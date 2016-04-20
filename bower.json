@@ -1,0 +1,21 @@
+{
+  "name": "trendclear-front",
+  "description": "",
+  "main": "",
+  "authors": [
+    "ByeongSu Do <bsdo@naver.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize-scss": "^3.0.3",
+    "jquery": "^2.2.3"
+  }
+}
