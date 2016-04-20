@@ -1,0 +1,20 @@
+#category_menu {
+  height: 40px;
+  background: #4769ac;
+  color: #fff;
+  vertical-align: middle;
+  position: relative;
+
+  .category_button {
+    padding: 10px 25px 10px 30px;
+    font-size: 18px;
+
+    .fa.fa-caret-right {
+      float: right;
+    }
+    .category_text {
+      display: inline;
+      padding-left: 75px;
+    }
+  }
+}

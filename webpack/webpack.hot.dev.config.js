@@ -4,14 +4,21 @@ var root = path.resolve(__dirname, '../');
 
 module.exports = {
   devtool: 'eval',
-  entry: [
-    'webpack-dev-server/client?http://localhost:2992',
-    'webpack/hot/only-dev-server',
-    path.resolve(root, './src/index')
-  ],
+  entry: {
+    Best: [
+      'webpack-dev-server/client?http://localhost:2992',
+      'webpack/hot/only-dev-server',
+      path.resolve(root, './src/App/Best')
+    ],
+    Community: [
+      'webpack-dev-server/client?http://localhost:2992',
+      'webpack/hot/only-dev-server',
+      path.resolve(root, './src/App/Community')
+    ]
+  },
   output: {
-    path: path.resolve(root, 'dist'),
-    filename: 'bundle.js',
+    path: path.resolve(root, './dist'),
+    filename: 'bundle-[name].js',
     publicPath: "http://localhost:2992/_assets/"
   },
   plugins: [
@@ -24,7 +31,8 @@ module.exports = {
       include: path.resolve(root, 'src')
     }, {
       test: /\.scss$/,
-      loaders: ["style", "css", "sass"]
+      loaders: ["style", "css", "sass"],
+      include: path.resolve(root, 'src')
     }]
   }
 };
