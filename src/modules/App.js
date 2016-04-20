@@ -1,5 +1,6 @@
 var React = require('react');
 
+require('./App.scss');
 var CommentBox = React.createClass({
   getInitialState() {
     return {
