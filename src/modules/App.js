@@ -1,10 +1,23 @@
 var React = require('react');
 
 var CommentBox = React.createClass({
-  render: function() {
+  getInitialState() {
+    return {
+      time: 0
+    }
+  },
+  componentDidMount() {
+    function timer() {
+      this.setState({time: this.state.time + 1})
+    }
+
+    setInterval(timer.bind(this), 1000);
+  },
+  render() {
     return (
       <div className="commentBox">
-        Hello, world!w2wfweereHello world I am a CommentBox.
+        asdfasdF
+        {this.state.time}
       </div>
     );
   }
