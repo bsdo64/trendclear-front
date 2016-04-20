@@ -1,12 +1,14 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var App = require('./modules/App');
+
 ReactDOM.render(
-  <h1>yout Hesldadsfk;lasdjfal;ksdfj!!</h1>,
+  <App />,
   document.getElementById('modal')
 );
 
 ReactDOM.render(
-  <h1>yout H1123112312312esld!!</h1>,
+  <App />,
   document.getElementById('contents')
 );
