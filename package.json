@@ -5,7 +5,8 @@
   "scripts": {
     "hot-dev-server": "node ./bin/webpack.hot.dev.server.js",
     "front-server": "node ./bin/www",
-    "start-dev": "npm run hot-dev-server | npm run front-server"
+    "start-dev": "npm run hot-dev-server | npm run front-server",
+    "webpack-dev": "webpack --config webpack/webpack.hot.dev.config.js"
   },
   "dependencies": {
     "alt": "^0.18.4",
@@ -16,6 +17,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "hbs": "~3.1.0",
+    "immutable": "^3.8.1",
     "morgan": "~1.6.1",
     "node-sass-middleware": "0.8.0",
     "react": "^15.0.1",

@@ -4,21 +4,21 @@ const CategoryItem = React.createClass({
   displayName: 'CategoryItem',
   createListItem(list) {
     return (
-      <div className="sub_category item">
-        <a href="#">{list.title}</a>
+      <div key={Math.random()} className="sub_category item">
+        <a href="#">{list.get('title')}</a>
       </div>
     )
   },
   createSubListItem(subList) {
     return (
-      <li>
+      <li key={Math.random()}>
         {
-          subList.header &&
+          subList.get('header') &&
           <h5 className="">
-            <a href="#">{subList.header}</a>
+            <a href="#">{subList.get('header')}</a>
           </h5>
         }
-        {subList.list.map(this.createListItem)}
+        {subList.get('list').map(this.createListItem)}
       </li>
     )
   },
@@ -28,13 +28,13 @@ const CategoryItem = React.createClass({
       <div>
         <div id="sub_category">
           <div className="sub_category_button">
-            <div className="sub_category_text">{category.menuHeader}</div>
+            <div className="sub_category_text">{category.get('menuHeader')}</div>
           </div>
         </div>
         <menu className="sub_category_list">
-          <div className="sub_category_header">{category.subHeader}</div>
+          <div className="sub_category_header">{category.get('subHeader')}</div>
           <ul >
-            {category.subList.map(this.createSubListItem)}
+            {category.get('subList').map(this.createSubListItem)}
           </ul>
         </menu>
       </div>
@@ -45,7 +45,7 @@ const CategoryItem = React.createClass({
 const CategoryList = React.createClass({
   displayName: 'CategoryList',
   createCategoryItem(category) {
-    return <CategoryItem category={category} />;
+    return <CategoryItem key={Math.random()} category={category} />;
   },
   render() {
     const { categories } = this.props;
