@@ -1,21 +1,27 @@
 export function initListener(Store) {
   "use strict";
+  Store.on('bootstrap', function (value) {
+    Store.setState(value);
+  });
 
   Store.on('beforeEach', function (value) {
     "use strict";
 
-    const payload = value.payload;
-    const state = value.state;
-    console.group(Store.displayName);
-    console.log('Before :\t', state.toJS());
-    console.log('payload :\t', payload.payload);
+    const { payload, state } = value;
+    if (Array.isArray(Store.actionListeners[payload.type])) {
+      console.group(Store.displayName);
+      console.log('Before :\t', state.toJS());
+      console.log('payload :\t', payload.payload);
+    }
   });
   Store.on('afterEach', function (value) {
     "use strict";
 
-    const state = value.state;
-    console.log('After :\t', state.toJS());
-    console.groupEnd(Store.displayName);
+    const { payload, state } = value;
+    if (Array.isArray(Store.actionListeners[payload.type])) {
+      console.log('After :\t', state.toJS());
+      console.groupEnd(Store.displayName);
+    }
   });
 }
 

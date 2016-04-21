@@ -7,10 +7,9 @@ Alt.debug('alt', alt);
 
 alt.dispatcher.register((state) => {
   if (!process.env.NODE) {
-    let snapshot = alt.takeSnapshot();
 
     /* Debug - Action Logs */
-    console.info('%cAction : ' + state.action, "color: #3769AC; font-weight: bold;");
+    console.log('%cAction : ' + state.action, "color: #3769AC; font-weight: bold;");
   }
 });
 

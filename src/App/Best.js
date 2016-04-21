@@ -25,6 +25,18 @@ alt.bootstrap(JSON.stringify({
             {title: '우리'}
           ]
         }]
+      },{
+        menuHeader: '공통게시판',
+        subHeader: '전체보기',
+        subList: [{
+          list: [
+            {title: '옷1'},
+            {title: '안너녕'},
+            {title: '우리'},
+            {title: '우리'},
+            {title: '우리'}
+          ]
+        }]
       }]
     }
   },
