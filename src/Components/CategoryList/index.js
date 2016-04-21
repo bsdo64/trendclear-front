@@ -1,4 +1,8 @@
+import { List } from 'immutable';
+
 var React = require('react');
+
+require('./index.scss');
 
 const CategoryItem = React.createClass({
   displayName: 'CategoryItem',
@@ -48,13 +52,12 @@ const CategoryList = React.createClass({
     return <CategoryItem key={Math.random()} category={category} />;
   },
   render() {
-    const { categories } = this.props;
-    if (Array.isArray(categories)) {
-      return <div>{categories.map(this.createCategoryItem)}</div>;
-    } else {
-      return <div>{this.createCategoryItem(categories)}</div>;
-    }
+    const { GnbStore } = this.props;
+    const categories = GnbStore.get('categoryMenu').get('categories');
+    return List.isList(categories) ?
+      <div>{categories.map(this.createCategoryItem)}</div> :
+      <div>{this.createCategoryItem(categories)}</div>;
   }
 });
 
-module.exports =  CategoryList;
+export default CategoryList;

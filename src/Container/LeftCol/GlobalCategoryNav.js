@@ -1,29 +1,24 @@
-var React = require('react');
-var CategoryNav = require('../../Components/CategoryNav');
+import React from 'react';
+import AltContainer from 'alt-container';
+import GnbStore from '../../Stores/GnbStore';
 
-var LeftCalCategoryNav = React.createClass({
-  displayName: 'LeftCalCategoryNav',
-  getInitialState() {
-    return {
-      categories: {
-        menuHeader: '베스트',
-        subHeader: '전체보기',
-        subList: [{
-          header: '의류',
-          list: [
-            {title: '옷'},
-            {title: '옷'},
-            {title: '우리집'}
-          ]
-        }]
-      }
-    }
-  },
+import CategoryNav from '../../Components/CategoryNav';
+
+var LeftColCategoryNav = React.createClass({
+  displayName: 'LeftColCategoryNav',
   render() {
     return (
-      <CategoryNav categories={this.state.categories} />
+      <AltContainer
+        stores={
+        {
+          GnbStore
+        }
+      }
+      >
+        <CategoryNav />
+      </AltContainer>
     );
   }
 });
 
-module.exports = LeftCalCategoryNav;
+module.exports = LeftColCategoryNav;
