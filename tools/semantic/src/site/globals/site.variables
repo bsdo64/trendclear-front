@@ -1,3 +1,36 @@
 /*******************************
      User Global Variables
 *******************************/
+
+/*-------------------
+       Fonts
+--------------------*/
+
+@fontName          : 'Noto Sans';
+@fontSmoothing     : antialiased;
+
+/*-------------------
+    Brand Colors
+--------------------*/
+
+@primaryColor        : #3769AC;
+@secondaryColor      : #27485e;
+
+@lightPrimaryColor   : #2185D0;
+@lightSecondaryColor : #3769AC;
+
+/*-------------------
+       Links
+--------------------*/
+
+@linkColor           : #3769AC;
+
+/*-------------------
+    Border Radius
+--------------------*/
+
+/* See Power-user section below
+   for explanation of @px variables
+*/
+@relativeBorderRadius: @relative1px;
+@absoluteBorderRadius: @1px;

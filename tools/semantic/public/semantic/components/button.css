@@ -23,7 +23,7 @@
   vertical-align: baseline;
   background: #E0E1E2 none;
   color: rgba(0, 0, 0, 0.6);
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Noto Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   margin: 0em 0.25em 0em 0em;
   padding: 0.78571429em 1.5em 0.78571429em;
   text-transform: none;
@@ -33,7 +33,7 @@
   font-style: normal;
   text-align: center;
   text-decoration: none;
-  border-radius: 0.28571429rem;
+  border-radius: 0.07142857rem;
   box-shadow: 0px 0px 0px 1px transparent inset, 0px 0em 0px 0px rgba(34, 36, 38, 0.15) inset;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -723,7 +723,7 @@
   background: transparent none !important;
   color: rgba(0, 0, 0, 0.6) !important;
   font-weight: normal;
-  border-radius: 0.28571429rem;
+  border-radius: 0.07142857rem;
   text-transform: none;
   text-shadow: none !important;
   box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
@@ -731,7 +731,7 @@
 .ui.basic.buttons {
   box-shadow: none;
   border: 1px solid rgba(34, 36, 38, 0.15);
-  border-radius: 0.28571429rem;
+  border-radius: 0.07142857rem;
 }
 .ui.basic.buttons .button {
   border-radius: 0em;
@@ -893,20 +893,20 @@
   border-radius: 0em;
 }
 .ui.labeled.icon.buttons .button:first-child > .icon {
-  border-top-left-radius: 0.28571429rem;
-  border-bottom-left-radius: 0.28571429rem;
+  border-top-left-radius: 0.07142857rem;
+  border-bottom-left-radius: 0.07142857rem;
 }
 .ui.labeled.icon.buttons .button:last-child > .icon {
-  border-top-right-radius: 0.28571429rem;
-  border-bottom-right-radius: 0.28571429rem;
+  border-top-right-radius: 0.07142857rem;
+  border-bottom-right-radius: 0.07142857rem;
 }
 .ui.vertical.labeled.icon.buttons .button:first-child > .icon {
   border-radius: 0em;
-  border-top-left-radius: 0.28571429rem;
+  border-top-left-radius: 0.07142857rem;
 }
 .ui.vertical.labeled.icon.buttons .button:last-child > .icon {
   border-radius: 0em;
-  border-bottom-left-radius: 0.28571429rem;
+  border-bottom-left-radius: 0.07142857rem;
 }
 
 /* Fluid Labeled */
@@ -1005,10 +1005,10 @@
 
 /* Top / Bottom */
 .ui.attached.top.button {
-  border-radius: 0.28571429rem 0.28571429rem 0em 0em;
+  border-radius: 0.07142857rem 0.07142857rem 0em 0em;
 }
 .ui.attached.bottom.button {
-  border-radius: 0em 0em 0.28571429rem 0.28571429rem;
+  border-radius: 0em 0em 0.07142857rem 0.07142857rem;
 }
 
 /* Left / Right */
@@ -1017,13 +1017,13 @@
   border-left: none;
   text-align: right;
   padding-right: 0.75em;
-  border-radius: 0.28571429rem 0em 0em 0.28571429rem;
+  border-radius: 0.07142857rem 0em 0em 0.07142857rem;
 }
 .ui.right.attached.button {
   display: inline-block;
   text-align: left;
   padding-left: 0.75em;
-  border-radius: 0em 0.28571429rem 0.28571429rem 0em;
+  border-radius: 0em 0.07142857rem 0.07142857rem 0em;
 }
 
 /* Plural */
@@ -1052,23 +1052,23 @@
 /* Top / Bottom */
 .ui[class*="top attached"].buttons {
   margin-bottom: -1px;
-  border-radius: 0.28571429rem 0.28571429rem 0em 0em;
+  border-radius: 0.07142857rem 0.07142857rem 0em 0em;
 }
 .ui[class*="top attached"].buttons .button:first-child {
-  border-radius: 0.28571429rem 0em 0em 0em;
+  border-radius: 0.07142857rem 0em 0em 0em;
 }
 .ui[class*="top attached"].buttons .button:last-child {
-  border-radius: 0em 0.28571429rem 0em 0em;
+  border-radius: 0em 0.07142857rem 0em 0em;
 }
 .ui[class*="bottom attached"].buttons {
   margin-top: -1px;
-  border-radius: 0em 0em 0.28571429rem 0.28571429rem;
+  border-radius: 0em 0em 0.07142857rem 0.07142857rem;
 }
 .ui[class*="bottom attached"].buttons .button:first-child {
-  border-radius: 0em 0em 0em 0.28571429rem;
+  border-radius: 0em 0em 0em 0.07142857rem;
 }
 .ui[class*="bottom attached"].buttons .button:last-child {
-  border-radius: 0em 0em 0.28571429rem 0em;
+  border-radius: 0em 0em 0.07142857rem 0em;
 }
 
 /* Left / Right */
@@ -1079,15 +1079,15 @@
   display: inline-flex;
   margin-right: 0em;
   margin-left: -1px;
-  border-radius: 0em 0.28571429rem 0.28571429rem 0em;
+  border-radius: 0em 0.07142857rem 0.07142857rem 0em;
 }
 .ui[class*="left attached"].buttons .button:first-child {
   margin-left: -1px;
-  border-radius: 0em 0.28571429rem 0em 0em;
+  border-radius: 0em 0.07142857rem 0em 0em;
 }
 .ui[class*="left attached"].buttons .button:last-child {
   margin-left: -1px;
-  border-radius: 0em 0em 0.28571429rem 0em;
+  border-radius: 0em 0em 0.07142857rem 0em;
 }
 .ui[class*="right attached"].buttons {
   display: -webkit-inline-box;
@@ -1096,15 +1096,15 @@
   display: inline-flex;
   margin-left: 0em;
   margin-right: -1px;
-  border-radius: 0.28571429rem 0em 0em 0.28571429rem;
+  border-radius: 0.07142857rem 0em 0em 0.07142857rem;
 }
 .ui[class*="right attached"].buttons .button:first-child {
   margin-left: -1px;
-  border-radius: 0.28571429rem 0em 0em 0em;
+  border-radius: 0.07142857rem 0em 0em 0em;
 }
 .ui[class*="right attached"].buttons .button:last-child {
   margin-left: -1px;
-  border-radius: 0em 0em 0em 0.28571429rem;
+  border-radius: 0em 0em 0em 0.07142857rem;
 }
 
 /*-------------------
@@ -3059,7 +3059,7 @@
 
 .ui.primary.buttons .button,
 .ui.primary.button {
-  background-color: #2185D0;
+  background-color: #3769AC;
   color: #FFFFFF;
   text-shadow: none;
   background-image: none;
@@ -3069,25 +3069,25 @@
 }
 .ui.primary.buttons .button:hover,
 .ui.primary.button:hover {
-  background-color: #1678c2;
+  background-color: #2c5c9e;
   color: #FFFFFF;
   text-shadow: none;
 }
 .ui.primary.buttons .button:focus,
 .ui.primary.button:focus {
-  background-color: #0d71bb;
+  background-color: #245597;
   color: #FFFFFF;
   text-shadow: none;
 }
 .ui.primary.buttons .button:active,
 .ui.primary.button:active {
-  background-color: #1a69a4;
+  background-color: #2b5185;
   color: #FFFFFF;
   text-shadow: none;
 }
 .ui.primary.buttons .active.button,
 .ui.primary.active.button {
-  background-color: #1279c6;
+  background-color: #295ca0;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -3098,7 +3098,7 @@
 
 .ui.secondary.buttons .button,
 .ui.secondary.button {
-  background-color: #1B1C1D;
+  background-color: #27485e;
   color: #FFFFFF;
   text-shadow: none;
   background-image: none;
@@ -3108,25 +3108,25 @@
 }
 .ui.secondary.buttons .button:hover,
 .ui.secondary.button:hover {
-  background-color: #27292a;
+  background-color: #2b5673;
   color: #FFFFFF;
   text-shadow: none;
 }
 .ui.secondary.buttons .button:focus,
 .ui.secondary.button:focus {
-  background-color: #2e3032;
+  background-color: #2c6082;
   color: #FFFFFF;
   text-shadow: none;
 }
 .ui.secondary.buttons .button:active,
 .ui.secondary.button:active {
-  background-color: #343637;
+  background-color: #366482;
   color: #FFFFFF;
   text-shadow: none;
 }
 .ui.secondary.buttons .active.button,
 .ui.secondary.active.button {
-  background-color: #27292a;
+  background-color: #2a5775;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -3260,12 +3260,12 @@
 .ui.buttons .button:first-child {
   border-left: none;
   margin-left: 0em;
-  border-top-left-radius: 0.28571429rem;
-  border-bottom-left-radius: 0.28571429rem;
+  border-top-left-radius: 0.07142857rem;
+  border-bottom-left-radius: 0.07142857rem;
 }
 .ui.buttons .button:last-child {
-  border-top-right-radius: 0.28571429rem;
-  border-bottom-right-radius: 0.28571429rem;
+  border-top-right-radius: 0.07142857rem;
+  border-bottom-right-radius: 0.07142857rem;
 }
 
 /* Vertical  Style */
@@ -3293,7 +3293,7 @@
 .ui.vertical.buttons .small.button:first-child,
 .ui.vertical.buttons .massive.button:first-child,
 .ui.vertical.buttons .huge.button:first-child {
-  border-radius: 0.28571429rem 0.28571429rem 0px 0px;
+  border-radius: 0.07142857rem 0.07142857rem 0px 0px;
 }
 .ui.vertical.buttons .button:last-child,
 .ui.vertical.buttons .mini.button:last-child,
@@ -3303,7 +3303,7 @@
 .ui.vertical.buttons .huge.button:last-child,
 .ui.vertical.buttons .gigantic.button:last-child {
   margin-bottom: 0px;
-  border-radius: 0px 0px 0.28571429rem 0.28571429rem;
+  border-radius: 0px 0px 0.07142857rem 0.07142857rem;
 }
 
 

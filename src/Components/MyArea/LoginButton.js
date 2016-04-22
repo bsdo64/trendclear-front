@@ -10,7 +10,7 @@ const LoginButton = React.createClass({
   render() {
     return (
       <div className="item">
-        <div className="ui mini button blue"
+        <div className="ui mini button primary"
              onClick={this.handleOpenLoginModal}>
           {'로그인'}
         </div>
