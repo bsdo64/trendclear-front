@@ -84,14 +84,14 @@ const LoginModalBox = React.createClass({
         <i className="close icon"></i>
         <div className="content">
 
-          <div id="daumHead" role="banner">
+          <div id="tc_Head" role="banner">
             <h1>
-              <a href="/" id="daumServiceLogo"><span
+              <a href="/" id="tc_ServiceLogo"><span
                 className="ir_wa">Trend Clear</span></a>
             </h1>
           </div>
 
-          <div id="daumContent" role="main">
+          <div id="tc_Content" role="main">
             <div id="mArticle">
               <form className="ui form" ref="loginform">
                 <div className="field">
@@ -122,10 +122,11 @@ const LoginModalBox = React.createClass({
 
               </form>
             </div>
-            <div id="daumFoot" className="footer_tistory" role="contentinfo">
+            <div id="tc_Foot" className="footer_tistory" role="contentinfo">
               <div className="inner_footer">
-                <address className="txt_copyright">Copyright © <a
-                  className="link_daum">TrendClear Corp.</a>
+                <address className="txt_copyright">
+                  Copyright © 
+                  <a className="link_tc_">TrendClear Corp.</a>
                   All rights reserved.
                 </address>
               </div>

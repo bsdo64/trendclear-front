@@ -14,6 +14,11 @@ module.exports = {
       'webpack-dev-server/client?http://localhost:2992',
       'webpack/hot/only-dev-server',
       path.resolve(root, './src/App/Community')
+    ],
+    Signin: [
+      'webpack-dev-server/client?http://localhost:2992',
+      'webpack/hot/only-dev-server',
+      path.resolve(root, './src/App/Signin')
     ]
   },
   output: {

@@ -23,6 +23,7 @@ $color_mine_shaft_approx: #333;
 $color_rolling_stone_approx: #737a84;
 $color_hit_pink_approx: #f8b18d;
 $color_gray_nurse_approx: #e9e9e9;
+$color_trendmaster: #A3BBDC;
 
 //fonts
 $font_0: verdana;
@@ -30,18 +31,18 @@ $font_1: sans-serif;
 $font_2: dotum;
 
 //urls
-$url_0: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_error.gif);
-$url_1: url(//i1.daumcdn.net/cfs.tistory/static/top/dot_error.gif);
-$url_2: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_unlock.gif);
-$url_3: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_success.gif);
-$url_4: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_deny.gif);
+$url_0: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_error.gif);
+$url_1: url(//i1.tc_cdn.net/cfs.tistory/static/top/dot_error.gif);
+$url_2: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_unlock.gif);
+$url_3: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_success.gif);
+$url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
 
 
 .gb_login {
   width: 650px;
 }
 
-#daumHead {
+#tc_Head {
   text-align: center;
   position: relative;
   width: 490px;
@@ -52,13 +53,13 @@ $url_4: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_deny.gif);
     font-size: 50px;
   }
 }
-#daumServiceLogo {
+#tc_ServiceLogo {
   width: 125px;
   height: 25px;
   margin-left: 1px;
   background-position: 0 0;
 }
-#daumContent {
+#tc_Content {
   margin: 0;
   padding: 0;
 }
@@ -71,7 +72,7 @@ $url_4: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_deny.gif);
     border: 0;
   }
 }
-#daumFoot {
+#tc_Foot {
   position: static;
   width: 490px;
   margin: 0 auto;
@@ -83,6 +84,7 @@ $url_4: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_deny.gif);
   border-top-color: $gallery;
   color: $color_mountain_mist_approx;
   .txt_copyright {
+    font-size: 11px;
     width: auto;
     padding: 20px 0;
   }
@@ -105,7 +107,7 @@ $url_4: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_deny.gif);
       background-color: $color_flamingo_approx;
     }
   }
-  .link_daumlogin {
+  .link_tc_login {
     display: block;
     height: 48px;
     padding-top: 12px;
@@ -347,13 +349,13 @@ $url_4: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_deny.gif);
   }
 }
 .wrap_error {
-  #daumHead {
+  #tc_Head {
     width: 590px;
     height: 32px;
     padding: 88px 0 0;
     border-bottom: 1px solid $color_scarpa_flow_approx;
   }
-  #daumServiceLogo {
+  #tc_ServiceLogo {
     float: left;
     width: 93px;
     height: 19px;
@@ -373,7 +375,7 @@ $url_4: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_deny.gif);
   #mArticle {
     width: 590px;
   }
-  #daumFoot {
+  #tc_Foot {
     width: 590px;
   }
   .tit_error {
@@ -628,8 +630,8 @@ $url_4: url(//i1.daumcdn.net/cfs.tistory/static/top/bg_deny.gif);
     padding-top: 67px;
   }
 }
-.footer_tistory .link_daum {
-  color: $color_mountain_mist_approx;
+.footer_tistory .link_tc_ {
+  color: $color_trendmaster;
 }
 .captcha_noti .ico_arrow {
   top: 42px;
