@@ -1,4 +1,4 @@
-import alt from '../Utills/alt';
+import alt from '../Utils/alt';
 
 class LoginActions {
   toggleLoginModal(openned) {

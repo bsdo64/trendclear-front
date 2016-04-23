@@ -1,4 +1,4 @@
-import alt from '../Utills/alt';
+import alt from '../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import GnbActions from '../Actions/GnbActions';
@@ -17,6 +17,12 @@ class GnbStore{
 
   onToggleGnb(oppend) {
     let state = this.state.set('openGnb', !oppend);
+    this.setMergeState(state);
+  }
+
+  onOpenSideCategory(clubId) {
+    console.log(clubId);
+    let state = this.state.set('openSideNow', clubId);
     this.setMergeState(state);
   }
 }

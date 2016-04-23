@@ -1,8 +1,11 @@
-import alt from '../Utills/alt';
+import alt from '../Utils/alt';
 
 class GnbActions {
   toggleGnb(openned) {
     return openned;
+  }
+  openSideCategory(clubId) {
+    return clubId;
   }
 }
 

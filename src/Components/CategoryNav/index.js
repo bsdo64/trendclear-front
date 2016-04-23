@@ -1,19 +1,129 @@
 var React = require('react');
 var GnbActions = require('../../Actions/GnbActions');
 
+const ClubList = React.createClass({
+  displayName: 'ClubList',
+  openSideCategories(e, target, target2) {
+    "use strict";
+    console.log(e, target, target2);
+    GnbActions.openSideCategory(e.target.dataset.clubId);
+  },
+  render() {
+    "use strict";
+    const { gnbMenu } = this.props;
+    const data = gnbMenu.get('data');
+    const openSideNow = gnbMenu.get('openSideNow');
+
+    const createCategory = function (category) {
+      return (
+        <li key={category.get('id')}>
+          <a href="http://www.11st.co.kr/html/category/127680.html">{category.get('title')}</a>
+        </li>
+      )
+    };
+
+    const createCategoryGroup = function (categoryGroup) {
+      return (
+        <div key={categoryGroup.get('id')}>
+          <h3 >{categoryGroup.get('title')}</h3>
+          <ul className="category_lists">
+            {categoryGroup.get('categories').map(createCategory)}
+          </ul>
+        </div>
+      )
+    };
+
+    const createClub = function (club) {
+      return (
+        <li key={club.get('id')} className="gnbm">
+          <a href="#gnb_cate_layer1" data-clubId={club.get('id')} onMouseEnter={this.openSideCategories}>
+            <i className="fa fa-hashtag"></i>
+            <span>{club.get('title')}</span>
+          </a>
+          {
+            (openSideNow === club.get('id')) &&
+            <div className="gnb_inner_wrap">
+              <div className="gnb_inner">
+                <div className="grouping">
+                  {club.get('category_groups').map(createCategoryGroup)}
+                </div>
+                <div className="grouping">
+                  <div className="special">
+                    <h3 >스패셜</h3>
+                    <ul className="category_lists">
+                      <li><a
+                        href="http://www.11st.co.kr/browsing/Bsshop.tmall?method=getBsshop&amp;bsshopId=half">하프클럽</a>
+                      </li>
+                      <li><a
+                        href="http://www.11st.co.kr/disp/DTAction.tmall?ID=DLUXURY11&amp;ctgrNo=47031">럭셔리11</a>
+                      </li>
+                      <li><a
+                        href="http://global.11st.co.kr/html/global/globalMain.html">해외직구</a>
+                      </li>
+                      <li><a href="http://www.11st.co.kr/html/FashionDept.html">패션백화점</a></li>
+                      <li><a href="http://shop.11st.co.kr/mandarinaduck-official">만다리나덕</a>
+                      </li>
+                      <li><a href="http://shop.11st.co.kr/tandy2015">TANDY</a></li>
+                      <li><a href="http://shop.11st.co.kr/lapkorea">LAP</a></li>
+                      <li><a href="http://shop.11st.co.kr/parkadmin">파크랜드</a></li>
+                      <li><a href="http://shop.11st.co.kr/giordano264">지오다노</a></li>
+                      <li><a href="http://shop.11st.co.kr/elandesi">미쏘</a></li>
+                      <li><a href="http://shop.11st.co.kr/stco2010">by STCO</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="banner">
+                  <div className="ban02">
+                    <a
+                      href="http://www.11st.co.kr/browsing/MallPlanDetail.tmall?method=getMallPlanDetail&amp;planDisplayNumber=914513">
+                      <img
+                        src="http://www.aut.ac.nz/__data/assets/image/0009/367794/Poster-Converted.jpg"
+                        alt="브라운브레스"/>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </li>
+      )
+    }
+
+    return (
+      <ul>
+        {data.map(createClub.bind(this))}
+      </ul>
+    )
+  }
+})
+
+const ClubListMain = React.createClass({
+  displayName: 'ClubListMain',
+  render() {
+    "use strict";
+
+    return (
+      <div className="category_box_main">
+        Hello main
+      </div>
+    )
+  }
+})
+
+
 require('./index.scss');
 var CategoryNav = React.createClass({
-  displayName: 'CategoryNav',
-  handleToggleGnb() {
+  displayName: 'CategoryNav', handleToggleGnb() {
     "use strict";
     const { GnbStore } = this.props;
     const openGnb = GnbStore.get('openGnb');
-    
+
     GnbActions.toggleGnb(openGnb);
-  },
-  render() {
+  }, render() {
     const { GnbStore } = this.props;
     const openGnb = GnbStore.get('openGnb');
+    const gnbMenu = GnbStore.get('gnbMenu');
+
     return (
       <div>
         <div className="category_button" onClick={this.handleToggleGnb}>
@@ -25,162 +135,12 @@ var CategoryNav = React.createClass({
         { /* 카테고리 박스 */ }
         {
           openGnb &&
-          <div ref="category_box" className="category_box" onMouseLeave={this.handleToggleGnb}>
-            <div className="gnb_menu" >
-              <ul>
-                <li className="gnbm">
-                  <a href="#gnb_cate_layer1">
-                    <i className="fa fa-hashtag"></i>
-                    <span>브랜드패션</span>
-                  </a>
-                  <div className="gnb_inner_wrap">
-                    <div className="gnb_inner" >
-                      <div className="grouping">
-                        <div><h3 >브랜드패션</h3>
-                          <ul className="category_lists">
-                            <li><a href="http://www.11st.co.kr/html/category/127680.html">브랜드
-                              여성의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/252019.html">브랜드
-                              남성의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127634.html">브랜드
-                              캐주얼의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/727029.html">브랜드
-                              신발/가방</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127663.html">브랜드
-                              시계/쥬얼리</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127646.html">수입명품</a>
-                            </li>
-                          </ul>
-                        </div>
-                        <div><h3 >브랜드패션</h3>
-                          <ul className="category_lists">
-                            <li><a href="http://www.11st.co.kr/html/category/127680.html">브랜드
-                              여성의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/252019.html">브랜드
-                              남성의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127634.html">브랜드
-                              캐주얼의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/727029.html">브랜드
-                              신발/가방</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127663.html">브랜드
-                              시계/쥬얼리</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127646.html">수입명품</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="grouping">
-                        <div className="special"><h3 >브랜드패션</h3>
-                          <ul className="category_lists" >
-                            <li><a
-                              href="http://www.11st.co.kr/browsing/Bsshop.tmall?method=getBsshop&amp;bsshopId=half">하프클럽</a>
-                            </li>
-                            <li><a
-                              href="http://www.11st.co.kr/disp/DTAction.tmall?ID=DLUXURY11&amp;ctgrNo=47031">럭셔리11</a>
-                            </li>
-                            <li><a
-                              href="http://global.11st.co.kr/html/global/globalMain.html">해외직구</a>
-                            </li>
-                            <li><a href="http://www.11st.co.kr/html/FashionDept.html">패션백화점</a></li>
-                            <li><a href="http://shop.11st.co.kr/mandarinaduck-official">만다리나덕</a>
-                            </li>
-                            <li><a href="http://shop.11st.co.kr/tandy2015">TANDY</a></li>
-                            <li><a href="http://shop.11st.co.kr/lapkorea">LAP</a></li>
-                            <li><a href="http://shop.11st.co.kr/parkadmin">파크랜드</a></li>
-                            <li><a href="http://shop.11st.co.kr/giordano264">지오다노</a></li>
-                            <li><a href="http://shop.11st.co.kr/elandesi">미쏘</a></li>
-                            <li><a href="http://shop.11st.co.kr/stco2010">by STCO</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="banner">
-                        <div className="ban02">
-                          <a href="http://www.11st.co.kr/browsing/MallPlanDetail.tmall?method=getMallPlanDetail&amp;planDisplayNumber=914513">
-                            <img src="http://www.aut.ac.nz/__data/assets/image/0009/367794/Poster-Converted.jpg" alt="브라운브레스" />
-                          </a>
-                        </div>
-                      </div>
-                      <button type="button" className="btn_close">카테고리레이어 닫기</button>
-                    </div>
-                  </div>
-                </li>
-                <li className="gnbm">
-                  <a href="#gnb_cate_layer1">
-                    <i className="fa fa-hashtag"></i>
-                    <span>브랜드패션</span>
-                  </a>
-                  <div className="gnb_inner_wrap">
-                    <div className="gnb_inner" >
-                      <div className="grouping">
-                        <div><h3 >브랜드패션</h3>
-                          <ul className="category_lists">
-                            <li><a href="http://www.11st.co.kr/html/category/127680.html">브랜드
-                              여성의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/252019.html">브랜드
-                              남성의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127634.html">브랜드
-                              캐주얼의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/727029.html">브랜드
-                              신발/가방</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127663.html">브랜드
-                              시계/쥬얼리</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127646.html">수입명품</a>
-                            </li>
-                          </ul>
-                        </div>
-                        <div><h3 >브랜드패션</h3>
-                          <ul className="category_lists">
-                            <li><a href="http://www.11st.co.kr/html/category/127680.html">브랜드
-                              여성의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/252019.html">브랜드
-                              남성의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127634.html">브랜드
-                              캐주얼의류</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/727029.html">브랜드
-                              신발/가방</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127663.html">브랜드
-                              시계/쥬얼리</a></li>
-                            <li><a href="http://www.11st.co.kr/html/category/127646.html">수입명품</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="grouping">
-                        <div className="special"><h3 >브랜드패션</h3>
-                          <ul className="category_lists" >
-                            <li><a
-                              href="http://www.11st.co.kr/browsing/Bsshop.tmall?method=getBsshop&amp;bsshopId=half">하프클럽</a>
-                            </li>
-                            <li><a
-                              href="http://www.11st.co.kr/disp/DTAction.tmall?ID=DLUXURY11&amp;ctgrNo=47031">럭셔리11</a>
-                            </li>
-                            <li><a
-                              href="http://global.11st.co.kr/html/global/globalMain.html">해외직구</a>
-                            </li>
-                            <li><a href="http://www.11st.co.kr/html/FashionDept.html">패션백화점</a></li>
-                            <li><a href="http://shop.11st.co.kr/mandarinaduck-official">만다리나덕</a>
-                            </li>
-                            <li><a href="http://shop.11st.co.kr/tandy2015">TANDY</a></li>
-                            <li><a href="http://shop.11st.co.kr/lapkorea">LAP</a></li>
-                            <li><a href="http://shop.11st.co.kr/parkadmin">파크랜드</a></li>
-                            <li><a href="http://shop.11st.co.kr/giordano264">지오다노</a></li>
-                            <li><a href="http://shop.11st.co.kr/elandesi">미쏘</a></li>
-                            <li><a href="http://shop.11st.co.kr/stco2010">by STCO</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="banner">
-                        <div className="ban02">
-                          <a href="http://www.11st.co.kr/browsing/MallPlanDetail.tmall?method=getMallPlanDetail&amp;planDisplayNumber=914513">
-                            <img src="http://www.aut.ac.nz/__data/assets/image/0009/367794/Poster-Converted.jpg" alt="브라운브레스" />
-                          </a>
-                        </div>
-                      </div>
-                      <button type="button" className="btn_close">카테고리레이어 닫기</button>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+          <div ref="category_box" className="category_box" /*onMouseLeave={this.handleToggleGnb}*/>
+            <div className="gnb_menu">
+              <ClubList
+                gnbMenu={gnbMenu}
+              />
+              <ClubListMain />
             </div>
           </div>
         }

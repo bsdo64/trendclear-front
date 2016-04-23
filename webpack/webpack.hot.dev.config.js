@@ -5,20 +5,10 @@ var root = path.resolve(__dirname, '../');
 module.exports = {
   devtool: 'eval',
   entry: {
-    Best: [
+    Entry: [
       'webpack-dev-server/client?http://localhost:2992',
       'webpack/hot/only-dev-server',
-      path.resolve(root, './src/App/Best')
-    ],
-    Community: [
-      'webpack-dev-server/client?http://localhost:2992',
-      'webpack/hot/only-dev-server',
-      path.resolve(root, './src/App/Community')
-    ],
-    Signin: [
-      'webpack-dev-server/client?http://localhost:2992',
-      'webpack/hot/only-dev-server',
-      path.resolve(root, './src/App/Signin')
+      path.resolve(root, './src/App/Entry')
     ]
   },
   output: {

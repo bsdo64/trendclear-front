@@ -1,4 +1,4 @@
-import alt from '../Utills/alt';
+import alt from '../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import LoginActions from '../Actions/LoginActions';

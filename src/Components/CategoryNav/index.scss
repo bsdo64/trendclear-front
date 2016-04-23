@@ -30,6 +30,16 @@
   min-height: 320px;
   border: 1px solid #3769AC;
 
+  .category_box_main {
+    position: absolute;
+    top: 0;
+    left: 150px;
+    width: 576px;
+    height: 318px;
+    background: #fff;
+    color: #000;
+  }
+
   ul {
     margin: 0;
     padding: 0;
@@ -50,6 +60,8 @@
       }
 
       .gnb_inner_wrap {
+        z-index: 1;
+        background: #fff;
         position: absolute;
         left: 150px;
         top: 0;
@@ -85,6 +97,9 @@
         .gnb_inner>.banner {
           float: left;
           width: 276px;
+          a {
+            display: flex;
+          }
 
           img {
             width: 276px;
