@@ -9,6 +9,15 @@ const SigninFormContents = React.createClass({
       emailVerifyFormOpen: false
     }
   },
+  componentWillReceiveProps(currentProps, nextProps) {
+    "use strict";
+    const {submitResult, emailVerifySuccess} = currentProps.SigninStore.toJS();
+    if (emailVerifySuccess && submitResult) {
+      
+
+      browserHistory.push('/');
+    }
+  },
   componentDidMount() {
     $('form select').dropdown();
     $(this.refs.signinform).form({
@@ -106,13 +115,13 @@ const SigninFormContents = React.createClass({
   handleEmail() {
     const emailValue = this.refs.signinEmail.value;
     if (emailValue.length > 3) {
-      SigninActions.checkEmail({signinEmail: emailValue});
+      SigninActions.checkEmailDup({email: emailValue});
     }
   },
   handleNick() {
     const nickValue = this.refs.signinNick.value;
     if (nickValue.length > 1) {
-      SigninActions.checkNick({signinNick: nickValue});
+      SigninActions.checkNickDup({nick: nickValue});
     }
   },
   handleSubmit() {
@@ -135,14 +144,14 @@ const SigninFormContents = React.createClass({
   },
   _sendEmailVerify() {
     SigninActions.requestEmailVerify({
-      signinEmail: this.refs.signinEmail.value
+      email: this.refs.signinEmail.value
     });
   },
   handleCheckEmailVerify() {
     SigninActions.checkVerifyCode({verifyCode: this.refs.emailVerify.value});
   },
   render() {
-    const {emailDup, nickDup, submitResult, emailVerifyFail, emailVerifySuccess} = this.props.SigninStore.toJS();
+    const {emailDup, nickDup, emailVerifyFail} = this.props.SigninStore.toJS();
     const {emailVerifyFormOpen} = this.state;
 
     let dupError = '';
@@ -165,10 +174,6 @@ const SigninFormContents = React.createClass({
           </ul>
         </div>
       );
-    }
-
-    if (emailVerifySuccess && submitResult) {
-      browserHistory.replace('/');
     }
 
     return (

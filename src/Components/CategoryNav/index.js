@@ -6,7 +6,7 @@ const ClubList = React.createClass({
   openSideCategories(e, target, target2) {
     "use strict";
     console.log(e, target, target2);
-    GnbActions.openSideCategory(e.target.dataset.clubId);
+    GnbActions.openSideCategory(e.target.dataset.clubid);
   },
   render() {
     "use strict";
@@ -41,7 +41,7 @@ const ClubList = React.createClass({
             <span>{club.get('title')}</span>
           </a>
           {
-            (openSideNow === club.get('id')) &&
+            (openSideNow == club.get('id')) &&
             <div className="gnb_inner_wrap">
               <div className="gnb_inner">
                 <div className="grouping">

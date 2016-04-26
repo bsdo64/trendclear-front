@@ -22,7 +22,7 @@ class GnbStore{
 
   onOpenSideCategory(clubId) {
     console.log(clubId);
-    let state = this.state.set('openSideNow', clubId);
+    let state = this.state.setIn(['gnbMenu', 'openSideNow'], clubId);
     this.setMergeState(state);
   }
 }

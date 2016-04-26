@@ -5,11 +5,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
+var Session = require('./middleware/Session');
 
+/* Middle ware */
+var ApiProxy = require('./middleware/Proxy.js');
+
+/* Routes */
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+app.all('/ajax/*', ApiProxy);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,6 +26,8 @@ hbs.registerPartials(__dirname + '/views/partials');
 // uncomment after placing your favicon in /dist
 //app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(Session.configSession());
+app.use(Session.initSession);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

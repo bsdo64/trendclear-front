@@ -6,10 +6,10 @@ import Api from '../Utils/ApiClient';
 
 class SigninActions {
 
-  checkEmail(params) {
+  checkEmailDup(params) {
     return (dispatch) => {
       Api
-        .post('/signin/checkEmail', params)
+        .post('/signin/checkEmailDup', params)
         .then((res) => {
           dispatch(res);
         })
@@ -19,10 +19,10 @@ class SigninActions {
     };
   }
 
-  checkNick(params) {
+  checkNickDup(params) {
     return (dispatch) => {
       Api
-        .post('/signin/checkNick', params)
+        .post('/signin/checkNickDup', params)
         .then((res) => {
           dispatch(res);
         })
@@ -62,7 +62,7 @@ class SigninActions {
   checkVerifyCode(params) {
     return (dispatch) => {
       Api
-        .post('/signin/checkEmailVerify', params)
+        .post('/signin/checkEmailCodeVerify', params)
         .then((res) => {
           dispatch(res);
         })

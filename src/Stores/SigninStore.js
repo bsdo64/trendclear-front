@@ -2,6 +2,7 @@ import alt from '../Utils/alt';
 import SigninActions from '../Actions/SigninActions';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
+import { initListener, setMergeState } from './Helper/func';
 
 class SigninStore {
   constructor() {
@@ -15,27 +16,41 @@ class SigninStore {
       emailVerifySuccess: false,
       emailVerifyFail: false
     });
+    initListener(this);
+    this.setMergeState = setMergeState.bind(this);
   }
 
-  onCheckEmail(result) {
-    if (result === 'ok') {
-      this.setState({
+  onCheckEmailDup(result) {
+    const dup = parseInt(result.dup, 10);
+
+    if (dup) {
+      this.setMergeState({
+        emailDup: true
+      });
+    } else if (!dup) {
+      this.setMergeState({
         emailDup: false
       });
     } else {
-      this.setState({
-        emailDup: true
+      this.setMergeState({
+        emailDup: null
       });
     }
   }
-  onCheckNick(result) {
-    if (result === 'ok') {
-      this.setState({
+  onCheckNickDup(result) {
+    const dup = parseInt(result.dup, 10);
+
+    if (dup) {
+      this.setMergeState({
+        nickDup: true
+      });
+    } else if (!dup) {
+      this.setMergeState({
         nickDup: false
       });
     } else {
-      this.setState({
-        nickDup: true
+      this.setMergeState({
+        nickDup: null
       });
     }
   }
