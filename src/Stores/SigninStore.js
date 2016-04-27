@@ -1,4 +1,5 @@
 import alt from '../Utils/alt';
+import AppActions from '../Actions/AppActions';
 import SigninActions from '../Actions/SigninActions';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
@@ -6,6 +7,9 @@ import { initListener, setMergeState } from './Helper/func';
 
 class SigninStore {
   constructor() {
+    this.displayName = 'SigninStore';
+    
+    this.bindActions(AppActions);
     this.bindActions(SigninActions);
 
     this.state = Map({
@@ -19,7 +23,11 @@ class SigninStore {
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
   }
-
+  onInit(bootstrapData) {
+    if (bootstrapData[this.displayName]) {
+      this.setState(bootstrapData[this.displayName]);
+    }
+  }
   onCheckEmailDup(result) {
     const dup = parseInt(result.dup, 10);
 

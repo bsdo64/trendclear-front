@@ -1,0 +1,30 @@
+#club_section, #club_main_section {
+  padding: 10px;
+  font-size: 12px;
+
+  th {
+    padding: 3px 5px;
+    color: #fff;
+    background: #3769AC;
+    font-weight: normal;
+  }
+}
+
+#club_section {
+  h3.ui.header {
+    font-size: 14px;
+
+    .sub.header {
+      font-size: 12px;
+      background: #D8E4F5;
+      padding: 10px;
+      margin-top: 5px;
+    }
+  }
+
+  .ui.horizontal.celled.list {
+    .item {
+      font-size: 12px;
+    }
+  }
+}

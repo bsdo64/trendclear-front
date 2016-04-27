@@ -4,7 +4,7 @@ var hbs = require('hbs');
 
 /* GET home page. */
 router.get('*', function(req, res, next) {
-  res.render('entry/index', { title: 'Express' });
+  res.render('entry/index');
 });
 
 module.exports = router;

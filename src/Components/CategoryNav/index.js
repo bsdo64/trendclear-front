@@ -1,11 +1,11 @@
-var React = require('react');
-var GnbActions = require('../../Actions/GnbActions');
+import React from 'react';
+import { Link } from 'react-router';
+import GnbActions from '../../Actions/GnbActions';
 
 const ClubList = React.createClass({
   displayName: 'ClubList',
   openSideCategories(e, target, target2) {
     "use strict";
-    console.log(e, target, target2);
     GnbActions.openSideCategory(e.target.dataset.clubid);
   },
   render() {
@@ -17,7 +17,7 @@ const ClubList = React.createClass({
     const createCategory = function (category) {
       return (
         <li key={category.get('id')}>
-          <a href="http://www.11st.co.kr/html/category/127680.html">{category.get('title')}</a>
+          <Link to={"/community?categoryId=" + category.get('id')}>{category.get('title')}</Link>
         </li>
       )
     };
@@ -36,7 +36,7 @@ const ClubList = React.createClass({
     const createClub = function (club) {
       return (
         <li key={club.get('id')} className="gnbm">
-          <a href="#gnb_cate_layer1" data-clubId={club.get('id')} onMouseEnter={this.openSideCategories}>
+          <a ref="category_btn" href="#gnb_cate_layer1" data-clubid={club.get('id')} onMouseEnter={this.openSideCategories}>
             <i className="fa fa-hashtag"></i>
             <span>{club.get('title')}</span>
           </a>
@@ -112,7 +112,7 @@ const ClubListMain = React.createClass({
 
 
 require('./index.scss');
-var CategoryNav = React.createClass({
+const CategoryNav = React.createClass({
   displayName: 'CategoryNav', handleToggleGnb() {
     "use strict";
     const { GnbStore } = this.props;
