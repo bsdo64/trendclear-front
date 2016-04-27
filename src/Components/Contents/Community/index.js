@@ -40,111 +40,123 @@ let CommunityContents = React.createClass({
     ClubSectionActions.requestPosts(this.props.CommunityStore.club.id, pagination);
   },
   render() {
-    const { list, club } = this.props.CommunityStore.toJS();
-    const { user, login } = { user: 'abc', login: true};
-    const { title, description, url, ClubGroup } = club;
-    const { page, limit, total, data } = list;
-    const { postId } = { postId: 1 };
+    "use strict";
+    const type = this.props.CommunityStore.get('type');
 
-    const defaultPageUrl = '/club/' + url + '/';
-    return (
-      <div id="club_section">
-        <h3 className="ui header">
-          {title}
-          <div className="sub header">{description}</div>
-        </h3>
-        <div className="ui horizontal celled list">
-          <div className="item" style={{fontWeight: 'bold'}}>
-            <div className="middle aligned content bold">전체</div>
+    if (type === 'forum') {
+      const { list, club } = this.props.CommunityStore.toJS();
+      const { user, login } = { user: 'abc', login: true};
+      const { title, description, url, ClubGroup } = club;
+      const { page, limit, total, data } = list;
+      const { postId } = { postId: 1 };
+
+      const defaultPageUrl = '/club/' + url + '/';
+      return (
+        <div id="club_section">
+          <h3 className="ui header">
+            {title}
+            <div className="sub header">{description}</div>
+          </h3>
+          <div className="ui horizontal celled list">
+            <div className="item" style={{fontWeight: 'bold'}}>
+              <div className="middle aligned content bold">전체</div>
+            </div>
+            <div className="item">
+              <div className="middle aligned content">샴푸 (150)</div>
+            </div>
+            <div className="item">
+              <div className="middle aligned content">샴푸 (150)</div>
+            </div>
+            <div className="item">
+              <div className="middle aligned content">샴푸 (150)</div>
+            </div>
           </div>
-          <div className="item">
-            <div className="middle aligned content">샴푸 (150)</div>
-          </div>
-          <div className="item">
-            <div className="middle aligned content">샴푸 (150)</div>
-          </div>
-          <div className="item">
-            <div className="middle aligned content">샴푸 (150)</div>
-          </div>
-        </div>
-        <table className="ui table very compact" >
-          <thead>
-          <tr>
-            <th className="center aligned collapsing">말머리</th>
-            <th className="center aligned collapsing">좋아요</th>
-            <th className="center aligned collapsing">조회</th>
-            <th className="center aligned collapsing">댓글</th>
-            <th className="center aligned">제목</th>
-            <th className="center aligned collapsing">글쓴이</th>
-            <th className="center aligned collapsing">등록일</th>
-          </tr>
-          </thead>
-          <tbody>
+          <table className="ui table very compact" >
+            <thead>
+            <tr>
+              <th className="center aligned collapsing">말머리</th>
+              <th className="center aligned collapsing">좋아요</th>
+              <th className="center aligned collapsing">조회</th>
+              <th className="center aligned collapsing">댓글</th>
+              <th className="center aligned">제목</th>
+              <th className="center aligned collapsing">글쓴이</th>
+              <th className="center aligned collapsing">등록일</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {
+              data &&
+              data.map(function (item) {
+                return (
+                  <PostList item={item} defaultPageUrl={defaultPageUrl}
+                            postId={postId} page={page} />
+                );
+              })
+            }
+
+            <tr>
+              <td className="center aligned collapsing">샴푸나라</td>
+              <td className="center aligned collapsing">10</td>
+              <td className="center aligned collapsing">120</td>
+              <td className="right aligned collapsing">120</td>
+              <td className="left aligned">스마트폰 액정필름, 케이스 제공 (중앙광장 T월드)</td>
+              <td className="right aligned collapsing">닉네임</td>
+              <td className="center aligned collapsing">2012.11.11</td>
+            </tr>
+
+
+            <tr>
+              <td className="center aligned collapsing">샴푸나라</td>
+              <td className="center aligned collapsing">10</td>
+              <td className="center aligned collapsing">1200</td>
+              <td className="right aligned collapsing">12012</td>
+              <td className="left aligned">스마트폰 액정필름, 케이스 제공 (중앙광장 T월드)</td>
+              <td className="right aligned collapsing">닉네임</td>
+              <td className="center aligned collapsing">2012.11.11</td>
+            </tr>
+            </tbody>
+          </table>
 
           {
-            data &&
-            data.map(function (item) {
-              return (
-                <PostList item={item} defaultPageUrl={defaultPageUrl}
-                          postId={postId} page={page} />
-              );
-            })
+            user && login &&
+            <div className="ui right aligned container">
+              <a className="ui button primary tiny" href={'/club/' + url + '/submit'}>글쓰기</a>
+            </div>
           }
 
-          <tr>
-            <td className="center aligned collapsing">샴푸나라</td>
-            <td className="center aligned collapsing">10</td>
-            <td className="center aligned collapsing">120</td>
-            <td className="right aligned collapsing">120</td>
-            <td className="left aligned">스마트폰 액정필름, 케이스 제공 (중앙광장 T월드)</td>
-            <td className="right aligned collapsing">닉네임</td>
-            <td className="center aligned collapsing">2012.11.11</td>
-          </tr>
+          <div className="ui divider"></div>
 
 
-          <tr>
-            <td className="center aligned collapsing">샴푸나라</td>
-            <td className="center aligned collapsing">10</td>
-            <td className="center aligned collapsing">1200</td>
-            <td className="right aligned collapsing">12012</td>
-            <td className="left aligned">스마트폰 액정필름, 케이스 제공 (중앙광장 T월드)</td>
-            <td className="right aligned collapsing">닉네임</td>
-            <td className="center aligned collapsing">2012.11.11</td>
-          </tr>
-          </tbody>
-        </table>
+          <div className="ui center aligned container">
 
-        {
-          user && login &&
-          <div className="ui right aligned container">
-            <a className="ui button primary tiny" href={'/club/' + url + '/submit'}>글쓰기</a>
-          </div>
-        }
+            <Paginator
+              total={total}
+              limit={limit}
+              page={page}
+              handleSetPage={this.handleSetPage}
+            />
 
-        <div className="ui divider"></div>
-
-
-        <div className="ui center aligned container">
-
-          <Paginator
-            total={total}
-            limit={limit}
-            page={page}
-            handleSetPage={this.handleSetPage}
-          />
-
-          <div className="ui search mini" style={{padding: '15px'}}>
-            <div className="ui icon input">
-              <input className="prompt" type="text" placeholder="Search animals..." />
-              <i className="search icon"></i>
+            <div className="ui search mini" style={{padding: '15px'}}>
+              <div className="ui icon input">
+                <input className="prompt" type="text" placeholder="Search animals..." />
+                <i className="search icon"></i>
+              </div>
+              <div className="results"></div>
             </div>
-            <div className="results"></div>
           </div>
+
+
         </div>
+      );
+    } else {
+      return (
+        <div>
+          Hello world!
+        </div>
+      )
 
-
-      </div>
-    );
+    }
   }
 });
 
