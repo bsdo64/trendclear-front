@@ -4,7 +4,7 @@ export function initListener(Store) {
     Store.setState(value);
   });
 
-  Store.on('beforeEach', function (value) {
+  Store.on('beforeEach', function beforeEachHandler(value) {
     "use strict";
 
     const { payload, state } = value;
@@ -14,7 +14,7 @@ export function initListener(Store) {
       console.log('payload :\t', payload.payload);
     }
   });
-  Store.on('afterEach', function (value) {
+  Store.on('afterEach', function afterEachHandler(value) {
     "use strict";
 
     const { payload, state } = value;

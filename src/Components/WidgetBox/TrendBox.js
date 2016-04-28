@@ -1,14 +1,24 @@
 import React from 'react';
+import UserActions from '../../Actions/UserActions';
 
 require('./Trendbox.scss');
 const TrendBox = React.createClass({
   componentDidMount() {
-    $('#exp_progress')
-      .progress('increment');
-  },
+    const {user} = this.props;
 
+    $('#exp_progress')
+      .progress({
+        percent:  user.trendbox.get('exp') / user.trendbox.get('next_exp') * 100
+      });
+  },
+  test() {
+    "use strict";
+
+    UserActions.increaseLevel();
+  },
   render() {
     const {user} = this.props;
+
 
     const sex = user.profile.get('sex'),
           avatar_img = user.profile.get('avatar_img'),
@@ -44,12 +54,12 @@ const TrendBox = React.createClass({
               </a>
               <div className="content">
                 <div className="user_info_header">
-                  <span className="ui description">{user.trendbox.get('nick')}</span>
+                  <span className="ui description">{user.user.get('nick')}</span>
                   {iconImg}
                 </div>
                 <div className="description">
 
-                  <div className="item">
+                  <div className="item" onClick={this.test}>
                     <span className="item_col">레벨</span>
                     <div className="item_num">
                       <span>{user.trendbox.get('level')}</span>
@@ -78,11 +88,11 @@ const TrendBox = React.createClass({
                   <h4 className="ui description title">트랜드 포인트</h4>
                   <div className="point_line">
                     <span className="ui description">TP</span>
-                    <span className="ui right floated point tp_point">{user.trendbox.get('tp')}</span>
+                    <span className="ui right floated point tp_point">{user.trendbox.get('T')}</span>
                   </div>
                   <div className="point_line">
                     <span className="ui description">RP</span>
-                    <span className="ui right floated point rp_point">{user.trendbox.get('rp')}</span>
+                    <span className="ui right floated point rp_point">{user.trendbox.get('R')}</span>
                   </div>
                 </div>
                 <div className="colum">
@@ -90,13 +100,13 @@ const TrendBox = React.createClass({
                   <div className="exp_line">
                     <div id="exp_progress"
                          className="ui indicating small blue progress"
-                         data-value={user.trendbox.get('exp')}
-                         data-total={user.trendbox.get('next_exp')}
                     >
                       <div className="bar">
                         <div className="progress"></div>
                       </div>
-                      <div className="label remain_exp">다음 {user.trendbox.get('next_exp')}</div>
+                      <div className="label remain_exp">
+                        나머지 {user.trendbox.get('next_exp') - user.trendbox.get('exp')}
+                      </div>
                     </div>
                   </div>
                 </div>

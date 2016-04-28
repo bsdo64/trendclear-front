@@ -90,7 +90,7 @@ Api
         </Route>
 
         <Route path="*" component={App}>
-          <IndexRedirect to="/" />
+          <IndexRedirect to="/signin" />
         </Route>
       </Router>
     ), document.getElementById('app'));

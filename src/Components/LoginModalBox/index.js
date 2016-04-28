@@ -1,6 +1,6 @@
 import React from 'react';
-
 import LoginActions from '../../Actions/LoginActions.js';
+import {browserHistory} from 'react-router';
 
 require('./index.scss');
 
@@ -37,7 +37,10 @@ const LoginModalBox = React.createClass({
           }
         },
         onSuccess: function(event, fields) {
-          LoginActions.requestLogin(fields);
+          LoginActions.sendLogin({
+            email: fields.loginEmail,
+            password: fields.password
+          });
         },
         onFailure: function (formErrors, fields) {
           console.log(formErrors);
@@ -49,6 +52,7 @@ const LoginModalBox = React.createClass({
     $(this.refs.loginform).form('validate form');
   },
   render() {
+
     const { LoginStore } = this.props;
     const loginFail = LoginStore.get('loginFail');
     const openLoginModal = LoginStore.get('openLoginModal');
@@ -75,8 +79,8 @@ const LoginModalBox = React.createClass({
       );
     }
 
-    if ((loginFail === false) && (loginSuccess === true)) {
-      location.href = '/'
+    if ((loginFail === false) && (loginSuccess === true) && (openLoginModal === true)) {
+      LoginActions.closeLoginModal();
     }
 
     return (

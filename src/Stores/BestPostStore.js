@@ -10,7 +10,6 @@ class BestPostStore{
     this.displayName = 'BestPostStore';
 
     this.bindActions(AppActions);
-    this.bindActions(LoginActions);
     this.state = Immutable.Map({});
 
     initListener(this);

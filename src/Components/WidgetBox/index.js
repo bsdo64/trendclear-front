@@ -11,6 +11,7 @@ class WidgetBox extends Component {
     const isLogin = LoginStore.get('isLogin');
     const openLoginModal = LoginStore.get('openLoginModal');
     const user = {
+      user: UserStore.get('user'),
       trendbox: UserStore.get('trendbox'),
       profile: UserStore.get('profile'),
       icon: UserStore.get('icon'),
@@ -30,7 +31,8 @@ class WidgetBox extends Component {
           <SigninButton />
         }
 
-        {/*isLogin && */user &&
+        {
+          isLogin && user &&
           <TrendBox
             user={user}
           />

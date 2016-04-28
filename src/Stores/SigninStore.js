@@ -99,4 +99,4 @@ class SigninStore {
   }
 }
 
-export default alt.createStore(immutable(SigninStore), 'SigninStore');
+export default alt.createStore(immutable(SigninStore));

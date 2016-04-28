@@ -9,13 +9,17 @@ const SigninFormContents = React.createClass({
       emailVerifyFormOpen: false
     }
   },
-  componentWillReceiveProps(currentProps, nextProps) {
+  componentWillReceiveProps(nextProps) {
     "use strict";
-    const {submitResult, emailVerifySuccess} = currentProps.SigninStore.toJS();
-    if (emailVerifySuccess && submitResult) {
-      
-
-      browserHistory.push('/');
+    const oldSubmitResult = this.props.SigninStore.toJS().subResult;
+    const oldEmailVerifySuccess = this.props.SigninStore.toJS().emailVerifySuccess;
+    const {submitResult, emailVerifySuccess} = nextProps.SigninStore.toJS();
+    if (oldSubmitResult !== submitResult ) {
+      if (oldEmailVerifySuccess !== emailVerifySuccess) {
+        if (submitResult && emailVerifySuccess) {
+          browserHistory.push('/');
+        }
+      }
     }
   },
   componentDidMount() {

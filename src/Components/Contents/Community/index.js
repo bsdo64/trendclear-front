@@ -52,7 +52,7 @@ let CommunityContents = React.createClass({
 
       const defaultPageUrl = '/club/' + url + '/';
       return (
-        <div id="club_section">
+        <div id="forum_contents">
           <h3 className="ui header">
             {title}
             <div className="sub header">{description}</div>

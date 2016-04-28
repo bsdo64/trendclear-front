@@ -24,8 +24,7 @@ const CategoryItem = React.createClass({
         {
           subList.get('forums').map(function createListItem(list) {
             "use strict";
-
-            let loc = browserHistory.createLocation(location);
+            
             let q = {
               categoryId: subList.get('id'),
               forumId: list.get('id')
