@@ -28,6 +28,7 @@
     "node-sass-middleware": "0.8.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
+    "react-modal": "^1.2.1",
     "react-pagify": "^2.0.4",
     "react-router": "^2.3.0",
     "segmentize": "^0.4.1",

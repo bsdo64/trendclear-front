@@ -1,24 +1,26 @@
 import React from 'react';
-import AltContainer from 'alt-container';
+import connectToStores from 'alt-utils/lib/connectToStores';
 import LoginStore from '../../Stores/LoginStore';
+import UserStore from '../../Stores/UserStore';
 
 import MyArea from '../../Components/MyArea';
 
-var MyMenuContainer = React.createClass({
-  displayName: 'MyMenuContainer',
-  render() {
-    return (
-      <AltContainer
-        stores={
-        {
-          LoginStore
-        }
-      }
-      >
-        <MyArea />
-      </AltContainer>
-    );
+const MyMenuContainer = connectToStores({
+  getStores() {
+    // this will handle the listening/unlistening for you
+    return [LoginStore]
+  },
+
+  getPropsFromStores() {
+    return {
+      LoginStore: LoginStore.getState(),
+      UserStore: UserStore.getState()
+    }
   }
-});
+}, React.createClass({
+  render() {
+    return (<MyArea {...this.props} />)
+  }
+}));
 
 module.exports = MyMenuContainer;

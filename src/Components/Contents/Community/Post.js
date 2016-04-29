@@ -1,6 +1,6 @@
 import React from 'react';
 
-require('./BestPost.scss');
+require('./Post.scss');
 const BestPost = React.createClass({
   render() {
     const post = this.props.post;

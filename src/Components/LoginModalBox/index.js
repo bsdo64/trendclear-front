@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import LoginActions from '../../Actions/LoginActions.js';
 import {browserHistory} from 'react-router';
 
@@ -48,8 +49,29 @@ const LoginModalBox = React.createClass({
         }
       });
   },
+  componentWillReceiveProps(nextProps) {
+    const oldOpenLoginModal = this.props.LoginStore.get('openLoginModal');
+    const { LoginStore } = nextProps;
+    const openLoginModal = LoginStore.get('openLoginModal');
+
+    if (openLoginModal === false && oldOpenLoginModal === true) { // close
+
+    }
+
+    if (openLoginModal === true && oldOpenLoginModal === false) { // open
+      $(this.refs.loginmodal).modal({
+        onHidden: function() {
+          LoginActions.closeLoginModal();
+        }
+      }).modal('show')
+    }
+  },
+
   handleRequestLogin() {
     $(this.refs.loginform).form('validate form');
+  },
+  handleRequestSignin() {
+    $(this.refs.loginmodal).modal('hide');
   },
   render() {
 
@@ -59,16 +81,6 @@ const LoginModalBox = React.createClass({
     const loginSuccess = LoginStore.get('loginSuccess');
     let loginError;
 
-    if (openLoginModal) {
-      $(this.refs.loginmodal).modal({
-        duration:	400,
-        detachable: false,
-        onHide: function () {
-          LoginActions.closeLoginModal();
-        }
-      }).modal('show');
-    }
-
     if (loginFail) {
       loginError = (
         <div className="ui error message" style={{display: 'block'}}>
@@ -77,10 +89,6 @@ const LoginModalBox = React.createClass({
           </ul>
         </div>
       );
-    }
-
-    if ((loginFail === false) && (loginSuccess === true) && (openLoginModal === true)) {
-      LoginActions.closeLoginModal();
     }
 
     return (
@@ -121,7 +129,7 @@ const LoginModalBox = React.createClass({
                   <span> / </span>
                   <a href="/member/find/password" className="link_find">비밀번호찾기</a>
                   <span className="txt_bar">|</span>
-                  <a href="/signin">회원 가입하기</a>
+                  <Link to="/signin" onClick={this.handleRequestSignin}>회원 가입하기</Link>
                 </div>
 
               </form>
@@ -129,7 +137,7 @@ const LoginModalBox = React.createClass({
             <div id="tc_Foot" className="footer_tistory" role="contentinfo">
               <div className="inner_footer">
                 <address className="txt_copyright">
-                  Copyright © 
+                  Copyright ©
                   <a className="link_tc_">TrendClear Corp.</a>
                   All rights reserved.
                 </address>

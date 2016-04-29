@@ -3,7 +3,7 @@ import AppActions from '../Actions/AppActions';
 import SigninActions from '../Actions/SigninActions';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import { initListener, setMergeState } from './Helper/func';
+import { initListener, setMergeState, locationHref } from './Helper/func';
 
 class SigninStore {
   constructor() {
@@ -75,13 +75,7 @@ class SigninStore {
   }
   onSubmit(result) {
     if (result.result === 'ok') {
-      this.setState({
-        submitResult: true
-      });
-    } else {
-      this.setState({
-        submitResult: false
-      });
+      locationHref('/');
     }
   }
   checkVerifyCode(result) {

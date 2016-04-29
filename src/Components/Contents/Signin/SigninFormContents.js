@@ -11,11 +11,11 @@ const SigninFormContents = React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     "use strict";
-    const oldSubmitResult = this.props.SigninStore.toJS().subResult;
+    const oldSubmitResult = this.props.SigninStore.toJS().submitResult;
     const oldEmailVerifySuccess = this.props.SigninStore.toJS().emailVerifySuccess;
     const {submitResult, emailVerifySuccess} = nextProps.SigninStore.toJS();
     if (oldSubmitResult !== submitResult ) {
-      if (oldEmailVerifySuccess !== emailVerifySuccess) {
+      if (oldEmailVerifySuccess === emailVerifySuccess) {
         if (submitResult && emailVerifySuccess) {
           browserHistory.push('/');
         }

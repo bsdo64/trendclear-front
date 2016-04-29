@@ -1,25 +1,27 @@
 import React from 'react';
-import AltContainer from 'alt-container';
+import connectToStores from 'alt-utils/lib/connectToStores';
 import LoginStore from '../../Stores/LoginStore';
+import UserStore from '../../Stores/UserStore';
 
 import LoginModalBox from '../../Components/LoginModalBox';
 
-var LoginModalContainer = React.createClass({
-  displayName: 'LoginModalContainer',
-  render() {
+const LoginModalContainer = connectToStores({
+  getStores() {
+    // this will handle the listening/unlistening for you
+    return [LoginStore, UserStore]
+  },
 
-    return (
-      <AltContainer
-        stores={
-        {
-          LoginStore
-        }
-      }
-      >
-        <LoginModalBox />
-      </AltContainer>
-    );
+  getPropsFromStores() {
+    return {
+      LoginStore: LoginStore.getState(),
+      UserStore: UserStore.getState(),
+    }
   }
-});
+}, React.createClass({
+  render() {
+    return (<LoginModalBox {...this.props} />)
+  }
+}));
+
 
 module.exports = LoginModalContainer;

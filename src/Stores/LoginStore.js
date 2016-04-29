@@ -1,19 +1,17 @@
 import alt from '../Utils/alt';
-import {browserHistory} from 'react-router';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../Actions/AppActions';
 import LoginActions from '../Actions/LoginActions';
-import { initListener, setMergeState } from './Helper/func';
+import { initListener, setMergeState, locationHref } from './Helper/func';
+import {browserHistory} from 'react-router';
 
 class LoginStore{
   constructor() {
     this.displayName = 'LoginStore';
 
-    this.bindAction(AppActions.init, this.onInit);
-    this.bindAction(LoginActions.closeLoginModal, this.onCloseLoginModal);
-    this.bindAction(LoginActions.sendLogin, this.onSendLogin);
-    this.bindAction(LoginActions.toggleLoginModal, this.onToggleLoginModal);
+    this.bindActions(AppActions);
+    this.bindActions(LoginActions);
     this.state = Immutable.Map({});
 
     initListener(this);
@@ -35,16 +33,23 @@ class LoginStore{
   }
 
   onSendLogin(result) {
-    console.log(' ok ::::::::::::::::::::: -> ', result);
-    let state = {
-      isLogin: true,
-      loginSuccess: true,
-      loginFail: false,
-      openLoginModal: true
-    };
-    let nextState = Map(state);
-    this.setMergeState(nextState);
+    if (result === 'ok') {
+      let state = {
+        isLogin: true,
+        loginSuccess: true,
+        loginFail: false,
+        openLoginModal: false
+      };
+      let nextState = Map(state);
+      this.setMergeState(nextState);
+
+      locationHref('/');
+    } else {
+      let state = this.state.set('loginFail', true);
+      this.setMergeState(state);
+    }
   }
+
 }
 
 export default alt.createStore(immutable(LoginStore));

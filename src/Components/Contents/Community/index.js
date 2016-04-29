@@ -5,8 +5,10 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
+import {Link} from 'react-router';
 import Paginator from '../../Paginator';
-import ClubSectionActions from '../../../Actions/CommunityActions';
+import CommunityActions from '../../../Actions/CommunityActions';
+import Post from './Post';
 
 require('./CommunityContents.scss');
 const PostList = React.createClass({
@@ -26,7 +28,7 @@ const PostList = React.createClass({
         <td className="center aligned collapsing">{like_count}</td>
         <td className="center aligned collapsing">{view_count}</td>
         <td className="right aligned collapsing">{comment_count}</td>
-        <td className="left aligned"><a href={defaultPageUrl + id + '?p=' + page}>{title}</a></td>
+        <td className="left aligned"><Link to={defaultPageUrl + '&postId=' + page + '&p=' + page}>{title}</Link></td>
         <td className="right aligned collapsing">{User.nick}</td>
         <td className="center aligned collapsing">{created_at}</td>
       </tr>
@@ -50,7 +52,7 @@ let CommunityContents = React.createClass({
       const { page, limit, total, data } = list;
       const { postId } = { postId: 1 };
 
-      const defaultPageUrl = '/club/' + url + '/';
+      const defaultPageUrl = '/community?' + this.props.location.search;
       return (
         <div id="forum_contents">
           <h3 className="ui header">
@@ -95,38 +97,17 @@ let CommunityContents = React.createClass({
               })
             }
 
-            <tr>
-              <td className="center aligned collapsing">샴푸나라</td>
-              <td className="center aligned collapsing">10</td>
-              <td className="center aligned collapsing">120</td>
-              <td className="right aligned collapsing">120</td>
-              <td className="left aligned">스마트폰 액정필름, 케이스 제공 (중앙광장 T월드)</td>
-              <td className="right aligned collapsing">닉네임</td>
-              <td className="center aligned collapsing">2012.11.11</td>
-            </tr>
-
-
-            <tr>
-              <td className="center aligned collapsing">샴푸나라</td>
-              <td className="center aligned collapsing">10</td>
-              <td className="center aligned collapsing">1200</td>
-              <td className="right aligned collapsing">12012</td>
-              <td className="left aligned">스마트폰 액정필름, 케이스 제공 (중앙광장 T월드)</td>
-              <td className="right aligned collapsing">닉네임</td>
-              <td className="center aligned collapsing">2012.11.11</td>
-            </tr>
             </tbody>
           </table>
 
           {
             user && login &&
             <div className="ui right aligned container">
-              <a className="ui button primary tiny" href={'/club/' + url + '/submit'}>글쓰기</a>
+              <Link className="ui button primary tiny" to={'submit'}>글쓰기</Link>
             </div>
           }
 
           <div className="ui divider"></div>
-
 
           <div className="ui center aligned container">
 
@@ -149,13 +130,21 @@ let CommunityContents = React.createClass({
 
         </div>
       );
+    } else if (type === 'post') {
+      const post = this.props.CommunityStore.get('post');
+
+      return (
+        <div id="post_box" className="ui items">
+          <Post post={post} styleClass="post_item" />
+        </div>
+      )
+
     } else {
       return (
         <div>
           Hello world!
         </div>
       )
-
     }
   }
 });

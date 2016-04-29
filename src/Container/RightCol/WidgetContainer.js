@@ -1,26 +1,27 @@
 import React from 'react';
-import AltContainer from 'alt-container';
+import connectToStores from 'alt-utils/lib/connectToStores';
+
 import LoginStore from '../../Stores/LoginStore';
 import UserStore from '../../Stores/UserStore';
 
 import WidgetBox from '../../Components/WidgetBox';
 
-var WidgetContainer = React.createClass({
-  displayName: 'WidgetContainer',
-  render() {
-    return (
-      <AltContainer
-        stores={
-        {
-          LoginStore,
-          UserStore
-        }
-      }
-      >
-        <WidgetBox />
-      </AltContainer>
-    );
+const WidgetContainer = connectToStores({
+  getStores() {
+    // this will handle the listening/unlistening for you
+    return [LoginStore, UserStore]
+  },
+
+  getPropsFromStores() {
+    return {
+      LoginStore: LoginStore.getState(),
+      UserStore: UserStore.getState(),
+    }
   }
-});
+}, React.createClass({
+  render() {
+    return (<WidgetBox {...this.props} />)
+  }
+}));
 
 module.exports = WidgetContainer;

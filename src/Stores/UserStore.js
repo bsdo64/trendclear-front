@@ -3,7 +3,7 @@ import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../Actions/AppActions';
 import UserActions from '../Actions/UserActions';
-import { initListener, setMergeState } from './Helper/func';
+import { initListener, setMergeState, locationHref } from './Helper/func';
 
 class UserStore{
   constructor() {
@@ -19,6 +19,13 @@ class UserStore{
   onInit(bootstrapData) {
     if (bootstrapData[this.displayName]) {
       this.setState(bootstrapData[this.displayName]);
+    }
+  }
+
+  onRequestLogout(result) {
+    if (result === 'ok') {
+      
+      locationHref('/');
     }
   }
 

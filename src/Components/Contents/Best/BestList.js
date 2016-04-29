@@ -7,7 +7,7 @@ const BestList = React.createClass({
   render() {
     const { posts } = this.props;
     const createPostItem = function (item) {
-      return <BestPost post={item} key={item.get('id')}/>;
+      return <BestPost post={item} key={item.get('id')} styleClass="best_list_item"/>;
     };
 
     return (

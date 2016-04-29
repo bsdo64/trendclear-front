@@ -1,0 +1,104 @@
+#post_box {
+  .post_item {
+    padding: 10px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid #B5C0D0;
+
+    h3.best_post_title {
+      font-size: 14px;
+      margin-bottom: 5px;
+      a {
+        color: #27485E;
+      }
+    }
+    .best_post_meta {
+      margin: 0;
+      padding: 2px 0;
+      .author_nick {
+        font-weight: bold;
+        font-size: 13px;
+        display: inline-block;
+      }
+      .author_icon {
+        font-size: 13px;
+        display: inline-block;
+        vertical-align: middle;
+        img {
+          width: 15px;
+        }
+      }
+      .list {
+        line-height: 0;
+
+        > .item {
+          margin: 0;
+          padding: 0 5px;
+          height: 12px;
+          line-height: 12px;
+          font-size: 12px;
+        }
+      }
+    }
+    .best_post_content {
+      font-size: 14px;
+      padding-right: 40px;
+    }
+
+    .best_post_buttons {
+      padding: 10px 40px 10px 10px;
+      .like_box {
+        display: inline-block;
+        padding-right: 10px;
+        .like_icon {
+          display: inline-block;
+          padding-right: 5px;
+          color: red;
+          font-size: 20px;
+          line-height: 20px;
+          vertical-align: middle;
+        }
+        .like_count {
+          display: inline-block;
+          font-size: 12px;
+        }
+      }
+      .comment_box {
+        display: inline-block;
+        .comment_icon {
+          display: inline-block;
+          padding-right: 5px;
+          color: #27485E;
+          font-size: 20px;
+          line-height: 20px;
+          vertical-align: middle;
+        }
+        .comment_count {
+          display: inline-block;
+          font-size: 12px;
+        }
+      }
+      .report_box {
+        display: inline-block;
+        float: right;
+
+        .report_icon {
+          :hover {
+            color: #27485E;
+          }
+          display: inline-block;
+          padding-right: 5px;
+          color: #D0D6DA;
+          font-size: 20px;
+          line-height: 20px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+}

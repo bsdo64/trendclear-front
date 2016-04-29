@@ -1,24 +1,24 @@
 import React from 'react';
-import AltContainer from 'alt-container';
+import connectToStores from 'alt-utils/lib/connectToStores';
 import GnbStore from '../../Stores/GnbStore';
 
 import CategoryNav from '../../Components/CategoryNav';
 
-var LeftColCategoryNav = React.createClass({
-  displayName: 'LeftColCategoryNav',
-  render() {
-    return (
-      <AltContainer
-        stores={
-        {
-          GnbStore
-        }
-      }
-      >
-        <CategoryNav />
-      </AltContainer>
-    );
+const LeftColCategoryNav = connectToStores({
+  getStores() {
+    // this will handle the listening/unlistening for you
+    return [GnbStore]
+  },
+
+  getPropsFromStores() {
+    return {
+      GnbStore: GnbStore.getState()
+    }
   }
-});
+}, React.createClass({
+  render() {
+    return (<CategoryNav {...this.props} />)
+  }
+}));
 
 module.exports = LeftColCategoryNav;

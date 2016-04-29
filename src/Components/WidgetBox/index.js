@@ -9,7 +9,6 @@ class WidgetBox extends Component {
   render() {
     const {LoginStore, UserStore} = this.props;
     const isLogin = LoginStore.get('isLogin');
-    const openLoginModal = LoginStore.get('openLoginModal');
     const user = {
       user: UserStore.get('user'),
       trendbox: UserStore.get('trendbox'),

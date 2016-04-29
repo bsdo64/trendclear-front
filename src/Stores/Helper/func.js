@@ -31,3 +31,9 @@ export function setMergeState(changedData) {
   let nextState = this.state.merge(changedData);
   this.setState(nextState);
 }
+
+export function locationHref(url) {
+  "use strict";
+
+  window.location.href = url;
+}
