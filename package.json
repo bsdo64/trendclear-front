@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "hot-dev-server": "node ./bin/webpack.hot.dev.server.js",
+    "redis": "redis-server ./redis.conf",
     "front-server-nodemon": "nodemon --harmony ./bin/www --watch app.js --watch src --watch routes --watch middleware --watch bin",
     "start-dev": "npm run hot-dev-server | npm run front-server",
     "webpack-dev": "webpack --config webpack/webpack.hot.dev.config.js"
