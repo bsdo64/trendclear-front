@@ -16,7 +16,7 @@ const SigninContainer = connectToStores({
     return {
       SubmitStore: SubmitStore.getState(),
       UserStore: UserStore.getState(),
-      LoginStore: LoginStore.getState(),
+      LoginStore: LoginStore.getState()
     }
   }
 }, React.createClass({

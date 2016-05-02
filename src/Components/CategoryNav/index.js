@@ -87,7 +87,7 @@ const ClubList = React.createClass({
           }
         </li>
       )
-    }
+    };
 
     return (
       <ul>
@@ -95,7 +95,7 @@ const ClubList = React.createClass({
       </ul>
     )
   }
-})
+});
 
 const ClubListMain = React.createClass({
   displayName: 'ClubListMain',
@@ -108,18 +108,19 @@ const ClubListMain = React.createClass({
       </div>
     )
   }
-})
-
+});
 
 require('./index.scss');
 const CategoryNav = React.createClass({
-  displayName: 'CategoryNav', handleToggleGnb() {
+  displayName: 'CategoryNav',
+  handleToggleGnb() {
     "use strict";
     const { GnbStore } = this.props;
     const openGnb = GnbStore.get('openGnb');
 
     GnbActions.toggleGnb(openGnb);
-  }, render() {
+  },
+  render() {
     const { GnbStore } = this.props;
     const openGnb = GnbStore.get('openGnb');
     const gnbMenu = GnbStore.get('gnbMenu');

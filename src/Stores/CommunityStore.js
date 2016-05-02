@@ -19,7 +19,7 @@ class CommunityStore{
 
   onInit(bootstrapData) {
     if (bootstrapData[this.displayName]) {
-      this.setState(bootstrapData[this.displayName]);
+      this.setMergeState(bootstrapData[this.displayName]);
     }
   }
 

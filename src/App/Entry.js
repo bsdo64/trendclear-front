@@ -18,23 +18,6 @@ var SigninContainer = require('../Container/Contents/Signin');
 var CommunityContainer = require('../Container/Contents/Community');
 var SubmitContainer = require('../Container/Contents/SubmitPost');
 
-browserHistory.listen((location) => {
-  "use strict";
-  // 1. location에 따라 모든 Store 데이터를 가져온다
-  // 2. 가져온 데이터를 각 Store에 삽입한다
-  // 3.
-  Api
-    .get('/store' + location.pathname, location.query)
-    .then(function (resBody, errBody) {
-      "use strict";
-
-      console.info('Move: ',location);
-      console.info('data: ',resBody);
-
-      AppActions.init(resBody)
-    })
-});
-
 // Bootstrap Location
 var loc = browserHistory.createLocation(location);
 
@@ -103,6 +86,26 @@ Api
         </Route>
       </Router>
     ), document.getElementById('app'));
+  })
+  .then(function() {
+    "use strict";
+
+    browserHistory.listen((location) => {
+      "use strict";
+      // 1. location에 따라 모든 Store 데이터를 가져온다
+      // 2. 가져온 데이터를 각 Store에 삽입한다
+      // 3.
+      Api
+        .get('/store' + location.pathname, location.query)
+        .then(function (resBody, errBody) {
+          "use strict";
+
+          console.info('Move: ',location);
+          console.info('data: ',resBody);
+
+          AppActions.init(resBody)
+        })
+    });
   });
 
 var App = React.createClass({
