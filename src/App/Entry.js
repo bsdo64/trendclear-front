@@ -16,6 +16,7 @@ var WidgetContainer = require('../Container/RightCol/WidgetContainer');
 var ContentsContainer = require('../Container/Contents/Best');
 var SigninContainer = require('../Container/Contents/Signin');
 var CommunityContainer = require('../Container/Contents/Community');
+var SubmitContainer = require('../Container/Contents/SubmitPost');
 
 browserHistory.listen((location) => {
   "use strict";
@@ -41,9 +42,6 @@ Api
   .get('/store' + loc.pathname, loc.query)
   .then(function (resBody, errBody) {
     "use strict";
-
-    console.log('Create Location : ', loc);
-    console.log('Window Location : ', location);
 
     alt.bootstrap(JSON.stringify(resBody));
 
@@ -87,10 +85,21 @@ Api
           WidgetContainer: WidgetContainer,
           ContentsContainer: CommunityContainer
         }} />
+
+          <Route path="submit"
+                 components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ContentsContainer: SubmitContainer
+                 }}
+          />
         </Route>
 
         <Route path="*" component={App}>
-          <IndexRedirect to="/signin" />
+          <IndexRedirect to="/" />
         </Route>
       </Router>
     ), document.getElementById('app'));

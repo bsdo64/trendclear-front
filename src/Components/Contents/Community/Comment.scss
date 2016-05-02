@@ -1,0 +1,45 @@
+#comment_box {
+  margin: 10px auto;
+  padding: 20px 0;
+  font-size: 0.9em;
+
+  .actions {
+    .like_icon, .comment_icon, .report_icon {
+      display: inline-block;
+    }
+    .like_box, .comment_box, .report_box {
+      display: inline-block;
+    }
+
+    .like_box, .comment_box {
+      margin-right: 10px;
+    }
+    .report_box {
+      float: right;
+    }
+  }
+
+  .comment ~ form.ui.reply.form {
+    .field {
+      width: 585px;
+    }
+  }
+
+  form.ui.reply.form {
+    margin-top: 1em;
+
+    .field {
+      width: 540px;
+      display: inline-block;
+
+      textarea {
+        min-height:35px;
+        height: 35px;
+        font-size:0.9em;
+      }
+    }
+    .ui.primary.submit.icon.button {
+      float: right;
+    }
+  }
+}

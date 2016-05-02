@@ -1,0 +1,59 @@
+#submit_box {
+  .post_item {
+    padding: 10px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid #B5C0D0;
+
+    input.post_submit_title {
+      width: 100%
+    }
+    .best_post_meta {
+      margin: 0;
+      padding: 2px 0;
+      .author_nick {
+        font-weight: bold;
+        font-size: 13px;
+        display: inline-block;
+      }
+      .author_icon {
+        font-size: 13px;
+        display: inline-block;
+        vertical-align: middle;
+        img {
+          width: 15px;
+        }
+      }
+      .list {
+        line-height: 0;
+
+        > .item {
+          margin: 0;
+          padding: 0 5px;
+          height: 12px;
+          line-height: 12px;
+          font-size: 12px;
+        }
+      }
+    }
+    #post_editor {
+      border: 1px solid #aaa;
+      min-height: 200px;
+      padding: 1em;
+
+      .medium-insert-embeds {
+        figure {
+          margin: 0;
+        }
+      }
+
+      &:after {
+        padding: 1em;
+      }
+    }
+  }
+}

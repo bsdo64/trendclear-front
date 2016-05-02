@@ -10,6 +10,195 @@ import Paginator from '../../Paginator';
 import CommunityActions from '../../../Actions/CommunityActions';
 import Post from './Post';
 
+require('./Comment.scss');
+const Comment = React.createClass({
+  displayName: 'Comment',
+  render() {
+    "use strict";
+
+    return (
+      <div id="comment_box" className="ui comments">
+        <div className="comment">
+          <a className="avatar">
+            <img src="/images/default-male.png" />
+          </a>
+          <div className="content">
+            <a className="author">Joe Henderson</a>
+            <div className="metadata">
+              <div className="date">1 day ago</div>
+            </div>
+            <div className="text">
+              <p>The hours, minutes and seconds stand as visible reminders that your effort put them all there. </p>
+              <p>Preserve until your next run, when the watch lets you see how Impermanent your efforts are.</p>
+            </div>
+            <div className="actions">
+              <div className="like_box">
+                <div className="like_icon">
+                  <i className="heart outline icon"></i>
+                </div>
+                <a className="like_count">{123}</a>
+              </div>
+              <div className="comment_box">
+                <div className="comment_icon">
+                  <i className="edit outline icon"></i>
+                </div>
+                <a className="comment_count">{1234}</a>
+              </div>
+              <a className="reply">Reply</a>
+              <div className="report_box">
+                <div className="report_icon">
+                  <i className="warning outline icon"></i>
+                </div>
+              </div>
+            </div>
+            <div className="comments">
+              <div className="comment">
+                <a className="avatar">
+                  <img src="/images/default-male.png" />
+                </a>
+                <div className="content">
+                  <a className="author">Jenny Hess</a>
+                  <div className="metadata">
+                    <span className="date">Just now</span>
+                  </div>
+                  <div className="text">
+                    Elliot you are always so right :)
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form className="ui reply form">
+              <div className="field">
+                <textarea></textarea>
+              </div>
+              <div className="ui primary submit icon button">
+                <i className="icon edit"></i>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div className="comment">
+          <a className="avatar">
+            <img src="/images/default-female.png" />
+          </a>
+          <div className="content">
+            <a className="author">Christian Rocha</a>
+            <div className="metadata">
+              <div className="date">2 days ago</div>
+            </div>
+            <div className="text">
+              I re-tweeted this.
+            </div>
+            <div className="actions">
+              <a className="reply">Reply</a>
+            </div>
+          </div>
+        </div>
+        <form className="ui reply form">
+          <div className="field">
+            <textarea></textarea>
+          </div>
+          <div className="ui primary submit icon button">
+            <i className="icon edit"></i>
+          </div>
+        </form>
+      </div>
+    )
+  }
+});
+
+const Forum = React.createClass({
+  displayName: 'Forum',
+  render() {
+    "use strict";
+    const { list, club } = this.props.CommunityStore;
+    const { user, login } = { user: 'abc', login: true};
+    const { title, description, url, ClubGroup } = club;
+    const { page, limit, total, data } = list;
+    const { postId } = { postId: 1 };
+
+    const defaultPageUrl = '/community' + this.props.location.search;
+    return (
+      <div id="forum_contents">
+        <h3 className="ui header">
+          {title}
+          <div className="sub header">{description}</div>
+        </h3>
+        <div className="ui horizontal celled list">
+          <div className="item" style={{fontWeight: 'bold'}}>
+            <div className="middle aligned content bold">전체</div>
+          </div>
+          <div className="item">
+            <div className="middle aligned content">샴푸 (150)</div>
+          </div>
+          <div className="item">
+            <div className="middle aligned content">샴푸 (150)</div>
+          </div>
+          <div className="item">
+            <div className="middle aligned content">샴푸 (150)</div>
+          </div>
+        </div>
+        <table className="ui table very compact" >
+          <thead>
+          <tr>
+            <th className="center aligned collapsing">말머리</th>
+            <th className="center aligned collapsing">좋아요</th>
+            <th className="center aligned collapsing">조회</th>
+            <th className="center aligned collapsing">댓글</th>
+            <th className="center aligned">제목</th>
+            <th className="center aligned collapsing">글쓴이</th>
+            <th className="center aligned collapsing">등록일</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          {
+            data &&
+            data.map(function (item) {
+              return (
+                <PostList item={item} defaultPageUrl={defaultPageUrl}
+                          postId={postId} page={page} />
+              );
+            })
+          }
+
+          </tbody>
+        </table>
+
+        {
+          user && login &&
+          <div className="ui right aligned container">
+            <Link className="ui button primary tiny"
+                  to={{pathname: '/community/submit', query:this.props.location.query}}>글쓰기</Link>
+          </div>
+        }
+
+        <div className="ui divider"></div>
+
+        <div className="ui center aligned container">
+
+          <Paginator
+            total={total}
+            limit={limit}
+            page={page}
+            handleSetPage={this.handleSetPage}
+          />
+
+          <div className="ui search mini" style={{padding: '15px'}}>
+            <div className="ui icon input">
+              <input className="prompt" type="text" placeholder="Search animals..." />
+              <i className="search icon"></i>
+            </div>
+            <div className="results"></div>
+          </div>
+        </div>
+
+
+      </div>
+    );
+  }
+});
+
 require('./CommunityContents.scss');
 const PostList = React.createClass({
   displayName: 'PostList',
@@ -46,96 +235,24 @@ let CommunityContents = React.createClass({
     const type = this.props.CommunityStore.get('type');
 
     if (type === 'forum') {
-      const { list, club } = this.props.CommunityStore.toJS();
-      const { user, login } = { user: 'abc', login: true};
-      const { title, description, url, ClubGroup } = club;
-      const { page, limit, total, data } = list;
-      const { postId } = { postId: 1 };
-
-      const defaultPageUrl = '/community?' + this.props.location.search;
       return (
-        <div id="forum_contents">
-          <h3 className="ui header">
-            {title}
-            <div className="sub header">{description}</div>
-          </h3>
-          <div className="ui horizontal celled list">
-            <div className="item" style={{fontWeight: 'bold'}}>
-              <div className="middle aligned content bold">전체</div>
-            </div>
-            <div className="item">
-              <div className="middle aligned content">샴푸 (150)</div>
-            </div>
-            <div className="item">
-              <div className="middle aligned content">샴푸 (150)</div>
-            </div>
-            <div className="item">
-              <div className="middle aligned content">샴푸 (150)</div>
-            </div>
-          </div>
-          <table className="ui table very compact" >
-            <thead>
-            <tr>
-              <th className="center aligned collapsing">말머리</th>
-              <th className="center aligned collapsing">좋아요</th>
-              <th className="center aligned collapsing">조회</th>
-              <th className="center aligned collapsing">댓글</th>
-              <th className="center aligned">제목</th>
-              <th className="center aligned collapsing">글쓴이</th>
-              <th className="center aligned collapsing">등록일</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            {
-              data &&
-              data.map(function (item) {
-                return (
-                  <PostList item={item} defaultPageUrl={defaultPageUrl}
-                            postId={postId} page={page} />
-                );
-              })
-            }
-
-            </tbody>
-          </table>
-
-          {
-            user && login &&
-            <div className="ui right aligned container">
-              <Link className="ui button primary tiny" to={'submit'}>글쓰기</Link>
-            </div>
-          }
-
-          <div className="ui divider"></div>
-
-          <div className="ui center aligned container">
-
-            <Paginator
-              total={total}
-              limit={limit}
-              page={page}
-              handleSetPage={this.handleSetPage}
-            />
-
-            <div className="ui search mini" style={{padding: '15px'}}>
-              <div className="ui icon input">
-                <input className="prompt" type="text" placeholder="Search animals..." />
-                <i className="search icon"></i>
-              </div>
-              <div className="results"></div>
-            </div>
-          </div>
-
-
-        </div>
-      );
+        <Forum
+          {...this.props}
+          CommunityStore={this.props.CommunityStore.toJS()}
+        />
+      )
     } else if (type === 'post') {
       const post = this.props.CommunityStore.get('post');
 
       return (
         <div id="post_box" className="ui items">
           <Post post={post} styleClass="post_item" />
+
+          <Comment />
+          <Forum
+            {...this.props}
+            CommunityStore={this.props.CommunityStore.toJS()}
+          />
         </div>
       )
 
