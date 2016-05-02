@@ -64,11 +64,11 @@ class SigninStore {
   }
   onRequestEmailVerify(result) {
     if (result.result === 'ok') {
-      this.setState({
+      this.setMergeState({
         emailRequested: true
       });
     } else {
-      this.setState({
+      this.setMergeState({
         emailRequested: false
       });
     }
@@ -80,12 +80,12 @@ class SigninStore {
   }
   checkVerifyCode(result) {
     if (result.result === 'ok') {
-      this.setState({
+      this.setMergeState({
         emailVerifySuccess: true,
         emailVerifyFail: false
       });
     } else {
-      this.setState({
+      this.setMergeState({
         emailVerifySuccess: false,
         emailVerifyFail: true
       });

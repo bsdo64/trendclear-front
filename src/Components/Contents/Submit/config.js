@@ -39,13 +39,13 @@ const mediumInsertConfig = function mediumInsertConfig(editor) {
     editor: editor,
     addons: {
       images: {
-        deleteScript: '/image/files/',
+        deleteScript: '/uploaded/files/',
         deleteMethod: 'DELETE',
         preview: true,
         captions: true,
         captionPlaceholder: '이미지 캡션을 입력하세요(옵션)',
         fileUploadOptions: {
-          url: 'http://localhost:3000/image',
+          url: 'http://localhost:3002/upload',
           acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
         }
       },
