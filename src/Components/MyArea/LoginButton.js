@@ -4,8 +4,8 @@ import LoginActions from '../../Actions/LoginActions';
 const LoginButton = React.createClass({
   displayName: 'LoginButton',
   handleOpenLoginModal() {
-    const { openLoginModal } = this.props;
-    LoginActions.toggleLoginModal(openLoginModal);
+    const { openLoginModal, location } = this.props;
+    LoginActions.toggleLoginModal(openLoginModal, location.pathname + location.search);
   },
   render() {
     return (

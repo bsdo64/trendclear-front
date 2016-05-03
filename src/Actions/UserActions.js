@@ -24,6 +24,19 @@ class UserActions {
   closeAvatarModal() {
     return true;
   }
+  uploadAvatarImage(file) {
+    return (dispatch) => {
+      Api
+        .setType('/image')
+        .postImg('/upload', file)
+        .then((res) => {
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
 }
 
 export default alt.createActions(UserActions);

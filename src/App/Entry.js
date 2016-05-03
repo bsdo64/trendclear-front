@@ -22,6 +22,7 @@ var SubmitContainer = require('../Container/Contents/SubmitPost');
 var loc = browserHistory.createLocation(location);
 
 Api
+  .setType('/ajax')
   .get('/store' + loc.pathname, loc.query)
   .then(function (resBody, errBody) {
     "use strict";
@@ -96,6 +97,7 @@ Api
       // 2. 가져온 데이터를 각 Store에 삽입한다
       // 3.
       Api
+        .setType('/ajax')
         .get('/store' + location.pathname, location.query)
         .then(function (resBody, errBody) {
           "use strict";

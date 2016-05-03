@@ -22,8 +22,11 @@ class LoginStore{
       this.setMergeState(bootstrapData[this.displayName]);
     }
   }
-  onToggleLoginModal(open) {
-    let state = this.state.set('openLoginModal', !open);
+  onToggleLoginModal(result) {
+    let state = Map({
+      openLoginModal: !result.opened,
+      location: result.location
+    });
     this.setMergeState(state);
   }
 
@@ -43,7 +46,8 @@ class LoginStore{
       let nextState = Map(state);
       this.setMergeState(nextState);
 
-      locationHref('/');
+      const loc = this.state.get('location');
+      loc ? locationHref(loc) : locationHref('/');
     } else {
       let state = this.state.set('loginFail', true);
       this.setMergeState(state);

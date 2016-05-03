@@ -5,9 +5,9 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import Paginator from '../../Paginator';
-import CommunityActions from '../../../Actions/CommunityActions';
+import LoginActions from '../../../Actions/LoginActions';
 import Post from './Post';
 
 require('./Comment.scss');
@@ -117,10 +117,18 @@ const Comment = React.createClass({
 
 const Forum = React.createClass({
   displayName: 'Forum',
+  openLoginModal() {
+    "use strict";
+
+    const modalFlag = this.props.LoginStore.openLoginModal;
+    const location = this.props.location;
+    LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+  },
   render() {
     "use strict";
     const { list, club } = this.props.CommunityStore;
-    const { user, login } = { user: 'abc', login: true};
+    const { user } = this.props.UserStore;
+    const { isLogin } = this.props.LoginStore;
     const { title, description, url, ClubGroup } = club;
     const { page, limit, total, data } = list;
     const { postId } = { postId: 1 };
@@ -173,13 +181,25 @@ const Forum = React.createClass({
           </tbody>
         </table>
 
-        {
-          user && login &&
-          <div className="ui right aligned container">
-            <Link className="ui button primary tiny"
-                  to={{pathname: '/community/submit', query:this.props.location.query}}>글쓰기</Link>
-          </div>
-        }
+
+        <div className="ui right aligned container">
+          {
+            user && isLogin &&
+            <Link
+              className="ui button primary tiny"
+              to={{pathname: '/community/submit', query:this.props.location.query}}>
+              글쓰기
+            </Link>
+          }
+          {
+            !user && !isLogin &&
+            <a
+              className="ui button primary tiny"
+              onClick={this.openLoginModal}>
+              글쓰기
+            </a>
+          }
+        </div>
 
         <div className="ui divider"></div>
 
@@ -247,6 +267,8 @@ let CommunityContents = React.createClass({
         <Forum
           {...this.props}
           CommunityStore={this.props.CommunityStore.toJS()}
+          UserStore={this.props.UserStore.toJS()}
+          LoginStore={this.props.LoginStore.toJS()}
         />
       )
     } else if (type === 'post') {
@@ -260,6 +282,8 @@ let CommunityContents = React.createClass({
           <Forum
             {...this.props}
             CommunityStore={this.props.CommunityStore.toJS()}
+            UserStore={this.props.UserStore.toJS()}
+            LoginStore={this.props.LoginStore.toJS()}
           />
         </div>
       )

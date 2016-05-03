@@ -2,6 +2,7 @@ import React from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import LoginStore from '../../Stores/LoginStore';
 import CommunityStore from '../../Stores/CommunityStore';
+import UserStore from '../../Stores/UserStore';
 
 import Community from '../../Components/Contents/Community';
 
@@ -14,7 +15,8 @@ const CommunityContainer = connectToStores({
   getPropsFromStores() {
     return {
       LoginStore: LoginStore.getState(),
-      CommunityStore: CommunityStore.getState()
+      CommunityStore: CommunityStore.getState(),
+      UserStore: UserStore.getState()
     }
   }
 }, React.createClass({

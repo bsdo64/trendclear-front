@@ -21,6 +21,12 @@ class AjaxApiClient {
     };
   }
 
+  setType(endPoint) {
+    this.ajaxEndPoint = endPoint;
+
+    return this;
+  }
+
   get(url, params) {
     return new Promise((resolve, reject) => {
       return request
@@ -36,6 +42,17 @@ class AjaxApiClient {
       return request
         .post(this.ajaxEndPoint + url)
         .send(params)
+        .set('Accept', 'application/json')
+        .withCredentials()
+        .end(this._done(resolve, reject));
+    });
+  }
+  
+  postImg(url, file) {
+    return new Promise((resolve, reject) => {
+      return request
+        .post(this.ajaxEndPoint + url)
+        .attach(file.name, file, file.name)
         .set('Accept', 'application/json')
         .withCredentials()
         .end(this._done(resolve, reject));

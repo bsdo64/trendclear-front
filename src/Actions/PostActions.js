@@ -11,6 +11,7 @@ class PostActions {
   submitPost(post) {
     return (dispatch) => {
       Api
+        .setType('/ajax')
         .post('/community/submit', post)
         .then((res) => {
           dispatch(res);

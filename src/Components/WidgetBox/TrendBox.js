@@ -34,7 +34,7 @@ const TrendBox = React.createClass({
     let avatarImg, iconImg, gradeImg;
 
     if (avatar_img) {
-      avatarImg = <img src={'/images/files/' + avatar_img + '.png'} />;
+      avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
     } else {
       if (sex) {
         avatarImg = <img src="/images/default-male.png" />;
@@ -56,10 +56,12 @@ const TrendBox = React.createClass({
         <div id="widget_user_info">
           <div className="ui items">
             <div className="ui item">
+
               <a id="user_avatar_img" className="ui mini image" onClick={this.openAvatarModal}>
                 { avatarImg }
-                <AvatarImageContainer />
               </a>
+              <AvatarImageContainer />
+
               <div className="content">
                 <div className="user_info_header">
                   <span className="ui description">{user.user.get('nick')}</span>

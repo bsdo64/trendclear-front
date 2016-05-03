@@ -46,7 +46,7 @@ class MyArea extends Component {
 
       let avatarImg;
       if (avatar_img) {
-        avatarImg = <img className="ui avatar image" src={'/images/files/' + avatar_img + '.png'} />;
+        avatarImg = <img className="ui avatar image" src={'/image/uploaded/files/' + avatar_img} />;
       } else {
         if (sex) {
           avatarImg = <img className="ui avatar image" src="/images/default-male.png" />;
@@ -120,6 +120,7 @@ class MyArea extends Component {
           {
             !isLogin &&
             <LoginButton
+              location={this.props.location}
               openLoginModal={openLoginModal}
             />
           }

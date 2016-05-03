@@ -11,7 +11,7 @@ const BestPost = React.createClass({
     let avatarImg, iconImg;
 
     if (avatar_img) {
-      avatarImg = <img src={'/images/files/' + avatar_img + '.png'} />;
+      avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
     } else {
       if (sex) {
         avatarImg = <img src="/images/default-male.png" />;

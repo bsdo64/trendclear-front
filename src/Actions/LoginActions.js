@@ -9,9 +9,8 @@ class LoginActions {
    * @param openned
    * @returns {*}
    */
-  toggleLoginModal(openned) {
-    console.log(openned);
-    return openned;
+  toggleLoginModal(openned, location) {
+    return {opened: openned, location: location};
   }
   closeLoginModal() {
     return false;
@@ -20,6 +19,7 @@ class LoginActions {
   sendLogin(params) {
     return (dispatch) => {
       Api
+        .setType('/ajax')
         .post('/login', params)
         .then((res) => {
           dispatch(res);

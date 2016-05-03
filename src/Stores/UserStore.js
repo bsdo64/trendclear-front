@@ -44,6 +44,12 @@ class UserStore{
     let state = Map({ openAvatarModal: false });
     this.setMergeState(state);
   }
+
+  onUploadAvatarImage(result) {
+    const file = result.files[0];
+    let state = this.state.setIn(['profile', 'avatar_img'], file.name);
+    this.setMergeState(state);
+  }
 }
 
 export default alt.createStore(immutable(UserStore));
