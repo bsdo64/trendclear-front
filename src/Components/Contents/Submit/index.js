@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {medium, mediumInsertConfig} from './config';
+import PostActions from '../../../Actions/PostActions';
 
 require('./index.scss');
 const SubmitContents = React.createClass({
@@ -10,8 +11,33 @@ const SubmitContents = React.createClass({
   propTypes: {},
 
   componentDidMount() {
+    let that = this;
     this.editor = new MediumEditor('#post_editor', medium);
+    this.editor.subscribe('editableInput', function (event, editable) {
+      "use strict";
+      that.handleContent()
+    });
     $('#post_editor').mediumInsert(mediumInsertConfig(this.editor));
+  },
+  
+  submitPost() {
+    const { SubmitStore } = this.props;
+    let newPost = {
+      title: SubmitStore.get('title'),
+      content: SubmitStore.get('content')
+    };
+    PostActions.submitPost(newPost);
+  },
+
+  handleTitle() {
+    "use strict";
+    PostActions.handleTitle(this.refs.title.value.trim());
+  },
+  handleContent() {
+    "use strict";
+    let allContents = this.editor.serialize();
+    let el = allContents['post_editor'].value;
+    PostActions.handleContent(el);
   },
 
   render() {
@@ -49,7 +75,12 @@ const SubmitContents = React.createClass({
           {/* meta */}
           <div className="ui content">
             제목 
-            <input id="post_submit_title" className="post_submit_title" />
+            <input
+              ref="title"
+              id="post_submit_title"
+              className="post_submit_title"
+              onChange={this.handleTitle}
+            />
             <div className="meta best_post_meta">
               <div className="ui horizontal divided list">
                 <div className="item">
@@ -74,10 +105,19 @@ const SubmitContents = React.createClass({
 
             {/* content */}
             <div className="ui description submit_post_box" >
-              <div className="post_editor" id="post_editor"></div>
+              <div className="post_editor" id="post_editor" ></div>
             </div>
 
             {/* <TagList items={Tags} /> */}
+
+            <div className="submit_button_box">
+              <button className="ui primary button" onClick={this.submitPost}>
+                저장하기
+              </button>
+              <button className="ui button">
+                다시 쓰기
+              </button>
+            </div>
 
           </div>
         </div>

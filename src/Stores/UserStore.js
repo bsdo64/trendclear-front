@@ -34,6 +34,16 @@ class UserStore{
     console.log(state.toJS());
     this.setMergeState(state);
   }
+
+  onOpenAvatarModalOpen() {
+    let state = Map({ openAvatarModal: true });
+    this.setMergeState(state);
+  }
+
+  onCloseAvatarModal() {
+    let state = Map({ openAvatarModal: false });
+    this.setMergeState(state);
+  }
 }
 
 export default alt.createStore(immutable(UserStore));

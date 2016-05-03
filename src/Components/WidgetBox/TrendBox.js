@@ -1,6 +1,8 @@
 import React from 'react';
 import UserActions from '../../Actions/UserActions';
 
+import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
+
 require('./Trendbox.scss');
 const TrendBox = React.createClass({
   componentDidMount() {
@@ -15,6 +17,11 @@ const TrendBox = React.createClass({
     "use strict";
 
     UserActions.increaseLevel();
+  },
+  openAvatarModal() {
+    "use strict";
+
+    UserActions.openAvatarModalOpen();
   },
   render() {
     const {user} = this.props;
@@ -49,8 +56,9 @@ const TrendBox = React.createClass({
         <div id="widget_user_info">
           <div className="ui items">
             <div className="ui item">
-              <a id="user_avatar_img" className="ui mini image">
+              <a id="user_avatar_img" className="ui mini image" onClick={this.openAvatarModal}>
                 { avatarImg }
+                <AvatarImageContainer />
               </a>
               <div className="content">
                 <div className="user_info_header">

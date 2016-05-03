@@ -1,14 +1,17 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 
-class UserActions {
-  increaseLevel() {
-    return true;
+class PostActions {
+  handleTitle(title) {
+    return title;
   }
-  requestLogout() {
+  handleContent(content) {
+    return content;
+  }
+  submitPost(post) {
     return (dispatch) => {
       Api
-        .post('/logout')
+        .post('/community/submit', post)
         .then((res) => {
           dispatch(res);
         })
@@ -17,13 +20,6 @@ class UserActions {
         });
     };
   }
-  openAvatarModalOpen() {
-    return true;
-  }
-
-  closeAvatarModal() {
-    return true;
-  }
 }
 
-export default alt.createActions(UserActions);
+export default alt.createActions(PostActions);

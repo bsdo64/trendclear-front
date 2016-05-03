@@ -8,7 +8,8 @@ var hbs = require('hbs');
 var Session = require('./middleware/Session');
 
 /* Middle ware */
-var ApiProxy = require('./middleware/Proxy.js');
+var ApiProxy = require('./middleware/ApiProxy.js');
+var ImageProxy = require('./middleware/ImageProxy.js');
 
 /* Routes */
 var routes = require('./routes/index');
@@ -17,6 +18,7 @@ var embed = require('./routes/embed');
 var app = express();
 
 app.all('/ajax/*', ApiProxy);
+app.use('/image', ImageProxy);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

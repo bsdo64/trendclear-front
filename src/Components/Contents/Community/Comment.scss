@@ -3,6 +3,23 @@
   padding: 20px 0;
   font-size: 0.9em;
 
+  .comment_header {
+    height: 20px;
+
+    .comment_count {
+      float: left;
+    }
+    ul.comment_sort_box {
+      margin: 0;
+      padding: 0;
+      float: right;
+      li {
+        display: inline-block;
+        padding-right: 5px;
+      }
+    }
+  }
+
   .actions {
     .like_icon, .comment_icon, .report_icon {
       display: inline-block;
@@ -19,7 +36,7 @@
     }
   }
 
-  .comment ~ form.ui.reply.form {
+  &.comments > form.ui.reply.form {
     .field {
       width: 585px;
     }

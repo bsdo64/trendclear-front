@@ -10,7 +10,8 @@
     border-bottom: 1px solid #B5C0D0;
 
     input.post_submit_title {
-      width: 100%
+      width: 100%;
+      padding: 5px 10px;
     }
     .best_post_meta {
       margin: 0;
@@ -53,6 +54,14 @@
 
       &:after {
         padding: 1em;
+      }
+    }
+
+    .submit_button_box {
+      padding: 10px 0;
+
+      button:first-child {
+        margin-right: 10px;
       }
     }
   }

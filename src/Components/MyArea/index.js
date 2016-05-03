@@ -57,7 +57,7 @@ class MyArea extends Component {
 
       userButtons = [
         <div className="item" key="1">
-          <i className="large alarm icon" />
+          <i className="large alarm icon inverted" />
           <div id="alarm_popup" className="ui segment popup"  style={{width: 250}}>
             <div className="ui feed ">
               <div className="event">

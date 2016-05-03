@@ -18,6 +18,22 @@ const Comment = React.createClass({
 
     return (
       <div id="comment_box" className="ui comments">
+        <div className="comment_header">
+          <div className="comment_count">댓글 3개</div>
+          <ul className="comment_sort_box">
+            <li>최신순</li>
+            <li>좋아요순</li>
+            <li>댓글순</li>
+          </ul>
+        </div>
+        <form className="ui reply form">
+          <div className="field">
+            <textarea></textarea>
+          </div>
+          <div className="ui primary submit icon button">
+            <i className="icon edit"></i>
+          </div>
+        </form>
         <div className="comment">
           <a className="avatar">
             <img src="/images/default-male.png" />
@@ -94,14 +110,6 @@ const Comment = React.createClass({
             </div>
           </div>
         </div>
-        <form className="ui reply form">
-          <div className="field">
-            <textarea></textarea>
-          </div>
-          <div className="ui primary submit icon button">
-            <i className="icon edit"></i>
-          </div>
-        </form>
       </div>
     )
   }
