@@ -3,6 +3,10 @@
  */
 
 const medium = {
+  placeholder: {
+    text: '텍스트를 입력하세요',
+    hideOnClick: true
+  },
   imageDragging: false,
   autoLink: true,
   toolbar: {
@@ -43,7 +47,7 @@ const mediumInsertConfig = function mediumInsertConfig(editor) {
         deleteMethod: 'DELETE',
         preview: true,
         captions: true,
-        captionPlaceholder: '이미지 캡션을 입력하세요(옵션)',
+        captionPlaceholder: '이미지 캡션을 입력하세요',
         fileUploadOptions: {
           url: 'http://localhost:3000/image/upload',
           acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i

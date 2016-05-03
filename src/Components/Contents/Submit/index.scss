@@ -42,9 +42,16 @@
       }
     }
     #post_editor {
-      border: 1px solid #aaa;
+      &:hover {
+        border-color: #ddd;
+      }
+      border: 1px solid #fff;
       min-height: 200px;
-      padding: 1em;
+      -webkit-transition: border-color 0.3s;
+      -moz-transition: border-color 0.3s;
+      -ms-transition: border-color 0.3s;
+      -o-transition: border-color 0.3s;
+      transition: border-color 0.3s;
 
       .medium-insert-embeds {
         figure {
