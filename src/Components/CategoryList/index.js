@@ -1,5 +1,6 @@
 import { List } from 'immutable';
 import { Link, browserHistory } from 'react-router';
+import Immutable from 'immutable';
 
 var React = require('react');
 
@@ -22,6 +23,7 @@ const CategoryItem = React.createClass({
           </h5>
         }
         {
+          subList.get('forums') &&
           subList.get('forums').map(function createListItem(list) {
             "use strict";
             
@@ -29,8 +31,7 @@ const CategoryItem = React.createClass({
               categoryId: subList.get('id'),
               forumId: list.get('id')
             };
-
-            console.log('ssssss');
+            
             return (
               <div key={Math.random()} className="sub_category item">
                 <Link to={{pathname: '/community', query: q}}>{list.get('title')}</Link>
@@ -39,6 +40,25 @@ const CategoryItem = React.createClass({
           })
         }
       </li>
+    )
+  },
+  createSubList(categoryGroup) {
+    "use strict";
+
+    return (
+      <menu className="sub_category_list">
+        {
+          categoryGroup.get('title') &&
+          <div className="sub_category_header">{categoryGroup.get('title')}</div>
+        }
+
+        <ul >
+          {
+            categoryGroup.get('categories') &&
+            categoryGroup.get('categories').map(this.createSubListItem)
+          }
+        </ul>
+      </menu>
     )
   },
   render() {
@@ -52,13 +72,7 @@ const CategoryItem = React.createClass({
           </div>
         </div>
         {
-          category.get('category_groups').get(0).get('title') && category.get('category_groups').get(0).get('categories') &&
-          <menu className="sub_category_list">
-            <div className="sub_category_header">{category.get('category_groups').get(0).get('title')}</div>
-            <ul >
-              {category.get('category_groups').get(0).get('categories').map(this.createSubListItem)}
-            </ul>
-          </menu>
+          category.get('category_groups').map(this.createSubList)
         }
       </div>
     )

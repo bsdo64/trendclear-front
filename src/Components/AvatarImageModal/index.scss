@@ -4,4 +4,14 @@
 
 
   }
+  &>.items > .header {
+    height: 35px;
+    background: #405EB3;
+    color: #fff;
+    position: relative;
+
+    .header_title {
+      padding: 10px;
+    }
+  }
 }

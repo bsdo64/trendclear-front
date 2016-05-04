@@ -89,6 +89,9 @@ const AvatarImageModal = React.createClass({
       <div ref="avatar_img_modal" className="ui modal avatar_img">
 
         <div className="ui items">
+          <div className="header">
+            <div className="header_title">프로필 이미지 변경</div>
+          </div>
           <div className="item">
             <div className="image">
               {
