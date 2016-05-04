@@ -27,11 +27,6 @@ class MyArea extends Component {
     const { LoginStore, UserStore } = this.props;
     const isLogin = LoginStore.get('isLogin');
     const openLoginModal = LoginStore.get('openLoginModal');
-    // const logout = LoginStore.get('logout');
-
-    // if (logout) {
-    //   location.href = '/';
-    // }
 
     let userButtons;
 

@@ -46,9 +46,11 @@ class UserStore{
   }
 
   onUploadAvatarImage(result) {
-    const file = result.files[0];
-    let state = this.state.setIn(['profile', 'avatar_img'], file.name);
-    this.setMergeState(state);
+    if (result && result.files[0]) {
+      const file = result.files[0];
+      let state = this.state.setIn(['profile', 'avatar_img'], file.name);
+      this.setMergeState(state);
+    }
   }
 }
 

@@ -18,6 +18,14 @@ const AvatarImageModal = React.createClass({
     };
   },
 
+  modalClose() {
+    $(this.refs.avatar_img_modal)
+      .modal({
+        allowMultiple: true,
+        detachable: true
+      })
+      .modal('hide');
+  },
   modalCloseSignal() {
     "use strict";
 
@@ -66,6 +74,9 @@ const AvatarImageModal = React.createClass({
 
     if (UserStore.get('openAvatarModal')) {
       this.modalCloseSignal();
+    }
+    if (!UserStore.get('openAvatarModal')) {
+      this.modalClose();
     }
 
     let {imagePreviewUrl} = this.state;

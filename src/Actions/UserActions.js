@@ -8,6 +8,7 @@ class UserActions {
   requestLogout() {
     return (dispatch) => {
       Api
+        .setType('/ajax')
         .post('/logout')
         .then((res) => {
           dispatch(res);
@@ -31,6 +32,8 @@ class UserActions {
         .postImg('/upload', file)
         .then((res) => {
           dispatch(res);
+
+          this.closeAvatarModal();
         })
         .catch((err) => {
           return err;
