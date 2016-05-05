@@ -11,6 +11,8 @@ const SubmitContents = React.createClass({
   propTypes: {},
 
   componentDidMount() {
+    const { SubmitStore } = this.props;
+    const initContent = SubmitStore.get('content');
     let that = this;
     this.editor = new MediumEditor('#post_editor', medium);
     this.editor.subscribe('editableInput', function (event, editable) {
@@ -18,6 +20,9 @@ const SubmitContents = React.createClass({
       that.handleContent()
     });
     $('#post_editor').mediumInsert(mediumInsertConfig(this.editor));
+    if (initContent) {
+      this.editor.setContent(initContent);
+    }
   },
   
   submitPost() {
@@ -38,6 +43,12 @@ const SubmitContents = React.createClass({
     let allContents = this.editor.serialize();
     let el = allContents['post_editor'].value;
     PostActions.handleContent(el);
+  },
+
+  setContent(content) {
+    "use strict";
+
+
   },
 
   render() {
