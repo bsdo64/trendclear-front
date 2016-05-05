@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import alt from '../Utils/alt';
 import { IndexRedirect, Router, Link, IndexRoute, Route, browserHistory } from 'react-router';
 import Api from '../Utils/ApiClient';
-import { createHistory } from 'history';
 
 import AppActions from '../Actions/AppActions';
 

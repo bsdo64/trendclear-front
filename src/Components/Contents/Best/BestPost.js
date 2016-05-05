@@ -5,8 +5,8 @@ const BestPost = React.createClass({
   render() {
     const post = this.props.post;
     const styleClass = this.props.styleClass;
-    const sex = post.getIn(['author', 'sex']),
-      avatar_img = post.getIn(['author', 'avatar_img']),
+    const sex = post.getIn(['author', 'profile', 'sex']),
+      avatar_img = post.getIn(['author', 'profile', 'avatar_img']),
       icon_img = post.getIn(['author', 'icon', 'img']);
     let avatarImg, iconImg;
 
