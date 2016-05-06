@@ -126,14 +126,22 @@ const Forum = React.createClass({
   },
   render() {
     "use strict";
-    const { list, club } = this.props.CommunityStore;
+    const { list, forum } = this.props.CommunityStore;
     const { user } = this.props.UserStore;
     const { isLogin } = this.props.LoginStore;
-    const { title, description, url, ClubGroup } = club;
+    const { title, description, url } = forum;
     const { page, limit, total, data } = list;
     const { postId } = { postId: 1 };
 
     const defaultPageUrl = '/community' + this.props.location.search;
+
+    function createPrefixItem(value, index) {
+      return (
+        <div className="item">
+          <div className="middle aligned content">{value.name + " (" + value.posts.length + ")"}</div>
+        </div>
+      )
+    }
     return (
       <div id="forum_contents">
         <h3 className="ui header">
@@ -144,15 +152,9 @@ const Forum = React.createClass({
           <div className="item" style={{fontWeight: 'bold'}}>
             <div className="middle aligned content bold">전체</div>
           </div>
-          <div className="item">
-            <div className="middle aligned content">샴푸 (150)</div>
-          </div>
-          <div className="item">
-            <div className="middle aligned content">샴푸 (150)</div>
-          </div>
-          <div className="item">
-            <div className="middle aligned content">샴푸 (150)</div>
-          </div>
+          {
+            forum.prefixes.map(createPrefixItem)
+          }
         </div>
         <table className="ui table very compact" >
           <thead>
