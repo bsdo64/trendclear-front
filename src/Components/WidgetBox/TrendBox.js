@@ -26,11 +26,10 @@ const TrendBox = React.createClass({
   render() {
     const {user} = this.props;
 
-
     const sex = user.profile.get('sex'),
           avatar_img = user.profile.get('avatar_img'),
-          icon_img = user.icon.get('img'),
-          grade_img = user.grade.get('img');
+          icon_img = user.icon.getIn(['iconDef', 'icon_img']),
+          grade_img = user.grade.getIn(['gradeDef', 'img']);
     let avatarImg, iconImg, gradeImg;
 
     if (avatar_img) {

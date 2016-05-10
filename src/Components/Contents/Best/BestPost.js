@@ -7,7 +7,7 @@ const BestPost = React.createClass({
     const styleClass = this.props.styleClass;
     const sex = post.getIn(['author', 'profile', 'sex']),
       avatar_img = post.getIn(['author', 'profile', 'avatar_img']),
-      icon_img = post.getIn(['author', 'icon', 'img']);
+      icon_img = post.getIn(['author', 'icon', 0, 'iconDef', 'icon_img']);
     let avatarImg, iconImg;
 
     if (avatar_img) {
@@ -37,13 +37,13 @@ const BestPost = React.createClass({
           <div className="meta best_post_meta">
             <div className="ui horizontal divided list">
               <div className="item">
-                {post.getIn(['categories', 'club', 'title'])}
+                {post.getIn(['forum', 'category', 'category_group', 'club', 'title'])}
               </div>
               <div className="item">
-                <a href={"/club/" + 'url'}>{post.getIn(['categories', 'club', 'category', 'title'])}</a>
+                <a href={"/club/" + 'url'}>{post.getIn(['forum', 'category', 'title'])}</a>
               </div>
               <div className="item">
-                <a href={"/club/" + 'url'}>{post.getIn(['categories', 'club', 'category', 'forum', 'title'])}</a>
+                <a href={"/club/" + 'url'}>{post.getIn(['forum', 'title'])}</a>
               </div>
             </div>
           </div>

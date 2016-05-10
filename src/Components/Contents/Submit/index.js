@@ -29,7 +29,8 @@ const SubmitContents = React.createClass({
     const { SubmitStore } = this.props;
     let newPost = {
       title: SubmitStore.get('title'),
-      content: SubmitStore.get('content')
+      content: SubmitStore.get('content'),
+      query: this.props.location.query
     };
     PostActions.submitPost(newPost);
   },

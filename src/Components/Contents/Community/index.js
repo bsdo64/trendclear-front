@@ -131,7 +131,8 @@ const Forum = React.createClass({
     const { isLogin } = this.props.LoginStore;
     const { title, description, url } = forum;
     const { page, limit, total, data } = list;
-    const { postId } = { postId: 1 };
+    const { query } = this.props.location;
+    const {categoryId, forumId, postId} = query;
 
     const defaultPageUrl = '/community' + this.props.location.search;
 
@@ -162,7 +163,6 @@ const Forum = React.createClass({
             <th className="center aligned collapsing">말머리</th>
             <th className="center aligned collapsing">좋아요</th>
             <th className="center aligned collapsing">조회</th>
-            <th className="center aligned collapsing">댓글</th>
             <th className="center aligned">제목</th>
             <th className="center aligned collapsing">글쓴이</th>
             <th className="center aligned collapsing">등록일</th>
@@ -175,7 +175,7 @@ const Forum = React.createClass({
             data.map(function (item) {
               return (
                 <PostList item={item} defaultPageUrl={defaultPageUrl}
-                          postId={postId} page={page} />
+                          postId={parseInt(postId, 10)} page={page} />
               );
             })
           }
@@ -189,7 +189,7 @@ const Forum = React.createClass({
             user && isLogin &&
             <Link
               className="ui button primary tiny"
-              to={{pathname: '/community/submit', query:this.props.location.query}}>
+              to={{pathname: '/community/submit', query: {categoryId: categoryId, forumId: forumId}}}>
               글쓰기
             </Link>
           }
@@ -233,22 +233,32 @@ require('./CommunityContents.scss');
 const PostList = React.createClass({
   displayName: 'PostList',
   render: function () {
-    const { id, title, Prefix, User, created_at, view_count, like_count, comment_count } = this.props.item;
+    const { id, title, prefix, author, created_at, view_count, like_count, comment_count, forum } = this.props.item;
     const { defaultPageUrl, page } = this.props;
 
     let activeClass;
-    if (id === this.props.postId) {
+    if (id == this.props.postId) {
       activeClass = 'active';
     }
 
+    console.log('forum', forum);
+
     return (
       <tr className={activeClass}>
-        <td className="center aligned collapsing">{Prefix && Prefix.name}</td>
+        <td className="center aligned collapsing">{prefix && prefix.name}</td>
         <td className="center aligned collapsing">{like_count}</td>
         <td className="center aligned collapsing">{view_count}</td>
-        <td className="right aligned collapsing">{comment_count}</td>
-        <td className="left aligned"><Link to={defaultPageUrl + '&postId=' + page + '&p=' + page}>{title}</Link></td>
-        <td className="right aligned collapsing">{User.nick}</td>
+        <td className="left aligned">
+          <Link to={'/community?' +
+                      'categoryId=' + forum.category.id +
+                      '&forumId=' + forum.id +
+                      '&postId=' + id +
+                      '&p=' + page} >
+            {title}
+          </Link>
+          { comment_count > 0 && '[' + comment_count + ']'}
+        </td>
+        <td className="right aligned collapsing">{author.nick}</td>
         <td className="center aligned collapsing">{created_at}</td>
       </tr>
     );

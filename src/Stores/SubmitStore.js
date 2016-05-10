@@ -32,7 +32,12 @@ class SubmitStore{
   }
   onSubmitPost(result) {
     if (result) {
-      browserHistory.replace('/community?categoryId=1&forumId=38&postId=' + result.id);
+      let forum = result.forum;
+      browserHistory.replace(
+        '/community?categoryId=' + forum.category.id +
+                  '&forumId=' + forum.id +
+                  '&postId=' + result.id
+      );
     }
   }
 }
