@@ -13,7 +13,10 @@ Embeds.get('/oembed', (req, res, next) => {
   switch (data.provider) {
     case 'youtube':
       html = '<div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.2493%;">' +
-        '<div id="' + data.id + '" class="youtube-embed" ' +
+        '<div id="' + data.id + '" class="youtube-embed ui embed" ' +
+        'data-source="youtube" ' +
+        'data-id="' + data.id + '" ' +
+        'data-placeholder="http://i.ytimg.com/vi/' + data.id + '/sddefault.jpg" ' +
         'style="-webkit-background-size: 100% 100%; -moz-background-size: 100% 100%; -o-background-size: 100% 100%; background-size: 100% 100%; ' +
         'background-image:url(http://i.ytimg.com/vi/' + data.id + '/sddefault.jpg); top: 0; left: 0; width: 100%; height: 100%; position: absolute;" ' +
         '/>' +
@@ -23,13 +26,13 @@ Embeds.get('/oembed', (req, res, next) => {
     case 'twitch':
       if (data.mediaType === 'stream') {
         html = '<div style="width: 100%; height: 0px; position: relative; padding-bottom: 60.9682%;">' +
-          '<iframe src="http://player.twitch.tv/?channel=' + data.channel + '" frameborder="0" allowfullscreen style="top: 0; left: 0; width: 100%; height: 100%; position: absolute;"></iframe>' +
+          '<iframe src="http://player.twitch.tv/?channel=' + data.channel + '&autoplay=false" frameborder="0" allowfullscreen style="top: 0; left: 0; width: 100%; height: 100%; position: absolute;"></iframe>' +
           '</div>';
       }
 
       if (data.mediaType === 'video') {
         html = '<div style="width: 100%; height: 0px; position: relative; padding-bottom: 60.9682%;">' +
-          '<iframe src="http://player.twitch.tv/?video=' + data.id + '" frameborder="0" allowfullscreen style="top: 0; left: 0; width: 100%; height: 100%; position: absolute;"></iframe>' +
+          '<iframe src="http://player.twitch.tv/?video=' + data.id + '&autoplay=false" frameborder="0" allowfullscreen style="top: 0; left: 0; width: 100%; height: 100%; position: absolute;"></iframe>' +
           '</div>';
       }
       break;

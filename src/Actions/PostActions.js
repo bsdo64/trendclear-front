@@ -8,6 +8,9 @@ class PostActions {
   handleContent(content) {
     return content;
   }
+  selectPrefix(prefixId) {
+    return prefixId;
+  }
   submitPost(post) {
     return (dispatch) => {
       Api

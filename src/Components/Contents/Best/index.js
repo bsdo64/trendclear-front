@@ -4,6 +4,14 @@ import BestList from './BestList';
 import BestPagination from './BestPagination';
 
 const BestContents = React.createClass({
+  componentDidMount() {
+    $('.ui.embed').embed();
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    $('.ui.embed').embed();
+  },
+
   render() {
     const {BestPostStore} = this.props;
     const posts = BestPostStore.get('posts');

@@ -232,6 +232,16 @@ const Forum = React.createClass({
 require('./CommunityContents.scss');
 const PostList = React.createClass({
   displayName: 'PostList',
+
+  componentDidMount() {
+    $('.ui.embed').embed();
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    $('.ui.embed').embed();
+  },
+
+
   render: function () {
     const { id, title, prefix, author, created_at, view_count, like_count, comment_count, forum } = this.props.item;
     const { defaultPageUrl, page } = this.props;
@@ -240,8 +250,6 @@ const PostList = React.createClass({
     if (id == this.props.postId) {
       activeClass = 'active';
     }
-
-    console.log('forum', forum);
 
     return (
       <tr className={activeClass}>
@@ -265,8 +273,9 @@ const PostList = React.createClass({
   }
 });
 
-let CommunityContents = React.createClass({
+const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
+
   handleSetPage(pagination) {
     ClubSectionActions.requestPosts(this.props.CommunityStore.club.id, pagination);
   },

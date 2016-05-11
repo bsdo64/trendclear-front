@@ -30,6 +30,9 @@ class SubmitStore{
   onHandleContent(content) {
     this.setMergeState(Map({content: content}));
   }
+  onSelectPrefix(prefixId) {
+    this.setMergeState(Map({selectPrefixId: prefixId}));
+  }
   onSubmitPost(result) {
     if (result) {
       let forum = result.forum;

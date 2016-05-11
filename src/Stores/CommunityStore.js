@@ -24,6 +24,7 @@ class CommunityStore{
   }
 
   
+  
 }
 
 export default alt.createStore(immutable(CommunityStore));
