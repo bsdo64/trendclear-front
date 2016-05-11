@@ -10,14 +10,143 @@ import Paginator from '../../Paginator';
 import LoginActions from '../../../Actions/LoginActions';
 import Post from './Post';
 
-require('./Comment.scss');
-const Comment = React.createClass({
-  displayName: 'Comment',
+const CommentItem = React.createClass({
+  getInitialState() {
+    return {
+      subCommentOpen: false
+    };
+  },
+
+  toggleSubComment() {
+    "use strict";
+
+    this.setState({subCommentOpen: !this.state.subCommentOpen})
+  },
+
   render() {
     "use strict";
 
+    const comment = this.props.comment;
+    const subCommentOpen = this.state.subCommentOpen;
+
+    function subCommentItem(subComment) {
+      return (
+        <div className="comment" key={subComment.get('id')}>
+          <a className="avatar">
+            <img src="/images/default-male.png" />
+          </a>
+          <div className="content">
+            <a className="author">{subComment.getIn(['author', 'nick'])}</a>
+            <div className="metadata">
+              <span className="date">{subComment.get('created_at')}</span>
+            </div>
+            <div className="text">
+              <p>{subComment.get('content')}</p>
+            </div>
+            <div className="actions">
+              <div className="like_box">
+                <div className="like_icon">
+                  <i className="heart outline icon"></i>
+                </div>
+                <a className="like_count">{subComment.get('like_count')}</a>
+              </div>
+              <div className="report_box">
+                <div className="report_icon">
+                  <i className="warning outline icon"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="comment" key={comment.get('id')}>
+        <a className="avatar">
+          <img src="/images/default-male.png" />
+        </a>
+        <div className="content">
+          <a className="author">{comment.getIn(['author', 'nick'])}</a>
+          <div className="metadata">
+            <div className="date">{comment.get('created_at')}</div>
+          </div>
+          <div className="text">
+            <p>{comment.get('content')}</p>
+          </div>
+          <div className="actions">
+            <div className="like_box">
+              <div className="like_icon">
+                <i className="heart outline icon"></i>
+              </div>
+              <a className="like_count">{comment.get('like_count')}</a>
+            </div>
+            <div className="comment_box" onClick={this.toggleSubComment}>
+              <div className="comment_icon">
+                <i className="edit outline icon"></i>
+              </div>
+              <a className="comment_count">{comment.get('sub_comment_count')}</a>
+            </div>
+            <div className="report_box">
+              <div className="report_icon">
+                <i className="warning outline icon"></i>
+              </div>
+            </div>
+          </div>
+          {
+            subCommentOpen && comment.get('subComments') &&
+            <div className="comments">
+              {comment.get('subComments').map(subCommentItem)}
+            </div>
+          }
+
+          {
+            subCommentOpen &&
+            <form className="ui reply form">
+              <div className="field">
+                <textarea></textarea>
+              </div>
+              <div className="ui primary submit icon button">
+                <i className="icon edit"></i>
+              </div>
+            </form>
+          }
+        </div>
+      </div>
+    )
+
+  }
+});
+
+const CommentList = React.createClass({
+  render() {
+    "use strict";
+    let commentsNode = this.props.comments.map(function(comment) {
+      return (
+        <CommentItem comment={comment} />
+      )
+    });
+    return (
+      <div>
+        {commentsNode}
+      </div>
+    )
+  }
+});
+
+require('./Comment.scss');
+const CommentBox = React.createClass({
+  displayName: 'CommentBox',
+  render() {
+    "use strict";
+
+    const comments = this.props.comments;
+
+
     return (
       <div id="comment_box" className="ui comments">
+
         <div className="comment_header">
           <div className="comment_count">댓글 3개</div>
           <ul className="comment_sort_box">
@@ -34,82 +163,20 @@ const Comment = React.createClass({
             <i className="icon edit"></i>
           </div>
         </form>
-        <div className="comment">
-          <a className="avatar">
-            <img src="/images/default-male.png" />
-          </a>
-          <div className="content">
-            <a className="author">Joe Henderson</a>
-            <div className="metadata">
-              <div className="date">1 day ago</div>
-            </div>
-            <div className="text">
-              <p>The hours, minutes and seconds stand as visible reminders that your effort put them all there. </p>
-              <p>Preserve until your next run, when the watch lets you see how Impermanent your efforts are.</p>
-            </div>
-            <div className="actions">
-              <div className="like_box">
-                <div className="like_icon">
-                  <i className="heart outline icon"></i>
-                </div>
-                <a className="like_count">{123}</a>
-              </div>
-              <div className="comment_box">
-                <div className="comment_icon">
-                  <i className="edit outline icon"></i>
-                </div>
-                <a className="comment_count">{1234}</a>
-              </div>
-              <a className="reply">Reply</a>
-              <div className="report_box">
-                <div className="report_icon">
-                  <i className="warning outline icon"></i>
-                </div>
-              </div>
-            </div>
-            <div className="comments">
-              <div className="comment">
-                <a className="avatar">
-                  <img src="/images/default-male.png" />
-                </a>
-                <div className="content">
-                  <a className="author">Jenny Hess</a>
-                  <div className="metadata">
-                    <span className="date">Just now</span>
-                  </div>
-                  <div className="text">
-                    Elliot you are always so right :)
-                  </div>
-                </div>
-              </div>
-            </div>
-            <form className="ui reply form">
-              <div className="field">
-                <textarea></textarea>
-              </div>
-              <div className="ui primary submit icon button">
-                <i className="icon edit"></i>
-              </div>
-            </form>
-          </div>
+
+        <CommentList
+          comments={comments}
+        />
+        
+        <div className="ui center aligned container">
+          <Paginator
+            total={10}
+            limit={10}
+            page={1}
+            handleSetPage={this.handleSetPage}
+          />
         </div>
-        <div className="comment">
-          <a className="avatar">
-            <img src="/images/default-female.png" />
-          </a>
-          <div className="content">
-            <a className="author">Christian Rocha</a>
-            <div className="metadata">
-              <div className="date">2 days ago</div>
-            </div>
-            <div className="text">
-              I re-tweeted this.
-            </div>
-            <div className="actions">
-              <a className="reply">Reply</a>
-            </div>
-          </div>
-        </div>
+
       </div>
     )
   }
@@ -299,7 +366,9 @@ const CommunityContents = React.createClass({
         <div id="post_box" className="ui items">
           <Post post={post} styleClass="post_item" />
 
-          <Comment />
+          <CommentBox
+            comments={post.get('comments')}
+          />
           <Forum
             {...this.props}
             CommunityStore={this.props.CommunityStore.toJS()}
