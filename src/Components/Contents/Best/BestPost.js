@@ -17,6 +17,7 @@ const BestPost = React.createClass({
         avatarImg = <img src="/images/default-male.png" />;
       } else {
         avatarImg = <img src="/images/default-female.png" />;
+        
       }
     }
 
