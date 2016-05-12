@@ -5,9 +5,11 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
+import {Map} from 'immutable';
 import {Link, browserHistory} from 'react-router';
 import Paginator from '../../Paginator';
 import LoginActions from '../../../Actions/LoginActions';
+import CommentActions from '../../../Actions/CommentActions';
 import Post from './Post';
 
 const CommentItem = React.createClass({
@@ -27,6 +29,7 @@ const CommentItem = React.createClass({
     "use strict";
 
     const comment = this.props.comment;
+    const author = this.props.author;
     const subCommentOpen = this.state.subCommentOpen;
 
     function subCommentItem(subComment) {
@@ -68,7 +71,7 @@ const CommentItem = React.createClass({
           <img src="/images/default-male.png" />
         </a>
         <div className="content">
-          <a className="author">{comment.getIn(['author', 'nick'])}</a>
+          <a className="author">{author.get('nick')}</a>
           <div className="metadata">
             <div className="date">{comment.get('created_at')}</div>
           </div>
@@ -122,9 +125,16 @@ const CommentItem = React.createClass({
 const CommentList = React.createClass({
   render() {
     "use strict";
-    let commentsNode = this.props.comments.map(function(comment) {
+    const {results, comments, author} = this.props;
+
+    let commentsNode = results.map(function(commentId) {
+      const comment = comments.get(commentId.toString());
+      const commentAuthor = author.get(comment.get('author').toString());
       return (
-        <CommentItem comment={comment} />
+        <CommentItem
+          comment={comment}
+          author={commentAuthor}
+        />
       )
     });
     return (
@@ -138,17 +148,29 @@ const CommentList = React.createClass({
 require('./Comment.scss');
 const CommentBox = React.createClass({
   displayName: 'CommentBox',
+  submitComment() {
+    "use strict";
+
+    const comment = {
+      content: this.refs.comment_content.value.trim(),
+      postId: this.props.location.query.postId
+    };
+
+    CommentActions.submitComment(comment);
+  },
   render() {
     "use strict";
 
-    const comments = this.props.comments;
-
+    const IPost = this.props.IPost;
+    const comments = IPost.getIn(['entities', 'comments']);
+    const author = IPost.getIn(['entities', 'author']);
+    const results = comments ? Object.keys(comments.toJS()) : [];
 
     return (
       <div id="comment_box" className="ui comments">
 
         <div className="comment_header">
-          <div className="comment_count">댓글 3개</div>
+          <div className="comment_count">댓글 {results.length}개</div>
           <ul className="comment_sort_box">
             <li>최신순</li>
             <li>좋아요순</li>
@@ -157,20 +179,28 @@ const CommentBox = React.createClass({
         </div>
         <form className="ui reply form">
           <div className="field">
-            <textarea></textarea>
+            <textarea
+              ref="comment_content"
+              onChange={e => console.log(e.target.value.trim())}
+            />
           </div>
-          <div className="ui primary submit icon button">
+          <div
+            className="ui primary submit icon button"
+            onClick={this.submitComment}
+          >
             <i className="icon edit"></i>
           </div>
         </form>
 
         <CommentList
           comments={comments}
+          author={author}
+          results={results}
         />
         
         <div className="ui center aligned container">
           <Paginator
-            total={10}
+            total={results.length}
             limit={10}
             page={1}
             handleSetPage={this.handleSetPage}
@@ -182,31 +212,100 @@ const CommentBox = React.createClass({
   }
 });
 
+
+require('./CommunityContents.scss');
+const PostList = React.createClass({
+  displayName: 'PostList',
+
+  componentDidMount() {
+    $('.ui.embed').embed();
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    $('.ui.embed').embed();
+  },
+
+
+  render: function () {
+    const item = this.props.item;
+    const id = item.get('id');
+    const title = item.get('title');
+    const prefix= item.get('prefix');
+    const created_at = item.get('created_at');
+    const view_count = item.get('view_count');
+    const like_count = item.get('like_count');
+    const comment_count = item.get('comment_count');
+    const forum = item.get('forum');
+
+    const author = this.props.author;
+
+    const { defaultPageUrl, page } = this.props;
+
+    let activeClass;
+    if (id == this.props.postIdNow) {
+      activeClass = 'active';
+    }
+
+    return (
+      <tr className={activeClass}>
+        <td className="center aligned collapsing">{prefix && prefix.get('name')}</td>
+        <td className="center aligned collapsing">{like_count}</td>
+        <td className="center aligned collapsing">{view_count}</td>
+        <td className="left aligned">
+          <Link to={'/community?' +
+                      'categoryId=' + forum.getIn(['category', 'id']) +
+                      '&forumId=' + forum.get('id') +
+                      '&postId=' + id +
+                      '&p=' + page} >
+            {title}
+          </Link>
+          { comment_count > 0 && '[' + comment_count + ']'}
+        </td>
+        <td className="right aligned collapsing">{author.get('nick')}</td>
+        <td className="center aligned collapsing">{created_at}</td>
+      </tr>
+    );
+  }
+});
+
 const Forum = React.createClass({
   displayName: 'Forum',
   openLoginModal() {
     "use strict";
 
-    const modalFlag = this.props.LoginStore.openLoginModal;
+    const modalFlag = this.props.LoginStore.get('openLoginModal');
     const location = this.props.location;
     LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
   },
   render() {
     "use strict";
-    const { list, forum } = this.props.CommunityStore;
-    const { user } = this.props.UserStore;
-    const { isLogin } = this.props.LoginStore;
-    const { title, description, url } = forum;
-    const { page, limit, total, data } = list;
+    const user = this.props.UserStore.get('user');
+    const isLogin = this.props.LoginStore.get('isLogin');
+
+    const forum = this.props.CommunityStore.get('forum');
+    const title = forum.get('title');
+    const description = forum.get('description');
+    const url = forum.get('url');
+
+    const list = this.props.CommunityStore.get('list');
+    const page = list.get('page');
+    const limit = list.get('limit');
+    const total = list.get('total');
+
+    const data = list.getIn(['postList', 'result']);
+    const entitiy = list.getIn(['postList', 'entities']);
+
     const { query } = this.props.location;
-    const {categoryId, forumId, postId} = query;
+    const {categoryId, forumId, postId: postIdNow} = query;
 
     const defaultPageUrl = '/community' + this.props.location.search;
 
-    function createPrefixItem(value, index) {
+    function createPrefixItem(prefixId, index) {
+      let prefixList = forum.getIn(['prefixList', 'entities', 'prefixes']);
+      let prefix = prefixList.get(prefixId.toString());
       return (
         <div className="item">
-          <div className="middle aligned content">{value.name + " (" + value.posts.length + ")"}</div>
+          <div className="middle aligned content">{prefix.get('name') + " (" + prefix.get('count') + ")"}</div>
         </div>
       )
     }
@@ -221,7 +320,8 @@ const Forum = React.createClass({
             <div className="middle aligned content bold">전체</div>
           </div>
           {
-            forum.prefixes.map(createPrefixItem)
+            forum.get('prefixList') &&
+            forum.getIn(['prefixList', 'result']).map(createPrefixItem)
           }
         </div>
         <table className="ui table very compact" >
@@ -239,10 +339,14 @@ const Forum = React.createClass({
 
           {
             data &&
-            data.map(function (item) {
+            data.map(function (postId) {
+              let item = entitiy.getIn(['posts', postId.toString()]);
+              let author = entitiy.getIn(['author', item.get('author').toString()]);
               return (
-                <PostList item={item} defaultPageUrl={defaultPageUrl}
-                          postId={parseInt(postId, 10)} page={page} />
+                <PostList
+                  author={author}
+                  item={item} defaultPageUrl={defaultPageUrl}
+                  postIdNow={parseInt(postIdNow, 10)} page={page} />
               );
             })
           }
@@ -296,50 +400,6 @@ const Forum = React.createClass({
   }
 });
 
-require('./CommunityContents.scss');
-const PostList = React.createClass({
-  displayName: 'PostList',
-
-  componentDidMount() {
-    $('.ui.embed').embed();
-  },
-
-  componentDidUpdate(prevProps, prevState) {
-    $('.ui.embed').embed();
-  },
-
-
-  render: function () {
-    const { id, title, prefix, author, created_at, view_count, like_count, comment_count, forum } = this.props.item;
-    const { defaultPageUrl, page } = this.props;
-
-    let activeClass;
-    if (id == this.props.postId) {
-      activeClass = 'active';
-    }
-
-    return (
-      <tr className={activeClass}>
-        <td className="center aligned collapsing">{prefix && prefix.name}</td>
-        <td className="center aligned collapsing">{like_count}</td>
-        <td className="center aligned collapsing">{view_count}</td>
-        <td className="left aligned">
-          <Link to={'/community?' +
-                      'categoryId=' + forum.category.id +
-                      '&forumId=' + forum.id +
-                      '&postId=' + id +
-                      '&p=' + page} >
-            {title}
-          </Link>
-          { comment_count > 0 && '[' + comment_count + ']'}
-        </td>
-        <td className="right aligned collapsing">{author.nick}</td>
-        <td className="center aligned collapsing">{created_at}</td>
-      </tr>
-    );
-  }
-});
-
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
 
@@ -354,26 +414,29 @@ const CommunityContents = React.createClass({
       return (
         <Forum
           {...this.props}
-          CommunityStore={this.props.CommunityStore.toJS()}
-          UserStore={this.props.UserStore.toJS()}
-          LoginStore={this.props.LoginStore.toJS()}
         />
       )
     } else if (type === 'post') {
-      const post = this.props.CommunityStore.get('post');
+      const post = this.props.CommunityStore.getIn(['post', 'IPost']);
 
       return (
         <div id="post_box" className="ui items">
-          <Post post={post} styleClass="post_item" />
 
-          <CommentBox
-            comments={post.get('comments')}
-          />
+          {
+            post &&
+            <Post post={post} styleClass="post_item"/>
+          }
+
+          {
+            post &&
+            <CommentBox
+              {...this.props}
+              IPost={post}
+            />
+          }
+
           <Forum
             {...this.props}
-            CommunityStore={this.props.CommunityStore.toJS()}
-            UserStore={this.props.UserStore.toJS()}
-            LoginStore={this.props.LoginStore.toJS()}
           />
         </div>
       )

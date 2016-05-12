@@ -72,11 +72,11 @@
       transition: border-color 0.3s;
 
       a.medium-insert-buttons-show {
-        -webkit-transform: rotate(0);
-        -moz-transform: rotate(0);
-        -ms-transform: rotate(0);
-        -o-transform: rotate(0);
-        transform: rotate(0);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
 
         -webkit-transition: transform 100ms;
         -moz-transition: transform 100ms;

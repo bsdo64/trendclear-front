@@ -12,11 +12,11 @@ class AjaxApiClient {
   _done(resolve, reject) {
     return (xhrErr, xhrRes) => {
       if (xhrErr) {
-        reject(xhrErr);
+        return reject(xhrErr);
       } else if (xhrRes.error) {
-        reject(xhrRes);
+        return reject(xhrRes);
       } else {
-        resolve(xhrRes.body);
+        return resolve(xhrRes.body);
       }
     };
   }

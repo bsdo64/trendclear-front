@@ -3,11 +3,14 @@ import React from 'react';
 require('./Post.scss');
 const BestPost = React.createClass({
   render() {
-    const post = this.props.post;
+    const IPost = this.props.post;
+    const postId = IPost.get('result').toString();
+    const post = IPost.getIn(['entities', 'posts', postId]);
+    const author = IPost.getIn(['entities', 'author', post.get('author').toString()]);
     const styleClass = this.props.styleClass;
-    const sex = post.getIn(['author', 'profile', 'sex']),
-      avatar_img = post.getIn(['author', 'profile', 'avatar_img']),
-      icon_img = post.getIn(['author', 'icon', 0, 'iconDef', 'icon_img']);
+    const sex = author.getIn(['profile', 'sex']),
+      avatar_img = author.getIn(['profile', 'avatar_img']),
+      icon_img = author.getIn(['icon', 0, 'iconDef', 'icon_img']);
     let avatarImg, iconImg;
 
     if (avatar_img) {
@@ -49,7 +52,7 @@ const BestPost = React.createClass({
           </div>
           <div className="meta best_post_meta">
             <div className="author_nick">
-              {post.getIn(['author', 'nick'])}
+              {author.get('nick')}
             </div>
             <div className="author_icon">
               {iconImg}
