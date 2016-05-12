@@ -16,7 +16,8 @@ const BestList = React.createClass({
     return (
       <div className="ui items best_list">
         {
-          postArray.map(createPostItem)
+          posts.get('data') &&
+          posts.get('data').map(createPostItem)
         }
       </div>
     );
