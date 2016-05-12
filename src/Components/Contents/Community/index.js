@@ -181,7 +181,7 @@ const CommentBox = React.createClass({
           <div className="field">
             <textarea
               ref="comment_content"
-              onChange={e => console.log(e.target.value.trim())}
+              onChange={e => { let s = e.target.value.trim(); s=s.replace(/\r?\n/g, '<br />'); console.log(s)}}
             />
           </div>
           <div
