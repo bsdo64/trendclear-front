@@ -132,6 +132,7 @@ const CommentList = React.createClass({
       const commentAuthor = author.get(comment.get('author').toString());
       return (
         <CommentItem
+          key={commentId}
           comment={comment}
           author={commentAuthor}
         />
@@ -181,7 +182,7 @@ const CommentBox = React.createClass({
           <div className="field">
             <textarea
               ref="comment_content"
-              onChange={e => console.log(e.target.value.trim())}
+              onChange={e => { let s = e.target.value.trim(); s=s.replace(/\r?\n/g, '<br />'); console.log(s)}}
             />
           </div>
           <div
@@ -304,7 +305,7 @@ const Forum = React.createClass({
       let prefixList = forum.getIn(['prefixList', 'entities', 'prefixes']);
       let prefix = prefixList.get(prefixId.toString());
       return (
-        <div className="item">
+        <div className="item" key={prefixId}>
           <div className="middle aligned content">{prefix.get('name') + " (" + prefix.get('count') + ")"}</div>
         </div>
       )
@@ -344,6 +345,7 @@ const Forum = React.createClass({
               let author = entitiy.getIn(['author', item.get('author').toString()]);
               return (
                 <PostList
+                  key={postId}
                   author={author}
                   item={item} defaultPageUrl={defaultPageUrl}
                   postIdNow={parseInt(postIdNow, 10)} page={page} />

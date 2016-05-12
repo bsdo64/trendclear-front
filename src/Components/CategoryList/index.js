@@ -46,7 +46,7 @@ const CategoryItem = React.createClass({
     "use strict";
 
     return (
-      <menu className="sub_category_list">
+      <menu className="sub_category_list" key={Math.random()}>
         {
           categoryGroup.get('title') &&
           <div className="sub_category_header">{categoryGroup.get('title')}</div>

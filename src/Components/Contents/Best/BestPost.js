@@ -5,8 +5,8 @@ const BestPost = React.createClass({
   render() {
     const postList = this.props.postList;
     const postId = this.props.postId;
-    const post = postList.getIn(['entities', 'posts', postId.toString()]);
-    const author = postList.getIn(['entities', 'author', post.get('author').toString()]);
+    const post = postList ? postList.getIn(['entities', 'posts', postId.toString()]) : null;
+    const author = postList ? postList.getIn(['entities', 'author', post.get('author').toString()]) : null;
 
     const styleClass = this.props.styleClass;
     const sex = author.getIn(['profile', 'sex']),
