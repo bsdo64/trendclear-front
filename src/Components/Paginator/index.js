@@ -82,7 +82,10 @@ export default class PaginatorApp extends React.Component {
         >
           { /*<Paginator.Button page={pagination.page - 10} className="item">{'< 10'}</Paginator.Button>*/ }
 
-          <Paginator.Button page={pagination.page - 1} className="ui item left_arrow">{'<'}</Paginator.Button>
+          {
+            (pagination.page > 1) &&
+            <Paginator.Button page={pagination.page - 1} className="ui item left_arrow">{'<'}</Paginator.Button>
+          }
           <Paginator.Segment field="beginPages" className="item"/>
           <Paginator.Ellipsis className="item disabled previousPages"
                               previousField="beginPages" nextField="previousPages">...</Paginator.Ellipsis>
@@ -96,7 +99,10 @@ export default class PaginatorApp extends React.Component {
 
           <Paginator.Segment field="endPages" className="next_pages"/>
 
-          <Paginator.Button page={pagination.page + 1} className="ui item right_arrow">{'>'}</Paginator.Button>
+          {
+            (pages !== pagination.page) &&
+            <Paginator.Button page={pagination.page + 1} className="ui item right_arrow">{'>'}</Paginator.Button>
+          }
           { /*<Paginator.Button page={pagination.page + 10} className="item">{'10 >'}</Paginator.Button>*/ }
         </Paginator.Context>
       </div>

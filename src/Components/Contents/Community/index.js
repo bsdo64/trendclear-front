@@ -230,12 +230,14 @@ const CommentBox = React.createClass({
         />
         
         <div className="ui center aligned container">
-          <Paginator
-            total={results.length}
-            limit={10}
-            page={1}
-            handleSetPage={this.handleSetPage}
-          />
+          { (results.length > 0) &&
+            <Paginator
+              total={results.length}
+              limit={10}
+              page={1}
+              handleSetPage={this.handleSetPage}
+            />
+          }
         </div>
 
       </div>
@@ -410,12 +412,14 @@ const Forum = React.createClass({
 
         <div className="ui center aligned container">
 
-          <Paginator
-            total={total}
-            limit={limit}
-            page={page}
-            handleSetPage={this.handleSetPage}
-          />
+          { (total > 0) &&
+            <Paginator
+              total={total}
+              limit={limit}
+              page={page}
+              handleSetPage={this.handleSetPage}
+            />
+          }
 
           <div className="ui search mini" style={{padding: '15px'}}>
             <div className="ui icon input">
