@@ -19,6 +19,7 @@ class CommentActions {
         });
     };
   }
+  
 }
 
 export default alt.createActions(CommentActions);

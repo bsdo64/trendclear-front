@@ -10,13 +10,22 @@ import {Link, browserHistory} from 'react-router';
 import Paginator from '../../Paginator';
 import LoginActions from '../../../Actions/LoginActions';
 import CommentActions from '../../../Actions/CommentActions';
+import CommunityActions from '../../../Actions/CommunityActions';
 import Post from './Post';
 
 const CommentItem = React.createClass({
   getInitialState() {
     return {
-      subCommentOpen: false
+      subCommentOpen: false,
+      liked: false
     };
+  },
+  sendLike() {
+    "use strict";
+
+    this.setState({liked: true}, () => {
+      CommunityActions.likeComment(this.props.comment.get('id'));
+    })
   },
 
   toggleSubComment() {
@@ -100,7 +109,7 @@ const CommentItem = React.createClass({
             <p>{comment.get('content')}</p>
           </div>
           <div className="actions">
-            <div className="like_box">
+            <div className="like_box" onClick={this.sendLike}>
               <div className="like_icon">
                 <i className="heart outline icon"></i>
               </div>
