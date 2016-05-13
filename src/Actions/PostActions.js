@@ -24,6 +24,9 @@ class PostActions {
         });
     };
   }
+  removeContent() {
+    return true;
+  }
 }
 
 export default alt.createActions(PostActions);

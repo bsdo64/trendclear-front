@@ -1,7 +1,21 @@
 import React from 'react';
+import CommunityActions from '../../../Actions/CommunityActions';
 
 require('./BestPost.scss');
 const BestPost = React.createClass({
+  getInitialState() {
+    return {
+      liked: false
+    };
+  },
+
+  sendLike() {
+    "use strict";
+
+    this.setState({liked: true}, () => {
+      CommunityActions.likePost(this.props.postId);
+    })
+  },
   render() {
     const postList = this.props.postList;
     const postId = this.props.postId;
@@ -79,8 +93,8 @@ const BestPost = React.createClass({
           {/* buttons */}
           <div className="ui extra best_post_buttons">
             <div className="like_box">
-              <div className="like_icon">
-                <i className="heart outline icon"></i>
+              <div className={'like_icon ' + (this.state.liked ? 'active' : '')} onClick={this.sendLike}>
+                <i className={'heart ' + (this.state.liked ? '' : 'outline') + ' icon'} />
               </div>
               <a className="like_count">{post.get('like_count')}</a>
             </div>

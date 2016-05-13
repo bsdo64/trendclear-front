@@ -65,4 +65,16 @@
       float: right;
     }
   }
+
+  .comment_list {
+    margin-bottom: 10px;
+
+    .comment {
+
+      .user_icon_img {
+        width: 12px;
+        margin-left: 5px;
+      }
+    }
+  }
 }

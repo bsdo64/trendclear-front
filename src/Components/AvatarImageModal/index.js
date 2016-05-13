@@ -79,10 +79,18 @@ const AvatarImageModal = React.createClass({
       this.modalClose();
     }
 
-    let {imagePreviewUrl} = this.state;
-    let $imagePreview = null;
-    if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} />);
+    const sex = profile.get('sex'),
+          avatar_img = profile.get('avatar_img');
+    let avatarImg;
+
+    if (avatar_img) {
+      avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
+    } else {
+      if (sex) {
+        avatarImg = <img src="/images/default-male.png" />;
+      } else {
+        avatarImg = <img src="/images/default-female.png" />;
+      }
     }
     
     return (
@@ -94,14 +102,7 @@ const AvatarImageModal = React.createClass({
           </div>
           <div className="item">
             <div className="image">
-              {
-                imagePreviewUrl &&
-                $imagePreview
-              }
-              {
-                !imagePreviewUrl &&
-                <img src="/images/default-male.png" />
-              }
+              { avatarImg }
             </div>
             <div className="content">
               <a className="header">{user.get('nick')}</a>

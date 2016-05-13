@@ -31,6 +31,15 @@ class UserActions {
         .setType('/image')
         .postImg('/upload', file)
         .then((res) => {
+
+          return Api
+            .setType('/ajax')
+            .post('/user/avatarImg', {file: res.files[0]})
+            .then(() => {
+              return res
+            })
+        })
+        .then((res) => {
           dispatch(res);
 
           this.closeAvatarModal();

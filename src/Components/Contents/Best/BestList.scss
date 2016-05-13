@@ -63,10 +63,21 @@
           .like_icon {
             display: inline-block;
             padding-right: 5px;
-            color: red;
+            color: grey;
             font-size: 20px;
             line-height: 20px;
             vertical-align: middle;
+            :hover {
+              color:red;
+            }
+
+            &.active {
+              color: red;
+            }
+
+            i.icon {
+              cursor: pointer;
+            }
           }
           .like_count {
             display: inline-block;

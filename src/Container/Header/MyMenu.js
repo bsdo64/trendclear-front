@@ -8,7 +8,7 @@ import MyArea from '../../Components/MyArea';
 const MyMenuContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [LoginStore]
+    return [LoginStore, UserStore]
   },
 
   getPropsFromStores() {

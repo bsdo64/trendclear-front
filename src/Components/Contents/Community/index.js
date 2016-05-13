@@ -32,14 +32,34 @@ const CommentItem = React.createClass({
     const author = this.props.author;
     const subCommentOpen = this.state.subCommentOpen;
 
+    const sex = author.getIn(['profile', 'sex']),
+      avatar_img = author.getIn(['profile', 'avatar_img']),
+      icon_img = author.getIn(['icon', 0, 'iconDef', 'icon_img']);
+    let avatarImg, iconImg;
+
+    if (avatar_img) {
+      avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
+    } else {
+      if (sex) {
+        avatarImg = <img src="/images/default-male.png" />;
+      } else {
+        avatarImg = <img src="/images/default-female.png" />;
+      }
+    }
+
+    if (icon_img) {
+      iconImg = <img className="user_icon_img" src={'/images/' + icon_img}/>;
+    }
+
     function subCommentItem(subComment) {
       return (
         <div className="comment" key={subComment.get('id')}>
           <a className="avatar">
-            <img src="/images/default-male.png" />
+            {avatarImg}
           </a>
           <div className="content">
             <a className="author">{subComment.getIn(['author', 'nick'])}</a>
+            {iconImg}
             <div className="metadata">
               <span className="date">{subComment.get('created_at')}</span>
             </div>
@@ -68,10 +88,11 @@ const CommentItem = React.createClass({
     return (
       <div className="comment" key={comment.get('id')}>
         <a className="avatar">
-          <img src="/images/default-male.png" />
+          {avatarImg}
         </a>
         <div className="content">
           <a className="author">{author.get('nick')}</a>
+          {iconImg}
           <div className="metadata">
             <div className="date">{comment.get('created_at')}</div>
           </div>
@@ -139,7 +160,7 @@ const CommentList = React.createClass({
       )
     });
     return (
-      <div>
+      <div className="comment_list">
         {commentsNode}
       </div>
     )

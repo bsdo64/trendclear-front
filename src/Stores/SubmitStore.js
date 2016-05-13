@@ -43,6 +43,13 @@ class SubmitStore{
       );
     }
   }
+  onRemoveContent() {
+    this.setMergeState(Map({
+      selectPrefixId: null,
+      title: '',
+      content: null
+    }));
+  }
 }
 
 export default alt.createStore(immutable(SubmitStore));

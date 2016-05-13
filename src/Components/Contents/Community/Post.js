@@ -1,7 +1,8 @@
 import React from 'react';
 
 require('./Post.scss');
-const BestPost = React.createClass({
+const Post = React.createClass({
+  displayName: 'Post',
   render() {
     const IPost = this.props.post;
     const postId = IPost.get('result').toString();
@@ -14,7 +15,7 @@ const BestPost = React.createClass({
     let avatarImg, iconImg;
 
     if (avatar_img) {
-      avatarImg = <img src={'/images/files/' + avatar_img + '.png'} />;
+      avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
     } else {
       if (sex) {
         avatarImg = <img src="/images/default-male.png" />;
@@ -101,4 +102,4 @@ const BestPost = React.createClass({
   }
 });
 
-export default BestPost;
+export default Post;

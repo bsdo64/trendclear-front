@@ -14,8 +14,6 @@ const SubmitContents = React.createClass({
   propTypes: {},
 
   componentDidMount() {
-    const { SubmitStore } = this.props;
-    const initContent = SubmitStore.get('content');
     let that = this;
     this.editor = new MediumEditor('#post_editor', medium);
     this.editor.subscribe('editableInput', function (event, editable) {
@@ -23,10 +21,12 @@ const SubmitContents = React.createClass({
       that.handleContent()
     });
     $('#post_editor').mediumInsert(mediumInsertConfig(this.editor));
+
+    // init content
+    const initContent = this.props.SubmitStore.get('content');
     if (initContent) {
       this.editor.setContent(initContent);
     }
-
   },
   
   submitPost() {
@@ -61,10 +61,14 @@ const SubmitContents = React.createClass({
 
   setContent(content) {
     "use strict";
-
-
+    
   },
 
+  removeContnet() {
+    "use strict";
+    PostActions.removeContent();
+    this.editor.setContent(null);
+  },
 
   render() {
     const { LoginStore, UserStore, SubmitStore } = this.props;
@@ -128,6 +132,7 @@ const SubmitContents = React.createClass({
                        id="post_submit_title"
                        type="text"
                        placeholder="제목을 입력하세요"
+                       value={SubmitStore.get('title')}
                        onChange={this.handleTitle} />
               </div>
             </div>
@@ -165,7 +170,7 @@ const SubmitContents = React.createClass({
               <button className="ui primary button" onClick={this.submitPost}>
                 저장하기
               </button>
-              <button className="ui button">
+              <button className="ui button" onClick={this.removeContnet}>
                 다시 쓰기
               </button>
             </div>

@@ -53,9 +53,10 @@ export default class PaginatorApp extends React.Component {
     );
 
     return (
-      <Paginator.Context
-        className="ui pagination menu small"
-        tags={{
+      <div className="pagination_box">
+        <Paginator.Context
+          className="ui pagination menu small"
+          tags={{
           button: {
             tag: 'a'
           },
@@ -69,36 +70,36 @@ export default class PaginatorApp extends React.Component {
             tag: 'a'
           }
         }}
-        segments={segmentize({
+          segments={segmentize({
             page: pagination.page,
             pages: pages,
             beginPages: 1,
             endPages: 1,
             sidePages: 3
           })}
-        onSelect={this.selectPage}
-        ellipsis={'…'}
-      >
-        { /*<Paginator.Button page={pagination.page - 10} className="item">{'< 10'}</Paginator.Button>*/ }
-        <Paginator.Button page={pagination.page - 1} className="ui item">{'<'}</Paginator.Button>
+          onSelect={this.selectPage}
+          ellipsis={'…'}
+        >
+          { /*<Paginator.Button page={pagination.page - 10} className="item">{'< 10'}</Paginator.Button>*/ }
 
-        <Paginator.Segment field="beginPages" className="item"/>
+          <Paginator.Button page={pagination.page - 1} className="ui item left_arrow">{'<'}</Paginator.Button>
+          <Paginator.Segment field="beginPages" className="item"/>
+          <Paginator.Ellipsis className="item disabled previousPages"
+                              previousField="beginPages" nextField="previousPages">...</Paginator.Ellipsis>
 
-        <Paginator.Ellipsis className="item disabled"
-                            previousField="beginPages" nextField="previousPages">...</Paginator.Ellipsis>
+          <Paginator.Segment field="previousPages" className="previous_pages"/>
+          <Paginator.Segment field="centerPage" className="ui active item"/>
+          <Paginator.Segment field="nextPages" className="next_pages"/>
 
-        <Paginator.Segment field="previousPages" className="previous_pages"/>
-        <Paginator.Segment field="centerPage" className="ui active item"/>
-        <Paginator.Segment field="nextPages" className="next_pages"/>
+          <Paginator.Ellipsis className="item disabled"
+                              previousField="nextPages" nextField="endPages">...</Paginator.Ellipsis>
 
-        <Paginator.Ellipsis className="item disabled"
-                            previousField="nextPages" nextField="endPages">...</Paginator.Ellipsis>
+          <Paginator.Segment field="endPages" className="next_pages"/>
 
-        <Paginator.Segment field="endPages" className="item"/>
-
-        <Paginator.Button page={pagination.page + 1} className="ui item">{'>'}</Paginator.Button>
-        { /*<Paginator.Button page={pagination.page + 10} className="item">{'10 >'}</Paginator.Button>*/ }
-      </Paginator.Context>
+          <Paginator.Button page={pagination.page + 1} className="ui item right_arrow">{'>'}</Paginator.Button>
+          { /*<Paginator.Button page={pagination.page + 10} className="item">{'10 >'}</Paginator.Button>*/ }
+        </Paginator.Context>
+      </div>
     );
   }
 }
