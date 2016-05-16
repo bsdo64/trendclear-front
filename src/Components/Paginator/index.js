@@ -21,6 +21,10 @@ export default class PaginatorApp extends React.Component {
     this.onPerPage = this.onPerPage.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({dataLength: nextProps.total})
+  }
+
   selectPage(page) {
     const state = this.state;
     const pagination = state.pagination || {};
