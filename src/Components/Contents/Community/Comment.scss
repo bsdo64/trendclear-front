@@ -55,10 +55,19 @@
       width: 540px;
       display: inline-block;
 
-      textarea {
-        min-height:35px;
-        height: 35px;
+      .comment_input {
+        border: 1px solid #cacaca;
+        padding: 10px;
+        outline: none;
+        min-height:37px;
         font-size:0.9em;
+
+        p {
+          margin-bottom: 5px;
+          &:last-child {
+            margin: 0;
+          }
+        }
       }
     }
     .ui.primary.submit.icon.button {
@@ -74,6 +83,14 @@
       .user_icon_img {
         width: 12px;
         margin-left: 5px;
+      }
+
+      .text {
+        .comment_text {
+          p {
+            margin-bottom: 5px;
+          }
+        }
       }
     }
   }

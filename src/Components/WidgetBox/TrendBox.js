@@ -13,6 +13,13 @@ const TrendBox = React.createClass({
         percent:  user.trendbox.get('exp') / user.trendbox.get('next_exp') * 100
       });
   },
+  componentWillReceiveProps(nextProps) {
+    const {user} = nextProps;
+    $('#exp_progress')
+      .progress({
+        percent:  user.trendbox.get('exp') / user.trendbox.get('next_exp') * 100
+      });
+  },
   test() {
     "use strict";
 
@@ -28,7 +35,8 @@ const TrendBox = React.createClass({
 
     const sex = user.profile.get('sex'),
           avatar_img = user.profile.get('avatar_img'),
-          icon_img = user.icon.getIn(['iconDef', 'icon_img']),
+          iconDef = user.icon ? user.icon.get('iconDef'): null,
+          icon_img = iconDef ? iconDef.get('icon_img'): null,
           grade_img = user.grade.getIn(['gradeDef', 'img']);
     let avatarImg, iconImg, gradeImg;
 

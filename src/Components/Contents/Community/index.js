@@ -106,7 +106,10 @@ const CommentItem = React.createClass({
             <div className="date">{comment.get('created_at')}</div>
           </div>
           <div className="text">
-            <p>{comment.get('content')}</p>
+            <div
+              className="comment_text"
+              dangerouslySetInnerHTML={{ __html: comment.get('content')}}
+            ></div>
           </div>
           <div className="actions">
             <div className="like_box" onClick={this.sendLike}>
@@ -179,20 +182,35 @@ const CommentList = React.createClass({
 require('./Comment.scss');
 const CommentBox = React.createClass({
   displayName: 'CommentBox',
+
+  componentDidMount() {
+    this.editor = new MediumEditor(this.refs.comment_content, {
+      toolbar: false,
+      disableDoubleReturn: true
+    });
+  },
+
   submitComment() {
     "use strict";
-
+    let allContents = this.editor.serialize();
+    let el = allContents['comment_input'].value;
     const comment = {
-      content: this.refs.comment_content.value.trim(),
+      content: el,
       postId: this.props.location.query.postId
     };
 
     CommentActions.submitComment(comment);
+    this.editor.setContent('');
   },
+
   render() {
     "use strict";
 
     const IPost = this.props.IPost;
+    const postId = IPost.get('result');
+    const post = IPost.getIn(['entities', 'posts', postId.toString()]);
+    const commentLength = post.get('comment_count');
+
     const comments = IPost.getIn(['entities', 'comments']);
     const author = IPost.getIn(['entities', 'author']);
     const results = comments ? Object.keys(comments.toJS()) : [];
@@ -201,7 +219,7 @@ const CommentBox = React.createClass({
       <div id="comment_box" className="ui comments">
 
         <div className="comment_header">
-          <div className="comment_count">댓글 {results.length}개</div>
+          <div className="comment_count">댓글 {commentLength}개</div>
           <ul className="comment_sort_box">
             <li>최신순</li>
             <li>좋아요순</li>
@@ -210,10 +228,12 @@ const CommentBox = React.createClass({
         </div>
         <form className="ui reply form">
           <div className="field">
-            <textarea
+            <div
+              id="comment_input"
               ref="comment_content"
+              className="comment_input"
               onChange={e => { let s = e.target.value.trim(); s=s.replace(/\r?\n/g, '<br />'); console.log(s)}}
-            />
+            ></div>
           </div>
           <div
             className="ui primary submit icon button"
@@ -230,9 +250,9 @@ const CommentBox = React.createClass({
         />
         
         <div className="ui center aligned container">
-          { (results.length > 0) &&
+          { (commentLength > 0) &&
             <Paginator
-              total={results.length}
+              total={commentLength}
               limit={10}
               page={1}
               handleSetPage={this.handleSetPage}

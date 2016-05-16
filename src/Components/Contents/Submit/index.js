@@ -42,7 +42,7 @@ const SubmitContents = React.createClass({
 
   handleTitle() {
     "use strict";
-    PostActions.handleTitle(this.refs.title.value.trim());
+    PostActions.handleTitle(this.refs.title.value);
   },
   handleContent() {
     "use strict";
@@ -78,7 +78,7 @@ const SubmitContents = React.createClass({
     const icon = UserStore.get('icon');
     const sex = profile.get('sex'),
       avatar_img = profile.get('avatar_img'),
-      icon_img = icon.get('img');
+      icon_img = icon ? icon.get('img'): null;
     let avatarImg, iconImg;
 
     if (avatar_img) {
@@ -104,7 +104,6 @@ const SubmitContents = React.createClass({
         return key==='id' ? 'value' : (key==='name' ? 'label' : key)
       })
     });
-    console.log(options);
     return (
       <div id="submit_box" className="ui items">
         <div className={"ui item post_item"}>
