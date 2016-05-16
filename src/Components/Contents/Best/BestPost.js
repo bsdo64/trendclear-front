@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import CommunityActions from '../../../Actions/CommunityActions';
 
 require('./BestPost.scss');
@@ -43,6 +44,10 @@ const BestPost = React.createClass({
       iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
     }
 
+    const categoryId = post.getIn(['forum', 'category', 'id']);
+    const forumId = post.getIn(['forum', 'id']);
+    const postUrl = `/community?categoryId=${categoryId}&forumId=${forumId}&postId=${postId}`;
+
     return (
       <div key={post.get('id')} className={"ui item " + styleClass}>
         {/* avatar */}
@@ -52,7 +57,7 @@ const BestPost = React.createClass({
 
         {/* meta */}
         <div className="ui content">
-          <h3 className="best_post_title"><a href={"/club/" + 'abc' + "/" + post.get('id')}>{post.get('title')}</a></h3>
+          <h3 className="best_post_title"><Link to={postUrl}>{post.get('title')}</Link></h3>
           <div className="meta best_post_meta">
             <div className="ui horizontal divided list">
               <div className="item">

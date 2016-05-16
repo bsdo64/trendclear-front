@@ -20,6 +20,11 @@ const CommentItem = React.createClass({
       liked: false
     };
   },
+
+  componentDidMount() {
+
+  },
+
   sendLike() {
     "use strict";
 
@@ -31,7 +36,20 @@ const CommentItem = React.createClass({
   toggleSubComment() {
     "use strict";
 
-    this.setState({subCommentOpen: !this.state.subCommentOpen})
+    this.setState({subCommentOpen: !this.state.subCommentOpen}, () => {
+
+      const commentId = this.props.comment.get('id');
+      const subCommentOpen = this.state.subCommentOpen;
+      function test() {
+        new MediumEditor(this.refs['sub_comment_content_' + commentId], {
+          toolbar: false,
+          disableDoubleReturn: true
+        })
+      }
+      if (subCommentOpen) {
+        setTimeout(test.bind(this), 0);
+      }
+    });
   },
 
   render() {
@@ -139,9 +157,13 @@ const CommentItem = React.createClass({
 
           {
             subCommentOpen &&
-            <form className="ui reply form">
+            <form className="ui reply form sub_comment_form">
               <div className="field">
-                <textarea></textarea>
+                <div
+                  id={"sub_comment_input_" + comment.get('id')}
+                  ref={"sub_comment_content_" + comment.get('id')}
+                  className="comment_input sub_comment_input"
+                ></div>
               </div>
               <div className="ui primary submit icon button">
                 <i className="icon edit"></i>
@@ -158,14 +180,13 @@ const CommentItem = React.createClass({
 const CommentList = React.createClass({
   render() {
     "use strict";
-    const {results, comments, author} = this.props;
+    const {comments, author} = this.props;
 
-    let commentsNode = results.map(function(commentId) {
-      const comment = comments.get(commentId.toString());
+    let commentsNode = comments.map(function(comment) {
       const commentAuthor = author.get(comment.get('author').toString());
       return (
         <CommentItem
-          key={commentId}
+          key={comment.get('id')}
           comment={comment}
           author={commentAuthor}
         />
@@ -188,6 +209,11 @@ const CommentBox = React.createClass({
       toolbar: false,
       disableDoubleReturn: true
     });
+  },
+
+  handleSetPage(pagination) {
+    console.log(pagination);
+    ClubSectionActions.requestPosts(this.props.CommunityStore.club.id, pagination);
   },
 
   submitComment() {
@@ -213,7 +239,10 @@ const CommentBox = React.createClass({
 
     const comments = IPost.getIn(['entities', 'comments']);
     const author = IPost.getIn(['entities', 'author']);
-    const results = comments ? Object.keys(comments.toJS()) : [];
+    const sortComments = comments ? comments.sortBy((value, key) => {
+      return -key;
+    }).toArray() : [];
+    const results = comments ? sortComments : [];
 
     return (
       <div id="comment_box" className="ui comments">
@@ -226,13 +255,12 @@ const CommentBox = React.createClass({
             <li>댓글순</li>
           </ul>
         </div>
-        <form className="ui reply form">
+        <form className="ui reply form ">
           <div className="field">
             <div
               id="comment_input"
               ref="comment_content"
               className="comment_input"
-              onChange={e => { let s = e.target.value.trim(); s=s.replace(/\r?\n/g, '<br />'); console.log(s)}}
             ></div>
           </div>
           <div
@@ -244,9 +272,8 @@ const CommentBox = React.createClass({
         </form>
 
         <CommentList
-          comments={comments}
           author={author}
-          results={results}
+          comments={results}
         />
         
         <div className="ui center aligned container">
@@ -323,6 +350,10 @@ const PostList = React.createClass({
 
 const Forum = React.createClass({
   displayName: 'Forum',
+  handleSetPage(pagination) {
+    console.log(pagination);
+    ClubSectionActions.requestPosts(this.props.CommunityStore.club.id, pagination);
+  },
   openLoginModal() {
     "use strict";
 
@@ -458,10 +489,6 @@ const Forum = React.createClass({
 
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
-
-  handleSetPage(pagination) {
-    ClubSectionActions.requestPosts(this.props.CommunityStore.club.id, pagination);
-  },
   render() {
     "use strict";
     const type = this.props.CommunityStore.get('type');

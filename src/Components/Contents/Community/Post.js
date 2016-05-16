@@ -37,7 +37,7 @@ const Post = React.createClass({
 
         {/* meta */}
         <div className="ui content">
-          <h3 className="best_post_title"><a href={"/club/" + 'abc' + "/" + post.get('id')}>{post.get('title')}</a></h3>
+          <h3 className="best_post_title"><a>{post.get('title')}</a></h3>
           <div className="meta best_post_meta">
             <div className="ui horizontal divided list">
               <div className="item">
