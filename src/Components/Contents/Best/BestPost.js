@@ -4,12 +4,6 @@ import CommunityActions from '../../../Actions/CommunityActions';
 
 require('./BestPost.scss');
 const BestPost = React.createClass({
-  getInitialState() {
-    return {
-      liked: false
-    };
-  },
-
   sendLike() {
     "use strict";
 
@@ -98,8 +92,8 @@ const BestPost = React.createClass({
           {/* buttons */}
           <div className="ui extra best_post_buttons">
             <div className="like_box">
-              <div className={'like_icon ' + (this.state.liked ? 'active' : '')} onClick={this.sendLike}>
-                <i className={'heart ' + (this.state.liked ? '' : 'outline') + ' icon'} />
+              <div className={'like_icon ' + (post.get('liked') ? 'active' : '')} onClick={this.sendLike}>
+                <i className={'heart ' + (post.get('liked')? '' : 'outline') + ' icon'} />
               </div>
               <a className="like_count">{post.get('like_count')}</a>
             </div>

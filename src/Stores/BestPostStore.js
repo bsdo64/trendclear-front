@@ -3,6 +3,7 @@ import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../Actions/AppActions';
 import PostActions from '../Actions/PostActions';
+import CommunityActions from '../Actions/CommunityActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class BestPostStore{
@@ -11,6 +12,7 @@ class BestPostStore{
 
     this.bindActions(AppActions);
     this.bindActions(PostActions);
+    this.bindActions(CommunityActions);
     this.state = Immutable.Map({});
 
     initListener(this);
@@ -30,13 +32,22 @@ class BestPostStore{
     const oldResult = this.state.getIn(['posts', 'postList', 'result']);
     const newResult = oldResult.concat(normalizedPosts.result);
 
-    console.log(newResult.toJS());
-
     const mergePosts = this.state.mergeDeep({posts: {postList: {entities: normalizedPosts.entities}}});
     const mergeResults = mergePosts.setIn(['posts', 'postList', 'result'], newResult);
     const mergeTotal = mergeResults.mergeDeep({posts: {collection: {total: total}}});
 
     this.setState(mergeTotal);
+  }
+
+  onLikePost(postId) {
+    const countPost = this.state.updateIn(['posts', 'postList', 'entities', 'posts', postId+''], post =>
+      post.mergeDeep({
+        liked: true,
+        like_count: post.get('like_count') + 1
+      })
+    );
+
+    this.setState(countPost);
   }
 }
 
