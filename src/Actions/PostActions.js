@@ -1,5 +1,7 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
+import {normalize, arrayOf} from 'normalizr';
+import {post, comment, subComment} from './normalizr/schema';
 
 class PostActions {
   handleTitle(title) {
@@ -26,6 +28,25 @@ class PostActions {
   }
   removeContent() {
     return true;
+  }
+  
+  getBestPost() {
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .get('/best')
+        .then((res) => {
+
+          let response = {
+            results: normalize(res.results, arrayOf(post)),
+            total: res.total
+          };
+          dispatch(response);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
   }
 }
 

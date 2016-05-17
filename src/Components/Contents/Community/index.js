@@ -212,8 +212,9 @@ const CommentBox = React.createClass({
   },
 
   handleSetPage(pagination) {
-    console.log(pagination);
-    ClubSectionActions.requestPosts(this.props.CommunityStore.club.id, pagination);
+    let location = this.props.location;
+    let url = `${location.pathname}?categoryId=${location.query.categoryId}&forumId=${location.query.forumId}&postId=${location.query.postId}&p=${location.query.p}&comment_p=${pagination.page}`;
+    browserHistory.push(url);
   },
 
   submitComment() {
@@ -351,8 +352,11 @@ const PostList = React.createClass({
 const Forum = React.createClass({
   displayName: 'Forum',
   handleSetPage(pagination) {
-    console.log(pagination);
-    ClubSectionActions.requestPosts(this.props.CommunityStore.club.id, pagination);
+
+    let location = this.props.location;
+    let url = `${location.pathname}?categoryId=${location.query.categoryId}&forumId=${location.query.forumId}&postId=${location.query.postId}&p=${pagination.page}`;
+    browserHistory.push(url);
+
   },
   openLoginModal() {
     "use strict";
