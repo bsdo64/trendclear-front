@@ -1,6 +1,6 @@
 import alt from '../Utils/alt';
 import {normalize, arrayOf} from 'normalizr';
-import {post, prefix, comment} from './normalizr/schema';
+import {club, post, prefix, comment} from './normalizr/schema';
 
 class AppActions {
   init(bootstrapData) {
@@ -23,6 +23,12 @@ class AppActions {
     if (bootstrapData.CommunityStore && bootstrapData.CommunityStore.post) {
       const IPost = bootstrapData.CommunityStore.post;
       bootstrapData.CommunityStore.post.IPost = normalize(IPost, post);
+    }
+
+
+    if (bootstrapData.GnbStore && bootstrapData.GnbStore.gnbMenu) {
+      const INCat = bootstrapData.GnbStore.gnbMenu.data;
+      bootstrapData.GnbStore.gnbMenu.INCat = normalize(INCat, arrayOf(club));
     }
 
     return bootstrapData;

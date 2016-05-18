@@ -1,15 +1,21 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import CommunityActions from '../../../Actions/CommunityActions';
+import LoginActions from '../../../Actions/LoginActions';
 
 require('./BestPost.scss');
 const BestPost = React.createClass({
   sendLike() {
     "use strict";
 
-    this.setState({liked: true}, () => {
+    const {LoginStore} = this.props;
+    const modalFlag = LoginStore.get('openLoginModal');
+    const isLogin = LoginStore.get('isLogin');
+    if (!isLogin) {
+      LoginActions.toggleLoginModal(modalFlag, '/');
+    } else {
       CommunityActions.likePost(this.props.postId);
-    })
+    }
   },
   render() {
     const postList = this.props.postList;

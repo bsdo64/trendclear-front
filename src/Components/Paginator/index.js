@@ -22,7 +22,13 @@ export default class PaginatorApp extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({dataLength: nextProps.total})
+    this.setState({
+      dataLength: nextProps.total,
+      pagination: {
+        page: nextProps.page,
+        perPage: nextProps.limit
+      }
+    })
   }
 
   selectPage(page) {
@@ -104,7 +110,7 @@ export default class PaginatorApp extends React.Component {
           <Paginator.Segment field="endPages" className="next_pages"/>
 
           {
-            (pages !== pagination.page) &&
+            (pages != pagination.page) &&
             <Paginator.Button page={pagination.page + 1} className="ui item right_arrow">{'>'}</Paginator.Button>
           }
           { /*<Paginator.Button page={pagination.page + 10} className="item">{'10 >'}</Paginator.Button>*/ }

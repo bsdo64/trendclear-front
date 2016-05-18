@@ -8,6 +8,7 @@ import AppActions from '../Actions/AppActions';
 
 var LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
 var LeftColCategoryMenu = require('../Container/LeftCol/CategoryMenu.js');
+var BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 var HeaderMyMenu = require('../Container/Header/MyMenu');
 var LoginModalContainer = require('../Container/Modal/LoginModalContainer');
 var WidgetContainer = require('../Container/RightCol/WidgetContainer');
@@ -39,7 +40,7 @@ Api
             components={{
           HeaderMyMenu: HeaderMyMenu,
           LeftColGnb: LeftColGlobalCategoryNav,
-          LeftColMenu: LeftColCategoryMenu,
+          LeftColMenu: BestCategoryMenu,
           LoginModalContainer: LoginModalContainer,
           WidgetContainer: WidgetContainer,
           ContentsContainer: ContentsContainer

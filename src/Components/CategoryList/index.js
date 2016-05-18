@@ -31,7 +31,7 @@ const CategoryItem = React.createClass({
               categoryId: subList.get('id'),
               forumId: list.get('id')
             };
-            
+
             return (
               <div key={Math.random()} className="sub_category item">
                 <Link to={{pathname: '/community', query: q}}>{list.get('title')}</Link>
@@ -87,9 +87,13 @@ const CategoryList = React.createClass({
   render() {
     const { GnbStore } = this.props;
     const categories = GnbStore.get('categoryMenu').get('categories');
-    return List.isList(categories) ?
-      <div>{categories.map(this.createCategoryItem)}</div> :
-      <div>{this.createCategoryItem(categories)}</div>;
+    if (categories) {
+      return List.isList(categories) ?
+        <div>{categories.map(this.createCategoryItem)}</div> :
+        <div>{this.createCategoryItem(categories)}</div>;
+    } else {
+      return <div></div>;
+    }
   }
 });
 

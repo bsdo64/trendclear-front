@@ -49,11 +49,11 @@ const BestContents = React.createClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
-    $('.ui.embed').embed();
+    $('.ui.embed').embed('refresh');
   },
 
   render() {
-    const {BestPostStore} = this.props;
+    const {BestPostStore, LoginStore} = this.props;
     const posts = BestPostStore.get('posts');
     const collection = BestPostStore.get('collection');
 
@@ -61,6 +61,7 @@ const BestContents = React.createClass({
       <div id="best_contents" ref="best_contents">
 
         <BestList
+          LoginStore={LoginStore}
           posts={posts}
         />
 

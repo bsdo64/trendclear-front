@@ -219,19 +219,31 @@ const CommentBox = React.createClass({
 
   submitComment() {
     "use strict";
-    let allContents = this.editor.serialize();
-    let el = allContents['comment_input'].value;
-    const comment = {
-      content: el,
-      postId: this.props.location.query.postId
-    };
 
-    CommentActions.submitComment(comment);
-    this.editor.setContent('');
+    const {LoginStore} = this.props;
+    const isLogin = LoginStore.get('isLogin');
+
+    if (isLogin) {
+      const allContents = this.editor.serialize();
+      const el = allContents['comment_input'].value;
+      const comment = {
+        content: el,
+        postId: this.props.location.query.postId
+      };
+
+      CommentActions.submitComment(comment);
+      this.editor.setContent('');
+    } else {
+      const modalFlag = LoginStore.get('openLoginModal');
+      const location = this.props.location;
+      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+    }
   },
 
   render() {
     "use strict";
+
+    const commentPage = this.props.location.query.comment_p ? this.props.location.query.comment_p : 1;
 
     const IPost = this.props.IPost;
     const postId = IPost.get('result');
@@ -282,7 +294,7 @@ const CommentBox = React.createClass({
             <Paginator
               total={commentLength}
               limit={10}
-              page={1}
+              page={commentPage}
               handleSetPage={this.handleSetPage}
             />
           }
@@ -354,7 +366,11 @@ const Forum = React.createClass({
   handleSetPage(pagination) {
 
     let location = this.props.location;
-    let url = `${location.pathname}?categoryId=${location.query.categoryId}&forumId=${location.query.forumId}&postId=${location.query.postId}&p=${pagination.page}`;
+    let url = `${location.pathname}?` +
+                `categoryId=${location.query.categoryId}&` +
+                `forumId=${location.query.forumId}&` +
+                (location.query.postId ? `postId=${location.query.postId}&` : '') +
+                `p=${pagination.page}`;
     browserHistory.push(url);
 
   },

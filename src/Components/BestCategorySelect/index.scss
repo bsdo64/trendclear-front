@@ -59,3 +59,44 @@ menu.sub_category_list {
     }
   }
 }
+
+#best_filter {
+  .sub_category.item {
+    margin-bottom: 10px;
+  }
+
+
+  .Select {
+    .Select-control {
+      background-color: #3769AC;
+      border: none;
+      height: 12px;
+    }
+
+    &.Select--multi .Select-value {
+      background-color: #ebf5ff;
+      border: none;
+      color: #3265AB;
+      margin-left: 2px;
+      margin-top: 2px;
+    }
+
+    .Select-input {
+      height: 24px;
+      color: #fff;
+
+      &>input {
+        padding: 2px 0 2px;
+        line-height: 22px;
+      }
+    }
+    .Select-clear-zone {
+      color: #fff;
+    }
+    .Select-arrow-zone {
+      .Select-arrow {
+        color: #fff;
+      }
+    }
+  }
+}
