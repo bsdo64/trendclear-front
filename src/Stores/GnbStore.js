@@ -33,6 +33,10 @@ class GnbStore{
     let state = this.state.setIn(['gnbMenu', 'openSideNow'], clubId);
     this.setMergeState(state);
   }
+
+  onUpdateFilter(val) {
+    this.setMergeState(val);
+  }
 }
 
 export default alt.createStore(immutable(GnbStore));

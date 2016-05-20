@@ -9,8 +9,11 @@ const BestContents = React.createClass({
     // some example callbacks
     $('#contents')
       .visibility('destroy');
+    PostActions.resetBestPage();
   },
   componentDidMount() {
+    const self = this;
+
     $('.ui.embed').embed();
 
     $('#contents')
@@ -28,34 +31,38 @@ const BestContents = React.createClass({
         onBottomVisible: function(calculations) {
           console.log('onBottomVisible', calculations);
           // top of element passed
-
-          PostActions.getBestPost();
+          self.getMoreBest();
         },
         onBottomPassed: function(calculations) {
           console.log('onBottomPassed', calculations);
           // top of element passed
-        },
-        onPassed: {
-          '40%': function(calculations) {
-            console.log(40, calculations);
-            // do something at 40%
-          },
-          '80%': function(calculations) {
-            console.log(80, calculations);
-            // do something at 80%
-          }
         }
-      });
+      })
   },
 
   componentDidUpdate(prevProps, prevState) {
     $('.ui.embed').embed('refresh');
   },
 
+  getMoreBest() {
+    "use strict";
+
+    const {BestPostStore} = this.props;
+    const noMore = BestPostStore.get('noMore');
+    const collection = BestPostStore.getIn(['posts', 'collection']);
+    const currentPage = collection.get('current_page');
+    const nextPage = collection.get('next_page');
+
+    if (!noMore) {
+      PostActions.getBestPost({page: nextPage});
+    }
+  },
+
   render() {
     const {BestPostStore, LoginStore} = this.props;
     const posts = BestPostStore.get('posts');
     const collection = BestPostStore.get('collection');
+    const noMore = BestPostStore.get('noMore');
 
     return (
       <div id="best_contents" ref="best_contents">
@@ -65,9 +72,12 @@ const BestContents = React.createClass({
           posts={posts}
         />
 
-        <BestPagination
-          collection={collection}
-        />
+        {
+          !noMore &&
+          <BestPagination
+            collection={collection}
+          />
+        }
       </div>
     )
   }

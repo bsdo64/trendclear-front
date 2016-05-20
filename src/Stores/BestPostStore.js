@@ -29,14 +29,38 @@ class BestPostStore{
     const normalizedPosts = response.results;
     const total = response.total;
 
-    const oldResult = this.state.getIn(['posts', 'postList', 'result']);
-    const newResult = oldResult.concat(normalizedPosts.result);
+    if (normalizedPosts.result.length < 20) {
+      const noMorePost = this.state.set('noMore', true);
+      this.setState(noMorePost);
+    } else {
+      const oldResult = this.state.getIn(['posts', 'postList', 'result']);
+      const newResult = oldResult.concat(normalizedPosts.result);
 
-    const mergePosts = this.state.mergeDeep({posts: {postList: {entities: normalizedPosts.entities}}});
-    const mergeResults = mergePosts.setIn(['posts', 'postList', 'result'], newResult);
-    const mergeTotal = mergeResults.mergeDeep({posts: {collection: {total: total}}});
+      const mergePosts = this.state.mergeDeep({posts: {postList: {entities: normalizedPosts.entities}}});
+      const mergeResults = mergePosts.setIn(['posts', 'postList', 'result'], newResult);
+      const mergeTotal = mergeResults.mergeDeep({posts: {collection: {total: total}}});
 
-    this.setState(mergeTotal);
+      const updateCollection = mergeTotal.updateIn(['posts', 'collection'], col =>
+        col.merge({
+          current_page: col.get('current_page') + 1,
+          next_page: col.get('next_page') + 1
+        })
+      );
+
+      this.setState(updateCollection);
+    }
+  }
+
+  onResetBestPage() {
+    const updateCollection = this.state.updateIn(['posts', 'collection'], col =>
+      col.merge({
+        current_page: 1,
+        next_page: 2
+      })
+    );
+
+    const updateNoMore = updateCollection.set('noMore', false);
+    this.setState(updateNoMore);
   }
 
   onLikePost(postId) {
