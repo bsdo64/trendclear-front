@@ -1,7 +1,7 @@
-import { List } from 'immutable';
 import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
-import {normalize, arrayOf} from 'normalizr';
+import _ from 'lodash';
+import GnbActions from '../../Actions/GnbActions';
 
 var React = require('react');
 
@@ -127,28 +127,44 @@ const CategoryList = React.createClass({
 const Temp = React.createClass({
   getInitialState() {
     return {
-      filtering: false
-    }
+      openFilter: false
+    };
+  },
+  
+  updateFilterValue(club, selectArray) {
+    "use strict";
+    
+    GnbActions.updateFilter({[club]: selectArray});
   },
 
-  toggleFiltering() {
-    
+  toggleFilter() {
+    "use strict";
+
+    this.setState({openFilter: !this.state.openFilter});
   },
+  
   render() {
     "use strict";
 
-    var options = [
-      { value: 'one', label: 'One' },
-      { value: 'two', label: 'Two' },
-      { value: 'three', label: 'three' },
-      { value: 'four', label: 'four' },
-      { value: 'five', label: 'five' },
-      { value: 'he', label: 'he' },
-    ];
+    const {GnbStore} = this.props;
+    const INCat = GnbStore.getIn(['gnbMenu', 'INCat']);
+    const clubs = INCat ? INCat.getIn(['entities', 'clubs']).toJS(): {};
+    const categoryGroups = INCat ? INCat.getIn(['entities', 'categoryGroups']).toJS(): {};
+    const categories = INCat ? INCat.getIn(['entities', 'categories']).toJS(): {};
 
-    function logChange(val) {
-      console.log("Selected: ", val);
-    }
+    const clubMap = _.map(clubs, (value, key) => {
+      return {value: key, label: value.title};
+    });
+    const categoryGroupsMap = _.map(categoryGroups, (value, key) => {
+      return {value: key, label: value.title};
+    });
+    const categoriesMap = _.map(categories, (value, key) => {
+      return {value: key, label: value.title};
+    });
+
+    const clubValue = GnbStore.get('clubValue') ? GnbStore.get('clubValue').toJS() : [];
+    const categoryGroupValue = GnbStore.get('categoryGroupValue') ? GnbStore.get('categoryGroupValue').toJS() : [];
+    const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
 
     return <div>
         <div id="sub_category">
@@ -163,52 +179,49 @@ const Temp = React.createClass({
           <ul >
             <li key={Math.random()}>
               <h5 className="">
-                <Link to={'/'}>{'필터링'}</Link>
+                <a onClick={this.toggleFilter}>{'필터링'}</a>
               </h5>
 
-              <div key={Math.random()} className="sub_category item">
-                <Link to={'/'}>{'클럽'}</Link>
-                <Select
-                  multi
-                  name="form-field-name"
-                  value="one"
-                  options={options}
-                  onChange={logChange}
-                />
-              </div>
-
-              <div key={Math.random()} className="sub_category item">
-                <Link to={'/'}>{'카테고리 그룹'}</Link>
-                <Select
-                  multi
-                  name="form-field-name"
-                  value="one"
-                  options={options}
-                  onChange={logChange}
-                />
-              </div>
-
-              <div key={Math.random()} className="sub_category item">
-                <Link to={'/'}>{'카테고리'}</Link>
-                <Select
-                  multi
-                  name="form-field-name"
-                  value={["one", 'two', 'he', 'three', 'four', 'five']}
-                  options={options}
-                  onChange={logChange}
-                />
-              </div>
-
-              <div key={Math.random()} className="sub_category item">
-                <Link to={'/'}>{'게시판'}</Link>
-                <Select
-                  multi
-                  name="form-field-name"
-                  value="one"
-                  options={options}
-                  onChange={logChange}
-                />
-              </div>
+              {
+                this.state.openFilter &&
+                [
+                  <div key={Math.random()} className="sub_category item">
+                    <Link to={'/'}>{'클럽'}</Link>
+                    <Select
+                      multi
+                      name="form-field-name"
+                      placeholder="클럽 선택 .."
+                      value={clubValue}
+                      options={clubMap}
+                      onChange={this.updateFilterValue.bind(this, 'clubValue')}
+                    />
+                  </div>
+                  ,
+                  <div key={Math.random()} className="sub_category item">
+                    <Link to={'/'}>{'카테고리 그룹'}</Link>
+                    <Select
+                      multi
+                      name="form-field-name"
+                      placeholder="그룹 선택 .."
+                      value={categoryGroupValue}
+                      options={categoryGroupsMap}
+                      onChange={this.updateFilterValue.bind(this, 'categoryGroupValue')}
+                    />
+                  </div>
+                  ,
+                  <div key={Math.random()} className="sub_category item">
+                    <Link to={'/'}>{'카테고리'}</Link>
+                    <Select
+                      multi
+                      name="form-field-name"
+                      placeholder="카테고리 선택 .."
+                      value={categoryValue}
+                      options={categoriesMap}
+                      onChange={this.updateFilterValue.bind(this, 'categoryValue')}
+                    />
+                  </div>
+                ]
+              }
             </li>
           </ul>
         </menu>

@@ -71,6 +71,11 @@ menu.sub_category_list {
       background-color: #3769AC;
       border: none;
       height: 12px;
+
+      .Select-placeholder {
+        line-height: 24px;
+        color:#fff;
+      }
     }
 
     &.Select--multi .Select-value {

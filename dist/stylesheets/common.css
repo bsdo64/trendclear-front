@@ -17,6 +17,11 @@
     z-index: 100; }
     #header .head_contents .top_area {
       height: 50px;
+      width: 100%;
+      left: 0;
+      top: 0;
+      position: fixed;
+      z-index: 100;
       background: #27485e; }
       #header .head_contents .top_area .top_contents {
         position: relative;

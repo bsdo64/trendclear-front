@@ -30,11 +30,11 @@ class PostActions {
     return true;
   }
   
-  getBestPost() {
+  getBestPost(params) {
     return (dispatch) => {
       Api
         .setType('/ajax')
-        .get('/best')
+        .get('/best', params)
         .then((res) => {
 
           let response = {
@@ -47,6 +47,10 @@ class PostActions {
           return err;
         });
     };
+  }
+
+  resetBestPage() {
+    return true;
   }
 }
 

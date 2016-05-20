@@ -7,6 +7,10 @@ class GnbActions {
   openSideCategory(clubId) {
     return clubId;
   }
+
+  updateFilter(val) {
+    return val
+  }
 }
 
 module.exports = alt.createActions(GnbActions);

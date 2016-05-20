@@ -264,8 +264,8 @@ const CommentBox = React.createClass({
           <div className="comment_count">댓글 {commentLength}개</div>
           <ul className="comment_sort_box">
             <li>최신순</li>
-            <li>좋아요순</li>
-            <li>댓글순</li>
+            {/* <li>좋아요순</li>*/}
+            {/*<li>댓글순</li>*/}
           </ul>
         </div>
         <form className="ui reply form ">
@@ -315,7 +315,7 @@ const PostList = React.createClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
-    $('.ui.embed').embed();
+    $('.ui.embed').embed('refresh');
   },
 
 
