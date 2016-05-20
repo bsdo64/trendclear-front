@@ -125,6 +125,15 @@ const CategoryList = React.createClass({
 });
 
 const Temp = React.createClass({
+  getInitialState() {
+    return {
+      filtering: false
+    }
+  },
+
+  toggleFiltering() {
+    
+  },
   render() {
     "use strict";
 

@@ -29,6 +29,10 @@
       <script src="/blueimp-file-upload/js/jquery.fileupload.js"></script>
       <script src="/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.min.js"></script>
 
+      {{#if production}}
+      <script src="/_assets/bundle-Entry.js"></script>
+      {{else}}
       <script src="http://localhost:2992/_assets/bundle-Entry.js"></script>
+      {{/if}}
   </body>
 </html>
