@@ -49,7 +49,35 @@ class CommunityStore{
 
     this.setMergeState(addListIncrement.toJS());
   }
-  
+
+  onSubmitSubComment(IComment) {
+
+    // const loc = browserHistory.createLocation(window.location);
+    // browserHistory.replace(
+    //   loc.pathname + '?categoryId=' + loc.query.categoryId +
+    //   '&forumId=' + loc.query.forumId +
+    //   '&postId=' + loc.query.postId +
+    //   (loc.query.p ? ('&p=' + loc.query.p) : '') +
+    //   '&comment_p=1'
+    // );
+
+
+    let commentId = IComment.commentId;
+    let subCommentId = IComment.result;
+    delete IComment.commentId;
+    delete IComment.result;
+
+    let addCommentState = this.state.mergeDeep({post: {IPost: {entities: IComment.entities }}});
+
+    let addSubComment = addCommentState.updateIn(['post', 'IPost', 'entities', 'comments', commentId+'', 'subComments'], list =>
+      list.push(subCommentId)
+    );
+    let addIncrement = addSubComment.updateIn(['post', 'IPost', 'entities', 'comments', commentId+'', 'sub_comment_count'], value =>
+      value + 1
+    );
+
+    this.setMergeState(addIncrement.toJS());
+  }
 }
 
 export default alt.createStore(immutable(CommunityStore));

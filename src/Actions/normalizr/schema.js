@@ -32,6 +32,10 @@ comment.define({
   subComments: arrayOf(subComment)
 });
 
+subComment.define({
+  author: author
+});
+
 post.define({
   comments: arrayOf(comment),
   author: author

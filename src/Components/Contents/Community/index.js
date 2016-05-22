@@ -41,7 +41,7 @@ const CommentItem = React.createClass({
       const commentId = this.props.comment.get('id');
       const subCommentOpen = this.state.subCommentOpen;
       function test() {
-        new MediumEditor(this.refs['sub_comment_content_' + commentId], {
+        this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], {
           toolbar: false,
           disableDoubleReturn: true
         })
@@ -52,11 +52,33 @@ const CommentItem = React.createClass({
     });
   },
 
+  submitSubComment(commentId) {
+    "use strict";
+
+    const {LoginStore} = this.props;
+    const isLogin = LoginStore.get('isLogin');
+
+    if (isLogin) {
+      const allContents = this.editor.serialize();
+      const el = allContents['sub_comment_input_' + commentId].value;
+      const comment = {
+        content: el,
+        commentId: commentId
+      };
+
+      CommentActions.submitSubComment(comment);
+      this.editor.setContent('');
+    } else {
+      const modalFlag = LoginStore.get('openLoginModal');
+      const location = this.props.location;
+      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+    }
+  },
+
   render() {
     "use strict";
 
-    const comment = this.props.comment;
-    const author = this.props.author;
+    const {comment, author, authors, subComments} = this.props;
     const subCommentOpen = this.state.subCommentOpen;
 
     const sex = author.getIn(['profile', 'sex']),
@@ -78,20 +100,44 @@ const CommentItem = React.createClass({
       iconImg = <img className="user_icon_img" src={'/images/' + icon_img}/>;
     }
 
-    function subCommentItem(subComment) {
+    function subCommentItem(subCommentId) {
+      const subComment = subComments.get(subCommentId.toString());
+      const subCommentAuthor = authors.get(subComment.get('author').toString());
+
+      const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
+        sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
+        sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
+      let subAvatarImg, subIconImg;
+
+      if (sub_avatar_img) {
+        subAvatarImg = <img src={'/image/uploaded/files/' + sub_avatar_img} />;
+      } else {
+        if (subCommentSex) {
+          subAvatarImg = <img src="/images/default-male.png" />;
+        } else {
+          subAvatarImg = <img src="/images/default-female.png" />;
+        }
+      }
+
+      if (sub_icon_img) {
+        subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
+      }
+
       return (
         <div className="comment" key={subComment.get('id')}>
           <a className="avatar">
-            {avatarImg}
+            {subAvatarImg}
           </a>
           <div className="content">
-            <a className="author">{subComment.getIn(['author', 'nick'])}</a>
-            {iconImg}
+            <a className="author">{subCommentAuthor.get('nick')}</a>
+            {subIconImg}
             <div className="metadata">
               <span className="date">{subComment.get('created_at')}</span>
             </div>
             <div className="text">
-              <p>{subComment.get('content')}</p>
+              <div className="comment_text"
+                dangerouslySetInnerHTML={{ __html: subComment.get('content')}}
+              ></div>
             </div>
             <div className="actions">
               <div className="like_box">
@@ -165,7 +211,7 @@ const CommentItem = React.createClass({
                   className="comment_input sub_comment_input"
                 ></div>
               </div>
-              <div className="ui primary submit icon button">
+              <div className="ui primary submit icon button" onClick={this.submitSubComment.bind(this, comment.get('id'))}>
                 <i className="icon edit"></i>
               </div>
             </form>
@@ -180,15 +226,18 @@ const CommentItem = React.createClass({
 const CommentList = React.createClass({
   render() {
     "use strict";
-    const {comments, author} = this.props;
+    const {comments, author, subComments, LoginStore} = this.props;
 
     let commentsNode = comments.map(function(comment) {
       const commentAuthor = author.get(comment.get('author').toString());
       return (
         <CommentItem
+          LoginStore={LoginStore}
           key={comment.get('id')}
           comment={comment}
           author={commentAuthor}
+          authors={author}
+          subComments={subComments}
         />
       )
     });
@@ -252,6 +301,8 @@ const CommentBox = React.createClass({
 
     const comments = IPost.getIn(['entities', 'comments']);
     const author = IPost.getIn(['entities', 'author']);
+    const subComments = IPost.getIn(['entities', 'subComments']);
+
     const sortComments = comments ? comments.sortBy((value, key) => {
       return -key;
     }).toArray() : [];
@@ -285,8 +336,10 @@ const CommentBox = React.createClass({
         </form>
 
         <CommentList
+          LoginStore={this.props.LoginStore}
           author={author}
           comments={results}
+          subComments={subComments}
         />
         
         <div className="ui center aligned container">

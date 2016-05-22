@@ -19,7 +19,24 @@ class CommentActions {
         });
     };
   }
-  
+
+  submitSubComment(params) {
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .post('/community/subComment', params)
+        .then((res) => {
+
+          let response = normalize(res, subComment);
+          response.commentId = res.commentId;
+          dispatch(response);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
+
 }
 
 export default alt.createActions(CommentActions);
