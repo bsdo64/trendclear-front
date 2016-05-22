@@ -1,4 +1,5 @@
 import React from 'react';
+import CommunityActions from '../../../Actions/CommunityActions';
 
 require('./Post.scss');
 const Post = React.createClass({

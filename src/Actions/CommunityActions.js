@@ -28,6 +28,10 @@ class CommunityActions {
         });
     };
   }
+
+  resetPost() {
+    return true;
+  }
 }
 
 module.exports = alt.createActions(CommunityActions);

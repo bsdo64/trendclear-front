@@ -61,7 +61,6 @@ class CommunityStore{
     //   '&comment_p=1'
     // );
 
-
     let commentId = IComment.commentId;
     let subCommentId = IComment.result;
     delete IComment.commentId;
@@ -77,6 +76,13 @@ class CommunityStore{
     );
 
     this.setMergeState(addIncrement.toJS());
+  }
+
+  onResetPost() {
+    this.setState(Map({
+      posts: {},
+      noMore: false
+    }));
   }
 }
 

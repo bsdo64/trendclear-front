@@ -80,6 +80,9 @@ const CommentItem = React.createClass({
 
     const {comment, author, authors, subComments} = this.props;
     const subCommentOpen = this.state.subCommentOpen;
+    const sortSubComments = comment.get('subComments') ? comment.get('subComments').sortBy((value, key) => {
+      return -key;
+    }).toArray() : [];
 
     const sex = author.getIn(['profile', 'sex']),
       avatar_img = author.getIn(['profile', 'avatar_img']),
@@ -195,9 +198,9 @@ const CommentItem = React.createClass({
             </div>
           </div>
           {
-            subCommentOpen && comment.get('subComments') &&
+            subCommentOpen && (sortSubComments.length > 0) &&
             <div className="comments">
-              {comment.get('subComments').map(subCommentItem)}
+              {sortSubComments.map(subCommentItem)}
             </div>
           }
 
@@ -226,7 +229,7 @@ const CommentItem = React.createClass({
 const CommentList = React.createClass({
   render() {
     "use strict";
-    const {comments, author, subComments, LoginStore} = this.props;
+    const {comments, author, subComments, LoginStore, location} = this.props;
 
     let commentsNode = comments.map(function(comment) {
       const commentAuthor = author.get(comment.get('author').toString());
@@ -238,6 +241,7 @@ const CommentList = React.createClass({
           author={commentAuthor}
           authors={author}
           subComments={subComments}
+          location={location}
         />
       )
     });
@@ -337,6 +341,7 @@ const CommentBox = React.createClass({
 
         <CommentList
           LoginStore={this.props.LoginStore}
+          location={this.props.location}
           author={author}
           comments={results}
           subComments={subComments}
@@ -601,8 +606,8 @@ const CommunityContents = React.createClass({
 
     } else {
       return (
-        <div>
-          Hello world!
+        <div className="ui active inverted dimmer">
+          <div className="ui large text loader">로딩중..</div>
         </div>
       )
     }
