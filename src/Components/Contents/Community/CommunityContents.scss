@@ -8,6 +8,26 @@
     background: #3769AC;
     font-weight: normal;
   }
+
+  td {
+    a.article_title {
+      max-width: 350px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+
+    span {
+      padding-left: 5px;
+      display: inline-block;
+      position: absolute;
+      color: #aaa;
+      font-weight: bold;
+      font-size: 10px;
+    }
+  }
 }
 
 #forum_contents {

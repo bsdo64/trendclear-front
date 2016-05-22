@@ -294,7 +294,7 @@ const CommentBox = React.createClass({
             <Paginator
               total={commentLength}
               limit={10}
-              page={commentPage}
+              page={parseInt(commentPage, 10)}
               handleSetPage={this.handleSetPage}
             />
           }
@@ -345,14 +345,16 @@ const PostList = React.createClass({
         <td className="center aligned collapsing">{like_count}</td>
         <td className="center aligned collapsing">{view_count}</td>
         <td className="left aligned">
-          <Link to={'/community?' +
-                      'categoryId=' + forum.getIn(['category', 'id']) +
-                      '&forumId=' + forum.get('id') +
-                      '&postId=' + id +
-                      '&p=' + page} >
+          <Link
+            className="article_title"
+            to={'/community?' +
+                'categoryId=' + forum.getIn(['category', 'id']) +
+                '&forumId=' + forum.get('id') +
+                '&postId=' + id +
+                '&p=' + page} >
             {title}
           </Link>
-          { comment_count > 0 && '[' + comment_count + ']'}
+          <span>{ comment_count > 0 && '[' + comment_count + ']'}</span>
         </td>
         <td className="right aligned collapsing">{author.get('nick')}</td>
         <td className="center aligned collapsing">{created_at}</td>

@@ -50,8 +50,8 @@ const BestContents = React.createClass({
     const {BestPostStore} = this.props;
     const noMore = BestPostStore.get('noMore');
     const collection = BestPostStore.getIn(['posts', 'collection']);
-    const currentPage = collection.get('current_page');
-    const nextPage = collection.get('next_page');
+    const currentPage = collection ? collection.get('current_page') : 1;
+    const nextPage = collection ? collection.get('next_page') : 2;
 
     if (!noMore) {
       PostActions.getBestPost({page: nextPage});

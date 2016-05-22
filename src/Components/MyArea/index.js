@@ -100,6 +100,7 @@ const MyArea = React.createClass({
       .popup({
         popup : $('#profile_popup'),
         position : 'bottom right',
+        lastResort: 'bottom right',
         on    : 'click'
       });
 
@@ -107,6 +108,7 @@ const MyArea = React.createClass({
       .popup({
         popup : $('#alarm_popup'),
         position : 'bottom right',
+        lastResort: 'bottom right',
         on    : 'click'
       });
   },
