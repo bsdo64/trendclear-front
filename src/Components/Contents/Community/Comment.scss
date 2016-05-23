@@ -32,7 +32,20 @@
       margin-right: 10px;
     }
     .like_box {
-      color: red;
+      .like_icon {
+        color: grey;
+        :hover {
+          color:red;
+        }
+
+        &.active {
+          color: red;
+        }
+
+        i.icon {
+          cursor: pointer;
+        }
+      }
     }
     .comment_box {
       color: #27485E;

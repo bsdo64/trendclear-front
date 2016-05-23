@@ -15,19 +15,6 @@ class CommunityActions {
         });
     };
   }
-  likeComment(commentId) {
-    return (dispatch) => {
-      Api
-        .setType('/ajax')
-        .post('/like/comment/' + commentId)
-        .then((res) => {
-          dispatch(res);
-        })
-        .catch((err) => {
-          return err;
-        });
-    };
-  }
 
   resetPost() {
     return true;

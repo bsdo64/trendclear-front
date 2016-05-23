@@ -36,6 +36,12 @@ class SubmitStore{
   onSubmitPost(result) {
     if (result) {
       let forum = result.forum;
+
+      this.setMergeState({
+        title: null,
+        content: null
+      });
+
       browserHistory.replace(
         '/community?categoryId=' + forum.category.id +
                   '&forumId=' + forum.id +

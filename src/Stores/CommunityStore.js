@@ -78,6 +78,17 @@ class CommunityStore{
     this.setMergeState(addIncrement.toJS());
   }
 
+  onLikeComment(commentId) {
+    const countComment = this.state.updateIn(['post', 'IPost', 'entities', 'comments', commentId+''], comment =>
+      comment.mergeDeep({
+        liked: true,
+        like_count: comment.get('like_count') + 1
+      })
+    );
+
+    this.setState(countComment);
+  }
+
   onResetPost() {
     this.setState(Map({
       posts: {},

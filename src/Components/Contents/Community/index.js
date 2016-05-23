@@ -28,9 +28,14 @@ const CommentItem = React.createClass({
   sendLike() {
     "use strict";
 
-    this.setState({liked: true}, () => {
-      CommunityActions.likeComment(this.props.comment.get('id'));
-    })
+    const {LoginStore} = this.props;
+    const modalFlag = LoginStore.get('openLoginModal');
+    const isLogin = LoginStore.get('isLogin');
+    if (!isLogin) {
+      LoginActions.toggleLoginModal(modalFlag, '/');
+    } else {
+      CommentActions.likeComment(this.props.comment.get('id'));
+    }
   },
 
   toggleSubComment() {
@@ -180,8 +185,8 @@ const CommentItem = React.createClass({
           </div>
           <div className="actions">
             <div className="like_box" onClick={this.sendLike}>
-              <div className="like_icon">
-                <i className="heart outline icon"></i>
+              <div className={'like_icon ' + (comment.get('liked') ? 'active' : '')}>
+                <i className={'heart ' + (comment.get('liked')? '' : 'outline') + ' icon'} />
               </div>
               <a className="like_count">{comment.get('like_count')}</a>
             </div>

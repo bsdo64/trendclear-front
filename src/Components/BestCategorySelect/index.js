@@ -51,7 +51,6 @@ const CategoryItem = React.createClass({
                 <Link to={{pathname: '/community', query: q}}>{forum.get('title')}</Link>
                 <Select
                   multi
-                  name="form-field-name"
                   value="one"
                   options={options}
                   onChange={logChange}
@@ -130,6 +129,10 @@ const Temp = React.createClass({
       openFilter: false
     };
   },
+
+  componentWillReceiveProps(nextProps) {
+    
+  },
   
   updateFilterValue(club, selectArray) {
     "use strict";
@@ -185,11 +188,10 @@ const Temp = React.createClass({
               {
                 this.state.openFilter &&
                 [
-                  <div key={Math.random()} className="sub_category item">
-                    <Link to={'/'}>{'클럽'}</Link>
+                  <div key={'club'} className="sub_category item">
+                    <a>{'클럽'}</a>
                     <Select
-                      multi
-                      name="form-field-name"
+                      multi={true}
                       placeholder="클럽 선택 .."
                       value={clubValue}
                       options={clubMap}
@@ -197,11 +199,10 @@ const Temp = React.createClass({
                     />
                   </div>
                   ,
-                  <div key={Math.random()} className="sub_category item">
-                    <Link to={'/'}>{'카테고리 그룹'}</Link>
+                  <div key={'category_group'} className="sub_category item">
+                    <a>{'카테고리 그룹'}</a>
                     <Select
-                      multi
-                      name="form-field-name"
+                      multi={true}
                       placeholder="그룹 선택 .."
                       value={categoryGroupValue}
                       options={categoryGroupsMap}
@@ -209,11 +210,10 @@ const Temp = React.createClass({
                     />
                   </div>
                   ,
-                  <div key={Math.random()} className="sub_category item">
-                    <Link to={'/'}>{'카테고리'}</Link>
+                  <div key={'category'} className="sub_category item">
+                    <a >{'카테고리'}</a>
                     <Select
-                      multi
-                      name="form-field-name"
+                      multi={true}
                       placeholder="카테고리 선택 .."
                       value={categoryValue}
                       options={categoriesMap}
