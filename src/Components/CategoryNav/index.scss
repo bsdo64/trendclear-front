@@ -67,6 +67,7 @@
         top: 0;
 
         .gnb_inner>.grouping {
+          overflow: auto;
           float: left;
           border-right: 1px solid #aaa;
           height: 318px;

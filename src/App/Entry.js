@@ -10,6 +10,7 @@ var LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav')
 var LeftColCategoryMenu = require('../Container/LeftCol/CategoryMenu.js');
 var BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 var HeaderMyMenu = require('../Container/Header/MyMenu');
+var HeaderSearch = require('../Container/Header/Search');
 var LoginModalContainer = require('../Container/Modal/LoginModalContainer');
 var WidgetContainer = require('../Container/RightCol/WidgetContainer');
 
@@ -17,6 +18,7 @@ var ContentsContainer = require('../Container/Contents/Best');
 var SigninContainer = require('../Container/Contents/Signin');
 var CommunityContainer = require('../Container/Contents/Community');
 var SubmitContainer = require('../Container/Contents/SubmitPost');
+var SearchContainer = require('../Container/Contents/Search');
 
 // Bootstrap Location
 var loc = browserHistory.createLocation(location);
@@ -39,6 +41,7 @@ Api
           <IndexRoute
             components={{
           HeaderMyMenu: HeaderMyMenu,
+          HeaderSearch: HeaderSearch,
           LeftColGnb: LeftColGlobalCategoryNav,
           LeftColMenu: BestCategoryMenu,
           LoginModalContainer: LoginModalContainer,
@@ -51,6 +54,7 @@ Api
           <IndexRoute
             components={{
           HeaderMyMenu: HeaderMyMenu,
+          HeaderSearch: HeaderSearch,
           LeftColGnb: LeftColGlobalCategoryNav,
           LeftColMenu: LeftColCategoryMenu,
           LoginModalContainer: LoginModalContainer,
@@ -63,6 +67,7 @@ Api
           <IndexRoute
             components={{
           HeaderMyMenu: HeaderMyMenu,
+          HeaderSearch: HeaderSearch,
           LeftColGnb: LeftColGlobalCategoryNav,
           LeftColMenu: LeftColCategoryMenu,
           LoginModalContainer: LoginModalContainer,
@@ -73,11 +78,26 @@ Api
           <Route path="submit"
                  components={{
                   HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
                   LeftColGnb: LeftColGlobalCategoryNav,
                   LeftColMenu: LeftColCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   WidgetContainer: WidgetContainer,
                   ContentsContainer: SubmitContainer
+                 }}
+          />
+        </Route>
+
+        <Route path="/search" component={App}>
+          <IndexRoute
+            components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ContentsContainer: SearchContainer
                  }}
           />
         </Route>
@@ -123,10 +143,7 @@ var App = React.createClass({
                     <Link className="ui header inverted huge" to="/">Trend Clear</Link>
                   </div>
                   <div id="top_search">
-                    <div className="ui input fluid small">
-                      <input type="text" placeholder="여기에 검색.." />
-                        <div className="results"></div>
-                    </div>
+                    { this.props.HeaderSearch }
                   </div>
                   <div id="top_my_area">
                     { this.props.HeaderMyMenu }

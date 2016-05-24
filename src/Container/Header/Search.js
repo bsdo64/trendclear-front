@@ -1,28 +1,28 @@
 import React from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import LoginStore from '../../Stores/LoginStore';
-import CommunityStore from '../../Stores/CommunityStore';
 import UserStore from '../../Stores/UserStore';
+import SearchStore from '../../Stores/SearchStore';
 
-import Community from '../../Components/Contents/Community';
+import SearchBar from '../../Components/Header/search';
 
-const CommunityContainer = connectToStores({
+const MyMenuContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [LoginStore, CommunityStore, UserStore]
+    return [LoginStore, UserStore, SearchStore]
   },
 
   getPropsFromStores() {
     return {
       LoginStore: LoginStore.getState(),
-      CommunityStore: CommunityStore.getState(),
-      UserStore: UserStore.getState()
+      UserStore: UserStore.getState(),
+      SearchStore: SearchStore.getState()
     }
   }
 }, React.createClass({
   render() {
-    return (<Community {...this.props} />)
+    return (<SearchBar {...this.props} />)
   }
 }));
 
-module.exports = CommunityContainer;
+module.exports = MyMenuContainer;

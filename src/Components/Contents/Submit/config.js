@@ -52,6 +52,10 @@ const mediumInsertConfig = function mediumInsertConfig(editor) {
           url: 'http://localhost:3000/image/upload',
           acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
           maxFileSize: 5 * 1024 * 1024
+        },
+        messages: {
+          acceptFileTypesError: '지원되지 않는 파일 형식 입니다: ',
+          maxFileSizeError: '파일의 크기가 큽니다 (5MB 이하): '
         }
       },
       embeds: {

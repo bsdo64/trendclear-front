@@ -585,6 +585,7 @@ const CommunityContents = React.createClass({
         />
       )
     } else if (type === 'post') {
+      const {LoginStore, UserStore} = this.props;
       const post = this.props.CommunityStore.getIn(['post', 'IPost']);
 
       return (
@@ -592,7 +593,11 @@ const CommunityContents = React.createClass({
 
           {
             post &&
-            <Post post={post} styleClass="post_item"/>
+            <Post 
+              post={post}
+              LoginStore={LoginStore}
+              UserStore={UserStore}
+              styleClass="post_item"/>
           }
 
           {

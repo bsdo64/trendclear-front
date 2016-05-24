@@ -59,7 +59,7 @@ const BestContents = React.createClass({
   },
 
   render() {
-    const {BestPostStore, LoginStore} = this.props;
+    const {BestPostStore, LoginStore, UserStore} = this.props;
     const posts = BestPostStore.get('posts');
     const collection = BestPostStore.get('collection');
     const noMore = BestPostStore.get('noMore');
@@ -69,6 +69,7 @@ const BestContents = React.createClass({
 
         <BestList
           LoginStore={LoginStore}
+          UserStore={UserStore}
           posts={posts}
         />
 

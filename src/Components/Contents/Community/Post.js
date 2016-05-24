@@ -1,10 +1,20 @@
 import React from 'react';
+import {Link, browserHistory} from 'react-router';
 import CommunityActions from '../../../Actions/CommunityActions';
+import LoginActions from '../../../Actions/LoginActions';
 
 require('./Post.scss');
 const Post = React.createClass({
   displayName: 'Post',
   render() {
+    const {LoginStore, UserStore} = this.props;
+    const isLogin = LoginStore.get('isLogin');
+
+    let userId;
+    if (isLogin) {
+      userId = UserStore.getIn(['user', 'id'])
+    }
+
     const IPost = this.props.post;
     const postId = IPost.get('result').toString();
     const post = IPost.getIn(['entities', 'posts', postId]);
@@ -22,6 +32,7 @@ const Post = React.createClass({
         avatarImg = <img src="/images/default-male.png" />;
       } else {
         avatarImg = <img src="/images/default-female.png" />;
+
       }
     }
 
@@ -79,8 +90,8 @@ const Post = React.createClass({
           {/* buttons */}
           <div className="ui extra best_post_buttons">
             <div className="like_box">
-              <div className="like_icon">
-                <i className="heart outline icon"></i>
+              <div className={'like_icon ' + (post.get('liked') ? 'active' : '')} onClick={this.sendLike}>
+                <i className={'heart ' + (post.get('liked')? '' : 'outline') + ' icon'} />
               </div>
               <a className="like_count">{post.get('like_count')}</a>
             </div>
@@ -91,8 +102,16 @@ const Post = React.createClass({
               <a className="comment_count">{post.get('comment_count')}</a>
             </div>
             <div className="report_box">
-              <div className="report_icon">
+              <div className="ui icon dropdown report_icon">
                 <i className="warning outline icon"></i>
+                <div className="menu">
+                  <div className="item" data-value={post.get('id')} data-action="report">신고</div>
+                  <div className="item " data-value={post.get('id')} data-action="report_ad">광고 신고</div>
+                  {
+                    userId && (userId === author.get('id')) &&
+                    <div className="item " data-value={post.get('id')} data-action="delete_post">삭제하기</div>
+                  }
+                </div>
               </div>
             </div>
           </div>

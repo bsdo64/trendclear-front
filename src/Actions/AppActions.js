@@ -10,6 +10,11 @@ class AppActions {
       bootstrapData.BestPostStore.posts.postList = normalize(bestPostList, arrayOf(post));
     }
 
+    if (bootstrapData.SearchStore && bootstrapData.SearchStore.search) {
+      const searchPostList = bootstrapData.SearchStore.search.posts.results;
+      bootstrapData.SearchStore.search.postList = normalize(searchPostList, arrayOf(post));
+    }
+
     if (bootstrapData.CommunityStore && bootstrapData.CommunityStore.list) {
       const forumPostList = bootstrapData.CommunityStore.list.data;
       bootstrapData.CommunityStore.list.postList = normalize(forumPostList, arrayOf(post));
@@ -30,6 +35,8 @@ class AppActions {
       const INCat = bootstrapData.GnbStore.gnbMenu.data;
       bootstrapData.GnbStore.gnbMenu.INCat = normalize(INCat, arrayOf(club));
     }
+
+
 
     return bootstrapData;
   }

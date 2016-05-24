@@ -5,6 +5,34 @@ import LoginActions from '../../../Actions/LoginActions';
 
 require('./BestPost.scss');
 const BestPost = React.createClass({
+  componentDidMount() {
+    "use strict";
+
+    $('.ui.dropdown.report_icon')
+      .dropdown({
+        onChange: function(value, text, $selectedItem) {
+          const action = $selectedItem.data('action');
+
+          switch (action) {
+            case 'report':
+
+              console.log('포스트 신고 Id : ', value);
+              break;
+            case 'report_ad':
+
+              console.log('포스트 광고 신고 Id : ', value);
+              break;
+            case 'delete_post':
+
+              console.log('포스트 삭제 Id : ', value);
+              break;
+            default:
+              break;
+          }
+        }
+      });
+  },
+
   sendLike() {
     "use strict";
 
@@ -18,8 +46,14 @@ const BestPost = React.createClass({
     }
   },
   render() {
-    const postList = this.props.postList;
-    const postId = this.props.postId;
+    
+    const {postList, postId, LoginStore, UserStore} = this.props;
+    const isLogin = LoginStore.get('isLogin');
+    let userId;
+    if (isLogin) {
+      userId = UserStore.getIn(['user', 'id'])
+    }
+    
     const post = postList ? postList.getIn(['entities', 'posts', postId.toString()]) : null;
     const author = postList ? postList.getIn(['entities', 'author', post.get('author').toString()]) : null;
 
@@ -110,8 +144,16 @@ const BestPost = React.createClass({
               <a className="comment_count">{post.get('comment_count')}</a>
             </div>
             <div className="report_box">
-              <div className="report_icon">
+              <div className="ui icon dropdown report_icon">
                 <i className="warning outline icon"></i>
+                <div className="menu">
+                  <div className="item" data-value={post.get('id')} data-action="report">신고</div>
+                  <div className="item " data-value={post.get('id')} data-action="report_ad">광고 신고</div>
+                  {
+                    userId && (userId === author.get('id')) &&
+                    <div className="item " data-value={post.get('id')} data-action="delete_post">삭제하기</div> 
+                  }
+                </div>
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ import AltContainer from 'alt-container';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import LoginStore from '../../Stores/LoginStore';
 import BestPostStore from '../../Stores/BestPostStore';
+import UserStore from '../../Stores/UserStore';
 
 import Best from '../../Components/Contents/Best';
 
@@ -15,7 +16,8 @@ const BestContainer = connectToStores({
   getPropsFromStores() {
     return {
       LoginStore: LoginStore.getState(),
-      BestPostStore: BestPostStore.getState()
+      BestPostStore: BestPostStore.getState(),
+      UserStore: UserStore.getState()
     }
   }
 }, React.createClass({

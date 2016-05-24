@@ -5,6 +5,8 @@ import React from 'react';
 import Select from 'react-select';
 import _ from 'lodash';
 
+import Editor from './newEditor';
+
 import {medium, mediumInsertConfig} from './config';
 import PostActions from '../../../Actions/PostActions';
 
@@ -160,7 +162,8 @@ const SubmitContents = React.createClass({
 
             {/* content */}
             <div className="ui description submit_post_box" >
-              <div className="post_editor" id="post_editor" ></div>
+              {<div className="post_editor" id="post_editor" ></div>}
+              {/*<Editor />*/}
             </div>
 
             {/* <TagList items={Tags} /> */}
