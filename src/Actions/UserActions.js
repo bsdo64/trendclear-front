@@ -5,6 +5,19 @@ class UserActions {
   increaseLevel() {
     return true;
   }
+  levelUp(params) {
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .post('/user/levelup', params)
+        .then((res) => {
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
   requestLogout() {
     return (dispatch) => {
       Api

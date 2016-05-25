@@ -1,5 +1,6 @@
 import React from 'react';
 import UserActions from '../../Actions/UserActions';
+import CountUp from 'countup.js';
 
 import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
 
@@ -7,18 +8,68 @@ require('./Trendbox.scss');
 const TrendBox = React.createClass({
   componentDidMount() {
     const {user} = this.props;
+    const prevTotalExp = user.trendbox.get('prev_exp');
+    const currentTotalExp = user.trendbox.get('exp');
+    const nextTotalExp = user.trendbox.get('next_exp');
 
+    const expPercent = (currentTotalExp - prevTotalExp) / (nextTotalExp - prevTotalExp) * 100;
+    
     $('#exp_progress')
       .progress({
-        percent:  user.trendbox.get('exp') / user.trendbox.get('next_exp') * 100
+        percent: expPercent
       });
   },
   componentWillReceiveProps(nextProps) {
-    const {user} = nextProps;
+    const currentUser = this.props.user;
+    const nextUser = nextProps.user;
+
+    const prev_currentTotalExp = currentUser.trendbox.get('exp');
+    const prev_nextTotalExp = currentUser.trendbox.get('next_exp');
+
+    const prevTotalExp = nextUser.trendbox.get('prev_exp');
+    const currentTotalExp = nextUser.trendbox.get('exp');
+    const nextTotalExp = nextUser.trendbox.get('next_exp');
+
+    let expPercent = (currentTotalExp - prevTotalExp) / (nextTotalExp - prevTotalExp) * 100;
+
+    if ( expPercent >= 100 ) {
+      expPercent = 0;
+
+      UserActions.levelUp({currentLevel: nextUser.trendbox.get('level')});
+    }
+
     $('#exp_progress')
       .progress({
-        percent:  user.trendbox.get('exp') / user.trendbox.get('next_exp') * 100
+        percent: expPercent
       });
+
+    // Update countUp
+    function updateCountUp(nodeId, from, to) {
+      "use strict";
+      const options = {
+        useEasing : true,
+        useGrouping : true,
+        separator : ',',
+        decimal : '.',
+        prefix : '',
+        suffix : ''
+      };
+
+      const count = new CountUp(nodeId, from, to, 0, 1.5, options);
+      count.start();
+    }
+
+    const prevTP = currentUser.trendbox.get('T');
+    const nextTP = nextUser.trendbox.get('T');
+    updateCountUp("tp_point", prevTP, nextTP);
+
+    const prevRP = currentUser.trendbox.get('R');
+    const nextRP = nextUser.trendbox.get('R');
+    updateCountUp("rp_point", prevRP, nextRP);
+
+    updateCountUp("current_exp", prev_currentTotalExp, currentTotalExp);
+    updateCountUp("next_exp", prev_nextTotalExp, nextTotalExp);
+
   },
   test() {
     "use strict";
@@ -105,15 +156,24 @@ const TrendBox = React.createClass({
                   <h4 className="ui description title">트랜드 포인트</h4>
                   <div className="point_line">
                     <span className="ui description">TP</span>
-                    <span className="ui right floated point tp_point">{user.trendbox.get('T')}</span>
+                    <span id="tp_point" className="ui right floated point tp_point">{user.trendbox.get('T')}</span>
                   </div>
                   <div className="point_line">
                     <span className="ui description">RP</span>
-                    <span className="ui right floated point rp_point">{user.trendbox.get('R')}</span>
+                    <span id="rp_point" className="ui right floated point rp_point">{user.trendbox.get('R')}</span>
                   </div>
                 </div>
                 <div className="colum">
-                  <h4 className="ui description title">경험치</h4>
+                  <h4 className="ui description title">
+                    {'경험치 '}
+                    <div className="exp_description">
+                      {'('}
+                      <span id="current_exp">{user.trendbox.get('exp')}</span>
+                      {'/'}
+                      <span id="next_exp">{user.trendbox.get('next_exp')}</span>
+                      {')'}
+                    </div>
+                  </h4>
                   <div className="exp_line">
                     <div id="exp_progress"
                          className="ui indicating small blue progress"

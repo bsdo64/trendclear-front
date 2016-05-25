@@ -3,6 +3,10 @@ import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../Actions/AppActions';
 import UserActions from '../Actions/UserActions';
+import PostActions from '../Actions/PostActions';
+
+import SubmitStore from './SubmitStore';
+
 import { initListener, setMergeState, locationHref } from './Helper/func';
 
 class UserStore{
@@ -11,6 +15,8 @@ class UserStore{
 
     this.bindActions(AppActions);
     this.bindActions(UserActions);
+    this.bindActions(PostActions);
+
     this.state = Immutable.Map({});
 
     initListener(this);
@@ -30,8 +36,9 @@ class UserStore{
   }
 
   onIncreaseLevel() {
+    this.waitFor(SubmitStore);
+
     let state = this.state.updateIn(['trendbox', 'level'], val => val + 1);
-    console.log(state.toJS());
     this.setMergeState(state);
   }
 
@@ -52,6 +59,22 @@ class UserStore{
       this.setMergeState(state);
     }
   }
+
+  onLevelUp(newTrendbox) {
+    let state = this.state.set('trendbox', newTrendbox);
+
+    console.log(state);
+    this.setMergeState(state.toJS());
+  }
+
+  // onSubmitPost(post) {
+  //   this.waitFor(SubmitStore);
+  //
+  //   let updateT10 = this.state.updateIn(['trendbox', 'T'], v => v + 10);
+  //   let updateExp10 = updateT10.updateIn(['trendbox', 'exp'], v => v + 5);
+  //
+  //   this.setMergeState(updateExp10);
+  // }
 }
 
 export default alt.createStore(immutable(UserStore));
