@@ -428,6 +428,22 @@ const PostList = React.createClass({
 
 const Forum = React.createClass({
   displayName: 'Forum',
+  getInitialState() {
+    return {
+      text: ''
+    }
+  },
+  onChange(e) {
+    this.setState({text: e.target.value});
+  },
+  handleSubmit(e) {
+    e.preventDefault();
+
+    console.log('search : ', this.state.text);
+
+    const nextText = '';
+    this.setState({text: nextText});
+  },
   handleSetPage(pagination) {
 
     let location = this.props.location;
@@ -559,7 +575,14 @@ const Forum = React.createClass({
 
           <div className="ui search mini" style={{padding: '15px'}}>
             <div className="ui icon input">
-              <input className="prompt" type="text" placeholder="Search animals..." />
+              <form onSubmit={this.handleSubmit}>
+                <input className="prompt"
+                       type="text"
+                       placeholder="게시글 검색..."
+                       onChange={this.onChange}
+                       value={this.state.text}
+                />
+              </form>
               <i className="search icon"></i>
             </div>
             <div className="results"></div>

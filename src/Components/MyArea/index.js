@@ -12,12 +12,10 @@ class NotiButtons extends Component {
         <div id="alarm_popup" className="ui segment popup"  style={{width: 250}}>
           <div className="ui feed ">
             <div className="event">
-              <div className="label">
-                <img src="http://dummyimage.com/40x40" />
-              </div>
               <div className="content">
                 <div className="summary">
-                  You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+                  <a>151</a>명이 글 <a>당신 지금 뭐하는거에요?!!!</a> 를 좋아합니다.
+                    <i className={'heart icon'} /> <a className="like_count">{132}</a>
                   <div className="date">
                     3 days ago
                   </div>
