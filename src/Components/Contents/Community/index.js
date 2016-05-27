@@ -17,12 +17,21 @@ const CommentItem = React.createClass({
   getInitialState() {
     return {
       subCommentOpen: false,
-      liked: false
+      liked: false,
+      focus: false
     };
   },
 
-  componentDidMount() {
+  show() {
+    "use strict";
 
+    this.setState({focus: true})
+  },
+
+  close() {
+    "use strict";
+
+    this.setState({focus: false})
   },
 
   sendLike() {
@@ -49,7 +58,31 @@ const CommentItem = React.createClass({
         this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], {
           toolbar: false,
           disableDoubleReturn: true
-        })
+        });
+
+        $('.ui.dropdown.report_icon')
+          .dropdown({
+            onChange: function(value, text, $selectedItem) {
+              const action = $selectedItem.data('action');
+
+              switch (action) {
+                case 'report':
+
+                  console.log('포스트 신고 Id : ', value);
+                  break;
+                case 'report_ad':
+
+                  console.log('포스트 광고 신고 Id : ', value);
+                  break;
+                case 'delete_post':
+
+                  console.log('포스트 삭제 Id : ', value);
+                  break;
+                default:
+                  break;
+              }
+            }
+          });
       }
       if (subCommentOpen) {
         setTimeout(test.bind(this), 0);
@@ -82,6 +115,14 @@ const CommentItem = React.createClass({
 
   render() {
     "use strict";
+
+    const {location, LoginStore, UserStore} = this.props;
+    const isLogin = LoginStore.get('isLogin');
+
+    let userId;
+    if (isLogin) {
+      userId = UserStore.getIn(['user', 'id'])
+    }
 
     const {comment, author, authors, subComments} = this.props;
     const subCommentOpen = this.state.subCommentOpen;
@@ -131,8 +172,18 @@ const CommentItem = React.createClass({
         subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
       }
 
+      function sendSubCommentLike() {
+        const modalFlag = LoginStore.get('openLoginModal');
+        if (!isLogin) {
+          LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+        } else {
+          CommentActions.likeSubComment(subCommentId);
+        }
+      }
+
       return (
-        <div className="comment" key={subComment.get('id')}>
+        <div className="comment"
+             key={subComment.get('id')}>
           <a className="avatar">
             {subAvatarImg}
           </a>
@@ -149,14 +200,22 @@ const CommentItem = React.createClass({
             </div>
             <div className="actions">
               <div className="like_box">
-                <div className="like_icon">
-                  <i className="heart outline icon"></i>
+                <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')} onClick={sendSubCommentLike}>
+                  <i className={'heart ' + (subComment.get('liked')? '' : 'outline') + ' icon'} />
                 </div>
                 <a className="like_count">{subComment.get('like_count')}</a>
               </div>
               <div className="report_box">
-                <div className="report_icon">
+                <div className={'ui icon dropdown report_icon'}>
                   <i className="warning outline icon"></i>
+                  <div className="menu">
+                    <div className="item" data-value={subComment.get('id')} data-action="report">신고</div>
+                    <div className="item " data-value={subComment.get('id')} data-action="report_ad">광고 신고</div>
+                    {
+                      userId && (userId === author.get('id')) &&
+                      <div className="item " data-value={subComment.get('id')} data-action="delete_post">삭제하기</div>
+                    }
+                  </div>
                 </div>
               </div>
             </div>
@@ -167,7 +226,10 @@ const CommentItem = React.createClass({
     }
 
     return (
-      <div className="comment" key={comment.get('id')}>
+      <div className="comment"
+           key={comment.get('id')}
+           onMouseEnter={this.show}
+           onMouseLeave={this.close}>
         <a className="avatar">
           {avatarImg}
         </a>
@@ -197,8 +259,16 @@ const CommentItem = React.createClass({
               <a className="comment_count">{comment.get('sub_comment_count')}</a>
             </div>
             <div className="report_box">
-              <div className="report_icon">
+              <div className={'ui icon dropdown report_icon '  + (this.state.focus ? '' : 'none')}>
                 <i className="warning outline icon"></i>
+                <div className="menu">
+                  <div className="item" data-value={comment.get('id')} data-action="report">신고</div>
+                  <div className="item " data-value={comment.get('id')} data-action="report_ad">광고 신고</div>
+                  {
+                    userId && (userId === author.get('id')) &&
+                    <div className="item " data-value={comment.get('id')} data-action="delete_post">삭제하기</div>
+                  }
+                </div>
               </div>
             </div>
           </div>
@@ -234,13 +304,14 @@ const CommentItem = React.createClass({
 const CommentList = React.createClass({
   render() {
     "use strict";
-    const {comments, author, subComments, LoginStore, location} = this.props;
+    const {comments, author, subComments, UserStore, LoginStore, location} = this.props;
 
     let commentsNode = comments.map(function(comment) {
       const commentAuthor = author.get(comment.get('author').toString());
       return (
         <CommentItem
           LoginStore={LoginStore}
+          UserStore={UserStore}
           key={comment.get('id')}
           comment={comment}
           author={commentAuthor}
@@ -346,6 +417,7 @@ const CommentBox = React.createClass({
 
         <CommentList
           LoginStore={this.props.LoginStore}
+          UserStore={this.props.UserStore}
           location={this.props.location}
           author={author}
           comments={results}
@@ -486,11 +558,13 @@ const Forum = React.createClass({
     const defaultPageUrl = '/community' + this.props.location.search;
 
     function createPrefixItem(prefixId, index) {
-      let prefixList = forum.getIn(['prefixList', 'entities', 'prefixes']);
-      let prefix = prefixList.get(prefixId.toString());
+      const prefixList = forum.getIn(['prefixList', 'entities', 'prefixes']);
+      const prefix = prefixList.get(prefixId.toString());
+      const postCount = prefix.get('count') ? prefix.get('count') : 0;
+
       return (
-        <div className="item" key={prefixId}>
-          <div className="middle aligned content">{prefix.get('name') + " (" + prefix.get('count') + ")"}</div>
+        <div className="item" key={index}>
+          <div className="middle aligned content">{prefix.get('name') + " (" + postCount + ")"}</div>
         </div>
       )
     }
@@ -597,6 +671,58 @@ const Forum = React.createClass({
 
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
+  componentDidMount() {
+    $('.ui.dropdown.report_icon')
+      .dropdown({
+        onChange: function(value, text, $selectedItem) {
+          const action = $selectedItem.data('action');
+
+          switch (action) {
+            case 'report':
+
+              console.log('포스트 신고 Id : ', value);
+              break;
+            case 'report_ad':
+
+              console.log('포스트 광고 신고 Id : ', value);
+              break;
+            case 'delete_post':
+
+              console.log('포스트 삭제 Id : ', value);
+              break;
+            default:
+              break;
+          }
+        }
+      });
+  },
+
+  componentDidUpdate() {
+    "use strict";
+    $('.ui.dropdown.report_icon')
+      .dropdown({
+        onChange: function(value, text, $selectedItem) {
+          const action = $selectedItem.data('action');
+
+          switch (action) {
+            case 'report':
+
+              console.log('포스트 신고 Id : ', value);
+              break;
+            case 'report_ad':
+
+              console.log('포스트 광고 신고 Id : ', value);
+              break;
+            case 'delete_post':
+
+              console.log('포스트 삭제 Id : ', value);
+              break;
+            default:
+              break;
+          }
+        }
+      });
+  },
   render() {
     "use strict";
     const type = this.props.CommunityStore.get('type');

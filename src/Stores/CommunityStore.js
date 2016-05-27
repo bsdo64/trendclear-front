@@ -1,9 +1,11 @@
 import alt from '../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable, {Map, List} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../Actions/AppActions';
 import GnbActions from '../Actions/GnbActions';
 import CommentActions from '../Actions/CommentActions';
+import CommunityActions from '../Actions/CommunityActions';
+import PostActions from '../Actions/PostActions';
 import { initListener, setMergeState } from './Helper/func';
 import {browserHistory} from 'react-router';
 
@@ -14,6 +16,8 @@ class CommunityStore{
     this.bindActions(AppActions);
     this.bindActions(GnbActions);
     this.bindActions(CommentActions);
+    this.bindActions(PostActions);
+    this.bindActions(CommunityActions);
     this.state = Immutable.Map({});
 
     initListener(this);
@@ -89,11 +93,43 @@ class CommunityStore{
     this.setState(countComment);
   }
 
+  onLikeSubComment(subCommentId) {
+    const countComment = this.state.updateIn(['post', 'IPost', 'entities', 'subComments', subCommentId+''], subComment =>
+      subComment.mergeDeep({
+        liked: true,
+        like_count: subComment.get('like_count') + 1
+      })
+    );
+
+    this.setState(countComment);
+  }
+
   onResetPost() {
     this.setState(Map({
       posts: {},
       noMore: false
     }));
+  }
+
+  onLikePost(postId) {
+    const IPost = this.state.getIn(['post', 'IPost']);
+
+    if (IPost) {
+      const countPost = this.state.updateIn(['post', 'IPost', 'entities', 'posts', postId+''], post =>
+        post.mergeDeep({
+          liked: true,
+          like_count: post.get('like_count') + 1
+        })
+      );
+      const countList = countPost.updateIn(['list', 'postList', 'entities', 'posts', postId+''], post =>
+        post.mergeDeep({
+          liked: true,
+          like_count: post.get('like_count') + 1
+        })
+      );
+
+      this.setState(countList);
+    }
   }
 }
 

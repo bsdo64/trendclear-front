@@ -1,24 +1,45 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import {Link, browserHistory} from 'react-router';
 import CommunityActions from '../../../Actions/CommunityActions';
 import LoginActions from '../../../Actions/LoginActions';
+import PostActions from '../../../Actions/PostActions';
 
 require('./Post.scss');
 const Post = React.createClass({
   displayName: 'Post',
+
+  sendLike() {
+    "use strict";
+
+    const {LoginStore, post: IPost} = this.props;
+    const postId = IPost.get('result').toString();
+    const modalFlag = LoginStore.get('openLoginModal');
+    const isLogin = LoginStore.get('isLogin');
+    if (!isLogin) {
+      LoginActions.toggleLoginModal(modalFlag, '/');
+    } else {
+      CommunityActions.likePost(postId);
+    }
+  },
+
   render() {
     const {LoginStore, UserStore} = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     let userId;
     if (isLogin) {
-      userId = UserStore.getIn(['user', 'id'])
+      userId = UserStore.getIn(['user', 'id']);
     }
 
     const IPost = this.props.post;
     const postId = IPost.get('result').toString();
     const post = IPost.getIn(['entities', 'posts', postId]);
     const author = IPost.getIn(['entities', 'author', post.get('author').toString()]);
+    const authorInfo = {
+      author: author,
+      trendbox: author.get('trendbox')
+    };
     const styleClass = this.props.styleClass;
     const sex = author.getIn(['profile', 'sex']),
       avatar_img = author.getIn(['profile', 'avatar_img']),
@@ -65,7 +86,61 @@ const Post = React.createClass({
           </div>
           <div className="meta best_post_meta">
             <div className="author_nick">
-              {author.get('nick')}
+              <a data-tip
+                 data-for="nick"
+                 data-offset="{'bottom': 8, 'right': 42}"
+              >
+                {author.get('nick')}
+              </a>
+              <ReactTooltip
+                id='nick'
+                place="right"
+                class="abc"
+                effect="solid"
+              >
+                <div id="trend_box" className="widget">
+                  <div id="widget_user_info">
+                    <div className="ui items">
+                      <div className="ui item">
+
+                        <a id="user_avatar_img" className="ui mini image" onClick={this.openAvatarModal}>
+                          { avatarImg }
+                        </a>
+
+                        <div className="content">
+                          <div className="user_info_header">
+                            <span className="ui description">{authorInfo.author.get('nick')}</span>
+                            {iconImg}
+                          </div>
+                          <div className="description">
+
+                            <div className="item" onClick={this.test}>
+                              <span className="item_col">레벨</span>
+                              <div className="item_num">
+                                <span>{authorInfo.trendbox.get('level')}</span>
+                              </div>
+                            </div>
+
+                            <div className="item">
+                              <span className="item_col">명성</span>
+                              <div className="item_num">
+                                <span>{authorInfo.trendbox.get('reputation')}</span>
+                              </div>
+                            </div>
+
+                            <div className="item">
+                              <span className="item_col">랭크</span>
+                              <div className="item_num">
+                                <span></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ReactTooltip>
             </div>
             <div className="author_icon">
               {iconImg}
@@ -77,7 +152,7 @@ const Post = React.createClass({
                 {post.get('created_at')}
               </div>
               <div className="item">
-                조회 {post.get('view_count')}
+                조회 {new Intl.NumberFormat().format(post.get('view_count'))}
               </div>
             </div>
           </div>

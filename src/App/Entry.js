@@ -1,10 +1,14 @@
 import React from 'react';
+import Perf from 'react-addons-perf'
+
 import ReactDOM from 'react-dom';
 import alt from '../Utils/alt';
 import { IndexRedirect, Router, Link, IndexRoute, Route, browserHistory } from 'react-router';
 import Api from '../Utils/ApiClient';
 
 import AppActions from '../Actions/AppActions';
+
+window.Perf = Perf;
 
 var LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
 var LeftColCategoryMenu = require('../Container/LeftCol/CategoryMenu.js');

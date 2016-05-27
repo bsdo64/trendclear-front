@@ -52,6 +52,17 @@
     }
     .report_box {
       float: right;
+
+      .report_icon {
+        :hover {
+          color: #27485E;
+        }
+        display: inline-block;
+        padding-right: 5px;
+        color: #D0D6DA;
+        vertical-align: middle;
+        cursor: pointer;
+      }
     }
   }
 
@@ -107,4 +118,8 @@
       }
     }
   }
+}
+
+.report_icon.none {
+  display:none !important;
 }

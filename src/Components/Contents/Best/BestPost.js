@@ -2,12 +2,27 @@ import React from 'react';
 import {Link, browserHistory} from 'react-router';
 import CommunityActions from '../../../Actions/CommunityActions';
 import LoginActions from '../../../Actions/LoginActions';
+import ReactTooltip from 'react-tooltip';
+import Perf from 'react-addons-perf';
 
 require('./BestPost.scss');
 const BestPost = React.createClass({
-  componentDidMount() {
+  getInitialState() {
+    return {
+      open: false
+    };
+  },
+
+  show() {
     "use strict";
-    
+
+    this.setState({open: true})
+  },
+
+  close() {
+    "use strict";
+
+    this.setState({open: false})
   },
 
   sendLike() {
@@ -33,6 +48,10 @@ const BestPost = React.createClass({
     
     const post = postList ? postList.getIn(['entities', 'posts', postId.toString()]) : null;
     const author = postList ? postList.getIn(['entities', 'author', post.get('author').toString()]) : null;
+    const authorInfo = {
+      author: author,
+      trendbox: author.get('trendbox')
+    };
 
     const styleClass = this.props.styleClass;
     const sex = author.getIn(['profile', 'sex']),
@@ -57,10 +76,14 @@ const BestPost = React.createClass({
 
     const categoryId = post.getIn(['forum', 'category', 'id']);
     const forumId = post.getIn(['forum', 'id']);
+    const forumUrl = `/community?categoryId=${categoryId}&forumId=${forumId}`;
     const postUrl = `/community?categoryId=${categoryId}&forumId=${forumId}&postId=${postId}`;
 
     return (
-      <div key={post.get('id')} className={"ui item " + styleClass}>
+      <div key={post.get('id')} className={"ui item " + styleClass}
+           onMouseEnter={this.show}
+           onMouseLeave={this.close}
+      >
         {/* avatar */}
         <div className="ui image tiny">
           { avatarImg }
@@ -72,19 +95,25 @@ const BestPost = React.createClass({
           <div className="meta best_post_meta">
             <div className="ui horizontal divided list">
               <div className="item">
-                {post.getIn(['forum', 'category', 'category_group', 'club', 'title'])}
+                <a >{post.getIn(['forum', 'category', 'category_group', 'club', 'title'])}</a>
               </div>
               <div className="item">
-                <a href={"/club/" + 'url'}>{post.getIn(['forum', 'category', 'title'])}</a>
+                <a >{post.getIn(['forum', 'category', 'title'])}</a>
               </div>
               <div className="item">
-                <a href={"/club/" + 'url'}>{post.getIn(['forum', 'title'])}</a>
+                <Link to={forumUrl}>{post.getIn(['forum', 'title'])}</Link>
               </div>
             </div>
           </div>
           <div className="meta best_post_meta">
             <div className="author_nick">
-              {author.get('nick')}
+              <a data-tip
+                 data-for={'nick_' + author.get('nick')}
+                 data-offset="{'bottom': 8, 'right': 42}"
+              >
+                {author.get('nick')}
+              </a>
+
             </div>
             <div className="author_icon">
               {iconImg}
@@ -116,12 +145,14 @@ const BestPost = React.createClass({
             </div>
             <div className="comment_box">
               <div className="comment_icon">
-                <i className="edit outline icon"></i>
+                <Link to={postUrl + '#comment_box'}>
+                  <i className="edit outline icon"></i>
+                </Link>
               </div>
               <a className="comment_count">{post.get('comment_count')}</a>
             </div>
             <div className="report_box">
-              <div className="ui icon dropdown report_icon">
+              <div className={'ui icon dropdown report_icon ' + (this.state.open? '': 'none')}>
                 <i className="warning outline icon"></i>
                 <div className="menu">
                   <div className="item" data-value={post.get('id')} data-action="report">신고</div>

@@ -52,6 +52,19 @@ class CommentActions {
     };
   }
 
+  likeSubComment(subCommentId) {
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .post('/like/subComment/' + subCommentId)
+        .then((res) => {
+          dispatch(subCommentId);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
 }
 
 export default alt.createActions(CommentActions);

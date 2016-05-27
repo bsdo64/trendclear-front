@@ -20,9 +20,12 @@
         margin: 0;
         padding: 2px 0;
         .author_nick {
-          font-weight: bold;
-          font-size: 13px;
           display: inline-block;
+
+          & > a {
+            font-weight: bold;
+            font-size: 13px;
+          }
         }
         .author_icon {
           font-size: 13px;

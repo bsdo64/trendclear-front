@@ -13,12 +13,13 @@ const TrendBox = React.createClass({
     const nextTotalExp = user.trendbox.get('next_exp');
 
     const expPercent = (currentTotalExp - prevTotalExp) / (nextTotalExp - prevTotalExp) * 100;
-    
+
     $('#exp_progress')
       .progress({
         percent: expPercent
       });
   },
+
   componentWillReceiveProps(nextProps) {
     const currentUser = this.props.user;
     const nextUser = nextProps.user;
@@ -33,30 +34,34 @@ const TrendBox = React.createClass({
     let expPercent = (currentTotalExp - prevTotalExp) / (nextTotalExp - prevTotalExp) * 100;
 
     if ( expPercent >= 100 ) {
-      expPercent = 0;
-
+      expPercent = expPercent - 100;
       UserActions.levelUp({currentLevel: nextUser.trendbox.get('level')});
     }
 
-    $('#exp_progress')
-      .progress({
-        percent: expPercent
-      });
+    if ( currentTotalExp != prev_currentTotalExp) {
+      $('#exp_progress')
+        .progress({
+          percent: expPercent
+        });
+    }
 
     // Update countUp
     function updateCountUp(nodeId, from, to) {
       "use strict";
-      const options = {
-        useEasing : true,
-        useGrouping : true,
-        separator : ',',
-        decimal : '.',
-        prefix : '',
-        suffix : ''
-      };
 
-      const count = new CountUp(nodeId, from, to, 0, 1.5, options);
-      count.start();
+      if (from != to ) {
+        const options = {
+          useEasing : true,
+          useGrouping : true,
+          separator : ',',
+          decimal : '.',
+          prefix : '',
+          suffix : ''
+        };
+
+        const count = new CountUp(nodeId, from, to, 0, 1.5, options);
+        count.start();
+      }
     }
 
     const prevTP = currentUser.trendbox.get('T');
@@ -69,7 +74,6 @@ const TrendBox = React.createClass({
 
     updateCountUp("current_exp", prev_currentTotalExp, currentTotalExp);
     updateCountUp("next_exp", prev_nextTotalExp, nextTotalExp);
-
   },
   test() {
     "use strict";

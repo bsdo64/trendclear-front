@@ -63,14 +63,18 @@ class BestPostStore{
   }
 
   onLikePost(postId) {
-    const countPost = this.state.updateIn(['posts', 'postList', 'entities', 'posts', postId+''], post =>
-      post.mergeDeep({
-        liked: true,
-        like_count: post.get('like_count') + 1
-      })
-    );
+    const post = this.state.getIn(['posts', 'postList', 'entities', 'posts', postId+'']);
 
-    this.setState(countPost);
+    if (post) {
+      const countPost = this.state.updateIn(['posts', 'postList', 'entities', 'posts', postId+''], post =>
+        post.mergeDeep({
+          liked: true,
+          like_count: post.get('like_count') + 1
+        })
+      );
+
+      this.setState(countPost);
+    }
   }
 }
 
