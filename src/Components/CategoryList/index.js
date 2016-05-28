@@ -15,7 +15,7 @@ const CategoryItem = React.createClass({
     };
 
     return (
-      <li key={Math.random()}>
+      <li key={q.categoryId}>
         {
           subList.get('title') &&
           <h5 className="">
@@ -33,7 +33,7 @@ const CategoryItem = React.createClass({
             };
 
             return (
-              <div key={Math.random()} className="sub_category item">
+              <div key={q.forumId} className="sub_category item">
                 <Link to={{pathname: '/community', query: q}}>{list.get('title')}</Link>
               </div>
             )
@@ -46,7 +46,7 @@ const CategoryItem = React.createClass({
     "use strict";
 
     return (
-      <menu className="sub_category_list" key={Math.random()}>
+      <menu className="sub_category_list" key={categoryGroup.get('id')}>
         {
           categoryGroup.get('title') &&
           <div className="sub_category_header">{categoryGroup.get('title')}</div>
@@ -63,7 +63,7 @@ const CategoryItem = React.createClass({
   },
   render() {
     const { category } = this.props;
-    console.log(category);
+
     return (
       <div>
         <div id="sub_category">
@@ -82,7 +82,7 @@ const CategoryItem = React.createClass({
 const CategoryList = React.createClass({
   displayName: 'CategoryList',
   createCategoryItem(category) {
-    return <CategoryItem key={Math.random()} category={category} />;
+    return <CategoryItem key={category.get('id')} category={category} />;
   },
   render() {
     const { GnbStore } = this.props;

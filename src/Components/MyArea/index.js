@@ -14,7 +14,7 @@ class NotiButtons extends Component {
             <div className="event">
               <div className="content">
                 <div className="summary">
-                  <a>151</a>명이 글 <a>당신 지금 뭐하는거에요?!!!</a> 를 좋아합니다.
+                  <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
                     <i className={'heart icon'} /> <a className="like_count">{132}</a>
                   <div className="date">
                     3 days ago

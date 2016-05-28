@@ -36,7 +36,11 @@ const ClubList = React.createClass({
     const createClub = function (club) {
       return (
         <li key={club.get('id')} className="gnbm">
-          <a ref="category_btn" href="#gnb_cate_layer1" data-clubid={club.get('id')} onMouseEnter={this.openSideCategories}>
+          <a className="category_btn"
+             ref="category_btn"
+             data-clubid={club.get('id')}
+             onMouseEnter={this.openSideCategories}
+             onClick={this.openSideCategories}>
             <i className="fa fa-hashtag"></i>
             <span>{club.get('title')}</span>
           </a>

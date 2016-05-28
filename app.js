@@ -1,3 +1,4 @@
+var compression = require('compression');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -16,6 +17,7 @@ var routes = require('./routes/index');
 var embed = require('./routes/embed');
 
 var app = express();
+app.use(compression());
 
 app.all('/ajax/*', ApiProxy);
 app.use('/image', ImageProxy);

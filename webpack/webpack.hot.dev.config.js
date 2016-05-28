@@ -3,7 +3,7 @@ var path = require('path');
 var root = path.resolve(__dirname, '../');
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'cheap',
   entry: {
     Entry: [
       'webpack-dev-server/client?http://localhost:2992',

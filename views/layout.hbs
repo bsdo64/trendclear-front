@@ -2,26 +2,26 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/normalize-scss/normalize.css' />
-    <link rel='stylesheet' href='/semantic/semantic.css' />
-    <link rel='stylesheet' href='/font-awesome/css/font-awesome.css' />
+    <link rel='stylesheet' href='/normalize-scss/normalize.min.css' />
+    <link rel='stylesheet' href='/semantic/semantic.min.css' />
+    <link rel='stylesheet' href='/font-awesome/css/font-awesome.min.css' />
 
     <link rel="stylesheet" href="/medium-editor/dist/css/medium-editor.min.css">
-    <link rel="stylesheet" href="/medium-editor/dist/css/themes/default.css">
+    <link rel="stylesheet" href="/medium-editor/dist/css/themes/default.min.css">
     <link rel="stylesheet" href="/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css">
 
     <link rel='stylesheet' href='/stylesheets/common.css' />
-    <link rel='stylesheet' href='/stylesheets/react-select.css' />
+    <link rel='stylesheet' href='/stylesheets/react-select.min.css' />
     <!--<link rel='stylesheet' href='/bundle.css' />-->
   </head>
   <body>
       <div id="app">
         {{{body}}}
       </div>
-      <script src="/jquery/dist/jquery.js"></script>
-      <script src="/semantic/semantic.js"></script>
+      <script src="/jquery/dist/jquery.min.js"></script>
+      <script src="/semantic/semantic.min.js"></script>
 
-      <script src="/medium-editor/dist/js/medium-editor.js"></script>
+      <script src="/medium-editor/dist/js/medium-editor.min.js"></script>
       <script src="/handlebars/handlebars.runtime.min.js"></script>
       <script src="/jquery-sortable/source/js/jquery-sortable-min.js"></script>
       <script src="/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
@@ -32,9 +32,6 @@
       {{#if production}}
       <script src="/_assets/bundle-Entry.js"></script>
       {{else}}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react-dom.js"></script>
-
         <script src="http://localhost:2992/_assets/bundle-Entry.js"></script>
       {{/if}}
   </body>
