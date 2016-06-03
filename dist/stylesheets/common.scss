@@ -6,8 +6,8 @@
   width: 1230px;
   margin: 0 auto;
 }
-
-$tc_blue_header: #27485e;
+$tc_blue_header: #00AABA;
+$tc_blue_header_end: #0E4458;
 $tc_blue_main: #3769ac;
 $white: #fff;
 #header {
@@ -26,7 +26,8 @@ $white: #fff;
       top: 0;
       position: fixed;
       z-index: 100;
-      background: $tc_blue_header;
+      background-color: $tc_blue_header;
+      background: linear-gradient(to right,$tc_blue_header 0,$tc_blue_header_end 100%);
       .top_contents {
         position: relative;
         width: 1230px;

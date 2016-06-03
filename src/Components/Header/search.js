@@ -2,6 +2,7 @@ import React from 'react';
 import SearchActions from '../../Actions/SearchActions';
 import {browserHistory} from 'react-router';
 
+require('./index.scss');
 const SearchBar = React.createClass({
 
   setQuery(e) {

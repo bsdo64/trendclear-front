@@ -4,6 +4,32 @@ import CountUp from 'countup.js';
 
 import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
 
+const Timer = React.createClass({
+  getInitialState: function() {
+    return {init: this.props.init || 0};
+  },
+  tick: function() {
+    this.setState({init: this.state.init - 1});
+  },
+  componentDidMount: function() {
+    this.interval = setInterval(this.tick, 1000);
+  },
+  componentWillUnmount: function() {
+    clearInterval(this.interval);
+  },
+  render: function() {
+    const time = this.state.init;
+    if (time === -1) {
+      clearInterval(this.interval);
+    }
+    return (
+      <span className={((time === 0) ? 'skill_cool_effect' : ((time > 0) ? 'skill_cool': ''))}>
+        {this.state.init}
+      </span>
+    );
+  }
+});
+
 require('./Trendbox.scss');
 const TrendBox = React.createClass({
   componentDidMount() {
@@ -155,7 +181,7 @@ const TrendBox = React.createClass({
               </div>
             </div>
             <div className="ui item">
-              <div id="trend_box">
+              <div id="stat_box">
                 <div className="colum">
                   <h4 className="ui description title">트랜드 포인트</h4>
                   <div className="point_line">
@@ -189,6 +215,42 @@ const TrendBox = React.createClass({
                         나머지 {user.trendbox.get('next_exp') - user.trendbox.get('exp')}
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="ui item">
+              <div id="skill_box">
+                <div className="colum">
+                  <h4 className="ui description title">스킬</h4>
+                  <div className="skill_line">
+                    <div className="ui mini images skills">
+                      <div className="skill">
+                        <Timer init={10} />
+                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
+                      </div>
+                      <div className="skill">
+                        <Timer init={152} />
+                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
+                      </div>
+                      <div className="skill">
+                        <Timer init={0} />
+                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
+                      </div>
+                      <div className="skill">
+                        <Timer init={6} />
+                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
+                      </div>
+                      <div className="skill">
+                        <Timer init={6} />
+                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
+                      </div>
+
+                    </div>
+                  </div>
+                  <div className="point_line">
+                    <span className="ui description">RP</span>
+                    <span id="rp_point" className="ui right floated point rp_point">{user.trendbox.get('R')}</span>
                   </div>
                 </div>
               </div>

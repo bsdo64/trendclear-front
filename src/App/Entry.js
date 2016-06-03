@@ -144,7 +144,9 @@ var App = React.createClass({
               <div className="top_area">
                 <div className="top_contents">
                   <div id="top_logo">
-                    <Link className="ui header inverted huge" to="/">Trend Clear</Link>
+                    <Link className="ui header inverted huge" to="/">
+                      <img src="/images/Venacle.png" />
+                    </Link>
                   </div>
                   <div id="top_search">
                     { this.props.HeaderSearch }

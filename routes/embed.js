@@ -16,9 +16,9 @@ Embeds.get('/oembed', (req, res, next) => {
         '<div id="' + data.id + '" class="youtube-embed ui embed" ' +
         'data-source="youtube" ' +
         'data-id="' + data.id + '" ' +
-        'data-placeholder="http://i.ytimg.com/vi/' + data.id + '/sddefault.jpg" ' +
+        'data-placeholder="http://i.ytimg.com/vi/' + data.id + '/hqdefault.jpg" ' +
         'style="-webkit-background-size: 100% 100%; -moz-background-size: 100% 100%; -o-background-size: 100% 100%; background-size: 100% 100%; ' +
-        'background-image:url(http://i.ytimg.com/vi/' + data.id + '/sddefault.jpg); top: 0; left: 0; width: 100%; height: 100%; position: absolute;" ' +
+        'background-image:url(http://i.ytimg.com/vi/' + data.id + '/hqdefault.jpg); top: 0; left: 0; width: 100%; height: 100%; position: absolute;" ' +
         '/>' +
         '</div>';
       break;

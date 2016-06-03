@@ -7,6 +7,7 @@
  */
 import React from 'react';
 import UserActions from '../../Actions/UserActions';
+import Modal from 'react-modal';
 
 require('./index.scss');
 const AvatarImageModal = React.createClass({
@@ -19,30 +20,12 @@ const AvatarImageModal = React.createClass({
   },
 
   modalClose() {
-    $(this.refs.avatar_img_modal)
-      .modal({
-        allowMultiple: true,
-        detachable: true
-      })
-      .modal('hide');
+    UserActions.closeAvatarModal();
   },
   modalCloseSignal() {
     "use strict";
 
-    let that = this;
-    $(this.refs.avatar_img_modal)
-      .modal({
-        allowMultiple: true,
-        detachable: true,
-        onHidden: function() {
-          UserActions.closeAvatarModal();
-          that.setState({
-            file: null,
-            imagePreviewUrl: null
-          })
-        }
-      })
-      .modal('show');
+    UserActions.closeAvatarModal();
   },
   handleFile: function(e) {
     e.preventDefault();
@@ -51,6 +34,9 @@ const AvatarImageModal = React.createClass({
     const file = e.target.files[0];
 
     reader.onloadend = () => {
+
+      console.log(file);
+      console.log(reader);
       this.setState({
         file: file,
         imagePreviewUrl: reader.result
@@ -72,18 +58,15 @@ const AvatarImageModal = React.createClass({
     const grade = UserStore.get('grade');
     const trendbox = UserStore.get('trendbox');
 
-    if (UserStore.get('openAvatarModal')) {
-      this.modalCloseSignal();
-    }
-    if (!UserStore.get('openAvatarModal')) {
-      this.modalClose();
-    }
+    const openAvatarModal = UserStore.get('openAvatarModal');
 
     const sex = profile.get('sex'),
           avatar_img = profile.get('avatar_img');
     let avatarImg;
 
-    if (avatar_img) {
+    if (this.state.imagePreviewUrl) {
+      avatarImg = <img src={this.state.imagePreviewUrl} />;
+    } else if (avatar_img) {
       avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
     } else {
       if (sex) {
@@ -94,7 +77,13 @@ const AvatarImageModal = React.createClass({
     }
     
     return (
-      <div ref="avatar_img_modal" className="ui modal avatar_img">
+      <Modal
+        overlayClassName={'ui dimmer modals page transition visible active ' + (openAvatarModal ? '' : 'fade out')}
+        className="ui modal avatar_img scrolling transition visible active "
+        isOpen={openAvatarModal}
+        closeTimeoutMS={500}
+        onRequestClose={this.modalClose}
+      >
 
         <div className="ui items">
           <div className="header">
@@ -116,7 +105,7 @@ const AvatarImageModal = React.createClass({
             </div>
           </div>
         </div>
-      </div>
+        </Modal>
     );
   }
 });

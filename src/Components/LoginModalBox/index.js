@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import LoginActions from '../../Actions/LoginActions.js';
 import {browserHistory} from 'react-router';
+import Modal from 'react-modal';
 
 require('./index.scss');
 
@@ -73,6 +74,54 @@ const LoginModalBox = React.createClass({
   handleRequestSignin() {
     $(this.refs.loginmodal).modal('hide');
   },
+
+  afterOpenModal: function() {
+    // references are now sync'd and can be accessed.
+    $(this.refs.loginform)
+      .form({
+        inline : true,
+        on     : 'blur',
+        keyboardShortcuts: false,
+        fields: {
+          loginEmail     : {
+            identifier  : 'loginEmail',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : '이메일을 입력해주세요'
+              },
+              {
+                type   : 'email',
+                prompt : 'Email 형식을 입력해 주세요.'
+              }
+            ]
+          },
+          password   : {
+            identifier  : 'password',
+            rules: [
+              {
+                type   : 'regExp[/^[a-z0-9_-]{4,16}$/]',
+                prompt : '비밀번호는 4~16자리,영문 입니다'
+              }
+            ]
+          }
+        },
+        onSuccess: function(event, fields) {
+          LoginActions.sendLogin({
+            email: fields.loginEmail,
+            password: fields.password
+          });
+        },
+        onFailure: function (formErrors, fields) {
+          console.log(formErrors);
+          console.log(fields);
+        }
+      });
+  },
+
+  closeModal: function() {
+    LoginActions.closeLoginModal();
+  },
   render() {
 
     const { LoginStore } = this.props;
@@ -92,14 +141,22 @@ const LoginModalBox = React.createClass({
     }
 
     return (
-      <div className="ui small modal gb_login" ref="loginmodal">
+      <Modal
+        overlayClassName={'ui dimmer modals page transition visible active ' + (openLoginModal ? '' : 'fade out')}
+        className="ui small modal gb_login scrolling transition visible active "
+        isOpen={openLoginModal}
+        closeTimeoutMS={500}
+        onAfterOpen={this.afterOpenModal}
+        onRequestClose={this.closeModal}
+      >
+
         <i className="close icon"></i>
         <div className="content">
 
           <div id="tc_Head" role="banner">
             <h1>
               <a href="/" id="tc_ServiceLogo"><span
-                className="ir_wa">Trend Clear</span></a>
+                className="ir_wa">Venacle</span></a>
             </h1>
           </div>
 
@@ -138,14 +195,14 @@ const LoginModalBox = React.createClass({
               <div className="inner_footer">
                 <address className="txt_copyright">
                   Copyright ©
-                  <a className="link_tc_">TrendClear Corp.</a>
+                  <a className="link_tc_">Venacle Corp.</a>
                   All rights reserved.
                 </address>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Modal>
     );
   }
 });

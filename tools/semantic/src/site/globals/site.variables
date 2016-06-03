@@ -13,17 +13,17 @@
     Brand Colors
 --------------------*/
 
-@primaryColor        : #3769AC;
-@secondaryColor      : #27485e;
+@primaryColor        : #058294;
+@secondaryColor      : #0E4458;
 
-@lightPrimaryColor   : #2185D0;
-@lightSecondaryColor : #3769AC;
+@lightPrimaryColor   : #0E4458;
+@lightSecondaryColor : #058294;
 
 /*-------------------
        Links
 --------------------*/
 
-@linkColor           : #3769AC;
+@linkColor           : #058294;
 
 /*-------------------
     Border Radius

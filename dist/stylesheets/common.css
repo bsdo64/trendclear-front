@@ -22,7 +22,8 @@
       top: 0;
       position: fixed;
       z-index: 100;
-      background: #27485e; }
+      background-color: #00AABA;
+      background: linear-gradient(to right, #00AABA 0, #0E4458 100%); }
       #header .head_contents .top_area .top_contents {
         position: relative;
         width: 1230px;
