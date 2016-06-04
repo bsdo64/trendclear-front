@@ -1,6 +1,7 @@
 import React from 'react';
 import UserActions from '../../Actions/UserActions';
 import CountUp from 'countup.js';
+import moment from 'moment';
 
 import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
 
@@ -9,18 +10,49 @@ const Timer = React.createClass({
     return {init: this.props.init || 0};
   },
   tick: function() {
+    const type = this.props.type || 'default';
+
+    console.log(this[type])
     this.setState({init: this.state.init - 1});
   },
   componentDidMount: function() {
-    this.interval = setInterval(this.tick, 1000);
+    const type = this.props.type || 'default';
+
+    if (this.state.init > 0 && !this[type]) {
+      clearInterval(this[type]);
+      this[type] = null;
+
+      this[type] = setInterval(this.tick, 1000);
+    }
   },
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps :', nextProps);
+    const self = this;
+    const type = nextProps.type || 'default';
+
+    if (nextProps.init > 0 && !this[type]) {
+      this.setState({init: nextProps.init}, (state) => {
+        "use strict";
+
+        clearInterval(self[type]);
+        self[type] = null;
+
+        self[type] = setInterval(self.tick, 1000);
+      });
+    }
+  },
+
   componentWillUnmount: function() {
-    clearInterval(this.interval);
+    const type = this.props.type || 'default';
+    clearInterval(this[type]);
+    this[type] = null;
   },
   render: function() {
     const time = this.state.init;
-    if (time === -1) {
-      clearInterval(this.interval);
+    if (time === 0) {
+      const type = this.props.type || 'default';
+      clearInterval(this[type]);
+      this[type] = null;
     }
     return (
       <span className={((time === 0) ? 'skill_cool_effect' : ((time > 0) ? 'skill_cool': ''))}>
@@ -225,27 +257,35 @@ const TrendBox = React.createClass({
                   <h4 className="ui description title">스킬</h4>
                   <div className="skill_line">
                     <div className="ui mini images skills">
-                      <div className="skill">
-                        <Timer init={10} />
-                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
-                      </div>
-                      <div className="skill">
-                        <Timer init={152} />
-                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
-                      </div>
-                      <div className="skill">
-                        <Timer init={0} />
-                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
-                      </div>
-                      <div className="skill">
-                        <Timer init={6} />
-                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
-                      </div>
-                      <div className="skill">
-                        <Timer init={6} />
-                        <img className="ui image skill_image" src="/images/leblanc-distortion.png" />
-                      </div>
+                      {
+                        user.skills &&
+                        user.skills.sortBy(value => value.get('id')).map((value, key) => {
 
+                          if (value.get('using_at')) {
+                            const usingTime = new Date(value.get('using_at'));
+                            const cooltimeSec = value.getIn(['skill', 'property', 'cooltime']);
+                            const endTime = new Date(moment(usingTime) + cooltimeSec * 1000);
+
+                            const gap = (endTime.getTime() - new Date().getTime()) / 1000;
+                            const result = gap > 0 ? parseInt(gap, 10): 0;
+
+                            return (
+                              <div className="skill" key={key}>
+                                <Timer init={result} type={value.getIn(['skill', 'name'])} />
+                                <img className="ui image skill_image" src={'/images/' + value.getIn(['skill', 'img'])} />
+                              </div>
+                            )
+
+                          } else {
+                            return (
+                              <div className="skill" key={key}>
+                                <Timer init={0} />
+                                <img className="ui image skill_image" src={'/images/' + value.getIn(['skill', 'img'])} />
+                              </div>
+                            )
+                          }
+                        })
+                      }
                     </div>
                   </div>
                   <div className="point_line">

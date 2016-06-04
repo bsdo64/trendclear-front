@@ -83,25 +83,29 @@ class CommunityStore{
   }
 
   onLikeComment(commentId) {
-    const countComment = this.state.updateIn(['post', 'IPost', 'entities', 'comments', commentId+''], comment =>
-      comment.mergeDeep({
-        liked: true,
-        like_count: comment.get('like_count') + 1
-      })
-    );
+    if (commentId) {
+      const countComment = this.state.updateIn(['post', 'IPost', 'entities', 'comments', commentId+''], comment =>
+        comment.mergeDeep({
+          liked: true,
+          like_count: comment.get('like_count') + 1
+        })
+      );
 
-    this.setState(countComment);
+      this.setState(countComment);
+    }
   }
 
   onLikeSubComment(subCommentId) {
-    const countComment = this.state.updateIn(['post', 'IPost', 'entities', 'subComments', subCommentId+''], subComment =>
-      subComment.mergeDeep({
-        liked: true,
-        like_count: subComment.get('like_count') + 1
-      })
-    );
+    if (subCommentId) {
+      const countComment = this.state.updateIn(['post', 'IPost', 'entities', 'subComments', subCommentId+''], subComment =>
+        subComment.mergeDeep({
+          liked: true,
+          like_count: subComment.get('like_count') + 1
+        })
+      );
 
-    this.setState(countComment);
+      this.setState(countComment);
+    }
   }
 
   onResetPost() {
@@ -112,23 +116,25 @@ class CommunityStore{
   }
 
   onLikePost(postId) {
-    const IPost = this.state.getIn(['post', 'IPost']);
+    if (postId) {
+      const IPost = this.state.getIn(['post', 'IPost']);
 
-    if (IPost) {
-      const countPost = this.state.updateIn(['post', 'IPost', 'entities', 'posts', postId+''], post =>
-        post.mergeDeep({
-          liked: true,
-          like_count: post.get('like_count') + 1
-        })
-      );
-      const countList = countPost.updateIn(['list', 'postList', 'entities', 'posts', postId+''], post =>
-        post.mergeDeep({
-          liked: true,
-          like_count: post.get('like_count') + 1
-        })
-      );
+      if (IPost) {
+        const countPost = this.state.updateIn(['post', 'IPost', 'entities', 'posts', postId+''], post =>
+          post.mergeDeep({
+            liked: true,
+            like_count: post.get('like_count') + 1
+          })
+        );
+        const countList = countPost.updateIn(['list', 'postList', 'entities', 'posts', postId+''], post =>
+          post.mergeDeep({
+            liked: true,
+            like_count: post.get('like_count') + 1
+          })
+        );
 
-      this.setState(countList);
+        this.setState(countList);
+      }
     }
   }
 }

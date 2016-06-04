@@ -15,6 +15,7 @@ class WidgetBox extends Component {
       profile: UserStore.get('profile'),
       icon: UserStore.get('icon'),
       grade: UserStore.get('grade'),
+      skills: UserStore.get('skills'),
     };
     // const logout = LoginStore.get('logout');
 

@@ -4,8 +4,10 @@ import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../Actions/AppActions';
 import UserActions from '../Actions/UserActions';
 import PostActions from '../Actions/PostActions';
+import CommentActions from '../Actions/CommentActions';
 
 import SubmitStore from './SubmitStore';
+import CommunityStore from './CommunityStore';
 
 import { initListener, setMergeState, locationHref } from './Helper/func';
 
@@ -16,6 +18,8 @@ class UserStore{
     this.bindActions(AppActions);
     this.bindActions(UserActions);
     this.bindActions(PostActions);
+
+    this.bindActions(CommentActions);
 
     this.state = Immutable.Map({});
 
@@ -68,14 +72,31 @@ class UserStore{
     this.setMergeState(state.toJS());
   }
 
-  // onSubmitPost(post) {
-  //   this.waitFor(SubmitStore);
-  //
-  //   let updateT10 = this.state.updateIn(['trendbox', 'T'], v => v + 10);
-  //   let updateExp10 = updateT10.updateIn(['trendbox', 'exp'], v => v + 5);
-  //
-  //   this.setMergeState(updateExp10);
-  // }
+  onSubmitComment() {
+    this.waitFor(CommunityStore);
+
+    let state = this.state.toJS();
+    state.skills.map((value, key) => {
+      if (value.skill.name === 'write_comment') {
+        return value.using_at = new Date();
+      }
+    });
+
+    this.setMergeState(state);
+  }
+
+  onSubmitSubComment() {
+    this.waitFor(CommunityStore);
+
+    let state = this.state.toJS();
+    state.skills.map((value, key) => {
+      if (value.skill.name === 'write_sub_comment') {
+        return value.using_at = new Date();
+      }
+    });
+
+    this.setMergeState(state);
+  }
 }
 
 export default alt.createStore(immutable(UserStore));

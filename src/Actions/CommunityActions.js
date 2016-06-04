@@ -8,7 +8,11 @@ class CommunityActions {
         .setType('/ajax')
         .post('/like/post/' + postId)
         .then((res) => {
-          dispatch(postId);
+          if (res === 'ok') {
+            dispatch(postId);
+          } else {
+            dispatch(false);
+          }
         })
         .catch((err) => {
           return err;

@@ -44,7 +44,11 @@ class CommentActions {
         .setType('/ajax')
         .post('/like/comment/' + commentId)
         .then((res) => {
-          dispatch(commentId);
+          if (res === 'ok') {
+            dispatch(commentId);
+          } else {
+            dispatch(false);
+          }
         })
         .catch((err) => {
           return err;
@@ -58,7 +62,11 @@ class CommentActions {
         .setType('/ajax')
         .post('/like/subComment/' + subCommentId)
         .then((res) => {
-          dispatch(subCommentId);
+          if (res === 'ok') {
+            dispatch(subCommentId);
+          } else {
+            dispatch(false);
+          }
         })
         .catch((err) => {
           return err;
