@@ -78,10 +78,12 @@ class UserStore{
     let state = this.state.toJS();
     state.skills.map((value, key) => {
       if (value.skill.name === 'write_comment') {
-        return value.using_at = new Date();
+        value.using_at = new Date();
       }
     });
 
+    state.trendbox.exp = state.trendbox.exp + 5;
+    
     this.setMergeState(state);
   }
 
@@ -94,6 +96,8 @@ class UserStore{
         return value.using_at = new Date();
       }
     });
+
+    state.trendbox.exp = state.trendbox.exp + 5;
 
     this.setMergeState(state);
   }
