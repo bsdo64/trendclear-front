@@ -156,7 +156,7 @@ const BestPost = React.createClass({
                 <i className="warning outline icon"></i>
                 <div className="menu">
                   <div className="item" data-value={post.get('id')} data-action="report">신고</div>
-                  <div className="item " data-value={post.get('id')} data-action="report_ad">광고 신고</div>
+                  {/*<div className="item " data-value={post.get('id')} data-action="report_ad">광고 신고</div>*/}
                   {
                     userId && (userId === author.get('id')) &&
                     <div className="item " data-value={post.get('id')} data-action="delete_post">삭제하기</div> 

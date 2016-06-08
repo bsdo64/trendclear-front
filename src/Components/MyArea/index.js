@@ -7,8 +7,9 @@ require('./index.scss');
 class NotiButtons extends Component {
   render() {
     return (
-      <div className="item">
+      <div className="item noti">
         <i className="large alarm icon inverted" />
+        <div className="ui red label">22</div>
         <div id="alarm_popup" className="ui segment popup"  style={{width: 250}}>
           <div className="ui feed ">
             <div className="event">

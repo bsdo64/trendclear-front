@@ -13,6 +13,27 @@ import CommentActions from '../../../Actions/CommentActions';
 import CommunityActions from '../../../Actions/CommunityActions';
 import Post from './Post';
 
+function checkSkillAvailable(skill) {
+  "use strict";
+
+  const property = skill.getIn(['skill', 'property']);
+  const cooltime = property.get('cooltime');
+  const usingAt = skill.get('using_at');
+
+  if (usingAt === null) {
+    return true;
+  }
+
+  if (cooltime && usingAt) {
+    const gapSec = (new Date() - new Date(usingAt)) / 1000;
+    if (gapSec > cooltime) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 const CommentItem = React.createClass({
   getInitialState() {
     return {
@@ -93,19 +114,30 @@ const CommentItem = React.createClass({
   submitSubComment(commentId) {
     "use strict";
 
-    const {LoginStore} = this.props;
+    const {LoginStore, UserStore} = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
-      const allContents = this.editor.serialize();
-      const el = allContents['sub_comment_input_' + commentId].value;
-      const comment = {
-        content: el,
-        commentId: commentId
-      };
+      const skills = UserStore.get('skills');
+      const writePost = skills
+        .filter((skill, index) => skill.getIn(['skill', 'name']) === 'write_sub_comment')
+        .get(0);
 
-      CommentActions.submitSubComment(comment);
-      this.editor.setContent('');
+      const result = checkSkillAvailable(writePost);
+
+      if (result) {
+        const allContents = this.editor.serialize();
+        const el = allContents['sub_comment_input_' + commentId].value;
+        const comment = {
+          content: el,
+          commentId: commentId
+        };
+
+        CommentActions.submitSubComment(comment);
+        this.editor.setContent('');
+      } else {
+        console.log('not available');
+      }
     } else {
       const modalFlag = LoginStore.get('openLoginModal');
       const location = this.props.location;
@@ -349,19 +381,31 @@ const CommentBox = React.createClass({
   submitComment() {
     "use strict";
 
-    const {LoginStore} = this.props;
+    const {LoginStore, UserStore} = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
-      const allContents = this.editor.serialize();
-      const el = allContents['comment_input'].value;
-      const comment = {
-        content: el,
-        postId: this.props.location.query.postId
-      };
 
-      CommentActions.submitComment(comment);
-      this.editor.setContent('');
+      const skills = UserStore.get('skills');
+      const writePost = skills
+        .filter((skill, index) => skill.getIn(['skill', 'name']) === 'write_comment')
+        .get(0);
+
+      const result = checkSkillAvailable(writePost);
+
+      if (result) {
+        const allContents = this.editor.serialize();
+        const el = allContents['comment_input'].value;
+        const comment = {
+          content: el,
+          postId: this.props.location.query.postId
+        };
+
+        CommentActions.submitComment(comment);
+        this.editor.setContent('');
+      } else {
+        console.log('not available');
+      }
     } else {
       const modalFlag = LoginStore.get('openLoginModal');
       const location = this.props.location;
@@ -513,8 +557,30 @@ const Forum = React.createClass({
 
     console.log('search : ', this.state.text);
 
-    const nextText = '';
-    this.setState({text: nextText});
+    let location = this.props.location;
+    let url = `${location.pathname}?` +
+      `categoryId=${location.query.categoryId}&` +
+      `forumId=${location.query.forumId}&` +
+      (location.query.postId ? `postId=${location.query.postId}&` : '') +
+      (location.query.p ? `p=${location.query.p}&` : '') +
+      (location.query.forumPrefix ? `forumPrefix=${location.query.forumPrefix}&` : '') +
+      `forumSearch=${this.state.text}`;
+
+    browserHistory.push(url);
+  },
+  handleSubmitPrefix(prefixId, e) {
+    "use strict";
+    e.preventDefault();
+
+    let location = this.props.location;
+    let url = `${location.pathname}?` +
+      `categoryId=${location.query.categoryId}&` +
+      `forumId=${location.query.forumId}&` +
+      (location.query.postId ? `postId=${location.query.postId}&` : '') +
+      (location.query.forumSearch ? `forumSearch=${location.query.forumSearch}&` : '') +
+      `forumPrefix=${prefixId}`;
+
+    browserHistory.push(url);
   },
   handleSetPage(pagination) {
 
@@ -524,9 +590,21 @@ const Forum = React.createClass({
                 `forumId=${location.query.forumId}&` +
                 (location.query.postId ? `postId=${location.query.postId}&` : '') +
                 `p=${pagination.page}`;
-    browserHistory.push(url);
 
+    browserHistory.push(url);
   },
+  resetPrefix() {
+    "use strict";
+
+    let location = this.props.location;
+    let url = `${location.pathname}?` +
+      `categoryId=${location.query.categoryId}&` +
+      `forumId=${location.query.forumId}&` +
+      (location.query.postId ? `postId=${location.query.postId}` : '');
+
+    browserHistory.push(url);
+  },
+
   openLoginModal() {
     "use strict";
 
@@ -564,7 +642,9 @@ const Forum = React.createClass({
 
       return (
         <div className="item" key={index}>
-          <div className="middle aligned content">{prefix.get('name') + " (" + postCount + ")"}</div>
+          <div className="middle aligned content" onClick={this.handleSubmitPrefix.bind(this, prefixId)}>
+            {prefix.get('name') + " (" + postCount + ")"}
+          </div>
         </div>
       )
     }
@@ -576,11 +656,11 @@ const Forum = React.createClass({
         </h3>
         <div className="ui horizontal celled list">
           <div className="item" style={{fontWeight: 'bold'}}>
-            <div className="middle aligned content bold">전체</div>
+            <div className="middle aligned content bold" onClick={this.resetPrefix}>전체</div>
           </div>
           {
             forum.get('prefixList') &&
-            forum.getIn(['prefixList', 'result']).map(createPrefixItem)
+            forum.getIn(['prefixList', 'result']).map(createPrefixItem.bind(this))
           }
         </div>
         <table className="ui table very compact" >
@@ -695,6 +775,12 @@ const CommunityContents = React.createClass({
           }
         }
       });
+  },
+  
+  componentWillUnmount() {
+    "use strict";
+    
+    CommunityActions.resetData();
   },
 
   componentDidUpdate() {

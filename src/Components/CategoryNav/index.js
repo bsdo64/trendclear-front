@@ -10,13 +10,31 @@ const ClubList = React.createClass({
   },
   render() {
     "use strict";
-    const { gnbMenu } = this.props;
+    const { gnbMenu, categorySet } = this.props;
     const data = gnbMenu.get('data');
     const openSideNow = gnbMenu.get('openSideNow');
+    const INCat = gnbMenu.get('INCat');
+
+    let forums;
+    if (INCat && categorySet) {
+      forums = INCat.getIn(['entities', 'categories', categorySet.toString(), 'forums']);
+    }
+
+    const createForumList = function (forumId) {
+      return <li>
+        <Link to={`/community?categoryId=${categorySet}&forumId=${forumId}`} >
+          {INCat.getIn(['entities', 'forums', forumId.toString(), 'title'])}
+        </Link>
+      </li>
+    };
+
+    const createForum = function (categoryId) {
+      GnbActions.getForums(categoryId);
+    };
 
     const createCategory = function (category) {
       return (
-        <li key={category.get('id')}>
+        <li key={category.get('id')} onMouseEnter={createForum.bind(null, category.get('id'))}>
           <Link to={"/community?categoryId=" + category.get('id')}>{category.get('title')}</Link>
         </li>
       )
@@ -52,29 +70,17 @@ const ClubList = React.createClass({
                   {club.get('category_groups').map(createCategoryGroup)}
                 </div>
                 <div className="grouping">
-                  <div className="special">
-                    <h3 >스패셜</h3>
-                    <ul className="category_lists">
-                      <li><a
-                        href="http://www.11st.co.kr/browsing/Bsshop.tmall?method=getBsshop&amp;bsshopId=half">하프클럽</a>
-                      </li>
-                      <li><a
-                        href="http://www.11st.co.kr/disp/DTAction.tmall?ID=DLUXURY11&amp;ctgrNo=47031">럭셔리11</a>
-                      </li>
-                      <li><a
-                        href="http://global.11st.co.kr/html/global/globalMain.html">해외직구</a>
-                      </li>
-                      <li><a href="http://www.11st.co.kr/html/FashionDept.html">패션백화점</a></li>
-                      <li><a href="http://shop.11st.co.kr/mandarinaduck-official">만다리나덕</a>
-                      </li>
-                      <li><a href="http://shop.11st.co.kr/tandy2015">TANDY</a></li>
-                      <li><a href="http://shop.11st.co.kr/lapkorea">LAP</a></li>
-                      <li><a href="http://shop.11st.co.kr/parkadmin">파크랜드</a></li>
-                      <li><a href="http://shop.11st.co.kr/giordano264">지오다노</a></li>
-                      <li><a href="http://shop.11st.co.kr/elandesi">미쏘</a></li>
-                      <li><a href="http://shop.11st.co.kr/stco2010">by STCO</a></li>
-                    </ul>
-                  </div>
+                  {
+                    categorySet && forums &&
+                    <div className="special">
+                      <h3 >포럼</h3>
+                      <ul className="category_lists">
+                        {
+                          forums.map(createForumList)
+                        }
+                      </ul>
+                    </div>
+                  }
                 </div>
                 <div className="banner">
                   <div className="ban02">
@@ -128,6 +134,7 @@ const CategoryNav = React.createClass({
     const { GnbStore } = this.props;
     const openGnb = GnbStore.get('openGnb');
     const gnbMenu = GnbStore.get('gnbMenu');
+    const categorySet = GnbStore.get('categorySet');
 
     return (
       <div>
@@ -144,6 +151,7 @@ const CategoryNav = React.createClass({
             <div className="gnb_menu">
               <ClubList
                 gnbMenu={gnbMenu}
+                categorySet={categorySet}
               />
               <ClubListMain />
             </div>

@@ -37,6 +37,11 @@ class GnbStore{
   onUpdateFilter(val) {
     this.setMergeState(val);
   }
+
+  onGetForums(categoryId) {
+    let state = this.state.set('categorySet', categoryId);
+    this.setMergeState(state);
+  }
 }
 
 export default alt.createStore(immutable(GnbStore));

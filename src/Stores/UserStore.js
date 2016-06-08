@@ -83,7 +83,8 @@ class UserStore{
     });
 
     state.trendbox.exp = state.trendbox.exp + 5;
-    
+    state.trendbox.T = state.trendbox.T + 10;
+
     this.setMergeState(state);
   }
 
@@ -98,6 +99,7 @@ class UserStore{
     });
 
     state.trendbox.exp = state.trendbox.exp + 5;
+    state.trendbox.T = state.trendbox.T + 10;
 
     this.setMergeState(state);
   }

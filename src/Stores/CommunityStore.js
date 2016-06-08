@@ -137,6 +137,10 @@ class CommunityStore{
       }
     }
   }
+
+  onResetData() {
+    this.setState(Map({}));
+  }
 }
 
 export default alt.createStore(immutable(CommunityStore));

@@ -288,10 +288,6 @@ const TrendBox = React.createClass({
                       }
                     </div>
                   </div>
-                  <div className="point_line">
-                    <span className="ui description">RP</span>
-                    <span id="rp_point" className="ui right floated point rp_point">{user.trendbox.get('R')}</span>
-                  </div>
                 </div>
               </div>
             </div>

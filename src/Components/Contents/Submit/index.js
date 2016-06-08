@@ -5,8 +5,6 @@ import React from 'react';
 import Select from 'react-select';
 import _ from 'lodash';
 
-import Editor from './newEditor';
-
 import {medium, mediumInsertConfig} from './config';
 import PostActions from '../../../Actions/PostActions';
 
@@ -32,14 +30,47 @@ const SubmitContents = React.createClass({
   },
   
   submitPost() {
-    const { SubmitStore } = this.props;
-    let newPost = {
-      title: SubmitStore.get('title'),
-      content: SubmitStore.get('content'),
-      prefixId: SubmitStore.get('selectPrefixId'),
-      query: this.props.location.query
-    };
-    PostActions.submitPost(newPost);
+    const { SubmitStore, UserStore } = this.props;
+
+    const skills = UserStore.get('skills');
+    const writePost = skills
+      .filter((skill, index) => skill.getIn(['skill', 'name']) === 'write_post')
+      .get(0);
+
+    function checkSkillAvailable(writePostSkill) {
+      "use strict";
+
+      const property = writePostSkill.getIn(['skill', 'property']);
+      const cooltime = property.get('cooltime');
+      const usingAt = writePostSkill.get('using_at');
+
+      if (usingAt === null) {
+        return true;
+      }
+
+      if (cooltime && usingAt) {
+        const gapSec = (new Date() - new Date(usingAt)) / 1000;
+        if (gapSec > cooltime) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    const result = checkSkillAvailable(writePost);
+
+    if (result) {
+      let newPost = {
+        title: SubmitStore.get('title'),
+        content: SubmitStore.get('content'),
+        prefixId: SubmitStore.get('selectPrefixId'),
+        query: this.props.location.query
+      };
+      PostActions.submitPost(newPost);
+    } else {
+      console.log('not available');
+    }
   },
 
   handleTitle() {

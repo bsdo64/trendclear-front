@@ -23,6 +23,10 @@ class CommunityActions {
   resetPost() {
     return true;
   }
+
+  resetData() {
+    return true;
+  }
 }
 
 module.exports = alt.createActions(CommunityActions);

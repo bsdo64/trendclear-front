@@ -9,4 +9,15 @@
       color: #cbdbf0;
     }
   }
+
+  .item.noti {
+    i.alarm ~ .label {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 10px;
+      font-size: 10px;
+      padding: 2px;
+    }
+  }
 }

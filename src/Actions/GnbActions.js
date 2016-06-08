@@ -11,6 +11,10 @@ class GnbActions {
   updateFilter(val) {
     return val
   }
+
+  getForums(categoryId) {
+    return categoryId;
+  }
 }
 
 module.exports = alt.createActions(GnbActions);
