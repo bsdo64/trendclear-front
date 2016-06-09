@@ -3,6 +3,8 @@ import UserActions from '../../Actions/UserActions';
 import CountUp from 'countup.js';
 import moment from 'moment';
 
+import ReactTooltip from 'react-tooltip';
+
 import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
 
 const Timer = React.createClass({
@@ -261,29 +263,49 @@ const TrendBox = React.createClass({
                         user.skills &&
                         user.skills.sortBy(value => value.get('id')).map((value, key) => {
 
+                          let usingTime, cooltimeSec, endTime, gap, result;
                           if (value.get('using_at')) {
-                            const usingTime = new Date(value.get('using_at'));
-                            const cooltimeSec = value.getIn(['skill', 'property', 'cooltime']);
-                            const endTime = new Date(moment(usingTime) + cooltimeSec * 1000);
+                            usingTime = new Date(value.get('using_at'));
+                            cooltimeSec = value.getIn(['skill', 'property', 'cooltime']);
+                            endTime = new Date(moment(usingTime) + cooltimeSec * 1000);
 
-                            const gap = (endTime.getTime() - new Date().getTime()) / 1000;
-                            const result = gap > 0 ? parseInt(gap, 10): 0;
+                            gap = (endTime.getTime() - new Date().getTime()) / 1000;
+                            result = gap > 0 ? parseInt(gap, 10) : 0;
+                          } else {
+                            result = 0;
+                          }
 
-                            return (
-                              <div className="skill" key={key}>
+                          return (
+                            <div
+                              data-tip
+                              data-for={value.getIn(['skill', 'name'])}
+                              data-offset="{'bottom': -10}"
+                              className="skill"
+                              key={key}>
                                 <Timer init={result} type={value.getIn(['skill', 'name'])} />
                                 <img className="ui image skill_image" src={'/images/' + value.getIn(['skill', 'img'])} />
-                              </div>
-                            )
+                                <ReactTooltip
+                                  id={value.getIn(['skill', 'name'])}
+                                  place="bottom"
+                                  class="skill2"
+                                  effect="solid">
 
-                          } else {
-                            return (
-                              <div className="skill" key={key}>
-                                <Timer init={0} />
-                                <img className="ui image skill_image" src={'/images/' + value.getIn(['skill', 'img'])} />
-                              </div>
-                            )
-                          }
+                                  <div className="ui horizontal list">
+                                    <div className="item">
+                                      <img className="ui mini circular image" src={'/images/' + value.getIn(['skill', 'img'])} />
+                                      <div className="content">
+                                        <div className="ui sub header">{value.getIn(['skill', 'title'])}</div>
+                                        <div className="meta level">레벨 : {value.getIn(['level'])}</div>
+                                        <div className="meta cooltime">쿨타임 : {value.getIn(['skill', 'property', 'cooltime'])}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <hr />
+                                  {value.getIn(['skill', 'description'])}
+
+                                </ReactTooltip>
+                            </div>
+                          )
                         })
                       }
                     </div>

@@ -6,8 +6,6 @@ import alt from '../Utils/alt';
 import { IndexRedirect, Router, Link, IndexRoute, Route, browserHistory } from 'react-router';
 import Api from '../Utils/ApiClient';
 
-import io from 'socket.io-client';
-
 import AppActions from '../Actions/AppActions';
 
 window.Perf = Perf;
@@ -186,14 +184,6 @@ var App = React.createClass({
     )
   }
 });
-
-var socket = io.connect('http://localhost:3001/noti');
-socket.emit('join_room');
-console.log('222222222222');
-
-socket.on('news', function (comment) {
-  UserActions.increaseLevel();
-})
 
 //
 // ReactDOM.render(
