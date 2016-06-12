@@ -16,6 +16,7 @@ var BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 var HeaderMyMenu = require('../Container/Header/MyMenu');
 var HeaderSearch = require('../Container/Header/Search');
 var LoginModalContainer = require('../Container/Modal/LoginModalContainer');
+var ReportModalContainer = require('../Container/Modal/ReportModalContainer');
 var WidgetContainer = require('../Container/RightCol/WidgetContainer');
 
 var ContentsContainer = require('../Container/Contents/Best');
@@ -50,6 +51,7 @@ Api
           LeftColMenu: BestCategoryMenu,
           LoginModalContainer: LoginModalContainer,
           WidgetContainer: WidgetContainer,
+          ReportModalContainer: ReportModalContainer,
           ContentsContainer: ContentsContainer
         }} />
         </Route>
@@ -63,6 +65,7 @@ Api
           LeftColMenu: LeftColCategoryMenu,
           LoginModalContainer: LoginModalContainer,
           WidgetContainer: WidgetContainer,
+          ReportModalContainer: ReportModalContainer,
           ContentsContainer: SigninContainer
         }} />
         </Route>
@@ -76,6 +79,7 @@ Api
           LeftColMenu: LeftColCategoryMenu,
           LoginModalContainer: LoginModalContainer,
           WidgetContainer: WidgetContainer,
+          ReportModalContainer: ReportModalContainer,
           ContentsContainer: CommunityContainer
         }} />
 
@@ -87,6 +91,7 @@ Api
                   LeftColMenu: LeftColCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   WidgetContainer: WidgetContainer,
+                  ReportModalContainer: ReportModalContainer,
                   ContentsContainer: SubmitContainer
                  }}
           />
@@ -100,6 +105,7 @@ Api
                   LeftColGnb: LeftColGlobalCategoryNav,
                   LeftColMenu: LeftColCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
+                  ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,
                   ContentsContainer: SearchContainer
                  }}
@@ -179,6 +185,7 @@ var App = React.createClass({
         </div>
         <div id="modal">
           { this.props.LoginModalContainer }
+          { this.props.ReportModalContainer }
         </div>
       </div>
     )

@@ -49,7 +49,7 @@ const mediumInsertConfig = function mediumInsertConfig(editor) {
         captions: true,
         captionPlaceholder: '이미지 캡션을 입력하세요',
         fileUploadOptions: {
-          url: 'http://localhost:3000/image/upload',
+          url: '/image/upload',
           acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
           maxFileSize: 5 * 1024 * 1024
         },

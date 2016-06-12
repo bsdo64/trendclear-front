@@ -32,38 +32,29 @@ class CommunityStore{
 
   onSubmitComment(IComment) {
 
-    // const loc = browserHistory.createLocation(window.location);
-    // browserHistory.replace(
-    //   loc.pathname + '?categoryId=' + loc.query.categoryId +
-    //   '&forumId=' + loc.query.forumId +
-    //   '&postId=' + loc.query.postId +
-    //   (loc.query.p ? ('&p=' + loc.query.p) : '') +
-    //   '&comment_p=1'
+    const loc = browserHistory.createLocation(window.location);
+    return browserHistory.push(
+      loc.pathname + '?categoryId=' + loc.query.categoryId +
+      '&forumId=' + loc.query.forumId +
+      '&postId=' + loc.query.postId +
+      (loc.query.p ? ('&p=' + loc.query.p) : '') +
+      '&comment_p=1'
+    );
+
+    // let addCommentState = this.state.mergeDeep({post: {IPost: {entities: IComment.entities} }});
+    //
+    // let postId = addCommentState.getIn(['post', 'IPost', 'result']).toString();
+    // let addIncrement = addCommentState.updateIn(['post', 'IPost', 'entities', 'posts', postId, 'comment_count'], value =>
+    //   value + 1
     // );
-
-    let addCommentState = this.state.mergeDeep({post: {IPost: {entities: IComment.entities} }});
-
-    let postId = addCommentState.getIn(['post', 'IPost', 'result']).toString();
-    let addIncrement = addCommentState.updateIn(['post', 'IPost', 'entities', 'posts', postId, 'comment_count'], value =>
-      value + 1
-    );
-    let addListIncrement = addIncrement.updateIn(['list', 'postList', 'entities', 'posts', postId, 'comment_count'], value =>
-      value + 1
-    );
-
-    this.setMergeState(addListIncrement.toJS());
+    // let addListIncrement = addIncrement.updateIn(['list', 'postList', 'entities', 'posts', postId, 'comment_count'], value =>
+    //   value + 1
+    // );
+    //
+    // this.setMergeState(addListIncrement.toJS());
   }
 
   onSubmitSubComment(IComment) {
-
-    // const loc = browserHistory.createLocation(window.location);
-    // browserHistory.replace(
-    //   loc.pathname + '?categoryId=' + loc.query.categoryId +
-    //   '&forumId=' + loc.query.forumId +
-    //   '&postId=' + loc.query.postId +
-    //   (loc.query.p ? ('&p=' + loc.query.p) : '') +
-    //   '&comment_p=1'
-    // );
 
     let commentId = IComment.commentId;
     let subCommentId = IComment.result;

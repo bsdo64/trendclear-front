@@ -1,6 +1,7 @@
 import React from 'react';
 
 import BestPost from './BestPost';
+import ReportActions from '../../../Actions/ReportActions';
 
 require('./BestList.scss');
 const BestList = React.createClass({
@@ -14,6 +15,7 @@ const BestList = React.createClass({
             case 'report':
 
               console.log('포스트 신고 Id : ', value);
+              ReportActions.openReportModal(true);
               break;
             case 'report_ad':
 
@@ -41,6 +43,7 @@ const BestList = React.createClass({
             case 'report':
 
               console.log('포스트 신고 Id : ', value);
+              ReportActions.openReportModal();
               break;
             case 'report_ad':
 

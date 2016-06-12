@@ -95,7 +95,7 @@ const TrendBox = React.createClass({
 
     if ( expPercent >= 100 ) {
       expPercent = expPercent - 100;
-      UserActions.levelUp({currentLevel: nextUser.trendbox.get('level')});
+      UserActions.levelUp();
     }
 
     if ( currentTotalExp != prev_currentTotalExp) {

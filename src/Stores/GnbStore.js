@@ -42,6 +42,10 @@ class GnbStore{
     let state = this.state.set('categorySet', categoryId);
     this.setMergeState(state);
   }
+
+  onSaveFilter() {
+    this.setState(this.state);
+  }
 }
 
 export default alt.createStore(immutable(GnbStore));

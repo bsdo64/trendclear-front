@@ -47,14 +47,23 @@ const BestContents = React.createClass({
   getMoreBest() {
     "use strict";
 
-    const {BestPostStore} = this.props;
+    const {BestPostStore, GnbStore} = this.props;
     const noMore = BestPostStore.get('noMore');
     const collection = BestPostStore.getIn(['posts', 'collection']);
     const currentPage = collection ? collection.get('current_page') : 1;
     const nextPage = collection ? collection.get('next_page') : 2;
 
+
+    const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
+    const normalize = categoryValue.map((object, key) => {
+      return parseInt(object.value);
+    });
+
     if (!noMore) {
-      PostActions.getBestPost({page: nextPage});
+      PostActions.getBestPost({
+        page: nextPage,
+        categoryValue: (normalize.length > 0) ? normalize: null
+      });
     }
   },
 

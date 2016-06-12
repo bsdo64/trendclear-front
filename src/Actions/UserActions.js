@@ -9,7 +9,7 @@ class UserActions {
     return (dispatch) => {
       Api
         .setType('/ajax')
-        .post('/user/levelup', params)
+        .post('/user/levelup')
         .then((res) => {
           dispatch(res);
         })

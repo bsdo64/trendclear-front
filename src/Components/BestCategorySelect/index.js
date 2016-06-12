@@ -29,6 +29,15 @@ const Temp = React.createClass({
     this.setState({openFilter: !this.state.openFilter});
   },
 
+  saveFilter() {
+    const {GnbStore} = this.props;
+    const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS(): [];
+    const normalize = categoryValue.map((object, key) => {
+      return parseInt(object.value);
+    });
+    GnbActions.saveFilter({categoryValue: normalize});
+  },
+  
   render() {
     "use strict";
 
@@ -83,28 +92,6 @@ const Temp = React.createClass({
               {
                 this.state.openFilter &&
                 [
-                  <div key={'club'} className="sub_category item">
-                    <a>{'클럽'}</a>
-                    <Select
-                      multi={true}
-                      placeholder="클럽 선택 .."
-                      value={clubValue}
-                      options={clubMap}
-                      onChange={this.updateFilterValue.bind(this, 'clubValue')}
-                    />
-                  </div>
-                  ,
-                  <div key={'category_group'} className="sub_category item">
-                    <a>{'카테고리 그룹'}</a>
-                    <Select
-                      multi={true}
-                      placeholder="그룹 선택 .."
-                      value={categoryGroupValue}
-                      options={categoryGroupsMap}
-                      onChange={this.updateFilterValue.bind(this, 'categoryGroupValue')}
-                    />
-                  </div>
-                  ,
                   <div key={'category'} className="sub_category item">
                     <a >{'카테고리'}</a>
                     <Select
@@ -117,7 +104,9 @@ const Temp = React.createClass({
                   </div>
                   ,
                   <div key={'button'} className="ui container fluid" style={{display: 'inline-block'}}>
-                    <button className="ui button inverted basic tiny right floated" style={{fontSize: '10px'}}>
+                    <button className="ui button inverted basic tiny right floated" 
+                            style={{fontSize: '10px'}}
+                            onClick={this.saveFilter}>
                       저장
                     </button>
                   </div>
