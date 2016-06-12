@@ -6,12 +6,40 @@ require('./index.scss');
 
 class NotiButtons extends Component {
   render() {
+    const {UserStore} = this.props;
+    const Noti = UserStore.getIn(['notifications', 'INoti']);
+
     return (
       <div className="item noti">
         <i className="large alarm icon inverted" />
-        <div className="ui red label">22</div>
+        <div className="ui red label">{Noti && Noti.getIn(['result']).size}</div>
         <div id="alarm_popup" className="ui segment popup"  style={{width: 250}}>
           <div className="ui feed ">
+            {
+              Noti &&
+              Noti.get('result').map(notiId => {
+
+                const noti = Noti.getIn(['entities', 'notis', notiId.toString()]);
+
+                switch(noti.get('type')) {
+                case 'comment_write':
+                  return (
+                    <div className="event">
+                      <div className="content">
+                        <div className="summary">
+                          글 <a>여봉이 사랑해</a>에 <a>{noti.get('count')}</a>개의 댓글이 달렸습니다.
+                          <i className={'heart icon'} /> <a className="like_count">{noti.get('count')}</a>
+                          <div className="date">
+                            3 days ago
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+
+              })
+            }
             <div className="event">
               <div className="content">
                 <div className="summary">

@@ -1,6 +1,6 @@
 import alt from '../Utils/alt';
 import {normalize, arrayOf} from 'normalizr';
-import {club, post, prefix, comment} from './normalizr/schema';
+import {club, post, prefix, comment, noti} from './normalizr/schema';
 
 class AppActions {
   init(bootstrapData) {
@@ -36,7 +36,10 @@ class AppActions {
       bootstrapData.GnbStore.gnbMenu.INCat = normalize(INCat, arrayOf(club));
     }
 
-
+    if (bootstrapData.UserStore && bootstrapData.UserStore.notifications) {
+      const INoti = bootstrapData.UserStore.notifications.data;
+      bootstrapData.UserStore.notifications.INoti = normalize(INoti, arrayOf(noti));
+    }
 
     return bootstrapData;
   }

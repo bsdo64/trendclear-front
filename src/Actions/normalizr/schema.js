@@ -11,6 +11,8 @@ const author = new Schema('author');
 const comment = new Schema('comments');
 const subComment = new Schema('subComments');
 
+const noti = new Schema('notis');
+
 club.define({
   category_groups: arrayOf(categoryGroup)
 });
@@ -51,5 +53,7 @@ module.exports = {
   post: post,
   author: author,
   comment: comment,
-  subComment: subComment
+  subComment: subComment,
+
+  noti: noti
 };
