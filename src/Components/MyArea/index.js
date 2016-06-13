@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
 import LoginButton from './LoginButton';
 import UserActions from '../../Actions/UserActions';
 
@@ -12,7 +13,12 @@ class NotiButtons extends Component {
     return (
       <div className="item noti">
         <i className="large alarm icon inverted" />
-        <div className="ui red label">{Noti && Noti.getIn(['result']).size}</div>
+        {
+          Noti && !!Noti.getIn(['result']).size &&
+          <div className="ui red label">
+            {Noti.getIn(['result']).size}
+          </div>
+        }
         <div id="alarm_popup" className="ui segment popup"  style={{width: 250}}>
           <div className="ui feed ">
             {
@@ -73,6 +79,20 @@ class NotiButtons extends Component {
 
 const UserButtons = React.createClass({
 
+  gotoActivity() {
+    "use strict";
+
+    $('#profile_id_button').popup('hide');
+    browserHistory.push('/activity');
+  },
+
+  gotoSettings() {
+    "use strict";
+
+    $('#profile_id_button').popup('hide');
+    browserHistory.push('/setting');
+  },
+
   handleLogout() {
     UserActions.requestLogout();
   },
@@ -104,13 +124,8 @@ const UserButtons = React.createClass({
         <a id="profile_id_button" className="text" >{user.get('nick')}</a>
         <div id="profile_popup" className="ui popup">
           <div className="ui vertical menu secondary">
-            <a className="active item">내 프로필</a>
-            <a className="item">내 활동</a>
-            <a className="item">도움말</a>
-            <div className="ui divider"></div>
-            <a href="http://www.google.com" className="item">
-              설정
-            </a>
+            <a className="item" onClick={this.gotoActivity}>나의 활동</a>
+            <a className="active item" onClick={this.gotoSettings}>설정1</a>
             <a className="item" onClick={this.handleLogout}>
               로그아웃
             </a>
@@ -139,6 +154,14 @@ const MyArea = React.createClass({
         on    : 'click'
       });
   },
+  componentDidUpdate(prevProps, prevState) {
+    $('#profile_id_button')
+      .popup('refresh');
+
+    $('.large.alarm.icon')
+      .popup('refresh');
+  },
+
   render() {
     const { LoginStore } = this.props;
     const isLogin = LoginStore.get('isLogin');

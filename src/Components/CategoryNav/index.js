@@ -35,7 +35,7 @@ const ClubList = React.createClass({
     const createCategory = function (category) {
       return (
         <li key={category.get('id')} onMouseEnter={createForum.bind(null, category.get('id'))}>
-          <Link to={"/community?categoryId=" + category.get('id')}>{category.get('title')}</Link>
+          <a to={"/community?categoryId=" + category.get('id')}>{category.get('title')}</a>
         </li>
       )
     };

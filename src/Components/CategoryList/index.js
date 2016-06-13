@@ -19,7 +19,7 @@ const CategoryItem = React.createClass({
         {
           subList.get('title') &&
           <h5 className="">
-            <Link to={{pathname: loc.pathname, query: q}}>{subList.get('title')}</Link>
+            <a to={{pathname: loc.pathname, query: q}}>{subList.get('title')}</a>
           </h5>
         }
         {

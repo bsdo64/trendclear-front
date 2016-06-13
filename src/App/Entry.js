@@ -24,6 +24,7 @@ var SigninContainer = require('../Container/Contents/Signin');
 var CommunityContainer = require('../Container/Contents/Community');
 var SubmitContainer = require('../Container/Contents/SubmitPost');
 var SearchContainer = require('../Container/Contents/Search');
+var SettingContainer = require('../Container/Contents/Setting');
 
 // Bootstrap Location
 var loc = browserHistory.createLocation(location);
@@ -108,6 +109,36 @@ Api
                   ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,
                   ContentsContainer: SearchContainer
+                 }}
+          />
+        </Route>
+
+        <Route path="/activity" component={App}>
+          <IndexRoute
+            components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  ReportModalContainer: ReportModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ContentsContainer: SearchContainer
+                 }}
+          />
+        </Route>
+
+        <Route path="/setting" component={App}>
+          <IndexRoute
+            components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  ReportModalContainer: ReportModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ContentsContainer: SettingContainer
                  }}
           />
         </Route>
