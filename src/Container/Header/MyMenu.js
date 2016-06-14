@@ -28,11 +28,6 @@ const MyMenuContainer = connectToStores({
     if (LoginStore.get('isLogin')) {
       var socket = io.connect('http://localhost:3001/noti');
       socket.emit('join_room');
-      console.log('222222222222');
-
-      socket.on('news', function (comment) {
-        UserActions.increaseLevel();
-      });
     }
 
   },

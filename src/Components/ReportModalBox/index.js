@@ -1,205 +1,88 @@
 import React from 'react';
-import {Link} from 'react-router';
-import LoginActions from '../../Actions/LoginActions.js';
 import ReportActions from '../../Actions/ReportActions.js';
-import {browserHistory} from 'react-router';
 import Modal from 'react-modal';
 
 require('./index.scss');
 const ReportModalBox = React.createClass({
   displayName: 'ReportModalBox',
   componentDidMount() {
-    $(this.refs.loginform)
-      .form({
-        inline : true,
-        on     : 'blur',
-        keyboardShortcuts: false,
-        fields: {
-          loginEmail     : {
-            identifier  : 'loginEmail',
-            rules: [
-              {
-                type   : 'empty',
-                prompt : '이메일을 입력해주세요'
-              },
-              {
-                type   : 'email',
-                prompt : 'Email 형식을 입력해 주세요.'
-              }
-            ]
-          },
-          password   : {
-            identifier  : 'password',
-            rules: [
-              {
-                type   : 'regExp[/^[a-z0-9_-]{4,16}$/]',
-                prompt : '비밀번호는 4~16자리,영문 입니다'
-              }
-            ]
-          }
-        },
-        onSuccess: function(event, fields) {
-          LoginActions.sendLogin({
-            email: fields.loginEmail,
-            password: fields.password
-          });
-        },
-        onFailure: function (formErrors, fields) {
-          console.log(formErrors);
-          console.log(fields);
-        }
-      });
+    $('.md-content .ui.radio.checkbox').checkbox();
   },
-  componentWillReceiveProps(nextProps) {
-    const oldOpenLoginModal = this.props.LoginStore.get('openLoginModal');
-    const { LoginStore } = nextProps;
-    const openLoginModal = LoginStore.get('openLoginModal');
-
-    if (openLoginModal === false && oldOpenLoginModal === true) { // close
-
-    }
-
-    if (openLoginModal === true && oldOpenLoginModal === false) { // open
-      $(this.refs.loginmodal).modal({
-        onHidden: function() {
-          LoginActions.closeLoginModal();
-        }
-      }).modal('show')
-    }
+  componentDidUpdate(prevProps, prevState) {
+    setTimeout(() => {
+      "use strict";
+      $('.md-content .ui.radio.checkbox').checkbox('refresh');
+    }, 0)
   },
 
-  handleRequestLogin() {
-    $(this.refs.loginform).form('validate form');
-  },
-  handleRequestSignin() {
-    $(this.refs.loginmodal).modal('hide');
-  },
-
-  afterOpenModal: function() {
-    // references are now sync'd and can be accessed.
-    $(this.refs.loginform)
-      .form({
-        inline : true,
-        on     : 'blur',
-        keyboardShortcuts: false,
-        fields: {
-          loginEmail     : {
-            identifier  : 'loginEmail',
-            rules: [
-              {
-                type   : 'empty',
-                prompt : '이메일을 입력해주세요'
-              },
-              {
-                type   : 'email',
-                prompt : 'Email 형식을 입력해 주세요.'
-              }
-            ]
-          },
-          password   : {
-            identifier  : 'password',
-            rules: [
-              {
-                type   : 'regExp[/^[a-z0-9_-]{4,16}$/]',
-                prompt : '비밀번호는 4~16자리,영문 입니다'
-              }
-            ]
-          }
-        },
-        onSuccess: function(event, fields) {
-          LoginActions.sendLogin({
-            email: fields.loginEmail,
-            password: fields.password
-          });
-        },
-        onFailure: function (formErrors, fields) {
-          console.log(formErrors);
-          console.log(fields);
-        }
-      });
+  openShow() {
+    "use strict";
+    $('.ReactModal__Content').addClass('md-show');
   },
 
   closeModal: function() {
+    $('.ReactModal__Content').removeClass('md-show');
     ReportActions.closeReportModal();
   },
   render() {
-
     const { LoginStore, ReportStore } = this.props;
     const loginFail = LoginStore.get('loginFail');
-    const openLoginModal = ReportStore.get('openReportModal');
+    const openReportModal = ReportStore.get('openReportModal');
     const loginSuccess = LoginStore.get('loginSuccess');
-    let loginError;
 
-    if (loginFail) {
-      loginError = (
-        <div className="ui error message" style={{display: 'block'}}>
-          <ul className="list">
-            <li>이메일과 비밀번호를 다시 확인해주세요</li>
-          </ul>
-        </div>
-      );
+    const content = ReportStore.get('content') ? ReportStore.get('content') : null;
+
+    if (openReportModal) {
+      // For animation
+      setTimeout(function () {
+        this.openShow();
+      }.bind(this), 0);
     }
 
     return (
       <Modal
-        overlayClassName={'ui dimmer modals page transition visible active ' + (openLoginModal ? '' : 'fade out')}
-        className="ui small modal gb_login scrolling transition visible active "
-        isOpen={openLoginModal}
-        closeTimeoutMS={500}
+        overlayClassName={'report-modal md-overlay'}
+        className={'md-modal md-effect-1'}
+        isOpen={openReportModal}
+        closeTimeoutMS={300}
         onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
       >
-
-        <i className="close icon"></i>
-        <div className="content">
-
-          <div id="tc_Head" role="banner">
-            <h1>
-              <a href="/" id="tc_ServiceLogo"><span
-                className="ir_wa">abc</span></a>
-            </h1>
-          </div>
-
-          <div id="tc_Content" role="main">
-            <div id="mArticle">
-              <form className="ui form" ref="loginform">
+        <div className="md-content content">
+          <h4 className="ui header">
+            불편하신 부분을 알려주세요.
+            <div className="sub header">
+              {content && ('제목 : ' + content.get('title'))}
+            </div>
+          </h4>
+          <div className="ui content">
+            <div className="ui form">
+              <div className="grouped fields">
+                <label htmlFor="report-item">어떤 부분이 불편하신가요? :</label>
                 <div className="field">
-                  <label>이메일</label>
-                  <input type="text" name="loginEmail"  />
-                </div>
-                <div className="field">
-                  <label>비밀번호</label>
-                  <input type="password" name="password" />
-                </div>
-                <div className="inline field">
-                  <div className="ui checkbox">
-                    <input type="checkbox" id="agreement-checkbox" />
-                    <label htmlFor="agreement-checkbox">아이디를 저장합니다</label>
+                  <div className="ui radio checkbox">
+                    <input type="radio" name="report-item" defaultChecked tabIndex="0" className="hidden" />
+                    <label>불쾌하거나 흥미없는 내용입니다.</label>
                   </div>
                 </div>
-                <div className="ui primary button fluid" onClick={this.handleRequestLogin}>로그인</div>
-
-                { loginError }
-
-                <div className="login_append">
-                  <a href="/member/find/loginId" className="link_find">아이디</a>
-                  <span> / </span>
-                  <a href="/member/find/password" className="link_find">비밀번호찾기</a>
-                  <span className="txt_bar">|</span>
-                  <Link to="/signin" onClick={this.handleRequestSignin}>회원 가입하기</Link>
+                <div className="field">
+                  <div className="ui radio checkbox">
+                    <input type="radio" name="report-item" tabIndex="0" className="hidden" />
+                    <label>스팸성 글입니다.</label>
+                  </div>
                 </div>
-
-              </form>
-            </div>
-            <div id="tc_Foot" className="footer_tistory" role="contentinfo">
-              <div className="inner_footer">
-                <address className="txt_copyright">
-                  Copyright ©
-                  <a className="link_tc_">Venacle Corp.</a>
-                  All rights reserved.
-                </address>
+                <div className="field">
+                  <div className="ui radio checkbox">
+                    <input type="radio" name="report-item" tabIndex="0" className="hidden" />
+                    <label>인신공격, 불법, 허위 내용을 유포하고 있습니다.</label>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+          <div className="ui actions">
+            <div className="ui primary approve button">확인</div>
+            <div className="ui cancel button">취소</div>
           </div>
         </div>
       </Modal>

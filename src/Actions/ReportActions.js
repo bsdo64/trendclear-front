@@ -2,8 +2,9 @@ import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 
 class ReportActions {
-  openReportModal() {
-    return {open: true};
+  openReportModal(payload = {}) {
+    payload.openReportModal = true;
+    return payload;
   }
   closeReportModal() {
     return {open: false};

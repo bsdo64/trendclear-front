@@ -21,8 +21,8 @@ class ReportStore{
       this.setMergeState(bootstrapData[this.displayName]);
     }
   }
-  onOpenReportModal(prop) {
-    this.setMergeState(Map({openReportModal: prop.open}))
+  onOpenReportModal(payload) {
+    this.setMergeState(Map(payload))
   }
   onCloseReportModal(prop) {
     this.setMergeState(Map({openReportModal: prop.open}))
