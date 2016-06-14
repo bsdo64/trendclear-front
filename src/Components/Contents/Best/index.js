@@ -20,22 +20,10 @@ const BestContents = React.createClass({
       .visibility({
         once: false,
         observeChanges: true,
-        onTopVisible: function(calculations) {
-          console.log('onTopVisible', calculations);
-          // top is on screen
-        },
-        onTopPassed: function(calculations) {
-          console.log('onTopPassed', calculations);
-          // top of element passed
-        },
         onBottomVisible: function(calculations) {
           console.log('onBottomVisible', calculations);
           // top of element passed
           self.getMoreBest();
-        },
-        onBottomPassed: function(calculations) {
-          console.log('onBottomPassed', calculations);
-          // top of element passed
         }
       })
   },

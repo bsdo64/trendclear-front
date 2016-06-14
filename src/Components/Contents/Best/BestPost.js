@@ -2,8 +2,6 @@ import React from 'react';
 import {Link, browserHistory} from 'react-router';
 import CommunityActions from '../../../Actions/CommunityActions';
 import LoginActions from '../../../Actions/LoginActions';
-import ReactTooltip from 'react-tooltip';
-import Perf from 'react-addons-perf';
 
 require('./BestPost.scss');
 const BestPost = React.createClass({
@@ -37,9 +35,29 @@ const BestPost = React.createClass({
       CommunityActions.likePost(this.props.postId);
     }
   },
+
+  createAvatarImg(sex, avatarImg) {
+
+    if (avatarImg) {
+      return <img src={'/image/uploaded/files/' + avatarImg} />;
+    } else {
+      if (sex) {
+        return <img src="/images/default-male.png" />;
+      } else {
+        return <img src="/images/default-female.png" />;
+      }
+    }
+  },
+
+  createIconImg(iconImg) {
+    if (iconImg) {
+      return <img id="user_icon_img" src={'/images/' + iconImg}/>;
+    }
+  },
+
   render() {
     
-    const {postList, postId, LoginStore, UserStore} = this.props;
+    const {postList, postId, LoginStore, UserStore, styleClass} = this.props;
     const isLogin = LoginStore.get('isLogin');
     let userId;
     if (isLogin) {
@@ -53,31 +71,15 @@ const BestPost = React.createClass({
       trendbox: author.get('trendbox')
     };
 
-    const styleClass = this.props.styleClass;
     const sex = author.getIn(['profile', 'sex']),
-      avatar_img = author.getIn(['profile', 'avatar_img']),
-      icon_img = author.getIn(['icon', 0, 'iconDef', 'icon_img']);
-    let avatarImg, iconImg;
-
-    if (avatar_img) {
-      avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
-    } else {
-      if (sex) {
-        avatarImg = <img src="/images/default-male.png" />;
-      } else {
-        avatarImg = <img src="/images/default-female.png" />;
-        
-      }
-    }
-
-    if (icon_img) {
-      iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
-    }
+          avatar_img = author.getIn(['profile', 'avatar_img']),
+          icon_img = author.getIn(['icon', 0, 'iconDef', 'icon_img']);
 
     const categoryId = post.getIn(['forum', 'category', 'id']);
     const forumId = post.getIn(['forum', 'id']);
     const forumUrl = `/community?categoryId=${categoryId}&forumId=${forumId}`;
     const postUrl = `/community?categoryId=${categoryId}&forumId=${forumId}&postId=${postId}`;
+    const liked = post.get('liked');
 
     return (
       <div key={post.get('id')} className={"ui item " + styleClass}
@@ -86,7 +88,7 @@ const BestPost = React.createClass({
       >
         {/* avatar */}
         <div className="ui image tiny">
-          { avatarImg }
+          { this.createAvatarImg(sex, avatar_img) }
         </div>
 
         {/* meta */}
@@ -116,7 +118,7 @@ const BestPost = React.createClass({
 
             </div>
             <div className="author_icon">
-              {iconImg}
+              {this.createIconImg(icon_img)}
             </div>
           </div>
           <div className="meta best_post_meta">
@@ -138,8 +140,8 @@ const BestPost = React.createClass({
           {/* buttons */}
           <div className="ui extra best_post_buttons">
             <div className="like_box">
-              <div className={'like_icon ' + (post.get('liked') ? 'active' : '')} onClick={this.sendLike}>
-                <i className={'heart ' + (post.get('liked')? '' : 'outline') + ' icon'} />
+              <div className={'like_icon ' + (liked ? 'active' : '')} onClick={this.sendLike}>
+                <i className={'heart ' + (liked? '' : 'outline') + ' icon'} />
               </div>
               <a className="like_count">{post.get('like_count')}</a>
             </div>

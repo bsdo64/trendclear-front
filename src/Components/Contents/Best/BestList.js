@@ -4,6 +4,7 @@ import BestPost from './BestPost';
 import ReportActions from '../../../Actions/ReportActions';
 
 require('./BestList.scss');
+const emptyArray = [];
 const BestList = React.createClass({
   _onSelectOptionHandler(value, text, $selectedItem) {
     "use strict";
@@ -62,22 +63,26 @@ const BestList = React.createClass({
       .dropdown('destroy');
   },
 
-  render() {
-    const { posts, LoginStore, UserStore } = this.props;
+  createPostItem(itemId) {
+    const {LoginStore, UserStore, posts} = this.props;
     const postList = posts ? posts.get('postList') : undefined;
-    const postArray = postList ? postList.get('result') : [];
-    const createPostItem = function (itemId) {
-      return <BestPost
-        LoginStore={LoginStore}
-        UserStore={UserStore}
-        postList={postList}
-        postId={itemId}
-        key={itemId} styleClass="best_list_item"/>;
-    };
+    return <BestPost
+      LoginStore={LoginStore}
+      UserStore={UserStore}
+      postList={postList}
+      postId={itemId}
+      key={itemId} styleClass="best_list_item"/>;
+  },
+
+  render() {
+    const { posts } = this.props;
+    const postList = posts ? posts.get('postList') : undefined;
+    const postArray = postList ? postList.get('result') : emptyArray;
+
     return (
       <div className="ui items best_list">
         {
-          postArray.map(createPostItem)
+          postArray.map(this.createPostItem)
         }
       </div>
     );
