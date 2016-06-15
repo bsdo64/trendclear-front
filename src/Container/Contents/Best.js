@@ -11,7 +11,7 @@ import Best from '../../Components/Contents/Best';
 const BestContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [LoginStore, BestPostStore]
+    return [LoginStore, BestPostStore, UserStore, GnbStore]
   },
 
   getPropsFromStores() {

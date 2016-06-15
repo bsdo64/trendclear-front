@@ -5,7 +5,7 @@ import UserStore from '../../Stores/UserStore';
 
 import MyArea from '../../Components/MyArea';
 
-import io from 'socket.io-client';
+import notiIo from '../../Utils/Socket';
 
 const MyMenuContainer = connectToStores({
   getStores() {
@@ -26,8 +26,8 @@ const MyMenuContainer = connectToStores({
     const { LoginStore } = this.props;
 
     if (LoginStore.get('isLogin')) {
-      var socket = io.connect('http://localhost:3001/noti');
-      socket.emit('join_room');
+      notiIo.emit('join_room');
+
     }
 
   },

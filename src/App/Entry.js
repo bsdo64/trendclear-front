@@ -141,6 +141,32 @@ Api
                   ContentsContainer: SettingContainer
                  }}
           />
+
+          <Route path="password"
+                 components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  ReportModalContainer: ReportModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ContentsContainer: SettingContainer
+                 }}
+          />
+
+          <Route path="profile"
+                 components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  ReportModalContainer: ReportModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ContentsContainer: SettingContainer
+                 }}
+          />
         </Route>
 
         <Route path="*" component={App}>
@@ -223,33 +249,8 @@ var App = React.createClass({
   }
 });
 
-//
-// ReactDOM.render(
-//   <LeftColGlobalCategoryNav />,
-//   document.getElementById('category_menu')
-// );
-//
-// ReactDOM.render(
-//   <LeftColCategoryMenu />,
-//   document.getElementById('category')
-// );
-//
-// ReactDOM.render(
-//   <HeaderMyMenu />,
-//   document.getElementById('top_my_area')
-// );
-//
-// ReactDOM.render(
-//   <LoginModalContainer />,
-//   document.getElementById('modal')
-// );
-//
-// ReactDOM.render(
-//   <WidgetContainer />,
-//   document.getElementById('right_col')
-// );
-//
-// ReactDOM.render(
-//   <ContentsContainer />,
-//   document.getElementById('contents')
-// );
+const socket = require('../Utils/Socket');
+
+socket.on('news', function (data) {
+  console.log(data);
+});
