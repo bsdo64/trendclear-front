@@ -751,64 +751,7 @@ const Forum = React.createClass({
 
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
-  componentDidMount() {
-    $('.ui.dropdown.report_icon')
-      .dropdown({
-        onChange: function(value, text, $selectedItem) {
-          const action = $selectedItem.data('action');
 
-          switch (action) {
-            case 'report':
-
-              console.log('포스트 신고 Id : ', value);
-              break;
-            case 'report_ad':
-
-              console.log('포스트 광고 신고 Id : ', value);
-              break;
-            case 'delete_post':
-
-              console.log('포스트 삭제 Id : ', value);
-              break;
-            default:
-              break;
-          }
-        }
-      });
-  },
-  
-  componentWillUnmount() {
-    "use strict";
-    
-    CommunityActions.resetData();
-  },
-
-  componentDidUpdate() {
-    "use strict";
-    $('.ui.dropdown.report_icon')
-      .dropdown({
-        onChange: function(value, text, $selectedItem) {
-          const action = $selectedItem.data('action');
-
-          switch (action) {
-            case 'report':
-
-              console.log('포스트 신고 Id : ', value);
-              break;
-            case 'report_ad':
-
-              console.log('포스트 광고 신고 Id : ', value);
-              break;
-            case 'delete_post':
-
-              console.log('포스트 삭제 Id : ', value);
-              break;
-            default:
-              break;
-          }
-        }
-      });
-  },
   render() {
     "use strict";
     const type = this.props.CommunityStore.get('type');

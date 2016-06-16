@@ -3,7 +3,7 @@ import ReactTooltip from 'react-tooltip';
 import {Link, browserHistory} from 'react-router';
 import CommunityActions from '../../../Actions/CommunityActions';
 import LoginActions from '../../../Actions/LoginActions';
-import PostActions from '../../../Actions/PostActions';
+import ReportActions from '../../../Actions/ReportActions';
 
 require('./Post.scss');
 const Post = React.createClass({
@@ -21,6 +21,61 @@ const Post = React.createClass({
     } else {
       CommunityActions.likePost(postId);
     }
+  },
+
+  componentWillUnmount() {
+    "use strict";
+
+    $(this.refs.report_icon).dropdown('destroy');
+    CommunityActions.resetData();
+  },
+
+  _onSelectOptionHandler(value, text, $selectedItem) {
+    "use strict";
+
+    const action = $selectedItem.data('action');
+
+    switch (action) {
+      case 'report':
+        const IPost = this.props.post;
+        const postId = IPost.get('result').toString();
+        const post = IPost.getIn(['entities', 'posts', postId]);
+
+        console.log('포스트 신고 Id : ', value);
+        const reportObj = {
+          type: 'post',
+          typeId: value,
+          content: post
+        };
+        ReportActions.openReportModal(reportObj);
+        break;
+      case 'report_ad':
+
+        console.log('포스트 광고 신고 Id : ', value);
+        break;
+      case 'delete_post':
+
+        console.log('포스트 삭제 Id : ', value);
+        break;
+      default:
+        break;
+    }
+  },
+  componentDidMount() {
+    const self = this;
+
+    $(this.refs.report_icon).dropdown({
+      onChange: self._onSelectOptionHandler
+    });
+  },
+
+  componentDidUpdate() {
+    "use strict";
+    const self = this;
+
+    $(this.refs.report_icon).dropdown({
+      onChange: self._onSelectOptionHandler
+    });
   },
 
   render() {
@@ -177,11 +232,11 @@ const Post = React.createClass({
               <a className="comment_count">{post.get('comment_count')}</a>
             </div>
             <div className="report_box">
-              <div className="ui icon dropdown report_icon">
+              <div ref="report_icon" className="ui icon dropdown report_icon">
                 <i className="warning outline icon"></i>
                 <div className="menu">
                   <div className="item" data-value={post.get('id')} data-action="report">신고</div>
-                  <div className="item " data-value={post.get('id')} data-action="report_ad">광고 신고</div>
+                  {/* <div className="item " data-value={post.get('id')} data-action="report_ad">광고 신고</div> */}
                   {
                     userId && (userId === author.get('id')) &&
                     <div className="item " data-value={post.get('id')} data-action="delete_post">삭제하기</div>
