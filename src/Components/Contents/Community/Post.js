@@ -74,13 +74,13 @@ const Post = React.createClass({
           <div className="meta best_post_meta">
             <div className="ui horizontal divided list">
               <div className="item">
-                {post.getIn(['forum', 'category', 'category_group', 'club', 'title'])}
+                <a>{post.getIn(['forum', 'category', 'category_group', 'club', 'title'])}</a>
               </div>
               <div className="item">
-                <a href={"/club/" + 'url'}>{post.getIn(['forum', 'category', 'title'])}</a>
+                <a>{post.getIn(['forum', 'category', 'title'])}</a>
               </div>
               <div className="item">
-                <a href={"/club/" + 'url'}>{post.getIn(['forum', 'title'])}</a>
+                <a>{post.getIn(['forum', 'title'])}</a>
               </div>
             </div>
           </div>
@@ -114,7 +114,7 @@ const Post = React.createClass({
                           </div>
                           <div className="description">
 
-                            <div className="item" onClick={this.test}>
+                            <div className="item" >
                               <span className="item_col">레벨</span>
                               <div className="item_num">
                                 <span>{authorInfo.trendbox.get('level')}</span>

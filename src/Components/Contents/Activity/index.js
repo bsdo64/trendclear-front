@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Link} from 'react-router';
+import BestContainer from '../../../Container/Contents/Best';
 
 require('./index.scss');
 const SettingBox = React.createClass({
@@ -41,18 +42,42 @@ const SettingBox = React.createClass({
   handleCheckPrivacy() {
     this.setState({privacy: !this.state.privacy});
   },
-  render() {
-    const {agree} = this.state;
-    return (
-      <div id="setting">
 
-        <div id="activity">
+  createActivityUserHeader(UserStore) {
+    "use strict";
+
+    const user = UserStore.get('user');
+    const sex = UserStore.getIn(['profile', 'sex']),
+          avatar_img = UserStore.getIn(['profile', 'avatar_img']);
+
+    return (
+      <h2 className="ui center aligned icon header">
+        {this.createAvatarImg(sex, avatar_img)}
+        <div className="nick">{user.get('nick')}</div>
+      </h2>
+    )
+  },
+  createAvatarImg(sex, avatarImg) {
+    
+    if (avatarImg) {
+      return <img className="circular users icon" src={'/image/uploaded/files/' + avatarImg} />;
+    } else {
+      if (sex) {
+        return <img className="circular users icon" src="/images/default-male.png" />;
+      } else {
+        return <img className="circular users icon" src="/images/default-female.png" />;
+      }
+    }
+  },
+  render() {
+    const {UserStore} = this.props;
+
+    return (
+      <div id="activity">
+        <div className="activity-header">
           <div className="activity-background">
 
-            <h2 className="ui center aligned icon header">
-              <img className="circular users icon" src="/image/uploaded/files/footer_facebook.gif" />
-              <div className="nick">Hello</div>
-            </h2>
+            {this.createActivityUserHeader(UserStore)}
 
             <div className="activity-meta">
               <div className="ui horizontal list">
@@ -87,6 +112,8 @@ const SettingBox = React.createClass({
             </Link>
           </div>
         </div>
+
+        <BestContainer />
       </div>
     );
   }

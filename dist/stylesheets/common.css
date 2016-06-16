@@ -1,6 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
 * {
-  font-family: 'Noto Sans', sans-serif; }
+  font-family: 'Malgun Gothic','Apple SD Gothic Neo','Roboto Light',sans-serif; }
 
 #wrap {
   width: 1230px;

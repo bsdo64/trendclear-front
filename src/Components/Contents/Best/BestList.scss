@@ -1,4 +1,9 @@
 #best_contents {
+  .search-header {
+    padding: 10px;
+    border-bottom: 1px solid #eaeaea;
+  }
+
   .best_list {
 
     .best_list_item {
@@ -134,5 +139,16 @@
   }
   .load_more_loading {
 
+  }
+  
+  .no-more-post {
+    text-align: center;
+    padding: 10px;
+
+    .alert {
+      padding: 10px;
+      color: #8f8f8f;
+      background: #dedede;
+    }
   }
 }

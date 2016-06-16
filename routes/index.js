@@ -1,15 +1,21 @@
 var express = require('express');
 var router = express.Router();
-var hbs = require('hbs');
 
+var routes = [
+  '/',
+  '/community',
+  '/activity',
+  '/setting',
+  '/search'
+]
 
 /* GET home page. */
-router.get('*', function(req, res, next) {
+router.get(routes, function(req, res, next) {
   console.log(req.headers);
   console.log(req.url);
 
   res.render('entry/index', {
-    title: '트렌드클리어',
+    title: '베나클',
     production: process.env.production ? true : false
   });
 });

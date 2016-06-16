@@ -18,6 +18,7 @@ var embed = require('./routes/embed');
 
 var app = express();
 app.use(compression());
+app.use(logger('dev'));
 
 app.all('/ajax/*', ApiProxy);
 app.use('/image', ImageProxy);
@@ -29,7 +30,6 @@ hbs.registerPartials(__dirname + '/views/partials');
 
 // uncomment after placing your favicon in /dist
 //app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
-app.use(logger('dev'));
 app.use(Session.configSession());
 app.use(Session.initSession);
 app.use(bodyParser.json());

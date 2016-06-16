@@ -5,17 +5,41 @@ import LoginStore from '../../Stores/LoginStore';
 import CommunityStore from '../../Stores/CommunityStore';
 import UserStore from '../../Stores/UserStore';
 import SearchStore from '../../Stores/SearchStore';
+import BestPostStore from '../../Stores/BestPostStore';
+import GnbStore from '../../Stores/GnbStore';
 
-import BestList from '../../Components/Contents/Best/BestList';
+import Best from '../../Components/Contents/Best';
+
+const SearchHeader = React.createClass({
+  displayName: 'SearchHeader',
+  render() {
+    "use strict";
+    const {posts, postList} = this.props;
+    if (posts) {
+      const postData = posts.get('posts');
+      const total = postData.get('total') ? postData.get('total'): 0;
+
+      return (
+        <div className="search-header">
+          검색 결과 {total}개
+        </div>
+      );
+    }
+
+    return <div></div>
+  }
+});
 
 const SearchContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [LoginStore, CommunityStore, UserStore, SearchStore]
+    return [GnbStore, LoginStore, CommunityStore, UserStore, SearchStore, BestPostStore]
   },
 
   getPropsFromStores() {
     return {
+      GnbStore: GnbStore.getState(),
+      BestPostStore: BestPostStore.getState(),
       LoginStore: LoginStore.getState(),
       CommunityStore: CommunityStore.getState(),
       SearchStore: SearchStore.getState(),
@@ -25,18 +49,15 @@ const SearchContainer = connectToStores({
 }, React.createClass({
   render() {
 
-    const {SearchStore, LoginStore, UserStore} = this.props;
+    const {SearchStore} = this.props;
     const searchPosts = SearchStore.get('search');
 
     return (
       <div id="best_contents" ref="best_contents">
-        <div>검색 결과 200개</div>
-        <div>검색 리스트</div>
+        <SearchHeader posts={searchPosts}/>
 
-        <BestList
-          LoginStore={LoginStore}
-          UserStore={UserStore}
-          posts={searchPosts}
+        <Best
+          {...this.props}
         />
         
       </div>

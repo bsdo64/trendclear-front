@@ -38,6 +38,9 @@ class GnbActions {
         });
     };
   }
+  resetFilter() {
+    return true;
+  }
 }
 
 module.exports = alt.createActions(GnbActions);

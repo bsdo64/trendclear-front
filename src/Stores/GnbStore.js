@@ -46,6 +46,10 @@ class GnbStore{
   onSaveFilter() {
     this.setState(this.state);
   }
+  onResetFilter() {
+    let state = this.state.set('categoryValue', null);
+    this.setState(state);
+  }
 }
 
 export default alt.createStore(immutable(GnbStore));
