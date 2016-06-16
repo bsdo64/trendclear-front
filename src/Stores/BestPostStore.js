@@ -7,6 +7,7 @@ import CommunityActions from '../Actions/CommunityActions';
 import GnbActions from '../Actions/GnbActions';
 import { initListener, setMergeState } from './Helper/func';
 
+import CommunityStore from './CommunityStore';
 import GnbStore from './GnbStore';
 
 class BestPostStore{
@@ -107,6 +108,7 @@ class BestPostStore{
     if (response) {
       const normalizedPosts = response.results;
       const total = response.total;
+      const limit = 10;
 
       const mergeData = this.state.setIn(['posts', 'data'], response.origin);
       const mergeResults = mergeData.setIn(['posts', 'postList'], normalizedPosts);
@@ -115,13 +117,14 @@ class BestPostStore{
           collection: {
             total: total,
             current_page: 1,
-            next_page: 2
+            next_page: (limit > total) ? null : 2,
+            limit: limit
           }
         }
       });
 
 
-      if (normalizedPosts.result.length < 20) {
+      if (normalizedPosts.result.length < 10) {
         const noMorePost = mergeTotal.set('noMore', true);
 
         this.setMergeState(noMorePost.toJS());
