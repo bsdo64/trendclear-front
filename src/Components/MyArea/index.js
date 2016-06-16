@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 import LoginButton from './LoginButton';
 import UserActions from '../../Actions/UserActions';
+import cx from 'classnames';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 require('./index.scss');
 
@@ -9,68 +11,226 @@ class NotiButtons extends Component {
   render() {
     const {UserStore} = this.props;
     const Noti = UserStore.getIn(['notifications', 'INoti']);
+    const notiEntities = Noti ? Noti.getIn(['entities', 'notis']) : null;
 
     return (
       <div className="item noti">
         <i className="large alarm icon inverted" />
         {
-          Noti && !!Noti.getIn(['result']).size &&
+          Noti && !!notiEntities &&
           <div className="ui red label">
-            {Noti.getIn(['result']).size}
+            {notiEntities.reduce((r, v) => r + (v.read ? 0 : 1), 0)}
           </div>
         }
-        <div id="alarm_popup" className="ui segment popup"  style={{width: 250}}>
-          <div className="ui feed ">
-            {
-              Noti &&
-              Noti.get('result').map(notiId => {
+        <div id="alarm_popup" className="ui segment popup">
+          <div className="alarm_header">
+            <div className="xQb">알림</div>
+          </div>
 
-                const noti = Noti.getIn(['entities', 'notis', notiId.toString()]);
+          <Scrollbars style={{ width: 270, height: 300 }}>
+            <div className="ui feed ">
+              {
+                Noti &&
+                Noti.get('result').map(notiId => {
 
-                switch(noti.get('type')) {
-                case 'comment_write':
-                  return (
-                    <div className="event">
-                      <div className="content">
-                        <div className="summary">
-                          글 <a>여봉이 사랑해</a>에 <a>{noti.get('count')}</a>개의 댓글이 달렸습니다.
-                          <i className={'heart icon'} /> <a className="like_count">{noti.get('count')}</a>
-                          <div className="date">
-                            3 days ago
+                  const noti = notiEntities.get(notiId.toString());
+                  const notiItemClass = cx({
+                    event: true,
+                    'is-read': !noti.get('read')
+                  });
+
+                  switch(noti.get('type')) {
+                    case 'comment_write':
+                      return (
+                        <div className={notiItemClass}>
+                          <div className="label">
+                            <img src="http://dummyimage.com/40x40" />
+                          </div>
+                          <div className="content">
+                            <div className="summary">
+                              글 <a>여봉이 사랑해</a>에 <a>{noti.get('count')}</a>개의 댓글이 달렸습니다.
+
+                              <div className="date">
+                                3 days ago
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  )
-                }
+                      )
+                  }
 
-              })
-            }
-            <div className="event">
-              <div className="content">
-                <div className="summary">
-                  <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
-                    <i className={'heart icon'} /> <a className="like_count">{132}</a>
-                  <div className="date">
-                    3 days ago
+                })
+              }
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    <a>151</a>명이 글 <a>여봉이 사랑해</a> 를 좋아합니다.
+
+                    <div className="date">
+                      3 days ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="event">
+                <div className="label">
+                  <img src="http://dummyimage.com/40x40" />
+                </div>
+                <div className="content">
+                  <div className="summary">
+                    You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+                    <div className="date">
+                      3 days ago
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="event">
-              <div className="label">
-                <img src="http://dummyimage.com/40x40" />
-              </div>
-              <div className="content">
-                <div className="summary">
-                  You added <a>Jenny Hess</a> to your <a>coworker</a> group.
-                  <div className="date">
-                    3 days ago
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
+          </Scrollbars>
         </div>
       </div>
     )

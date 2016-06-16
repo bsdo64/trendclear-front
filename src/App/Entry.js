@@ -25,6 +25,7 @@ var CommunityContainer = require('../Container/Contents/Community');
 var SubmitContainer = require('../Container/Contents/SubmitPost');
 var SearchContainer = require('../Container/Contents/Search');
 var SettingContainer = require('../Container/Contents/Setting');
+var ActivityContainer = require('../Container/Contents/Activity');
 
 // Bootstrap Location
 var loc = browserHistory.createLocation(location);
@@ -123,9 +124,49 @@ Api
                   LoginModalContainer: LoginModalContainer,
                   ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,
-                  ContentsContainer: SearchContainer
+                  ContentsContainer: ActivityContainer
                  }}
           />
+
+          <Route path="likes"
+                 components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  ReportModalContainer: ReportModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ContentsContainer: ActivityContainer
+                 }}
+          />
+
+          <Route path="posts"
+                 components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  ReportModalContainer: ReportModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ContentsContainer: ActivityContainer
+                 }}
+          />
+
+          <Route path="comments"
+                 components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  ReportModalContainer: ReportModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ContentsContainer: ActivityContainer
+                 }}
+          />
+
         </Route>
 
         <Route path="/setting" component={App}>

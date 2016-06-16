@@ -2,6 +2,7 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
+import {Link} from 'react-router';
 
 require('./index.scss');
 const SettingBox = React.createClass({
@@ -44,49 +45,6 @@ const SettingBox = React.createClass({
     const {agree} = this.state;
     return (
       <div id="setting">
-
-
-        <div id="activity">
-          <div className="activity-background">
-
-            <h2 className="ui center aligned icon header">
-              <img className="circular users icon" src="/image/uploaded/files/footer_facebook.gif" />
-              <div className="nick">Hello</div>
-            </h2>
-
-            <div className="activity-meta">
-              <div className="ui horizontal list">
-                <div className="item">
-                  <div className="middle aligned content">
-                    글 1,042
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="middle aligned content">
-                    좋아요 1,243
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="middle aligned content">
-                    댓글 204
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="ui menu activity-menu">
-            <a className="item">
-              좋아요
-            </a>
-            <a className="item">
-              글
-            </a>
-            <a className="item active">
-              댓글
-            </a>
-          </div>
-        </div>
 
         <h3 className="ui dividing header">
           비밀번호 설정
