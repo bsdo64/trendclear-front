@@ -752,6 +752,10 @@ const Forum = React.createClass({
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
 
+  componentWillUnmount() {
+    CommunityActions.resetData();
+  },
+
   render() {
     "use strict";
     const type = this.props.CommunityStore.get('type');

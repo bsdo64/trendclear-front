@@ -27,7 +27,6 @@ const Post = React.createClass({
     "use strict";
 
     $(this.refs.report_icon).dropdown('destroy');
-    CommunityActions.resetData();
   },
 
   _onSelectOptionHandler(value, text, $selectedItem) {
