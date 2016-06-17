@@ -3,73 +3,114 @@
  */
 import React from 'react';
 import {Link} from 'react-router';
+import UserActions from '../../../Actions/UserActions';
+import SettingActions from '../../../Actions/SettingActions';
 
-require('./index.scss');
-const SettingBox = React.createClass({
-  displayName: 'SettingBox',
-  propTypes: {},
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
+import moment from 'moment';
+
+const SettingProfile = React.createClass({
+  displayName: 'SettingProfile',
+  getInitialState() {
+    const {UserStore} = this.props;
+    const sex = UserStore.getIn(['profile', 'sex']);
+    const birthday = UserStore.getIn(['profile', 'birth']);
+
+    const d = moment(birthday);
+    return {
+      sex: sex,
+      year: d.get('year'),
+      month: d.get('month'),
+      date: d.get('date')
+    };
   },
 
   componentDidMount() {
     $('.ui.radio.checkbox')
-      .checkbox()
-    ;
+      .checkbox();
 
     $('select.dropdown')
-      .dropdown()
-    ;
+      .dropdown();
   },
 
+  changeYear(e) {
+    "use strict";
+    this.setState({year: e.target.value})
+  },
+  changeMonth(e) {
+    "use strict";
+    this.setState({month: e.target.value})
+  },
+  changeDate(e) {
+    "use strict";
+    this.setState({date: e.target.value})
+  },
+  changeSex(sex) {
+    "use strict";
+    this.setState({sex: sex})
+  },
 
-  getInitialState() {
-    return {
-      term: false, privacy: false, agree: false
+  updateProfile() {
+    "use strict";
+    const birth = {
+      year: this.state.year,
+      month: this.state.month,
+      date: this.state.date
     };
-  },
-  submitAgreement() {
-    const {term, privacy} = this.state;
+    const profile = {
+      sex: this.state.sex,
+      birth: moment(birth).format()
+    };
 
-    if (term && privacy) {
-      this.setState({agree: true});
+    console.log(profile);
+
+    UserActions.updateProfile(profile);
+  },
+
+  closeMessageBox(type) {
+    "use strict";
+
+    $(this.refs[type + 'Message'])
+      .closest('.message')
+      .transition('fade');
+
+    SettingActions.closeMessage({type: type});
+  },
+
+  setErrorMessage(SettingStore) {
+    "use strict";
+    const errMessage = SettingStore.get('error');
+    const successMessage = SettingStore.get('success');
+
+    if (errMessage) {
+      return (
+        <div ref="errorMessage" className="ui error message">
+          <i className="close icon" onClick={this.closeMessageBox.bind(this, 'error')}></i>
+          <ul className="list">
+            <li>이전 비밀번호와 다릅니다.</li>
+          </ul>
+        </div>
+      )
     }
+
+    if (successMessage) {
+      return (
+        <div ref="successMessage" className="ui icon small success message">
+          <i className="close icon" onClick={this.closeMessageBox.bind(this, 'success')}></i>
+          <i className="checkmark icon"></i>
+          <div className="content">
+            <p>비밀번호를 성공적으로 변경하였습니다</p>
+          </div>
+        </div>
+      )
+    }
+
   },
-  handleCheckTerms() {
-    this.setState({term: !this.state.term});
-  },
-  handleCheckPrivacy() {
-    this.setState({privacy: !this.state.privacy});
-  },
+
   render() {
-    const {agree} = this.state;
+    "use strict";
+    const {SettingStore} = this.props;
     return (
       <div id="setting">
-
-        <h3 className="ui dividing header">
-          비밀번호 설정
-          <div className="ui sub header">새로운 비밀번호를 설정합니다.</div>
-        </h3>
-
-        <div className="setting-account">
-          <form className="ui form ">
-            <div className="field">
-              <label>이전 비밀번호</label>
-              <input type="password" name="old-password" placeholder="예전 비밀번호" />
-            </div>
-            <div className="field">
-              <label>새 비밀번호</label>
-              <input type="password" name="new-password" placeholder="새로운 비밀번호" />
-            </div>
-            <div className="field">
-              <label>새 비밀번호 확인</label>
-              <input type="password" name="re-new-password" placeholder="새로운 비밀번호 확인" />
-            </div>
-            <button className="ui button primary" type="submit">저장</button>
-          </form>
-
-        </div>
-
         <h3 className="ui dividing header">
           회원 정보
           <div className="ui sub header">회원 정보를 수정합니다.</div>
@@ -81,14 +122,18 @@ const SettingBox = React.createClass({
               <div className="grouped fields">
                 <label htmlFor="fruit">성별</label>
                 <div className="field">
-                  <div className="ui radio checkbox">
-                    <input type="radio" name="sex" checked="" tabindex="0" className="hidden" value="1" />
+                  <div className="ui radio checkbox" onClick={this.changeSex.bind(this, true)}>
+                    <input type="radio" name="sex" checked={this.state.sex}
+                           className="hidden" value="1"
+                    />
                     <label>남자</label>
                   </div>
                 </div>
                 <div className="field">
-                  <div className="ui radio checkbox">
-                    <input type="radio" name="sex" tabindex="0" className="hidden" value="0"/>
+                  <div className="ui radio checkbox" onClick={this.changeSex.bind(this, false)}>
+                    <input type="radio" name="sex" checked={!this.state.sex}
+                           className="hidden" value="0"
+                    />
                     <label>여자</label>
                   </div>
                 </div>
@@ -98,7 +143,12 @@ const SettingBox = React.createClass({
               <label>생일</label>
               <div className="three fields">
                 <div className="field">
-                  <select className="ui fluid search dropdown" name="year">
+                  <select
+                    className="ui fluid search dropdown"
+                    name="year"
+                    value={this.state.year}
+                    onChange={this.changeYear}
+                  >
                     <option value="">연도</option>
                     <option value="2016">2016</option>
                     <option value="2015">2015</option>
@@ -215,24 +265,34 @@ const SettingBox = React.createClass({
                   </select>
                 </div>
                 <div className="field">
-                  <select className="ui fluid search dropdown" name="month">
+                  <select
+                    className="ui fluid search dropdown"
+                    name="month"
+                    value={this.state.month}
+                    onChange={this.changeMonth}
+                  >
                     <option value="">월</option>
-                    <option value="1">1월</option>
-                    <option value="2">2월</option>
-                    <option value="3">3월</option>
-                    <option value="4">4월</option>
-                    <option value="5">5월</option>
-                    <option value="6">6월</option>
-                    <option value="7">7월</option>
-                    <option value="8">8월</option>
-                    <option value="9">9월</option>
-                    <option value="10">10월</option>
-                    <option value="11">11월</option>
-                    <option value="12">12월</option>
+                    <option value="0">1월</option>
+                    <option value="1">2월</option>
+                    <option value="2">3월</option>
+                    <option value="3">4월</option>
+                    <option value="4">5월</option>
+                    <option value="5">6월</option>
+                    <option value="6">7월</option>
+                    <option value="7">8월</option>
+                    <option value="8">9월</option>
+                    <option value="9">10월</option>
+                    <option value="10">11월</option>
+                    <option value="11">12월</option>
                   </select>
                 </div>
                 <div className="field">
-                  <select className="ui fluid search dropdown" name="day">
+                  <select
+                    className="ui fluid search dropdown"
+                    name="day"
+                    value={this.state.date}
+                    onChange={this.changeDate}
+                  >
                     <option value="">일</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -269,12 +329,169 @@ const SettingBox = React.createClass({
                 </div>
               </div>
             </div>
-            <button className="ui button primary" type="submit">저장</button>
+            <div className="ui button primary" onClick={this.updateProfile}>저장</div>
           </form>
 
+          {
+            this.setErrorMessage(SettingStore)
+          }
+        </div>
+      </div>
+    )
+  }
+});
+
+const SettingPassword = React.createClass({
+  displayName: 'SettingPassword',
+  componentDidMount() {
+    $('.ui.form')
+      .form({
+        fields: {
+          oldPassword : {
+            identifier: 'old-password',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : '빈칸을 모두 채워주세요'
+              }
+            ]
+          },
+          newPassword: {
+            identifier: 'new-password',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : '빈칸을 채워주세요'
+              },
+
+              {
+                type   : 'minLength[6]',
+                prompt : '적어도 {ruleValue}글자 이상 입력해주세요'
+              }
+            ]
+          },
+          reNewPassword: {
+            identifier: 're-new-password',
+            rules: [
+              {
+                type   : 'match[new-password]',
+                prompt : '입력한 비밀번호와 서로 다릅니다.'
+              }
+            ]
+          }
+        },
+        onSuccess: (e, value) => {
+          e.preventDefault();
+
+          UserActions.updatePassword({
+            oldPassword: value['old-password'],
+            newPassword: value['new-password']
+          });
+          console.log(value);
+        },
+        onFailure: () => {
+          console.log('Fail');
+        }
+      })
+    ;
+  },
+
+  closeMessageBox(type) {
+    "use strict";
+
+    $(this.refs[type + 'Message'])
+      .closest('.message')
+      .transition('fade');
+
+    SettingActions.closeMessage({type: type});
+  },
+
+  setErrorMessage(SettingStore) {
+    "use strict";
+    const errMessage = SettingStore.get('error');
+    const successMessage = SettingStore.get('success');
+
+    if (errMessage) {
+      return (
+        <div ref="errorMessage" className="ui error message">
+          <i className="close icon" onClick={this.closeMessageBox.bind(this, 'error')}></i>
+          <ul className="list">
+            <li>이전 비밀번호와 다릅니다.</li>
+          </ul>
+        </div>
+      )
+    }
+
+    if (successMessage) {
+      return (
+        <div ref="successMessage" className="ui icon small success message">
+          <i className="close icon" onClick={this.closeMessageBox.bind(this, 'success')}></i>
+          <i className="checkmark icon"></i>
+          <div className="content">
+            <p>비밀번호를 성공적으로 변경하였습니다</p>
+          </div>
+        </div>
+      )
+    }
+
+  },
+  render() {
+    const {SettingStore} = this.props;
+    return (
+      <div id="setting">
+
+        <h3 className="ui dividing header">
+          비밀번호 설정
+          <div className="ui sub header">새로운 비밀번호를 설정합니다.</div>
+        </h3>
+
+        <div className="setting-account">
+          <div className="ui form ">
+            <div className="field">
+              <label>이전 비밀번호</label>
+              <input type="password" name="old-password" placeholder="예전 비밀번호" />
+            </div>
+            <div className="field">
+              <label>새 비밀번호</label>
+              <input type="password" name="new-password" placeholder="새로운 비밀번호" />
+            </div>
+            <div className="field">
+              <label>새 비밀번호 확인</label>
+              <input type="password" name="re-new-password" placeholder="새로운 비밀번호 확인" />
+            </div>
+            <div className="ui submit button primary">저장</div>
+            <div className="ui error message "></div>
+          </div>
+          {
+            this.setErrorMessage(SettingStore)
+          }
         </div>
       </div>
     );
+  }
+});
+
+require('./index.scss');
+const SettingBox = React.createClass({
+  displayName: 'SettingBox',
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
+  render() {
+    const {SettingStore} = this.props;
+    switch (SettingStore.get('page')) {
+      case 'password' :
+        return <SettingPassword {...this.props} />;
+      break;
+
+      case 'profile' :
+        return <SettingProfile {...this.props} />;
+      break;
+
+      default :
+        return (<div></div>)
+    }
   }
 });
 

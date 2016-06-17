@@ -1,8 +1,9 @@
 import alt from '../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../Actions/AppActions';
-import SearchActions from '../Actions/SearchActions';
+import UserActions from '../Actions/UserActions';
+import SettingActions from '../Actions/SettingActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class SettingStore{
@@ -10,8 +11,9 @@ class SettingStore{
     this.displayName = 'SettingStore';
 
     this.bindActions(AppActions);
-    this.bindActions(SearchActions);
-    this.state = Immutable.Map({});
+    this.bindActions(UserActions);
+    this.bindActions(SettingActions);
+    this.state = Map({});
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
@@ -22,15 +24,36 @@ class SettingStore{
       this.setMergeState(bootstrapData[this.displayName]);
     }
   }
-  onHandleSearchQuery(query) {
-    this.setMergeState({
-      query: query
-    })
+
+  onUpdatePassword(result) {
+    if (result.code === 1) {
+      let state = this.state.set('error', '이전 비밀번호가 다릅니다');
+      this.setMergeState(state)
+    }
+
+    if (result === 'ok') {
+      let state = this.state.set('error', null);
+      let successState = state.set('success', true);
+      this.setMergeState(successState)
+    }
   }
-  onSubmitSearchQuery(query) {
-    this.setState(Map({
-      query: query
-    }))
+
+  onCloseMessage(payload) {
+    let state = this.state.set(payload.type, null);
+    this.setMergeState(state)
+  }
+
+  onUpdateProfile(result) {
+    if (result.code === 1) {
+      let state = this.state.set('error', '이전 비밀번호가 다릅니다');
+      this.setMergeState(state)
+    }
+
+    if (result.length === 1) {
+      let state = this.state.set('error', null);
+      let successState = state.set('success', true);
+      this.setMergeState(successState)
+    }
   }
 }
 

@@ -6,6 +6,7 @@ import UserActions from '../Actions/UserActions';
 import PostActions from '../Actions/PostActions';
 import CommentActions from '../Actions/CommentActions';
 
+import SettingStore from './SettingStore';
 import SubmitStore from './SubmitStore';
 import CommunityStore from './CommunityStore';
 
@@ -102,6 +103,16 @@ class UserStore{
     state.trendbox.T = state.trendbox.T + 10;
 
     this.setMergeState(state);
+  }
+
+  onUpdateProfile(result) {
+    this.waitFor(SettingStore);
+
+    if (result.length === 1) {
+      const newProfile = result[0];
+      const state = this.state.set('profile', newProfile);
+      this.setMergeState(state.toJS());
+    }
   }
 }
 

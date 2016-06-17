@@ -8,8 +8,7 @@ require('./index.scss');
 const Temp = React.createClass({
   getInitialState() {
     return {
-      openFilter: false,
-      modalIsOpen: false
+      openFilter: false
     };
   },
 
@@ -47,31 +46,11 @@ const Temp = React.createClass({
     const categoryGroups = INCat ? INCat.getIn(['entities', 'categoryGroups']).toJS(): {};
     const categories = INCat ? INCat.getIn(['entities', 'categories']).toJS(): {};
 
-    const clubMap = _.map(clubs, (value, key) => {
-      return {value: key, label: value.title};
-    });
-    const categoryGroupsMap = _.map(categoryGroups, (value, key) => {
-      return {value: key, label: value.title};
-    });
     const categoriesMap = _.map(categories, (value, key) => {
       return {value: key, label: value.title};
     });
 
-    const clubValue = GnbStore.get('clubValue') ? GnbStore.get('clubValue').toJS() : [];
-    const categoryGroupValue = GnbStore.get('categoryGroupValue') ? GnbStore.get('categoryGroupValue').toJS() : [];
     const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
-
-
-    const customStyles = {
-      content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
-      }
-    };
 
     return <div>
         <div id="sub_category">
