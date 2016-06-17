@@ -6,41 +6,11 @@ import {Link} from 'react-router';
 import BestContainer from '../../../Container/Contents/Best';
 
 require('./index.scss');
-const SettingBox = React.createClass({
-  displayName: 'SettingBox',
+const ActivityBox = React.createClass({
+  displayName: 'ActivityBox',
   propTypes: {},
   contextTypes: {
     router: React.PropTypes.object.isRequired
-  },
-
-  componentDidMount() {
-    $('.ui.radio.checkbox')
-      .checkbox()
-    ;
-
-    $('select.dropdown')
-      .dropdown()
-    ;
-  },
-
-
-  getInitialState() {
-    return {
-      term: false, privacy: false, agree: false
-    };
-  },
-  submitAgreement() {
-    const {term, privacy} = this.state;
-
-    if (term && privacy) {
-      this.setState({agree: true});
-    }
-  },
-  handleCheckTerms() {
-    this.setState({term: !this.state.term});
-  },
-  handleCheckPrivacy() {
-    this.setState({privacy: !this.state.privacy});
   },
 
   createActivityUserHeader(UserStore) {
@@ -69,8 +39,33 @@ const SettingBox = React.createClass({
       }
     }
   },
+  createActivityMeta(meta) {
+    "use strict";
+
+    return (
+      <div className="activity-meta">
+        <div className="ui horizontal list">
+          <div className="item">
+            <div className="middle aligned content">
+              글 {meta.get('postsCount')}
+            </div>
+          </div>
+          <div className="item">
+            <div className="middle aligned content">
+              좋아요 {meta.get('likesCount')}
+            </div>
+          </div>
+          <div className="item">
+            <div className="middle aligned content">
+              댓글 {meta.get('commentsCount')}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
   render() {
-    const {UserStore} = this.props;
+    const {UserStore, ActivityStore} = this.props;
 
     return (
       <div id="activity">
@@ -78,26 +73,7 @@ const SettingBox = React.createClass({
           <div className="activity-background">
 
             {this.createActivityUserHeader(UserStore)}
-
-            <div className="activity-meta">
-              <div className="ui horizontal list">
-                <div className="item">
-                  <div className="middle aligned content">
-                    글 1,042
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="middle aligned content">
-                    좋아요 1,243
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="middle aligned content">
-                    댓글 204
-                  </div>
-                </div>
-              </div>
-            </div>
+            {this.createActivityMeta(ActivityStore.get('meta'))}
           </div>
 
           <div className="ui menu activity-menu">
@@ -119,4 +95,4 @@ const SettingBox = React.createClass({
   }
 });
 
-export default SettingBox;
+export default ActivityBox;
