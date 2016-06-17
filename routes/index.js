@@ -5,7 +5,12 @@ var routes = [
   '/',
   '/community',
   '/activity',
+  '/activity/likes',
+  '/activity/posts',
+  '/activity/comments',
   '/setting',
+  '/setting/password',
+  '/setting/profile',
   '/search'
 ]
 

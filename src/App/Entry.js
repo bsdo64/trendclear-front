@@ -13,6 +13,8 @@ window.Perf = Perf;
 var LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
 var LeftColCategoryMenu = require('../Container/LeftCol/CategoryMenu.js');
 var BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
+var AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
+
 var HeaderMyMenu = require('../Container/Header/MyMenu');
 var HeaderSearch = require('../Container/Header/Search');
 var LoginModalContainer = require('../Container/Modal/LoginModalContainer');
@@ -120,7 +122,7 @@ Api
                   HeaderMyMenu: HeaderMyMenu,
                   HeaderSearch: HeaderSearch,
                   LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
+                  LeftColMenu: AccountCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,
@@ -133,7 +135,7 @@ Api
                   HeaderMyMenu: HeaderMyMenu,
                   HeaderSearch: HeaderSearch,
                   LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
+                  LeftColMenu: AccountCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,
@@ -146,7 +148,7 @@ Api
                   HeaderMyMenu: HeaderMyMenu,
                   HeaderSearch: HeaderSearch,
                   LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
+                  LeftColMenu: AccountCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,
@@ -159,7 +161,7 @@ Api
                   HeaderMyMenu: HeaderMyMenu,
                   HeaderSearch: HeaderSearch,
                   LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
+                  LeftColMenu: AccountCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,
@@ -175,7 +177,7 @@ Api
                   HeaderMyMenu: HeaderMyMenu,
                   HeaderSearch: HeaderSearch,
                   LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
+                  LeftColMenu: AccountCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,
@@ -188,7 +190,7 @@ Api
                   HeaderMyMenu: HeaderMyMenu,
                   HeaderSearch: HeaderSearch,
                   LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
+                  LeftColMenu: AccountCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,
@@ -201,7 +203,7 @@ Api
                   HeaderMyMenu: HeaderMyMenu,
                   HeaderSearch: HeaderSearch,
                   LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
+                  LeftColMenu: AccountCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   ReportModalContainer: ReportModalContainer,
                   WidgetContainer: WidgetContainer,

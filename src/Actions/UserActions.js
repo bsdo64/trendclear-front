@@ -62,6 +62,34 @@ class UserActions {
         });
     };
   }
+
+  updatePassword(params) {
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .post('/user/setting/password', params)
+        .then(res => {
+          dispatch(res);
+        })
+        .catch(err => {
+          return err;
+        })
+    }
+  }
+
+  updateProfile(params) {
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .post('/user/setting/profile', params)
+        .then(res => {
+          dispatch(res);
+        })
+        .catch(err => {
+          return err;
+        })
+    }
+  }
 }
 
 export default alt.createActions(UserActions);
