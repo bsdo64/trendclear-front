@@ -47,17 +47,17 @@ const ActivityBox = React.createClass({
         <div className="ui horizontal list">
           <div className="item">
             <div className="middle aligned content">
-              글 {meta.get('postsCount')}
+              글 {meta && meta.get('postsCount')}
             </div>
           </div>
           <div className="item">
             <div className="middle aligned content">
-              좋아요 {meta.get('likesCount')}
+              좋아요 {meta && meta.get('likesCount')}
             </div>
           </div>
           <div className="item">
             <div className="middle aligned content">
-              댓글 {meta.get('commentsCount')}
+              댓글 {meta && meta.get('commentsCount')}
             </div>
           </div>
         </div>
