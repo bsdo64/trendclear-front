@@ -292,8 +292,4 @@ var App = React.createClass({
   }
 });
 
-const socket = require('../Utils/Socket');
-
-socket.on('news', function (data) {
-  console.log(data);
-});
+require('./socketSubscribe');

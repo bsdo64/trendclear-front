@@ -10,6 +10,9 @@
     }
   }
 
+  #noti_button {
+    cursor: pointer;
+  }
   .item.noti {
     i.alarm ~ .label {
       display: inline-block;

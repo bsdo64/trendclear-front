@@ -114,6 +114,20 @@ class UserStore{
       this.setMergeState(state.toJS());
     }
   }
+
+  onSocketNoti(normalizedNoti) {
+    let state = this.state.setIn(['notifications', 'INoti'], normalizedNoti);
+    this.setMergeState(state.toJS());
+  }
+
+  onReadNoti(params) {
+    let state = this.state.updateIn(['notifications', 'INoti', 'entities', 'notis', params.id.toString()], v => {
+      return v
+        .set('read', true)
+        .set('read_at', new Date)
+    });
+    this.setState(state);
+  }
 }
 
 export default alt.createStore(immutable(UserStore));

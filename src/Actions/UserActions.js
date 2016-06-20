@@ -1,5 +1,7 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
+import {normalize, arrayOf} from 'normalizr';
+import {noti} from './normalizr/schema';
 
 class UserActions {
   increaseLevel() {
@@ -89,6 +91,24 @@ class UserActions {
           return err;
         })
     }
+  }
+
+  socketNoti(data) {
+    return normalize(data, arrayOf(noti))
+  }
+  readNoti(params) {
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .post('/user/noti/read', params)
+        .then(res => {
+          dispatch(params);
+        })
+        .catch(err => {
+          return err;
+        })
+    }
+
   }
 }
 

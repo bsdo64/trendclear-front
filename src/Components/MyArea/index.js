@@ -1,11 +1,80 @@
 import React, {Component} from 'react';
-import {browserHistory} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import LoginButton from './LoginButton';
 import UserActions from '../../Actions/UserActions';
 import cx from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
+import moment from 'moment';
+moment.locale('ko')
 
 require('./index.scss');
+
+const NotiItem = React.createClass({
+  readNoti(notiId) {
+    "use strict";
+    const {noti} = this.props;
+
+    if (!noti.get('read')) {
+      UserActions.readNoti({
+        id: notiId
+      });
+    }
+  },
+  render() {
+
+    const {noti} = this.props;
+    const categoryId = noti.get('category_id');
+    const forumId = noti.get('forum_id');
+    const postId = noti.get('post_id');
+    const linkUrl = `/community?categoryId=${categoryId}&forumId=${forumId}&postId=${postId}`
+    const notiItemClass = cx({
+      event: true,
+      'is-read': !noti.get('read')
+    });
+
+    switch(noti.get('type')) {
+      case 'comment_write':
+        return (
+          <div className={notiItemClass} onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
+            <div className="label">
+              <img src="http://dummyimage.com/40x40" />
+            </div>
+            <div className="content">
+              <div className="summary">
+                글 <Link to={linkUrl}>{noti.get('title')}</Link>에 <Link to={linkUrl}>{noti.get('count')}</Link>개의 댓글이 달렸습니다.
+
+                <div className="date">
+                  {moment(noti.get('receive_at')).fromNow()}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'post_like':
+        return (
+          <div className={notiItemClass} onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
+            <div className="label">
+              <img src="http://dummyimage.com/40x40" />
+            </div>
+            <div className="content">
+              <div className="summary">
+                글 <Link to={linkUrl}>{noti.get('title')}</Link>을 <Link to={linkUrl}>{noti.get('count')}</Link>명이 좋아합니다.
+
+                <div className="date">
+                  {moment(noti.get('receive_at')).fromNow()}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      default :
+        return (
+          <div></div>
+        )
+    }
+  }
+});
+
 
 class NotiButtons extends Component {
   render() {
@@ -13,13 +82,17 @@ class NotiButtons extends Component {
     const Noti = UserStore.getIn(['notifications', 'INoti']);
     const notiEntities = Noti ? Noti.getIn(['entities', 'notis']) : null;
 
+    let countNoti;
+    if (notiEntities) {
+      countNoti = notiEntities.reduce((r, v) => r + (v.get('read') ? 0 : 1), 0)
+    }
     return (
-      <div className="item noti">
+      <div id='noti_button' className="item noti">
         <i className="large alarm icon inverted" />
         {
-          Noti && !!notiEntities &&
+          Noti && !!notiEntities && !!countNoti &&
           <div className="ui red label">
-            {notiEntities.reduce((r, v) => r + (v.read ? 0 : 1), 0)}
+            {countNoti}
           </div>
         }
         <div id="alarm_popup" className="ui segment popup">
@@ -31,35 +104,7 @@ class NotiButtons extends Component {
             <div className="ui feed ">
               {
                 Noti &&
-                Noti.get('result').map(notiId => {
-
-                  const noti = notiEntities.get(notiId.toString());
-                  const notiItemClass = cx({
-                    event: true,
-                    'is-read': !noti.get('read')
-                  });
-
-                  switch(noti.get('type')) {
-                    case 'comment_write':
-                      return (
-                        <div className={notiItemClass}>
-                          <div className="label">
-                            <img src="http://dummyimage.com/40x40" />
-                          </div>
-                          <div className="content">
-                            <div className="summary">
-                              글 <a>여봉이 사랑해</a>에 <a>{noti.get('count')}</a>개의 댓글이 달렸습니다.
-
-                              <div className="date">
-                                3 days ago
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                  }
-
-                })
+                Noti.get('result').map(notiId => <NotiItem key={notiId} noti={notiEntities.get(notiId.toString())} />)
               }
             </div>
 
