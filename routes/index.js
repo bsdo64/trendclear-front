@@ -11,13 +11,15 @@ var routes = [
   '/setting',
   '/setting/password',
   '/setting/profile',
-  '/search'
+  '/search',
+  '/signin'
 ]
 
 /* GET home page. */
 router.get(routes, function(req, res, next) {
   console.log(req.headers);
   console.log(req.url);
+  console.log(process.env);
 
   res.render('entry/index', {
     title: '베나클',
