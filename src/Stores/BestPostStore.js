@@ -136,4 +136,4 @@ class BestPostStore{
   }
 }
 
-export default alt.createStore(immutable(BestPostStore));
+export default alt.createStore(immutable(BestPostStore), 'BestPostStore');

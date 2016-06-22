@@ -52,4 +52,4 @@ class GnbStore{
   }
 }
 
-export default alt.createStore(immutable(GnbStore));
+export default alt.createStore(immutable(GnbStore), 'GnbStore');

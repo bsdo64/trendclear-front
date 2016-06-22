@@ -58,4 +58,4 @@ class SubmitStore{
   }
 }
 
-export default alt.createStore(immutable(SubmitStore));
+export default alt.createStore(immutable(SubmitStore), 'SubmitStore');

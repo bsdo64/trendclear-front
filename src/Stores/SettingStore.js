@@ -57,4 +57,4 @@ class SettingStore{
   }
 }
 
-export default alt.createStore(immutable(SettingStore));
+export default alt.createStore(immutable(SettingStore), 'SettingStore');

@@ -130,4 +130,4 @@ class UserStore{
   }
 }
 
-export default alt.createStore(immutable(UserStore));
+export default alt.createStore(immutable(UserStore), 'UserStore');
