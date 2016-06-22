@@ -19,11 +19,10 @@ var routes = [
 router.get(routes, function(req, res, next) {
   console.log(req.headers);
   console.log(req.url);
-  console.log(process.env);
 
   res.render('entry/index', {
     title: '베나클',
-    production: process.env.production ? true : false
+    production: process.env.NODE_ENV ? true : false
   });
 });
 
