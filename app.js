@@ -18,8 +18,11 @@ var embed = require('./routes/embed');
 
 var app = express();
 app.use(compression());
-app.use(logger('dev'));
+app.use(logger('common'));
 
+app.use('/soc', (req, res, next) => {
+  proxy.ws(req, res, {target: 'http://127.0.0.1:3001' });
+});
 app.all('/ajax/*', ApiProxy);
 app.use('/image', ImageProxy);
 
