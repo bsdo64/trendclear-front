@@ -11,8 +11,8 @@ const SigninFormContents = React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     "use strict";
-    const oldSubmitResult = this.props.SigninStore.toJS().submitResult;
-    const oldEmailVerifySuccess = this.props.SigninStore.toJS().emailVerifySuccess;
+    const oldSubmitResult = this.props.SigninStore.get('submitResult');
+    const oldEmailVerifySuccess = this.props.SigninStore.get('emailVerifySuccess');
     const {submitResult, emailVerifySuccess} = nextProps.SigninStore.toJS();
     if (oldSubmitResult !== submitResult ) {
       if (oldEmailVerifySuccess === emailVerifySuccess) {
@@ -46,8 +46,8 @@ const SigninFormContents = React.createClass({
             identifier  : 'password',
             rules: [
               {
-                type   : 'regExp[/^[a-z0-9_-]{4,16}$/]',
-                prompt : 'Please enter a 4-16 letter username'
+                type   : 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
+                prompt : '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
               }
             ]
           },
@@ -69,7 +69,7 @@ const SigninFormContents = React.createClass({
               },
               {
                 type   : 'regExp[/^[a-z가-힣A-Z0-9_]+( [a-z가-힣A-Z0-9_]+)*$/]',
-                prompt : '한칸 이상 공백은 허용하지 않습니다'
+                prompt : '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
               }
             ]
           },
@@ -115,44 +115,6 @@ const SigninFormContents = React.createClass({
           SigninActions.submit(result);
         }
       });
-  },
-  handleEmail() {
-    const emailValue = this.refs.signinEmail.value;
-    if (emailValue.length > 3) {
-      SigninActions.checkEmailDup({email: emailValue});
-    }
-  },
-  handleNick() {
-    const nickValue = this.refs.signinNick.value;
-    if (nickValue.length > 1) {
-      SigninActions.checkNickDup({nick: nickValue});
-    }
-  },
-  handleSubmit() {
-    const {emailDup, nickDup, emailVerifyFail ,emailVerifySuccess, emailRequested} = this.props.SigninStore.toJS();
-
-    if (emailVerifyFail) {
-      return;
-    }
-
-    if ((emailDup === false) && (nickDup === false) &&
-        (emailVerifySuccess === false) && (emailVerifyFail === false) &&
-        (!emailRequested)) {
-      this.setState({emailVerifyFormOpen: true});
-      this._sendEmailVerify();
-    }
-
-    if (!emailDup && !nickDup && !emailVerifyFail && emailVerifySuccess && emailRequested) {
-      $(this.refs.signinform).form('validate form');
-    }
-  },
-  _sendEmailVerify() {
-    SigninActions.requestEmailVerify({
-      email: this.refs.signinEmail.value
-    });
-  },
-  handleCheckEmailVerify() {
-    SigninActions.checkVerifyCode({verifyCode: this.refs.emailVerify.value});
   },
   render() {
     const {emailDup, nickDup, emailVerifyFail} = this.props.SigninStore.toJS();
@@ -399,7 +361,7 @@ const SigninFormContents = React.createClass({
               emailVerifyFormOpen &&
               <div className="field">
                 <label>이메일 확인</label>
-                <input ref="emailVerify" type="text" name="nick" placeholder="이메일을 확인해주세요" onBlur={this.handleCheckEmailVerify}/>
+                <input ref="emailVerify" type="text" name="nick" placeholder="이메일을 확인해주세요" onBlur={this.handleCheckEmailCodeVerify}/>
               </div>
             }
           </div>
@@ -412,6 +374,48 @@ const SigninFormContents = React.createClass({
         </form>
       </div>
     );
+  },
+
+  handleEmail() {
+    const emailValue = this.refs.signinEmail.value;
+    if (emailValue.length > 3) {
+      SigninActions.checkEmailDup({email: emailValue});
+    }
+  },
+
+  handleNick() {
+    const nickValue = this.refs.signinNick.value;
+    if (nickValue.length > 1) {
+      SigninActions.checkNickDup({nick: nickValue});
+    }
+  },
+
+  _sendEmailVerify() {
+    SigninActions.requestEmailVerify({
+      email: this.refs.signinEmail.value
+    });
+  },
+  handleSubmit() {
+    const {emailDup, nickDup, emailVerifyFail ,emailVerifySuccess, emailRequested} = this.props.SigninStore.toJS();
+
+    if (emailVerifyFail) {
+      return;
+    }
+
+    if ((emailDup === false) && (nickDup === false) &&
+      (emailVerifySuccess === false) && (emailVerifyFail === false) &&
+      (!emailRequested)) {
+      this.setState({emailVerifyFormOpen: true});
+      this._sendEmailVerify();
+    }
+
+    if (!emailDup && !nickDup && !emailVerifyFail && emailVerifySuccess && emailRequested) {
+      $(this.refs.signinform).form('validate form');
+    }
+  },
+
+  handleCheckEmailCodeVerify() {
+    SigninActions.checkVerifyCode({verifyCode: this.refs.emailVerify.value});
   }
 });
 

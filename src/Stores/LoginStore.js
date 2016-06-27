@@ -56,4 +56,4 @@ class LoginStore{
 
 }
 
-export default alt.createStore(immutable(LoginStore), 'LoginStore');
+export default alt.createStore(immutable(LoginStore), LoginStore.name);

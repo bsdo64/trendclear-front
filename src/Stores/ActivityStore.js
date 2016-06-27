@@ -24,4 +24,4 @@ class ActivityStore {
   }
 }
 
-export default alt.createStore(immutable(ActivityStore), 'ActivityStore');
+export default alt.createStore(immutable(ActivityStore), ActivityStore.name);

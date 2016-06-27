@@ -105,40 +105,33 @@ const TrendBox = React.createClass({
         });
     }
 
-    // Update countUp
-    function updateCountUp(nodeId, from, to) {
-      "use strict";
-
-      if (from != to ) {
-        const options = {
-          useEasing : true,
-          useGrouping : true,
-          separator : ',',
-          decimal : '.',
-          prefix : '',
-          suffix : ''
-        };
-
-        const count = new CountUp(nodeId, from, to, 0, 1.5, options);
-        count.start();
-      }
-    }
+    const options = {
+      useEasing : true,
+      useGrouping : true,
+      separator : ',',
+      decimal : '.',
+      prefix : '',
+      suffix : ''
+    };
 
     const prevTP = currentUser.trendbox.get('T');
     const nextTP = nextUser.trendbox.get('T');
-    updateCountUp("tp_point", prevTP, nextTP);
+    this.updateCountUp("tp_point", prevTP, nextTP, options);
 
     const prevRP = currentUser.trendbox.get('R');
     const nextRP = nextUser.trendbox.get('R');
-    updateCountUp("rp_point", prevRP, nextRP);
+    this.updateCountUp("rp_point", prevRP, nextRP, options);
 
-    updateCountUp("current_exp", prev_currentTotalExp, currentTotalExp);
-    updateCountUp("next_exp", prev_nextTotalExp, nextTotalExp);
+    this.updateCountUp("current_exp", prev_currentTotalExp, currentTotalExp, options);
+    this.updateCountUp("next_exp", prev_nextTotalExp, nextTotalExp, options);
   },
-  test() {
+  updateCountUp(nodeId, from, to, options) {
     "use strict";
 
-    UserActions.increaseLevel();
+    if (from != to ) {
+      const count = new CountUp(nodeId, from, to, 0, 1.5, options);
+      count.start();
+    }
   },
   openAvatarModal() {
     "use strict";
@@ -191,7 +184,7 @@ const TrendBox = React.createClass({
                 </div>
                 <div className="description">
 
-                  <div className="item" onClick={this.test}>
+                  <div className="item" >
                     <span className="item_col">레벨</span>
                     <div className="item_num">
                       <span>{user.trendbox.get('level')}</span>

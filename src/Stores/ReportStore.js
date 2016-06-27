@@ -29,4 +29,4 @@ class ReportStore{
   }
 }
 
-export default alt.createStore(immutable(ReportStore), 'ReportStore');
+export default alt.createStore(immutable(ReportStore), ReportStore.name);

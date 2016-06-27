@@ -70,6 +70,7 @@ const CommentItem = React.createClass({
 
   toggleSubComment() {
     "use strict";
+    const self = this;
 
     this.setState({subCommentOpen: !this.state.subCommentOpen}, () => {
 
@@ -81,7 +82,7 @@ const CommentItem = React.createClass({
           disableDoubleReturn: true
         });
 
-        $('.ui.dropdown.report_icon')
+        $(self.refs.report_icon)
           .dropdown({
             onChange: function(value, text, $selectedItem) {
               const action = $selectedItem.data('action');
@@ -238,7 +239,7 @@ const CommentItem = React.createClass({
                 <a className="like_count">{subComment.get('like_count')}</a>
               </div>
               <div className="report_box">
-                <div className={'ui icon dropdown report_icon'}>
+                <div ref="report_icon" className={'ui icon dropdown report_icon'}>
                   <i className="warning outline icon"></i>
                   <div className="menu">
                     <div className="item" data-value={subComment.get('id')} data-action="report">신고</div>
@@ -291,7 +292,7 @@ const CommentItem = React.createClass({
               <a className="comment_count">{comment.get('sub_comment_count')}</a>
             </div>
             <div className="report_box">
-              <div className={'ui icon dropdown report_icon '  + (this.state.focus ? '' : 'none')}>
+              <div ref="report_icon" className={'ui icon dropdown report_icon '  + (this.state.focus ? '' : 'none')}>
                 <i className="warning outline icon"></i>
                 <div className="menu">
                   <div className="item" data-value={comment.get('id')} data-action="report">신고</div>

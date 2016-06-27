@@ -4,9 +4,6 @@ import {normalize, arrayOf} from 'normalizr';
 import {noti} from './normalizr/schema';
 
 class UserActions {
-  increaseLevel() {
-    return true;
-  }
   levelUp(params) {
     return (dispatch) => {
       Api

@@ -39,14 +39,7 @@ class UserStore{
       locationHref('/');
     }
   }
-
-  onIncreaseLevel() {
-    this.waitFor(SubmitStore);
-
-    let state = this.state.updateIn(['trendbox', 'level'], val => val + 1);
-    this.setMergeState(state);
-  }
-
+  
   onOpenAvatarModalOpen() {
     let state = Map({ openAvatarModal: true });
     this.setMergeState(state);
@@ -130,4 +123,4 @@ class UserStore{
   }
 }
 
-export default alt.createStore(immutable(UserStore), 'UserStore');
+export default alt.createStore(immutable(UserStore), UserStore.name);

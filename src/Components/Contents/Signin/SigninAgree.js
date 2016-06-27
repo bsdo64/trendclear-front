@@ -9,7 +9,7 @@ const SigninAgree = React.createClass({
     if (term && privacy) {
       buttonClass = buttonClass.replace('disabled', ' ');
     }
-
+    
     return (
       <div id="signin_section" className="ui container section_pad">
         <h3 className="ui dividing header">
@@ -24,7 +24,7 @@ const SigninAgree = React.createClass({
                 <p dir="ltr">서비스약관 (2016. 1. 1 부터 유효)</p>
                 <p dir="ltr">제1장 총 칙</p>
                 <p dir="ltr">제 1 조 (목적)</p>
-                <p dir="ltr">본 약관은 서비스 이용자가 고블린 클럽(이하 &ldquo;회사&rdquo;라 합니다)이 제공하는 온라인상의 인터넷 서비스(이하 &ldquo;서비스&rdquo;라고 하며... 접속 가능한 유&middot;무선 단말기의 종류와는 상관없이 이용 가능한 &ldquo;회사&rdquo;가 제공하는 모든 &ldquo;서비스&rdquo;를 의미합니다. 이하 같습니다)에 회원으로 가입하고 이를 이용함에 있어 회사와 회원(본 약관에 동의하고 회원등록을 완료한 서비스 이용자를 말합니다. 이하 &ldquo;회원&rdquo;이라고 합니다)의 권리&middot;의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+                <p dir="ltr">본 약관은 서비스 이용자가 베나클(이하 &ldquo;회사&rdquo;라 합니다)이 제공하는 온라인상의 인터넷 서비스(이하 &ldquo;서비스&rdquo;라고 하며... 접속 가능한 유&middot;무선 단말기의 종류와는 상관없이 이용 가능한 &ldquo;회사&rdquo;가 제공하는 모든 &ldquo;서비스&rdquo;를 의미합니다. 이하 같습니다)에 회원으로 가입하고 이를 이용함에 있어 회사와 회원(본 약관에 동의하고 회원등록을 완료한 서비스 이용자를 말합니다. 이하 &ldquo;회원&rdquo;이라고 합니다)의 권리&middot;의무 및 책임사항을 규정함을 목적으로 합니다.</p>
                 <p dir="ltr">제 2 조 (약관의 명시, 효력 및 개정)</p>
                 <ol>
                   <li dir="ltr">
@@ -428,7 +428,7 @@ const SigninAgree = React.createClass({
             <section id="fregister_private">
               <h4>개인정보처리방침안내</h4>
               <div className="privacy">
-                <p dir="ltr">'고블린 클럽'은 (이하 '회사'는)</p>
+                <p dir="ltr">'베나클'은 (이하 '회사'는)</p>
                 <p dir="ltr">고객님의 개인정보를 중요시하며, "정보통신망 이용촉진 및 정보보호"에 관한 법률을 준수하고 있습니다.</p>
                 <p dir="ltr"><strong>&nbsp;</strong></p>
                 <p dir="ltr">회사는 개인정보취급방침을 통하여 고객님께서 제공하시는 개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려드립니다.</p>
@@ -439,7 +439,7 @@ const SigninAgree = React.createClass({
                 <p dir="ltr"><strong>&nbsp;</strong></p>
                 <p dir="ltr">회사는 회원가입, 상담, 서비스 신청 등등을 위해 아래와 같은 개인정보를 수집하고 있습니다.</p>
                 <p dir="ltr"><strong><br /><br /></strong></p>
-                <p dir="ltr">&omicron; 수집항목 : 이름 , 생년월일 , 성별 , 로그인ID , 비밀번호 , 이메일 , 서비스 이용기록 , 접속 로그 , 쿠키 , 접속 IP 정보 , 결제기록</p>
+                <p dir="ltr">&omicron; 수집항목 : 생년월일 , 성별 , 비밀번호 , 이메일 , 서비스 이용기록 , 접속 로그 , 쿠키 , 접속 IP 정보 , 결제기록</p>
                 <p dir="ltr">&omicron; 개인정보 수집방법 : 홈페이지(회원가입,게시판)</p>
                 <p dir="ltr"><strong>&nbsp;</strong></p>
                 <p dir="ltr">■ 개인정보의 수집 및 이용목적</p>

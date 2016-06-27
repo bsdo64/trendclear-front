@@ -34,4 +34,4 @@ class SearchStore{
   }
 }
 
-export default alt.createStore(immutable(SearchStore), 'SearchStore');
+export default alt.createStore(immutable(SearchStore), SearchStore.name);
