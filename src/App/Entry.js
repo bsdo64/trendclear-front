@@ -22,6 +22,7 @@ var ContentsContainer = require('../Container/Contents/Best');
 var SigninContainer = require('../Container/Contents/Signin');
 var CommunityContainer = require('../Container/Contents/Community');
 var SubmitContainer = require('../Container/Contents/SubmitPost');
+var SubmitCategoryContainer = require('../Container/Contents/SubmitCategory');
 var SearchContainer = require('../Container/Contents/Search');
 var SettingContainer = require('../Container/Contents/Setting');
 var ActivityContainer = require('../Container/Contents/Activity');
@@ -94,6 +95,19 @@ Api
                   WidgetContainer: WidgetContainer,
                   ReportModalContainer: ReportModalContainer,
                   ContentsContainer: SubmitContainer
+                 }}
+          />
+
+          <Route path="submit/category"
+                 components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: LeftColCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ReportModalContainer: ReportModalContainer,
+                  ContentsContainer: SubmitCategoryContainer
                  }}
           />
         </Route>

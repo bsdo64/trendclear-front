@@ -117,6 +117,13 @@ class NotiButtons extends Component {
 
 const UserButtons = React.createClass({
 
+  gotoSubmitCategory() {
+    "use strict";
+
+    $('#profile_id_button').popup('hide');
+    browserHistory.push('/community/submit/category');
+  },
+
   gotoActivity() {
     "use strict";
 
@@ -162,6 +169,8 @@ const UserButtons = React.createClass({
         <a id="profile_id_button" className="text" >{user.get('nick')}</a>
         <div id="profile_popup" className="ui popup">
           <div className="ui vertical menu secondary">
+            <a className="item" onClick={this.gotoSubmitCategory}>커뮤니티 만들기</a>
+            <div className="ui divider"></div>
             <a className="item" onClick={this.gotoActivity}>나의 활동</a>
             <a className="active item" onClick={this.gotoSettings}>설정1</a>
             <a className="item" onClick={this.handleLogout}>

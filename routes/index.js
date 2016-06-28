@@ -4,6 +4,8 @@ var router = express.Router();
 var routes = [
   '/',
   '/community',
+  '/community/submit',
+  '/community/submit/category',
   '/activity',
   '/activity/likes',
   '/activity/posts',
@@ -13,7 +15,7 @@ var routes = [
   '/setting/profile',
   '/search',
   '/signin'
-]
+];
 
 /* GET home page. */
 router.get(routes, function(req, res, next) {
