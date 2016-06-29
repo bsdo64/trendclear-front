@@ -11,6 +11,7 @@ var LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav')
 var LeftColCategoryMenu = require('../Container/LeftCol/CategoryMenu.js');
 var BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 var AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
+var SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
 
 var HeaderMyMenu = require('../Container/Header/MyMenu');
 var HeaderSearch = require('../Container/Header/Search');
@@ -22,7 +23,8 @@ var ContentsContainer = require('../Container/Contents/Best');
 var SigninContainer = require('../Container/Contents/Signin');
 var CommunityContainer = require('../Container/Contents/Community');
 var SubmitContainer = require('../Container/Contents/SubmitPost');
-var SubmitCategoryContainer = require('../Container/Contents/SubmitCategory');
+var SubmitForumContainer = require('../Container/Contents/SubmitForum');
+var SubmitForumPrefixContainer = require('../Container/Contents/SubmitForumPrefix');
 var SearchContainer = require('../Container/Contents/Search');
 var SettingContainer = require('../Container/Contents/Setting');
 var ActivityContainer = require('../Container/Contents/Activity');
@@ -98,16 +100,29 @@ Api
                  }}
           />
 
-          <Route path="submit/category"
+          <Route path="submit/forum"
                  components={{
                   HeaderMyMenu: HeaderMyMenu,
                   HeaderSearch: HeaderSearch,
                   LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
+                  LeftColMenu: SubmitCategoryMenu,
                   LoginModalContainer: LoginModalContainer,
                   WidgetContainer: WidgetContainer,
                   ReportModalContainer: ReportModalContainer,
-                  ContentsContainer: SubmitCategoryContainer
+                  ContentsContainer: SubmitForumContainer
+                 }}
+          />
+
+          <Route path="submit/forum/prefix"
+                 components={{
+                  HeaderMyMenu: HeaderMyMenu,
+                  HeaderSearch: HeaderSearch,
+                  LeftColGnb: LeftColGlobalCategoryNav,
+                  LeftColMenu: SubmitCategoryMenu,
+                  LoginModalContainer: LoginModalContainer,
+                  WidgetContainer: WidgetContainer,
+                  ReportModalContainer: ReportModalContainer,
+                  ContentsContainer: SubmitForumPrefixContainer
                  }}
           />
         </Route>

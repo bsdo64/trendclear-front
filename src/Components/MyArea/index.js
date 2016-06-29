@@ -121,7 +121,7 @@ const UserButtons = React.createClass({
     "use strict";
 
     $('#profile_id_button').popup('hide');
-    browserHistory.push('/community/submit/category');
+    browserHistory.push('/community/submit/forum');
   },
 
   gotoActivity() {
