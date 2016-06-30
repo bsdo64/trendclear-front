@@ -1,14 +1,32 @@
 import React from 'react';
+import cx from 'classnames';
+
+import SigninActions from '../../../Actions/SigninActions';
 
 const SigninAgree = React.createClass({
   displayName: 'SigninAgree',
-  render() {
-    const {term, privacy, handleCheckTerms, handleCheckPrivacy, submitAgreement} = this.props;
-    let buttonClass = 'btn_submit ui button submit disabled';
-
-    if (term && privacy) {
-      buttonClass = buttonClass.replace('disabled', ' ');
+  toggleTerm() {
+    "use strict";
+    SigninActions.agreeTerm();
+  },
+  
+  togglePrivacy() {
+    "use strict";
+    SigninActions.agreePrivacy();
+  },
+  submitAgreement() {
+    "use strict";
+    const {agreeTerm, agreePrivacy} = this.props;
+    if (agreeTerm && agreePrivacy) {
+      SigninActions.confirmAgree();
     }
+  },
+  render() {
+    const {agreeTerm, agreePrivacy} = this.props;
+    
+    const buttonClass = cx('btn_submit ui button submit primary fluid', {
+      disabled: !agreeTerm || !agreePrivacy
+    });
     
     return (
       <div id="signin_section" className="ui container section_pad">
@@ -419,7 +437,7 @@ const SigninAgree = React.createClass({
               <div className="field agreements">
                 <div className="ui checkbox">
                   <input id="term" type="checkbox"
-                         name="term" checked={term} onClick={handleCheckTerms} />
+                         name="term" checked={agreeTerm} onClick={this.toggleTerm} />
                   <label htmlFor="term">동의합니다.</label>
                 </div>
               </div>
@@ -470,7 +488,7 @@ const SigninAgree = React.createClass({
               <div className="field agreements">
                 <div className="ui checkbox">
                   <input id="private" type="checkbox"
-                         name="private" checked={privacy} onClick={handleCheckPrivacy}/>
+                         name="private" checked={agreePrivacy} onClick={this.togglePrivacy}/>
                   <label htmlFor="private">동의합니다.</label>
                 </div>
               </div>
@@ -480,7 +498,7 @@ const SigninAgree = React.createClass({
             <div className="ui error message"></div>
 
             <div className="">
-              <div className={"ui button primary fluid " + buttonClass} onClick={submitAgreement} >다음</div>
+              <div className={buttonClass} onClick={this.submitAgreement} >다음</div>
             </div>
             
           </div>

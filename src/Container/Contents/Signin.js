@@ -1,18 +1,20 @@
 import React from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
-import SigninStore from '../../Stores/SigninStore';
+import SigninFormStore from '../../Stores/UI/SigninFormStore';
+import UserStore from '../../Stores/UserStore';
 
 import Signin from '../../Components/Contents/Signin';
 
 const SigninContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [SigninStore]
+    return [SigninFormStore, UserStore]
   },
 
   getPropsFromStores() {
     return {
-      SigninStore: SigninStore.getState()
+      SigninFormStore: SigninFormStore.getState(),
+      UserStore: UserStore.getState()
     }
   }
 }, React.createClass({

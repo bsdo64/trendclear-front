@@ -27,6 +27,24 @@ class CommunityActions {
   resetData() {
     return true;
   }
+
+  createCommunity(category) {
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .post('/community/category', category)
+        .then((res) => {
+          if (res === 'ok') {
+            dispatch(res);
+          } else {
+            dispatch(false);
+          }
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
 }
 
 module.exports = alt.createActions(CommunityActions);

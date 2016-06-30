@@ -4,16 +4,11 @@ import { browserHistory } from 'react-router'
 import SigninActions from '../../../Actions/SigninActions';
 
 const SigninFormContents = React.createClass({
-  getInitialState: function() {
-    return {
-      emailVerifyFormOpen: false
-    }
-  },
   componentWillReceiveProps(nextProps) {
     "use strict";
-    const oldSubmitResult = this.props.SigninStore.get('submitResult');
-    const oldEmailVerifySuccess = this.props.SigninStore.get('emailVerifySuccess');
-    const {submitResult, emailVerifySuccess} = nextProps.SigninStore.toJS();
+    const oldSubmitResult = this.props.submitResult;
+    const oldEmailVerifySuccess = this.props.emailVerifySuccess;
+    const {submitResult, emailVerifySuccess} = nextProps;
     if (oldSubmitResult !== submitResult ) {
       if (oldEmailVerifySuccess === emailVerifySuccess) {
         if (submitResult && emailVerifySuccess) {
@@ -117,8 +112,7 @@ const SigninFormContents = React.createClass({
       });
   },
   render() {
-    const {emailDup, nickDup, emailVerifyFail} = this.props.SigninStore.toJS();
-    const {emailVerifyFormOpen} = this.state;
+    const {emailDup, nickDup, emailVerifyFail, emailVerifyFormOpen} = this.props;
 
     let dupError = '';
     if (emailDup || nickDup || emailVerifyFail) {
@@ -396,7 +390,7 @@ const SigninFormContents = React.createClass({
     });
   },
   handleSubmit() {
-    const {emailDup, nickDup, emailVerifyFail ,emailVerifySuccess, emailRequested} = this.props.SigninStore.toJS();
+    const {emailDup, nickDup, emailVerifyFail ,emailVerifySuccess, emailRequested} = this.props;
 
     if (emailVerifyFail) {
       return;
@@ -405,7 +399,7 @@ const SigninFormContents = React.createClass({
     if ((emailDup === false) && (nickDup === false) &&
       (emailVerifySuccess === false) && (emailVerifyFail === false) &&
       (!emailRequested)) {
-      this.setState({emailVerifyFormOpen: true});
+      SigninActions.emailVerifyFormOpen();
       this._sendEmailVerify();
     }
 

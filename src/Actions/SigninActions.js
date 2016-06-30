@@ -5,7 +5,12 @@ import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 
 class SigninActions {
-
+  constructor() {
+    this.generateActions('agreeTerm', 'agreePrivacy', 'confirmAgree');
+    this.generateActions('emailVerifyFormOpen');
+    this.generateActions('resetForm');
+  }
+  
   checkEmailDup(params) {
     return (dispatch) => {
       Api

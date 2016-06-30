@@ -2,53 +2,72 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
+import {browserHistory} from 'react-router';
+
+import SigninActions from '../../../Actions/SigninActions';
 
 import SigninAgree from './SigninAgree';
 import SigninFormContents from './SigninFormContents';
 
 require('./Signin.scss');
-let SigninContents = React.createClass({
+const SigninContents = React.createClass({
   displayName: 'SigninContents',
   propTypes: {},
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-
-  getInitialState() {
-    return {
-      term: false, privacy: false, agree: false
-    };
-  },
-  submitAgreement() {
-    const {term, privacy} = this.state;
-
-    if (term && privacy) {
-      this.setState({agree: true});
+  componentWillMount() {
+    const {UserStore} = this.props;
+    if (UserStore.get('user')) {
+      browserHistory.replace('/');
     }
   },
-  handleCheckTerms() {
-    this.setState({term: !this.state.term});
+  
+  componentWillUnmount() {
+    SigninActions.resetForm();
   },
-  handleCheckPrivacy() {
-    this.setState({privacy: !this.state.privacy});
-  },
+
   render() {
-    const {agree} = this.state;
+    const {SigninFormStore} = this.props;
+    
+    const agreeTerm = SigninFormStore.get('agreeTerm');
+    const agreePrivacy = SigninFormStore.get('agreePrivacy');
+    const confirmAgree = SigninFormStore.get('confirmAgree');
+
+    const signinContentsProps = {
+      emailDup: SigninFormStore.get('emailDup'),
+      nickDup: SigninFormStore.get('nickDup'),
+      emailRequested: SigninFormStore.get('emailRequested'),
+      submitResult: SigninFormStore.get('submitResult'),
+      emailVerifySuccess: SigninFormStore.get('emailVerifySuccess'),
+      emailVerifyFail: SigninFormStore.get('emailVerifyFail'),
+      emailVerifyFormOpen: SigninFormStore.get('emailVerifyFormOpen'),
+
+      email: SigninFormStore.get('email'),
+      password: SigninFormStore.get('password'),
+      nick: SigninFormStore.get('nick'),
+      sex: SigninFormStore.get('sex'),
+      year: SigninFormStore.get('year'),
+      month: SigninFormStore.get('month'),
+      day: SigninFormStore.get('day'),
+      birth: SigninFormStore.get('birth')
+    };
+
     return (
       <div id="signing">
         {
-          agree &&
+          confirmAgree &&
           <SigninFormContents
-            SigninStore={this.props.SigninStore}
+            {...signinContentsProps}
           />
         }
 
         {
-          !agree && <SigninAgree
-            {...this.state}
-            handleCheckTerms={this.handleCheckTerms}
-            handleCheckPrivacy={this.handleCheckPrivacy}
-            submitAgreement={this.submitAgreement}/>
+          !confirmAgree && <SigninAgree
+            agreeTerm={agreeTerm}
+            agreePrivacy={agreePrivacy}
+            confirmAgree={confirmAgree}
+          />
         }
       </div>
     );
