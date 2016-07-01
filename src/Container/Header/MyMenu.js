@@ -2,6 +2,7 @@ import React from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import LoginStore from '../../Stores/LoginStore';
 import UserStore from '../../Stores/UserStore';
+import Notis from '../../Stores/Domain/Notis';
 
 import MyArea from '../../Components/MyArea';
 
@@ -10,11 +11,12 @@ import notiIo from '../../Utils/Socket';
 const MyMenuContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [LoginStore, UserStore]
+    return [LoginStore, UserStore, Notis]
   },
 
   getPropsFromStores() {
     return {
+      Notis: Notis.getState(),
       LoginStore: LoginStore.getState(),
       UserStore: UserStore.getState()
     }

@@ -22,7 +22,14 @@ class UserStore{
 
     this.bindActions(CommentActions);
 
-    this.state = Immutable.Map({});
+    this.state = Immutable.fromJS({
+      user: null,
+      trendbox: null,
+      profile: {
+        avatar_img: null,
+        sex: null
+      }
+    });
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);

@@ -1,9 +1,12 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 import {normalize} from 'normalizr';
-import {post, comment, subComment} from './normalizr/schema';
+import {post, comment, subComment} from '../Model/normalizr/schema';
 
 class CommentActions {
+  constructor() {
+    this.generateActions('addList');
+  }
   submitComment(params) {
     return (dispatch) => {
       Api

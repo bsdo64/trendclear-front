@@ -1,9 +1,13 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 import {normalize, arrayOf} from 'normalizr';
-import {noti} from './normalizr/schema';
+import {noti} from '../Model/normalizr/schema';
 
 class UserActions {
+  constructor() {
+    this.generateActions('addList');
+  }
+  
   levelUp(params) {
     return (dispatch) => {
       Api

@@ -2,6 +2,9 @@ import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 
 class CommunityActions {
+  constructor() {
+    this.generateActions('addPrefixes');
+  }
   likePost(postId) {
     return (dispatch) => {
       Api

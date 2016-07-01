@@ -2,17 +2,20 @@ import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../../Actions/AppActions';
-import PostActions from '../../Actions/PostActions';
+import ListActions from '../../Actions/ListActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
-class Posts {
+import {normalize, arrayOf} from 'normalizr';
+import {club, post, prefix, comment, noti} from '../../Model/normalizr/schema';
+
+class ListStore {
   constructor() {
-    this.displayName = 'Posts';
+    this.displayName = 'ListStore';
 
     this.bindActions(AppActions);
-    this.bindActions(PostActions);
+    this.bindActions(ListActions);
     this.state = Immutable.Map({
-
+      
     });
 
     initListener(this);
@@ -24,10 +27,10 @@ class Posts {
       this.setMergeState(bootstrapData[this.displayName]);
     }
   }
-  
-  onAddList(posts) {
-    this.setMergeState(posts);
+
+  onAdd(list) {
+    this.setMergeState(list);
   }
 }
 
-export default alt.createStore(immutable(Posts), Posts.name);
+export default alt.createStore(immutable(ListStore), ListStore.name);
