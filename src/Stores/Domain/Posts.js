@@ -3,7 +3,11 @@ import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../../Actions/AppActions';
 import PostActions from '../../Actions/PostActions';
+import GnbActions from '../../Actions/GnbActions';
+import CommunityActions from '../../Actions/CommunityActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
+
+import GnbStore from '../../Stores/GnbStore';
 
 class Posts {
   constructor() {
@@ -11,6 +15,8 @@ class Posts {
 
     this.bindActions(AppActions);
     this.bindActions(PostActions);
+    this.bindActions(GnbActions);
+    this.bindActions(CommunityActions);
     this.state = Immutable.Map({
 
     });
@@ -27,6 +33,37 @@ class Posts {
   
   onAddList(posts) {
     this.setMergeState(posts);
+  }
+
+  onLikePost(postId) {
+    if (postId) {
+      const newState = this.state.update(postId.toString(), v => {
+        return v.set('like_count', v.get('like_count') + 1).set('liked', true);
+      });
+
+      this.setState(newState);
+    }
+  }
+
+  onGetBestPost(response) {
+    const normalizedPosts = response.results;
+    const total = response.total;
+
+    const newState = this.state.merge(normalizedPosts.entities.posts);
+    this.setState(newState);
+  }
+
+  onSaveFilter(response) {
+    this.waitFor(GnbStore);
+
+    if (response) {
+      const normalizedPosts = response.results;
+      const total = response.total;
+      const limit = 10;
+
+      const newState = this.state.merge(normalizedPosts.entities.posts);
+      this.setState(newState);
+    }
   }
 }
 

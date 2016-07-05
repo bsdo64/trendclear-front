@@ -1,39 +1,26 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Link} from 'react-router';
 
 import BestList from './BestList';
 import BestPagination from './BestPagination';
 import PostActions from '../../../Actions/PostActions';
 import GnbActions from '../../../Actions/GnbActions';
+import LoginActions from '../../../Actions/LoginActions';
+import CommunityActions from '../../../Actions/CommunityActions';
+import ReportActions from '../../../Actions/ReportActions';
 
 const BestPost = React.createClass({
-  getInitialState() {
-    return {
-      open: false
-    };
-  },
+  mixins: [PureRenderMixin],
 
-  show() {
-    "use strict";
-
-    this.setState({open: true})
-  },
-
-  close() {
-    "use strict";
-
-    this.setState({open: false})
-  },
   sendLike() {
     "use strict";
 
-    const {LoginStore} = this.props;
-    const modalFlag = LoginStore.get('openLoginModal');
-    const isLogin = LoginStore.get('isLogin');
-    if (!isLogin) {
-      LoginActions.toggleLoginModal(modalFlag, '/');
+    const {post, user, loginModalFlag} = this.props;
+    if (!user) {
+      LoginActions.toggleLoginModal(loginModalFlag, '/');
     } else {
-      CommunityActions.likePost(this.props.postId);
+      CommunityActions.likePost(post.get('id'));
     }
   },
 
@@ -60,7 +47,7 @@ const BestPost = React.createClass({
     "use strict";
     const {post, author, user} = this.props;
 
-    const userId = user.get('id');
+    const userId = user && user.get('id');
     const sex = author.getIn(['profile', 'sex']),
       avatar_img = author.getIn(['profile', 'avatar_img']),
       icon_img = author.getIn(['icon', 0, 'iconDef', 'icon_img']);
@@ -145,7 +132,7 @@ const BestPost = React.createClass({
               <a className="comment_count">{post.get('comment_count')}</a>
             </div>
             <div className="report_box">
-              <div className={'ui icon dropdown report_icon ' + (this.state.open? '': 'none')}>
+              <div className={'ui icon dropdown report_icon'}>
                 <i className="warning outline icon"></i>
                 <div className="menu">
                   <div className="item" data-value={post.get('id')} data-action="report">신고</div>
@@ -180,11 +167,8 @@ const InfiniteList = React.createClass({
 
     switch (action) {
       case 'report':
-        const { posts } = this.props;
-        const postList = posts ? posts.get('postList') : undefined;
-        const postObj = postList ? postList.get('entities'): {};
-
-        const post = postObj.getIn(['posts', value.toString()]);
+        const { PostItems } = this.props;
+        const post = PostItems.get(value.toString());
 
         console.log('포스트 신고 Id : ', value);
         const reportObj = {
@@ -219,10 +203,11 @@ const InfiniteList = React.createClass({
     "use strict";
     const self = this;
 
-    $('.ui.dropdown.report_icon')
-      .dropdown({
-        onChange: self._onSelectOptionHandler
-      });
+    // $('.ui.dropdown.report_icon')
+    //   .dropdown({
+    //     onChange: self._onSelectOptionHandler
+    //   })
+    //   .dropdown('refresh');
   },
 
   componentWillUnmount() {
@@ -233,13 +218,14 @@ const InfiniteList = React.createClass({
   createItem(id) {
     "use strict";
 
-    const {PostItems, AuthorItems, User} = this.props;
+    const {PostItems, AuthorItems, User, LoginModalFlag} = this.props;
 
     const post = PostItems.get(id.toString());
     const author = AuthorItems.get(post.get('author').toString());
+    const user = User.get('userId') ? AuthorItems.get(User.get('userId').toString()) : null;
 
     return (
-      <BestPost key={id} author={author} post={post} user={User}/>
+      <BestPost key={id} author={author} post={post} user={user} loginModalFlag={LoginModalFlag}/>
     )
   },
 
@@ -247,7 +233,7 @@ const InfiniteList = React.createClass({
     const {PostIdList, PostItems, AuthorItems, User} = this.props;
     "use strict";
 
-    const okey = PostItems.size && AuthorItems.size && User.size;
+    const okey = !!(PostItems.size && AuthorItems.size && User.size);
 
     return (
       <div className="ui items best_list">
@@ -277,7 +263,7 @@ const BestContents = React.createClass({
     $('.ui.embed').embed('refresh');
   },
 
-  createBestPagination(noMore, collection) {
+  createBestPagination(collection) {
     "use strict";
 
     if (collection && collection.get('next_page')) {
@@ -296,12 +282,9 @@ const BestContents = React.createClass({
   getMoreBest() {
     "use strict";
 
-    const {BestPostStore, GnbStore} = this.props;
-    const noMore = BestPostStore.get('noMore');
-    const collection = BestPostStore.getIn(['posts', 'collection']);
-    const currentPage = collection ? collection.get('current_page') : 1;
-    const nextPage = collection.get('next_page');
-
+    const {PaginationStore, GnbStore} = this.props;
+    const Pagination = PaginationStore.get('bestPostList');
+    const nextPage = Pagination.get('next_page');
 
     const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
     const normalize = categoryValue.map((object, key) => {
@@ -330,12 +313,8 @@ const BestContents = React.createClass({
   },
 
   render() {
-    const {BestPostStore, LoginStore, UserStore} = this.props;
-    const posts = BestPostStore.get('posts');
-    const noMore = BestPostStore.get('noMore');
-    const collection = BestPostStore.getIn(['posts', 'collection']);
-
-    const {ListStore, Posts, Users} = this.props;
+    const {ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
+    const Pagination = PaginationStore.get('bestPostList');
 
     return (
       <div id="best_contents" >
@@ -344,17 +323,12 @@ const BestContents = React.createClass({
           PostIdList={ListStore.get('bestPostList')}
           PostItems={Posts}
           AuthorItems={Users}
-          User={UserStore}
+          User={AuthStore}
+          LoginModalFlag={LoginModalStore.get('openLoginModal')}
         />
 
-        {/*        <BestList
-          LoginStore={LoginStore}
-          UserStore={UserStore}
-          posts={posts}
-        /> */}
-
         {
-          this.createBestPagination(noMore, collection)
+          this.createBestPagination(Pagination)
         }
       </div>
     )

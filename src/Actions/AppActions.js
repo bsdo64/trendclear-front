@@ -26,6 +26,7 @@ class AppActions {
       bootstrapData.Posts = normalized.entities.posts;
       bootstrapData.Users = (normalized.entities.author);
       bootstrapData.PaginationStore = {bestPostList: bestPostListPagination};
+      bootstrapData.ListStore = bootstrapData.ListStore || {};
       bootstrapData.ListStore.bestPostList = normalized.result;
     }
 
@@ -91,17 +92,20 @@ class AppActions {
       bootstrapData.Categories = (normalized.entities.categories);
       bootstrapData.CategoryGroups = (normalized.entities.categoryGroups);
       bootstrapData.Forums = (normalized.entities.forums);
+      bootstrapData.ListStore = bootstrapData.ListStore || {};
       bootstrapData.ListStore.ClubList = normalized.result;
     }
 
     if (bootstrapData.UserStore && bootstrapData.UserStore.notifications) {
       const INoti = bootstrapData.UserStore.notifications.data;
-      bootstrapData.UserStore.notifications.INoti = normalize(INoti, arrayOf(noti));
 
       const normalized = normalize(INoti, arrayOf(noti));
 
-      NotiActions.addList(normalized.entities.notis);
-      ListActions.add({NotiList: normalized.result});
+      bootstrapData.UserStore.notifications.INoti = normalized;
+
+      bootstrapData.Notis = normalized.entities.notis;
+      bootstrapData.ListStore = bootstrapData.ListStore || {};
+      bootstrapData.ListStore.NotiList = normalized.result;
     }
 
     return bootstrapData;

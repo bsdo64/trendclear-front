@@ -23,9 +23,11 @@ class PaginationStore {
   }
 
   onInit(bootstrapData) {
-    if (bootstrapData[this.displayName]) {
-      this.setMergeState(bootstrapData[this.displayName]);
+    const StoreData = bootstrapData[this.displayName];
+    if (StoreData && !(this.state.equals(Immutable.fromJS(StoreData))) ) {
+      this.setMergeState(StoreData);
     }
+
   }
 
   onAddPagination(collection) {

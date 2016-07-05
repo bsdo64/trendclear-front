@@ -5,6 +5,7 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Map} from 'immutable';
 import {Link, browserHistory} from 'react-router';
 import Paginator from '../../Paginator';
@@ -365,6 +366,7 @@ const CommentList = React.createClass({
 require('./Comment.scss');
 const CommentBox = React.createClass({
   displayName: 'CommentBox',
+  mixins: [PureRenderMixin],
 
   componentDidMount() {
     this.editor = new MediumEditor(this.refs.comment_content, {
@@ -545,6 +547,7 @@ const PostList = React.createClass({
 
 const Forum = React.createClass({
   displayName: 'Forum',
+  mixins: [PureRenderMixin],
   getInitialState() {
     return {
       text: ''
@@ -752,6 +755,8 @@ const Forum = React.createClass({
 
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
+  mixins: [PureRenderMixin],
+
 
   componentWillUnmount() {
     CommunityActions.resetData();

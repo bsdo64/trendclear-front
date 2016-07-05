@@ -26,9 +26,11 @@ class BestPostStore{
   }
 
   onInit(bootstrapData) {
-    if (bootstrapData[this.displayName]) {
-      this.setMergeState(bootstrapData[this.displayName]);
+    const StoreData = bootstrapData[this.displayName];
+    if (StoreData && !(this.state.equals(Immutable.fromJS(StoreData))) ) {
+      this.setMergeState(StoreData);
     }
+
   }
 
   onGetBestPost(response) {
