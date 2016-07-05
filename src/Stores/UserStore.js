@@ -59,10 +59,8 @@ class UserStore{
   }
 
   onUploadAvatarImage(result) {
-    if (result && result.files[0]) {
-      const file = result.files[0];
-      let state = this.state.setIn(['profile', 'avatar_img'], file.name);
-      let closeModal = state.set('openAvatarModal', false);
+    if (result.file && result.file.files[0]) {
+      let closeModal = this.state.set('openAvatarModal', false);
       this.setMergeState(closeModal);
     }
   }

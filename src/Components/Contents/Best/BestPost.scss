@@ -1,3 +1,21 @@
-#best_contents {
+.report_box {
+  .dropdown {
+    display: inline-block;
+  }
 
+  .dropdown__content {
+    display: none;
+    position: absolute;
+  }
+
+  .dropdown--active .dropdown__content {
+    display: block;
+  }
+}
+:local .Hello {
+  color: #fff;
+
+  .world {
+    color: #ddd;
+  }
 }

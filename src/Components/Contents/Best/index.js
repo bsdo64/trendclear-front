@@ -10,8 +10,64 @@ import LoginActions from '../../../Actions/LoginActions';
 import CommunityActions from '../../../Actions/CommunityActions';
 import ReportActions from '../../../Actions/ReportActions';
 
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+
+import style from './BestPost.scss';
+const Menu = (props) => {
+  "use strict";
+
+  function toggleModal (e) {
+    "use strict";
+
+    const action = e.target.dataset.action;
+    const targetId = e.target.dataset.value;
+
+    switch (action) {
+      case 'report':
+        console.log('포스트 신고 Id : ', targetId);
+        const reportObj = {
+          type: 'post',
+          typeId: targetId
+        };
+        ReportActions.openReportModal(reportObj);
+        break;
+      case 'report_ad':
+
+        console.log('포스트 광고 신고 Id : ', targetId);
+        break;
+      case 'delete_post':
+
+        console.log('포스트 삭제 Id : ', targetId);
+        break;
+      default:
+        break;
+    }
+  }
+
+  return (
+    <Dropdown>
+      <DropdownTrigger>
+        <div className={"ui icon dropdown report_icon " + style.Hello}>
+          <i className="warning outline icon"></i>
+        </div>
+      </DropdownTrigger>
+      <DropdownContent>
+        <div className="ui dropdown">
+          <div className="ui menu transition visible" tabindex="-1">
+            <div className="item" data-value={props.postId} data-action="report" onClick={toggleModal}>신고</div>
+            {
+              props.isUser &&
+              <div className="item " data-value={props.postId} data-action="delete_post" onClick={toggleModal}>삭제하기</div>
+            }
+          </div>
+        </div>
+      </DropdownContent>
+    </Dropdown>
+  )
+};
+
 const BestPost = React.createClass({
-  mixins: [PureRenderMixin],
+  //mixins: [PureRenderMixin],
 
   sendLike() {
     "use strict";
@@ -60,10 +116,7 @@ const BestPost = React.createClass({
     const liked = post.get('liked');
 
     return (
-      <div key={post.get('id')} className={"ui item best_list_item"}
-           onMouseEnter={this.show}
-           onMouseLeave={this.close}
-      >
+      <div key={post.get('id')} className={"ui item best_list_item"}>
         {/* avatar */}
         <div className="ui image tiny">
           { this.createAvatarImg(sex, avatar_img) }
@@ -132,17 +185,10 @@ const BestPost = React.createClass({
               <a className="comment_count">{post.get('comment_count')}</a>
             </div>
             <div className="report_box">
-              <div className={'ui icon dropdown report_icon'}>
-                <i className="warning outline icon"></i>
-                <div className="menu">
-                  <div className="item" data-value={post.get('id')} data-action="report">신고</div>
-                  {/*<div className="item " data-value={post.get('id')} data-action="report_ad">광고 신고</div>*/}
-                  {
-                    userId && (userId === author.get('id')) &&
-                    <div className="item " data-value={post.get('id')} data-action="delete_post">삭제하기</div>
-                  }
-                </div>
-              </div>
+              <Menu
+                postId={post.get('id')}
+                isUser={userId && (userId === author.get('id'))}
+              />
             </div>
           </div>
           {/* Comments */}
@@ -158,61 +204,6 @@ const InfiniteList = React.createClass({
       PostIdList: [],
       PostItems: {}
     };
-  },
-
-  _onSelectOptionHandler(value, text, $selectedItem) {
-    "use strict";
-
-    const action = $selectedItem.data('action');
-
-    switch (action) {
-      case 'report':
-        const { PostItems } = this.props;
-        const post = PostItems.get(value.toString());
-
-        console.log('포스트 신고 Id : ', value);
-        const reportObj = {
-          type: 'post',
-          typeId: value,
-          content: post
-        };
-        ReportActions.openReportModal(reportObj);
-        break;
-      case 'report_ad':
-
-        console.log('포스트 광고 신고 Id : ', value);
-        break;
-      case 'delete_post':
-
-        console.log('포스트 삭제 Id : ', value);
-        break;
-      default:
-        break;
-    }
-  },
-  componentDidMount() {
-    const self = this;
-
-    $('.ui.dropdown.report_icon')
-      .dropdown({
-        onChange: self._onSelectOptionHandler
-      });
-  },
-
-  componentDidUpdate() {
-    "use strict";
-    const self = this;
-
-    // $('.ui.dropdown.report_icon')
-    //   .dropdown({
-    //     onChange: self._onSelectOptionHandler
-    //   })
-    //   .dropdown('refresh');
-  },
-
-  componentWillUnmount() {
-    $('.ui.dropdown.report_icon')
-      .dropdown('destroy');
   },
 
   createItem(id) {

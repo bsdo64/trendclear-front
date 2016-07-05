@@ -51,8 +51,8 @@ class UserActions {
           return Api
             .setType('/ajax')
             .post('/user/avatarImg', {file: res.files[0]})
-            .then(() => {
-              return res
+            .then((res2) => {
+              return {file: res, user: res2}
             })
         })
         .then((res) => {

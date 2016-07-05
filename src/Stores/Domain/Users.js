@@ -50,6 +50,14 @@ class Users {
       this.setState(this.state.merge(normalizedPosts.entities.author));
     }
   }
+
+  onUploadAvatarImage(result) {
+    if (result.file && result.file.files[0] && result.user.user.id) {
+      const file = result.file.files[0];
+      let state = this.state.updateIn([result.user.user.id.toString(), 'profile', 'avatar_img'], f => file.name);
+      this.setMergeState(state);
+    }
+  }
 }
 
 export default alt.createStore(immutable(Users), Users.name);

@@ -110,6 +110,7 @@ class AppActions {
 
     return bootstrapData;
   }
+  
   openSideCategory(clubId) {
     return clubId;
   }

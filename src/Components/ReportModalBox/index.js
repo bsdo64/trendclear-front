@@ -25,12 +25,12 @@ const ReportModalBox = React.createClass({
     ReportActions.closeReportModal();
   },
   render() {
-    const { LoginStore, ReportStore } = this.props;
+    const { LoginStore, ReportStore, Posts } = this.props;
     const loginFail = LoginStore.get('loginFail');
     const openReportModal = ReportStore.get('openReportModal');
     const loginSuccess = LoginStore.get('loginSuccess');
 
-    const content = ReportStore.get('content') ? ReportStore.get('content') : null;
+    const content = ReportStore.get('typeId') ? Posts.get(ReportStore.get('typeId').toString()) : null;
 
     if (openReportModal) {
       // For animation
