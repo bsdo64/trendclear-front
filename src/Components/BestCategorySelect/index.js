@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
-import _ from 'lodash';
+import {map} from 'lodash';
 import GnbActions from '../../Actions/GnbActions';
 
 require('./index.scss');
@@ -46,7 +46,7 @@ const Temp = React.createClass({
     const categoryGroups = INCat ? INCat.getIn(['entities', 'categoryGroups']).toJS(): {};
     const categories = INCat ? INCat.getIn(['entities', 'categories']).toJS(): {};
 
-    const categoriesMap = _.map(categories, (value, key) => {
+    const categoriesMap = map(categories, (value, key) => {
       return {value: key, label: value.title};
     });
 

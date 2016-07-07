@@ -12,7 +12,6 @@ import ReportActions from '../../../Actions/ReportActions';
 
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 
-import style from './BestPost.scss';
 const Menu = (props) => {
   "use strict";
 
@@ -47,13 +46,13 @@ const Menu = (props) => {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <div className={"ui icon dropdown report_icon " + style.Hello}>
+        <div className={"ui icon dropdown report_icon "}>
           <i className="warning outline icon"></i>
         </div>
       </DropdownTrigger>
       <DropdownContent>
         <div className="ui dropdown">
-          <div className="ui menu transition visible" tabindex="-1">
+          <div className="ui menu transition visible" tabIndex="-1">
             <div className="item" data-value={props.postId} data-action="report" onClick={toggleModal}>신고</div>
             {
               props.isUser &&

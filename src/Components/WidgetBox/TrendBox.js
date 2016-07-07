@@ -14,7 +14,6 @@ const Timer = React.createClass({
   tick: function() {
     const type = this.props.type || 'default';
 
-    console.log(this[type])
     this.setState({init: this.state.init - 1});
   },
   componentDidMount: function() {
@@ -28,7 +27,6 @@ const Timer = React.createClass({
     }
   },
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps :', nextProps);
     const self = this;
     const type = nextProps.type || 'default';
 

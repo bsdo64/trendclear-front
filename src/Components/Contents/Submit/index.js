@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Select from 'react-select';
-import _ from 'lodash';
+import {mapKeys} from 'lodash';
 
 import {medium, mediumInsertConfig} from './config';
 import PostActions from '../../../Actions/PostActions';
@@ -133,7 +133,7 @@ const SubmitContents = React.createClass({
       prefixes = prefixesData.toJS();
     }
     let options = prefixes.map(function (item) {
-      return _.mapKeys(item, function (value, key) {
+      return mapKeys(item, function (value, key) {
         return key==='id' ? 'value' : (key==='name' ? 'label' : key)
       })
     });
