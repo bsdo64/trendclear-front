@@ -7,8 +7,8 @@ import SettingActions from '../Actions/SettingActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class SettingStore{
+  static displayName = 'SettingStore';
   constructor() {
-    this.displayName = 'SettingStore';
 
     this.bindActions(AppActions);
     this.bindActions(UserActions);
@@ -59,4 +59,4 @@ class SettingStore{
   }
 }
 
-export default alt.createStore(immutable(SettingStore), SettingStore.name);
+export default alt.createStore(immutable(SettingStore), SettingStore.displayName);

@@ -6,6 +6,7 @@ import CommunityActions from '../../Actions/CommunityActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 class Prefixes {
+  static displayName = 'Prefixes';
   constructor() {
     this.displayName = 'Prefixes';
 
@@ -20,7 +21,9 @@ class Prefixes {
   }
 
   onInit(bootstrapData) {
-
+    if (bootstrapData[this.displayName]) {
+      this.setMergeState(bootstrapData[this.displayName]);
+    }
   }
 
   onAddPrefixes(prefixes) {
@@ -28,4 +31,4 @@ class Prefixes {
   }
 }
 
-export default alt.createStore(immutable(Prefixes), Prefixes.name);
+export default alt.createStore(immutable(Prefixes), Prefixes.displayName);

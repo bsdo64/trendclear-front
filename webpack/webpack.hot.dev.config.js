@@ -6,7 +6,7 @@ var root = path.resolve(__dirname, '../');
 var autoprefixer = require('autoprefixer');
 
 module.exports = {
-  devtool: 'cheap-source-map',
+  devtool: 'cheap',
   debug: true,
   entry: {
     Entry: [
@@ -21,7 +21,11 @@ module.exports = {
     publicPath: "http://localhost:2992/_assets/"
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      __DEV__: JSON.stringify((process.env.NODE_ENV === 'development').toString() || 'true'),
+      __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
+    })
   ],
   module: {
     loaders: [{

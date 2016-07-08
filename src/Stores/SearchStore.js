@@ -6,8 +6,8 @@ import SearchActions from '../Actions/SearchActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class SearchStore{
+  static displayName = 'SearchStore';
   constructor() {
-    this.displayName = 'SearchStore';
 
     this.bindActions(AppActions);
     this.bindActions(SearchActions);
@@ -36,4 +36,4 @@ class SearchStore{
   }
 }
 
-export default alt.createStore(immutable(SearchStore), SearchStore.name);
+export default alt.createStore(immutable(SearchStore), SearchStore.displayName);

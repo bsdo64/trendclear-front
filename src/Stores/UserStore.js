@@ -13,8 +13,9 @@ import CommunityStore from './CommunityStore';
 import { initListener, setMergeState, locationHref } from './Helper/func';
 
 class UserStore{
+  static displayName = 'UserStore';
+  
   constructor() {
-    this.displayName = 'UserStore';
 
     this.bindActions(AppActions);
     this.bindActions(UserActions);
@@ -129,4 +130,4 @@ class UserStore{
   }
 }
 
-export default alt.createStore(immutable(UserStore), UserStore.name);
+export default alt.createStore(immutable(UserStore), UserStore.displayName);

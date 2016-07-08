@@ -13,6 +13,7 @@ import LoginActions from '../../../Actions/LoginActions';
 import CommentActions from '../../../Actions/CommentActions';
 import CommunityActions from '../../../Actions/CommunityActions';
 import Post from './Post';
+import BestPost from '../Best/BestPost';
 
 function checkSkillAvailable(skill) {
   "use strict";
@@ -556,7 +557,7 @@ const Forum = React.createClass({
   onChange(e) {
     this.setState({text: e.target.value});
   },
-  handleSubmit(e) {
+  handleForumSearch(e) {
     e.preventDefault();
 
     console.log('search : ', this.state.text);
@@ -612,151 +613,170 @@ const Forum = React.createClass({
   openLoginModal() {
     "use strict";
 
-    const modalFlag = this.props.LoginStore.get('openLoginModal');
+    const modalFlag = this.props.LoginModalStore.get('openLoginModal');
     const location = this.props.location;
     LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
   },
-  render() {
+
+  createPrefixItem(Prefixes, prefixId) {
     "use strict";
-    const user = this.props.UserStore.get('user');
-    const isLogin = this.props.LoginStore.get('isLogin');
 
-    const forum = this.props.CommunityStore.get('forum');
-    const title = forum.get('title');
-    const description = forum.get('description');
-    const url = forum.get('url');
-
-    const list = this.props.CommunityStore.get('list');
-    const page = list.get('page');
-    const limit = list.get('limit');
-    const total = list.get('total');
-
-    const data = list.getIn(['postList', 'result']);
-    const entitiy = list.getIn(['postList', 'entities']);
-
-    const { query } = this.props.location;
-    const {categoryId, forumId, postId: postIdNow} = query;
-
-    const defaultPageUrl = '/community' + this.props.location.search;
-
-    function createPrefixItem(prefixId, index) {
-      const prefixList = forum.getIn(['prefixList', 'entities', 'prefixes']);
-      const prefix = prefixList.get(prefixId.toString());
+    const prefix = Prefixes.get(prefixId.toString());
+    if (prefix) {
       const postCount = prefix.get('count') ? prefix.get('count') : 0;
 
       return (
-        <div className="item" key={index}>
+        <div className="item" key={prefixId}>
           <div className="middle aligned content" onClick={this.handleSubmitPrefix.bind(this, prefixId)}>
             {prefix.get('name') + " (" + postCount + ")"}
           </div>
         </div>
       )
     }
-    return (
-      <div id="forum_contents">
-        <h3 className="ui header">
-          {title}
-          <div className="sub header">{description}</div>
-        </h3>
-        <div className="ui horizontal celled list">
-          <div className="item" style={{fontWeight: 'bold'}}>
-            <div className="middle aligned content bold" onClick={this.resetPrefix}>전체</div>
+  },
+  createPostItem(page, location, postId) {
+    "use strict";
+
+    const {Posts, Users} = this.props;
+
+    const { query } = location;
+    const {categoryId, postId: postIdNow} = query;
+    const defaultPageUrl = '/community' + location.search;
+
+    let item = Posts.get(postId.toString());
+    if (item) {
+      let author = Users.get(item.get('author').toString());
+      if (author) {
+        return (
+          <PostList
+            key={postId}
+            author={author}
+            item={item} defaultPageUrl={defaultPageUrl}
+            postIdNow={parseInt(postIdNow, 10)} page={page} />
+        );
+      }
+    }
+  },
+  render() {
+    "use strict";
+
+    const {Forums, Prefixes, AuthStore, ListStore, PaginationStore} = this.props;
+
+    const userId = AuthStore.get('userId');
+    const isLogin = AuthStore.get('isLogin');
+
+    const forumId = ListStore.get('forum');
+    const postIds = ListStore.get('forumPostList');
+    const pagination = PaginationStore.get('forumPostList');
+
+    if (forumId && postIds && pagination) {
+      const forum = Forums.get(forumId.toString());
+      const title = forum.get('title');
+      const description = forum.get('description');
+      const url = forum.get('url');
+
+      const page = pagination.get('current_page');
+      const limit = pagination.get('limit');
+      const total = pagination.get('total');
+
+      const categoryId = forum.get('category_id');
+
+      return (
+        <div id="forum_contents">
+          <h3 className="ui header">
+            {title}
+            <div className="sub header">{description}</div>
+          </h3>
+          <div className="ui horizontal celled list">
+            <div className="item" style={{fontWeight: 'bold'}}>
+              <div className="middle aligned content bold" onClick={this.resetPrefix}>전체</div>
+            </div>
+            {
+              forum.get('prefixes') &&
+              forum.get('prefixes').map(this.createPrefixItem.bind(this, Prefixes))
+            }
           </div>
-          {
-            forum.get('prefixList') &&
-            forum.getIn(['prefixList', 'result']).map(createPrefixItem.bind(this))
-          }
-        </div>
-        <table className="ui table very compact" >
-          <thead>
-          <tr>
-            <th className="center aligned collapsing">말머리</th>
-            <th className="center aligned collapsing">좋아요</th>
-            <th className="center aligned collapsing">조회</th>
-            <th className="center aligned">제목</th>
-            <th className="center aligned collapsing">글쓴이</th>
-            <th className="center aligned collapsing">등록일</th>
-          </tr>
-          </thead>
-          <tbody>
+          <table className="ui table very compact" >
+            <thead>
+            <tr>
+              <th className="center aligned collapsing">말머리</th>
+              <th className="center aligned collapsing">좋아요</th>
+              <th className="center aligned collapsing">조회</th>
+              <th className="center aligned">제목</th>
+              <th className="center aligned collapsing">글쓴이</th>
+              <th className="center aligned collapsing">등록일</th>
+            </tr>
+            </thead>
+            <tbody>
 
-          {
-            data &&
-            data.map(function (postId) {
-              let item = entitiy.getIn(['posts', postId.toString()]);
-              let author = entitiy.getIn(['author', item.get('author').toString()]);
-              return (
-                <PostList
-                  key={postId}
-                  author={author}
-                  item={item} defaultPageUrl={defaultPageUrl}
-                  postIdNow={parseInt(postIdNow, 10)} page={page} />
-              );
-            })
-          }
+            {
+              postIds.map(this.createPostItem.bind(this, page, this.props.location))
+            }
 
-          </tbody>
-        </table>
+            </tbody>
+          </table>
 
 
-        <div className="ui right aligned container">
-          {
-            user && isLogin &&
-            <Link
-              className="ui button primary tiny"
-              to={{pathname: '/community/submit', query: {categoryId: categoryId, forumId: forumId}}}>
-              글쓰기
-            </Link>
-          }
-          {
-            !user && !isLogin &&
-            <a
-              className="ui button primary tiny"
-              onClick={this.openLoginModal}>
-              글쓰기
-            </a>
-          }
-        </div>
+          <div className="ui right aligned container">
+            {
+              userId && isLogin &&
+              <Link
+                className="ui button primary tiny"
+                to={{pathname: '/community/submit', query: {categoryId: categoryId, forumId: forumId}}}>
+                글쓰기
+              </Link>
+            }
+            {
+              !userId && !isLogin &&
+              <a
+                className="ui button primary tiny"
+                onClick={this.openLoginModal}>
+                글쓰기
+              </a>
+            }
+          </div>
 
-        <div className="ui divider"></div>
+          <div className="ui divider"></div>
 
-        <div className="ui center aligned container">
+          <div className="ui center aligned container">
 
-          { (total > 0) &&
+            { (total > 0) &&
             <Paginator
               total={total}
               limit={limit}
               page={page}
               handleSetPage={this.handleSetPage}
             />
-          }
+            }
 
-          <div className="ui search mini" style={{padding: '15px'}}>
-            <div className="ui icon input">
-              <form onSubmit={this.handleSubmit}>
-                <input className="prompt"
-                       type="text"
-                       placeholder="게시글 검색..."
-                       onChange={this.onChange}
-                       value={this.state.text}
-                />
-              </form>
-              <i className="search icon"></i>
+            <div className="ui search mini" style={{padding: '15px'}}>
+              <div className="ui icon input">
+                <form onSubmit={this.handleForumSearch}>
+                  <input className="prompt"
+                         type="text"
+                         placeholder="게시글 검색..."
+                         onChange={this.onChange}
+                         value={this.state.text}
+                  />
+                </form>
+                <i className="search icon"></i>
+              </div>
+              <div className="results"></div>
             </div>
-            <div className="results"></div>
           </div>
+
+
         </div>
-
-
-      </div>
-    );
+      );
+    } else {
+      return <div></div>
+    }
   }
 });
 
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
   mixins: [PureRenderMixin],
-
 
   componentWillUnmount() {
     CommunityActions.resetData();
@@ -773,34 +793,51 @@ const CommunityContents = React.createClass({
         />
       )
     } else if (type === 'post') {
-      const {LoginStore, UserStore} = this.props;
-      const post = this.props.CommunityStore.getIn(['post', 'IPost']);
+      const {Users, Posts, ListStore, AuthStore, LoginModalStore, LoginStore, UserStore} = this.props;
 
-      return (
-        <div id="post_box" className="ui items">
+      const postId = ListStore.get('IPost');
+      if (postId) {
+        const post = Posts.get(postId.toString());
 
-          {
-            post &&
-            <Post 
-              post={post}
-              LoginStore={LoginStore}
-              UserStore={UserStore}
-              styleClass="post_item"/>
-          }
+        if (post) {
+          const author = Users.get(post.get('author').toString());
+          const user = AuthStore.get('userId') ? Users.get(AuthStore.get('userId').toString()) : null;
+          const LoginModalFlag = LoginModalStore.get('openLoginModal');
 
-          {
-            post &&
-            <CommentBox
-              {...this.props}
-              IPost={post}
-            />
-          }
+          return (
+            <div id="post_box" className="ui items">
 
-          <Forum
-            {...this.props}
-          />
-        </div>
-      )
+              {
+                post &&
+                <BestPost 
+                  author={author} 
+                  post={post} 
+                  user={user} 
+                  loginModalFlag={LoginModalFlag}
+                  postStyle="post_item"
+                />
+              }
+
+              {
+/*
+                post &&
+                <CommentBox
+                  {...this.props}
+                  IPost={post}
+                />
+*/
+              }
+
+              <Forum
+                {...this.props}
+              />
+            </div>
+          )
+        }
+      } else {
+        return <div></div>
+      }
+
 
     } else {
       return (

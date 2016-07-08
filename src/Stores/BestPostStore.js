@@ -11,6 +11,8 @@ import CommunityStore from './CommunityStore';
 import GnbStore from './GnbStore';
 
 class BestPostStore{
+  static displayName = 'BestPostStore';
+  
   constructor() {
     this.displayName = 'BestPostStore';
 
@@ -34,8 +36,8 @@ class BestPostStore{
   }
 
   onGetBestPost(response) {
-    const normalizedPosts = response.results;
-    const total = response.total;
+    const normalizedPosts = response.data;
+    const total = response.collection.total;
 
     const oldResult = this.state.getIn(['posts', 'postList', 'result']);
     const newResult = oldResult.concat(normalizedPosts.result);
@@ -55,7 +57,6 @@ class BestPostStore{
       })
     });
     this.setState(updateCollection);
-
   }
 
   onResetBestPage() {
@@ -138,4 +139,4 @@ class BestPostStore{
   }
 }
 
-export default alt.createStore(immutable(BestPostStore), BestPostStore.name);
+export default alt.createStore(immutable(BestPostStore), BestPostStore.displayName);

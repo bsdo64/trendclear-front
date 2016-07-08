@@ -2,15 +2,13 @@ import Alt from 'alt';
 
 const alt = new Alt({});
 
-// Debug
-Alt.debug('alt', alt);
+if (__DEV__) {
+  // Debug
+  Alt.debug('alt', alt);
 
-alt.dispatcher.register((state) => {
-  if (!process.env.NODE) {
-
-    /* Debug - Action Logs */
+  alt.dispatcher.register((state) => {
     console.log('%cAction : ' + state.action, "color: #3769AC; font-weight: bold;");
-  }
-});
+  });
+}
 
 export default alt;

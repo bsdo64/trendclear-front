@@ -6,6 +6,7 @@ import NotiActions from '../../Actions/NotiActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 class Notis {
+  static displayName = 'Notis';
   constructor() {
     this.displayName = 'Notis';
 
@@ -28,4 +29,4 @@ class Notis {
   }
 }
 
-export default alt.createStore(immutable(Notis), Notis.name);
+export default alt.createStore(immutable(Notis), Notis.displayName);

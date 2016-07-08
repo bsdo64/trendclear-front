@@ -6,6 +6,7 @@ import CommentActions from '../../Actions/CommentActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 class Comments {
+  static displayName = 'Comments';
   constructor() {
     this.displayName = 'Comments';
 
@@ -28,4 +29,4 @@ class Comments {
   }
 }
 
-export default alt.createStore(immutable(Comments), Comments.name);
+export default alt.createStore(immutable(Comments), Comments.displayName);

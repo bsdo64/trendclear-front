@@ -10,6 +10,8 @@ import { initListener, setMergeState } from './Helper/func';
 import {browserHistory} from 'react-router';
 
 class CommunityStore{
+  static displayName = 'CommunityStore';
+  
   constructor() {
     this.displayName = 'CommunityStore';
 
@@ -136,4 +138,4 @@ class CommunityStore{
   }
 }
 
-export default alt.createStore(immutable(CommunityStore), CommunityStore.name);
+export default alt.createStore(immutable(CommunityStore), CommunityStore.displayName);

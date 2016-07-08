@@ -1,321 +1,162 @@
 import React from 'react';
-import Promise from 'bluebird';
-import ReactDOM from 'react-dom';
+import {render} from 'react-dom';
+import {browserHistory} from 'react-router';
+
 import alt from '../Utils/alt';
-import { IndexRedirect, Router, Link, IndexRoute, Route, browserHistory } from 'react-router';
 import Api from '../Utils/ApiClient';
 
-import AppActions from '../Actions/AppActions';
+import assign from 'deep-assign';
+import {normalize, arrayOf} from 'normalizr';
+import {club, post, noti, forum} from '../Model/normalizr/schema';
 
-var LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
-var LeftColCategoryMenu = require('../Container/LeftCol/CategoryMenu.js');
-var BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
-var AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
-var SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
+import Router from './Routes';
 
-var HeaderMyMenu = require('../Container/Header/MyMenu');
-var HeaderSearch = require('../Container/Header/Search');
-var LoginModalContainer = require('../Container/Modal/LoginModalContainer');
-var ReportModalContainer = require('../Container/Modal/ReportModalContainer');
-var WidgetContainer = require('../Container/RightCol/WidgetContainer');
-
-var ContentsContainer = require('../Container/Contents/Best');
-var SigninContainer = require('../Container/Contents/Signin');
-var CommunityContainer = require('../Container/Contents/Community');
-var SubmitContainer = require('../Container/Contents/SubmitPost');
-var SubmitForumContainer = require('../Container/Contents/SubmitForum');
-var SubmitForumPrefixContainer = require('../Container/Contents/SubmitForumPrefix');
-var SearchContainer = require('../Container/Contents/Search');
-var SettingContainer = require('../Container/Contents/Setting');
-var ActivityContainer = require('../Container/Contents/Activity');
-
-// Bootstrap Location
-var loc = browserHistory.createLocation(location);
-
-Api
-  .setType('/ajax')
-  .get('/store' + loc.pathname, loc.query)
-  .then(function (resBody, errBody) {
+new Promise((resolve, reject) => {
+  browserHistory.listen((location) => {
     "use strict";
+    // 1. location에 따라 모든 Store 데이터를 가져온다
+    // 2. 가져온 데이터를 각 Store에 삽입한다
 
-    alt.bootstrap(JSON.stringify(resBody));
+    Api
+      .setType('/ajax')
+      .get('/store' + location.pathname, location.query)
+      .then(function (resBody, errBody) {
+        "use strict";
 
+        if (resBody.BestPostStore && resBody.BestPostStore.posts) {
+          const bestPostList = resBody.BestPostStore.posts.data;
+          const bestPostListPagination = resBody.BestPostStore.posts.collection;
+
+          const normalized = normalize(bestPostList, arrayOf(post));
+
+          assign(resBody, {
+            // Temp
+            BestPostStore: {posts: {postList: normalized}},
+
+            Posts: normalized.entities.posts,
+            Users: normalized.entities.author,
+            ListStore: {bestPostList: normalized.result},
+            PaginationStore: {bestPostList: bestPostListPagination}
+          });
+        }
+
+        if (resBody.SearchStore && resBody.SearchStore.search) {
+          const searchPostList = resBody.SearchStore.search.posts.results;
+          const searchPostListPagination = resBody.SearchStore.search.collection;
+
+          const normalized = normalize(searchPostList, arrayOf(post));
+
+          assign(resBody, {
+            // Temp
+            SearchStore: {search: {postList: normalized}},
+
+            Posts: normalized.entities.posts,
+            Users: normalized.entities.author,
+            ListStore: {searchPostList: normalized.result},
+            PaginationStore: {searchPostList: searchPostListPagination}
+          });
+        }
+
+        if (resBody.CommunityStore && resBody.CommunityStore.list) {
+          const forumPostList = resBody.CommunityStore.list.data;
+          const forumPostListPagination = resBody.CommunityStore.list.collection;
+
+          const normalized = normalize(forumPostList, arrayOf(post));
+
+          resBody.CommunityStore.list.postList = normalized;
+
+          assign(resBody, {
+            // Temp
+            BestPostStore: {posts: {postList: normalized}},
+
+            Posts: normalized.entities.posts,
+            Users: normalized.entities.author,
+            Comments: normalized.entities.comments,
+            SubComments: normalized.entities.subComments,
+            ListStore: {forumPostList: normalized.result},
+            PaginationStore: {forumPostList: forumPostListPagination}
+          });
+        }
+
+        if (resBody.CommunityStore && resBody.CommunityStore.forum) {
+          const forumData = resBody.CommunityStore.forum;
+
+          const normalized = normalize(forumData, forum);
+
+          resBody.CommunityStore.forum.IForum = normalized;
+
+          assign(resBody, {
+            Prefixes: normalized.entities.prefixes,
+            Forums: normalized.entities.forums,
+            ListStore: {
+              prefixList: normalized.entities.forums[normalized.result].prefixes,
+              forum: normalized.result
+            }
+          });
+        }
+
+        if (resBody.CommunityStore && resBody.CommunityStore.post) {
+          const IPost = resBody.CommunityStore.post;
+
+          const normalized = normalize(IPost, post);
+
+          resBody.CommunityStore.post.IPost = normalized;
+
+          assign(resBody, {
+            Prefixes: normalized.entities.prefixes,
+            Forums: normalized.entities.forums,
+            Posts: normalized.entities.posts,
+            Users: normalized.entities.author,
+            Comments: normalized.entities.comments,
+            SubComments: normalized.entities.subComments,
+
+            ListStore: {
+              IPost: normalized.result
+            }
+          });
+        }
+
+        if (resBody.GnbStore && resBody.GnbStore.gnbMenu) {
+          const INCat = resBody.GnbStore.gnbMenu.data;
+
+          const normalized = normalize(INCat, arrayOf(club));
+
+          resBody.GnbStore.gnbMenu.INCat = normalized;
+
+          assign(resBody, {
+            Clubs: normalized.entities.clubs,
+            Categories: normalized.entities.categories,
+            CategoryGroups: normalized.entities.categoryGroups,
+            Forums: normalized.entities.forums,
+            ListStore: {ClubList: normalized.result}
+          });
+        }
+
+        if (resBody.UserStore && resBody.UserStore.notifications) {
+          const INoti = resBody.UserStore.notifications.data;
+
+          const normalized = normalize(INoti, arrayOf(noti));
+
+          resBody.UserStore.notifications.INoti = normalized;
+
+          assign(resBody, {
+            Notis: normalized.entities.notis,
+            ListStore: {NotiList: normalized.result}
+          });
+        }
+
+        console.info('Bootstrap Data : ', resBody);
+
+        alt.bootstrap(JSON.stringify(resBody));
+
+        resolve();
+      })
   })
-  .then(function () {
-    "use strict";
+})
+.then(function () {
+  "use strict";
 
-    ReactDOM.render((
-      <Router history={browserHistory}>
-        <Route path="/" component={App}>
-          <IndexRoute
-            components={{
-          HeaderMyMenu: HeaderMyMenu,
-          HeaderSearch: HeaderSearch,
-          LeftColGnb: LeftColGlobalCategoryNav,
-          LeftColMenu: BestCategoryMenu,
-          LoginModalContainer: LoginModalContainer,
-          WidgetContainer: WidgetContainer,
-          ReportModalContainer: ReportModalContainer,
-          ContentsContainer: ContentsContainer
-        }} />
-        </Route>
-
-        <Route path="/signin" component={App}>
-          <IndexRoute
-            components={{
-          HeaderMyMenu: HeaderMyMenu,
-          HeaderSearch: HeaderSearch,
-          LeftColGnb: LeftColGlobalCategoryNav,
-          LeftColMenu: LeftColCategoryMenu,
-          LoginModalContainer: LoginModalContainer,
-          WidgetContainer: WidgetContainer,
-          ReportModalContainer: ReportModalContainer,
-          ContentsContainer: SigninContainer
-        }} />
-        </Route>
-
-        <Route path="/community" component={App}>
-          <IndexRoute
-            components={{
-          HeaderMyMenu: HeaderMyMenu,
-          HeaderSearch: HeaderSearch,
-          LeftColGnb: LeftColGlobalCategoryNav,
-          LeftColMenu: LeftColCategoryMenu,
-          LoginModalContainer: LoginModalContainer,
-          WidgetContainer: WidgetContainer,
-          ReportModalContainer: ReportModalContainer,
-          ContentsContainer: CommunityContainer
-        }} />
-
-          <Route path="submit"
-                 components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  ContentsContainer: SubmitContainer
-                 }}
-          />
-
-          <Route path="submit/forum"
-                 components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: SubmitCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  ContentsContainer: SubmitForumContainer
-                 }}
-          />
-
-          <Route path="submit/forum/prefix"
-                 components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: SubmitCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  ContentsContainer: SubmitForumPrefixContainer
-                 }}
-          />
-        </Route>
-
-        <Route path="/search" component={App}>
-          <IndexRoute
-            components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: LeftColCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ContentsContainer: SearchContainer
-                 }}
-          />
-        </Route>
-
-        <Route path="/activity" component={App}>
-          <IndexRoute
-            components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: AccountCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ContentsContainer: ActivityContainer
-                 }}
-          />
-
-          <Route path="likes"
-                 components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: AccountCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ContentsContainer: ActivityContainer
-                 }}
-          />
-
-          <Route path="posts"
-                 components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: AccountCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ContentsContainer: ActivityContainer
-                 }}
-          />
-
-          <Route path="comments"
-                 components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: AccountCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ContentsContainer: ActivityContainer
-                 }}
-          />
-
-        </Route>
-
-        <Route path="/setting" component={App}>
-          <IndexRoute
-            components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: AccountCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ContentsContainer: SettingContainer
-                 }}
-          />
-
-          <Route path="password"
-                 components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: AccountCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ContentsContainer: SettingContainer
-                 }}
-          />
-
-          <Route path="profile"
-                 components={{
-                  HeaderMyMenu: HeaderMyMenu,
-                  HeaderSearch: HeaderSearch,
-                  LeftColGnb: LeftColGlobalCategoryNav,
-                  LeftColMenu: AccountCategoryMenu,
-                  LoginModalContainer: LoginModalContainer,
-                  ReportModalContainer: ReportModalContainer,
-                  WidgetContainer: WidgetContainer,
-                  ContentsContainer: SettingContainer
-                 }}
-          />
-        </Route>
-
-        <Route path="*" component={App}>
-          <IndexRedirect to="/" />
-        </Route>
-      </Router>
-    ), document.getElementById('app'));
-  })
-  .then(function() {
-    "use strict";
-
-    browserHistory.listen((location) => {
-      "use strict";
-      // 1. location에 따라 모든 Store 데이터를 가져온다
-      // 2. 가져온 데이터를 각 Store에 삽입한다
-      // 3.
-      Api
-        .setType('/ajax')
-        .get('/store' + location.pathname, location.query)
-        .then(function (resBody, errBody) {
-          "use strict";
-
-          console.info('Move: ',location);
-          console.info('data: ',resBody);
-
-          AppActions.init(resBody)
-        })
-    });
-  });
-
-var App = React.createClass({
-  render() {
-    return (
-      <div>
-        <div id="wrap">
-          <div id="header">
-            <div className="head_contents">
-              <div className="top_area">
-                <div className="top_contents">
-                  <div id="top_logo">
-                    <Link className="ui header inverted huge" to="/">
-                      <img src="/images/Venacle.png" />
-                    </Link>
-                  </div>
-                  <div id="top_search">
-                    { this.props.HeaderSearch }
-                  </div>
-                  <div id="top_my_area">
-                    { this.props.HeaderMyMenu }
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="container">
-            <div id="left_col">
-              <div id="category_menu">
-                { this.props.LeftColGnb }
-              </div>
-              <div id="category">
-                { this.props.LeftColMenu }
-              </div>
-            </div>
-            <div id="section">
-              <div id="contents">
-                { this.props.ContentsContainer }
-              </div>
-              <div id="right_col">
-                { this.props.WidgetContainer }
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="modal">
-          { this.props.LoginModalContainer }
-          { this.props.ReportModalContainer }
-        </div>
-      </div>
-    )
-  }
+  render(Router(), document.getElementById('app'));
 });
 
 require('./socketSubscribe');

@@ -6,6 +6,7 @@ import GnbActions from '../../Actions/GnbActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 class Categorygroups {
+  static displayName = 'CategoryGroups';
   constructor() {
     this.displayName = 'Categorygroups';
 
@@ -28,4 +29,4 @@ class Categorygroups {
   }
 }
 
-export default alt.createStore(immutable(Categorygroups), Categorygroups.name);
+export default alt.createStore(immutable(Categorygroups), Categorygroups.displayName);

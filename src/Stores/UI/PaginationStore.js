@@ -2,17 +2,21 @@ import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../../Actions/AppActions';
+import PostActions from '../../Actions/PostActions';
 import PaginationActions from '../../Actions/PaginationActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
-import {normalize, arrayOf} from 'normalizr';
-import {club, post, prefix, comment, noti} from '../../Model/normalizr/schema';
+import Users from '../Domain/Users';
+import Posts from '../Domain/Posts';
+import ListStore from './ListStore';
 
 class PaginationStore {
+  static displayName = 'PaginationStore';
   constructor() {
     this.displayName = 'PaginationStore';
 
     this.bindActions(AppActions);
+    this.bindActions(PostActions);
     this.bindActions(PaginationActions);
     this.state = Immutable.Map({
 
@@ -33,6 +37,13 @@ class PaginationStore {
   onAddPagination(collection) {
     this.setMergeState(collection);
   }
+
+  onGetBestPost(response) {
+    this.waitFor(Users, Posts, ListStore);
+
+    this.setMergeState({bestPostList: response.collection});
+  }
+
 }
 
-export default alt.createStore(immutable(PaginationStore), PaginationStore.name);
+export default alt.createStore(immutable(PaginationStore), PaginationStore.displayName);

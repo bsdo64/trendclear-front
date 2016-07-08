@@ -6,6 +6,7 @@ import SubCommentActions from '../../Actions/SubCommentActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 class SubComments {
+  static displayName = 'SubComments';
   constructor() {
     this.displayName = 'SubComments';
 
@@ -28,4 +29,4 @@ class SubComments {
   }
 }
 
-export default alt.createStore(immutable(SubComments), SubComments.name);
+export default alt.createStore(immutable(SubComments), SubComments.displayName);

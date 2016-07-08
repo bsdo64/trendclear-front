@@ -10,6 +10,7 @@ import { initListener, setMergeState, locationHref } from '../Helper/func';
 import GnbStore from '../../Stores/GnbStore';
 
 class Posts {
+  static displayName = 'Posts';
   constructor() {
     this.displayName = 'Posts';
 
@@ -46,8 +47,7 @@ class Posts {
   }
 
   onGetBestPost(response) {
-    const normalizedPosts = response.results;
-    const total = response.total;
+    const normalizedPosts = response.data;
 
     const newState = this.state.merge(normalizedPosts.entities.posts);
     this.setState(newState);
@@ -67,4 +67,4 @@ class Posts {
   }
 }
 
-export default alt.createStore(immutable(Posts), Posts.name);
+export default alt.createStore(immutable(Posts), Posts.displayName);

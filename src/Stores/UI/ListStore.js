@@ -15,6 +15,7 @@ import {normalize, arrayOf} from 'normalizr';
 import {club, post, prefix, comment, noti} from '../../Model/normalizr/schema';
 
 class ListStore {
+  static displayName = 'ListStore';
   constructor() {
     this.displayName = 'ListStore';
 
@@ -44,7 +45,7 @@ class ListStore {
 
   onGetBestPost(response) {
     this.waitFor(Users, Posts);
-    const normalizedPosts = response.results;
+    const normalizedPosts = response.data;
 
     const newState = this.state.update('bestPostList', list => list.concat(normalizedPosts.result));
     this.setState(newState);
@@ -64,4 +65,4 @@ class ListStore {
   }
 }
 
-export default alt.createStore(immutable(ListStore), ListStore.name);
+export default alt.createStore(immutable(ListStore), ListStore.displayName);

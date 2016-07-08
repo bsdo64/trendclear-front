@@ -8,8 +8,8 @@ import PostActions from '../Actions/PostActions';
 import { initListener, setMergeState, locationHref } from './Helper/func';
 
 class SubmitStore{
+  static displayName = 'SubmitStore';
   constructor() {
-    this.displayName = 'SubmitStore';
 
     this.bindActions(AppActions);
     this.bindActions(UserActions);
@@ -60,4 +60,4 @@ class SubmitStore{
   }
 }
 
-export default alt.createStore(immutable(SubmitStore), SubmitStore.name);
+export default alt.createStore(immutable(SubmitStore), SubmitStore.displayName);

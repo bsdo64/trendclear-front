@@ -21,24 +21,40 @@ import Best from '../../Components/Contents/Best';
 const BestContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [LoginModalStore, AuthStore, PaginationStore, GnbStore, ListStore, Posts, Users, Categories, Clubs, CategoryGroups, Forums]
+    return [
+      // UI Stores
+      LoginModalStore,
+      AuthStore,
+      PaginationStore,
+      ListStore,
+
+      // Domain Stores
+      Posts,
+      Users,
+      Categories,
+      Clubs,
+      CategoryGroups,
+      Forums,
+
+      GnbStore
+    ]
   },
 
   getPropsFromStores() {
     return {
-      AuthStore: AuthStore.getState(),
-      PaginationStore: PaginationStore.getState(),
-      ListStore: ListStore.getState(),
-      LoginModalStore: LoginModalStore.getState(),
+      AuthStore:        AuthStore.getState(),
+      PaginationStore:  PaginationStore.getState(),
+      ListStore:        ListStore.getState(),
+      LoginModalStore:  LoginModalStore.getState(),
 
-      Clubs: Clubs.getState(),
-      Categories: Categories.getState(),
-      CategoryGroups: CategoryGroups.getState(),
-      Forums: Forums.getState(),
-      Users: Users.getState(),
-      Posts: Posts.getState(),
+      Clubs:            Clubs.getState(),
+      Categories:       Categories.getState(),
+      CategoryGroups:   CategoryGroups.getState(),
+      Forums:           Forums.getState(),
+      Users:            Users.getState(),
+      Posts:            Posts.getState(),
 
-      GnbStore: GnbStore.getState()
+      GnbStore:         GnbStore.getState()
     }
   }
 }, React.createClass({

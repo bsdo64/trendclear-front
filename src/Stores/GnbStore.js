@@ -6,6 +6,7 @@ import GnbActions from '../Actions/GnbActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class GnbStore{
+  static displayName = 'GnbStore';
   constructor() {
     this.displayName = 'GnbStore';
 
@@ -55,4 +56,4 @@ class GnbStore{
   }
 }
 
-export default alt.createStore(immutable(GnbStore), GnbStore.name);
+export default alt.createStore(immutable(GnbStore), GnbStore.displayName);

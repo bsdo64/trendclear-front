@@ -6,6 +6,7 @@ import ReportActions from '../Actions/ReportActions';
 import { initListener, setMergeState, locationHref } from './Helper/func';
 
 class ReportStore{
+  static displayName = 'ReportStore';
   constructor() {
     this.displayName = 'ReportStore';
 
@@ -31,4 +32,4 @@ class ReportStore{
   }
 }
 
-export default alt.createStore(immutable(ReportStore), ReportStore.name);
+export default alt.createStore(immutable(ReportStore), ReportStore.displayName);

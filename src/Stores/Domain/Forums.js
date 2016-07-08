@@ -6,6 +6,7 @@ import GnbActions from '../../Actions/GnbActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 class Forums {
+  static displayName = 'Forums';
   constructor() {
     this.displayName = 'Forums';
 
@@ -20,7 +21,9 @@ class Forums {
   }
 
   onInit(bootstrapData) {
-
+    if (bootstrapData[this.displayName]) {
+      this.setMergeState(bootstrapData[this.displayName]);
+    }
   }
 
   onAddForum(forums) {
@@ -28,4 +31,4 @@ class Forums {
   }
 }
 
-export default alt.createStore(immutable(Forums), Forums.name);
+export default alt.createStore(immutable(Forums), Forums.displayName);

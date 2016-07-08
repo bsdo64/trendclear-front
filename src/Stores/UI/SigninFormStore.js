@@ -33,8 +33,9 @@ const defaultProps = {
 };
 
 class SigninFormStore {
+  static displayName = 'SigninFormStore';
+  
   constructor() {
-    this.displayName = 'SigninFormStore';
 
     this.bindActions(AppActions);
     this.bindActions(SigninActions);
@@ -118,4 +119,4 @@ class SigninFormStore {
   }
 }
 
-export default alt.createStore(immutable(SigninFormStore), SigninFormStore.name);
+export default alt.createStore(immutable(SigninFormStore), SigninFormStore.displayName);

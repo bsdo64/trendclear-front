@@ -1,38 +1,26 @@
 import React from 'react';
-import {Link, browserHistory} from 'react-router';
-import CommunityActions from '../../../Actions/CommunityActions';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import {Link} from 'react-router';
+import cx from 'classnames';
+import ReactTooltip from 'react-tooltip';
+
 import LoginActions from '../../../Actions/LoginActions';
+import CommunityActions from '../../../Actions/CommunityActions';
 
-require('./BestPost.scss');
+import Menu from './ReportMenu';
+
+import './BestPost.scss';
 const BestPost = React.createClass({
-  getInitialState() {
-    return {
-      open: false
-    };
-  },
-
-  show() {
-    "use strict";
-
-    this.setState({open: true})
-  },
-
-  close() {
-    "use strict";
-
-    this.setState({open: false})
-  },
+  mixins: [PureRenderMixin],
 
   sendLike() {
     "use strict";
 
-    const {LoginStore} = this.props;
-    const modalFlag = LoginStore.get('openLoginModal');
-    const isLogin = LoginStore.get('isLogin');
-    if (!isLogin) {
-      LoginActions.toggleLoginModal(modalFlag, '/');
+    const {post, user, loginModalFlag} = this.props;
+    if (!user) {
+      LoginActions.toggleLoginModal(loginModalFlag, '/');
     } else {
-      CommunityActions.likePost(this.props.postId);
+      CommunityActions.likePost(post.get('id'));
     }
   },
 
@@ -56,36 +44,27 @@ const BestPost = React.createClass({
   },
 
   render() {
-    
-    const {postList, postId, LoginStore, UserStore, styleClass} = this.props;
-    const isLogin = LoginStore.get('isLogin');
-    let userId;
-    if (isLogin) {
-      userId = UserStore.getIn(['user', 'id'])
-    }
-    
-    const post = postList ? postList.getIn(['entities', 'posts', postId.toString()]) : null;
-    const author = postList ? postList.getIn(['entities', 'author', post.get('author').toString()]) : null;
-    const authorInfo = {
-      author: author,
-      trendbox: author.get('trendbox')
-    };
+    "use strict";
+    const {post, author, user} = this.props;
 
+    const userId = user && user.get('id');
     const sex = author.getIn(['profile', 'sex']),
-          avatar_img = author.getIn(['profile', 'avatar_img']),
-          icon_img = author.getIn(['icon', 0, 'iconDef', 'icon_img']);
+      avatar_img = author.getIn(['profile', 'avatar_img']),
+      icon_img = author.getIn(['icon', 0, 'iconDef', 'icon_img']);
 
-    const categoryId = post.getIn(['forum', 'category', 'id']);
-    const forumId = post.getIn(['forum', 'id']);
+    const categoryId = post.get('category_id');
+    const forumId = post.get('forum_id');
+    const postId = post.get('id');
     const forumUrl = `/community?categoryId=${categoryId}&forumId=${forumId}`;
     const postUrl = `/community?categoryId=${categoryId}&forumId=${forumId}&postId=${postId}`;
     const liked = post.get('liked');
 
+    const postStyle = cx('ui item best_list_item', {
+      post_item: (this.props.postStyle === 'post_item')
+    });
+
     return (
-      <div key={post.get('id')} className={"ui item " + styleClass}
-           onMouseEnter={this.show}
-           onMouseLeave={this.close}
-      >
+      <div key={post.get('id')} className={postStyle}>
         {/* avatar */}
         <div className="ui image tiny">
           { this.createAvatarImg(sex, avatar_img) }
@@ -100,6 +79,9 @@ const BestPost = React.createClass({
                 <a >{post.getIn(['forum', 'category', 'category_group', 'club', 'title'])}</a>
               </div>
               <div className="item">
+                <a >{post.getIn(['forum', 'category', 'category_group', 'title'])}</a>
+              </div>
+              <div className="item">
                 <a >{post.getIn(['forum', 'category', 'title'])}</a>
               </div>
               <div className="item">
@@ -110,12 +92,60 @@ const BestPost = React.createClass({
           <div className="meta best_post_meta">
             <div className="author_nick">
               <a data-tip
-                 data-for={'nick_' + author.get('nick')}
+                 data-for={'nick_' + author.get('nick') + '_' + post.get('id')}
                  data-offset="{'bottom': 8, 'right': 42}"
               >
                 {author.get('nick')}
               </a>
+              <ReactTooltip
+                id={'nick_' + author.get('nick') + '_' + post.get('id')}
+                place="right"
+                class="abc"
+                effect="solid"
+              >
+                <div id="trend_box" className="widget">
+                  <div id="widget_user_info">
+                    <div className="ui items">
+                      <div className="ui item">
 
+                        <a id="user_avatar_img" className="ui mini image" >
+                          { this.createAvatarImg(sex, avatar_img) }
+                        </a>
+
+                        <div className="content">
+                          <div className="user_info_header">
+                            <span className="ui description">{author.get('nick')}</span>
+                            {this.createIconImg(icon_img)}
+                          </div>
+                          <div className="description">
+
+                            <div className="item" >
+                              <span className="item_col">레벨</span>
+                              <div className="item_num">
+                                <span>{author.getIn(['trendbox', 'level'])}</span>
+                              </div>
+                            </div>
+
+                            <div className="item">
+                              <span className="item_col">명성</span>
+                              <div className="item_num">
+                                <span>{author.getIn(['trendbox', 'reputation'])}</span>
+                              </div>
+                            </div>
+
+                            <div className="item">
+                              <span className="item_col">랭크</span>
+                              <div className="item_num">
+                                <span></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ReactTooltip>
             </div>
             <div className="author_icon">
               {this.createIconImg(icon_img)}
@@ -153,24 +183,20 @@ const BestPost = React.createClass({
               </div>
               <a className="comment_count">{post.get('comment_count')}</a>
             </div>
-            <div className="report_box">
-              <div className={'ui icon dropdown report_icon ' + (this.state.open? '': 'none')}>
-                <i className="warning outline icon"></i>
-                <div className="menu">
-                  <div className="item" data-value={post.get('id')} data-action="report">신고</div>
-                  {/*<div className="item " data-value={post.get('id')} data-action="report_ad">광고 신고</div>*/}
-                  {
-                    userId && (userId === author.get('id')) &&
-                    <div className="item " data-value={post.get('id')} data-action="delete_post">삭제하기</div> 
-                  }
-                </div>
+            {
+              userId &&
+              <div className="report_box">
+                <Menu
+                  postId={post.get('id')}
+                  isUser={userId && (userId === author.get('id'))}
+                />
               </div>
-            </div>
+            }
           </div>
           {/* Comments */}
         </div>
       </div>
-    );
+    )
   }
 });
 

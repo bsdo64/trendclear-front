@@ -5,6 +5,7 @@ import AppActions from '../../Actions/AppActions';
 import { initListener, setMergeState } from '../Helper/func';
 
 class AuthStore {
+  static displayName = 'AuthStore';
   constructor() {
     this.displayName = 'AuthStore';
 
@@ -27,4 +28,4 @@ class AuthStore {
   }
 }
 
-export default alt.createStore(immutable(AuthStore), AuthStore.name);
+export default alt.createStore(immutable(AuthStore), AuthStore.displayName);

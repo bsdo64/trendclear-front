@@ -5,6 +5,7 @@ import LoginActions from '../../Actions/LoginActions';
 import { setMergeState } from '../Helper/func';
 
 class LoginModalStore {
+  static displayName = 'LoginModalStore';
   constructor() {
     this.displayName = 'LoginModalStore';
 
@@ -31,4 +32,4 @@ class LoginModalStore {
   }
 }
 
-export default alt.createStore(immutable(LoginModalStore), LoginModalStore.name);
+export default alt.createStore(immutable(LoginModalStore), LoginModalStore.displayName);

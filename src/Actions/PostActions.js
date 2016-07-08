@@ -41,11 +41,9 @@ class PostActions {
         .get('/best', params)
         .then((res) => {
 
-          let response = {
-            results: normalize(res.results, arrayOf(post)),
-            total: res.total
-          };
-          dispatch(response);
+          res.data = normalize(res.data, arrayOf(post));
+
+          dispatch(res);
         })
         .catch((err) => {
           return err;

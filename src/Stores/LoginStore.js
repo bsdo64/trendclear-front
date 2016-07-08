@@ -7,6 +7,8 @@ import { initListener, setMergeState, locationHref } from './Helper/func';
 import {browserHistory} from 'react-router';
 
 class LoginStore{
+  static displayName = 'LoginStore';
+  
   constructor() {
     this.displayName = 'LoginStore';
 
@@ -58,4 +60,4 @@ class LoginStore{
 
 }
 
-export default alt.createStore(immutable(LoginStore), LoginStore.name);
+export default alt.createStore(immutable(LoginStore), LoginStore.displayName);
