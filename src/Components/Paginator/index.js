@@ -22,6 +22,7 @@ export default class PaginatorApp extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('Pagination Next : ', nextProps);
     this.setState({
       dataLength: nextProps.total,
       pagination: {

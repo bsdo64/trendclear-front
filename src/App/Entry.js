@@ -11,6 +11,10 @@ import {club, post, noti, forum} from '../Model/normalizr/schema';
 
 import Router from './Routes';
 
+import Perf from 'react-addons-perf'
+
+window.Perf = Perf;
+
 new Promise((resolve, reject) => {
   browserHistory.listen((location) => {
     "use strict";

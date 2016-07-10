@@ -492,6 +492,7 @@ const CommentBox = React.createClass({
 require('./CommunityContents.scss');
 const PostList = React.createClass({
   displayName: 'PostList',
+  mixins: [PureRenderMixin],
 
   componentDidMount() {
     $('.ui.embed').embed();
@@ -833,6 +834,8 @@ const CommunityContents = React.createClass({
               />
             </div>
           )
+        } else {
+          return <div></div>
         }
       } else {
         return <div></div>
