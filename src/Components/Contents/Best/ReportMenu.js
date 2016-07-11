@@ -1,6 +1,7 @@
 import React from 'react';
 import ReportActions from '../../../Actions/ReportActions';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+import memoize from 'fast-memoize';
 
 const Menu = (props) => {
   "use strict";
@@ -55,4 +56,4 @@ const Menu = (props) => {
   )
 };
 
-export default Menu;
+export default memoize(Menu);

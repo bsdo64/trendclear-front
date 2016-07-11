@@ -27,6 +27,19 @@ class Comments {
   onAddList(comments) {
     this.setMergeState(comments);
   }
+
+  onLikeComment(commentId) {
+    if (commentId) {
+      const newState = this.state.update(commentId.toString(), c =>
+        c.mergeDeep({
+          liked: true,
+          like_count: c.get('like_count') + 1
+        })
+      );
+
+      this.setState(newState);
+    }
+  }
 }
 
 export default alt.createStore(immutable(Comments), Comments.displayName);

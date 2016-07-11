@@ -70,24 +70,7 @@ class BestPostStore{
     const updateNoMore = updateCollection.set('noMore', false);
     this.setState(updateNoMore);
   }
-
-  onLikePost(postId) {
-    if (postId) {
-      const post = this.state.getIn(['posts', 'postList', 'entities', 'posts', postId+'']);
-
-      if (post) {
-        const countPost = this.state.updateIn(['posts', 'postList', 'entities', 'posts', postId+''], post =>
-          post.mergeDeep({
-            liked: true,
-            like_count: post.get('like_count') + 1
-          })
-        );
-
-        this.setState(countPost);
-      }
-    }
-  }
-
+  
 
   onSubmitComment() {
     this.waitFor(CommunityStore);

@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import ReportActions from '../../Actions/ReportActions.js';
 import Modal from 'react-modal';
 
@@ -15,13 +16,7 @@ const ReportModalBox = React.createClass({
     }, 0)
   },
 
-  openShow() {
-    "use strict";
-    $('.ReactModal__Content').addClass('md-show');
-  },
-
   closeModal: function() {
-    $('.ReactModal__Content').removeClass('md-show');
     ReportActions.closeReportModal();
   },
   render() {
@@ -32,17 +27,14 @@ const ReportModalBox = React.createClass({
 
     const content = ReportStore.get('typeId') ? Posts.get(ReportStore.get('typeId').toString()) : null;
 
-    if (openReportModal) {
-      // For animation
-      setTimeout(function () {
-        this.openShow();
-      }.bind(this), 0);
-    }
+    const openModalStyle = cx('md-modal md-effect-1', {
+      'md-show': openReportModal
+    });
 
     return (
       <Modal
         overlayClassName={'report-modal md-overlay'}
-        className={'md-modal md-effect-1'}
+        className={openModalStyle}
         isOpen={openReportModal}
         closeTimeoutMS={300}
         onAfterOpen={this.afterOpenModal}

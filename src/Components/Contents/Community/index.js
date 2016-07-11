@@ -162,15 +162,12 @@ const CommentItem = React.createClass({
       userId = UserStore.getIn(['user', 'id'])
     }
 
-    const {comment, author, authors, subComments} = this.props;
+    const {comment, commentAuthor, authors, subComments, subCommentList} = this.props;
     const subCommentOpen = this.state.subCommentOpen;
-    const sortSubComments = comment.get('subComments') ? comment.get('subComments').sortBy((value, key) => {
-      return -key;
-    }).toArray() : [];
 
-    const sex = author.getIn(['profile', 'sex']),
-      avatar_img = author.getIn(['profile', 'avatar_img']),
-      icon_img = author.getIn(['icon', 0, 'iconDef', 'icon_img']);
+    const sex = commentAuthor.getIn(['profile', 'sex']),
+      avatar_img = commentAuthor.getIn(['profile', 'avatar_img']),
+      icon_img = commentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
     let avatarImg, iconImg;
 
     if (avatar_img) {
@@ -250,7 +247,7 @@ const CommentItem = React.createClass({
                     <div className="item" data-value={subComment.get('id')} data-action="report">신고</div>
                     <div className="item " data-value={subComment.get('id')} data-action="report_ad">광고 신고</div>
                     {
-                      userId && (userId === author.get('id')) &&
+                      userId && (userId === commentAuthor.get('id')) &&
                       <div className="item " data-value={subComment.get('id')} data-action="delete_post">삭제하기</div>
                     }
                   </div>
@@ -272,7 +269,7 @@ const CommentItem = React.createClass({
           {avatarImg}
         </a>
         <div className="content">
-          <a className="author">{author.get('nick')}</a>
+          <a className="author">{commentAuthor.get('nick')}</a>
           {iconImg}
           <div className="metadata">
             <div className="date">{comment.get('created_at')}</div>
@@ -303,7 +300,7 @@ const CommentItem = React.createClass({
                   <div className="item" data-value={comment.get('id')} data-action="report">신고</div>
                   <div className="item " data-value={comment.get('id')} data-action="report_ad">광고 신고</div>
                   {
-                    userId && (userId === author.get('id')) &&
+                    userId && (userId === commentAuthor.get('id')) &&
                     <div className="item " data-value={comment.get('id')} data-action="delete_post">삭제하기</div>
                   }
                 </div>
@@ -311,9 +308,9 @@ const CommentItem = React.createClass({
             </div>
           </div>
           {
-            subCommentOpen && (sortSubComments.length > 0) &&
+            subCommentOpen && (subCommentList.length > 0) &&
             <div className="comments">
-              {sortSubComments.map(subCommentItem)}
+              {subCommentList.map(subCommentItem)}
             </div>
           }
 
@@ -342,22 +339,34 @@ const CommentItem = React.createClass({
 const CommentList = React.createClass({
   render() {
     "use strict";
-    const {comments, author, subComments, UserStore, LoginStore, location} = this.props;
+    const {commentList, comments, authors, subComments, UserStore, LoginStore, location} = this.props;
 
-    let commentsNode = comments.map(function(comment) {
-      const commentAuthor = author.get(comment.get('author').toString());
-      return (
-        <CommentItem
-          LoginStore={LoginStore}
-          UserStore={UserStore}
-          key={comment.get('id')}
-          comment={comment}
-          author={commentAuthor}
-          authors={author}
-          subComments={subComments}
-          location={location}
-        />
-      )
+    let commentsNode = commentList.map(function(commentId) {
+      const comment = comments.get(commentId.toString());
+
+      if (comment) {
+        const commentAuthor = authors.get(comment.get('author').toString());
+
+        if (commentAuthor) {
+          const subCommentList = comment.get('subComments');
+
+          return (
+            <CommentItem
+              LoginStore={LoginStore}
+              UserStore={UserStore}
+              key={commentId}
+              comment={comment}
+              commentAuthor={commentAuthor}
+              authors={authors}
+              subComments={subComments}
+              location={location}
+              subCommentList={subCommentList}
+            />
+          )
+        }
+      }
+
+      return (<div key={commentId}></div>)
     });
     return (
       <div className="comment_list">
@@ -370,7 +379,7 @@ const CommentList = React.createClass({
 require('./Comment.scss');
 const CommentBox = React.createClass({
   displayName: 'CommentBox',
-  mixins: [PureRenderMixin],
+
 
   componentDidMount() {
     this.editor = new MediumEditor(this.refs.comment_content, {
@@ -379,8 +388,15 @@ const CommentBox = React.createClass({
     });
   },
 
+  componentDidUpdate() {
+    this.editor = new MediumEditor(this.refs.comment_content, {
+      toolbar: false,
+      disableDoubleReturn: true
+    });
+  },
+
   handleSetPage(pagination) {
-    const makeUrl = MakeUrl(this.props.location);
+    const makeUrl = new MakeUrl(this.props.location);
     browserHistory.push(makeUrl.setQuery('comment_p', pagination.page));
   },
 
@@ -422,71 +438,68 @@ const CommentBox = React.createClass({
   render() {
     "use strict";
 
-    const commentPage = this.props.location.query.comment_p ? this.props.location.query.comment_p : 1;
+    const {comments, subComments, authors, IPost} = this.props;
+    const commentList = IPost.get('comments');
 
-    const IPost = this.props.IPost;
-    const postId = IPost.get('result');
-    const post = IPost.getIn(['entities', 'posts', postId.toString()]);
-    const commentLength = post.get('comment_count');
+    if (commentList) {
 
-    const comments = IPost.getIn(['entities', 'comments']);
-    const author = IPost.getIn(['entities', 'author']);
-    const subComments = IPost.getIn(['entities', 'subComments']);
+      const commentPage = this.props.location.query.comment_p ? this.props.location.query.comment_p : 1;
+      const commentLength = IPost.get('comment_count');
 
-    const sortComments = comments ? comments.sortBy((value, key) => {
-      return -key;
-    }).toArray() : [];
-    const results = comments ? sortComments : [];
+      return (
+        <div id="comment_box" className="ui comments">
 
-    return (
-      <div id="comment_box" className="ui comments">
-
-        <div className="comment_header">
-          <div className="comment_count">댓글 {commentLength}개</div>
-          <ul className="comment_sort_box">
-            <li>최신순</li>
-            {/* <li>좋아요순</li>*/}
-            {/*<li>댓글순</li>*/}
-          </ul>
-        </div>
-        <form className="ui reply form ">
-          <div className="field">
+          <div className="comment_header">
+            <div className="comment_count">댓글 {commentLength}개</div>
+            <ul className="comment_sort_box">
+              <li>최신순</li>
+              {/* <li>좋아요순</li>*/}
+              {/*<li>댓글순</li>*/}
+            </ul>
+          </div>
+          <form className="ui reply form ">
+            <div className="field">
+              <div
+                id="comment_input"
+                ref="comment_content"
+                className="comment_input"
+              ></div>
+            </div>
             <div
-              id="comment_input"
-              ref="comment_content"
-              className="comment_input"
-            ></div>
-          </div>
-          <div
-            className="ui primary submit icon button"
-            onClick={this.submitComment}
-          >
-            <i className="icon edit"></i>
-          </div>
-        </form>
+              className="ui primary submit icon button"
+              onClick={this.submitComment}
+            >
+              <i className="icon edit"></i>
+            </div>
+          </form>
 
-        <CommentList
-          LoginStore={this.props.LoginStore}
-          UserStore={this.props.UserStore}
-          location={this.props.location}
-          author={author}
-          comments={results}
-          subComments={subComments}
-        />
-        
-        <div className="ui center aligned container">
-          { (commentLength > 0) &&
+          <CommentList
+            LoginStore={this.props.LoginStore}
+            UserStore={this.props.UserStore}
+            location={this.props.location}
+            commentList={commentList}
+            authors={authors}
+            comments={comments}
+            subComments={subComments}
+          />
+
+          <div className="ui center aligned container">
+            { (commentLength > 0) &&
             <Paginator
               total={commentLength}
               limit={10}
               page={parseInt(commentPage, 10)}
               handleSetPage={this.handleSetPage}
             />
-          }
-        </div>
+            }
+          </div>
 
-      </div>
-    )
+        </div>
+      )
+    }
+
+
+    return (<div></div>)
   }
 });
 
@@ -494,7 +507,7 @@ const CommentBox = React.createClass({
 require('./CommunityContents.scss');
 const PostList = React.createClass({
   displayName: 'PostList',
-  mixins: [PureRenderMixin],
+  //mixins: [PureRenderMixin],
 
   componentDidMount() {
     $('.ui.embed').embed();
@@ -791,6 +804,9 @@ const CommunityContents = React.createClass({
                 <CommentBox
                   {...this.props}
                   IPost={post}
+                  comments={this.props.Comments}
+                  subComments={this.props.SubComments}
+                  authors={this.props.Users}
                 />
               }
 

@@ -1,6 +1,5 @@
 /* eslint no-console:0 */
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import segmentize from 'segmentize';
 import Paginator from 'react-pagify';
 
@@ -18,37 +17,7 @@ const PaginatorApp = React.createClass({
       perPage: limit || 10
     };
     const dataLength = total || 0;
-
-<<<<<<< HEAD
-    this.selectPage = this.selectPage.bind(this);
-    this.onPerPage = this.onPerPage.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props !== nextProps) {
-      this.setState({
-        dataLength: nextProps.total,
-        pagination: {
-          page: nextProps.page,
-          perPage: nextProps.limit
-        }
-      })
-    }
-  }
-
-  selectPage(page) {
-    const state = this.state;
-    const pagination = state.pagination || {};
-    const pages = Math.ceil(state.dataLength / pagination.perPage);
-
-    pagination.page = Math.min(Math.max(page, 1), pages);
-    
-    this.setState({
-      pagination: pagination
-    });
-=======
     const pages = Math.ceil(dataLength / pagination.perPage);
->>>>>>> master
 
     pagination.page = Math.min(Math.max(newPage, 1), pages);
 

@@ -18,7 +18,11 @@ var embed = require('./routes/embed');
 
 var app = express();
 app.use(compression());
-app.use(logger('common'));
+if (process.env.NODE_ENV !== 'production') {
+  app.use(logger('short'));
+} else {
+  app.use(logger('common'));
+}
 
 app.all('/ajax/*', ApiProxy);
 app.use('/image', ImageProxy);
@@ -40,8 +44,8 @@ app.use(require('node-sass-middleware')({
   dest: path.join(__dirname, 'dist'),
   sourceMap: true
 }));
-app.use(express.static(path.join(__dirname, 'dist')));
-app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use(express.static(path.join(__dirname, 'dist'), {maxAge: '1d'}));
+app.use(express.static(path.join(__dirname, 'bower_components'), {maxAge: '1d'}));
 
 app.use('/api', embed);
 app.use('/', routes);

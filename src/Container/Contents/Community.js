@@ -6,6 +6,8 @@ import CommunityStore from '../../Stores/CommunityStore';
 import UserStore from '../../Stores/UserStore';
 
 import Posts from '../../Stores/Domain/Posts';
+import Comments from '../../Stores/Domain/Comments';
+import SubComments from '../../Stores/Domain/SubComments';
 import Users from '../../Stores/Domain/Users';
 import Clubs from '../../Stores/Domain/Clubs';
 import Categories from '../../Stores/Domain/Categories';
@@ -37,6 +39,8 @@ const CommunityContainer = connectToStores({
 
       // Domain Stores
       Posts,
+      Comments,
+      SubComments,
       Users,
       Prefixes,
       Forums,
@@ -60,6 +64,8 @@ const CommunityContainer = connectToStores({
 
       // Domain Stores
       Posts: Posts.getState(),
+      Comments: Comments.getState(),
+      SubComments: SubComments.getState(),
       Users: Users.getState(),
       Prefixes: Prefixes.getState(),
       Forums: Forums.getState(),
