@@ -1,24 +1,25 @@
 /* eslint no-console:0 */
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import segmentize from 'segmentize';
 import Paginator from 'react-pagify';
 
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 require('./Paginator.scss');
-export default class PaginatorApp extends React.Component {
-  constructor(props) {
-    super(props);
+const PaginatorApp = React.createClass({
+  displayName: 'PaginatorApp',
+  mixins: [PureRenderMixin],
 
-    this.displayName = 'PaginatorApp';
-    this.state = {
-      dataLength: props.total || 0,
-      pagination: {
-        page: props.page || 1,
-        perPage: props.limit || 10
-      }
+  selectPage(newPage) {
+    const {page, limit, total } = this.props;
+    const pagination = {
+      page: page || 1,
+      perPage: limit || 10
     };
+    const dataLength = total || 0;
 
+<<<<<<< HEAD
     this.selectPage = this.selectPage.bind(this);
     this.onPerPage = this.onPerPage.bind(this);
   }
@@ -45,23 +46,22 @@ export default class PaginatorApp extends React.Component {
     this.setState({
       pagination: pagination
     });
+=======
+    const pages = Math.ceil(dataLength / pagination.perPage);
+>>>>>>> master
 
-    this.props.handleSetPage(this.state.pagination);
-  }
+    pagination.page = Math.min(Math.max(newPage, 1), pages);
 
-  onPerPage(event) {
-    const pagination = this.state.pagination || {};
-
-    pagination.perPage = parseInt(event.target.value, 10);
-
-    this.setState({
-      pagination: pagination
-    });
-  }
+    this.props.handleSetPage(pagination);
+  },
 
   render() {
-    const dataLength = this.state.dataLength || [];
-    const pagination = this.state.pagination || {};
+    const {page, limit, total } = this.props;
+    const pagination = {
+      page: page || 1,
+      perPage: limit || 10
+    };
+    const dataLength = total || 0;
     const pages = Math.ceil(dataLength / Math.max(
         isNaN(pagination.perPage) ? 1 : pagination.perPage, 1)
     );
@@ -126,4 +126,6 @@ export default class PaginatorApp extends React.Component {
       </div>
     );
   }
-}
+});
+
+export default PaginatorApp;

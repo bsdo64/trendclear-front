@@ -38,6 +38,7 @@
     "node-sass-middleware": "^0.9.8",
     "normalizr": "^2.1.0",
     "object-assign": "^4.1.0",
+    "qs": "^6.2.0",
     "react": "^15.2.0",
     "react-addons-pure-render-mixin": "^15.2.0",
     "react-addons-shallow-compare": "^15.2.0",

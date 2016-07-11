@@ -5,6 +5,7 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
+import cx from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Map} from 'immutable';
 import {Link, browserHistory} from 'react-router';
@@ -14,6 +15,8 @@ import CommentActions from '../../../Actions/CommentActions';
 import CommunityActions from '../../../Actions/CommunityActions';
 import Post from './Post';
 import BestPost from '../Best/BestPost';
+
+import MakeUrl from '../../Lib/MakeUrl';
 
 function checkSkillAvailable(skill) {
   "use strict";
@@ -377,9 +380,8 @@ const CommentBox = React.createClass({
   },
 
   handleSetPage(pagination) {
-    let location = this.props.location;
-    let url = `${location.pathname}?categoryId=${location.query.categoryId}&forumId=${location.query.forumId}&postId=${location.query.postId}&p=${location.query.p}&comment_p=${pagination.page}`;
-    browserHistory.push(url);
+    const makeUrl = MakeUrl(this.props.location);
+    browserHistory.push(makeUrl.setQuery('comment_p', pagination.page));
   },
 
   submitComment() {
@@ -516,12 +518,9 @@ const PostList = React.createClass({
 
     const author = this.props.author;
 
-    const { defaultPageUrl, page } = this.props;
-
-    let activeClass;
-    if (id == this.props.postIdNow) {
-      activeClass = 'active';
-    }
+    const activeClass = cx({
+      active: id == this.props.postIdNow
+    });
 
     return (
       <tr className={activeClass}>
@@ -531,11 +530,7 @@ const PostList = React.createClass({
         <td className="left aligned">
           <Link
             className="article_title"
-            to={'/community?' +
-                'categoryId=' + forum.getIn(['category', 'id']) +
-                '&forumId=' + forum.get('id') +
-                '&postId=' + id +
-                '&p=' + page} >
+            to={this.props.defaultPageUrl} >
             {title}
           </Link>
           <span>{ comment_count > 0 && '[' + comment_count + ']'}</span>
@@ -561,54 +556,26 @@ const Forum = React.createClass({
   handleForumSearch(e) {
     e.preventDefault();
 
-    console.log('search : ', this.state.text);
-
-    let location = this.props.location;
-    let url = `${location.pathname}?` +
-      `categoryId=${location.query.categoryId}&` +
-      `forumId=${location.query.forumId}&` +
-      (location.query.postId ? `postId=${location.query.postId}&` : '') +
-      (location.query.p ? `p=${location.query.p}&` : '') +
-      (location.query.forumPrefix ? `forumPrefix=${location.query.forumPrefix}&` : '') +
-      `forumSearch=${this.state.text}`;
-
-    browserHistory.push(url);
+    const makeUrl = new MakeUrl(this.props.location);
+    browserHistory.push(makeUrl.setQuery('forumSearch', this.state.text));
   },
   handleSubmitPrefix(prefixId, e) {
     "use strict";
     e.preventDefault();
 
-    let location = this.props.location;
-    let url = `${location.pathname}?` +
-      `categoryId=${location.query.categoryId}&` +
-      `forumId=${location.query.forumId}&` +
-      (location.query.postId ? `postId=${location.query.postId}&` : '') +
-      (location.query.forumSearch ? `forumSearch=${location.query.forumSearch}&` : '') +
-      `forumPrefix=${prefixId}`;
-
-    browserHistory.push(url);
+    const makeUrl = new MakeUrl(this.props.location);
+    browserHistory.push(makeUrl.setQuery('forumPrefix', prefixId));
   },
   handleSetPage(pagination) {
 
-    let location = this.props.location;
-    let url = `${location.pathname}?` +
-                `categoryId=${location.query.categoryId}&` +
-                `forumId=${location.query.forumId}&` +
-                (location.query.postId ? `postId=${location.query.postId}&` : '') +
-                `p=${pagination.page}`;
-
-    browserHistory.push(url);
+    const makeUrl = new MakeUrl(this.props.location);
+    browserHistory.push(makeUrl.setQuery('p', pagination.page));
   },
-  resetPrefix() {
-    "use strict";
+  resetPrefix(e) {
+    e.preventDefault();
 
-    let location = this.props.location;
-    let url = `${location.pathname}?` +
-      `categoryId=${location.query.categoryId}&` +
-      `forumId=${location.query.forumId}&` +
-      (location.query.postId ? `postId=${location.query.postId}` : '');
-
-    browserHistory.push(url);
+    const makeUrl = new MakeUrl(this.props.location);
+    browserHistory.push(makeUrl.removeQuery('forumPrefix'));
   },
 
   openLoginModal() {
@@ -635,14 +602,12 @@ const Forum = React.createClass({
       )
     }
   },
-  createPostItem(page, location, postId) {
+  createPostItem(makeUrl, postId) {
     "use strict";
 
     const {Posts, Users} = this.props;
-
-    const { query } = location;
-    const {categoryId, postId: postIdNow} = query;
-    const defaultPageUrl = '/community' + location.search;
+    const postIdNow = this.props.location.query.postId;
+    const defaultPageUrl = makeUrl.setQuery('postId', postId);
 
     let item = Posts.get(postId.toString());
     if (item) {
@@ -653,7 +618,7 @@ const Forum = React.createClass({
             key={postId}
             author={author}
             item={item} defaultPageUrl={defaultPageUrl}
-            postIdNow={parseInt(postIdNow, 10)} page={page} />
+            postIdNow={parseInt(postIdNow, 10)} />
         );
       }
     }
@@ -681,6 +646,8 @@ const Forum = React.createClass({
       const total = pagination.get('total');
 
       const categoryId = forum.get('category_id');
+
+      const makeUrl = new MakeUrl(this.props.location);
 
       return (
         <div id="forum_contents">
@@ -711,7 +678,7 @@ const Forum = React.createClass({
             <tbody>
 
             {
-              postIds.map(this.createPostItem.bind(this, page, this.props.location))
+              postIds.map(this.createPostItem.bind(this, makeUrl))
             }
 
             </tbody>
@@ -820,13 +787,11 @@ const CommunityContents = React.createClass({
               }
 
               {
-/*
                 post &&
                 <CommentBox
                   {...this.props}
                   IPost={post}
                 />
-*/
               }
 
               <Forum
