@@ -1,6 +1,6 @@
 export function initListener(Store) {
   "use strict";
-  Store.on('bootstrap', function (value) {
+  Store.on('bootstrap', function initBootStrapListener(value) {
     Store.setState(value);
   });
 

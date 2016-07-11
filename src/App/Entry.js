@@ -24,7 +24,7 @@ new Promise((resolve, reject) => {
     Api
       .setType('/ajax')
       .get('/store' + location.pathname, location.query)
-      .then(function (resBody, errBody) {
+      .then(function CallStoreApi(resBody, errBody) {
         "use strict";
 
         if (resBody.BestPostStore && resBody.BestPostStore.posts) {

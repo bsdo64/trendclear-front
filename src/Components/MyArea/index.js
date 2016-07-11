@@ -201,13 +201,6 @@ const MyArea = React.createClass({
         on    : 'click'
       });
   },
-  componentDidUpdate(prevProps, prevState) {
-    $('#profile_id_button')
-      .popup('refresh');
-
-    $('.large.alarm.icon')
-      .popup('refresh');
-  },
 
   render() {
     const { LoginStore } = this.props;

@@ -3,6 +3,8 @@ import React from 'react';
 import segmentize from 'segmentize';
 import Paginator from 'react-pagify';
 
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 require('./Paginator.scss');
 export default class PaginatorApp extends React.Component {
   constructor(props) {
@@ -22,14 +24,15 @@ export default class PaginatorApp extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('Pagination Next : ', nextProps);
-    this.setState({
-      dataLength: nextProps.total,
-      pagination: {
-        page: nextProps.page,
-        perPage: nextProps.limit
-      }
-    })
+    if (this.props !== nextProps) {
+      this.setState({
+        dataLength: nextProps.total,
+        pagination: {
+          page: nextProps.page,
+          perPage: nextProps.limit
+        }
+      })
+    }
   }
 
   selectPage(page) {

@@ -777,7 +777,7 @@ const Forum = React.createClass({
 
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
-  mixins: [PureRenderMixin],
+  // mixins: [PureRenderMixin],
 
   componentWillUnmount() {
     CommunityActions.resetData();
