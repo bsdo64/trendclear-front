@@ -3,6 +3,7 @@ import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../../Actions/AppActions';
 import PostActions from '../../Actions/PostActions';
+import GnbActions from '../../Actions/GnbActions';
 import PaginationActions from '../../Actions/PaginationActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
@@ -16,6 +17,7 @@ class PaginationStore {
     this.displayName = 'PaginationStore';
 
     this.bindActions(AppActions);
+    this.bindActions(GnbActions);
     this.bindActions(PostActions);
     this.bindActions(PaginationActions);
     this.state = Immutable.Map({
@@ -44,6 +46,11 @@ class PaginationStore {
     this.setMergeState({bestPostList: response.collection});
   }
 
+  onSaveFilter(res) {
+    const collection = res.collection;
+
+    this.setMergeState({bestPostList: collection});
+  }
 }
 
 export default alt.createStore(immutable(PaginationStore), PaginationStore.displayName);

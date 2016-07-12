@@ -2,6 +2,9 @@ import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 
 class ReportActions {
+  constructor() {
+    this.generateActions('sendReport');
+  }
   openReportModal(payload = {}) {
     payload.openReportModal = true;
     return payload;

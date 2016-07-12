@@ -28,13 +28,8 @@ class GnbActions {
         .get('/best', categoryValue)
         .then((res) => {
 
-          let response = {
-            origin: res.results,
-            results: normalize(res.results, arrayOf(post)),
-            total: res.total
-          };
-
-          dispatch(response);
+          res.data = normalize(res.data, arrayOf(post)),
+          dispatch(res);
         })
         .catch((err) => {
           return err;

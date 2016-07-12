@@ -4,6 +4,7 @@ import LoginButton from './LoginButton';
 import UserActions from '../../Actions/UserActions';
 import cx from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import moment from 'moment';
 moment.locale('ko')
 
@@ -20,6 +21,7 @@ const NotiItem = React.createClass({
       });
     }
   },
+
   render() {
 
     const {noti} = this.props;
@@ -40,7 +42,7 @@ const NotiItem = React.createClass({
               <img src="http://dummyimage.com/40x40" />
             </div>
             <div className="content">
-              <div className="summary">
+              <div className="summary" onClick={this.props.close}>
                 글 <Link to={linkUrl}>{noti.get('title')}</Link>에 <Link to={linkUrl}>{noti.get('count')}</Link>개의 댓글이 달렸습니다.
 
                 <div className="date">
@@ -77,6 +79,14 @@ const NotiItem = React.createClass({
 
 
 class NotiButtons extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleCloseDropdown = this.handleCloseDropdown.bind(this);
+  }
+  handleCloseDropdown() {
+    this.refs.noti_dropdown.hide();
+  }
   render() {
     const {UserStore} = this.props;
     const Noti = UserStore.getIn(['notifications', 'INoti']);
@@ -87,30 +97,34 @@ class NotiButtons extends Component {
       countNoti = notiEntities.reduce((r, v) => r + (v.get('read') ? 0 : 1), 0)
     }
     return (
-      <div id='noti_button' className="item noti">
-        <i className="large alarm icon inverted" />
-        {
-          Noti && !!notiEntities && !!countNoti &&
-          <div className="ui red label">
-            {countNoti}
-          </div>
-        }
-        <div id="alarm_popup" className="ui segment popup">
-          <div className="alarm_header">
-            <div className="xQb">알림</div>
-          </div>
-
-          <Scrollbars style={{ height: 300 }}>
-            <div className="ui feed ">
-              {
-                Noti &&
-                Noti.get('result').map(notiId => <NotiItem key={notiId} noti={notiEntities.get(notiId.toString())} />)
-              }
+      <Dropdown id='noti_button' className="item noti" ref="noti_dropdown">
+        <DropdownTrigger>
+          <i className="large alarm icon inverted" />
+          {
+            Noti && !!notiEntities && !!countNoti &&
+            <div className="ui red label">
+              {countNoti}
+            </div>
+          }
+        </DropdownTrigger>
+        <DropdownContent>
+          <div id="alarm_popup" className="ui segment">
+            <div className="alarm_header">
+              <div className="xQb">알림</div>
             </div>
 
-          </Scrollbars>
-        </div>
-      </div>
+            <Scrollbars style={{ height: 300 }}>
+              <div className="ui feed ">
+                {
+                  Noti &&
+                  Noti.get('result').map(notiId => <NotiItem close={this.handleCloseDropdown} key={notiId} noti={notiEntities.get(notiId.toString())} />)
+                }
+              </div>
+
+            </Scrollbars>
+          </div>
+        </DropdownContent>
+      </Dropdown>
     )
   }
 }
@@ -120,21 +134,21 @@ const UserButtons = React.createClass({
   gotoSubmitCategory() {
     "use strict";
 
-    $('#profile_id_button').popup('hide');
+    this.refs.profile_dropdown.hide();
     browserHistory.push('/community/submit/forum');
   },
 
   gotoActivity() {
     "use strict";
 
-    $('#profile_id_button').popup('hide');
+    this.refs.profile_dropdown.hide();
     browserHistory.push('/activity');
   },
 
   gotoSettings() {
     "use strict";
 
-    $('#profile_id_button').popup('hide');
+    this.refs.profile_dropdown.hide();
     browserHistory.push('/setting');
   },
 
@@ -162,46 +176,32 @@ const UserButtons = React.createClass({
     }
 
     return (
-      <div className="item gnb_my_namebox">
+      <div className="item profile">
         {
           avatarImg
         }
-        <a id="profile_id_button" className="text" >{user.get('nick')}</a>
-        <div id="profile_popup" className="ui popup">
-          <div className="ui vertical menu secondary">
-            <a className="item" onClick={this.gotoSubmitCategory}>커뮤니티 만들기</a>
-            <div className="ui divider"></div>
-            <a className="item" onClick={this.gotoActivity}>나의 활동</a>
-            <a className="active item" onClick={this.gotoSettings}>설정1</a>
-            <a className="item" onClick={this.handleLogout}>
-              로그아웃
-            </a>
-          </div>
-        </div>
+        <Dropdown ref="profile_dropdown">
+          <DropdownTrigger id="profile_id_button" className="text">
+            {user.get('nick')}
+          </DropdownTrigger>
+          <DropdownContent id="profile_popup" className="ui">
+            <div className="ui vertical menu secondary">
+              <a className="item" onClick={this.gotoSubmitCategory}>커뮤니티 만들기</a>
+              <div className="ui divider"></div>
+              <a className="item" onClick={this.gotoActivity}>나의 활동</a>
+              <a className="active item" onClick={this.gotoSettings}>설정1</a>
+              <a className="item" onClick={this.handleLogout}>
+                로그아웃
+              </a>
+            </div>
+          </DropdownContent>
+        </Dropdown>
       </div>
     )
   }
 });
 
 const MyArea = React.createClass({
-  componentDidMount() {
-    $('#profile_id_button')
-      .popup({
-        popup : $('#profile_popup'),
-        position : 'bottom right',
-        lastResort: 'bottom right',
-        on    : 'click'
-      });
-
-    $('.large.alarm.icon')
-      .popup({
-        popup : $('#alarm_popup'),
-        position : 'bottom right',
-        lastResort: 'bottom right',
-        on    : 'click'
-      });
-  },
-
   render() {
     const { LoginStore } = this.props;
     const isLogin = LoginStore.get('isLogin');

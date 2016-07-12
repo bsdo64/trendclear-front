@@ -66,7 +66,7 @@ const BestBox = React.createClass({
     );
   },
   handleScroll(event) {
-    if($(window).scrollTop() + $(window).height() == this._getDocHeight(event.srcElement)) {
+    if($(window).scrollTop() + $(window).height() == this._getDocHeight(event.srcElement || event.target)) {
       this.getMoreBest();
     }
   },

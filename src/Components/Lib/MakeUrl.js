@@ -20,8 +20,11 @@ class MakeUrl {
     return this.pathname + qs.stringify(this.query, {skipNulls: true});
   }
   
-  removeQuery(typeName) {
-    this.query[typeName] = null;
+  removeQuery(...args) {
+    for (let index in args) {
+      this.query[args[index]] = null;
+    }
+
     return this.pathname + qs.stringify(this.query, {skipNulls: true});
   }
 }

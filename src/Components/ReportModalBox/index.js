@@ -6,18 +6,47 @@ import Modal from 'react-modal';
 require('./index.scss');
 const ReportModalBox = React.createClass({
   displayName: 'ReportModalBox',
-  componentDidMount() {
-    $('.md-content .ui.radio.checkbox').checkbox();
-  },
-  componentDidUpdate(prevProps, prevState) {
-    setTimeout(() => {
-      "use strict";
-      $('.md-content .ui.radio.checkbox').checkbox('refresh');
-    }, 0)
+  
+  getInitialState() {
+    return {
+      selectItem: 1
+    }
   },
 
   closeModal: function() {
     ReportActions.closeReportModal();
+  },
+  selectReportItem(e) {
+    "use strict";
+
+    const reportId = e.target.dataset.id;
+    this.setState({selectItem: parseInt(reportId, 10)});
+  },
+  createReportItem(item) {
+    "use strict";
+    const id = item.get('id');
+    const message = item.get('message');
+    const activeItemStyle = cx('report_item', {
+      active: this.state.selectItem === id
+    });
+    return (
+      <div className="field">
+        <div className={activeItemStyle} onClick={this.selectReportItem} data-id={id}>{message}</div>
+      </div>
+    )
+  },
+  sendReport() {
+    "use strict";
+
+    const {ReportStore} = this.props;
+
+    const reportObj = {
+      type: ReportStore.get('type'),
+      typeId: ReportStore.get('typeId'),
+      reportId: this.state.selectItem
+    };
+
+    ReportActions.sendReport(reportObj);
   },
   render() {
     const { LoginStore, ReportStore, Posts } = this.props;
@@ -26,6 +55,7 @@ const ReportModalBox = React.createClass({
     const loginSuccess = LoginStore.get('loginSuccess');
 
     const content = ReportStore.get('typeId') ? Posts.get(ReportStore.get('typeId').toString()) : null;
+    const reportSuccess = ReportStore.get('successReport');
 
     const openModalStyle = cx('md-modal md-effect-1', {
       'md-show': openReportModal
@@ -40,43 +70,48 @@ const ReportModalBox = React.createClass({
         onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
       >
-        <div className="md-content content">
-          <h4 className="ui header">
-            불편하신 부분을 알려주세요.
-            <div className="sub header">
-              {content && ('제목 : ' + content.get('title'))}
-            </div>
-          </h4>
-          <div className="ui content">
-            <div className="ui form">
-              <div className="grouped fields">
-                <label htmlFor="report-item">어떤 부분이 불편하신가요? :</label>
-                <div className="field">
-                  <div className="ui radio checkbox">
-                    <input type="radio" name="report-item" defaultChecked tabIndex="0" className="hidden" />
-                    <label>불쾌하거나 흥미없는 내용입니다.</label>
-                  </div>
-                </div>
-                <div className="field">
-                  <div className="ui radio checkbox">
-                    <input type="radio" name="report-item" tabIndex="0" className="hidden" />
-                    <label>스팸성 글입니다.</label>
-                  </div>
-                </div>
-                <div className="field">
-                  <div className="ui radio checkbox">
-                    <input type="radio" name="report-item" tabIndex="0" className="hidden" />
-                    <label>인신공격, 불법, 허위 내용을 유포하고 있습니다.</label>
-                  </div>
+        {
+          !reportSuccess &&
+          <div className="md-content content">
+            <h4 className="ui header">
+              불편하신 부분을 알려주세요.
+              <div className="sub header">
+                {content && ('제목 : ' + content.get('title'))}
+              </div>
+            </h4>
+            <div className="ui content">
+              <div className="ui form">
+                <div className="grouped fields">
+                  <label htmlFor="report-item">어떤 부분이 불편하신가요? :</label>
+                  {
+                    ReportStore.get('reportItem').map(this.createReportItem)
+                  }
                 </div>
               </div>
             </div>
+            <div className="ui actions">
+              <div className="ui primary approve button" onClick={this.sendReport}>확인</div>
+            </div>
           </div>
-          <div className="ui actions">
-            <div className="ui primary approve button">확인</div>
-            <div className="ui cancel button">취소</div>
+        }
+
+        {
+          reportSuccess &&
+          <div className="md-content content">
+            <div className="success">
+              <svg className="checkmark" viewBox="0 0 52 52">
+                <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+              </svg>
+              <h2 className="ui icon header">
+                <div className="content">
+                  신고 되었습니다.
+                  <div className="sub header">의견을 보내주셔서 감사합니다.</div>
+                </div>
+              </h2>
+            </div>
           </div>
-        </div>
+        }
       </Modal>
     );
   }

@@ -54,13 +54,11 @@ class ListStore {
   onSaveFilter(response) {
     this.waitFor(GnbStore, Users, Posts);
 
-    if (response) {
-      const normalizedPosts = response.results;
-      const total = response.total;
-      const limit = 10;
+    if (response.data) {
+      const postIdList = response.data.result;
 
-      const mergeResults = this.state.set('bestPostList', normalizedPosts.result);
-      this.setMergeState(mergeResults.toJS());
+      const mergeResults = this.state.set('bestPostList', postIdList);
+      this.setState(mergeResults);
     }
   }
 }

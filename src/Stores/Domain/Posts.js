@@ -5,6 +5,7 @@ import AppActions from '../../Actions/AppActions';
 import PostActions from '../../Actions/PostActions';
 import GnbActions from '../../Actions/GnbActions';
 import CommunityActions from '../../Actions/CommunityActions';
+import CommentActions from '../../Actions/CommentActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 import GnbStore from '../../Stores/GnbStore';
@@ -18,6 +19,7 @@ class Posts {
     this.bindActions(PostActions);
     this.bindActions(GnbActions);
     this.bindActions(CommunityActions);
+    this.bindActions(CommentActions);
     this.state = Immutable.Map({
 
     });
@@ -53,18 +55,20 @@ class Posts {
     this.setState(newState);
   }
 
-  onSaveFilter(response) {
-    this.waitFor(GnbStore);
-
-    if (response) {
-      const normalizedPosts = response.results;
-      const total = response.total;
-      const limit = 10;
-
+  onSaveFilter(res) {
+    if (res.data) {
+      const normalizedPosts = res.data;
       const newState = this.state.merge(normalizedPosts.entities.posts);
       this.setState(newState);
     }
   }
+  
+  onSubmitComment(IPost) {
+
+    let addCommentState = this.state.merge(IPost.entities.posts);
+    this.setMergeState(addCommentState);
+  }
+
 }
 
 export default alt.createStore(immutable(Posts), Posts.displayName);

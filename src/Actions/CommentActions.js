@@ -14,7 +14,7 @@ class CommentActions {
         .post('/community/comment', params)
         .then((res) => {
 
-          let response = normalize(res, comment);
+          let response = normalize(res, post);
           dispatch(response);
         })
         .catch((err) => {

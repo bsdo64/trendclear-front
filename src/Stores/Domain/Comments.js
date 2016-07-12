@@ -40,6 +40,26 @@ class Comments {
       this.setState(newState);
     }
   }
+
+  onSubmitSubComment(IComment) {
+
+    const commentId = IComment.commentId;
+    const subCommentId = IComment.result;
+
+    const addSubComment = this.state.updateIn([commentId.toString(), 'subComments'], list =>
+      list.push(subCommentId)
+    );
+    const addIncrement = addSubComment.updateIn([commentId.toString(), 'sub_comment_count'], value =>
+      value + 1
+    );
+
+    this.setState(addIncrement);
+  }
+
+  onSubmitComment(IPost) {
+    let addCommentState = this.state.merge(IPost.entities.comments);
+    this.setMergeState(addCommentState);
+  }
 }
 
 export default alt.createStore(immutable(Comments), Comments.displayName);

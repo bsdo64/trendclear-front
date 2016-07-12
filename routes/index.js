@@ -6,6 +6,7 @@ var routes = [
   '/community',
   '/community/submit',
   '/community/submit/category',
+  '/community/submit/forum',
   '/activity',
   '/activity/likes',
   '/activity/posts',

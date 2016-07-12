@@ -186,26 +186,6 @@ const CommentItem = React.createClass({
 
     function subCommentItem(subCommentId) {
       const subComment = subComments.get(subCommentId.toString());
-      const subCommentAuthor = authors.get(subComment.get('author').toString());
-
-      const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
-        sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
-        sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
-      let subAvatarImg, subIconImg;
-
-      if (sub_avatar_img) {
-        subAvatarImg = <img src={'/image/uploaded/files/' + sub_avatar_img} />;
-      } else {
-        if (subCommentSex) {
-          subAvatarImg = <img src="/images/default-male.png" />;
-        } else {
-          subAvatarImg = <img src="/images/default-female.png" />;
-        }
-      }
-
-      if (sub_icon_img) {
-        subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
-      }
 
       function sendSubCommentLike() {
         const modalFlag = LoginStore.get('openLoginModal');
@@ -216,48 +196,75 @@ const CommentItem = React.createClass({
         }
       }
 
-      return (
-        <div className="comment"
-             key={subComment.get('id')}>
-          <a className="avatar">
-            {subAvatarImg}
-          </a>
-          <div className="content">
-            <a className="author">{subCommentAuthor.get('nick')}</a>
-            {subIconImg}
-            <div className="metadata">
-              <span className="date">{subComment.get('created_at')}</span>
-            </div>
-            <div className="text">
-              <div className="comment_text"
-                dangerouslySetInnerHTML={{ __html: subComment.get('content')}}
-              ></div>
-            </div>
-            <div className="actions">
-              <div className="like_box">
-                <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')} onClick={sendSubCommentLike}>
-                  <i className={'heart ' + (subComment.get('liked')? '' : 'outline') + ' icon'} />
+      if (subComment) {
+        const subCommentAuthor = authors.get(subComment.get('author').toString());
+
+        if (subCommentAuthor) {
+          const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
+            sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
+            sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
+          let subAvatarImg, subIconImg;
+
+          if (sub_avatar_img) {
+            subAvatarImg = <img src={'/image/uploaded/files/' + sub_avatar_img} />;
+          } else {
+            if (subCommentSex) {
+              subAvatarImg = <img src="/images/default-male.png" />;
+            } else {
+              subAvatarImg = <img src="/images/default-female.png" />;
+            }
+          }
+
+          if (sub_icon_img) {
+            subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
+          }
+
+          return (
+            <div className="comment"
+                 key={subComment.get('id')}>
+              <a className="avatar">
+                {subAvatarImg}
+              </a>
+              <div className="content">
+                <a className="author">{subCommentAuthor.get('nick')}</a>
+                {subIconImg}
+                <div className="metadata">
+                  <span className="date">{subComment.get('created_at')}</span>
                 </div>
-                <a className="like_count">{subComment.get('like_count')}</a>
-              </div>
-              <div className="report_box">
-                <div ref="report_icon" className={'ui icon dropdown report_icon'}>
-                  <i className="warning outline icon"></i>
-                  <div className="menu">
-                    <div className="item" data-value={subComment.get('id')} data-action="report">신고</div>
-                    <div className="item " data-value={subComment.get('id')} data-action="report_ad">광고 신고</div>
-                    {
-                      userId && (userId === commentAuthor.get('id')) &&
-                      <div className="item " data-value={subComment.get('id')} data-action="delete_post">삭제하기</div>
-                    }
+                <div className="text">
+                  <div className="comment_text"
+                       dangerouslySetInnerHTML={{ __html: subComment.get('content')}}
+                  ></div>
+                </div>
+                <div className="actions">
+                  <div className="like_box">
+                    <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')} onClick={sendSubCommentLike}>
+                      <i className={'heart ' + (subComment.get('liked')? '' : 'outline') + ' icon'} />
+                    </div>
+                    <a className="like_count">{subComment.get('like_count')}</a>
+                  </div>
+                  <div className="report_box">
+                    <div ref="report_icon" className={'ui icon dropdown report_icon'}>
+                      <i className="warning outline icon"></i>
+                      <div className="menu">
+                        <div className="item" data-value={subComment.get('id')} data-action="report">신고</div>
+                        <div className="item " data-value={subComment.get('id')} data-action="report_ad">광고 신고</div>
+                        {
+                          userId && (userId === commentAuthor.get('id')) &&
+                          <div className="item " data-value={subComment.get('id')} data-action="delete_post">삭제하기</div>
+                        }
+                      </div>
+                    </div>
                   </div>
                 </div>
+
               </div>
             </div>
+          )
+        }
+      }
 
-          </div>
-        </div>
-      )
+      return (<div></div>)
     }
 
     return (
@@ -308,7 +315,7 @@ const CommentItem = React.createClass({
             </div>
           </div>
           {
-            subCommentOpen && (subCommentList.length > 0) &&
+            subCommentOpen && (subCommentList.size > 0) &&
             <div className="comments">
               {subCommentList.map(subCommentItem)}
             </div>
@@ -588,7 +595,7 @@ const Forum = React.createClass({
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.removeQuery('forumPrefix'));
+    browserHistory.push(makeUrl.removeQuery('forumPrefix', 'forumSearch'));
   },
 
   openLoginModal() {
@@ -620,7 +627,9 @@ const Forum = React.createClass({
 
     const {Posts, Users} = this.props;
     const postIdNow = this.props.location.query.postId;
-    const defaultPageUrl = makeUrl.setQuery('postId', postId);
+
+    makeUrl.setQuery('postId', postId);
+    const defaultPageUrl = makeUrl.removeQuery('comment_p');
 
     let item = Posts.get(postId.toString());
     if (item) {
