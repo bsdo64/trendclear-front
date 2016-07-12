@@ -39,7 +39,100 @@ function checkSkillAvailable(skill) {
   return false;
 }
 
+
+function sendSubCommentLike(props) {
+  const {location, modalFlag, isLogin, subCommentId} = props;
+  return function createSendSubCommentLike() {
+    if (!isLogin) {
+      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+    } else {
+      CommentActions.likeSubComment(subCommentId);
+    }
+  }
+}
+
+function subCommentItem(props) {
+  const {subComments, authors, commentAuthor, userId} = props;
+
+  return function createSubCommentItem(subCommentId) {
+    const subComment = subComments.get(subCommentId.toString());
+
+    if (subComment) {
+      const subCommentAuthor = authors.get(subComment.get('author').toString());
+      props.subCommentId = subCommentId
+
+      if (subCommentAuthor) {
+        const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
+          sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
+          sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
+        let subAvatarImg, subIconImg;
+
+        if (sub_avatar_img) {
+          subAvatarImg = <img src={'/image/uploaded/files/' + sub_avatar_img} />;
+        } else {
+          if (subCommentSex) {
+            subAvatarImg = <img src="/images/default-male.png" />;
+          } else {
+            subAvatarImg = <img src="/images/default-female.png" />;
+          }
+        }
+
+        if (sub_icon_img) {
+          subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
+        }
+
+        return (
+          <div className="comment"
+               key={subComment.get('id')}>
+            <a className="avatar">
+              {subAvatarImg}
+            </a>
+            <div className="content">
+              <a className="author">{subCommentAuthor.get('nick')}</a>
+              {subIconImg}
+              <div className="metadata">
+                <span className="date">{subComment.get('created_at')}</span>
+              </div>
+              <div className="text">
+                <div className="comment_text"
+                     dangerouslySetInnerHTML={{ __html: subComment.get('content')}}
+                ></div>
+              </div>
+              <div className="actions">
+                <div className="like_box">
+                  <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')} onClick={sendSubCommentLike(props)}>
+                    <i className={'heart ' + (subComment.get('liked')? '' : 'outline') + ' icon'} />
+                  </div>
+                  <a className="like_count">{subComment.get('like_count')}</a>
+                </div>
+                <div className="report_box">
+                  <div ref="report_icon" className={'ui icon dropdown report_icon'}>
+                    <i className="warning outline icon"></i>
+                    <div className="menu">
+                      <div className="item" data-value={subComment.get('id')} data-action="report">신고</div>
+                      <div className="item " data-value={subComment.get('id')} data-action="report_ad">광고 신고</div>
+                      {
+                        userId && (userId === commentAuthor.get('id')) &&
+                        <div className="item " data-value={subComment.get('id')} data-action="delete_post">삭제하기</div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )
+      }
+    }
+
+    return (<div></div>)
+  }
+}
+
 const CommentItem = React.createClass({
+  mixins: [PureRenderMixin],
+
   getInitialState() {
     return {
       subCommentOpen: false,
@@ -154,7 +247,7 @@ const CommentItem = React.createClass({
   render() {
     "use strict";
 
-    const {location, LoginStore, UserStore} = this.props;
+    const {LoginStore, UserStore} = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     let userId;
@@ -162,7 +255,7 @@ const CommentItem = React.createClass({
       userId = UserStore.getIn(['user', 'id'])
     }
 
-    const {comment, commentAuthor, authors, subComments, subCommentList} = this.props;
+    const {comment, commentAuthor, subCommentList} = this.props;
     const subCommentOpen = this.state.subCommentOpen;
 
     const sex = commentAuthor.getIn(['profile', 'sex']),
@@ -184,88 +277,15 @@ const CommentItem = React.createClass({
       iconImg = <img className="user_icon_img" src={'/images/' + icon_img}/>;
     }
 
-    function subCommentItem(subCommentId) {
-      const subComment = subComments.get(subCommentId.toString());
-
-      function sendSubCommentLike() {
-        const modalFlag = LoginStore.get('openLoginModal');
-        if (!isLogin) {
-          LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
-        } else {
-          CommentActions.likeSubComment(subCommentId);
-        }
-      }
-
-      if (subComment) {
-        const subCommentAuthor = authors.get(subComment.get('author').toString());
-
-        if (subCommentAuthor) {
-          const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
-            sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
-            sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
-          let subAvatarImg, subIconImg;
-
-          if (sub_avatar_img) {
-            subAvatarImg = <img src={'/image/uploaded/files/' + sub_avatar_img} />;
-          } else {
-            if (subCommentSex) {
-              subAvatarImg = <img src="/images/default-male.png" />;
-            } else {
-              subAvatarImg = <img src="/images/default-female.png" />;
-            }
-          }
-
-          if (sub_icon_img) {
-            subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
-          }
-
-          return (
-            <div className="comment"
-                 key={subComment.get('id')}>
-              <a className="avatar">
-                {subAvatarImg}
-              </a>
-              <div className="content">
-                <a className="author">{subCommentAuthor.get('nick')}</a>
-                {subIconImg}
-                <div className="metadata">
-                  <span className="date">{subComment.get('created_at')}</span>
-                </div>
-                <div className="text">
-                  <div className="comment_text"
-                       dangerouslySetInnerHTML={{ __html: subComment.get('content')}}
-                  ></div>
-                </div>
-                <div className="actions">
-                  <div className="like_box">
-                    <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')} onClick={sendSubCommentLike}>
-                      <i className={'heart ' + (subComment.get('liked')? '' : 'outline') + ' icon'} />
-                    </div>
-                    <a className="like_count">{subComment.get('like_count')}</a>
-                  </div>
-                  <div className="report_box">
-                    <div ref="report_icon" className={'ui icon dropdown report_icon'}>
-                      <i className="warning outline icon"></i>
-                      <div className="menu">
-                        <div className="item" data-value={subComment.get('id')} data-action="report">신고</div>
-                        <div className="item " data-value={subComment.get('id')} data-action="report_ad">광고 신고</div>
-                        {
-                          userId && (userId === commentAuthor.get('id')) &&
-                          <div className="item " data-value={subComment.get('id')} data-action="delete_post">삭제하기</div>
-                        }
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          )
-        }
-      }
-
-      return (<div></div>)
-    }
+    const subCommentProps = {
+      modalFlag: LoginStore.get('openLoginModal'),
+      authors: this.props.authors,
+      subComments: this.props.subComments,
+      location: this.props.location,
+      isLogin: isLogin,
+      userId: userId,
+      commentAuthor: commentAuthor
+    };
 
     return (
       <div className="comment"
@@ -301,7 +321,7 @@ const CommentItem = React.createClass({
               <a className="comment_count">{comment.get('sub_comment_count')}</a>
             </div>
             <div className="report_box">
-              <div ref="report_icon" className={'ui icon dropdown report_icon '  + (this.state.focus ? '' : 'none')}>
+              <div ref="report_icon" className={'ui icon dropdown report_icon '}>
                 <i className="warning outline icon"></i>
                 <div className="menu">
                   <div className="item" data-value={comment.get('id')} data-action="report">신고</div>
@@ -317,7 +337,7 @@ const CommentItem = React.createClass({
           {
             subCommentOpen && (subCommentList.size > 0) &&
             <div className="comments">
-              {subCommentList.map(subCommentItem)}
+              {subCommentList.map(subCommentItem(subCommentProps))}
             </div>
           }
 
@@ -386,7 +406,7 @@ const CommentList = React.createClass({
 require('./Comment.scss');
 const CommentBox = React.createClass({
   displayName: 'CommentBox',
-
+  mixins: [PureRenderMixin],
 
   componentDidMount() {
     this.editor = new MediumEditor(this.refs.comment_content, {
@@ -514,7 +534,7 @@ const CommentBox = React.createClass({
 require('./CommunityContents.scss');
 const PostList = React.createClass({
   displayName: 'PostList',
-  //mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   componentDidMount() {
     $('.ui.embed').embed();
@@ -564,7 +584,7 @@ const PostList = React.createClass({
 
 const Forum = React.createClass({
   displayName: 'Forum',
-  mixins: [PureRenderMixin],
+  // mixins: [PureRenderMixin],
   getInitialState() {
     return {
       text: ''
@@ -584,6 +604,7 @@ const Forum = React.createClass({
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
+    makeUrl.removeQuery('forumSearch')
     browserHistory.push(makeUrl.setQuery('forumPrefix', prefixId));
   },
   handleSetPage(pagination) {
