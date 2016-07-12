@@ -126,7 +126,7 @@ function subCommentItem(props) {
       }
     }
 
-    return (<div></div>)
+    return (<div key={userId}></div>)
   }
 }
 
