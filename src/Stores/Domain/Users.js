@@ -63,13 +63,13 @@ class Users {
 
     const subCommentAuthor = IComment.entities.author;
 
-    const addSubCommentAuthor = this.state.merge(subCommentAuthor);
+    const addSubCommentAuthor = this.state.mergeDeep(subCommentAuthor);
 
     this.setState(addSubCommentAuthor);
   }
 
   onSubmitComment(IPost) {
-    let addCommentState = this.state.merge(IPost.entities.author);
+    let addCommentState = this.state.mergeDeep(IPost.entities.author);
     this.setState(addCommentState);
   }
 }
