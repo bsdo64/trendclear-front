@@ -187,7 +187,8 @@ const BestPost = React.createClass({
               userId &&
               <div className="report_box">
                 <Menu
-                  postId={post.get('id')}
+                  targetType="post"
+                  targetId={post.get('id')}
                   isUser={userId && (userId === author.get('id'))}
                 />
               </div>

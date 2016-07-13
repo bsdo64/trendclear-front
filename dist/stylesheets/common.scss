@@ -6,7 +6,7 @@
 }
 $tc_blue_header: #00AABA;
 $tc_blue_header_end: #0E4458;
-$tc_blue_main: #3769ac;
+$tc_blue_main: #058294;
 $white: #fff;
 #header {
   height: 50px;
@@ -24,8 +24,7 @@ $white: #fff;
       top: 0;
       position: fixed;
       z-index: 100;
-      background-color: $tc_blue_header;
-      background: linear-gradient(to right,$tc_blue_header 0,$tc_blue_header_end 100%);
+      background: $tc_blue_header linear-gradient(to right, $tc_blue_header 0, $tc_blue_header_end 100%);
       .top_contents {
         position: relative;
         width: 1230px;

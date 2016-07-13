@@ -189,7 +189,7 @@ const UserButtons = React.createClass({
               <a className="item" onClick={this.gotoSubmitCategory}>커뮤니티 만들기</a>
               <div className="ui divider"></div>
               <a className="item" onClick={this.gotoActivity}>나의 활동</a>
-              <a className="active item" onClick={this.gotoSettings}>설정1</a>
+              <a className="item" onClick={this.gotoSettings}>설정</a>
               <a className="item" onClick={this.handleLogout}>
                 로그아웃
               </a>

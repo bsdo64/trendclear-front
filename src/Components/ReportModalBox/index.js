@@ -31,7 +31,7 @@ const ReportModalBox = React.createClass({
     });
     return (
       <div className="field">
-        <div className={activeItemStyle} onClick={this.selectReportItem} data-id={id}>{message}</div>
+        <div key={id} className={activeItemStyle} onClick={this.selectReportItem} data-id={id}>{message}</div>
       </div>
     )
   },
@@ -49,12 +49,34 @@ const ReportModalBox = React.createClass({
     ReportActions.sendReport(reportObj);
   },
   render() {
-    const { LoginStore, ReportStore, Posts } = this.props;
+    const { LoginStore, ReportStore} = this.props;
     const loginFail = LoginStore.get('loginFail');
     const openReportModal = ReportStore.get('openReportModal');
     const loginSuccess = LoginStore.get('loginSuccess');
 
-    const content = ReportStore.get('typeId') ? Posts.get(ReportStore.get('typeId').toString()) : null;
+
+    let content, title;
+    switch (ReportStore.get('type')) {
+      case 'post':
+        content = this.props.Posts.get(ReportStore.get('typeId').toString());
+        title = ('제목 : ' + content.get('title')) || null;
+        break;
+
+      case 'comment':
+        content = this.props.Comments.get(ReportStore.get('typeId').toString());
+        title = content ? (<span>댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
+        break;
+
+      case 'subComment':
+        content = this.props.SubComments.get(ReportStore.get('typeId').toString());
+        title = content ? (<span>대댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
+        break;
+
+      default:
+        content = null;
+        title = null;
+    }
+
     const reportSuccess = ReportStore.get('successReport');
 
     const openModalStyle = cx('md-modal md-effect-1', {
@@ -76,7 +98,7 @@ const ReportModalBox = React.createClass({
             <h4 className="ui header">
               불편하신 부분을 알려주세요.
               <div className="sub header">
-                {content && ('제목 : ' + content.get('title'))}
+                {title}
               </div>
             </h4>
             <div className="ui content">

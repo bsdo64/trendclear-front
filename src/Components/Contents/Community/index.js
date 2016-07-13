@@ -15,6 +15,7 @@ import CommentActions from '../../../Actions/CommentActions';
 import CommunityActions from '../../../Actions/CommunityActions';
 import Post from './Post';
 import BestPost from '../Best/BestPost';
+import Menu from '../Best/ReportMenu';
 
 import MakeUrl from '../../Lib/MakeUrl';
 
@@ -106,17 +107,11 @@ function subCommentItem(props) {
                   <a className="like_count">{subComment.get('like_count')}</a>
                 </div>
                 <div className="report_box">
-                  <div ref="report_icon" className={'ui icon dropdown report_icon'}>
-                    <i className="warning outline icon"></i>
-                    <div className="menu">
-                      <div className="item" data-value={subComment.get('id')} data-action="report">신고</div>
-                      <div className="item " data-value={subComment.get('id')} data-action="report_ad">광고 신고</div>
-                      {
-                        userId && (userId === commentAuthor.get('id')) &&
-                        <div className="item " data-value={subComment.get('id')} data-action="delete_post">삭제하기</div>
-                      }
-                    </div>
-                  </div>
+                  <Menu
+                    isUser={userId === subCommentAuthor.get('id')}
+                    targetType="subComment"
+                    targetId={subComment.get('id')}
+                  />
                 </div>
               </div>
 
@@ -174,39 +169,10 @@ const CommentItem = React.createClass({
 
       const commentId = this.props.comment.get('id');
       const subCommentOpen = this.state.subCommentOpen;
-      function test() {
-        this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], {
-          toolbar: false,
-          disableDoubleReturn: true
-        });
-
-        $(self.refs.report_icon)
-          .dropdown({
-            onChange: function(value, text, $selectedItem) {
-              const action = $selectedItem.data('action');
-
-              switch (action) {
-                case 'report':
-
-                  console.log('포스트 신고 Id : ', value);
-                  break;
-                case 'report_ad':
-
-                  console.log('포스트 광고 신고 Id : ', value);
-                  break;
-                case 'delete_post':
-
-                  console.log('포스트 삭제 Id : ', value);
-                  break;
-                default:
-                  break;
-              }
-            }
-          });
-      }
-      if (subCommentOpen) {
-        setTimeout(test.bind(this), 0);
-      }
+      this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], {
+        toolbar: false,
+        disableDoubleReturn: true
+      });
     });
   },
 
@@ -321,17 +287,11 @@ const CommentItem = React.createClass({
               <a className="comment_count">{comment.get('sub_comment_count')}</a>
             </div>
             <div className="report_box">
-              <div ref="report_icon" className={'ui icon dropdown report_icon '}>
-                <i className="warning outline icon"></i>
-                <div className="menu">
-                  <div className="item" data-value={comment.get('id')} data-action="report">신고</div>
-                  <div className="item " data-value={comment.get('id')} data-action="report_ad">광고 신고</div>
-                  {
-                    userId && (userId === commentAuthor.get('id')) &&
-                    <div className="item " data-value={comment.get('id')} data-action="delete_post">삭제하기</div>
-                  }
-                </div>
-              </div>
+              <Menu
+                isUser={userId === commentAuthor.get('id')}
+                targetType="comment"
+                targetId={comment.get('id')}
+              />
             </div>
           </div>
           {
