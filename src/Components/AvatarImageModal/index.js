@@ -92,6 +92,7 @@ const AvatarImageModal = React.createClass({
           <div className="item">
             <div className="image">
               { avatarImg }
+              <input name="thumb-roundness" className="slider form-control ng-valid ng-scope ng-dirty" type="range" />
             </div>
             <div className="content">
               <a className="header">{user.get('nick')}</a>
