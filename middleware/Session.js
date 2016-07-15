@@ -12,6 +12,7 @@ exports.configSession = function configSession() {
       port: 6379,
       db: 0
     }),
+    cookie: {httpOnly: false},
     secret: '1234567890QWERTY',
     name: 'sessionId',
     resave: false,

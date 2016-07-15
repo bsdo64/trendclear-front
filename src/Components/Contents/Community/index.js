@@ -376,10 +376,10 @@ const CommentBox = React.createClass({
   },
 
   componentDidUpdate() {
-    this.editor = new MediumEditor(this.refs.comment_content, {
-      toolbar: false,
-      disableDoubleReturn: true
-    });
+    // this.editor = new MediumEditor(this.refs.comment_content, {
+    //   toolbar: false,
+    //   disableDoubleReturn: true
+    // });
   },
 
   handleSetPage(pagination) {

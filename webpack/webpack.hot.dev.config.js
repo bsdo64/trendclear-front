@@ -41,5 +41,9 @@ module.exports = {
       include: path.resolve(root, 'src')
     }]
   },
+  node: {
+    child_process: 'empty',
+    fs: 'empty'
+  },
   postcss: function () { return [ autoprefixer ] }
 };
