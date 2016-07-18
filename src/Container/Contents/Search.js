@@ -1,5 +1,6 @@
 import React from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
+import alt from '../../Utils/alt';
 
 import LoginStore from '../../Stores/LoginStore';
 import CommunityStore from '../../Stores/CommunityStore';
@@ -7,6 +8,18 @@ import UserStore from '../../Stores/UserStore';
 import SearchStore from '../../Stores/SearchStore';
 import BestPostStore from '../../Stores/BestPostStore';
 import GnbStore from '../../Stores/GnbStore';
+
+import Posts from '../../Stores/Domain/Posts';
+import Users from '../../Stores/Domain/Users';
+import Clubs from '../../Stores/Domain/Clubs';
+import Categories from '../../Stores/Domain/Categories';
+import CategoryGroups from '../../Stores/Domain/CategoryGroups';
+import Forums from '../../Stores/Domain/Forums';
+
+import AuthStore from '../../Stores/UI/AuthStore';
+import LoginModalStore from '../../Stores/UI/LoginModalStore';
+const PaginationStore = alt.getStore('PaginationStore');
+const ListStore = alt.getStore('ListStore');
 
 import Best from '../../Components/Contents/Best';
 
@@ -33,7 +46,28 @@ const SearchHeader = React.createClass({
 const SearchContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [GnbStore, LoginStore, CommunityStore, UserStore, SearchStore, BestPostStore]
+    return [
+      GnbStore,
+      LoginStore,
+      CommunityStore,
+      UserStore,
+      SearchStore,
+      BestPostStore,
+
+      // UI Stores
+      LoginModalStore,
+      AuthStore,
+      PaginationStore,
+      ListStore,
+
+      // Domain Stores
+      Posts,
+      Users,
+      Categories,
+      Clubs,
+      CategoryGroups,
+      Forums
+    ]
   },
 
   getPropsFromStores() {
@@ -43,7 +77,20 @@ const SearchContainer = connectToStores({
       LoginStore: LoginStore.getState(),
       CommunityStore: CommunityStore.getState(),
       SearchStore: SearchStore.getState(),
-      UserStore: UserStore.getState()
+
+      UserStore: UserStore.getState(),
+      PaginationStore: PaginationStore.getState(),
+      ListStore: ListStore.getState(),
+
+      AuthStore:        AuthStore.getState(),
+      LoginModalStore:  LoginModalStore.getState(),
+
+      Clubs:            Clubs.getState(),
+      Categories:       Categories.getState(),
+      CategoryGroups:   CategoryGroups.getState(),
+      Forums:           Forums.getState(),
+      Users:            Users.getState(),
+      Posts:            Posts.getState()
     }
   }
 }, React.createClass({

@@ -366,7 +366,7 @@ const CommentList = React.createClass({
 require('./Comment.scss');
 const CommentBox = React.createClass({
   displayName: 'CommentBox',
-  mixins: [PureRenderMixin],
+  //mixins: [PureRenderMixin],
 
   componentDidMount() {
     this.editor = new MediumEditor(this.refs.comment_content, {
@@ -376,10 +376,10 @@ const CommentBox = React.createClass({
   },
 
   componentDidUpdate() {
-    // this.editor = new MediumEditor(this.refs.comment_content, {
-    //   toolbar: false,
-    //   disableDoubleReturn: true
-    // });
+    this.editor = new MediumEditor(this.refs.comment_content, {
+      toolbar: false,
+      disableDoubleReturn: true
+    });
   },
 
   handleSetPage(pagination) {

@@ -3,21 +3,16 @@
  */
 var connectRedis = require('connect-redis');
 var session = require('express-session');
+const config = require('vn-config');
 
 const RedisStore = connectRedis(session);
 exports.configSession = function configSession() {
-  return session({
-    store: new RedisStore({
-      host: 'localhost',
-      port: 6379,
-      db: 0
-    }),
-    cookie: {httpOnly: false},
-    secret: '1234567890QWERTY',
-    name: 'sessionId',
-    resave: false,
-    saveUninitialized: false
-  });
+
+  const sessionConf = config.front.session;
+  const redisConf = config.redis.server;
+  sessionConf.store = new RedisStore(redisConf);
+
+  return session(sessionConf);
 };
 
 exports.initSession = function initSession(req, res, next) {
