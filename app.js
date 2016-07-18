@@ -17,7 +17,9 @@ var routes = require('./routes/index');
 var embed = require('./routes/embed');
 
 var app = express();
+app.set('trust proxy', 'loopback');
 app.use(compression());
+
 if (process.env.NODE_ENV !== 'production') {
   app.use(logger('short'));
 } else {

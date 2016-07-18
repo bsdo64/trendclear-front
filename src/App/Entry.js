@@ -11,9 +11,16 @@ import {club, post, noti, forum} from '../Model/normalizr/schema';
 
 import Router from './Routes';
 
-import Perf from 'react-addons-perf'
+if (__DEV__) {
 
-window.Perf = Perf;
+  window.Perf = require('react-addons-perf');
+
+} else {
+
+  const ES6Promise = require('es6-promise');
+  ES6Promise.polyfill();
+
+}
 
 new Promise((resolve, reject) => {
   browserHistory.listen((location) => {

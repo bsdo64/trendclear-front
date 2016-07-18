@@ -17,7 +17,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(root, './dist'),
-    filename: 'bundle-[name].js',
+    filename: 'bundle.js',
     publicPath: "http://localhost:2992/_assets/"
   },
   plugins: [
