@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import { browserHistory } from 'react-router'
 
 import SigninActions from '../../../Actions/SigninActions';
@@ -136,6 +137,12 @@ const SigninFormContents = React.createClass({
       );
     }
 
+    const formCx = {
+      default: cx('field', {
+        disabled: emailVerifyFormOpen
+      })
+    };
+
     return (
       <div id="signinform_section" className="ui container section_pad">
         <h3 className="ui dividing header">
@@ -146,15 +153,15 @@ const SigninFormContents = React.createClass({
 
           <div className="ui basic segment">
             <h4>로그인 정보</h4>
-            <div className="field">
+            <div className={formCx.default}>
               <label>이메일</label>
               <input ref="signinEmail" type="text" name="signinEmail" placeholder="이메일을 입력하세요" onBlur={this.handleEmail} />
             </div>
-            <div className="field">
+            <div className={formCx.default}>
               <label>비밀번호</label>
               <input type="password" name="password" placeholder="비밀번호를 입력하세요" />
             </div>
-            <div className="field">
+            <div className={formCx.default}>
               <label>비밀번호 재입력</label>
               <input type="password" name="password_re" placeholder="비밀번호를 다시한번 입력하세요" />
             </div>
@@ -163,11 +170,11 @@ const SigninFormContents = React.createClass({
           <div className="ui divider"></div>
 
           <div className="ui basic segment">
-            <div className="field">
+            <div className={formCx.default}>
               <label>닉네임</label>
               <input ref="signinNick" type="text" name="signinNick" placeholder="닉네임을 입력하세요" onBlur={this.handleNick}/>
             </div>
-            <div className="field">
+            <div className={formCx.default}>
               <label>성별</label>
               <select className="ui dropdown" name="sex">
                 <option value="">성별</option>
@@ -175,7 +182,7 @@ const SigninFormContents = React.createClass({
                 <option value="0">여자</option>
               </select>
             </div>
-            <div className="field">
+            <div className={formCx.default}>
               <label>생일</label>
               <div className="three fields">
                 <div className="field">

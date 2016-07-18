@@ -4,12 +4,12 @@ import {Link} from 'react-router';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
 
-import LoginActions from '../../../Actions/LoginActions';
-import CommunityActions from '../../../Actions/CommunityActions';
+import LoginActions from '../../Actions/LoginActions';
+import CommunityActions from '../../Actions/CommunityActions';
 
 import Menu from './ReportMenu';
 
-import './ReportBox.scss';
+import './BestPost.scss';
 const BestPost = React.createClass({
   mixins: [PureRenderMixin],
 

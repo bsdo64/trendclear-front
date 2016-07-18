@@ -32,8 +32,8 @@ const LoginModalBox = React.createClass({
             identifier  : 'password',
             rules: [
               {
-                type   : 'regExp[/^[a-z0-9_-]{4,16}$/]',
-                prompt : '비밀번호는 4~16자리,영문 입니다'
+                type   : 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
+                prompt : '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
               }
             ]
           }
@@ -100,8 +100,8 @@ const LoginModalBox = React.createClass({
             identifier  : 'password',
             rules: [
               {
-                type   : 'regExp[/^[a-z0-9_-]{4,16}$/]',
-                prompt : '비밀번호는 4~16자리,영문 입니다'
+                type   : 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
+                prompt : '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
               }
             ]
           }
@@ -149,8 +149,6 @@ const LoginModalBox = React.createClass({
         onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
       >
-
-        <i className="close icon"></i>
         <div className="content">
 
           <div id="tc_Head" role="banner">
