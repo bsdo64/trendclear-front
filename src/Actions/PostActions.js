@@ -51,6 +51,23 @@ class PostActions {
     };
   }
 
+  getSearchPost(params) {
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .get('/search', params)
+        .then((res) => {
+
+          res.data = normalize(res.data, arrayOf(post));
+
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
+
   resetBestPage() {
     return true;
   }

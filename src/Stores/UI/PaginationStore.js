@@ -33,7 +33,6 @@ class PaginationStore {
     if (StoreData && !(this.state.equals(Immutable.fromJS(StoreData))) ) {
       this.setMergeState(StoreData);
     }
-
   }
 
   onAddPagination(collection) {
@@ -44,6 +43,12 @@ class PaginationStore {
     this.waitFor(Users, Posts, ListStore);
 
     this.setMergeState({bestPostList: response.collection});
+  }
+
+  onGetSearchPost(response) {
+    this.waitFor(Users, Posts, ListStore);
+
+    this.setMergeState({searchPostList: response.collection});
   }
 
   onSaveFilter(res) {

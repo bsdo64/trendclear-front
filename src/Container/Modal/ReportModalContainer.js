@@ -21,8 +21,8 @@ const ReportModalContainer = connectToStores({
       UserStore: UserStore.getState(),
       ReportStore: ReportStore.getState(),
       Posts: Posts.getState(),
-      Comments: Posts.getState(),
-      SubComments: Posts.getState(),
+      Comments: Comments.getState(),
+      SubComments: SubComments.getState(),
     }
   }
 }, React.createClass({

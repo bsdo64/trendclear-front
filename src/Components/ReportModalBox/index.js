@@ -30,8 +30,8 @@ const ReportModalBox = React.createClass({
       active: this.state.selectItem === id
     });
     return (
-      <div className="field">
-        <div key={id} className={activeItemStyle} onClick={this.selectReportItem} data-id={id}>{message}</div>
+      <div key={id} className="field">
+        <div className={activeItemStyle} onClick={this.selectReportItem} data-id={id}>{message}</div>
       </div>
     )
   },
@@ -64,7 +64,8 @@ const ReportModalBox = React.createClass({
 
       case 'comment':
         content = this.props.Comments.get(ReportStore.get('typeId').toString());
-        title = content ? (<span>댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
+        console.log(content);
+        title = content ? <span>댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span> : null;
         break;
 
       case 'subComment':

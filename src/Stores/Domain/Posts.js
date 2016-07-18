@@ -48,24 +48,31 @@ class Posts {
     }
   }
 
+  onGetSearchPost(response) {
+    const normalizedPosts = response.data;
+
+    const newState = this.state.mergeDeep(normalizedPosts.entities.posts);
+    this.setState(newState);
+  }
+
   onGetBestPost(response) {
     const normalizedPosts = response.data;
 
-    const newState = this.state.merge(normalizedPosts.entities.posts);
+    const newState = this.state.mergeDeep(normalizedPosts.entities.posts);
     this.setState(newState);
   }
 
   onSaveFilter(res) {
     if (res.data) {
       const normalizedPosts = res.data;
-      const newState = this.state.merge(normalizedPosts.entities.posts);
+      const newState = this.state.mergeDeep(normalizedPosts.entities.posts);
       this.setState(newState);
     }
   }
   
   onSubmitComment(IPost) {
 
-    let addCommentState = this.state.merge(IPost.entities.posts);
+    let addCommentState = this.state.mergeDeep(IPost.entities.posts);
     this.setMergeState(addCommentState);
   }
 

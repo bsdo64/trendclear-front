@@ -51,6 +51,14 @@ class ListStore {
     this.setState(newState);
   }
 
+  onGetSearchPost(response) {
+    this.waitFor(Users, Posts);
+    const normalizedPosts = response.data;
+
+    const newState = this.state.update('searchPostList', list => list.concat(normalizedPosts.result));
+    this.setState(newState);
+  }
+
   onSaveFilter(response) {
     this.waitFor(GnbStore, Users, Posts);
 

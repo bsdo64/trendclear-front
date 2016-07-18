@@ -149,7 +149,9 @@ new Promise((resolve, reject) => {
           });
         }
 
-        console.info('Bootstrap Data : ', resBody);
+        if (__DEV__) {
+          console.info('Bootstrap Data : ', resBody);
+        }
 
         alt.bootstrap(JSON.stringify(resBody));
 

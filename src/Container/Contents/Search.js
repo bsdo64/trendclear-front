@@ -21,7 +21,7 @@ import LoginModalStore from '../../Stores/UI/LoginModalStore';
 const PaginationStore = alt.getStore('PaginationStore');
 const ListStore = alt.getStore('ListStore');
 
-import Best from '../../Components/Contents/Best';
+import Search from '../../Components/Contents/Search';
 
 const SearchHeader = React.createClass({
   displayName: 'SearchHeader',
@@ -103,7 +103,7 @@ const SearchContainer = connectToStores({
       <div id="best_contents" ref="best_contents">
         <SearchHeader posts={searchPosts}/>
 
-        <Best
+        <Search
           {...this.props}
         />
         

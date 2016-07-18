@@ -39,14 +39,21 @@ class Users {
   onGetBestPost(response) {
     const normalizedPosts = response.data;
 
-    const newState = this.state.merge(normalizedPosts.entities.author);
+    const newState = this.state.mergeDeep(normalizedPosts.entities.author);
+    this.setState(newState);
+  }
+
+  onGetSearchPost(response) {
+    const normalizedPosts = response.data;
+
+    const newState = this.state.mergeDeep(normalizedPosts.entities.author);
     this.setState(newState);
   }
 
   onSaveFilter(res) {
     if (res.data) {
       const normalizedPosts = res.data;
-      const newState = this.state.merge(normalizedPosts.entities.author);
+      const newState = this.state.mergeDeep(normalizedPosts.entities.author);
       this.setState(newState);
     }
   }
