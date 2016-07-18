@@ -25,6 +25,7 @@
     "debug": "~2.2.0",
     "deep-assign": "^2.0.0",
     "draft-js": "^0.7.0",
+    "es6-promise": "^3.2.1",
     "express": "^4.14.0",
     "express-session": "^1.14.0",
     "fast-memoize": "^2.0.1",
