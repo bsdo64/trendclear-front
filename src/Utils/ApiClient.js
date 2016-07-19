@@ -6,7 +6,7 @@ import Promise from 'bluebird';
 
 class AjaxApiClient {
   constructor() {
-    this.ajaxEndPoint = '/ajax';
+    this.EndPoint = '/ajax';
   }
 
   _done(resolve, reject) {
@@ -21,8 +21,8 @@ class AjaxApiClient {
     };
   }
 
-  setType(endPoint) {
-    this.ajaxEndPoint = endPoint;
+  setEntryPoint(endPoint) {
+    this.EndPoint = endPoint;
 
     return this;
   }
@@ -30,7 +30,7 @@ class AjaxApiClient {
   get(url, params) {
     return new Promise((resolve, reject) => {
       return request
-        .get(this.ajaxEndPoint + url)
+        .get(this.EndPoint + url)
         .query(params)
         .set('Accept', 'application/json')
         .end(this._done(resolve, reject));
@@ -40,7 +40,18 @@ class AjaxApiClient {
   post(url, params) {
     return new Promise((resolve, reject) => {
       return request
-        .post(this.ajaxEndPoint + url)
+        .post(this.EndPoint + url)
+        .send(params)
+        .set('Accept', 'application/json')
+        .withCredentials()
+        .end(this._done(resolve, reject));
+    });
+  }
+
+  put(url, params) {
+    return new Promise((resolve, reject) => {
+      return request
+        .put(this.EndPoint + url)
         .send(params)
         .set('Accept', 'application/json')
         .withCredentials()
@@ -51,7 +62,7 @@ class AjaxApiClient {
   postImg(url, file) {
     return new Promise((resolve, reject) => {
       return request
-        .post(this.ajaxEndPoint + url)
+        .post(this.EndPoint + url)
         .attach(file.name, file, file.name)
         .set('Accept', 'application/json')
         .withCredentials()

@@ -8,7 +8,7 @@ class CommunityActions {
   likePost(postId) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/like/post/' + postId)
         .then((res) => {
           if (res === 'ok') {
@@ -34,7 +34,7 @@ class CommunityActions {
   createCommunity(category) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/community/category', category)
         .then((res) => {
           if (res === 'ok') {

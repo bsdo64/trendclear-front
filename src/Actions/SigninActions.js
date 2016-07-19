@@ -14,7 +14,7 @@ class SigninActions {
   checkEmailDup(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/signin/checkEmailDup', params)
         .then((res) => {
           dispatch(res);
@@ -28,7 +28,7 @@ class SigninActions {
   checkNickDup(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/signin/checkNickDup', params)
         .then((res) => {
           dispatch(res);
@@ -43,7 +43,7 @@ class SigninActions {
     console.log(params);
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/signin', params)
         .then((res) => {
           dispatch(res);
@@ -57,7 +57,7 @@ class SigninActions {
   requestEmailVerify(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/signin/requestEmailVerify', params)
         .then((res) => {
           dispatch(res);
@@ -71,7 +71,7 @@ class SigninActions {
   checkVerifyCode(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/signin/checkEmailCodeVerify', params)
         .then((res) => {
           dispatch(res);

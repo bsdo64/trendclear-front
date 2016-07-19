@@ -8,7 +8,7 @@ class SearchActions {
   submitSearchQuery(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .get('/search', params)
         .then((res) => {
           dispatch(res);

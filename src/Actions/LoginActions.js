@@ -19,7 +19,7 @@ class LoginActions {
   sendLogin(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/login', params)
         .then((res) => {
           dispatch(res);

@@ -27,7 +27,7 @@ new Promise((resolve, reject) => {
     // 2. 가져온 데이터를 각 Store에 삽입한다
 
     Api
-      .setType('/ajax')
+      .setEntryPoint('/ajax')
       .get('/store' + location.pathname, location.query)
       .then(function CallStoreApi(resBody, errBody) {
         "use strict";

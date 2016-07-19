@@ -20,7 +20,7 @@ class PostActions {
   submitPost(post) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/community/submit', post)
         .then((res) => {
           dispatch(res);
@@ -37,7 +37,7 @@ class PostActions {
   getBestPost(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .get('/best', params)
         .then((res) => {
 
@@ -54,7 +54,7 @@ class PostActions {
   getSearchPost(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .get('/search', params)
         .then((res) => {
 
@@ -89,7 +89,7 @@ class PostActions {
 
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .get(url, params)
         .then((res) => {
 

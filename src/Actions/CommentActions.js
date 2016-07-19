@@ -10,7 +10,7 @@ class CommentActions {
   submitComment(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/community/comment', params)
         .then((res) => {
 
@@ -26,7 +26,7 @@ class CommentActions {
   submitSubComment(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/community/subComment', params)
         .then((res) => {
 
@@ -44,7 +44,7 @@ class CommentActions {
   likeComment(commentId) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/like/comment/' + commentId)
         .then((res) => {
           if (res === 'ok') {
@@ -62,7 +62,7 @@ class CommentActions {
   likeSubComment(subCommentId) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/like/subComment/' + subCommentId)
         .then((res) => {
           if (res === 'ok') {

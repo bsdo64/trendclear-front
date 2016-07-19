@@ -11,7 +11,7 @@ class UserActions {
   levelUp(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/user/levelup')
         .then((res) => {
           dispatch(res);
@@ -24,7 +24,7 @@ class UserActions {
   requestLogout() {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/logout')
         .then((res) => {
           dispatch(res);
@@ -44,12 +44,12 @@ class UserActions {
   uploadAvatarImage(file) {
     return (dispatch) => {
       Api
-        .setType('/image')
+        .setEntryPoint('/image')
         .postImg('/upload', file)
         .then((res) => {
 
           return Api
-            .setType('/ajax')
+            .setEntryPoint('/ajax')
             .post('/user/avatarImg', {file: res.files[0]})
             .then((res2) => {
               return {file: res, user: res2}
@@ -69,7 +69,7 @@ class UserActions {
   updatePassword(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/user/setting/password', params)
         .then(res => {
           dispatch(res);
@@ -83,7 +83,7 @@ class UserActions {
   updateProfile(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .post('/user/setting/profile', params)
         .then(res => {
           dispatch(res);
@@ -100,8 +100,8 @@ class UserActions {
   readNoti(params) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
-        .post('/user/noti/read', params)
+        .setEntryPoint('/ajax')
+        .put('/user/noti/read', params)
         .then(res => {
           dispatch(params);
         })

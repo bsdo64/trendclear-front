@@ -24,7 +24,7 @@ class GnbActions {
   saveFilter(categoryValue) {
     return (dispatch) => {
       Api
-        .setType('/ajax')
+        .setEntryPoint('/ajax')
         .get('/best', categoryValue)
         .then((res) => {
 
