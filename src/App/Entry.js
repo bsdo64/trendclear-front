@@ -15,12 +15,10 @@ if (__DEV__) {
 
   window.Perf = require('react-addons-perf');
 
-} else {
-
-  const ES6Promise = require('es6-promise');
-  ES6Promise.polyfill();
-
 }
+
+const ES6Promise = require('es6-promise');
+ES6Promise.polyfill();
 
 new Promise((resolve, reject) => {
   browserHistory.listen((location) => {

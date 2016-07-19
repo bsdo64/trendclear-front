@@ -32,7 +32,7 @@ const LoginModalBox = React.createClass({
             identifier  : 'password',
             rules: [
               {
-                type   : 'regExp[/^[a-z0-9_-]{4,16}$/]',
+                type   : 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
                 prompt : '비밀번호는 4~16자리,영문 입니다'
               }
             ]

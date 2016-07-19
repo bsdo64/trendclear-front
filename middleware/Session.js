@@ -25,4 +25,4 @@ exports.initSession = function initSession(req, res, next) {
     req.session.touch();
     next();
   }
-}
+};
