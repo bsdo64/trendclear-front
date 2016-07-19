@@ -49,6 +49,23 @@ new Promise((resolve, reject) => {
           });
         }
 
+        if (resBody.ActivityStore && resBody.ActivityStore.posts) {
+          const bestPostList = resBody.ActivityStore.posts.data;
+          const bestPostListPagination = resBody.ActivityStore.posts.collection;
+
+          const normalized = normalize(bestPostList, arrayOf(post));
+
+          assign(resBody, {
+            // Temp
+            ActivityStore: {posts: {postList: normalized}},
+
+            Posts: normalized.entities.posts,
+            Users: normalized.entities.author,
+            ListStore: {likePostList: normalized.result},
+            PaginationStore: {likePostList: bestPostListPagination}
+          });
+        }
+
         if (resBody.SearchStore && resBody.SearchStore.search) {
           const searchPostList = resBody.SearchStore.search.posts.results;
           const searchPostListPagination = resBody.SearchStore.search.collection;

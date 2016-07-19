@@ -90,6 +90,8 @@ const ActivityBox = React.createClass({
         </div>
 
         <BestContainer />
+
+        <div style={{width: 150, height: 1000}}></div>
       </div>
     );
   }

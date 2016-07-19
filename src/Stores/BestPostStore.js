@@ -87,39 +87,6 @@ class BestPostStore{
 
     this.setMergeState(state);
   }
-
-  onSaveFilter(response) {
-    this.waitFor(GnbStore);
-
-    if (response) {
-      const normalizedPosts = response.results;
-      const total = response.total;
-      const limit = 10;
-
-      const mergeData = this.state.setIn(['posts', 'data'], response.origin);
-      const mergeResults = mergeData.setIn(['posts', 'postList'], normalizedPosts);
-      const mergeTotal = mergeResults.mergeDeep({
-        posts: {
-          collection: {
-            total: total,
-            current_page: 1,
-            next_page: (limit > total) ? null : 2,
-            limit: limit
-          }
-        }
-      });
-
-
-      if (normalizedPosts.result.length < 10) {
-        const noMorePost = mergeTotal.set('noMore', true);
-
-        this.setMergeState(noMorePost.toJS());
-      } else {
-        const morePost = mergeTotal.set('noMore', false);
-        this.setMergeState(morePost.toJS());
-      }
-    }
-  }
 }
 
 export default alt.createStore(immutable(BestPostStore), BestPostStore.displayName);
