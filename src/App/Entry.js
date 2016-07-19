@@ -11,7 +11,7 @@ import {club, post, noti, forum} from '../Model/normalizr/schema';
 
 import Router from './Routes';
 
-if (__DEV__) {
+if (process.env.NODE_ENV !== 'production') {
 
   window.Perf = require('react-addons-perf');
 
@@ -189,7 +189,7 @@ new Promise((resolve, reject) => {
           });
         }
 
-        if (__DEV__) {
+        if (process.env.NODE_ENV !== 'production') {
           console.info('Bootstrap Data : ', resBody);
         }
 

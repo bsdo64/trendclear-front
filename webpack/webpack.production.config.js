@@ -22,7 +22,6 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
       },
-      __DEV__: JSON.stringify((process.env.NODE_ENV === 'development').toString() || 'true'),
       __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
     })
   ],

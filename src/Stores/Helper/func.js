@@ -7,7 +7,7 @@ export function initListener(Store) {
   Store.on('beforeEach', function beforeEachHandler(value) {
     "use strict";
 
-    if (__DEV__) {
+    if (process.env.NODE_ENV !== 'production') {
       const { payload, state } = value;
       if (Array.isArray(Store.actionListeners[payload.type])) {
         console.group(Store.displayName);
@@ -19,7 +19,7 @@ export function initListener(Store) {
   Store.on('afterEach', function afterEachHandler(value) {
     "use strict";
 
-    if (__DEV__) {
+    if (process.env.NODE_ENV !== 'production') {
       const { payload, state } = value;
       if (Array.isArray(Store.actionListeners[payload.type])) {
         console.log('After :\t', state.toJS());
