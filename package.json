@@ -52,6 +52,7 @@
     "react-select": "^1.0.0-beta13",
     "react-simple-dropdown": "^1.1.4",
     "react-tooltip": "^2.0.2",
+    "react-waypoint": "^3.1.0",
     "segmentize": "^0.4.1",
     "semantic-ui": "^2.1.8",
     "serve-favicon": "~2.3.0",
