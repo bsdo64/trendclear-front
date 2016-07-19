@@ -13,6 +13,12 @@ const ActivityContainer = connectToStores({
       ActivityStore, 
       UserStore,
 
+      // UI Stores
+      alt.getStore('LoginModalStore'),
+      alt.getStore('AuthStore'),
+      alt.getStore('PaginationStore'),
+      alt.getStore('ListStore'),
+
       alt.getStore('Posts'),
       alt.getStore('Users'),
       alt.getStore('Categories'),
@@ -26,6 +32,12 @@ const ActivityContainer = connectToStores({
     return {
       ActivityStore: ActivityStore.getState(),
       UserStore: UserStore.getState(),
+
+      // UI Stores
+      LoginModalStore: alt.getStore('LoginModalStore').getState(),
+      AuthStore: alt.getStore('AuthStore').getState(),
+      PaginationStore: alt.getStore('PaginationStore').getState(),
+      ListStore: alt.getStore('ListStore').getState(),
 
       Posts: alt.getStore('Posts').getState(),
       Users: alt.getStore('Users').getState(),

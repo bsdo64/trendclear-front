@@ -62,6 +62,13 @@ class Posts {
     this.setState(newState);
   }
 
+  onGetMoreMyPost(response) {
+    const normalizedPosts = response.data;
+
+    const newState = this.state.mergeDeep(normalizedPosts.entities.posts);
+    this.setState(newState);
+  }
+
   onSaveFilter(res) {
     if (res.data) {
       const normalizedPosts = res.data;

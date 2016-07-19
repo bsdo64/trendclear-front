@@ -68,6 +68,41 @@ class PostActions {
     };
   }
 
+  getMoreMyPost(params) {
+    let url;
+    switch (params.type) {
+      case 'likePostList':
+        url = '/user/likes';
+        break;
+
+      case 'myWritePostList':
+        url = '/user/posts';
+        break;
+
+      case 'myWriteCommentPostList':
+        url = '/user/comments';
+        break;
+
+      default:
+        url = '/user/likes';
+    }
+
+    return (dispatch) => {
+      Api
+        .setType('/ajax')
+        .get(url, params)
+        .then((res) => {
+
+          res.data = normalize(res.data, arrayOf(post));
+
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
+
   resetBestPage() {
     return true;
   }

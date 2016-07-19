@@ -1,7 +1,9 @@
 import React from 'react';
-import ReportActions from '../../../Actions/ReportActions';
+import ReportActions from '../../Actions/ReportActions';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import memoize from 'fast-memoize';
+
+import './ReportBox.scss';
 
 function createToggleModal(props) {
   "use strict";
@@ -35,6 +37,7 @@ function createToggleModal(props) {
     }
   }
 }
+
 
 const Menu = (props) => {
   "use strict";

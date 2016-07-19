@@ -50,10 +50,28 @@ new Promise((resolve, reject) => {
         }
 
         if (resBody.ActivityStore && resBody.ActivityStore.posts) {
-          const bestPostList = resBody.ActivityStore.posts.data;
-          const bestPostListPagination = resBody.ActivityStore.posts.collection;
+          const data = resBody.ActivityStore.posts.data;
+          const collection = resBody.ActivityStore.posts.collection;
 
-          const normalized = normalize(bestPostList, arrayOf(post));
+          const normalized = normalize(data, arrayOf(post));
+
+          let context, type = resBody.ActivityStore.type;
+          switch(type) {
+            case 'likePostList':
+              context = 'likePostList';
+              break;
+
+            case 'myWritePostList':
+              context = 'myWritePostList';
+              break;
+
+            case 'myWriteCommentPostList':
+              context = 'myWriteCommentPostList';
+              break;
+
+            default:
+              context = 'likePostList';
+          }
 
           assign(resBody, {
             // Temp
@@ -61,8 +79,8 @@ new Promise((resolve, reject) => {
 
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
-            ListStore: {likePostList: normalized.result},
-            PaginationStore: {likePostList: bestPostListPagination}
+            ListStore: {[context]: normalized.result},
+            PaginationStore: {[context]: collection}
           });
         }
 

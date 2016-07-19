@@ -7,15 +7,15 @@
 import React from 'react';
 import cx from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {Map} from 'immutable';
 import {Link, browserHistory} from 'react-router';
-import Paginator from '../../Paginator';
+
 import LoginActions from '../../../Actions/LoginActions';
 import CommentActions from '../../../Actions/CommentActions';
 import CommunityActions from '../../../Actions/CommunityActions';
-import Post from './Post';
-import BestPost from '../Best/BestPost';
-import Menu from '../Best/ReportMenu';
+
+import Paginator from '../../Paginator';
+import BestPost from '../../PostItem/BigPost';
+import Menu from '../../PostItem/ReportMenu';
 
 import MakeUrl from '../../Lib/MakeUrl';
 

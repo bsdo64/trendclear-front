@@ -51,6 +51,12 @@ class PaginationStore {
     this.setMergeState({searchPostList: response.collection});
   }
 
+  onGetMoreMyPost(response) {
+    this.waitFor(Users, Posts, ListStore);
+
+    this.setMergeState({[response.type]: response.collection});
+  }
+
   onSaveFilter(res) {
     const collection = res.collection;
 

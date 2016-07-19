@@ -3,7 +3,12 @@
  */
 import React from 'react';
 import {Link} from 'react-router';
-import BestContainer from '../../../Container/Contents/Best';
+import cx from 'classnames';
+import InfiniteList from '../../List/InfiniteList';
+import InfiniteLoader from '../../Loader/InfiniteLoader';
+import PostActions from '../../../Actions/PostActions';
+
+import Waypoint from 'react-waypoint';
 
 require('./index.scss');
 const ActivityBox = React.createClass({
@@ -47,12 +52,12 @@ const ActivityBox = React.createClass({
         <div className="ui horizontal list">
           <div className="item">
             <div className="middle aligned content">
-              글 {meta && meta.get('postsCount')}
+              좋아요 {meta && meta.get('likesCount')}
             </div>
           </div>
           <div className="item">
             <div className="middle aligned content">
-              좋아요 {meta && meta.get('likesCount')}
+              글 {meta && meta.get('postsCount')}
             </div>
           </div>
           <div className="item">
@@ -64,8 +69,52 @@ const ActivityBox = React.createClass({
       </div>
     )
   },
+
+  getMorePosts(context) {
+    "use strict";
+
+    const {PaginationStore} = this.props;
+    const Pagination = PaginationStore.get(context);
+    if (Pagination) {
+      const nextPage = Pagination.get('next_page');
+
+      if (nextPage) {
+        PostActions.getMoreMyPost({
+          type: context,
+          page: nextPage
+        });
+      }
+    }
+  },
+
+  createStyle(context, linkContext) {
+    "use strict";
+
+    return cx('item', {
+      active: context === linkContext
+    })
+  },
+
   render() {
-    const {UserStore, ActivityStore} = this.props;
+    const {UserStore, ActivityStore, location} = this.props;
+    const {ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
+    let context, Collection, PostIdList;
+
+    if (location.pathname === '/activity' || location.pathname === '/activity/likes') {
+      context = 'likePostList';
+      Collection = PaginationStore.get(context);
+      PostIdList = ListStore.get(context);
+
+    } else if (location.pathname === ('/activity/posts')) {
+      context = 'myWritePostList';
+      Collection = PaginationStore.get(context);
+      PostIdList = ListStore.get(context);
+
+    } else if (location.pathname === ('/activity/comments')) {
+      context = 'myWriteCommentPostList';
+      Collection = PaginationStore.get(context);
+      PostIdList = ListStore.get(context);
+    }
 
     return (
       <div id="activity">
@@ -77,21 +126,38 @@ const ActivityBox = React.createClass({
           </div>
 
           <div className="ui menu activity-menu">
-            <Link to="/activity/likes" className="item">
+            <Link to="/activity/likes" className={this.createStyle(context, 'likePostList')}>
               좋아요
             </Link>
-            <Link to="/activity/posts" className="item">
+            <Link to="/activity/posts" className={this.createStyle(context, 'myWritePostList')}>
               글
             </Link>
-            <Link to="/activity/comments" className="item active">
+            <Link to="/activity/comments" className={this.createStyle(context, 'myWriteCommentPostList')}>
               댓글
             </Link>
           </div>
         </div>
 
-        <BestContainer />
+        <div id="best_contents">
 
-        <div style={{width: 150, height: 1000}}></div>
+          <InfiniteList
+            PostIdList={PostIdList}
+            PostItems={Posts}
+            AuthorItems={Users}
+            User={AuthStore}
+            LoginModalFlag={LoginModalStore.get('openLoginModal')}
+          />
+
+          <Waypoint
+            onEnter={this.getMorePosts.bind(this, context)}
+            bottomOffset='-10%'
+            scrollableAncestor={window || null}
+          />
+
+          <InfiniteLoader collection={Collection} />
+
+        </div>
+
       </div>
     );
   }
