@@ -1,6 +1,7 @@
 import React from 'react';
-import SearchActions from '../../Actions/SearchActions';
 import {browserHistory} from 'react-router';
+
+import SearchActions from '../../Actions/SearchActions';
 
 require('./index.scss');
 const SearchBar = React.createClass({
@@ -14,17 +15,12 @@ const SearchBar = React.createClass({
   submitQuery(e) {
     "use strict";
 
-    if (e.charCode === 13) {
-      const {SearchStore} = this.props;
-      const query = SearchStore.get('query');
+    e.preventDefault();
 
-      console.log('submit : ', query);
+    const {SearchStore} = this.props;
+    const query = SearchStore.get('query');
 
-      console.log(this.props);
-
-      browserHistory.push({pathname: '/search', query: {query: query}});
-      // SearchActions.submitSearchQuery({query: query});
-    }
+    browserHistory.push({pathname: '/search', query: {query: query}});
   },
 
   render() {
@@ -34,14 +30,16 @@ const SearchBar = React.createClass({
     const query = SearchStore.get('query');
 
     return (
-      <div className="ui input fluid small">
-        <input type="text" placeholder="여기에 검색.."
-               onChange={this.setQuery}
-               value={query}
-               onKeyPress={this.submitQuery}
-        />
-        <div className="results"></div>
-      </div>
+      <form onSubmit={this.submitQuery}>
+        <div className="ui input fluid small">
+          <input type="text" placeholder="여기에 검색.."
+                 value={query}
+                 onChange={this.setQuery}
+          />
+
+          <div className="results"></div>
+        </div>
+      </form>
     )
   }
 });

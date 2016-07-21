@@ -21,7 +21,7 @@ const ClubList = React.createClass({
     }
 
     const createForumList = function (forumId) {
-      return <li>
+      return <li key={forumId}>
         <Link to={`/community?categoryId=${categorySet}&forumId=${forumId}`} >
           {INCat.getIn(['entities', 'forums', forumId.toString(), 'title'])}
         </Link>

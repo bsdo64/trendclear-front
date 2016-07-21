@@ -70,6 +70,15 @@ const SubmitForm = connectToStores({
   componentDidUpdate(prevProps, prevState) {
     const self = this;
 
+    $('#selectClub.search.dropdown')
+      .dropdown({
+        onChange: function(value, text, $selectedItem) {
+          // custom action
+          console.log(value, text, $selectedItem);
+          self.setState({selectClubId: value, selectClub: true, selectClubValue: text})
+        }
+      });
+
     $('#selectCategoryGroup.search.dropdown')
       .dropdown({
         allowAdditions: true,
@@ -111,10 +120,6 @@ const SubmitForm = connectToStores({
   resetAll() {
     "use strict";
 
-    $('#selectClub.search.dropdown').dropdown('clear');
-    $('#selectCategoryGroup.search.dropdown').dropdown('clear');
-    $('#selectCategory.search.dropdown').dropdown('clear');
-
     this.setState({
       selectClubId: null,
       selectClubValue: null,
@@ -155,8 +160,7 @@ const SubmitForm = connectToStores({
     };
 
     CommunityActions.createCommunity(category);
-  }
-  ,
+  },
 
   confirmForum() {
     "use strict";
@@ -219,45 +223,58 @@ const SubmitForm = connectToStores({
       <div className="ui container" style={{margin: 10, width: 700}}>
         <div className={"ui segments "} >
 
-          <div className={"ui segment " + (this.state.disableClub ? 'disabled' : '')}>
-            <h3 className="ui header">클럽 선택</h3>
-            <div className="ui divider"></div>
-            <div className="ui list">
-              <a className="item">
-                <i className="right triangle icon"></i>
-                <div className="content">
-                  <div className="header">가장 큰 분류</div>
-                  <div className="description">클럽은 각 커뮤니티를 구분합니다</div>
-                </div>
-              </a>
-              <a className="item">
-                <i className="right triangle icon"></i>
-                <div className="content">
-                  <div className="header">클럽은 베나클에서 관리합니다.</div>
-                  <div className="description">사람들이 생각하는 가장 큰 화제를 모으고 있는 분류로 구분합니다.</div>
-                </div>
-              </a>
-              <a className="item">
-                <i className="help icon"></i>
-                <div className="content">
-                  <div className="description">추가하고 싶은 클럽이 있다면 의견을 보내주세요</div>
-                </div>
-              </a>
+          <div className="ui segment">
+            <div className="ui header">
+              클럽 만들기
             </div>
-            <div id="selectClub" className={"ui search selection dropdown "  + (this.state.disableClub ? 'disabled' : '')} style={{marginRight: 10}}>
-              <input name="tags" type="hidden" />
-              <i className="dropdown icon"></i>
-              <div className="default text">클럽 선택..</div>
-              <div className="menu">
-                {
-                  clubs.toArray().map(v => <div className="item" data-value={v.get('id')}>{v.get('title')}</div>)
-                }
-              </div>
+
+            <div className="ui large breadcrumb">
+              <a className="section">{this.state.selectClubValue}</a>
+              <i className="right chevron icon divider"></i>
+              <a className="section">{this.state.selectCategoryGroupValue}</a>
+              <i className="right chevron icon divider"></i>
+              <a className="section">{this.state.selectCategoryValue}</a>
+              <i className="right chevron icon divider"></i>
+              <div className="active section">{this.state.selectForumValue}</div>
             </div>
-            <div className={"ui button primary "} onClick={this.confirmClub}>확인</div>
           </div>
 
           {
+            !this.state.confirmClub && !this.state.disableClub &&
+            <div className={"ui segment " + (this.state.disableClub ? 'disabled' : '')}>
+              <h3 className="ui header">클럽 선택</h3>
+              <div className="ui divider"></div>
+              <div className="ui list">
+                <a className="item">
+                  <i className="right triangle icon"></i>
+                  <div className="content">
+                    <div className="header">클럽은 베나클에서 관리합니다.</div>
+                    <div className="description">가장 큰 주제입니다.</div>
+                  </div>
+                </a>
+                <a className="item">
+                  <i className="help icon"></i>
+                  <div className="content">
+                    <div className="description">추가하고 싶은 클럽이 있다면 의견을 보내주세요</div>
+                  </div>
+                </a>
+              </div>
+              <div id="selectClub" className={"ui search selection dropdown "  + (this.state.disableClub ? 'disabled' : '')} style={{marginRight: 10}}>
+                <input name="tags" type="hidden" />
+                <i className="dropdown icon"></i>
+                <div className="default text">클럽 선택..</div>
+                <div className="menu">
+                  {
+                    clubs.toArray().map(v => <div className="item" data-value={v.get('id')}>{v.get('title')}</div>)
+                  }
+                </div>
+              </div>
+              <div className={"ui button primary "} onClick={this.confirmClub}>확인</div>
+            </div>
+          }
+
+          {
+            !this.state.confirmCategoryGroup && !this.state.disableCategoryGroup &&
             this.state.confirmClub && this.state.selectClubId &&
             <div className={"ui segment " + (this.state.disableCategoryGroup ? 'disabled' : '')}>
               <h3 className="header">카테고리 박스 입력</h3>
@@ -287,6 +304,7 @@ const SubmitForm = connectToStores({
           }
 
           {
+            !this.state.confirmCategory && !this.state.disableCategory &&
             this.state.confirmCategoryGroup && (this.state.selectCategoryGroupId || this.state.newCategoryGroup) &&
             <div className={"ui segment " + (this.state.disableCategory ? 'disabled' : '')}>
               <h3 className="header">포럼 그룹 입력</h3>
@@ -327,7 +345,8 @@ const SubmitForm = connectToStores({
           }
 
           {
-            this.state.selectCategory && (this.state.selectCategoryId || this.state.newCategory) &&
+            !this.state.confirmForum && !this.state.disableForum &&
+            this.state.confirmCategory && (this.state.selectCategoryId || this.state.newCategory) &&
             <div className={"ui segment " + (this.state.disableForum ? 'disabled' : '')}>
             <h3 className="header">게시판 입력</h3>
               <div className="ui divider"></div>
@@ -356,26 +375,32 @@ const SubmitForm = connectToStores({
 
         </div>
 
-        <div className="ui segment">
-          <h3>입력 확인하기</h3>
-          <div className="ui divider"></div>
-          <h4>아래 사항이 맞습니까</h4>
-          <div className="ui large breadcrumb">
-            <a className="section">{this.state.selectClubValue}</a>
-            <i className="right chevron icon divider"></i>
-            <a className="section">{this.state.selectCategoryGroupValue}</a>
-            <i className="right chevron icon divider"></i>
-            <a className="section">{this.state.selectCategoryValue}</a>
-            <i className="right chevron icon divider"></i>
-            <div className="active section">{this.state.selectForumValue}</div>
-          </div>
+        {
+          this.state.confirmForum && this.state.disableForum &&
+          this.state.confirmCategory && this.state.disableCategory &&
+          this.state.confirmCategoryGroup && this.state.disableCategoryGroup &&
+          this.state.confirmClub && this.state.disableClub &&
+          <div className="ui segment">
+            <h3>입력 확인하기</h3>
+            <div className="ui divider"></div>
+            <h4>아래 사항이 맞습니까</h4>
+            <div className="ui large breadcrumb">
+              <a className="section">{this.state.selectClubValue}</a>
+              <i className="right chevron icon divider"></i>
+              <a className="section">{this.state.selectCategoryGroupValue}</a>
+              <i className="right chevron icon divider"></i>
+              <a className="section">{this.state.selectCategoryValue}</a>
+              <i className="right chevron icon divider"></i>
+              <div className="active section">{this.state.selectForumValue}</div>
+            </div>
 
-          <div className="ui ">
-            <div className="ui primary submit button" onClick={this.submitCategory}>확인</div>
-            <div className="ui clear button" onClick={this.resetAll}>리셋</div>
+            <div className="ui ">
+              <div className="ui primary submit button" onClick={this.submitCategory}>확인</div>
+              <div className="ui clear button" onClick={this.resetAll}>리셋</div>
+            </div>
           </div>
+        }
         </div>
-      </div>
     )
   }
 }));
