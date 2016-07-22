@@ -8,8 +8,10 @@ import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdow
 import moment from 'moment';
 moment.locale('ko')
 
-require('./index.scss');
-
+if (process.env.browser === true) {
+  console.log("!!!!!!!!!!!!!!!!!!!!");
+  require('./index.scss');
+}
 const NotiItem = React.createClass({
   readNoti(notiId) {
     "use strict";

@@ -8,7 +8,9 @@ import {mapKeys} from 'lodash';
 import {medium, mediumInsertConfig} from './config';
 import PostActions from '../../../Actions/PostActions';
 
-require('./index.scss');
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const SubmitContents = React.createClass({
   displayName: 'SubmitContents',
   propTypes: {},
@@ -80,8 +82,9 @@ const SubmitContents = React.createClass({
   handleContent() {
     "use strict";
     let allContents = this.editor.serialize();
-    let el = allContents['post_editor'].value;
-    PostActions.handleContent(el);
+    let el = allContents['post_editor'].value.trim();
+    let disableDoubleReturn = el.split('<p class=""><br></p><p class=""><br></p>').join('');
+    PostActions.handleContent(disableDoubleReturn);
   },
   handlePrefix(option) {
     "use strict";

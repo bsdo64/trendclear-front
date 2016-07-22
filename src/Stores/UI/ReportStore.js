@@ -1,5 +1,5 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable, {fromJS} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../../Actions/AppActions';
 import ReportActions from '../../Actions/ReportActions';
@@ -12,7 +12,7 @@ class ReportStore{
 
     this.bindActions(AppActions);
     this.bindActions(ReportActions);
-    this.state = Immutable.Map({
+    this.state = fromJS({
       reportItem: [
         {
           id: 1,

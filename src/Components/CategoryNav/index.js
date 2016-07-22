@@ -120,7 +120,9 @@ const ClubListMain = React.createClass({
   }
 });
 
-require('./index.scss');
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const CategoryNav = React.createClass({
   displayName: 'CategoryNav',
   handleToggleGnb() {

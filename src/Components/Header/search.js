@@ -3,7 +3,9 @@ import {browserHistory} from 'react-router';
 
 import SearchActions from '../../Actions/SearchActions';
 
-require('./index.scss');
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const SearchBar = React.createClass({
 
   setQuery(e) {

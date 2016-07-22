@@ -9,7 +9,9 @@ import SigninActions from '../../../Actions/SigninActions';
 import SigninAgree from './SigninAgree';
 import SigninFormContents from './SigninFormContents';
 
-require('./Signin.scss');
+if (process.env.browser === true) {
+  require('./Signin.scss');
+}
 const SigninContents = React.createClass({
   displayName: 'SigninContents',
   propTypes: {},

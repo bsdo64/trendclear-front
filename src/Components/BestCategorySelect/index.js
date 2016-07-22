@@ -4,7 +4,9 @@ import Select from 'react-select';
 import {map} from 'lodash';
 import GnbActions from '../../Actions/GnbActions';
 
-require('./index.scss');
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const Temp = React.createClass({
   getInitialState() {
     return {

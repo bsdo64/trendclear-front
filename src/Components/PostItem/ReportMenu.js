@@ -3,8 +3,9 @@ import ReportActions from '../../Actions/ReportActions';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import memoize from 'fast-memoize';
 
-import './ReportBox.scss';
-
+if (process.env.browser === true) {
+  require('./ReportBox.scss');
+}
 function createToggleModal(props) {
   "use strict";
 

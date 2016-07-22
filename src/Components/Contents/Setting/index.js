@@ -471,7 +471,9 @@ const SettingPassword = React.createClass({
   }
 });
 
-require('./index.scss');
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const SettingBox = React.createClass({
   displayName: 'SettingBox',
   contextTypes: {

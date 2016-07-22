@@ -1,6 +1,9 @@
 import React from 'react';
 import BigPost from '../PostItem/BigPost';
-import './BestList.scss';
+
+if (process.env.browser === true) {
+  require('./BestList.scss');
+}
 
 function createItem(props, id) {
   "use strict";

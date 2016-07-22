@@ -3,7 +3,9 @@ import React, {Component} from 'react';
 import SigninButton from './SigninButton';
 import TrendBox from './TrendBox';
 
-require('./index.scss');
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 
 class WidgetBox extends Component {
   render() {

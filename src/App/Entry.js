@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {browserHistory} from 'react-router';
+import {Router, browserHistory} from 'react-router';
 
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
@@ -9,7 +9,7 @@ import assign from 'deep-assign';
 import {normalize, arrayOf} from 'normalizr';
 import {club, post, noti, forum} from '../Model/normalizr/schema';
 
-import Router from './Routes';
+import routes from './Routes';
 
 if (process.env.NODE_ENV !== 'production') {
 
@@ -202,7 +202,7 @@ new Promise((resolve, reject) => {
 .then(function () {
   "use strict";
 
-  render(Router(), document.getElementById('app'));
+  render(<Router routes={routes} history={browserHistory}/>, document.getElementById('app'));
 });
 
 require('./socketSubscribe');

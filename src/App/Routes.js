@@ -78,9 +78,7 @@ const App = React.createClass({
 });
 
 
-export default () =>
-<Router history={browserHistory}>
-  <Route path="/" component={App}>
+module.exports = (<Route path="/" component={App}>
     <IndexRoute
       components={{
       HeaderMyMenu: HeaderMyMenu,
@@ -92,187 +90,186 @@ export default () =>
       ReportModalContainer: ReportModalContainer,
       ContentsContainer: ContentsContainer
     }}/>
-  </Route>
 
-  <Route path="/signin" component={App}>
+  <Route path="/signin" components={{
+    HeaderMyMenu: HeaderMyMenu,
+    HeaderSearch: HeaderSearch,
+    LeftColGnb: LeftColGlobalCategoryNav,
+    LeftColMenu: LeftColCategoryMenu,
+    LoginModalContainer: LoginModalContainer,
+    WidgetContainer: WidgetContainer,
+    ReportModalContainer: ReportModalContainer,
+    ContentsContainer: SigninContainer
+  }}/>
+
+  <Route path="/community" >
     <IndexRoute
       components={{
-      HeaderMyMenu: HeaderMyMenu,
-      HeaderSearch: HeaderSearch,
-      LeftColGnb: LeftColGlobalCategoryNav,
-      LeftColMenu: LeftColCategoryMenu,
-      LoginModalContainer: LoginModalContainer,
-      WidgetContainer: WidgetContainer,
-      ReportModalContainer: ReportModalContainer,
-      ContentsContainer: SigninContainer
-    }}/>
-  </Route>
-
-  <Route path="/community" component={App}>
-    <IndexRoute
-      components={{
-      HeaderMyMenu: HeaderMyMenu,
-      HeaderSearch: HeaderSearch,
-      LeftColGnb: LeftColGlobalCategoryNav,
-      LeftColMenu: LeftColCategoryMenu,
-      LoginModalContainer: LoginModalContainer,
-      WidgetContainer: WidgetContainer,
-      ReportModalContainer: ReportModalContainer,
-      ContentsContainer: CommunityContainer
-    }}/>
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: LeftColCategoryMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: CommunityContainer
+      }}/>
 
     <Route path="submit"
            components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: LeftColCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              WidgetContainer: WidgetContainer,
-              ReportModalContainer: ReportModalContainer,
-              ContentsContainer: SubmitContainer
-             }}
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: LeftColCategoryMenu,
+             LoginModalContainer: LoginModalContainer,
+             WidgetContainer: WidgetContainer,
+             ReportModalContainer: ReportModalContainer,
+             ContentsContainer: SubmitContainer
+           }}
     />
 
     <Route path="submit/forum"
            components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: SubmitCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              WidgetContainer: WidgetContainer,
-              ReportModalContainer: ReportModalContainer,
-              ContentsContainer: SubmitForumContainer
-             }}
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: SubmitCategoryMenu,
+             LoginModalContainer: LoginModalContainer,
+             WidgetContainer: WidgetContainer,
+             ReportModalContainer: ReportModalContainer,
+             ContentsContainer: SubmitForumContainer
+           }}
     />
 
     <Route path="submit/forum/prefix"
            components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: SubmitCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              WidgetContainer: WidgetContainer,
-              ReportModalContainer: ReportModalContainer,
-              ContentsContainer: SubmitForumPrefixContainer
-             }}
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: SubmitCategoryMenu,
+             LoginModalContainer: LoginModalContainer,
+             WidgetContainer: WidgetContainer,
+             ReportModalContainer: ReportModalContainer,
+             ContentsContainer: SubmitForumPrefixContainer
+           }}
     />
   </Route>
 
-  <Route path="/search" component={App}>
+
+  <Route path="/search" >
     <IndexRoute
       components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: LeftColCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              WidgetContainer: WidgetContainer,
-              ContentsContainer: SearchContainer
-             }}
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: LeftColCategoryMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: SearchContainer
+      }}
     />
   </Route>
 
-  <Route path="/activity" component={App}>
+  <Route path="/activity" >
     <IndexRoute
       components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              WidgetContainer: WidgetContainer,
-              ContentsContainer: ActivityContainer
-             }}
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: AccountCategoryMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: ActivityContainer
+      }}
     />
 
     <Route path="likes"
            components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              WidgetContainer: WidgetContainer,
-              ContentsContainer: ActivityContainer
-             }}
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: AccountCategoryMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             WidgetContainer: WidgetContainer,
+             ContentsContainer: ActivityContainer
+           }}
     />
 
     <Route path="posts"
            components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              WidgetContainer: WidgetContainer,
-              ContentsContainer: ActivityContainer
-             }}
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: AccountCategoryMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             WidgetContainer: WidgetContainer,
+             ContentsContainer: ActivityContainer
+           }}
     />
 
     <Route path="comments"
            components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              WidgetContainer: WidgetContainer,
-              ContentsContainer: ActivityContainer
-             }}
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: AccountCategoryMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             WidgetContainer: WidgetContainer,
+             ContentsContainer: ActivityContainer
+           }}
     />
 
   </Route>
 
-  <Route path="/setting" component={App}>
+  <Route path="/setting" >
     <IndexRoute
       components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              WidgetContainer: WidgetContainer,
-              ContentsContainer: SettingContainer
-             }}
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: AccountCategoryMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: SettingContainer
+      }}
     />
 
     <Route path="password"
            components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              WidgetContainer: WidgetContainer,
-              ContentsContainer: SettingContainer
-             }}
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: AccountCategoryMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             WidgetContainer: WidgetContainer,
+             ContentsContainer: SettingContainer
+           }}
     />
 
     <Route path="profile"
            components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              WidgetContainer: WidgetContainer,
-              ContentsContainer: SettingContainer
-             }}
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: AccountCategoryMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             WidgetContainer: WidgetContainer,
+             ContentsContainer: SettingContainer
+           }}
     />
   </Route>
 
-  <Route path="*" component={App}>
+  <Route path="*" >
     <IndexRedirect to="/"/>
   </Route>
-</Router>
+
+</Route>);
+

@@ -356,7 +356,9 @@ const CommentList = React.createClass({
   }
 });
 
-require('./Comment.scss');
+if (process.env.browser === true) {
+  require('./Comment.scss');
+}
 const CommentBox = React.createClass({
   displayName: 'CommentBox',
   //mixins: [PureRenderMixin],
@@ -483,8 +485,9 @@ const CommentBox = React.createClass({
   }
 });
 
-
-require('./Post.scss');
+if (process.env.browser === true) {
+  require('./Post.scss');
+}
 const PostPage = React.createClass({
   render() {
     "use strict";

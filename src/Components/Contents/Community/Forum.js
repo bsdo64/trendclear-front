@@ -8,7 +8,9 @@ import Paginator from '../../Paginator';
 
 import LoginActions from '../../../Actions/LoginActions';
 
-require('./CommunityContents.scss');
+if (process.env.browser === true) {
+  require('./CommunityContents.scss');
+}
 const PostList = React.createClass({
   displayName: 'PostList',
   mixins: [PureRenderMixin],

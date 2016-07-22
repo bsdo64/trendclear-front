@@ -10,7 +10,9 @@ import PostActions from '../../../Actions/PostActions';
 
 import Waypoint from 'react-waypoint';
 
-require('./index.scss');
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const ActivityBox = React.createClass({
   displayName: 'ActivityBox',
   propTypes: {},
@@ -21,14 +23,19 @@ const ActivityBox = React.createClass({
   createActivityUserHeader(UserStore) {
     "use strict";
 
-    const user = UserStore.get('user');
+    const user = UserStore.get('user'),
+          userNick = user ? user.get('nick') : null;
     const sex = UserStore.getIn(['profile', 'sex']),
           avatar_img = UserStore.getIn(['profile', 'avatar_img']);
 
     return (
       <h2 className="ui center aligned icon header">
         {this.createAvatarImg(sex, avatar_img)}
-        <div className="nick">{user.get('nick')}</div>
+
+        {
+          userNick &&
+          <div className="nick">{user.get('nick')}</div>
+        }
       </h2>
     )
   },
@@ -151,7 +158,7 @@ const ActivityBox = React.createClass({
           <Waypoint
             onEnter={this.getMorePosts.bind(this, context)}
             bottomOffset='-10%'
-            scrollableAncestor={window || null}
+            scrollableAncestor={process.env.browser ? window : null}
           />
 
           <InfiniteLoader collection={Collection} />

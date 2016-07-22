@@ -9,7 +9,9 @@ import React from 'react';
 import UserActions from '../../Actions/UserActions';
 import Modal from 'react-modal';
 
-require('./index.scss');
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const AvatarImageModal = React.createClass({
   displayName: 'AvatarImageModal',
   getInitialState() {

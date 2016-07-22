@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-require('./SigninButton.scss');
+if (process.env.browser === true) {
+  require('./SigninButton.scss');
+}
 const SigninButton = React.createClass({
   render() {
     return (

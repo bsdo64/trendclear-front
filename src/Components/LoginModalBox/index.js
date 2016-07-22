@@ -4,8 +4,9 @@ import LoginActions from '../../Actions/LoginActions.js';
 import {browserHistory} from 'react-router';
 import Modal from 'react-modal';
 
-require('./index.scss');
-
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const LoginModalBox = React.createClass({
   displayName: 'LoginModalBox',
   componentDidMount() {

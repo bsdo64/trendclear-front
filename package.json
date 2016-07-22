@@ -58,7 +58,8 @@
     "serve-favicon": "~2.3.0",
     "socket.io-client": "^1.4.8",
     "superagent": "^1.8.3",
-    "vn-config": "github:bsdo64/vn-config"
+    "vn-config": "github:bsdo64/vn-config",
+    "babel-register": "latest"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.7",

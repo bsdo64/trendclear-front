@@ -4,8 +4,9 @@ import Immutable from 'immutable';
 
 var React = require('react');
 
-require('./index.scss');
-
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const CategoryItem = React.createClass({
   displayName: 'CategoryItem',
   createSubListItem(subList) {
@@ -86,14 +87,21 @@ const CategoryList = React.createClass({
   },
   render() {
     const { GnbStore } = this.props;
-    const categories = GnbStore.get('categoryMenu').get('categories');
-    if (categories) {
-      return List.isList(categories) ?
-        <div>{categories.map(this.createCategoryItem)}</div> :
-        <div>{this.createCategoryItem(categories)}</div>;
-    } else {
-      return <div></div>;
+    if (GnbStore) {
+      const categoryMenu = GnbStore.get('categoryMenu');
+
+      if (categoryMenu) {
+        const categories = categoryMenu.get('categories');
+
+        if (categories) {
+          return List.isList(categories) ?
+            <div>{categories.map(this.createCategoryItem)}</div> :
+            <div>{this.createCategoryItem(categories)}</div>;
+        }
+      }
     }
+
+    return <div></div>;
   }
 });
 

@@ -62,7 +62,9 @@ const Timer = React.createClass({
   }
 });
 
-require('./Trendbox.scss');
+if (process.env.browser === true) {
+  require('./Trendbox.scss');
+}
 const TrendBox = React.createClass({
   componentDidMount() {
     const {user} = this.props;

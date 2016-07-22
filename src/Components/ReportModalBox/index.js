@@ -3,7 +3,9 @@ import cx from 'classnames';
 import ReportActions from '../../Actions/ReportActions.js';
 import Modal from 'react-modal';
 
-require('./index.scss');
+if (process.env.browser === true) {
+  require('./index.scss');
+}
 const ReportModalBox = React.createClass({
   displayName: 'ReportModalBox',
   

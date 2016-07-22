@@ -61,7 +61,7 @@ const BestBox = React.createClass({
         <Waypoint
           onEnter={this.getMoreBest}
           bottomOffset='-10%'
-          scrollableAncestor={window || null}
+          scrollableAncestor={process.env.browser ? window : null}
         />
 
         <InfiniteLoader collection={Collection} />

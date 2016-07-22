@@ -9,7 +9,9 @@ import CommunityActions from '../../Actions/CommunityActions';
 
 import Menu from './ReportMenu';
 
-require('./Post.scss');
+if (process.env.browser === true) {
+  require('./Post.scss');
+}
 const BestPost = React.createClass({
   mixins: [PureRenderMixin],
 

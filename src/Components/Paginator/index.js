@@ -4,8 +4,9 @@ import segmentize from 'segmentize';
 import Paginator from 'react-pagify';
 
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-
-require('./Paginator.scss');
+if (process.env.browser === true) {
+  require('./Paginator.scss');
+}
 const PaginatorApp = React.createClass({
   displayName: 'PaginatorApp',
   mixins: [PureRenderMixin],
