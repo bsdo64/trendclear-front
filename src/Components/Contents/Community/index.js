@@ -8,7 +8,7 @@ import React from 'react';
 import CommunityActions from '../../../Actions/CommunityActions';
 
 import Forum from './Forum';
-import PostPage from './Post';
+import PostPage from './PostPage';
 
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',

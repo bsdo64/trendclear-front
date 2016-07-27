@@ -7,7 +7,7 @@ import Api from '../Utils/ApiClient';
 
 import assign from 'deep-assign';
 import {normalize, arrayOf} from 'normalizr';
-import {club, post, noti, forum} from '../Model/normalizr/schema';
+import {author, club, post, noti, forum} from '../Model/normalizr/schema';
 
 import Router from './Routes';
 
@@ -31,6 +31,24 @@ new Promise((resolve, reject) => {
       .get('/store' + location.pathname, location.query)
       .then(function CallStoreApi(resBody, errBody) {
         "use strict";
+
+        if (resBody.UserStore && resBody.UserStore.user) {
+          const User = resBody.UserStore.user;
+          const userInfo = Object.assign(User, {
+            trendbox: resBody.UserStore.trendbox,
+            profile: resBody.UserStore.profile,
+            grade: resBody.UserStore.grade,
+            role: resBody.UserStore.role,
+            notifications: resBody.UserStore.notifications,
+            skills: resBody.UserStore.skills,
+          });
+
+          const normalized = normalize(userInfo, author);
+
+          assign(resBody, {
+            Users: normalized.entities.author
+          });
+        }
 
         if (resBody.BestPostStore && resBody.BestPostStore.posts) {
           const bestPostList = resBody.BestPostStore.posts.data;

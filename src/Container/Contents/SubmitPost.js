@@ -5,6 +5,7 @@ import LoginStore from '../../Stores/LoginStore';
 import UserStore from '../../Stores/UserStore';
 import SubmitStore from '../../Stores/SubmitStore';
 
+import Posts from '../../Stores/Domain/Posts';
 import AuthStore from '../../Stores/UI/AuthStore';
 
 import Submit from '../../Components/Contents/Submit';
@@ -12,11 +13,12 @@ import Submit from '../../Components/Contents/Submit';
 const SigninContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [SubmitStore, LoginStore, UserStore, AuthStore];
+    return [Posts, SubmitStore, LoginStore, UserStore, AuthStore];
   },
 
   getPropsFromStores() {
     return {
+      Posts: Posts.getState(),
       SubmitStore: SubmitStore.getState(),
       AuthStore: AuthStore.getState(),
       UserStore: UserStore.getState(),

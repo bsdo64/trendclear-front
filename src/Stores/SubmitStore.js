@@ -51,6 +51,25 @@ class SubmitStore{
       );
     }
   }
+  onModPost(result) {
+    if (result) {
+      let forum = result.forum;
+
+      this.setMergeState({
+        title: null,
+        content: null
+      });
+
+      browserHistory.replace(
+        '/community?categoryId=' + forum.category.id +
+        '&forumId=' + forum.id +
+        '&postId=' + result.id
+      );
+    }
+  }
+  onRemoveServerInit() {
+    this.setMergeState(Map({server: null}));
+  }
   onRemoveContent() {
     this.setMergeState(Map({
       selectPrefixId: null,

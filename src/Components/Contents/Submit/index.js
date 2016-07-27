@@ -23,10 +23,33 @@ const SubmitContents = React.createClass({
     $('#post_editor').mediumInsert(mediumInsertConfig(this.editor));
 
     // init content
-    const initContent = this.props.SubmitStore.get('content');
-    if (initContent) {
-      this.editor.setContent(initContent);
+    if (this.props.SubmitStore.get('server') === 'update') {
+      const initContent = this.props.SubmitStore.get('content');
+      if (initContent) {
+        this.editor.setContent(initContent);
+      }
+
+      PostActions.removeServerInit();
+    } else {
+      this.editor.setContent(null);
+      PostActions.removeServerInit();
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    // init from server
+    if (nextProps.SubmitStore.get('server') === 'update') {
+      const initContent = nextProps.SubmitStore.get('content');
+      if (initContent) {
+        this.editor.setContent(initContent);
+      }
+
+      PostActions.removeServerInit();
+    }
+  },
+
+  componentWillUnmount() {
+    this.editor.destroy();
   },
   
   submitPost() {
@@ -73,6 +96,20 @@ const SubmitContents = React.createClass({
     }
   },
 
+  modPost() {
+    "use strict";
+    const { SubmitStore, UserStore } = this.props;
+
+    let newPost = {
+      postId: SubmitStore.get('postId'),
+      title: SubmitStore.get('title'),
+      content: SubmitStore.get('content'),
+      prefixId: SubmitStore.get('selectPrefixId'),
+      query: this.props.location.query
+    };
+    PostActions.modPost(newPost);
+  },
+
   handleTitle() {
     "use strict";
     PostActions.handleTitle(this.refs.title.value);
@@ -107,6 +144,7 @@ const SubmitContents = React.createClass({
     const { AuthStore, UserStore, SubmitStore } = this.props;
 
     const isLogin = AuthStore.get('isLogin');
+    const type = SubmitStore.get('type');
 
     if (isLogin) {
 
@@ -211,9 +249,18 @@ const SubmitContents = React.createClass({
               {/* <TagList items={Tags} /> */}
 
               <div className="submit_button_box">
-                <button className="ui primary button" onClick={this.submitPost}>
-                  저장하기
-                </button>
+                {
+                  (type === 'write') &&
+                  <button className="ui primary button" onClick={this.submitPost}>
+                    저장하기
+                  </button>
+                }
+                {
+                  (type === 'mod') &&
+                  <button className="ui primary button" onClick={this.modPost}>
+                    수정하기
+                  </button>
+                }
                 <button className="ui button" onClick={this.removeContnet}>
                   다시 쓰기
                 </button>

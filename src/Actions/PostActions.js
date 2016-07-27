@@ -30,6 +30,22 @@ class PostActions {
         });
     };
   }
+  modPost(post) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .put('/community/submit', post)
+        .then((res) => {
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
+  removeServerInit() {
+    return true;
+  }
   removeContent() {
     return true;
   }
