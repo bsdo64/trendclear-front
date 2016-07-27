@@ -10,7 +10,7 @@ import './ReportBox.scss';
 function createToggleModal(props) {
   "use strict";
 
-  const {targetId, targetType} = props;
+  const {categoryId, forumId, targetId, targetType} = props;
 
   return function toggleModal (e) {
     "use strict";
@@ -32,7 +32,7 @@ function createToggleModal(props) {
         break;
       case 'mod_post':
         console.log('포스트 수정 Id : ', targetId);
-        browserHistory.push(`/community/submit?postId=${targetId}`)
+        browserHistory.push(`/community/submit?categoryId=${categoryId}&forumId=${forumId}&postId=${targetId}`)
         break;
       case 'delete_post':
 

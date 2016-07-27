@@ -10,7 +10,7 @@ import CommunityActions from '../../Actions/CommunityActions';
 import Menu from './ReportMenu';
 
 require('./Post.scss');
-const BestPost = React.createClass({
+const BigPost = React.createClass({
   mixins: [PureRenderMixin],
 
   sendLike() {
@@ -188,6 +188,8 @@ const BestPost = React.createClass({
               <div className="report_box">
                 <Menu
                   targetType="post"
+                  categoryId={post.get('category_id')}
+                  forumId={post.get('forum_id')}
                   targetId={post.get('id')}
                   isUser={userId && (userId === author.get('id'))}
                 />
@@ -201,4 +203,4 @@ const BestPost = React.createClass({
   }
 });
 
-export default BestPost;
+export default BigPost;

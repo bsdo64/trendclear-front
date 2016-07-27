@@ -369,6 +369,8 @@ const CommentBox = React.createClass({
   },
 
   componentDidUpdate() {
+    this.editor.destroy();
+
     this.editor = new MediumEditor(this.refs.comment_content, {
       toolbar: false,
       disableDoubleReturn: true
