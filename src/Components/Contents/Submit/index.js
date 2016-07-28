@@ -69,7 +69,7 @@ const EditorBox = React.createClass({
   },
 
   submitPost() {
-    const { SubmitStore, UserStore } = this.props;
+    const {SubmitStore, UserStore} = this.props;
 
     const skills = UserStore.get('skills');
     const writePost = skills
@@ -118,7 +118,7 @@ const EditorBox = React.createClass({
 
   modPost() {
     "use strict";
-    const { SubmitStore, UserStore } = this.props;
+    const {SubmitStore, UserStore} = this.props;
 
     const title = SubmitStore.get('title');
     const content = SubmitStore.get('content');
@@ -161,13 +161,10 @@ const EditorBox = React.createClass({
     this.setState({type: 'url'});
   },
 
-  setUrlMetaContent(e) {
+  createUrlMetaContent(urlMetaData, askButton) {
     "use strict";
-    e.preventDefault();
-    e.stopPropagation();
 
-    const urlMetaData = this.props.SubmitStore.get('urlMetaData');
-    const box = (
+    return (
       <div className="url-meta-data-box">
         <a href={urlMetaData.get('url')} target="_blank">
           <div className="ui items">
@@ -180,15 +177,34 @@ const EditorBox = React.createClass({
               }
               <div className="content">
                 <div className="header">{urlMetaData.get('title')}</div>
+                <div className="meta">
+                  <p>{(urlMetaData.get('siteName') || urlMetaData.getIn(['uri', 'host']))}</p>
+                </div>
                 <div className="description">
                   <p>{urlMetaData.get('description')}</p>
                 </div>
+                {
+                  askButton &&
+                  <div className="extra">
+                    <div className="ui right floated button" onClick={this.setUrlMetaContent}>
+                      링크 사용
+                    </div>
+                  </div>
+                }
               </div>
             </div>
           </div>
         </a>
-      </div>
-    );
+      </div>)
+  },
+
+  setUrlMetaContent(e) {
+    "use strict";
+    e.preventDefault();
+    e.stopPropagation();
+
+    const urlMetaData = this.props.SubmitStore.get('urlMetaData');
+    const box = this.createUrlMetaContent(urlMetaData, false);
 
     PostActions.handleContent(ReactDOM.renderToStaticMarkup(box));
   },
@@ -225,35 +241,7 @@ const EditorBox = React.createClass({
 
     let urlMetaDataBox;
     if (urlMetaData && urlMetaData.size) {
-      urlMetaDataBox = (
-        <div className="url-meta-data-box">
-          <a href={urlMetaData.get('url')} target="_blank">
-            <div className="ui items">
-              <div className="item">
-                {
-                  urlMetaData.get('image') &&
-                  <div className="image">
-                    <img src={urlMetaData.get('image')}/>
-                  </div>
-                }
-                <div className="content">
-                  <div className="header">{urlMetaData.get('title')}</div>
-                  <div className="description">
-                    <p>{urlMetaData.get('description')}</p>
-                  </div>
-                  <div className="extra">
-                    <div className="ui right floated button" onClick={this.setUrlMetaContent}>
-                      링크 사용
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      );
-
-
+      urlMetaDataBox = this.createUrlMetaContent(urlMetaData, true);
     }
 
     return (
@@ -270,14 +258,14 @@ const EditorBox = React.createClass({
           </a>
         </div>
 
-        <div className={displayEditor} >
-          {<div className="post_editor" id="post_editor" ></div>}
+        <div className={displayEditor}>
+          {<div className="post_editor" id="post_editor"></div>}
           {/*<Editor />*/}
         </div>
 
         <div className={displayUrl}>
           <div className="ui action input">
-            <input ref="url_input" type="text" placeholder="주소를 입력하세요" />
+            <input ref="url_input" type="text" placeholder="주소를 입력하세요"/>
             <button className="ui button" onClick={this.getUrlPost}>확인</button>
           </div>
 
@@ -331,11 +319,11 @@ const SubmitContents = React.createClass({
 
   setContent(content) {
     "use strict";
-    
+
   },
 
   render() {
-    const { AuthStore, UserStore, SubmitStore } = this.props;
+    const {AuthStore, UserStore, SubmitStore} = this.props;
 
     const isLogin = AuthStore.get('isLogin');
 
@@ -350,16 +338,16 @@ const SubmitContents = React.createClass({
       const icon = UserStore.get('icon');
       const sex = profile.get('sex'),
         avatar_img = profile.get('avatar_img'),
-        icon_img = icon ? icon.get('img'): null;
+        icon_img = icon ? icon.get('img') : null;
       let avatarImg, iconImg;
 
       if (avatar_img) {
-        avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
+        avatarImg = <img src={'/image/uploaded/files/' + avatar_img}/>;
       } else {
         if (sex) {
-          avatarImg = <img src="/images/default-male.png" />;
+          avatarImg = <img src="/images/default-male.png"/>;
         } else {
-          avatarImg = <img src="/images/default-female.png" />;
+          avatarImg = <img src="/images/default-female.png"/>;
         }
       }
 
@@ -373,7 +361,7 @@ const SubmitContents = React.createClass({
       }
       let options = prefixes.map(function (item) {
         return mapKeys(item, function (value, key) {
-          return key==='id' ? 'value' : (key==='name' ? 'label' : key)
+          return key === 'id' ? 'value' : (key === 'name' ? 'label' : key)
         })
       });
       return (
@@ -404,7 +392,7 @@ const SubmitContents = React.createClass({
                          type="text"
                          placeholder="제목을 입력하세요"
                          value={SubmitStore.get('title')}
-                         onChange={this.handleTitle} />
+                         onChange={this.handleTitle}/>
                 </div>
               </div>
 
