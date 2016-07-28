@@ -13,6 +13,7 @@ const BestBox = React.createClass({
     PostActions.resetBestPage();
     GnbActions.resetFilter();
   },
+  
   componentDidMount() {
     $('.ui.embed').embed();
   },
