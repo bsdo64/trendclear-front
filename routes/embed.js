@@ -2,6 +2,7 @@
 
 var express = require('express');
 var videoParser = require('js-video-url-parser');
+var metafetch = require('metafetch');
 
 const Embeds = express.Router();
 
@@ -61,6 +62,23 @@ Embeds.get('/oembed', (req, res, next) => {
    //res.json(iframeResult.body);
    res.json({html: '<div>haha</div>'})
    })*/
+});
+
+Embeds.get('/urlMeta', (req, res, next) => {
+  let url = req.query.url;
+
+  metafetch.fetch(url, {
+    flags: {
+      images: false,
+      links: false
+    },
+    http: {
+      timeout: 30000
+    }
+  }, function (err, meta) {
+
+    res.json(meta);
+  });
 });
 
 module.exports = Embeds;

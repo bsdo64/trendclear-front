@@ -119,3 +119,18 @@
     }
   }
 }
+
+.editor-box {
+  .ui.labeled.icon.menu.editor-type-menu {
+    margin-top: 10px;
+  }
+  .hide {
+    display: none;
+  }
+}
+
+.url-meta-data-box {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #dedede;
+}

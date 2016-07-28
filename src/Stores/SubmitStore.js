@@ -77,6 +77,9 @@ class SubmitStore{
       content: null
     }));
   }
+  onGetMeta(result) {
+    this.setMergeState({urlMetaData: result});
+  }
 }
 
 export default alt.createStore(immutable(SubmitStore), SubmitStore.displayName);

@@ -122,6 +122,21 @@ class PostActions {
   resetBestPage() {
     return true;
   }
+
+  getMeta(url) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/api')
+        .get('/urlMeta', {url: url})
+        .then((res) => {
+
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
 }
 
 export default alt.createActions(PostActions);

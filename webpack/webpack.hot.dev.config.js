@@ -41,6 +41,9 @@ module.exports = {
       test: /\.scss$/,
       loaders: ["style", "css", "postcss", "sass"],
       include: path.resolve(root, 'src')
+    }, {
+      test: /\.json$/,
+      loaders: ["json"],
     }]
   },
   node: {

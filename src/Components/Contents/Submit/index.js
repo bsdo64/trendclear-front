@@ -2,16 +2,24 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
+import ReactDOM from 'react-dom/server';
 import Select from 'react-select';
+import cx from 'classnames';
 import {mapKeys} from 'lodash';
 
 import {medium, mediumInsertConfig} from './config';
 import PostActions from '../../../Actions/PostActions';
 
-require('./index.scss');
-const SubmitContents = React.createClass({
-  displayName: 'SubmitContents',
-  propTypes: {},
+const EditorBox = React.createClass({
+  getInitialState() {
+    return {
+      type: 'editor',
+      isLoadingUrl: false,
+      isLoadedUrl: false,
+      successUrl: false,
+      loadedUrlMeta: null
+    };
+  },
 
   componentDidMount() {
     let that = this;
@@ -51,7 +59,15 @@ const SubmitContents = React.createClass({
   componentWillUnmount() {
     this.editor.destroy();
   },
-  
+
+
+  handleContent() {
+    "use strict";
+    let allContents = this.editor.serialize();
+    let el = allContents['post_editor'].value;
+    PostActions.handleContent(el);
+  },
+
   submitPost() {
     const { SubmitStore, UserStore } = this.props;
 
@@ -84,13 +100,17 @@ const SubmitContents = React.createClass({
     const result = checkSkillAvailable(writePost);
 
     if (result) {
-      let newPost = {
-        title: SubmitStore.get('title'),
-        content: SubmitStore.get('content'),
-        prefixId: SubmitStore.get('selectPrefixId'),
-        query: this.props.location.query
-      };
-      PostActions.submitPost(newPost);
+      const title = SubmitStore.get('title');
+      const content = SubmitStore.get('content');
+      if (title && content) {
+        let newPost = {
+          title: title,
+          content: content,
+          prefixId: SubmitStore.get('selectPrefixId'),
+          query: this.props.location.query
+        };
+        PostActions.submitPost(newPost);
+      }
     } else {
       console.log('not available');
     }
@@ -100,25 +120,205 @@ const SubmitContents = React.createClass({
     "use strict";
     const { SubmitStore, UserStore } = this.props;
 
-    let newPost = {
-      postId: SubmitStore.get('postId'),
-      title: SubmitStore.get('title'),
-      content: SubmitStore.get('content'),
-      prefixId: SubmitStore.get('selectPrefixId'),
-      query: this.props.location.query
-    };
-    PostActions.modPost(newPost);
+    const title = SubmitStore.get('title');
+    const content = SubmitStore.get('content');
+
+    if (title && content) {
+      let newPost = {
+        postId: SubmitStore.get('postId'),
+        title: title,
+        content: content,
+        prefixId: SubmitStore.get('selectPrefixId'),
+        query: this.props.location.query
+      };
+      PostActions.modPost(newPost);
+    }
   },
+
+
+  removeContnet() {
+    "use strict";
+    PostActions.removeContent();
+    this.editor.setContent(null);
+  },
+
+  getUrlPost() {
+    "use strict";
+
+    const url = this.refs.url_input.value.trim();
+    PostActions.getMeta(url);
+  },
+
+  selectEditor() {
+    "use strict";
+
+    this.setState({type: 'editor'});
+  },
+
+  selectUrl() {
+    "use strict";
+
+    this.setState({type: 'url'});
+  },
+
+  setUrlMetaContent(e) {
+    "use strict";
+    e.preventDefault();
+    e.stopPropagation();
+
+    const urlMetaData = this.props.SubmitStore.get('urlMetaData');
+    const box = (
+      <div className="url-meta-data-box">
+        <a href={urlMetaData.get('url')} target="_blank">
+          <div className="ui items">
+            <div className="item">
+              {
+                urlMetaData.get('image') &&
+                <div className="image">
+                  <img src={urlMetaData.get('image')}/>
+                </div>
+              }
+              <div className="content">
+                <div className="header">{urlMetaData.get('title')}</div>
+                <div className="description">
+                  <p>{urlMetaData.get('description')}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    );
+
+    PostActions.handleContent(ReactDOM.renderToStaticMarkup(box));
+  },
+
+  checkTitleAndContent() {
+    "use strict";
+
+    const {SubmitStore} = this.props;
+    return !SubmitStore.get('title') || !$(SubmitStore.get('content')).text().trim();
+  },
+
+  render() {
+    "use strict";
+
+    const {SubmitStore} = this.props;
+    const type = SubmitStore.get('type');
+    const urlMetaData = SubmitStore.get('urlMetaData');
+
+    const displayEditor = cx('ui description submit_post_box', {
+      hide: this.state.type !== 'editor'
+    });
+    const displayUrl = cx('', {
+      hide: this.state.type !== 'url'
+    });
+    const editorActive = cx('item', {
+      active: this.state.type === 'editor'
+    });
+    const urlActive = cx('item', {
+      active: this.state.type === 'url'
+    });
+    const titleAndContentActiveButton = cx('ui primary button', {
+      disabled: this.checkTitleAndContent()
+    });
+
+    let urlMetaDataBox;
+    if (urlMetaData && urlMetaData.size) {
+      urlMetaDataBox = (
+        <div className="url-meta-data-box">
+          <a href={urlMetaData.get('url')} target="_blank">
+            <div className="ui items">
+              <div className="item">
+                {
+                  urlMetaData.get('image') &&
+                  <div className="image">
+                    <img src={urlMetaData.get('image')}/>
+                  </div>
+                }
+                <div className="content">
+                  <div className="header">{urlMetaData.get('title')}</div>
+                  <div className="description">
+                    <p>{urlMetaData.get('description')}</p>
+                  </div>
+                  <div className="extra">
+                    <div className="ui right floated button" onClick={this.setUrlMetaContent}>
+                      링크 사용
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      );
+
+
+    }
+
+    return (
+      <div className="editor-box">
+
+        <div className="ui labeled icon menu editor-type-menu">
+          <a className={editorActive} onClick={this.selectEditor}>
+            <i className="pencil icon"></i>
+            에디터
+          </a>
+          <a className={urlActive} onClick={this.selectUrl}>
+            <i className="fa fa-link icon"></i>
+            URL
+          </a>
+        </div>
+
+        <div className={displayEditor} >
+          {<div className="post_editor" id="post_editor" ></div>}
+          {/*<Editor />*/}
+        </div>
+
+        <div className={displayUrl}>
+          <div className="ui action input">
+            <input ref="url_input" type="text" placeholder="주소를 입력하세요" />
+            <button className="ui button" onClick={this.getUrlPost}>확인</button>
+          </div>
+
+          { urlMetaDataBox }
+
+        </div>
+
+        {/* <TagList items={Tags} /> */}
+
+        <div className="submit_button_box">
+          {
+            (type === 'write') &&
+            <button className={titleAndContentActiveButton} onClick={this.submitPost}>
+              저장하기
+            </button>
+          }
+          {
+            (type === 'mod') &&
+            <button className={titleAndContentActiveButton} onClick={this.modPost}>
+              수정하기
+            </button>
+          }
+          <button className="ui button" onClick={this.removeContnet}>
+            다시 쓰기
+          </button>
+        </div>
+
+      </div>
+    )
+  }
+})
+
+
+require('./index.scss');
+const SubmitContents = React.createClass({
+  displayName: 'SubmitContents',
+  propTypes: {},
 
   handleTitle() {
     "use strict";
     PostActions.handleTitle(this.refs.title.value);
-  },
-  handleContent() {
-    "use strict";
-    let allContents = this.editor.serialize();
-    let el = allContents['post_editor'].value;
-    PostActions.handleContent(el);
   },
   handlePrefix(option) {
     "use strict";
@@ -134,17 +334,10 @@ const SubmitContents = React.createClass({
     
   },
 
-  removeContnet() {
-    "use strict";
-    PostActions.removeContent();
-    this.editor.setContent(null);
-  },
-
   render() {
     const { AuthStore, UserStore, SubmitStore } = this.props;
 
     const isLogin = AuthStore.get('isLogin');
-    const type = SubmitStore.get('type');
 
     if (isLogin) {
 
@@ -240,31 +433,9 @@ const SubmitContents = React.createClass({
                 </div>
               </div>
 
-              {/* content */}
-              <div className="ui description submit_post_box" >
-                {<div className="post_editor" id="post_editor" ></div>}
-                {/*<Editor />*/}
-              </div>
-
-              {/* <TagList items={Tags} /> */}
-
-              <div className="submit_button_box">
-                {
-                  (type === 'write') &&
-                  <button className="ui primary button" onClick={this.submitPost}>
-                    저장하기
-                  </button>
-                }
-                {
-                  (type === 'mod') &&
-                  <button className="ui primary button" onClick={this.modPost}>
-                    수정하기
-                  </button>
-                }
-                <button className="ui button" onClick={this.removeContnet}>
-                  다시 쓰기
-                </button>
-              </div>
+              <EditorBox
+                {...this.props}
+              />
 
             </div>
           </div>

@@ -3,6 +3,7 @@
  */
 import request from 'superagent';
 import Promise from 'bluebird';
+import {browserHistory} from 'react-router';
 
 class AjaxApiClient {
   constructor() {
@@ -11,6 +12,7 @@ class AjaxApiClient {
 
   _done(resolve, reject) {
     return (xhrErr, xhrRes) => {
+      console.log(xhrRes);
       if (xhrErr) {
         return reject(xhrErr);
       } else if (xhrRes.error) {
