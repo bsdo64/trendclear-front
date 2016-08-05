@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Select from 'react-select';
 import cx from 'classnames';
+import Recaptcha from 'react-recaptcha';
 import {mapKeys} from 'lodash';
 
 import {medium, mediumInsertConfig} from './config';
@@ -214,6 +215,14 @@ const EditorBox = React.createClass({
 
     const {SubmitStore} = this.props;
     return !SubmitStore.get('title') || !$(SubmitStore.get('content')).text().trim();
+  },
+
+  handleRecaptcha(a,b,c,d) {
+    "use strict";
+
+    const args = Array.prototype.slice.call(arguments, 1);
+
+    console.log(args, a, b, c, d)
   },
 
   render() {

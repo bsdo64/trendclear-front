@@ -76,6 +76,7 @@ const Temp = React.createClass({
                     <Select
                       multi={true}
                       placeholder="카테고리 선택 .."
+                      backspaceToRemoveMessage="{label} 삭제하기 (Back space)"
                       value={categoryValue}
                       options={categoriesMap}
                       onChange={this.updateFilterValue.bind(this, 'categoryValue')}
