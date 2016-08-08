@@ -17,8 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 }
 
-const ES6Promise = require('es6-promise');
-ES6Promise.polyfill();
+require('core-js');
 
 new Promise((resolve, reject) => {
   browserHistory.listen((location) => {

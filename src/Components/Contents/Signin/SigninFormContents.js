@@ -66,6 +66,14 @@ const SigninFormContents = React.createClass({
               {
                 type   : 'regExp[/^[a-z가-힣A-Z0-9_]+( [a-z가-힣A-Z0-9_]+)*$/]',
                 prompt : '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
+              },
+              {
+                type   : 'minLength[2]',
+                prompt : '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
+              },
+              {
+                type   : 'maxLength[10]',
+                prompt : '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
               }
             ]
           },
