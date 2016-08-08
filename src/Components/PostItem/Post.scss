@@ -54,6 +54,10 @@
           margin: 1em 0;
         }
       }
+
+      & > .url-meta-data-box, & > .medium-insert-images {
+        max-width: 567px;
+      }
     }
 
     .best_post_buttons {
