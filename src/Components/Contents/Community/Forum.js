@@ -157,6 +157,11 @@ const Forum = React.createClass({
 
     if (forumId && postIds && pagination) {
       const forum = Forums.get(forumId.toString());
+
+      if (!forum) {
+        return (<div></div>)
+      }
+
       const title = forum.get('title');
       const description = forum.get('description');
       const url = forum.get('url');
@@ -164,8 +169,6 @@ const Forum = React.createClass({
       const page = pagination.get('current_page');
       const limit = pagination.get('limit');
       const total = pagination.get('total');
-
-      const categoryId = forum.get('category_id');
 
       const makeUrl = new MakeUrl(this.props.location);
 
@@ -210,7 +213,7 @@ const Forum = React.createClass({
               userId && isLogin &&
               <Link
                 className="ui button primary tiny"
-                to={{pathname: '/community/submit', query: {categoryId: categoryId, forumId: forumId}}}>
+                to={{pathname: '/community/submit', query: {forumId: forumId}}}>
                 글쓰기
               </Link>
             }

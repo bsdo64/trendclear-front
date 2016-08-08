@@ -10,7 +10,7 @@ import AuthStore from '../../Stores/UI/AuthStore';
 
 import Submit from '../../Components/Contents/Submit';
 
-const SigninContainer = connectToStores({
+const SubmitPostContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
     return [Posts, SubmitStore, LoginStore, UserStore, AuthStore];
@@ -27,24 +27,8 @@ const SigninContainer = connectToStores({
   }
 }, React.createClass({
   render() {
-    const forumInfo = this.props.SubmitStore.get('forum');
-    const clubs = alt.getStore('Clubs').getState();
-    const CategoryGroups = alt.getStore('CategoryGroups').getState();
-    const Category = alt.getStore('Categories').getState();
-
-
-    if (clubs && Category && CategoryGroups && forumInfo) {
-      const club = clubs.get(forumInfo.get('club_id').toString());
-      const category = Category.get(forumInfo.get('category_id').toString());
-      const categoryGroup = CategoryGroups.get(forumInfo.get('club_category_group_id').toString());
-
-      if (club && categoryGroup && category) {
-        return (<Submit {...this.props} club={club} categoryGroup={categoryGroup} category={category} />)
-      }
-    }
-
-    return (<div></div>);
+    return (<Submit {...this.props} />);
   }
 }));
 
-module.exports = SigninContainer;
+module.exports = SubmitPostContainer;

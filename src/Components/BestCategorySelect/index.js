@@ -30,7 +30,7 @@ const Temp = React.createClass({
 
   saveFilter() {
     const {GnbStore} = this.props;
-    const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS(): [];
+    const categoryValue = [];
     const normalize = categoryValue.map((object, key) => {
       return parseInt(object.value);
     });
@@ -40,17 +40,9 @@ const Temp = React.createClass({
   render() {
     "use strict";
 
-    const {GnbStore} = this.props;
-    const INCat = GnbStore.getIn(['gnbMenu', 'INCat']);
-    const clubs = INCat ? INCat.getIn(['entities', 'clubs']).toJS(): {};
-    const categoryGroups = INCat ? INCat.getIn(['entities', 'categoryGroups']).toJS(): {};
-    const categories = INCat ? INCat.getIn(['entities', 'categories']).toJS(): {};
+    const categoriesMap = [{value: 1, label: 'hello'}];
 
-    const categoriesMap = map(categories, (value, key) => {
-      return {value: key, label: value.title};
-    });
-
-    const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
+    const categoryValue = [];
 
     return <div>
         <div id="sub_category">

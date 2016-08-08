@@ -4,7 +4,6 @@ class MakeUrl {
   constructor(location) {
     this.pathname = location.pathname + '?';
     this.query = {
-      categoryId:   location.query.categoryId,
       forumId:      location.query.forumId,
       postId:       location.query.postId,
       p:            location.query.p || 1,

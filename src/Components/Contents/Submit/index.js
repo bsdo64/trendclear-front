@@ -336,11 +336,12 @@ const SubmitContents = React.createClass({
 
     const isLogin = AuthStore.get('isLogin');
 
+    const forumInfo = this.props.SubmitStore.get('forum');
+    if (!forumInfo) {
+      return (<div></div>)
+    }
+
     if (isLogin) {
-
-      const {club, category, categoryGroup} = this.props;
-      const forumInfo = this.props.SubmitStore.get('forum');
-
       const prefixesData = SubmitStore.get('prefixes');
       const user = UserStore.get('user');
       const profile = UserStore.get('profile');
@@ -407,15 +408,6 @@ const SubmitContents = React.createClass({
 
               <div className="meta best_post_meta">
                 <div className="ui horizontal divided list">
-                  <div className="item">
-                    {club.get('title')}
-                  </div>
-                  <div className="item">
-                    {categoryGroup.get('title')}
-                  </div>
-                  <div className="item">
-                    {category.get('title')}
-                  </div>
                   <div className="item">
                     {forumInfo.get('title')}
                   </div>

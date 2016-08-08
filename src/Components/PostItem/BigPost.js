@@ -52,11 +52,10 @@ const BigPost = React.createClass({
       avatar_img = author.getIn(['profile', 'avatar_img']),
       icon_img = author.getIn(['icon', 0, 'iconDef', 'icon_img']);
 
-    const categoryId = post.get('category_id');
     const forumId = post.get('forum_id');
     const postId = post.get('id');
-    const forumUrl = `/community?categoryId=${categoryId}&forumId=${forumId}`;
-    const postUrl = `/community?categoryId=${categoryId}&forumId=${forumId}&postId=${postId}`;
+    const forumUrl = `/community?forumId=${forumId}`;
+    const postUrl = `/community?forumId=${forumId}&postId=${postId}`;
     const liked = post.get('liked');
 
     const postStyle = cx('ui item best_list_item', {
@@ -75,15 +74,6 @@ const BigPost = React.createClass({
           <h3 className="best_post_title"><Link to={postUrl}>{post.get('title')}</Link></h3>
           <div className="meta best_post_meta">
             <div className="ui horizontal divided list">
-              <div className="item">
-                <a >{post.getIn(['forum', 'category', 'category_group', 'club', 'title'])}</a>
-              </div>
-              <div className="item">
-                <a >{post.getIn(['forum', 'category', 'category_group', 'title'])}</a>
-              </div>
-              <div className="item">
-                <a >{post.getIn(['forum', 'category', 'title'])}</a>
-              </div>
               <div className="item">
                 <Link to={forumUrl}>{post.getIn(['forum', 'title'])}</Link>
               </div>
@@ -188,7 +178,6 @@ const BigPost = React.createClass({
               <div className="report_box">
                 <Menu
                   targetType="post"
-                  categoryId={post.get('category_id')}
                   forumId={post.get('forum_id')}
                   targetId={post.get('id')}
                   isUser={userId && (userId === author.get('id'))}
