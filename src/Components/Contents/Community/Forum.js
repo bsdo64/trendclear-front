@@ -174,10 +174,64 @@ const Forum = React.createClass({
 
       return (
         <div id="forum_contents">
-          <h3 className="ui header">
-            {title}
-            <div className="sub header">{description}</div>
-          </h3>
+
+          <div id="forum_info" style={{
+            margin: '0 0 0 2px',
+            padding: 0,
+          }}>
+            <div className="ui cards">
+              <div className="card" style={{
+                borderTop: '1px solid rgb(5, 130, 148)',
+                boxShadow: 'none',
+                width: '100%'
+              }}>
+                <div className="content">
+                  <img className="right floated mini ui image" src="https://avatars2.githubusercontent.com/u/3207153?v=3&s=96" />
+                  <div className="header">
+                    {forum.get('title')}
+                    <a
+                      className="ui button primary basic tiny right floated"
+                      onClick={this.openLoginModal}>
+                      <i className="fa fa-share" />
+                      {' 구독'}
+                    </a>
+                    <a
+                      className="ui button primary basic tiny right floated"
+                      onClick={this.openLoginModal}>
+                      <i className="fa fa-star" />
+                      {' 팔로우'}
+                    </a>
+                  </div>
+                  <div className="meta">
+                    {forum.get('title')}
+                  </div>
+                  <div className="description">
+                    {forum.get('description') + '를 위한 글 입니다. 세계인의 파마'}
+                  </div>
+                </div>
+                <div className="content">
+                  <div className="ui header tiny">
+                    클럽 규칙
+                  </div>
+                  <div className="description">
+                    <p>This is a subreddit where you can get your pictures photoshopped. Need an old photo touched up? Want someone to make a faceswap for you? Do you need a logo for something? Want your friend to be flying through space on a velociraptor? This is the place for any and all of your Photoshop needs!
+                      Submit your requests or help others with your skills. Tons of people are rewarded with reddit gold almost everyday! <a href="https://www.reddit.com/r/PhotoshopRequest/gilded/">Check out what's gilded</a>.</p>
+
+                    <p>Make sure to use subreddit's theme (CSS activated) to have a better experience in this sub.</p>
+
+                    <p>Read the <a href="https://www.reddit.com/r/PhotoshopRequest/wiki/"><strong>guidelines &amp; rules</strong></a> before posting.
+                      Any violation of the rules will result in a ban or shadowban.</p>
+
+                    <p>This subreddit has age &amp; karma requirement: your account must be at least <strong>1 DAY OLD</strong> and have at least <strong>10 COMMENT KARMA</strong> in order to post a request or leave a comment. This is to avoid throwaway, inactive and troll accounts.
+                      <strong>NO EXCEPTIONS</strong> will be made so don't message the mods or you'll be ignored!</p>
+
+                    <p><a href="https://www.reddit.com/r/PhotoshopRequest/wiki/index#wiki_faq"><strong>Check out our FAQ for more info.</strong></a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="ui horizontal celled list">
             <div className="item" style={{fontWeight: 'bold'}}>
               <div className="middle aligned content bold" onClick={this.resetPrefix}>전체</div>

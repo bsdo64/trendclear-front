@@ -2,16 +2,13 @@ import React from 'react';
 import {Link} from 'react-router';
 
 const AccountCategoryMenu = (props) => (
-  <div>
+  <div id="account_menu">
     <div id="sub_category">
       <div className="sub_category_button">
         <div className="sub_category_text">{'계정'}</div>
       </div>
     </div>
     <menu className="sub_category_list">
-
-      <div className="sub_category_header">{'전체 메뉴'}</div>
-
       <ul >
         <li>
           <h5 className="">

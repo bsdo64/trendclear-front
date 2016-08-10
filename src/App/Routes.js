@@ -2,7 +2,7 @@ import React from 'react';
 import {IndexRedirect, Link, IndexRoute, Router, Route, browserHistory} from 'react-router';
 
 var LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
-var LeftColCategoryMenu = require('../Container/LeftCol/CategoryMenu.js');
+var ForumMenu = require('../Container/LeftCol/ForumMenu.js');
 
 var HeaderMyMenu = require('../Container/Header/MyMenu');
 var HeaderSearch = require('../Container/Header/Search');
@@ -100,7 +100,7 @@ export default () =>
       HeaderMyMenu: HeaderMyMenu,
       HeaderSearch: HeaderSearch,
       LeftColGnb: LeftColGlobalCategoryNav,
-      LeftColMenu: LeftColCategoryMenu,
+      LeftColMenu: ForumMenu,
       LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
       ReportModalContainer: ReportModalContainer,
@@ -114,7 +114,7 @@ export default () =>
       HeaderMyMenu: HeaderMyMenu,
       HeaderSearch: HeaderSearch,
       LeftColGnb: LeftColGlobalCategoryNav,
-      LeftColMenu: LeftColCategoryMenu,
+      LeftColMenu: ForumMenu,
       LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
       ReportModalContainer: ReportModalContainer,
@@ -126,7 +126,7 @@ export default () =>
               HeaderMyMenu: HeaderMyMenu,
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: LeftColCategoryMenu,
+              LeftColMenu: ForumMenu,
               LoginModalContainer: LoginModalContainer,
               WidgetContainer: WidgetContainer,
               ReportModalContainer: ReportModalContainer,
@@ -167,7 +167,7 @@ export default () =>
               HeaderMyMenu: HeaderMyMenu,
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: LeftColCategoryMenu,
+              LeftColMenu: ForumMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
               WidgetContainer: WidgetContainer,
