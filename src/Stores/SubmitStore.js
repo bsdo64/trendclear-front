@@ -45,8 +45,7 @@ class SubmitStore{
       });
 
       browserHistory.replace(
-        '/community?categoryId=' + forum.category.id +
-                  '&forumId=' + forum.id +
+        '/community?forumId=' + forum.id +
                   '&postId=' + result.id
       );
     }
@@ -61,8 +60,7 @@ class SubmitStore{
       });
 
       browserHistory.replace(
-        '/community?categoryId=' + forum.category.id +
-        '&forumId=' + forum.id +
+        '/community?forumId=' + forum.id +
         '&postId=' + result.id
       );
     }

@@ -59,7 +59,7 @@
     "semantic-ui": "^2.1.8",
     "serve-favicon": "~2.3.0",
     "socket.io-client": "^1.4.8",
-    "superagent": "^1.8.3",
+    "superagent": "^2.1.0",
     "vn-config": "github:bsdo64/vn-config"
   },
   "devDependencies": {

@@ -3,7 +3,6 @@
  */
 import request from 'superagent';
 import Promise from 'bluebird';
-import {browserHistory} from 'react-router';
 
 class AjaxApiClient {
   constructor() {
