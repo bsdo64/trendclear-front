@@ -4,6 +4,8 @@ import Select from 'react-select';
 import {map} from 'lodash';
 import GnbActions from '../../Actions/GnbActions';
 
+import Collection from './Collection';
+
 require('./index.scss');
 const Temp = React.createClass({
   getInitialState() {
@@ -40,7 +42,7 @@ const Temp = React.createClass({
   render() {
     "use strict";
 
-    const {UserStore, GnbStore} = this.props;
+    const {UserStore, GnbStore, Forums} = this.props;
     const user = UserStore.get('user');
     const categoriesMap = [{value: 1, label: 'hello'}];
     const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
@@ -87,36 +89,7 @@ const Temp = React.createClass({
             </li>
             {
               user &&
-              <li id="user_best_collection">
-                <h5 className="">
-                  <a>{'콜랙션'}</a>
-                </h5>
-
-                <div className="sub_category item" onMouseOver={this.openCollection}>
-                  <Link to={{pathname: '/community'}}>{'나의 게임'}</Link>
-                  <div className="collection_list">
-                    <ul className="forum_list">
-                      <li className="forum_list_item">안녕</li>
-                      <li className="forum_list_item">하세요</li>
-                      <li className="forum_list_item">저는</li>
-                      <li className="forum_list_item">도병수</li>
-                      <li className="forum_list_item">입니다</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="sub_category item">
-                  <Link to={{pathname: '/community'}}>{'나의 유머'}</Link>
-                </div>
-                <div className="sub_category item">
-                  <Link to={{pathname: '/community'}}>{'나의 날씨'}</Link>
-                </div>
-                <div className="sub_category item">
-                  <Link to={{pathname: '/community'}}>{'나의 컨텐츠'}</Link>
-                </div>
-                <div className="sub_category item">
-                  <Link to={{pathname: '/community'}}>{'새로운 콜랙션 추가 +'}</Link>
-                </div>
-              </li>
+              <Collection />
             }
           </ul>
         </menu>
