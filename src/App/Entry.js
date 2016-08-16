@@ -40,12 +40,15 @@ new Promise((resolve, reject) => {
             role: resBody.UserStore.role,
             notifications: resBody.UserStore.notifications,
             skills: resBody.UserStore.skills,
+            collections: resBody.UserStore.collections,
           });
 
           const normalized = normalize(userInfo, author);
 
           assign(resBody, {
-            Users: normalized.entities.author
+            Users: normalized.entities.author,
+            Collections: normalized.entities.collections,
+            Forums: normalized.entities.forums,
           });
         }
 

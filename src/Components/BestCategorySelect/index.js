@@ -42,7 +42,7 @@ const Temp = React.createClass({
   render() {
     "use strict";
 
-    const {UserStore, GnbStore, Forums} = this.props;
+    const {UserStore, GnbStore, Forums, Collections} = this.props;
     const user = UserStore.get('user');
     const categoriesMap = [{value: 1, label: 'hello'}];
     const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
@@ -89,12 +89,15 @@ const Temp = React.createClass({
             </li>
             {
               user &&
-              <Collection />
+              <Collection
+                collections={Collections}
+                forums={Forums}
+              />
             }
           </ul>
         </menu>
     </div>
   }
-})
+});
 
 export default Temp ;

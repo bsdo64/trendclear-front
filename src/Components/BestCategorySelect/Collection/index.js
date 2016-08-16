@@ -4,61 +4,28 @@ import cx from 'classnames';
 
 import CollectionActions from '../../../Actions/CollectionActions';
 
-const collectionData = [{
-  id: 1,
-  title: '나의 게임',
-  subs: [{
-    id: 1,
-    title: '오버워치'
-  }, {
-    id: 2,
-    title: '롤'
-  }, {
-    id: 3,
-    title: '인벤'
-  }, {
-    id: 4,
-    title: '디스크'
-  }, {
-    id: 5,
-    title: '맥'
-  }]
-}, {
-  id: 2,
-  title: '나의 오락',
-  subs: [{
-    id: 1,
-    title: '오버워치'
-  }, {
-    id: 2,
-    title: '롤'
-  }, {
-    id: 3,
-    title: '인벤'
-  }, {
-    id: 4,
-    title: '디스크'
-  }, {
-    id: 5,
-    title: '맥'
-  }]
-}];
-
 const Subs = React.createClass({
   displayName: 'Subs',
+
   render() {
     "use strict";
-    const {subs} = this.props;
+    const {subs, forums} = this.props;
     return (
       <ul className="forum_list">
         {
-          subs.map(sub => {
-            return (
-              <li key={sub.id} className="forum_list_item">
-                <a>{sub.title}</a>
-                <i className="fa fa-minus un_subscribe"/>
-              </li>
-            )
+          subs &&
+          subs.map(subId => {
+            const forum = forums.get(subId.toString());
+            if (forum) {
+              return (
+                <li key={forum.get('id')} className="forum_list_item">
+                  <a>{forum.get('title')}</a>
+                  <i className="fa fa-minus un_subscribe"/>
+                </li>
+              )
+            } else {
+              return <li></li>
+            }
           })
         }
       </ul>
@@ -74,41 +41,40 @@ const CollectionItem = React.createClass({
     };
   },
 
-  openCollection() {
+  openCollection(itemId) {
     "use strict";
 
-    clearTimeout(this.closeTimer);
-    this.setState({hide: false});
+    this.props.mouseOverItemHandler(itemId)
   },
 
   closeCollection() {
     "use strict";
 
-    this.closeTimer = setTimeout(() => {
-      // const isMouseOver = checkMouseOver();
-
-      this.setState({hide: true});
-    }, 200);
+    this.props.closeItemHandler();
   },
 
   render() {
     "use strict";
 
-    const {id, title, subs} = this.props;
+    const {
+      id, title, subs, forums,
+      mouseOverItem,
+    } = this.props;
     const itemStyle = cx('collection_list', {
-      hide: this.state.hide
+      hide: (mouseOverItem !== id)
     });
 
     return (
       <div key={id} className='sub_category item'
-           onMouseOver={this.openCollection}
-           onMouseOut={this.closeCollection}
+           onMouseOver={this.openCollection.bind(this, id)}
+           onMouseOut={this.closeCollection.bind(this, id)}
       >
         <Link to={{pathname: '/community'}}>{title}</Link>
         <div className={itemStyle}>
           <h4 className="forum_list_header">이 컬렉션의 구독 </h4>
 
           <Subs subs={subs}
+                forums={forums}
                 onMouseOver={this.openCollection}
                 onMouseOut={this.closeCollection}
           />
@@ -123,43 +89,75 @@ const Collection = React.createClass({
   displayName: 'Collection',
   getInitialState() {
     return {
-      title: '',
-      description: '',
-      isPrivate: false
+      createCollection: {
+        title: '',
+        description: '',
+        isPrivate: false
+      },
+      hideCreateCollectionBox: true,
+      mouseOverItemId: null
     };
   },
-
-  openCreateCollection() {
+  closeItemHandler() {
     "use strict";
 
+    this.setState({mouseOverItemId: null});
+  },
+  mouseOverItemHandler(itemId) {
+    "use strict";
+
+    this.setState({mouseOverItemId: itemId});
+  },
+  toggleCreateCollection() {
+    "use strict";
+
+    this.setState({hideCreateCollectionBox: !this.state.hideCreateCollectionBox})
+  },
+  closeCreateCollection() {
+    "use strict";
+
+    this.setState({hideCreateCollectionBox: true})
   },
   handleChangeTitle(event) {
     "use strict";
 
-    this.setState({title: event.target.value});
+    const newState = this.state;
+    newState.createCollection.title = event.target.value;
+    this.setState(newState);
   },
   handleChangeDescription(event) {
     "use strict";
 
-    this.setState({description: event.target.value});
+    const newState = this.state;
+    newState.createCollection.description = event.target.value;
+    this.setState(newState);
   },
   handleChangePrivate(event) {
     "use strict";
 
-    this.setState({isPrivate: !this.state.isPrivate});
+    const newState = this.state;
+    newState.createCollection.isPrivate = !newState.createCollection.isPrivate;
+    this.setState(newState);
   },
   submitNewCollection(e) {
     "use strict";
     e.preventDefault();
     e.stopPropagation();
 
-    const {title, description} = this.state;
+    const {title, description} = this.state.createCollection;
     if (title && description) {
-      CollectionActions.createCollection(...this.state);
+      CollectionActions.createCollection(this.state.createCollection);
+      this.closeCreateCollection();
     }
   },
   render() {
     "use strict";
+
+    const {collections, forums} = this.props;
+    const self = this;
+    const createCollectionBoxStyle = cx('create_box', {
+      hide: this.state.hideCreateCollectionBox
+    });
 
     return (
       <li id="user_best_collection">
@@ -168,20 +166,26 @@ const Collection = React.createClass({
         </h5>
 
         {
-          collectionData.map((collection => {
+          collections &&
+          collections.map((collection => {
             return (
               <CollectionItem
-                key={collection.id}
-                title={collection.title}
-                subs={collection.subs}
+                key={collection.get('id')}
+                id={collection.get('id')}
+                title={collection.get('title')}
+                subs={collection.get('forums')}
+                forums={forums}
+                mouseOverItemHandler={self.mouseOverItemHandler}
+                closeItemHandler={self.closeItemHandler}
+                mouseOverItem={this.state.mouseOverItemId}
               />
             )
           }))
         }
 
         <div className="sub_category item create_collection">
-          <a className="create_collection_btn" onClick={this.openCreateCollection}>{'새로운 콜랙션 추가 +'}</a>
-          <div className="create_box">
+          <a className="create_collection_btn" onClick={this.toggleCreateCollection}>{'새로운 콜랙션 추가 +'}</a>
+          <div className={createCollectionBoxStyle}>
             <form className="ui mini form " onSubmit={this.submitNewCollection}>
               <div className="field collection_title_field">
                 <label>이름</label>
@@ -201,7 +205,7 @@ const Collection = React.createClass({
                   /> 비공개
                 </label>
               </div>
-              <button className="ui primary button tiny" type="submit">만들기</button>
+              <button className="ui primary button tiny" type="submit" >만들기</button>
             </form>
 
           </div>

@@ -22,6 +22,40 @@ class CollectionActions {
         });
     };
   }
+  updateCollection(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .put('/collection', params)
+        .then((res) => {
+          if (res === 'ok') {
+            dispatch(params);
+          } else {
+            dispatch(false);
+          }
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
+  deleteCollection(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .del('/collection', params)
+        .then((res) => {
+          if (res === 'ok') {
+            dispatch(params);
+          } else {
+            dispatch(false);
+          }
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
 }
 
 module.exports = alt.createActions(CollectionActions);

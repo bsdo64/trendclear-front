@@ -3,6 +3,7 @@ const { Schema, arrayOf } = require('normalizr');
 const club = new Schema('clubs');
 const categoryGroup = new Schema('categoryGroups');
 const category = new Schema('categories');
+const collection = new Schema('collections');
 const forum = new Schema('forums');
 const prefix = new Schema('prefixes');
 
@@ -13,6 +14,10 @@ const subComment = new Schema('subComments');
 
 const noti = new Schema('notis');
 
+author.define({
+  collections: arrayOf(collection)
+});
+
 club.define({
   category_groups: arrayOf(categoryGroup)
 });
@@ -22,6 +27,10 @@ categoryGroup.define({
 });
 
 category.define({
+  forums: arrayOf(forum)
+});
+
+collection.define({
   forums: arrayOf(forum)
 });
 
@@ -47,6 +56,7 @@ module.exports = {
   club: club,
   categoryGroup: categoryGroup,
   category: category,
+  collection: collection,
   forum: forum,
   prefix: prefix,
 
