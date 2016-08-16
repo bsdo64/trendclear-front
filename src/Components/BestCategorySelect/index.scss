@@ -107,6 +107,7 @@ menu.sub_category_list {
         &>.sub_category.item {
           margin-bottom: 2px;
           position: relative;
+          cursor: pointer;
 
           &>a {
             text-align: right;

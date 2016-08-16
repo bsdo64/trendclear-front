@@ -162,7 +162,7 @@ const Collection = React.createClass({
     return (
       <li id="user_best_collection">
         <h5 className="">
-          <a>{'콜랙션'}</a>
+          <a>{'컬랙션'}</a>
         </h5>
 
         {
@@ -184,7 +184,7 @@ const Collection = React.createClass({
         }
 
         <div className="sub_category item create_collection">
-          <a className="create_collection_btn" onClick={this.toggleCreateCollection}>{'새로운 콜랙션 추가 +'}</a>
+          <a className="create_collection_btn" onClick={this.toggleCreateCollection}>{'컬랙션 추가 +'}</a>
           <div className={createCollectionBoxStyle}>
             <form className="ui mini form " onSubmit={this.submitNewCollection}>
               <div className="field collection_title_field">
