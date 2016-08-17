@@ -50,14 +50,15 @@ class PostActions {
     return true;
   }
   
-  getBestPost(params) {
+  getBestPost(data) {
     return (dispatch) => {
       Api
         .setEntryPoint('/ajax')
-        .get('/best', params)
+        .get(data.pathname, data.params)
         .then((res) => {
 
           res.data = normalize(res.data, arrayOf(post));
+          res.listName = data.listName;
 
           dispatch(res);
         })

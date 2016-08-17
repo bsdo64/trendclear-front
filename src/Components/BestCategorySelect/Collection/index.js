@@ -69,7 +69,7 @@ const CollectionItem = React.createClass({
            onMouseOver={this.openCollection.bind(this, id)}
            onMouseOut={this.closeCollection.bind(this, id)}
       >
-        <Link to={{pathname: '/community'}}>{title}</Link>
+        <Link to={{pathname: `/collection/${id}`}}>{title}</Link>
         <div className={itemStyle}>
           <h4 className="forum_list_header">이 컬렉션의 구독 </h4>
 

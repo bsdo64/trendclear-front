@@ -61,7 +61,6 @@ const PaginatorApp = React.createClass({
             sidePages: 3
           })}
           onSelect={this.selectPage}
-          ellipsis={'…'}
         >
           { /*<Paginator.Button page={pagination.page - 10} className="item">{'< 10'}</Paginator.Button>*/ }
 

@@ -25,10 +25,9 @@ const NotiItem = React.createClass({
   render() {
 
     const {noti} = this.props;
-    const categoryId = noti.get('category_id');
     const forumId = noti.get('forum_id');
     const postId = noti.get('post_id');
-    const linkUrl = `/community?categoryId=${categoryId}&forumId=${forumId}&postId=${postId}`
+    const linkUrl = `/community?forumId=${forumId}&postId=${postId}`
     const notiItemClass = cx({
       event: true,
       'is-read': !noti.get('read')

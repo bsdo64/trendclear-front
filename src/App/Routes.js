@@ -8,6 +8,7 @@ var HeaderMyMenu = require('../Container/Header/MyMenu');
 var HeaderSearch = require('../Container/Header/Search');
 
 var ContentsContainer = require('../Container/Contents/Best');
+var CollectionContentsContainer = require('../Container/Contents/BestCollection');
 var SigninContainer = require('../Container/Contents/Signin');
 var CommunityContainer = require('../Container/Contents/Community');
 var SubmitContainer = require('../Container/Contents/SubmitPost');
@@ -106,6 +107,20 @@ export default () =>
       ReportModalContainer: ReportModalContainer,
       ContentsContainer: SigninContainer
     }}/>
+  </Route>
+
+  <Route path="/collection/:collectionId" component={App}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: CollectionContentsContainer
+      }}/>
   </Route>
 
   <Route path="/community" component={App}>

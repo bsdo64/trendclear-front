@@ -3,6 +3,8 @@ var router = express.Router();
 
 var routes = [
   '/',
+  '/collection/:collectionId',
+  '/collection',
   '/community',
   '/community/submit',
   '/community/submit/category',

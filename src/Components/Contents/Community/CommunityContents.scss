@@ -51,4 +51,43 @@
       }
     }
   }
+
+  .dropdown.subscribe_dropdown {
+    display: inline;
+
+    .dropdown__content {
+      display: none;
+      position: absolute;
+      top: 45px;
+      right: 57px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid #dedede;
+
+      ul.collection_list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li.collection_item {
+          margin: 0;
+          padding: 0;
+
+          input[type="checkbox"] {
+            &~label {
+              cursor: pointer;
+              font-size: 13px;
+              font-weight: normal;
+            }
+          }
+        }
+      }
+    }
+
+    &.dropdown--active {
+      .dropdown__content {
+        display: block;
+      }
+    }
+  }
 }

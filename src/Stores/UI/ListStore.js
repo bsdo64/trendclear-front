@@ -46,8 +46,9 @@ class ListStore {
   onGetBestPost(response) {
     this.waitFor(Users, Posts);
     const normalizedPosts = response.data;
+    const listName = response.listName;
 
-    const newState = this.state.update('bestPostList', list => list.concat(normalizedPosts.result));
+    const newState = this.state.update(listName, list => list.concat(normalizedPosts.result));
     this.setState(newState);
   }
 

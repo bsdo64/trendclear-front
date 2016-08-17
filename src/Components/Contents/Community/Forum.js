@@ -2,11 +2,13 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import cx from 'classnames';
 import {browserHistory, Link} from 'react-router';
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
 
 import LoginActions from '../../../Actions/LoginActions';
+import CollectionActions from '../../../Actions/CollectionActions';
 
 require('./CommunityContents.scss');
 const PostList = React.createClass({
@@ -143,11 +145,30 @@ const Forum = React.createClass({
       }
     }
   },
+
+  selectCollection(e) {
+    "use strict";
+    const {ListStore} = this.props;
+    const forumId = ListStore.get('forum');
+    const params = {collectionId: e.target.value, forumId: forumId};
+
+    if (e.target.checked) {
+      CollectionActions.addForum(params)
+    } else {
+      CollectionActions.removeForum(params)
+    }
+  },
+  checkCollectionHasForums(collectionForumList, forumId) {
+    "use strict";
+
+    return collectionForumList.includes(forumId);
+  },
   render() {
     "use strict";
 
-    const {Forums, Prefixes, AuthStore, ListStore, PaginationStore} = this.props;
+    const {Users, Forums, Prefixes, AuthStore, ListStore, PaginationStore, Collections} = this.props;
 
+    const self = this;
     const userId = AuthStore.get('userId');
     const isLogin = AuthStore.get('isLogin');
 
@@ -189,15 +210,38 @@ const Forum = React.createClass({
                   <img className="right floated mini ui image" src="https://avatars2.githubusercontent.com/u/3207153?v=3&s=96" />
                   <div className="header">
                     {forum.get('title')}
-                    <a
-                      className="ui button primary basic tiny right floated"
-                      onClick={this.openLoginModal}>
-                      <i className="fa fa-share" />
-                      {' 구독'}
-                    </a>
-                    <a
-                      className="ui button primary basic tiny right floated"
-                      onClick={this.openLoginModal}>
+                    <Dropdown className="subscribe_dropdown" ref="subscribe_dropdown">
+                      <DropdownTrigger className="ui button primary basic tiny right floated">
+                        <i className="fa fa-share" />
+                        {' 구독'}
+                      </DropdownTrigger>
+                      <DropdownContent>
+                        <h4>구독 컬렉션 선택</h4>
+                        <ul className="collection_list">
+                          {
+                            Users
+                              .get(userId.toString())
+                              .get('collections')
+                              .map(collectionId => {
+                                const collection = Collections.get(collectionId.toString());
+                                return (
+                                  <li key={collectionId} className="collection_item">
+                                    <div className="ui checkbox">
+                                      <input id={`collection-id-${collectionId}`}
+                                             type="checkbox"
+                                             value={collection.get('id')}
+                                             defaultChecked={self.checkCollectionHasForums(collection.get('forums'), forumId)}
+                                             onChange={self.selectCollection} />
+                                      <label htmlFor={`collection-id-${collectionId}`}>{collection.get('title')}</label>
+                                    </div>
+                                  </li>
+                                )
+                              })
+                          }
+                        </ul>
+                      </DropdownContent>
+                    </Dropdown>
+                    <a className="ui button primary basic tiny right floated">
                       <i className="fa fa-star" />
                       {' 팔로우'}
                     </a>

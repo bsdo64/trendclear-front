@@ -56,6 +56,41 @@ class CollectionActions {
         });
     };
   }
+
+  addForum(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .post(`/collection/${params.collectionId}/forum`, {forumId: params.forumId})
+        .then((res) => {
+          if (res === 'ok') {
+            dispatch(params);
+          } else {
+            dispatch(false);
+          }
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
+  removeForum(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .delete(`/collection/${params.collectionId}/forum/${params.forumId}`)
+        .then((res) => {
+          if (res === 'ok') {
+            dispatch(params);
+          } else {
+            dispatch(false);
+          }
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
 }
 
 module.exports = alt.createActions(CollectionActions);

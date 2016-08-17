@@ -6,14 +6,10 @@ import LoginStore from '../../Stores/LoginStore';
 import CommunityStore from '../../Stores/CommunityStore';
 import UserStore from '../../Stores/UserStore';
 import SearchStore from '../../Stores/SearchStore';
-import BestPostStore from '../../Stores/BestPostStore';
 import GnbStore from '../../Stores/GnbStore';
 
 import Posts from '../../Stores/Domain/Posts';
 import Users from '../../Stores/Domain/Users';
-import Clubs from '../../Stores/Domain/Clubs';
-import Categories from '../../Stores/Domain/Categories';
-import CategoryGroups from '../../Stores/Domain/CategoryGroups';
 import Forums from '../../Stores/Domain/Forums';
 
 import AuthStore from '../../Stores/UI/AuthStore';
@@ -52,7 +48,6 @@ const SearchContainer = connectToStores({
       CommunityStore,
       UserStore,
       SearchStore,
-      BestPostStore,
 
       // UI Stores
       LoginModalStore,
@@ -63,9 +58,6 @@ const SearchContainer = connectToStores({
       // Domain Stores
       Posts,
       Users,
-      Categories,
-      Clubs,
-      CategoryGroups,
       Forums
     ]
   },
@@ -73,7 +65,6 @@ const SearchContainer = connectToStores({
   getPropsFromStores() {
     return {
       GnbStore: GnbStore.getState(),
-      BestPostStore: BestPostStore.getState(),
       LoginStore: LoginStore.getState(),
       CommunityStore: CommunityStore.getState(),
       SearchStore: SearchStore.getState(),
@@ -85,9 +76,6 @@ const SearchContainer = connectToStores({
       AuthStore:        AuthStore.getState(),
       LoginModalStore:  LoginModalStore.getState(),
 
-      Clubs:            Clubs.getState(),
-      Categories:       Categories.getState(),
-      CategoryGroups:   CategoryGroups.getState(),
       Forums:           Forums.getState(),
       Users:            Users.getState(),
       Posts:            Posts.getState()

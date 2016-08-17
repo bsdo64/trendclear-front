@@ -25,8 +25,8 @@ const BestBox = React.createClass({
   getMoreBest() {
     "use strict";
 
-    const {PaginationStore, GnbStore} = this.props;
-    const Pagination = PaginationStore.get('bestPostList');
+    const {PaginationStore, GnbStore, listName, location} = this.props;
+    const Pagination = PaginationStore.get(listName);
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
 
@@ -36,23 +36,42 @@ const BestBox = React.createClass({
       });
 
       if (nextPage) {
+
+        let pathname;
+        switch(listName) {
+          case 'bestPostList':
+            pathname = '/best';
+            break;
+
+          case 'collectionBestPostList':
+            pathname = location.pathname + '/posts';
+            break;
+
+          default:
+            pathname = '/best';
+        }
+
         PostActions.getBestPost({
-          page: nextPage,
-          categoryValue: (normalize.length > 0) ? normalize: null
+          listName: listName,
+          pathname: pathname,
+          params: {
+            page: nextPage,
+            categoryValue: (normalize.length > 0) ? normalize: null
+          }
         });
       }
     }
   },
 
   render() {
-    const {ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
-    const Collection = PaginationStore.get('bestPostList');
+    const {listName, ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
+    const Collection = PaginationStore.get(listName);
 
     return (
       <div id="best_contents" >
 
         <InfiniteList
-          PostIdList={ListStore.get('bestPostList')}
+          PostIdList={ListStore.get(listName)}
           PostItems={Posts}
           AuthorItems={Users}
           User={AuthStore}

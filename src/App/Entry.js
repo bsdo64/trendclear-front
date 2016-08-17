@@ -52,6 +52,23 @@ new Promise((resolve, reject) => {
           });
         }
 
+        if (resBody.CollectionBestPostStore && resBody.CollectionBestPostStore.posts) {
+          const collectionBestPostList = resBody.CollectionBestPostStore.posts.data;
+          const collectionBestPostListPagination = resBody.CollectionBestPostStore.posts.collection;
+
+          const normalized = normalize(collectionBestPostList, arrayOf(post));
+
+          assign(resBody, {
+            // Temp
+            CollectionBestPostStore: {posts: {postList: normalized}},
+
+            Posts: normalized.entities.posts,
+            Users: normalized.entities.author,
+            ListStore: {collectionBestPostList: normalized.result},
+            PaginationStore: {collectionBestPostList: collectionBestPostListPagination}
+          });
+        }
+
         if (resBody.BestPostStore && resBody.BestPostStore.posts) {
           const bestPostList = resBody.BestPostStore.posts.data;
           const bestPostListPagination = resBody.BestPostStore.posts.collection;

@@ -11,7 +11,6 @@ class AjaxApiClient {
 
   _done(resolve, reject) {
     return (xhrErr, xhrRes) => {
-      console.log(xhrRes);
       if (xhrErr) {
         return reject(xhrErr);
       } else if (xhrRes.error) {
@@ -53,6 +52,17 @@ class AjaxApiClient {
     return new Promise((resolve, reject) => {
       return request
         .put(this.EndPoint + url)
+        .send(params)
+        .set('Accept', 'application/json')
+        .withCredentials()
+        .end(this._done(resolve, reject));
+    });
+  }
+
+  delete(url, params) {
+    return new Promise((resolve, reject) => {
+      return request
+        .delete(this.EndPoint + url)
         .send(params)
         .set('Accept', 'application/json')
         .withCredentials()

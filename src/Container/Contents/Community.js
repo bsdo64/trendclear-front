@@ -9,11 +9,9 @@ import Posts from '../../Stores/Domain/Posts';
 import Comments from '../../Stores/Domain/Comments';
 import SubComments from '../../Stores/Domain/SubComments';
 import Users from '../../Stores/Domain/Users';
-import Clubs from '../../Stores/Domain/Clubs';
-import Categories from '../../Stores/Domain/Categories';
-import CategoryGroups from '../../Stores/Domain/CategoryGroups';
 import Forums from '../../Stores/Domain/Forums';
 import Prefixes from '../../Stores/Domain/Prefixes';
+import Collections from '../../Stores/Domain/Collections';
 
 import ListStore from '../../Stores/UI/ListStore';
 import AuthStore from '../../Stores/UI/AuthStore';
@@ -44,9 +42,7 @@ const CommunityContainer = connectToStores({
       Users,
       Prefixes,
       Forums,
-      Categories,
-      Clubs,
-      CategoryGroups
+      Collections
     ]
   },
 
@@ -69,9 +65,7 @@ const CommunityContainer = connectToStores({
       Users: Users.getState(),
       Prefixes: Prefixes.getState(),
       Forums: Forums.getState(),
-      Categories: Categories.getState(),
-      Clubs: Clubs.getState(),
-      CategoryGroup: CategoryGroups.getState(),
+      Collections: Collections.getState(),
     }
   }
 }, React.createClass({

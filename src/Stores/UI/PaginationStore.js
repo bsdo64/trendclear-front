@@ -42,7 +42,7 @@ class PaginationStore {
   onGetBestPost(response) {
     this.waitFor(Users, Posts, ListStore);
 
-    this.setMergeState({bestPostList: response.collection});
+    this.setMergeState({[response.listName]: response.collection});
   }
 
   onGetSearchPost(response) {
