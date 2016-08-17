@@ -9,8 +9,6 @@ import GnbActions from '../../../Actions/GnbActions';
 const BestBox = React.createClass({
   componentWillUnmount() {
     // some example callbacks
-
-    PostActions.resetBestPage();
     GnbActions.resetFilter();
   },
   

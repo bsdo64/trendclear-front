@@ -120,10 +120,6 @@ class PostActions {
     }
   }
 
-  resetBestPage() {
-    return true;
-  }
-
   getMeta(url) {
     return (dispatch) => {
       Api
