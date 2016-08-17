@@ -1,10 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const  express = require('express');
+const router = express.Router();
 
-var routes = [
+const routes = [
   '/',
   '/collection/:collectionId',
-  '/collection',
   '/community',
   '/community/submit',
   '/community/submit/category',
@@ -20,6 +19,28 @@ var routes = [
   '/signin'
 ];
 
+const redirectRoutes = [
+  '/collection'
+];
+
+const redirectTo = {
+  '/collection': '/'
+};
+
+router.get(redirectRoutes, function (req, res, next) {
+  console.log(req.headers);
+  console.log(req.path);
+
+  let redirect = redirectTo[req.path];
+  if (redirect) {
+    res.redirect(redirect);
+  } else {
+    res.redirect('/');
+  }
+
+  next();
+});
+
 /* GET home page. */
 router.get(routes, function(req, res, next) {
   console.log(req.headers);
@@ -29,6 +50,14 @@ router.get(routes, function(req, res, next) {
     title: '베나클',
     production: process.env.NODE_ENV ? true : false
   });
+});
+
+/* 404 page. */
+router.get('*', function(req, res, next) {
+  console.log(req.headers);
+  console.log(req.url);
+
+  res.redirect('/');
 });
 
 module.exports = router;

@@ -5,9 +5,6 @@ var React = require('react');
 require('./index.scss');
 const CategoryList = React.createClass({
   displayName: 'CategoryList',
-  createCategoryItem(category) {
-    return <CategoryItem key={category.get('id')} category={category} />;
-  },
   render() {
     const { CommunityStore } = this.props;
     const forum = CommunityStore.get('forum');

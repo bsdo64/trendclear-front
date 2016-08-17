@@ -210,37 +210,49 @@ const Forum = React.createClass({
                   <img className="right floated mini ui image" src="https://avatars2.githubusercontent.com/u/3207153?v=3&s=96" />
                   <div className="header">
                     {forum.get('title')}
-                    <Dropdown className="subscribe_dropdown" ref="subscribe_dropdown">
-                      <DropdownTrigger className="ui button primary basic tiny right floated">
-                        <i className="fa fa-share" />
-                        {' 구독'}
-                      </DropdownTrigger>
-                      <DropdownContent>
-                        <h4>구독 컬렉션 선택</h4>
-                        <ul className="collection_list">
-                          {
-                            Users
-                              .get(userId.toString())
-                              .get('collections')
-                              .map(collectionId => {
-                                const collection = Collections.get(collectionId.toString());
-                                return (
-                                  <li key={collectionId} className="collection_item">
-                                    <div className="ui checkbox">
-                                      <input id={`collection-id-${collectionId}`}
-                                             type="checkbox"
-                                             value={collection.get('id')}
-                                             defaultChecked={self.checkCollectionHasForums(collection.get('forums'), forumId)}
-                                             onChange={self.selectCollection} />
-                                      <label htmlFor={`collection-id-${collectionId}`}>{collection.get('title')}</label>
-                                    </div>
-                                  </li>
-                                )
-                              })
-                          }
-                        </ul>
-                      </DropdownContent>
-                    </Dropdown>
+                    {
+                      userId && isLogin &&
+                      <Dropdown className="subscribe_dropdown" ref="subscribe_dropdown">
+                        <DropdownTrigger className="ui button primary basic tiny right floated">
+                          <i className="fa fa-share" />
+                          {' 구독'}
+                        </DropdownTrigger>
+                        <DropdownContent>
+                          <h4>구독 컬렉션 선택</h4>
+                          <ul className="collection_list">
+                            {
+                              Users
+                                .get(userId.toString())
+                                .get('collections')
+                                .map(collectionId => {
+                                  const collection = Collections.get(collectionId.toString());
+                                  return (
+                                    <li key={collectionId} className="collection_item">
+                                      <div className="ui checkbox">
+                                        <input id={`collection-id-${collectionId}`}
+                                               type="checkbox"
+                                               value={collection.get('id')}
+                                               defaultChecked={self.checkCollectionHasForums(collection.get('forums'), forumId)}
+                                               onChange={self.selectCollection} />
+                                        <label htmlFor={`collection-id-${collectionId}`}>{collection.get('title')}</label>
+                                      </div>
+                                    </li>
+                                  )
+                                })
+                            }
+                          </ul>
+                        </DropdownContent>
+                      </Dropdown>
+                    }
+
+                    {
+                      !userId && !isLogin &&
+                      <a onClick={this.openLoginModal} className="ui button primary basic tiny right floated">
+                        <i className="fa fa-star" />
+                        {' 팔로우'}
+                      </a>
+                    }
+
                     <a className="ui button primary basic tiny right floated">
                       <i className="fa fa-star" />
                       {' 팔로우'}

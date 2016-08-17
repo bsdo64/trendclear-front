@@ -11,7 +11,6 @@ const SearchBox = React.createClass({
   componentWillUnmount() {
     // some example callbacks
 
-    PostActions.resetBestPage();
     GnbActions.resetFilter();
   },
   componentDidMount() {
