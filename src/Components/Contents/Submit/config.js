@@ -8,6 +8,7 @@ const medium = {
     hideOnClick: true
   },
   imageDragging: false,
+  targetBlank: true,
   autoLink: true,
   toolbar: {
     buttons: [
