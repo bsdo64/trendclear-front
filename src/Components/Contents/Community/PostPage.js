@@ -12,6 +12,20 @@ import MakeUrl from '../../Lib/MakeUrl';
 
 import Forum from './Forum';
 
+const commentMediumConfig = {
+  toolbar: false,
+  disableDoubleReturn: true,
+  placeholder: {
+    /* This example includes the default options for placeholder,
+     if nothing is passed this is what it used */
+    text: '여기에 댓글을 입력하세요',
+    hideOnClick: true
+  },
+  imageDragging: false,
+  targetBlank: true,
+  autoLink: true
+};
+
 function checkSkillAvailable(skill) {
   "use strict";
 
@@ -162,10 +176,7 @@ const CommentItem = React.createClass({
 
       const commentId = this.props.comment.get('id');
       const subCommentOpen = this.state.subCommentOpen;
-      this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], {
-        toolbar: false,
-        disableDoubleReturn: true
-      });
+      this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], commentMediumConfig);
     });
   },
 
@@ -362,19 +373,13 @@ const CommentBox = React.createClass({
   //mixins: [PureRenderMixin],
 
   componentDidMount() {
-    this.editor = new MediumEditor(this.refs.comment_content, {
-      toolbar: false,
-      disableDoubleReturn: true
-    });
+    this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig);
   },
 
   componentDidUpdate() {
     this.editor.destroy();
 
-    this.editor = new MediumEditor(this.refs.comment_content, {
-      toolbar: false,
-      disableDoubleReturn: true
-    });
+    this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig);
   },
 
   handleSetPage(pagination) {
