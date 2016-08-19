@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import SigninButton from './SigninButton';
+import FlatButton from './FlatButton';
 import TrendBox from './TrendBox';
 
 require('./index.scss');
@@ -28,7 +28,18 @@ class WidgetBox extends Component {
 
         {
           !isLogin &&
-          <SigninButton />
+          <FlatButton
+            linkTo="/signin"
+            text="지금 가입하세요 !"
+          />
+        }
+
+        {
+          isLogin && user &&
+          <FlatButton
+            linkTo="/community/submit"
+            text="글쓰기"
+          />
         }
 
         {

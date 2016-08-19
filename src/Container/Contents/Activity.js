@@ -21,9 +21,6 @@ const ActivityContainer = connectToStores({
 
       alt.getStore('Posts'),
       alt.getStore('Users'),
-      alt.getStore('Categories'),
-      alt.getStore('Clubs'),
-      alt.getStore('CategoryGroups'),
       alt.getStore('Forums')
     ]
   },
@@ -41,9 +38,6 @@ const ActivityContainer = connectToStores({
 
       Posts: alt.getStore('Posts').getState(),
       Users: alt.getStore('Users').getState(),
-      Categories: alt.getStore('Categories').getState(),
-      Clubs: alt.getStore('Clubs').getState(),
-      CategoryGroups: alt.getStore('CategoryGroups').getState(),
       Forums: alt.getStore('Forums').getState()
     }
   }

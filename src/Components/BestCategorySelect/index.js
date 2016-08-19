@@ -60,7 +60,9 @@ const Temp = React.createClass({
           <ul >
             <li id="best_filter" >
               <h5 className="">
-                <a onClick={this.toggleFilter}>{'팔로잉'}</a>
+                <a onClick={this.toggleFilter}>
+                  <i className="fa fa-star" />{' 팔로잉'}
+                </a>
               </h5>
 
               {

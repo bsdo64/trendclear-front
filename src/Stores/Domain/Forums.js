@@ -3,6 +3,7 @@ import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import AppActions from '../../Actions/AppActions';
 import GnbActions from '../../Actions/GnbActions';
+import CollectionActions from '../../Actions/CollectionActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 class Forums {
@@ -12,6 +13,8 @@ class Forums {
 
     this.bindActions(AppActions);
     this.bindActions(GnbActions);
+    this.bindActions(CollectionActions);
+
     this.state = Immutable.Map({
 
     });
@@ -26,8 +29,12 @@ class Forums {
     }
   }
 
-  onAddForum(forums) {
-    this.setMergeState(forums);
+  onAddForum(normalizedForums) {
+    this.setMergeState(normalizedForums.entities.forums);
+  }
+
+  onFindForumByTitle(normalizedForums) {
+    this.setMergeState(normalizedForums.entities.forums);
   }
 }
 

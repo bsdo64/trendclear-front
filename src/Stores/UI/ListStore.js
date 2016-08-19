@@ -5,9 +5,11 @@ import AppActions from '../../Actions/AppActions';
 import ListActions from '../../Actions/ListActions';
 import PostActions from '../../Actions/PostActions';
 import GnbActions from '../../Actions/GnbActions';
+import CollectionActions from '../../Actions/CollectionActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 import Users from '../Domain/Users';
+import Forums from '../Domain/Forums';
 import Posts from '../Domain/Posts';
 import GnbStore from '../GnbStore';
 
@@ -23,6 +25,7 @@ class ListStore {
     this.bindActions(ListActions);
     this.bindActions(PostActions);
     this.bindActions(GnbActions);
+    this.bindActions(CollectionActions);
     this.state = Immutable.Map({
       
     });
@@ -77,6 +80,12 @@ class ListStore {
       const mergeResults = this.state.set('bestPostList', postIdList);
       this.setState(mergeResults);
     }
+  }
+
+  onFindForumByTitle(normalizedForums) {
+    this.waitFor(Forums);
+
+    this.setMergeState({searchCollectionForumList: normalizedForums.result});
   }
 }
 

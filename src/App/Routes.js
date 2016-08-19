@@ -3,6 +3,7 @@ import {IndexRedirect, Link, IndexRoute, Router, Route, browserHistory} from 're
 
 var LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
 var ForumMenu = require('../Container/LeftCol/ForumMenu.js');
+var CollectionMenu = require('../Container/LeftCol/CollectionMenu');
 
 var HeaderMyMenu = require('../Container/Header/MyMenu');
 var HeaderSearch = require('../Container/Header/Search');
@@ -119,7 +120,7 @@ export default () =>
         HeaderMyMenu: HeaderMyMenu,
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumMenu,
+        LeftColMenu: CollectionMenu,
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,

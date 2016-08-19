@@ -5,6 +5,8 @@ import AppActions from '../../Actions/AppActions';
 import CollectionActions from '../../Actions/CollectionActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
+import Forums from '../../Stores/Domain/Forums';
+
 class Collections {
   static displayName = 'Collections';
   constructor() {
@@ -19,7 +21,8 @@ class Collections {
   }
 
   onCreateCollection(collection) {
-    this.setMergeState(collection);
+    collection.forums = [];
+    this.setMergeState({[collection.id]: collection});
   }
 
   onUpdateCollection(collection) {
@@ -28,6 +31,28 @@ class Collections {
 
   onDeleteCollection(collection) {
     this.setMergeState(collection);
+  }
+
+  onAddForum(res) {
+    this.waitFor(Forums);
+
+    if (res) {
+      const newState = this.state.updateIn([res.collectionId.toString(), 'forums'], forums => {
+        return forums.push(res.result);
+      });
+
+      this.setMergeState(newState);
+    }
+  }
+
+  onRemoveForum(res) {
+    if (res.removeSuccess) {
+      const newState = this.state.updateIn([res.collectionId.toString(), 'forums'], forums => {
+        return forums.filter(value => value !== res.forumId)
+      });
+
+      this.setMergeState(newState);
+    }
   }
 }
 

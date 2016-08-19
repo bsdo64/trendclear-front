@@ -5,7 +5,7 @@ import GnbStore from '../../Stores/GnbStore';
 import Forums from '../../Stores/Domain/Forums';
 import CommunityStore from '../../Stores/CommunityStore';
 
-import CategoryList from '../../Components/CategoryList';
+import CategoryList from '../../Components/ForumLeftMenu';
 
 const MenuContainer = connectToStores({
   getStores() {

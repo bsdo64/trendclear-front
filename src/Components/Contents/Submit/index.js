@@ -7,8 +7,9 @@ import Select from 'react-select';
 import cx from 'classnames';
 import Recaptcha from 'react-recaptcha';
 import {mapKeys} from 'lodash';
-
 import {medium, mediumInsertConfig} from './config';
+
+import SelectSearchForum from './SelectSearchForum';
 import PostActions from '../../../Actions/PostActions';
 
 const EditorBox = React.createClass({
@@ -337,9 +338,6 @@ const SubmitContents = React.createClass({
     const isLogin = AuthStore.get('isLogin');
 
     const forumInfo = this.props.SubmitStore.get('forum');
-    if (!forumInfo) {
-      return (<div></div>)
-    }
 
     if (isLogin) {
       const prefixesData = SubmitStore.get('prefixes');
@@ -349,7 +347,8 @@ const SubmitContents = React.createClass({
       const sex = profile.get('sex'),
         avatar_img = profile.get('avatar_img'),
         icon_img = icon ? icon.get('img') : null;
-      let avatarImg, iconImg;
+
+      let avatarImg, iconImg, options;
 
       if (avatar_img) {
         avatarImg = <img src={'/image/uploaded/files/' + avatar_img}/>;
@@ -368,12 +367,21 @@ const SubmitContents = React.createClass({
       let prefixes = [];
       if (prefixesData) {
         prefixes = prefixesData.toJS();
+        options = prefixes.map(function (item) {
+          return mapKeys(item, function (value, key) {
+            return key === 'id' ? 'value' : (key === 'name' ? 'label' : key)
+          })
+        });
       }
-      let options = prefixes.map(function (item) {
-        return mapKeys(item, function (value, key) {
-          return key === 'id' ? 'value' : (key === 'name' ? 'label' : key)
-        })
-      });
+
+      if (!forumInfo) {
+        return (
+          <SelectSearchForum
+            avatarImg={avatarImg}
+          />
+        )
+      }
+
       return (
         <div id="submit_box" className="ui items">
           <div className={"ui item post_item"}>

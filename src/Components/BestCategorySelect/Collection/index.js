@@ -85,6 +85,8 @@ const CollectionItem = React.createClass({
   }
 });
 
+
+require('./index.scss');
 const Collection = React.createClass({
   displayName: 'Collection',
   getInitialState() {
@@ -162,7 +164,7 @@ const Collection = React.createClass({
     return (
       <li id="user_best_collection">
         <h5 className="">
-          <a>{'컬랙션'}</a>
+          <a><i className="fa fa-folder-open" />{' 컬랙션'}</a>
         </h5>
 
         {
@@ -200,7 +202,7 @@ const Collection = React.createClass({
               <div className="field collection_checkbox_field">
                 <label>
                   <input name="isPrivate" type="checkbox"
-                         defaultChecked={false} value={this.state.isPrivate}
+                         defaultChecked={false} value={this.state.createCollection.isPrivate}
                          onChange={this.handleChangePrivate}
                   /> 비공개
                 </label>

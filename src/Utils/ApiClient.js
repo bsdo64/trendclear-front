@@ -11,6 +11,9 @@ class AjaxApiClient {
 
   _done(resolve, reject) {
     return (xhrErr, xhrRes) => {
+      console.log('error : ', xhrErr)
+      console.log('result : ', xhrRes)
+
       if (xhrErr) {
         return reject(xhrErr);
       } else if (xhrRes.error) {

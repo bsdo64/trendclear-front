@@ -249,7 +249,7 @@ const Forum = React.createClass({
                       !userId && !isLogin &&
                       <a onClick={this.openLoginModal} className="ui button primary basic tiny right floated">
                         <i className="fa fa-star" />
-                        {' 팔로우'}
+                        {' 구독'}
                       </a>
                     }
 
@@ -259,30 +259,24 @@ const Forum = React.createClass({
                     </a>
                   </div>
                   <div className="meta">
-                    {forum.get('title')}
+                    {forum.get('sub_header')}
                   </div>
                   <div className="description">
-                    {forum.get('description') + '를 위한 글 입니다. 세계인의 파마'}
+                    {forum.get('description')}
                   </div>
                 </div>
                 <div className="content">
-                  <div className="ui header tiny">
-                    클럽 규칙
-                  </div>
-                  <div className="description">
-                    <p>This is a subreddit where you can get your pictures photoshopped. Need an old photo touched up? Want someone to make a faceswap for you? Do you need a logo for something? Want your friend to be flying through space on a velociraptor? This is the place for any and all of your Photoshop needs!
-                      Submit your requests or help others with your skills. Tons of people are rewarded with reddit gold almost everyday! <a href="https://www.reddit.com/r/PhotoshopRequest/gilded/">Check out what's gilded</a>.</p>
-
-                    <p>Make sure to use subreddit's theme (CSS activated) to have a better experience in this sub.</p>
-
-                    <p>Read the <a href="https://www.reddit.com/r/PhotoshopRequest/wiki/"><strong>guidelines &amp; rules</strong></a> before posting.
-                      Any violation of the rules will result in a ban or shadowban.</p>
-
-                    <p>This subreddit has age &amp; karma requirement: your account must be at least <strong>1 DAY OLD</strong> and have at least <strong>10 COMMENT KARMA</strong> in order to post a request or leave a comment. This is to avoid throwaway, inactive and troll accounts.
-                      <strong>NO EXCEPTIONS</strong> will be made so don't message the mods or you'll be ignored!</p>
-
-                    <p><a href="https://www.reddit.com/r/PhotoshopRequest/wiki/index#wiki_faq"><strong>Check out our FAQ for more info.</strong></a></p>
-                  </div>
+                  {
+                    forum.get('rule') &&
+                    <div >
+                      <div className="ui header tiny">
+                        클럽 규칙
+                      </div>
+                      <div className="description">
+                        {forum.get('rule')}
+                      </div>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
