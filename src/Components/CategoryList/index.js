@@ -15,18 +15,18 @@ const CategoryList = React.createClass({
           {/* Title */}
           <div id="sub_category">
             <div className="sub_category_button">
-              <div className="sub_category_text">{forum.get('title')}</div>
+              <div className="sub_category_text">
+                <Link to={`/community?forumId=${forum.get('id')}`}>{forum.get('title')}</Link>
+              </div>
             </div>
           </div>
 
           {/* Menu */}
           <menu className="sub_category_list" key={forum.get('id')}>
-
-
             <ul >
               <li >
                 <h5 className="">
-                  <a>{'뉴스피드'}</a>
+                  <a><i className="fa fa-rss" />{' 뉴스피드'}</a>
                 </h5>
 
                 <div className="sub_category item">

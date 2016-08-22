@@ -11,8 +11,10 @@ class AjaxApiClient {
 
   _done(resolve, reject) {
     return (xhrErr, xhrRes) => {
-      console.log('error : ', xhrErr)
-      console.log('result : ', xhrRes)
+      if (!process.env.production) {
+        console.log('error : ', xhrErr);
+        console.log('result : ', xhrRes);
+      }
 
       if (xhrErr) {
         return reject(xhrErr);

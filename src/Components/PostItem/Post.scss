@@ -1,13 +1,16 @@
 #post_box {
   .post_item {
     padding: 10px;
+    margin: 0;
+    border-bottom: 1px solid #B5C0D0;
 
     &:last-child {
       border-bottom: none;
     }
-    margin: 0;
-    padding: 10px;
-    border-bottom: 1px solid #B5C0D0;
+
+    .ui.image.tiny {
+      width: 50px;
+    }
 
     h3.best_post_title {
       font-size: 14px;

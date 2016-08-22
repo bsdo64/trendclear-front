@@ -163,6 +163,19 @@ const Forum = React.createClass({
 
     return collectionForumList.includes(forumId);
   },
+
+  createAvatarImg(sex, avatarImg) {
+    if (avatarImg) {
+      return <img className="right floated mini ui image"  src={'/image/uploaded/files/' + avatarImg} />;
+    } else {
+      if (sex) {
+        return <img className="right floated mini ui image" src="/images/default-male.png" />;
+      } else {
+        return <img className="right floated mini ui image" src="/images/default-female.png" />;
+      }
+    }
+  },
+
   render() {
     "use strict";
 
@@ -193,6 +206,9 @@ const Forum = React.createClass({
 
       const makeUrl = new MakeUrl(this.props.location);
 
+      const creator = forum.get('creator');
+      const creatorProfile = creator.get('profile');
+
       return (
         <div id="forum_contents">
 
@@ -207,9 +223,21 @@ const Forum = React.createClass({
                 width: '100%'
               }}>
                 <div className="content">
-                  <img className="right floated mini ui image" src="https://avatars2.githubusercontent.com/u/3207153?v=3&s=96" />
+                  {
+                    this.createAvatarImg(creatorProfile.get('sex'), creatorProfile.get('avatar_img'))
+                  }
                   <div className="header">
                     {forum.get('title')}
+
+                    {
+                      (userId === creator.get('id')) &&
+                      <Link to={`/community/setting?forumId=${forumId}`}
+                            className="ui button primary basic tiny right floated">
+                        <i className="fa fa-gear" />
+                        {' 설정'}
+                      </Link>
+                    }
+
                     {
                       userId && isLogin &&
                       <Dropdown className="subscribe_dropdown" ref="subscribe_dropdown">

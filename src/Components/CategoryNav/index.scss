@@ -75,7 +75,14 @@
           float: left;
           border-right: 1px solid #aaa;
           height: 318px;
-          width: 150px;
+          width: 576px;
+          margin: 0;
+          padding: 0;
+          display: block;
+
+          .group {
+            padding: 0px;
+          }
 
           h3 {
             color: #fff;
