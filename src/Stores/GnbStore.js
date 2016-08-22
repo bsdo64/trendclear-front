@@ -12,7 +12,9 @@ class GnbStore{
 
     this.bindActions(AppActions);
     this.bindActions(GnbActions);
-    this.state = Immutable.Map({});
+    this.state = Immutable.Map({
+      openGnb: false
+    });
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
@@ -26,14 +28,13 @@ class GnbStore{
 
   }
 
-  onToggleGnb(oppend) {
-    let state = this.state.set('openGnb', !oppend);
+  onToggleGnb() {
+    let state = this.state.set('openGnb', !this.state.get('openGnb'));
 
     this.setMergeState(state);
   }
 
   onOpenSideCategory(clubId) {
-    console.log(clubId);
     let state = this.state.setIn(['gnbMenu', 'openSideNow'], clubId);
     this.setMergeState(state);
   }

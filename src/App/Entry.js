@@ -7,7 +7,7 @@ import Api from '../Utils/ApiClient';
 
 import assign from 'deep-assign';
 import {normalize, arrayOf} from 'normalizr';
-import {author, club, post, noti, forum} from '../Model/normalizr/schema';
+import {author, category, post, noti, forum} from '../Model/normalizr/schema';
 
 import Router from './Routes';
 
@@ -200,16 +200,14 @@ new Promise((resolve, reject) => {
         if (resBody.GnbStore && resBody.GnbStore.gnbMenu) {
           const INCat = resBody.GnbStore.gnbMenu.data;
 
-          const normalized = normalize(INCat, arrayOf(club));
+          const normalized = normalize(INCat, arrayOf(category));
 
           resBody.GnbStore.gnbMenu.INCat = normalized;
 
           assign(resBody, {
-            Clubs: normalized.entities.clubs,
             Categories: normalized.entities.categories,
-            CategoryGroups: normalized.entities.categoryGroups,
             Forums: normalized.entities.forums,
-            ListStore: {ClubList: normalized.result}
+            ListStore: {CategoryList: normalized.result}
           });
         }
 

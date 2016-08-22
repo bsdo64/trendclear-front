@@ -5,10 +5,7 @@ import {post, comment, subComment} from '../Model/normalizr/schema';
 
 class GnbActions {
   constructor() {
-    this.generateActions('addClub', 'addCategory', 'addCategoryGroup', 'addForum');
-  }
-  toggleGnb(openned) {
-    return openned;
+    this.generateActions('addClub', 'addCategory', 'addCategoryGroup', 'addForum', 'toggleGnb');
   }
   openSideCategory(clubId) {
     return clubId;

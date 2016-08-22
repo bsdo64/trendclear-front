@@ -207,193 +207,197 @@ const Forum = React.createClass({
       const makeUrl = new MakeUrl(this.props.location);
 
       const creator = forum.get('creator');
-      const creatorProfile = creator.get('profile');
+      if (creator) {
+        const creatorProfile = creator.get('profile');
 
-      return (
-        <div id="forum_contents">
+        return (
+          <div id="forum_contents">
 
-          <div id="forum_info" style={{
-            margin: '0 0 0 2px',
-            padding: 0,
-          }}>
-            <div className="ui cards">
-              <div className="card" style={{
-                borderTop: '1px solid rgb(5, 130, 148)',
-                boxShadow: 'none',
-                width: '100%'
-              }}>
-                <div className="content">
-                  {
-                    this.createAvatarImg(creatorProfile.get('sex'), creatorProfile.get('avatar_img'))
-                  }
-                  <div className="header">
-                    {forum.get('title')}
-
+            <div id="forum_info" style={{
+              margin: '0 0 0 2px',
+              padding: 0,
+            }}>
+              <div className="ui cards">
+                <div className="card" style={{
+                  borderTop: '1px solid rgb(5, 130, 148)',
+                  boxShadow: 'none',
+                  width: '100%'
+                }}>
+                  <div className="content">
                     {
-                      (userId === creator.get('id')) &&
-                      <Link to={`/community/setting?forumId=${forumId}`}
-                            className="ui button primary basic tiny right floated">
-                        <i className="fa fa-gear" />
-                        {' 설정'}
-                      </Link>
+                      this.createAvatarImg(creatorProfile.get('sex'), creatorProfile.get('avatar_img'))
                     }
+                    <div className="header">
+                      {forum.get('title')}
 
-                    {
-                      userId && isLogin &&
-                      <Dropdown className="subscribe_dropdown" ref="subscribe_dropdown">
-                        <DropdownTrigger className="ui button primary basic tiny right floated">
-                          <i className="fa fa-share" />
+                      {
+                        (userId === creator.get('id')) &&
+                        <Link to={`/community/setting?forumId=${forumId}`}
+                              className="ui button primary basic tiny right floated">
+                          <i className="fa fa-gear" />
+                          {' 설정'}
+                        </Link>
+                      }
+
+                      {
+                        userId && isLogin &&
+                        <Dropdown className="subscribe_dropdown" ref="subscribe_dropdown">
+                          <DropdownTrigger className="ui button primary basic tiny right floated">
+                            <i className="fa fa-share" />
+                            {' 구독'}
+                          </DropdownTrigger>
+                          <DropdownContent>
+                            <h4>구독 컬렉션 선택</h4>
+                            <ul className="collection_list">
+                              {
+                                Users
+                                  .get(userId.toString())
+                                  .get('collections')
+                                  .map(collectionId => {
+                                    const collection = Collections.get(collectionId.toString());
+                                    return (
+                                      <li key={collectionId} className="collection_item">
+                                        <div className="ui checkbox">
+                                          <input id={`collection-id-${collectionId}`}
+                                                 type="checkbox"
+                                                 value={collection.get('id')}
+                                                 defaultChecked={self.checkCollectionHasForums(collection.get('forums'), forumId)}
+                                                 onChange={self.selectCollection} />
+                                          <label htmlFor={`collection-id-${collectionId}`}>{collection.get('title')}</label>
+                                        </div>
+                                      </li>
+                                    )
+                                  })
+                              }
+                            </ul>
+                          </DropdownContent>
+                        </Dropdown>
+                      }
+
+                      {
+                        !userId && !isLogin &&
+                        <a onClick={this.openLoginModal} className="ui button primary basic tiny right floated">
+                          <i className="fa fa-star" />
                           {' 구독'}
-                        </DropdownTrigger>
-                        <DropdownContent>
-                          <h4>구독 컬렉션 선택</h4>
-                          <ul className="collection_list">
-                            {
-                              Users
-                                .get(userId.toString())
-                                .get('collections')
-                                .map(collectionId => {
-                                  const collection = Collections.get(collectionId.toString());
-                                  return (
-                                    <li key={collectionId} className="collection_item">
-                                      <div className="ui checkbox">
-                                        <input id={`collection-id-${collectionId}`}
-                                               type="checkbox"
-                                               value={collection.get('id')}
-                                               defaultChecked={self.checkCollectionHasForums(collection.get('forums'), forumId)}
-                                               onChange={self.selectCollection} />
-                                        <label htmlFor={`collection-id-${collectionId}`}>{collection.get('title')}</label>
-                                      </div>
-                                    </li>
-                                  )
-                                })
-                            }
-                          </ul>
-                        </DropdownContent>
-                      </Dropdown>
-                    }
+                        </a>
+                      }
 
-                    {
-                      !userId && !isLogin &&
-                      <a onClick={this.openLoginModal} className="ui button primary basic tiny right floated">
+                      <a className="ui button primary basic tiny right floated">
                         <i className="fa fa-star" />
-                        {' 구독'}
+                        {' 팔로우'}
                       </a>
-                    }
-
-                    <a className="ui button primary basic tiny right floated">
-                      <i className="fa fa-star" />
-                      {' 팔로우'}
-                    </a>
-                  </div>
-                  <div className="meta">
-                    {forum.get('sub_header')}
-                  </div>
-                  <div className="description">
-                    {forum.get('description')}
-                  </div>
-                </div>
-                <div className="content">
-                  {
-                    forum.get('rule') &&
-                    <div >
-                      <div className="ui header tiny">
-                        클럽 규칙
-                      </div>
-                      <div className="description">
-                        {forum.get('rule')}
-                      </div>
                     </div>
-                  }
+                    <div className="meta">
+                      {forum.get('sub_header')}
+                    </div>
+                    <div className="description">
+                      {forum.get('description')}
+                    </div>
+                  </div>
+                  <div className="content">
+                    {
+                      forum.get('rule') &&
+                      <div >
+                        <div className="ui header tiny">
+                          클럽 규칙
+                        </div>
+                        <div className="description">
+                          {forum.get('rule')}
+                        </div>
+                      </div>
+                    }
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="ui horizontal celled list">
-            <div className="item" style={{fontWeight: 'bold'}}>
-              <div className="middle aligned content bold" onClick={this.resetPrefix}>전체</div>
-            </div>
-            {
-              forum.get('prefixes') &&
-              forum.get('prefixes').map(this.createPrefixItem.bind(this, Prefixes))
-            }
-          </div>
-          <table className="ui table very compact" >
-            <thead>
-            <tr>
-              <th className="center aligned collapsing">말머리</th>
-              <th className="center aligned collapsing">좋아요</th>
-              <th className="center aligned collapsing">조회</th>
-              <th className="center aligned">제목</th>
-              <th className="center aligned collapsing">글쓴이</th>
-              <th className="center aligned collapsing">등록일</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            {
-              postIds.map(this.createPostItem.bind(this, makeUrl))
-            }
-
-            </tbody>
-          </table>
-
-
-          <div className="ui right aligned container">
-            {
-              userId && isLogin &&
-              <Link
-                className="ui button primary tiny"
-                to={{pathname: '/community/submit', query: {forumId: forumId}}}>
-                글쓰기
-              </Link>
-            }
-            {
-              !userId && !isLogin &&
-              <a
-                className="ui button primary tiny"
-                onClick={this.openLoginModal}>
-                글쓰기
-              </a>
-            }
-          </div>
-
-          <div className="ui divider"></div>
-
-          <div className="ui center aligned container">
-
-            { (total > 0) &&
-            <Paginator
-              total={total}
-              limit={limit}
-              page={page}
-              handleSetPage={this.handleSetPage}
-            />
-            }
-
-            <div className="ui search mini" style={{padding: '15px'}}>
-              <div className="ui icon input">
-                <form onSubmit={this.handleForumSearch}>
-                  <input className="prompt"
-                         type="text"
-                         placeholder="게시글 검색..."
-                         onChange={this.onChange}
-                         value={this.state.text}
-                  />
-                </form>
-                <i className="search icon"></i>
+            <div className="ui horizontal celled list">
+              <div className="item" style={{fontWeight: 'bold'}}>
+                <div className="middle aligned content bold" onClick={this.resetPrefix}>전체</div>
               </div>
-              <div className="results"></div>
+              {
+                forum.get('prefixes') &&
+                forum.get('prefixes').map(this.createPrefixItem.bind(this, Prefixes))
+              }
             </div>
+            <table className="ui table very compact" >
+              <thead>
+              <tr>
+                <th className="center aligned collapsing">말머리</th>
+                <th className="center aligned collapsing">좋아요</th>
+                <th className="center aligned collapsing">조회</th>
+                <th className="center aligned">제목</th>
+                <th className="center aligned collapsing">글쓴이</th>
+                <th className="center aligned collapsing">등록일</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              {
+                postIds.map(this.createPostItem.bind(this, makeUrl))
+              }
+
+              </tbody>
+            </table>
+
+
+            <div className="ui right aligned container">
+              {
+                userId && isLogin &&
+                <Link
+                  className="ui button primary tiny"
+                  to={{pathname: '/community/submit', query: {forumId: forumId}}}>
+                  글쓰기
+                </Link>
+              }
+              {
+                !userId && !isLogin &&
+                <a
+                  className="ui button primary tiny"
+                  onClick={this.openLoginModal}>
+                  글쓰기
+                </a>
+              }
+            </div>
+
+            <div className="ui divider"></div>
+
+            <div className="ui center aligned container">
+
+              { (total > 0) &&
+              <Paginator
+                total={total}
+                limit={limit}
+                page={page}
+                handleSetPage={this.handleSetPage}
+              />
+              }
+
+              <div className="ui search mini" style={{padding: '15px'}}>
+                <div className="ui icon input">
+                  <form onSubmit={this.handleForumSearch}>
+                    <input className="prompt"
+                           type="text"
+                           placeholder="게시글 검색..."
+                           onChange={this.onChange}
+                           value={this.state.text}
+                    />
+                  </form>
+                  <i className="search icon"></i>
+                </div>
+                <div className="results"></div>
+              </div>
+            </div>
+
+
           </div>
+        );
+      }
 
-
-        </div>
-      );
-    } else {
       return <div></div>
     }
+
+    return <div></div>
   }
 });
 
