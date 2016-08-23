@@ -1,7 +1,6 @@
 import alt from '../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../Actions/AppActions';
 import UserActions from '../Actions/UserActions';
 import SettingActions from '../Actions/SettingActions';
 import { initListener, setMergeState } from './Helper/func';
@@ -10,21 +9,12 @@ class SettingStore{
   static displayName = 'SettingStore';
   constructor() {
 
-    this.bindActions(AppActions);
     this.bindActions(UserActions);
     this.bindActions(SettingActions);
     this.state = Map({});
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
-  }
-
-  onInit(bootstrapData) {
-    const StoreData = bootstrapData[this.displayName];
-    if (StoreData && !(this.state.equals(Immutable.fromJS(StoreData))) ) {
-      this.setMergeState(StoreData);
-    }
-
   }
 
   onUpdatePassword(result) {

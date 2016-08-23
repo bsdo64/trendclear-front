@@ -15,6 +15,7 @@ var CommunityContainer = require('../Container/Contents/Community');
 var SubmitContainer = require('../Container/Contents/SubmitPost');
 var SubmitForumContainer = require('../Container/Contents/SubmitForum');
 var SubmitForumPrefixContainer = require('../Container/Contents/SubmitForumPrefix');
+var ForumSettingMain = require('../Container/Contents/ForumSetting');
 var SearchContainer = require('../Container/Contents/Search');
 var SettingContainer = require('../Container/Contents/Setting');
 var ActivityContainer = require('../Container/Contents/Activity');
@@ -22,6 +23,7 @@ var ActivityContainer = require('../Container/Contents/Activity');
 var BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 var AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
 var SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
+var ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
 
 var LoginModalContainer = require('../Container/Modal/LoginModalContainer');
 var ReportModalContainer = require('../Container/Modal/ReportModalContainer');
@@ -179,6 +181,209 @@ export default () =>
               ContentsContainer: SubmitForumPrefixContainer
              }}
     />
+
+    <Route path="settings">
+      <IndexRoute
+        components={{
+          HeaderMyMenu: HeaderMyMenu,
+          HeaderSearch: HeaderSearch,
+          LeftColGnb: LeftColGlobalCategoryNav,
+          LeftColMenu: ForumSettingMenu,
+          LoginModalContainer: LoginModalContainer,
+          WidgetContainer: WidgetContainer,
+          ReportModalContainer: ReportModalContainer,
+          ContentsContainer: ForumSettingMain
+        }}/>
+
+      <Route path="foruminfo" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="forumurl" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="announce" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="writepost" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="writecomment" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="share" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="promotion" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="managers" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="banlist" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="spams" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="spamreports" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="stat/forum" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="stat/views" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="stat/visitors" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="stat/likerank" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="stat/commentrank" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+      <Route path="stat/viewrank" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
+
+    </Route>
+
   </Route>
 
   <Route path="/search" component={App}>

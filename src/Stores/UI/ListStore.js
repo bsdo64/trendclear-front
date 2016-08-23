@@ -1,7 +1,6 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../../Actions/AppActions';
 import ListActions from '../../Actions/ListActions';
 import PostActions from '../../Actions/PostActions';
 import GnbActions from '../../Actions/GnbActions';
@@ -21,7 +20,6 @@ class ListStore {
   constructor() {
     this.displayName = 'ListStore';
 
-    this.bindActions(AppActions);
     this.bindActions(ListActions);
     this.bindActions(PostActions);
     this.bindActions(GnbActions);
@@ -32,14 +30,6 @@ class ListStore {
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
-  }
-
-  onInit(bootstrapData) {
-    const StoreData = bootstrapData[this.displayName];
-    if (StoreData && !(this.state.equals(Immutable.fromJS(StoreData))) ) {
-      this.setMergeState(StoreData);
-    }
-
   }
 
   onAdd(list) {

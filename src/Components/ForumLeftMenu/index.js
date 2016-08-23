@@ -9,7 +9,6 @@ const ForumLeftMenu = React.createClass({
     const forum = CommunityStore.get('forum');
 
     if (forum) {
-      const forumId = forum.get('id');
       const creator = forum.get('creator');
       if (creator) {
         const userId = AuthStore.get('userId');
@@ -48,17 +47,6 @@ const ForumLeftMenu = React.createClass({
                   </div>
                 </li>
 
-                {
-                  (creator.get('id') === userId) &&
-                  <li >
-                    <h5 className="">
-                      <Link to={`/community/settings?forumId=${forumId}`}>
-                        <i className="fa fa-gear"/>
-                        {' 설정'}
-                      </Link>
-                    </h5>
-                  </li>
-                }
               </ul>
             </menu>
           </div>

@@ -1,7 +1,6 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../../Actions/AppActions';
 import SubCommentActions from '../../Actions/SubCommentActions';
 import CommentActions from '../../Actions/CommentActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
@@ -11,7 +10,6 @@ class SubComments {
   constructor() {
     this.displayName = 'SubComments';
 
-    this.bindActions(AppActions);
     this.bindActions(SubCommentActions);
     this.bindActions(CommentActions);
     this.state = Immutable.Map({
@@ -21,11 +19,6 @@ class SubComments {
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
   }
-
-  onInit(bootstrapData) {
-
-  }
-
   onAddList(subComments) {
     this.setMergeState(subComments);
   }

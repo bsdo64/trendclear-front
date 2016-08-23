@@ -1,17 +1,6 @@
 import React from 'react';
-import AltContainer from 'alt-container';
+import alt from '../../Utils/alt';
 import connectToStores from 'alt-utils/lib/connectToStores';
-
-import GnbStore from '../../Stores/GnbStore';
-
-import Posts from '../../Stores/Domain/Posts';
-import Users from '../../Stores/Domain/Users';
-import Forums from '../../Stores/Domain/Forums';
-
-import ListStore from '../../Stores/UI/ListStore';
-import AuthStore from '../../Stores/UI/AuthStore';
-import PaginationStore from '../../Stores/UI/PaginationStore';
-import LoginModalStore from '../../Stores/UI/LoginModalStore';
 
 import Best from '../../Components/Contents/Best';
 
@@ -20,32 +9,32 @@ const BestContainer = connectToStores({
     // this will handle the listening/unlistening for you
     return [
       // UI Stores
-      LoginModalStore,
-      AuthStore,
-      PaginationStore,
-      ListStore,
+      alt.getStore('LoginModalStore'),
+      alt.getStore('AuthStore'),
+      alt.getStore('PaginationStore'),
+      alt.getStore('ListStore'),
 
       // Domain Stores
-      Posts,
-      Users,
-      Forums,
+      alt.getStore('Posts'),
+      alt.getStore('Users'),
+      alt.getStore('Forums'),
 
-      GnbStore
+      alt.getStore('GnbStore')
     ]
   },
 
   getPropsFromStores() {
     return {
-      AuthStore:        AuthStore.getState(),
-      PaginationStore:  PaginationStore.getState(),
-      ListStore:        ListStore.getState(),
-      LoginModalStore:  LoginModalStore.getState(),
+      AuthStore:        alt.getStore('AuthStore').getState(),
+      PaginationStore:  alt.getStore('PaginationStore').getState(),
+      ListStore:        alt.getStore('ListStore').getState(),
+      LoginModalStore:  alt.getStore('LoginModalStore').getState(),
 
-      Forums:           Forums.getState(),
-      Users:            Users.getState(),
-      Posts:            Posts.getState(),
+      Forums:           alt.getStore('Forums').getState(),
+      Users:            alt.getStore('Users').getState(),
+      Posts:            alt.getStore('Posts').getState(),
 
-      GnbStore:         GnbStore.getState()
+      GnbStore:         alt.getStore('GnbStore').getState()
     }
   }
 }, React.createClass({

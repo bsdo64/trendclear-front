@@ -1,7 +1,6 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../../Actions/AppActions';
 import GnbActions from '../../Actions/GnbActions';
 import CollectionActions from '../../Actions/CollectionActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
@@ -11,7 +10,6 @@ class Forums {
   constructor() {
     this.displayName = 'Forums';
 
-    this.bindActions(AppActions);
     this.bindActions(GnbActions);
     this.bindActions(CollectionActions);
 
@@ -21,12 +19,6 @@ class Forums {
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
-  }
-
-  onInit(bootstrapData) {
-    if (bootstrapData[this.displayName]) {
-      this.setMergeState(bootstrapData[this.displayName]);
-    }
   }
 
   onAddForum(normalizedForums) {

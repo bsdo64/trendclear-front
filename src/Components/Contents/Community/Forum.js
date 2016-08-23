@@ -232,7 +232,7 @@ const Forum = React.createClass({
 
                       {
                         (userId === creator.get('id')) &&
-                        <Link to={`/community/setting?forumId=${forumId}`}
+                        <Link to={`/community/settings?forumId=${forumId}`}
                               className="ui button primary basic tiny right floated">
                           <i className="fa fa-gear" />
                           {' 설정'}

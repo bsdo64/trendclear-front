@@ -1,7 +1,6 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../../Actions/AppActions';
 import CollectionActions from '../../Actions/CollectionActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
@@ -12,7 +11,7 @@ class Collections {
   constructor() {
     this.displayName = 'Collections';
 
-    this.bindActions(AppActions);
+
     this.bindActions(CollectionActions);
     this.state = Immutable.Map({});
 

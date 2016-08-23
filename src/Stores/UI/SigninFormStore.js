@@ -1,7 +1,6 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../../Actions/AppActions';
 import SigninActions from '../../Actions/SigninActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
@@ -37,20 +36,11 @@ class SigninFormStore {
   
   constructor() {
 
-    this.bindActions(AppActions);
     this.bindActions(SigninActions);
     this.state = Immutable.Map(defaultProps);
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
-  }
-
-  onInit(bootstrapData) {
-    const StoreData = bootstrapData[this.displayName];
-    if (StoreData && !(this.state.equals(Immutable.fromJS(StoreData))) ) {
-      this.setMergeState(StoreData);
-    }
-
   }
 
   onAgreeTerm() {

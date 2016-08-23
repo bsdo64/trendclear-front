@@ -1,7 +1,13 @@
+let count = 0;
 export function initListener(Store) {
   "use strict";
-  Store.on('bootstrap', function initBootStrapListener(value) {
-    Store.setState(value);
+  Store.on('bootstrap', function initBootStrapListener(nextState) {
+
+    const prevState = Store.state;
+    if (!nextState.equals(prevState)) {
+      count++;
+      Store.setState(nextState);
+    }
   });
 
   Store.on('beforeEach', function beforeEachHandler(value) {
@@ -33,6 +39,10 @@ export function setMergeState(changedData) {
   "use strict";
 
   let nextState = this.state.merge(changedData);
+  if (this.state.equals(nextState)) {
+    return null;
+  }
+
   this.setState(nextState);
 }
 

@@ -1,7 +1,6 @@
 import alt from '../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../Actions/AppActions';
 import UserActions from '../Actions/UserActions';
 import PostActions from '../Actions/PostActions';
 import CommentActions from '../Actions/CommentActions';
@@ -17,7 +16,6 @@ class UserStore{
   
   constructor() {
 
-    this.bindActions(AppActions);
     this.bindActions(UserActions);
     this.bindActions(PostActions);
 
@@ -34,12 +32,6 @@ class UserStore{
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
-  }
-  onInit(bootstrapData) {
-    const StoreData = bootstrapData[this.displayName];
-    if (StoreData && !(this.state.equals(Immutable.fromJS(StoreData))) ) {
-      this.setMergeState(StoreData);
-    }
   }
 
   onRequestLogout(result) {

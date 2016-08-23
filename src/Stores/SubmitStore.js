@@ -2,7 +2,6 @@ import alt from '../Utils/alt';
 import {browserHistory} from 'react-router';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../Actions/AppActions';
 import UserActions from '../Actions/UserActions';
 import PostActions from '../Actions/PostActions';
 import { initListener, setMergeState, locationHref } from './Helper/func';
@@ -11,7 +10,6 @@ class SubmitStore{
   static displayName = 'SubmitStore';
   constructor() {
 
-    this.bindActions(AppActions);
     this.bindActions(UserActions);
     this.bindActions(PostActions);
     this.state = Immutable.Map({});
@@ -19,13 +17,7 @@ class SubmitStore{
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
   }
-  onInit(bootstrapData) {
-    const StoreData = bootstrapData[this.displayName];
-    if (StoreData && !(this.state.equals(Immutable.fromJS(StoreData))) ) {
-      this.setMergeState(StoreData);
-    }
 
-  }
   onHandleTitle(title) {
     this.setMergeState(Map({title: title}));
   }

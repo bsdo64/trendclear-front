@@ -1,7 +1,6 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../../Actions/AppActions';
 import PostActions from '../../Actions/PostActions';
 import GnbActions from '../../Actions/GnbActions';
 import CommunityActions from '../../Actions/CommunityActions';
@@ -15,7 +14,6 @@ class Posts {
   constructor() {
     this.displayName = 'Posts';
 
-    this.bindActions(AppActions);
     this.bindActions(PostActions);
     this.bindActions(GnbActions);
     this.bindActions(CommunityActions);
@@ -26,12 +24,6 @@ class Posts {
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
-  }
-
-  onInit(bootstrapData) {
-    if (bootstrapData[this.displayName]) {
-      this.setMergeState(bootstrapData[this.displayName]);
-    }
   }
   
   onAddList(posts) {

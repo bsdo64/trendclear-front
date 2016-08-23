@@ -1,7 +1,6 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import AppActions from '../../Actions/AppActions';
 import PostActions from '../../Actions/PostActions';
 import GnbActions from '../../Actions/GnbActions';
 import PaginationActions from '../../Actions/PaginationActions';
@@ -16,7 +15,6 @@ class PaginationStore {
   constructor() {
     this.displayName = 'PaginationStore';
 
-    this.bindActions(AppActions);
     this.bindActions(GnbActions);
     this.bindActions(PostActions);
     this.bindActions(PaginationActions);
@@ -26,13 +24,6 @@ class PaginationStore {
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
-  }
-
-  onInit(bootstrapData) {
-    const StoreData = bootstrapData[this.displayName];
-    if (StoreData && !(this.state.equals(Immutable.fromJS(StoreData))) ) {
-      this.setMergeState(StoreData);
-    }
   }
 
   onAddPagination(collection) {
