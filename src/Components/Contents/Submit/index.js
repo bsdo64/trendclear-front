@@ -229,7 +229,7 @@ const EditorBox = React.createClass({
   render() {
     "use strict";
 
-    const {SubmitStore} = this.props;
+    const {SubmitStore, UserStore, AuthStore} = this.props;
     const type = SubmitStore.get('type');
     const urlMetaData = SubmitStore.get('urlMetaData');
 
@@ -284,6 +284,13 @@ const EditorBox = React.createClass({
         </div>
 
         {/* <TagList items={Tags} /> */}
+
+        {
+          <div className="ui checkbox">
+            <input id="example-id" type="checkbox" />
+              <label htmlFor="example-id">공지 글 (최대 5개)</label>
+          </div>
+        }
 
         <div className="submit_button_box">
           {

@@ -1,50 +1,87 @@
 import React from 'react';
-import alt from '../../Utils/alt';
-import connectToStores from 'alt-utils/lib/connectToStores';
-import ActivityStore from '../../Stores/ActivityStore';
-import UserStore from '../../Stores/UserStore';
 
-import Activity from '../../Components/Contents/Activity';
+import ForumInfo from './ForumInfo';
+import ForumUrl from './ForumUrl';
+import Announce from './Announce';
+import WritePost from './WritePost';
+import WriteComment from './WriteComment';
+import Share from './Share';
+import Promotion from './Promotion';
+import Managers from './Managers';
+import BanList from './BanList';
+import Spams from './Spams';
+import SpamReports from './SpamReports';
+import StatForum from './StatForum';
+import StatVisitors from './StatVisitors';
+import StatLikeRank from './StatLikeRank';
+import StatCommentRank from './StatCommentRank';
+import StatViewRank from './StatViewRank';
 
-const ActivityContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [
-      ActivityStore,
-      UserStore,
+const ForumSettingsComponent = (props) => {
+  const {ForumSettingStore} = props;
+  const content = ForumSettingStore.get('content');
 
-      // UI Stores
-      alt.getStore('LoginModalStore'),
-      alt.getStore('AuthStore'),
-      alt.getStore('PaginationStore'),
-      alt.getStore('ListStore'),
+  switch (content) {
+    case 'foruminfo':
+      return <ForumInfo {...props} />;
+      break;
+    case 'forumurl':
+      return <ForumUrl {...props} />;
+      break;
+    case 'announce':
+      return <Announce {...props} />;
+      break;
+    case 'writepost':
+      return <WritePost {...props} />;
+      break;
+    case 'writecomment':
+      return <WriteComment {...props} />;
+      break;
+    case 'share':
+      return <Share {...props} />;
+      break;
+    case 'promotion':
+      return <Promotion {...props} />;
+      break;
+    case 'managers':
+      return <Managers {...props} />;
+      break;
+    case 'banlist':
+      return <BanList {...props} />;
+      break;
+    case 'spams':
+      return <Spams {...props} />;
+      break;
+    case 'spamreports':
+      return <SpamReports {...props} />;
+      break;
+    case 'stat_forum':
+      return <StatForum {...props} />;
+      break;
+    case 'stat_views':
+      return <StatViews {...props} />;
+      break;
+    case 'stat_visitors':
+      return <StatVisitors {...props} />;
+      break;
+    case 'stat_likerank':
+      return <StatLikeRank {...props} />;
+      break;
+    case 'stat_commentrank':
+      return <StatCommentRank {...props} />;
+      break;
+    case 'stat_viewrank':
+      return <StatViewRank {...props} />;
+      break;
+    default:
+      return (
+        <div className="ui segments">
+          <div className="ui segment">
 
-      alt.getStore('Posts'),
-      alt.getStore('Users'),
-      alt.getStore('Forums')
-    ]
-  },
-
-  getPropsFromStores() {
-    return {
-      ActivityStore: ActivityStore.getState(),
-      UserStore: UserStore.getState(),
-
-      // UI Stores
-      LoginModalStore: alt.getStore('LoginModalStore').getState(),
-      AuthStore: alt.getStore('AuthStore').getState(),
-      PaginationStore: alt.getStore('PaginationStore').getState(),
-      ListStore: alt.getStore('ListStore').getState(),
-
-      Posts: alt.getStore('Posts').getState(),
-      Users: alt.getStore('Users').getState(),
-      Forums: alt.getStore('Forums').getState()
-    }
+          </div>
+        </div>
+      )
   }
-}, React.createClass({
-  render() {
-    return (<Activity {...this.props} />)
-  }
-}));
+};
 
-module.exports = ActivityContainer;
+export default ForumSettingsComponent;

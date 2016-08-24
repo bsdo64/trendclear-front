@@ -112,7 +112,7 @@ const SubmitForm = connectToStores({
                 <input name="forum_title" type="text" />
               </div>
               <div className="field">
-                <label>작은 제목</label>
+                <label>부제 :</label>
                 <input name="forum_sub_header" type="text" />
               </div>
               <div className="field">

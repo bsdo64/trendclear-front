@@ -38,9 +38,9 @@ const ForumSettingLeftMenu = React.createClass({
                   <div className="sub_category item">
                     <Link to={{pathname: '/community/settings/foruminfo', query: {forumId: forumId}}}>{'게시판 정보'}</Link>
                   </div>
-                  <div className="sub_category item">
-                    <Link to={{pathname: '/community/settings/forumurl', query: {forumId: forumId}}}>{'게시판 주소'}</Link>
-                  </div>
+                  {/*<div className="sub_category item">*/}
+                    {/*<Link to={{pathname: '/community/settings/forumurl', query: {forumId: forumId}}}>{'게시판 주소'}</Link>*/}
+                  {/*</div>*/}
                 </li>
                 <li >
                   <h5 className="">

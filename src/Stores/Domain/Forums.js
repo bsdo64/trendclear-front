@@ -3,7 +3,7 @@ import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import GnbActions from '../../Actions/GnbActions';
 import CollectionActions from '../../Actions/CollectionActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import { initListener, setMergeState, setMergeDeep } from '../Helper/func';
 
 class Forums {
   static displayName = 'Forums';
@@ -19,14 +19,15 @@ class Forums {
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
+    this.setMergeDeep = setMergeDeep.bind(this);
   }
 
   onAddForum(normalizedForums) {
-    this.setMergeState(normalizedForums.entities.forums);
+    this.setMergeDeep(normalizedForums.entities.forums);
   }
 
   onFindForumByTitle(normalizedForums) {
-    this.setMergeState(normalizedForums.entities.forums);
+    this.setMergeDeep(normalizedForums.entities.forums);
   }
 }
 

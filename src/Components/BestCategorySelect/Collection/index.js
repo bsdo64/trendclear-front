@@ -152,11 +152,29 @@ const Collection = React.createClass({
       this.closeCreateCollection();
     }
   },
+  createCollectionItem(collections) {
+    const {forums} = this.props;
+    const self = this;
+    return collections.entrySeq().map(([key, map]) => {
+      return (
+        <CollectionItem
+          key={key}
+          id={key}
+          title={map.get('title')}
+          subs={map.get('forums')}
+          forums={forums}
+          mouseOverItemHandler={self.mouseOverItemHandler}
+          closeItemHandler={self.closeItemHandler}
+          mouseOverItem={self.state.mouseOverItemId}
+        />
+      )
+    })
+  },
+
   render() {
     "use strict";
 
-    const {collections, forums} = this.props;
-    const self = this;
+    const {collections} = this.props;
     const createCollectionBoxStyle = cx('create_box', {
       hide: this.state.hideCreateCollectionBox
     });
@@ -169,20 +187,7 @@ const Collection = React.createClass({
 
         {
           collections &&
-          collections.map((collection => {
-            return (
-              <CollectionItem
-                key={collection.get('id')}
-                id={collection.get('id')}
-                title={collection.get('title')}
-                subs={collection.get('forums')}
-                forums={forums}
-                mouseOverItemHandler={self.mouseOverItemHandler}
-                closeItemHandler={self.closeItemHandler}
-                mouseOverItem={this.state.mouseOverItemId}
-              />
-            )
-          }))
+          this.createCollectionItem(collections)
         }
 
         <div className="sub_category item create_collection">

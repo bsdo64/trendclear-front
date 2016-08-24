@@ -1,85 +1,83 @@
 import React from 'react';
 import {IndexRedirect, Link, IndexRoute, Router, Route, browserHistory} from 'react-router';
 
-var LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
-var ForumMenu = require('../Container/LeftCol/ForumMenu.js');
-var CollectionMenu = require('../Container/LeftCol/CollectionMenu');
+const LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
+const ForumMenu = require('../Container/LeftCol/ForumMenu.js');
+const CollectionMenu = require('../Container/LeftCol/CollectionMenu');
 
-var HeaderMyMenu = require('../Container/Header/MyMenu');
-var HeaderSearch = require('../Container/Header/Search');
+const HeaderMyMenu = require('../Container/Header/MyMenu');
+const HeaderSearch = require('../Container/Header/Search');
 
-var ContentsContainer = require('../Container/Contents/Best');
-var CollectionContentsContainer = require('../Container/Contents/BestCollection');
-var SigninContainer = require('../Container/Contents/Signin');
-var CommunityContainer = require('../Container/Contents/Community');
-var SubmitContainer = require('../Container/Contents/SubmitPost');
-var SubmitForumContainer = require('../Container/Contents/SubmitForum');
-var SubmitForumPrefixContainer = require('../Container/Contents/SubmitForumPrefix');
-var ForumSettingMain = require('../Container/Contents/ForumSetting');
-var SearchContainer = require('../Container/Contents/Search');
-var SettingContainer = require('../Container/Contents/Setting');
-var ActivityContainer = require('../Container/Contents/Activity');
+const ContentsContainer = require('../Container/Contents/Best');
+const CollectionContentsContainer = require('../Container/Contents/BestCollection');
+const SigninContainer = require('../Container/Contents/Signin');
+const CommunityContainer = require('../Container/Contents/Community');
+const SubmitContainer = require('../Container/Contents/SubmitPost');
+const SubmitForumContainer = require('../Container/Contents/SubmitForum');
+const SubmitForumPrefixContainer = require('../Container/Contents/SubmitForumPrefix');
+const ForumSettingMain = require('../Container/Contents/ForumSetting');
+const SearchContainer = require('../Container/Contents/Search');
+const SettingContainer = require('../Container/Contents/Setting');
+const ActivityContainer = require('../Container/Contents/Activity');
 
-var BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
-var AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
-var SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
-var ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
+const BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
+const AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
+const SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
+const ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
 
-var LoginModalContainer = require('../Container/Modal/LoginModalContainer');
-var ReportModalContainer = require('../Container/Modal/ReportModalContainer');
-var WidgetContainer = require('../Container/RightCol/WidgetContainer');
+const LoginModalContainer = require('../Container/Modal/LoginModalContainer');
+const ReportModalContainer = require('../Container/Modal/ReportModalContainer');
+const WidgetContainer = require('../Container/RightCol/WidgetContainer');
 
-const App = React.createClass({
-  render() {
-    return (
-      <div>
-        <div id="wrap">
-          <div id="header">
-            <div className="head_contents">
-              <div className="top_area">
-                <div className="top_contents">
-                  <div id="top_logo">
-                    <Link className="ui header inverted huge" to="/">
-                      <img src="/images/Venacle.png"/>
-                    </Link>
-                  </div>
-                  <div id="top_search">
-                    { this.props.HeaderSearch }
-                  </div>
-                  <div id="top_my_area">
-                    { this.props.HeaderMyMenu }
-                  </div>
+const App = (props) => {
+  return (
+    <div>
+      <div id="wrap">
+        <div id="header">
+          <div className="head_contents">
+            <div className="top_area">
+              <div className="top_contents">
+                <div id="top_logo">
+                  <Link className="ui header inverted huge" to="/">
+                    <img src="/images/Venacle.png"/>
+                  </Link>
+                </div>
+                <div id="top_search">
+                  { props.HeaderSearch }
+                </div>
+                <div id="top_my_area">
+                  { props.HeaderMyMenu }
                 </div>
               </div>
             </div>
           </div>
-          <div id="container">
-            <div id="left_col">
-              <div id="category_menu">
-                { this.props.LeftColGnb }
-              </div>
-              <div id="category">
-                { this.props.LeftColMenu }
-              </div>
+        </div>
+        <div id="container">
+          <div id="left_col">
+            <div id="category_menu">
+              { props.LeftColGnb }
             </div>
-            <div id="section">
-              <div id="contents">
-                { this.props.ContentsContainer }
-              </div>
-              <div id="right_col">
-                { this.props.WidgetContainer }
-              </div>
+            <div id="category">
+              { props.LeftColMenu }
+            </div>
+          </div>
+          <div id="section">
+            <div id="contents">
+              { props.ContentsContainer }
+            </div>
+            <div id="right_col">
+              { props.WidgetContainer }
             </div>
           </div>
         </div>
-        <div id="modal">
-          { this.props.LoginModalContainer }
-          { this.props.ReportModalContainer }
-        </div>
       </div>
-    )
-  }
-});
+      <div id="modal">
+        { props.LoginModalContainer }
+        { props.ReportModalContainer }
+      </div>
+    </div>
+  )
+};
 
 
 export default () =>

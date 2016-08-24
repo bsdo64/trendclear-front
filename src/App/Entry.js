@@ -224,6 +224,11 @@ new Promise((resolve, reject) => {
           });
         }
 
+        if (resBody.ForumSettingStore && resBody.ForumSettingStore.content) {
+
+          resBody.ForumSettingStore.forum = resBody.CommunityStore.forum;
+        }
+
         if (process.env.NODE_ENV !== 'production') {
           console.info('Bootstrap Data : ', resBody);
         }

@@ -23,6 +23,20 @@ class PostActions {
         return err;
       });
   }
+
+  patchForum(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .put('/forum', params)
+        .then((forum) => {
+          dispatch(forum);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
 }
 
 export default alt.createActions(PostActions);

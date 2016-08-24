@@ -27,6 +27,9 @@ class SubmitStore{
   onSelectPrefix(prefixId) {
     this.setMergeState(Map({selectPrefixId: prefixId}));
   }
+  onCheckAnnounce(checked) {
+    this.setMergeState(Map({announce: checked}));
+  }
   onSubmitPost(result) {
     if (result) {
       let forum = result.forum;

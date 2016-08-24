@@ -80,7 +80,7 @@ const Temp = React.createClass({
                   </div>
                   ,
                   <div key={'button'} className="ui container fluid" style={{display: 'inline-block'}}>
-                    <button className="ui button inverted basic tiny right floated" 
+                    <button className="ui button inverted basic tiny right floated"
                             style={{fontSize: '10px'}}
                             onClick={this.saveFilter}>
                       저장

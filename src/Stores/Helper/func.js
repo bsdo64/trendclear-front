@@ -46,6 +46,17 @@ export function setMergeState(changedData) {
   this.setState(nextState);
 }
 
+export function setMergeDeep(changedData) {
+  "use strict";
+
+  let nextState = this.state.mergeDeep(changedData);
+  if (this.state.equals(nextState)) {
+    return null;
+  }
+
+  this.setState(nextState);
+}
+
 export function locationHref(url) {
   "use strict";
 
