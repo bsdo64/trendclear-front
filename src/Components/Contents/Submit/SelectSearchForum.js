@@ -53,7 +53,7 @@ const SelectSearchForum = React.createClass({
             <div className="search_box">
               <h3 className="ui header">
                 게시판 선택
-                <div className="sub header">게시판을 먼저 선택해주세요</div>
+                <div className="sub header">관심 게시판을 찾아보세요</div>
               </h3>
 
               <div className="ui search search_forums">

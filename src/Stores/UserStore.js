@@ -120,6 +120,16 @@ class UserStore{
     });
     this.setState(state);
   }
+
+  onFollowForum(result) {
+    const state = this.state.update('follow_forums', list => list.push(Map(result)));
+    this.setState(state);
+  }
+
+  onUnFollowForum(result) {
+    const state = this.state.update('follow_forums', list => list.filterNot(v => v.get('id') === result.id));
+    this.setState(state);
+  }
 }
 
 export default alt.createStore(immutable(UserStore), UserStore.displayName);

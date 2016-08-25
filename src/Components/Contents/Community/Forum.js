@@ -7,6 +7,7 @@ import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdow
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
 
+import UserActions from '../../../Actions/UserActions';
 import LoginActions from '../../../Actions/LoginActions';
 import CollectionActions from '../../../Actions/CollectionActions';
 
@@ -176,6 +177,22 @@ const Forum = React.createClass({
     }
   },
 
+  toggleFollow(followItem, forumId) {
+    "use strict";
+
+    const {AuthStore} = this.props;
+    const userId = AuthStore.get('userId');
+    if (!userId) {
+      this.openLoginModal();
+    }  else {
+      if (followItem) {
+        UserActions.unFollowForum(followItem.toJS());
+      } else {
+        UserActions.followForum({forumId: forumId});
+      }
+    }
+  },
+
   render() {
     "use strict";
 
@@ -191,10 +208,17 @@ const Forum = React.createClass({
 
     if (forumId && postIds && pagination) {
       const forum = Forums.get(forumId.toString());
+      const isUserForumFollow = isLogin ?
+        Users.get(userId.toString()).get('follow_forums').find(v => v.get('forum_id') === forumId) :
+        false;
 
       if (!forum) {
         return (<div></div>)
       }
+
+      const cFollowActive = cx('ui button primary basic tiny right floated follow_button', {
+        active: isUserForumFollow
+      });
 
       const title = forum.get('title');
       const description = forum.get('description');
@@ -282,7 +306,7 @@ const Forum = React.createClass({
                         </a>
                       }
 
-                      <a className="ui button primary basic tiny right floated">
+                      <a className={cFollowActive} onClick={this.toggleFollow.bind(this, isUserForumFollow, forumId)}>
                         <i className="fa fa-star" />
                         {' 팔로우'}
                       </a>

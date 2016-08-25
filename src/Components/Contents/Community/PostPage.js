@@ -26,6 +26,15 @@ const commentMediumConfig = {
   autoLink: true
 };
 
+function removeWhiteSpace(text) {
+  "use strict";
+
+  const removedLine = text.replace(/\n\s*\n/g, '\n');
+  const removedWhite = removedLine.replace(/\s{2,}/g, ' ');
+  const removedNbsp = removedWhite.replace(/ ?&nbsp; ?|\t+/g, '');
+  return removedNbsp;
+}
+
 function checkSkillAvailable(skill) {
   "use strict";
 
@@ -197,13 +206,17 @@ const CommentItem = React.createClass({
       if (result) {
         const allContents = this.editor.serialize();
         const el = allContents['sub_comment_input_' + commentId].value;
-        const comment = {
-          content: el,
-          commentId: commentId
-        };
+        if ($(el).text().trim()) {
+          const comment = {
+            content: removeWhiteSpace(el),
+            commentId: commentId
+          };
 
-        CommentActions.submitSubComment(comment);
-        this.editor.setContent('');
+          CommentActions.submitSubComment(comment);
+          this.editor.setContent('');
+        } else {
+          console.log('Input sub comment');
+        }
       } else {
         console.log('not available');
       }
@@ -405,13 +418,18 @@ const CommentBox = React.createClass({
       if (result) {
         const allContents = this.editor.serialize();
         const el = allContents['comment_input'].value;
-        const comment = {
-          content: el,
-          postId: this.props.location.query.postId
-        };
 
-        CommentActions.submitComment(comment);
-        this.editor.setContent('');
+        if ($(el).text().trim()) {
+          const comment = {
+            content: removeWhiteSpace(el),
+            postId: this.props.location.query.postId
+          };
+
+          CommentActions.submitComment(comment);
+          this.editor.setContent('');
+        } else {
+          console.log('Input comment');
+        }
       } else {
         console.log('not available');
       }

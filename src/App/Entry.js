@@ -41,6 +41,7 @@ new Promise((resolve, reject) => {
             notifications: resBody.UserStore.notifications,
             skills: resBody.UserStore.skills,
             collections: resBody.UserStore.collections,
+            follow_forums: resBody.UserStore.follow_forums,
           });
 
           const normalized = normalize(userInfo, author);

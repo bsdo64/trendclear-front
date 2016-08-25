@@ -7,9 +7,12 @@ import GnbActions from '../../Actions/GnbActions';
 
 const ClubList = React.createClass({
   displayName: 'ClubList',
-  openSideCategories(e, target, target2) {
+  openSideCategories(e) {
     "use strict";
-    GnbActions.openSideCategory(e.target.dataset.clubid);
+    e.preventDefault();
+    e.stopPropagation();
+
+    GnbActions.openSideCategory(this.refs.category_btn.dataset.clubid);
   },
   toggleGnb() {
     GnbActions.toggleGnb();
@@ -73,7 +76,7 @@ const ClubList = React.createClass({
     const groups = gnbMenu.get('data');
     const data = fromJS([{
       id: 1,
-      title: '베나클',
+      title: '일반',
       groups: groups
     }]);
 

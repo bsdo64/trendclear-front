@@ -1,11 +1,16 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
+import { initListener, setMergeState, locationHref } from '../Helper/func';
+import {normalize} from 'normalizr';
+import {author} from '../../Model/normalizr/schema';
+
+import UserStore from '../UserStore';
+
 import PostActions from '../../Actions/PostActions';
 import CommentActions from '../../Actions/CommentActions';
 import UserActions from '../../Actions/UserActions';
 import GnbActions from '../../Actions/GnbActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 class Users {
   static displayName = 'Users';
@@ -77,6 +82,26 @@ class Users {
   onSubmitComment(IPost) {
     let addCommentState = this.state.mergeDeep(IPost.entities.author);
     this.setState(addCommentState);
+  }
+
+  onFollowForum(result) {
+    this.waitFor(UserStore);
+
+    const newFollowState = this.state
+      .update(result.user_id.toString(), user =>
+        user.update('follow_forums', list => list.push(Map(result)))
+      );
+    this.setState(newFollowState);
+  }
+
+  onUnFollowForum(result) {
+    this.waitFor(UserStore);
+
+    const newFollowState = this.state
+      .update(result.user_id.toString(), user =>
+        user.update('follow_forums', list => list.filterNot(v => v.get('id') === result.id))
+      );
+    this.setState(newFollowState);
   }
 }
 

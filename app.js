@@ -44,7 +44,7 @@ app.use(cookieParser());
 app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'dist'),
   dest: path.join(__dirname, 'dist'),
-  sourceMap: true
+  sourceMap: false
 }));
 app.use(express.static(path.join(__dirname, 'dist'), {maxAge: '1d'}));
 app.use(express.static(path.join(__dirname, 'bower_components'), {maxAge: '1d'}));

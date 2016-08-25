@@ -28,6 +28,14 @@
       font-size: 10px;
     }
   }
+
+  #forum_info {
+    .follow_button.active {
+      .fa.fa-star {
+        color: #058294;
+      }
+    }
+  }
 }
 
 #forum_contents {

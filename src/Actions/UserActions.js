@@ -111,6 +111,38 @@ class UserActions {
     }
 
   }
+
+  followForum(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .post('/user/forum/follow', params)
+        .then(res => {
+          if (res) {
+            dispatch(res);
+          }
+        })
+        .catch(err => {
+          return err;
+        })
+    }
+  }
+
+  unFollowForum(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .post('/user/forum/unfollow', params)
+        .then(res => {
+          if (res) {
+            dispatch(params);
+          }
+        })
+        .catch(err => {
+          return err;
+        })
+    }
+  }
 }
 
 export default alt.createActions(UserActions);
