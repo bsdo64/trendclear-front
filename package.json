@@ -12,9 +12,7 @@
   },
   "dependencies": {
     "alt": "^0.18.5",
-    "alt-container": "^1.0.2",
     "alt-utils": "^1.0.0",
-    "aws-sdk": "^2.3.7",
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "classnames": "^2.2.5",
@@ -26,7 +24,6 @@
     "debug": "~2.2.0",
     "deep-assign": "^2.0.0",
     "draft-js": "^0.7.0",
-    "es6-promise": "^3.2.1",
     "express": "^4.14.0",
     "express-session": "^1.14.0",
     "fast-memoize": "^2.0.2",
@@ -34,6 +31,7 @@
     "history": "^2.1.0",
     "http-proxy": "^1.14.0",
     "immutable": "^3.8.1",
+    "jquery": "latest",
     "js-video-url-parser": "^0.1.6",
     "lodash": "^4.14.0",
     "metafetch": "github:bsdo64/metafetch",
@@ -60,8 +58,7 @@
     "serve-favicon": "~2.3.0",
     "socket.io-client": "^1.4.8",
     "superagent": "^2.1.0",
-    "vn-config": "github:bsdo64/vn-config",
-    "jquery": "latest"
+    "vn-config": "github:bsdo64/vn-config"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.7",

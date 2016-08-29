@@ -4,6 +4,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import cx from 'classnames';
+import AvatarImage from '../../AvatarImage';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 import PostActions from '../../../Actions/PostActions';
@@ -27,22 +28,14 @@ const ActivityBox = React.createClass({
 
     return (
       <h2 className="ui center aligned icon header">
-        {this.createAvatarImg(sex, avatar_img)}
+        <AvatarImage
+          sex={sex}
+          avatarImg={avatar_img}
+          imageClass="circular users icon"
+        />
         <div className="nick">{user.get('nick')}</div>
       </h2>
     )
-  },
-  createAvatarImg(sex, avatarImg) {
-    
-    if (avatarImg) {
-      return <img className="circular users icon" src={'/image/uploaded/files/' + avatarImg} />;
-    } else {
-      if (sex) {
-        return <img className="circular users icon" src="/images/default-male.png" />;
-      } else {
-        return <img className="circular users icon" src="/images/default-female.png" />;
-      }
-    }
   },
   createActivityMeta(meta) {
     "use strict";

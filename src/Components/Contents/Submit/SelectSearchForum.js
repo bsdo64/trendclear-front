@@ -1,6 +1,8 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 
+import AvatarImage from '../../AvatarImage';
+
 const SelectSearchForum = React.createClass({
   componentDidMount() {
     const self = this;
@@ -38,14 +40,19 @@ const SelectSearchForum = React.createClass({
   },
 
   render() {
-    const {avatarImg} = this.props;
+    const {profile} = this.props;
+    const sex = profile.get('sex');
+    const avatarImg = profile.get('avatar_img');
 
     return (
       <div id="submit_box" className="ui items">
         <div className={"ui item post_item"}>
           {/* avatar */}
           <div className="ui image tiny">
-            { avatarImg }
+            <AvatarImage
+              sex={sex}
+              avatarImg={avatarImg}
+            />
           </div>
 
           {/* meta */}

@@ -3,6 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Link} from 'react-router';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
+import AvatarImage from '../AvatarImage';
 
 import LoginActions from '../../Actions/LoginActions';
 import CommunityActions from '../../Actions/CommunityActions';
@@ -21,19 +22,6 @@ const BigPost = React.createClass({
       LoginActions.toggleLoginModal(loginModalFlag, '/');
     } else {
       CommunityActions.likePost(post.get('id'));
-    }
-  },
-
-  createAvatarImg(sex, avatarImg) {
-
-    if (avatarImg) {
-      return <img src={'/image/uploaded/files/' + avatarImg} />;
-    } else {
-      if (sex) {
-        return <img src="/images/default-male.png" />;
-      } else {
-        return <img src="/images/default-female.png" />;
-      }
     }
   },
 
@@ -66,7 +54,10 @@ const BigPost = React.createClass({
       <div key={post.get('id')} className={postStyle}>
         {/* avatar */}
         <div className="ui image tiny">
-          { this.createAvatarImg(sex, avatar_img) }
+          <AvatarImage
+            sex={sex}
+            avatarImg={avatar_img}
+          />
         </div>
 
         {/* meta */}
@@ -99,7 +90,10 @@ const BigPost = React.createClass({
                       <div className="ui item">
 
                         <a id="user_avatar_img" className="ui mini image" >
-                          { this.createAvatarImg(sex, avatar_img) }
+                          <AvatarImage
+                            sex={sex}
+                            avatarImg={avatar_img}
+                          />
                         </a>
 
                         <div className="content">

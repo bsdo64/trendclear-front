@@ -3,6 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import cx from 'classnames';
 import {browserHistory, Link} from 'react-router';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+import AvatarImage from '../../AvatarImage';
 
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
@@ -165,18 +166,6 @@ const Forum = React.createClass({
     return collectionForumList.includes(forumId);
   },
 
-  createAvatarImg(sex, avatarImg) {
-    if (avatarImg) {
-      return <img className="right floated mini ui image"  src={'/image/uploaded/files/' + avatarImg} />;
-    } else {
-      if (sex) {
-        return <img className="right floated mini ui image" src="/images/default-male.png" />;
-      } else {
-        return <img className="right floated mini ui image" src="/images/default-female.png" />;
-      }
-    }
-  },
-
   toggleFollow(followItem, forumId) {
     "use strict";
 
@@ -248,9 +237,11 @@ const Forum = React.createClass({
                   width: '100%'
                 }}>
                   <div className="content">
-                    {
-                      this.createAvatarImg(creatorProfile.get('sex'), creatorProfile.get('avatar_img'))
-                    }
+                    <AvatarImage
+                      sex={creatorProfile.get('sex')}
+                      avatarImg={creatorProfile.get('avatar_img')}
+                      imageClass="right floated mini ui image"
+                    />
                     <div className="header">
                       {forum.get('title')}
 

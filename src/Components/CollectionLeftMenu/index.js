@@ -48,6 +48,14 @@ const CollectionLeftMenu = React.createClass({
 
               {
                 user &&
+                <CollectionComponent
+                  collections={Collections}
+                  forums={Forums}
+                />
+              }
+
+              {
+                user &&
                 <SubscribeForumList
                   searchForumList={ListStore.get('searchCollectionForumList')}
                   subscribeForumList={collection.get('forums')}
@@ -56,13 +64,6 @@ const CollectionLeftMenu = React.createClass({
                 />
               }
 
-              {
-                user &&
-                <CollectionComponent
-                  collections={Collections}
-                  forums={Forums}
-                />
-              }
             </ul>
           </menu>
         </div>

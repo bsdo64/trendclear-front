@@ -61,9 +61,16 @@ const BestBox = React.createClass({
     }
   },
 
+  createHeader() {
+    "use strict";
+
+  },
+
   render() {
     const {listName, ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
     const Collection = PaginationStore.get(listName);
+
+    const Header = this.createHeader(listName);
 
     return (
       <div id="best_contents" >

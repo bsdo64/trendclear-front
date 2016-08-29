@@ -2,6 +2,7 @@ import React from 'react';
 import UserActions from '../../Actions/UserActions';
 import CountUp from 'countup.js';
 import moment from 'moment';
+import AvatarImage from '../AvatarImage';
 
 import ReactTooltip from 'react-tooltip';
 
@@ -144,17 +145,7 @@ const TrendBox = React.createClass({
           iconDef = user.icon ? user.icon.get('iconDef'): null,
           icon_img = iconDef ? iconDef.get('icon_img'): null,
           grade_img = user.grade.getIn(['gradeDef', 'img']);
-    let avatarImg, iconImg, gradeImg;
-
-    if (avatar_img) {
-      avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
-    } else {
-      if (sex) {
-        avatarImg = <img src="/images/default-male.png" />;
-      } else {
-        avatarImg = <img src="/images/default-female.png" />;
-      }
-    }
+    let iconImg, gradeImg;
 
     if (icon_img) {
       iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
@@ -171,7 +162,10 @@ const TrendBox = React.createClass({
             <div className="ui item">
 
               <a id="user_avatar_img" className="ui mini image" onClick={this.openAvatarModal}>
-                { avatarImg }
+                <AvatarImage
+                  sex={sex}
+                  avatarImg={avatar_img}
+                />
               </a>
               <AvatarImageContainer />
 

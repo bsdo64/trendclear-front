@@ -9,6 +9,7 @@ import BestPost from '../../PostItem/BigPost';
 import Paginator from '../../Paginator';
 import Menu from '../../PostItem/ReportMenu';
 import MakeUrl from '../../Lib/MakeUrl';
+import AvatarImage from '../../AvatarImage';
 
 import Forum from './Forum';
 
@@ -76,23 +77,13 @@ function subCommentItem(props) {
 
     if (subComment) {
       const subCommentAuthor = authors.get(subComment.get('author').toString());
-      props.subCommentId = subCommentId
+      props.subCommentId = subCommentId;
 
       if (subCommentAuthor) {
         const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
           sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
           sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
-        let subAvatarImg, subIconImg;
-
-        if (sub_avatar_img) {
-          subAvatarImg = <img src={'/image/uploaded/files/' + sub_avatar_img} />;
-        } else {
-          if (subCommentSex) {
-            subAvatarImg = <img src="/images/default-male.png" />;
-          } else {
-            subAvatarImg = <img src="/images/default-female.png" />;
-          }
-        }
+        let subIconImg;
 
         if (sub_icon_img) {
           subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
@@ -102,7 +93,10 @@ function subCommentItem(props) {
           <div className="comment"
                key={subComment.get('id')}>
             <a className="avatar">
-              {subAvatarImg}
+              <AvatarImage
+                sex={subCommentSex}
+                avatarImg={sub_avatar_img}
+              />
             </a>
             <div className="content">
               <a className="author">{subCommentAuthor.get('nick')}</a>
@@ -244,17 +238,7 @@ const CommentItem = React.createClass({
     const sex = commentAuthor.getIn(['profile', 'sex']),
       avatar_img = commentAuthor.getIn(['profile', 'avatar_img']),
       icon_img = commentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
-    let avatarImg, iconImg;
-
-    if (avatar_img) {
-      avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
-    } else {
-      if (sex) {
-        avatarImg = <img src="/images/default-male.png" />;
-      } else {
-        avatarImg = <img src="/images/default-female.png" />;
-      }
-    }
+    let iconImg;
 
     if (icon_img) {
       iconImg = <img className="user_icon_img" src={'/images/' + icon_img}/>;
@@ -276,7 +260,10 @@ const CommentItem = React.createClass({
            onMouseEnter={this.show}
            onMouseLeave={this.close}>
         <a className="avatar">
-          {avatarImg}
+          <AvatarImage
+            sex={sex}
+            avatarImg={avatar_img}
+          />
         </a>
         <div className="content">
           <a className="author">{commentAuthor.get('nick')}</a>

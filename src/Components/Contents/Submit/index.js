@@ -9,6 +9,7 @@ import Recaptcha from 'react-recaptcha';
 import {mapKeys} from 'lodash';
 import {medium, mediumInsertConfig} from './config';
 
+import AvatarImage from '../../AvatarImage';
 import SelectSearchForum from './SelectSearchForum';
 import PostActions from '../../../Actions/PostActions';
 
@@ -357,16 +358,6 @@ const SubmitContents = React.createClass({
 
       let avatarImg, iconImg, options;
 
-      if (avatar_img) {
-        avatarImg = <img src={'/image/uploaded/files/' + avatar_img}/>;
-      } else {
-        if (sex) {
-          avatarImg = <img src="/images/default-male.png"/>;
-        } else {
-          avatarImg = <img src="/images/default-female.png"/>;
-        }
-      }
-
       if (icon_img) {
         iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
       }
@@ -384,7 +375,7 @@ const SubmitContents = React.createClass({
       if (!forumInfo) {
         return (
           <SelectSearchForum
-            avatarImg={avatarImg}
+            profile={profile}
           />
         )
       }
@@ -394,7 +385,10 @@ const SubmitContents = React.createClass({
           <div className={"ui item post_item"}>
             {/* avatar */}
             <div className="ui image tiny">
-              { avatarImg }
+              <AvatarImage
+                sex={sex}
+                avatarImg={avatar_img}
+              />
             </div>
 
             {/* meta */}
