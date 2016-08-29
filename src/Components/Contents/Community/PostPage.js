@@ -498,6 +498,14 @@ const CommentBox = React.createClass({
 
 require('./Post.scss');
 const PostPage = React.createClass({
+  componentDidMount() {
+    $('.ui.embed').embed();
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    $('.ui.embed').embed('refresh');
+  },
+
   render() {
     "use strict";
 

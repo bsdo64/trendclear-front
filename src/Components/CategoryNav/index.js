@@ -12,7 +12,7 @@ const ClubList = React.createClass({
     e.preventDefault();
     e.stopPropagation();
 
-    GnbActions.openSideCategory(this.refs.category_btn.dataset.clubid);
+    GnbActions.openSideCategory(e.target.dataset.clubid);
   },
   toggleGnb() {
     GnbActions.toggleGnb();
@@ -48,7 +48,7 @@ const ClubList = React.createClass({
     return (
       <li key={item.get('id')} className="gnbm">
         <a className="category_btn"
-           ref="category_btn"
+           ref={'menu_btn_' + item.get('id')}
            data-clubid={item.get('id')}
            onMouseEnter={this.openSideCategories}
            onClick={this.openSideCategories}>
@@ -77,6 +77,16 @@ const ClubList = React.createClass({
     const data = fromJS([{
       id: 1,
       title: '일반',
+      groups: groups
+    }, {
+      id: 2,
+      title: '인기 게시판',
+      type: 'rank',
+      groups: groups
+    }, {
+      id: 3,
+      title: '새로운 게시판',
+      type: 'rank',
       groups: groups
     }]);
 
