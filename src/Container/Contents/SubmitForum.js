@@ -3,6 +3,7 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 import GnbStore from '../../Stores/GnbStore';
 import LoginStore from '../../Stores/LoginStore';
 import UserStore from '../../Stores/UserStore';
+import marked from '../../Components/Lib/Marked';
 
 import ForumActions from '../../Actions/ForumActions';
 
@@ -34,6 +35,10 @@ const SubmitForm = connectToStores({
               {
                 type   : 'empty',
                 prompt : '게시판 이름을 입력하세요'
+              },
+              {
+                type   : 'regExp[/^[가-힣a-z0-9_]{2,14}$/]',
+                prompt : '한글, 영문 2-14 내로 입력해주세요'
               }
             ]
           },
@@ -73,6 +78,16 @@ const SubmitForm = connectToStores({
           ForumActions.createForum(formValue);
         }
       });
+  },
+
+  getInitialState: function() {
+    return {value: 'Type some *markdown* here!'};
+  },
+  handleChange: function() {
+    this.setState({value: this.refs.rule_textarea.value});
+  },
+  rawMarkup: function() {
+    return { __html: marked(this.state.value, {breaks: true}) };
   },
 
   render() {
@@ -121,8 +136,17 @@ const SubmitForm = connectToStores({
               </div>
               <div className="field">
                 <label>규칙 *</label>
-                <textarea name="forum_rule" />
+                <textarea name="forum_rule"
+                          onChange={this.handleChange}
+                          ref="rule_textarea"
+                          defaultValue={this.state.value} />
               </div>
+              <h5>클럽 규칙</h5>
+              <div
+                className="markdown_output"
+                style={{paddingBottom: 10}}
+                dangerouslySetInnerHTML={this.rawMarkup()}
+              />
 
               <div className="ui error message"></div>
               <div className={"ui submit button primary"}>확인</div>

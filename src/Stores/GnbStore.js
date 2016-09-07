@@ -29,6 +29,11 @@ class GnbStore{
     this.setMergeState(state);
   }
 
+  openForumMeta(forumId) {
+    let state = this.state.setIn(['gnbMenu', 'openForumMeta'], forumId);
+    this.setMergeState(state);
+  }
+
   onUpdateFilter(val) {
     this.setMergeState(val);
   }

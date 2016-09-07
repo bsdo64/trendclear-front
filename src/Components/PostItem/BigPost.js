@@ -33,7 +33,7 @@ const BigPost = React.createClass({
 
   render() {
     "use strict";
-    const {post, author, user} = this.props;
+    const {post, author, user, view} = this.props;
 
     const userId = user && user.get('id');
     const sex = author.getIn(['profile', 'sex']),
@@ -62,7 +62,7 @@ const BigPost = React.createClass({
 
         {/* meta */}
         <div className="ui content">
-          <h3 className="best_post_title"><Link to={postUrl}>{post.get('title')}</Link></h3>
+          {/* forum */}
           <div className="meta best_post_meta">
             <div className="ui horizontal divided list">
               <div className="item">
@@ -70,79 +70,87 @@ const BigPost = React.createClass({
               </div>
             </div>
           </div>
+
+          {/* title */}
+          <h3 className="best_post_title"><Link to={postUrl}>{post.get('title')}</Link></h3>
+
+          {/* nick, date, view */}
           <div className="meta best_post_meta">
-            <div className="author_nick">
-              <a data-tip
-                 data-for={'nick_' + author.get('nick') + '_' + post.get('id')}
-                 data-offset="{'bottom': 8, 'right': 42}"
-              >
-                {author.get('nick')}
-              </a>
-              <ReactTooltip
-                id={'nick_' + author.get('nick') + '_' + post.get('id')}
-                place="right"
-                class="abc"
-                effect="solid"
-              >
-                <div id="trend_box" className="widget">
-                  <div id="widget_user_info">
-                    <div className="ui items">
-                      <div className="ui item">
+            <div className="ui horizontal divided list">
+              <div className="item">
+                <div className="author_nick">
+                  <a data-tip
+                     data-for={'nick_' + author.get('nick') + '_' + post.get('id')}
+                     data-offset="{'bottom': 8, 'right': 42}"
+                  >
+                    {author.get('nick')}
+                  </a>
+                  <ReactTooltip
+                    id={'nick_' + author.get('nick') + '_' + post.get('id')}
+                    place="right"
+                    class="abc"
+                    effect="solid"
+                  >
+                    <div id="trend_box" className="widget">
+                      <div id="widget_user_info">
+                        <div className="ui items">
+                          <div className="ui item">
 
-                        <a id="user_avatar_img" className="ui mini image" >
-                          <AvatarImage
-                            sex={sex}
-                            avatarImg={avatar_img}
-                          />
-                        </a>
+                            <a id="user_avatar_img" className="ui mini image" >
+                              <AvatarImage
+                                sex={sex}
+                                avatarImg={avatar_img}
+                              />
+                            </a>
 
-                        <div className="content">
-                          <div className="user_info_header">
-                            <span className="ui description">{author.get('nick')}</span>
-                            {this.createIconImg(icon_img)}
-                          </div>
-                          <div className="description">
-
-                            <div className="item" >
-                              <span className="item_col">레벨</span>
-                              <div className="item_num">
-                                <span>{author.getIn(['trendbox', 'level'])}</span>
+                            <div className="content">
+                              <div className="user_info_header">
+                                <span className="ui description">{author.get('nick')}</span>
+                                {this.createIconImg(icon_img)}
                               </div>
-                            </div>
+                              <div className="description">
 
-                            <div className="item">
-                              <span className="item_col">명성</span>
-                              <div className="item_num">
-                                <span>{author.getIn(['trendbox', 'reputation'])}</span>
-                              </div>
-                            </div>
+                                <div className="item" >
+                                  <span className="item_col">레벨</span>
+                                  <div className="item_num">
+                                    <span>{author.getIn(['trendbox', 'level'])}</span>
+                                  </div>
+                                </div>
 
-                            <div className="item">
-                              <span className="item_col">랭크</span>
-                              <div className="item_num">
-                                <span></span>
+                                <div className="item">
+                                  <span className="item_col">명성</span>
+                                  <div className="item_num">
+                                    <span>{author.getIn(['trendbox', 'reputation'])}</span>
+                                  </div>
+                                </div>
+
+                                <div className="item">
+                                  <span className="item_col">랭크</span>
+                                  <div className="item_num">
+                                    <span></span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </ReactTooltip>
                 </div>
-              </ReactTooltip>
-            </div>
-            <div className="author_icon">
-              {this.createIconImg(icon_img)}
-            </div>
-          </div>
-          <div className="meta best_post_meta">
-            <div className="ui horizontal divided list">
+                <div className="author_icon">
+                  {this.createIconImg(icon_img)}
+                </div>
+              </div>
               <div className="item">
                 {post.get('created_at')}
               </div>
-              <div className="item">
-                조회 {post.get('view_count')}
-              </div>
+              {
+                view === true &&
+                <div className="item">
+                  조회 {post.get('view_count')}
+                </div>
+              }
             </div>
           </div>
 

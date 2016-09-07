@@ -42,6 +42,7 @@ new Promise((resolve, reject) => {
             skills: resBody.UserStore.skills,
             collections: resBody.UserStore.collections,
             follow_forums: resBody.UserStore.follow_forums,
+            forumCreated: resBody.UserStore.forumCreated,
           });
 
           const normalized = normalize(userInfo, author);

@@ -531,6 +531,7 @@ const PostPage = React.createClass({
                 user={user}
                 loginModalFlag={LoginModalFlag}
                 postStyle="post_item"
+                view={true}
               />
             }
 

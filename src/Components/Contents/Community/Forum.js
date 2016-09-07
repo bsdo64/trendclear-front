@@ -4,6 +4,7 @@ import cx from 'classnames';
 import {browserHistory, Link} from 'react-router';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import AvatarImage from '../../AvatarImage';
+import marked from '../../Lib/Marked';
 
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
@@ -166,7 +167,7 @@ const Forum = React.createClass({
     return collectionForumList.includes(forumId);
   },
 
-  toggleFollow(followItem, forumId) {
+  toggleFollow(isForumFollow, forumId) {
     "use strict";
 
     const {AuthStore} = this.props;
@@ -174,8 +175,8 @@ const Forum = React.createClass({
     if (!userId) {
       this.openLoginModal();
     }  else {
-      if (followItem) {
-        UserActions.unFollowForum(followItem.toJS());
+      if (isForumFollow) {
+        UserActions.unFollowForum({id: forumId});
       } else {
         UserActions.followForum({forumId: forumId});
       }
@@ -197,9 +198,12 @@ const Forum = React.createClass({
 
     if (forumId && postIds && pagination) {
       const forum = Forums.get(forumId.toString());
-      const isUserForumFollow = isLogin ?
-        Users.get(userId.toString()).get('follow_forums').find(v => v.get('forum_id') === forumId) :
-        false;
+      const isUserForumFollow = isLogin
+        ? Users
+          .get(userId.toString())
+          .get('follow_forums')
+          .find(v => v === forumId)
+        : false;
 
       if (!forum) {
         return (<div></div>)
@@ -316,9 +320,9 @@ const Forum = React.createClass({
                         <div className="ui header tiny">
                           클럽 규칙
                         </div>
-                        <div className="description">
-                          {forum.get('rule')}
-                        </div>
+                        <div className="description"
+                             dangerouslySetInnerHTML={{__html: marked(forum.get('rule'))}}
+                        ></div>
                       </div>
                     }
                   </div>

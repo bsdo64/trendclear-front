@@ -80,6 +80,51 @@
           padding: 0;
           display: block;
 
+          .forum_rank {
+            color: #000;
+            padding: 0;
+
+            ul {
+              margin: 0;
+              padding: 0;
+              border-right: 1px solid #000000;
+              width: 180px;
+              height: 318px;
+              overflow: auto;
+
+              li {
+                &:last-child {
+                  border-bottom: none;
+                }
+
+                .forum_button {
+                  border-bottom: 1px solid #ececec;
+                  padding: 5px 5px 5px 10px;
+                  cursor: pointer;
+                  a {
+                    font-size: 12px;
+                    color: #000000;
+
+                    &.active {
+                      color: #01a2b2;
+                    }
+                  }
+                }
+
+                .forum_info {
+                  position: absolute;
+                  margin-left: 179px;
+                  top: 0;
+
+                  #forum_contents {
+                    padding: 5px;
+                    width: 395px;
+                  }
+                }
+              }
+            }
+          }
+
           .group {
             padding: 0px;
           }

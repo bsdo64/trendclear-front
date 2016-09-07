@@ -21,6 +21,7 @@ function createItem(props, id) {
           post={post}
           user={user}
           loginModalFlag={LoginModalFlag}
+          view={false}
         />
       )
     }

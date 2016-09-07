@@ -122,12 +122,12 @@ class UserStore{
   }
 
   onFollowForum(result) {
-    const state = this.state.update('follow_forums', list => list.push(Map(result)));
+    const state = this.state.update('follow_forums', list => list.push(Map({id: result.forum_id})));
     this.setState(state);
   }
 
   onUnFollowForum(result) {
-    const state = this.state.update('follow_forums', list => list.filterNot(v => v.get('id') === result.id));
+    const state = this.state.update('follow_forums', list => list.filterNot(v => v.get('id') === result.forum_id));
     this.setState(state);
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
 
+import Header from '../../ContentBreadCrumb/ContentBreadCrumb';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 import PostActions from '../../../Actions/PostActions';
@@ -61,19 +62,21 @@ const BestBox = React.createClass({
     }
   },
 
-  createHeader() {
-    "use strict";
-
-  },
-
   render() {
-    const {listName, ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
+    const {location, listName, ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
     const Collection = PaginationStore.get(listName);
-
-    const Header = this.createHeader(listName);
 
     return (
       <div id="best_contents" >
+
+        <Header
+          type={listName}
+          location={location}
+          breadcrumbs={[
+            {title: '베스트', url: '/'},
+            {title: '팔로잉'},
+          ]}
+        />
 
         <InfiniteList
           PostIdList={ListStore.get(listName)}

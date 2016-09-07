@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
+import CollectionComponent from '../BestCategorySelect/Collection';
 
 require('./index.scss');
 const ForumLeftMenu = React.createClass({
   displayName: 'ForumLeftMenu',
   render() {
-    const { CommunityStore, AuthStore } = this.props;
+    const { CommunityStore, AuthStore, UserStore, Forums, Collections } = this.props;
     const forum = CommunityStore.get('forum');
+    const user = UserStore.get('user');
 
     if (forum) {
       const creator = forum.get('creator');
@@ -46,6 +48,14 @@ const ForumLeftMenu = React.createClass({
                     <Link to={{pathname: '/community'}}>{'댓글 많은 글'}</Link>
                   </div>
                 </li>
+
+                {
+                  user &&
+                  <CollectionComponent
+                    collections={Collections}
+                    forums={Forums}
+                  />
+                }
 
               </ul>
             </menu>

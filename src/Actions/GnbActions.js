@@ -10,6 +10,9 @@ class GnbActions {
   openSideCategory(clubId) {
     return clubId;
   }
+  openForumMeta(forumId) {
+    return forumId;
+  }
 
   updateFilter(val) {
     return val

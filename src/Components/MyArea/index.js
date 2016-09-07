@@ -130,13 +130,6 @@ class NotiButtons extends Component {
 
 const UserButtons = React.createClass({
 
-  gotoSubmitCategory() {
-    "use strict";
-
-    this.refs.profile_dropdown.hide();
-    browserHistory.push('/community/submit/forum');
-  },
-
   gotoActivity() {
     "use strict";
 
@@ -185,8 +178,6 @@ const UserButtons = React.createClass({
           </DropdownTrigger>
           <DropdownContent id="profile_popup" className="ui">
             <div className="ui vertical menu secondary">
-              <a className="item" onClick={this.gotoSubmitCategory}>커뮤니티 만들기</a>
-              <div className="ui divider"></div>
               <a className="item" onClick={this.gotoActivity}>나의 활동</a>
               <a className="item" onClick={this.gotoSettings}>설정</a>
               <a className="item" onClick={this.handleLogout}>

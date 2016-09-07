@@ -43,10 +43,13 @@
             display: block;
           }
         }
+
         &>.sub_category.item {
           margin-bottom: 2px;
+          position: relative;
+          cursor: pointer;
 
-          a {
+          &>a {
             text-align: right;
             color: #fff;
             width: 100%;

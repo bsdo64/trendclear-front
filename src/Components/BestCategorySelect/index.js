@@ -32,7 +32,7 @@ const Temp = React.createClass({
 
   saveFilter() {
     const {GnbStore} = this.props;
-    const categoryValue = [];
+    const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
     const normalize = categoryValue.map((object, key) => {
       return parseInt(object.value);
     });
@@ -44,8 +44,25 @@ const Temp = React.createClass({
 
     const {UserStore, GnbStore, Forums, Collections} = this.props;
     const user = UserStore.get('user');
-    const categoriesMap = [{value: 1, label: 'hello'}];
-    const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
+    const categoriesMap = UserStore.get('follow_forums')
+      ? UserStore
+        .get('follow_forums')
+        .map(forumData => {
+          return {value: forumData.get('id'), label: forumData.get('title')}
+        })
+        .sortBy(item => item.label)
+        .toJS()
+      : GnbStore
+        .getIn(['gnbMenu', 'INCat', 'entities', 'forums'])
+        .map(forum => {
+          return {value: forum.get('id'), label: forum.get('title')}
+        })
+        .sortBy(item => item.label)
+        .toList()
+        .toJS();
+    const categoryValue = GnbStore.get('categoryValue')
+      ? GnbStore.get('categoryValue').toJS()
+      : [];
 
     return <div id="best_category">
         <div id="sub_category">
@@ -54,9 +71,6 @@ const Temp = React.createClass({
           </div>
         </div>
         <menu className="sub_category_list">
-
-          <div className="sub_category_header">{'전체보기'}</div>
-          
           <ul >
             <li id="best_filter" >
               <h5 className="">

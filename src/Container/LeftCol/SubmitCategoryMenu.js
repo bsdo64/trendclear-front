@@ -13,20 +13,14 @@ const SubmitCategoryMenu = React.createClass({
           </div>
         </div>
         <menu className="sub_category_list">
-
-          <div className="sub_category_header">{'전체 메뉴'}</div>
-
           <ul >
             <li>
               <h5 className="">
-                <a>{'카테고리'}</a>
+                <a>{'메뉴'}</a>
               </h5>
 
               <div className="sub_category item">
-                <Link to="/community/submit/forum">{'게시판'}</Link>
-              </div>
-              <div className="sub_category item">
-                <Link to="/community/submit/forum/prefix">{'게시판 머릿말'}</Link>
+                <Link to="/community/submit/forum">{'게시판 생성'}</Link>
               </div>
             </li>
 

@@ -8,6 +8,7 @@
 import React from 'react';
 import UserActions from '../../Actions/UserActions';
 import Modal from 'react-modal';
+import AvatarImage from '../AvatarImage';
 
 require('./index.scss');
 const AvatarImageModal = React.createClass({
@@ -67,13 +68,10 @@ const AvatarImageModal = React.createClass({
     if (this.state.imagePreviewUrl) {
       avatarImg = <img src={this.state.imagePreviewUrl} />;
     } else if (avatar_img) {
-      avatarImg = <img src={'/image/uploaded/files/' + avatar_img} />;
-    } else {
-      if (sex) {
-        avatarImg = <img src="/images/default-male.png" />;
-      } else {
-        avatarImg = <img src="/images/default-female.png" />;
-      }
+      avatarImg = <AvatarImage
+        sex={sex}
+        avatarImg={avatar_img}
+      />
     }
     
     return (

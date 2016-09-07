@@ -39,8 +39,13 @@ const BestContainer = connectToStores({
   }
 }, React.createClass({
   render() {
-    return (<Best listName="bestPostList"
-                  {...this.props} />)
+    return (
+      <div>
+
+        <Best listName="bestPostList"
+              {...this.props} />
+      </div>
+    )
   }
 }));
 

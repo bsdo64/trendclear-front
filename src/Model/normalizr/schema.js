@@ -5,6 +5,7 @@ const categoryGroup = new Schema('categoryGroups');
 const category = new Schema('categories');
 const collection = new Schema('collections');
 const forum = new Schema('forums');
+const follow_forums = new Schema('follow_forums');
 const prefix = new Schema('prefixes');
 
 const post = new Schema('posts');
@@ -15,7 +16,9 @@ const subComment = new Schema('subComments');
 const noti = new Schema('notis');
 
 author.define({
-  collections: arrayOf(collection)
+  collections: arrayOf(collection),
+  follow_forums: arrayOf(forum),
+  forumCreated: arrayOf(forum)
 });
 
 club.define({

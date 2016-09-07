@@ -89,7 +89,7 @@ class Users {
 
     const newFollowState = this.state
       .update(result.user_id.toString(), user =>
-        user.update('follow_forums', list => list.push(Map(result)))
+        user.update('follow_forums', list => list.push(result.forum_id))
       );
     this.setState(newFollowState);
   }
@@ -99,7 +99,7 @@ class Users {
 
     const newFollowState = this.state
       .update(result.user_id.toString(), user =>
-        user.update('follow_forums', list => list.filterNot(v => v.get('id') === result.id))
+        user.update('follow_forums', list => list.filterNot(v => v === result.forum_id))
       );
     this.setState(newFollowState);
   }

@@ -135,7 +135,7 @@ class UserActions {
         .post('/user/forum/unfollow', params)
         .then(res => {
           if (res) {
-            dispatch(params);
+            dispatch(res);
           }
         })
         .catch(err => {
