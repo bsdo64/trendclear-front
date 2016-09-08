@@ -3,7 +3,7 @@ import Api from '../Utils/ApiClient';
 
 class ReportActions {
   constructor() {
-    this.generateActions('sendReport');
+
   }
   openReportModal(payload = {}) {
     payload.openReportModal = true;
@@ -18,6 +18,20 @@ class ReportActions {
   
   submitReport() {
     
+  }
+
+  sendReport(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .post('/user/report', params)
+        .then((res) => {
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
   }
   
   submitSearchQuery(params) {

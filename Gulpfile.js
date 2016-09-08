@@ -9,6 +9,7 @@ const runSequence = require('run-sequence');
 const root = __dirname;
 const bowerSrc = __dirname + '/bower_components';
 const distSrc = __dirname + '/dist';
+const nodeModuleSrc = __dirname + '/node_modules';
 
 gulp.task('concat-js', function() {
   return gulp
@@ -38,6 +39,7 @@ gulp.task('concat-css', function() {
       bowerSrc + '/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css',
       distSrc + '/stylesheets/common.css',
       distSrc + '/stylesheets/react-select.min.css',
+      nodeModuleSrc + '/highlight.js/styles/androidstudio.css'
     ])
     .pipe(concat('vendor.css'))
     .pipe(gulp.dest(root + '/dist'));

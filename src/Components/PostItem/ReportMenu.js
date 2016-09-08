@@ -1,6 +1,7 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 import ReportActions from '../../Actions/ReportActions';
+import DeleteActions from '../../Actions/DeleteActions';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import makeUrl from '../Lib/MakeUrl';
 import memoize from 'fast-memoize';
@@ -35,7 +36,7 @@ function createToggleModal(props) {
         browserHistory.push(`/community/submit?forumId=${forumId}&postId=${targetId}`)
         break;
       case 'delete_post':
-
+        DeleteActions.openModal(reportObj);
         console.log('포스트 삭제 Id : ', targetId);
         break;
       default:

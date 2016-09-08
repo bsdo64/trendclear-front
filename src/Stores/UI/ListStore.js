@@ -4,6 +4,7 @@ import immutable from 'alt-utils/lib/ImmutableUtil';
 import ListActions from '../../Actions/ListActions';
 import PostActions from '../../Actions/PostActions';
 import GnbActions from '../../Actions/GnbActions';
+import DeleteActions from '../../Actions/DeleteActions';
 import CollectionActions from '../../Actions/CollectionActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
@@ -21,6 +22,7 @@ class ListStore {
     this.displayName = 'ListStore';
 
     this.bindActions(ListActions);
+    this.bindActions(DeleteActions);
     this.bindActions(PostActions);
     this.bindActions(GnbActions);
     this.bindActions(CollectionActions);
@@ -76,6 +78,13 @@ class ListStore {
     this.waitFor(Forums);
 
     this.setMergeState({searchCollectionForumList: normalizedForums.result});
+  }
+
+  onDelete(deletedItem) {
+    const itemIndex = this.state.get('bestPostList').findIndex(postId => postId === deletedItem.id);
+    const deletedList = this.state.get('bestPostList').splice(itemIndex, 1);
+    const mergeResults = this.state.set('bestPostList', deletedList);
+    this.setState(mergeResults);
   }
 }
 

@@ -27,6 +27,7 @@ const ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
 
 const LoginModalContainer = require('../Container/Modal/LoginModalContainer');
 const ReportModalContainer = require('../Container/Modal/ReportModalContainer');
+const DeleteModalContainer = require('../Container/Modal/DeleteModalContainer');
 const WidgetContainer = require('../Container/RightCol/WidgetContainer');
 
 const App = (props) => {
@@ -74,6 +75,7 @@ const App = (props) => {
       <div id="modal">
         { props.LoginModalContainer }
         { props.ReportModalContainer }
+        { props.DeleteModalContainer }
       </div>
     </div>
   )
@@ -92,6 +94,7 @@ export default () =>
       LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
       ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
       ContentsContainer: ContentsContainer
     }}/>
   </Route>
@@ -106,6 +109,7 @@ export default () =>
       LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
       ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
       ContentsContainer: SigninContainer
     }}/>
   </Route>
@@ -124,6 +128,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: CollectionContentsContainer
       }}/>
   </Route>
@@ -138,6 +143,7 @@ export default () =>
       LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
       ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
       ContentsContainer: CommunityContainer
     }}/>
 
@@ -150,6 +156,7 @@ export default () =>
               LoginModalContainer: LoginModalContainer,
               WidgetContainer: WidgetContainer,
               ReportModalContainer: ReportModalContainer,
+              DeleteModalContainer: DeleteModalContainer,
               ContentsContainer: SubmitContainer
              }}
     />
@@ -163,6 +170,7 @@ export default () =>
               LoginModalContainer: LoginModalContainer,
               WidgetContainer: WidgetContainer,
               ReportModalContainer: ReportModalContainer,
+              DeleteModalContainer: DeleteModalContainer,
               ContentsContainer: SubmitForumContainer
              }}
     />
@@ -176,6 +184,7 @@ export default () =>
               LoginModalContainer: LoginModalContainer,
               WidgetContainer: WidgetContainer,
               ReportModalContainer: ReportModalContainer,
+              DeleteModalContainer: DeleteModalContainer,
               ContentsContainer: SubmitForumPrefixContainer
              }}
     />
@@ -190,6 +199,7 @@ export default () =>
           LoginModalContainer: LoginModalContainer,
           WidgetContainer: WidgetContainer,
           ReportModalContainer: ReportModalContainer,
+            DeleteModalContainer: DeleteModalContainer,
           ContentsContainer: ForumSettingMain
         }}/>
 
@@ -201,6 +211,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -212,6 +223,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -223,6 +235,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -234,6 +247,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -245,6 +259,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -256,6 +271,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -267,6 +283,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -278,6 +295,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -289,6 +307,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -300,6 +319,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -311,6 +331,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -322,6 +343,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -333,6 +355,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -344,6 +367,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -355,6 +379,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -366,6 +391,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -377,6 +403,7 @@ export default () =>
         LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
         ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -393,6 +420,7 @@ export default () =>
               LeftColMenu: ForumMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
               ContentsContainer: SearchContainer
              }}
@@ -408,6 +436,7 @@ export default () =>
               LeftColMenu: AccountCategoryMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
               ContentsContainer: ActivityContainer
              }}
@@ -421,6 +450,7 @@ export default () =>
               LeftColMenu: AccountCategoryMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
+              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
               ContentsContainer: ActivityContainer
              }}
@@ -434,6 +464,7 @@ export default () =>
               LeftColMenu: AccountCategoryMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
+              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
               ContentsContainer: ActivityContainer
              }}
@@ -447,6 +478,7 @@ export default () =>
               LeftColMenu: AccountCategoryMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
+              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
               ContentsContainer: ActivityContainer
              }}
@@ -463,6 +495,7 @@ export default () =>
               LeftColMenu: AccountCategoryMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
               ContentsContainer: SettingContainer
              }}
@@ -476,6 +509,7 @@ export default () =>
               LeftColMenu: AccountCategoryMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
+              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
               ContentsContainer: SettingContainer
              }}
@@ -489,6 +523,7 @@ export default () =>
               LeftColMenu: AccountCategoryMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
+              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
               ContentsContainer: SettingContainer
              }}

@@ -9,7 +9,7 @@ require('./index.scss');
 
 class WidgetBox extends Component {
   render() {
-    const {LoginStore, UserStore} = this.props;
+    const {LoginStore, UserStore, location} = this.props;
     const isLogin = LoginStore.get('isLogin');
     const user = {
       user: UserStore.get('user'),
@@ -25,6 +25,10 @@ class WidgetBox extends Component {
     // if (logout) {
     //   location.href = '/';
     // }
+
+    const submitLink = location.query.forumId
+      ? `/community/submit?forumId=${location.query.forumId}`
+      : '/community/submit';
 
     return (
       <div id="section_cldmm">
@@ -48,7 +52,7 @@ class WidgetBox extends Component {
         {
           isLogin && user &&
           <FlatButton
-            linkTo="/community/submit"
+            linkTo={submitLink}
             text="글쓰기"
           />
         }

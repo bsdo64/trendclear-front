@@ -2,6 +2,7 @@ import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import PostActions from '../../Actions/PostActions';
+import DeleteActions from '../../Actions/DeleteActions';
 import GnbActions from '../../Actions/GnbActions';
 import CommunityActions from '../../Actions/CommunityActions';
 import CommentActions from '../../Actions/CommentActions';
@@ -15,6 +16,7 @@ class Posts {
     this.displayName = 'Posts';
 
     this.bindActions(PostActions);
+    this.bindActions(DeleteActions);
     this.bindActions(GnbActions);
     this.bindActions(CommunityActions);
     this.bindActions(CommentActions);
@@ -75,6 +77,12 @@ class Posts {
     this.setMergeState(addCommentState);
   }
 
+  onDelete(deletedItem) {
+    if (deletedItem.id) {
+      let deletedPosts = this.state.delete(deletedItem.id);
+      this.setMergeState(deletedPosts);
+    }
+  }
 }
 
 export default alt.createStore(immutable(Posts), Posts.displayName);
