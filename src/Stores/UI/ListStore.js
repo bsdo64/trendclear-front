@@ -4,6 +4,7 @@ import immutable from 'alt-utils/lib/ImmutableUtil';
 import ListActions from '../../Actions/ListActions';
 import PostActions from '../../Actions/PostActions';
 import GnbActions from '../../Actions/GnbActions';
+import DeleteActions from '../../Actions/DeleteActions';
 import CollectionActions from '../../Actions/CollectionActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
@@ -21,6 +22,7 @@ class ListStore {
     this.displayName = 'ListStore';
 
     this.bindActions(ListActions);
+    this.bindActions(DeleteActions);
     this.bindActions(PostActions);
     this.bindActions(GnbActions);
     this.bindActions(CollectionActions);
@@ -76,6 +78,32 @@ class ListStore {
     this.waitFor(Forums);
 
     this.setMergeState({searchCollectionForumList: normalizedForums.result});
+  }
+
+  onDelete(deletedItem) {
+    let mergeResults = this.state;
+
+    if (!deletedItem.comment_id) {
+      if (this.state.get('bestPostList')) {
+        const itemIndex = this.state.get('bestPostList').findIndex(postId => postId === deletedItem.id);
+        const deletedList = this.state.get('bestPostList').splice(itemIndex, 1);
+        mergeResults = mergeResults.set('bestPostList', deletedList);
+      }
+
+      if (this.state.get('myWritePostList')) {
+        const itemIndex = this.state.get('myWritePostList').findIndex(postId => postId === deletedItem.id);
+        const deletedList = this.state.get('myWritePostList').splice(itemIndex, 1);
+        mergeResults = mergeResults.set('myWritePostList', deletedList);
+      }
+
+      if (this.state.get('likePostList')) {
+        const itemIndex = this.state.get('likePostList').findIndex(postId => postId === deletedItem.id);
+        const deletedList = this.state.get('likePostList').splice(itemIndex, 1);
+        mergeResults = mergeResults.set('likePostList', deletedList);
+      }
+
+      this.setState(mergeResults);
+    }
   }
 }
 

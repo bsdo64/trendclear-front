@@ -2,13 +2,15 @@ import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import CommentActions from '../../Actions/CommentActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import DeleteActions from '../../Actions/DeleteActions';
+import { initListener, setMergeState, setMergeDeep } from '../Helper/func';
 
 class Comments {
   static displayName = 'Comments';
   constructor() {
     this.displayName = 'Comments';
 
+    this.bindActions(DeleteActions);
     this.bindActions(CommentActions);
     this.state = Immutable.Map({
 
@@ -53,6 +55,20 @@ class Comments {
   onSubmitComment(IPost) {
     let addCommentState = this.state.merge(IPost.entities.comments);
     this.setMergeState(addCommentState);
+  }
+
+  onUpdateComment(comment) {
+    if (comment.result) {
+      let setComment = this.state.mergeDeep(comment.entities.comments);
+      this.setState(setComment);
+    }
+  }
+
+  onDelete(comment) {
+    if (comment && comment.id && !comment.comment_id) {
+      const setComment = this.state.mergeDeepIn([comment.id.toString()], comment);
+      this.setState(setComment);
+    }
   }
 }
 

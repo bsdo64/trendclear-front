@@ -4,6 +4,7 @@ import {browserHistory} from 'react-router';
 
 import LoginActions from '../../../Actions/LoginActions';
 import CommentActions from '../../../Actions/CommentActions';
+import CommunityActions from '../../../Actions/CommunityActions';
 
 import BestPost from '../../PostItem/BigPost';
 import Paginator from '../../Paginator';
@@ -57,6 +58,11 @@ function checkSkillAvailable(skill) {
   return false;
 }
 
+function closeUpdateComment() {
+  "use strict";
+
+  CommunityActions.closeUpdateComment();
+}
 
 function sendSubCommentLike(props) {
   const {location, modalFlag, isLogin, subCommentId} = props;
@@ -70,70 +76,170 @@ function sendSubCommentLike(props) {
 }
 
 function subCommentItem(props) {
-  const {subComments, authors, commentAuthor, userId} = props;
+    return function createSubCommentItem(subCommentId) {
+      "use strict";
+      return <SubCommentItem key={subCommentId} {...props} subCommentId={subCommentId} />
+  }
+}
 
-  return function createSubCommentItem(subCommentId) {
+const SubCommentItem = React.createClass({
+  componentDidUpdate(prevProps, prevState) {
+    const oldUpdating = prevProps.updating;
+    const {updating} = this.props;
+    if ((oldUpdating.id !== updating.id)) {
+      if ((oldUpdating.type !== updating.type) && (updating.type === 'subComment')) {
+        if (oldUpdating.updating !== updating) {
+          if (this.editor) {
+            this.editor.destroy();
+          }
+          this.editor = new MediumEditor(this.refs.sub_comment_content_update, commentMediumConfig);
+        }
+      }
+    }
+  },
+
+  updateSubComment(commentId) {
+    "use strict";
+
+    const {LoginStore, UserStore} = this.props;
+    const isLogin = LoginStore.get('isLogin');
+
+    if (isLogin) {
+      const skills = UserStore.get('skills');
+      const writePost = skills
+        .filter((skill, index) => skill.getIn(['skill', 'name']) === 'write_sub_comment')
+        .get(0);
+
+      const result = checkSkillAvailable(writePost);
+
+      if (result) {
+        const allContents = this.editor.serialize();
+        const el = allContents['sub_comment_content_update'].value;
+        if ($(el).text().trim()) {
+          const comment = {
+            id: commentId,
+            content: removeWhiteSpace(el)
+          };
+
+          CommentActions.updateSubComment(comment);
+        } else {
+          console.log('Input sub comment');
+        }
+      } else {
+        console.log('not available');
+      }
+    } else {
+      const modalFlag = LoginStore.get('openLoginModal');
+      const location = this.props.location;
+      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+    }
+  },
+
+  render() {
+    "use strict";
+    const {subComments, authors, subCommentId, userId, updating, commentId} = this.props;
     const subComment = subComments.get(subCommentId.toString());
 
-    if (subComment) {
-      const subCommentAuthor = authors.get(subComment.get('author').toString());
-      props.subCommentId = subCommentId;
+  if (subComment) {
+    const subCommentAuthor = authors.get(subComment.get('author').toString());
 
-      if (subCommentAuthor) {
-        const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
-          sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
-          sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
-        let subIconImg;
+    if (subCommentAuthor) {
+      const commentDeleted = subComment.get('deleted');
+      const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
+        sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
+        sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
+      let subIconImg;
 
-        if (sub_icon_img) {
-          subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
-        }
+      if (sub_icon_img) {
+        subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
+      }
 
-        return (
-          <div className="comment"
-               key={subComment.get('id')}>
-            <a className="avatar">
-              <AvatarImage
-                sex={subCommentSex}
-                avatarImg={sub_avatar_img}
-              />
-            </a>
-            <div className="content">
-              <a className="author">{subCommentAuthor.get('nick')}</a>
-              {subIconImg}
-              <div className="metadata">
-                <span className="date">{subComment.get('created_at')}</span>
-              </div>
-              <div className="text">
-                <div className="comment_text"
-                     dangerouslySetInnerHTML={{ __html: subComment.get('content')}}
-                ></div>
-              </div>
-              <div className="actions">
-                <div className="like_box">
-                  <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')} onClick={sendSubCommentLike(props)}>
-                    <i className={'heart ' + (subComment.get('liked')? '' : 'outline') + ' icon'} />
-                  </div>
-                  <a className="like_count">{subComment.get('like_count')}</a>
+      let contents;
+      if (updating.type ==='subComment' && updating.updating && updating.id === subComment.get('id')) {
+        contents = (
+          <form className="ui reply form sub_comment_form">
+            <div className="field update">
+              <div
+                id={"sub_comment_content_update"}
+                ref={"sub_comment_content_update"}
+                className="comment_input sub_comment_input"
+                dangerouslySetInnerHTML={{__html: subComment.get('content')}}
+              ></div>
+            </div>
+            <div className="ui primary submit icon button" onClick={this.updateSubComment.bind(this, subCommentId)}>
+              <i className="icon edit"></i>
+            </div>
+            <div
+              className="ui submit icon button close_update"
+              onClick={closeUpdateComment}
+            >
+              <i className="icon remove circle outline"></i>
+            </div>
+          </form>
+        )
+      } else if (commentDeleted) {
+        contents = (
+          <div>
+            [삭제된 글입니다]
+          </div>
+        )
+
+      } else {
+        contents = (
+          <div
+            className="comment_text"
+            dangerouslySetInnerHTML={{ __html: subComment.get('content')}}
+          ></div>
+        )
+      }
+
+      return (
+        <div className="comment"
+             key={subComment.get('id')}>
+          <a className="avatar">
+            <AvatarImage
+              sex={subCommentSex}
+              avatarImg={sub_avatar_img}
+            />
+          </a>
+          <div className="content">
+            <a className="author">{subCommentAuthor.get('nick')}</a>
+            {subIconImg}
+            <div className="metadata">
+              <span className="date">{subComment.get('created_at')}</span>
+            </div>
+            <div className="text">
+              {contents}
+            </div>
+            <div className="actions">
+              <div className="like_box">
+                <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')} onClick={sendSubCommentLike(this.props)}>
+                  <i className={'heart ' + (subComment.get('liked')? '' : 'outline') + ' icon'} />
                 </div>
-                <div className="report_box">
+                <a className="like_count">{subComment.get('like_count')}</a>
+              </div>
+              <div className="report_box">
+                {
+                  !commentDeleted &&
                   <Menu
                     isUser={userId === subCommentAuthor.get('id')}
                     targetType="subComment"
                     targetId={subComment.get('id')}
                   />
-                </div>
+                }
               </div>
-
             </div>
-          </div>
-        )
-      }
-    }
 
-    return (<div key={userId}></div>)
+          </div>
+        </div>
+      )
+    }
   }
+
+  return (<div key={userId}></div>)
+
 }
+});
 
 const CommentItem = React.createClass({
   mixins: [PureRenderMixin],
@@ -144,6 +250,21 @@ const CommentItem = React.createClass({
       liked: false,
       focus: false
     };
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    const oldUpdating = prevProps.updating;
+    const {updating} = this.props;
+    if ((oldUpdating.id !== updating.id)) {
+      if ((oldUpdating.type !== updating.type) && (updating.type === 'comment')) {
+        if (oldUpdating.updating !== updating) {
+          if (this.editor) {
+            this.editor.destroy();
+          }
+          this.editor = new MediumEditor(this.refs.comment_content_update, commentMediumConfig);
+        }
+      }
+    }
   },
 
   show() {
@@ -221,10 +342,50 @@ const CommentItem = React.createClass({
     }
   },
 
+  updateComment() {
+    "use strict";
+    const {LoginStore, UserStore, updating} = this.props;
+    const isLogin = LoginStore.get('isLogin');
+
+    if (isLogin && updating.updating) {
+
+      const skills = UserStore.get('skills');
+      const writePost = skills
+        .filter((skill, index) => skill.getIn(['skill', 'name']) === 'write_comment')
+        .get(0);
+
+      const result = checkSkillAvailable(writePost);
+
+      if (result) {
+        const allContents = this.editor.serialize();
+        const el = allContents['comment_input_update'].value;
+
+        if ($(el).text().trim()) {
+          const comment = {
+            id: updating.id,
+            content: removeWhiteSpace(el),
+            postId: this.props.location.query.postId
+          };
+
+          CommentActions.updateComment(comment);
+          this.editor.destroy();
+        } else {
+          console.log('Input comment');
+        }
+      } else {
+        console.log('not available');
+      }
+    } else {
+      const modalFlag = LoginStore.get('openLoginModal');
+      const location = this.props.location;
+      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+    }
+  },
+
   render() {
     "use strict";
 
-    const {LoginStore, UserStore} = this.props;
+    const {LoginStore, UserStore, updating} = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     let userId;
@@ -234,6 +395,7 @@ const CommentItem = React.createClass({
 
     const {comment, commentAuthor, subCommentList} = this.props;
     const subCommentOpen = this.state.subCommentOpen;
+    const commentDeleted = comment.get('deleted');
 
     const sex = commentAuthor.getIn(['profile', 'sex']),
       avatar_img = commentAuthor.getIn(['profile', 'avatar_img']),
@@ -249,10 +411,57 @@ const CommentItem = React.createClass({
       authors: this.props.authors,
       subComments: this.props.subComments,
       location: this.props.location,
+      updating: updating,
       isLogin: isLogin,
       userId: userId,
-      commentAuthor: commentAuthor
+      commentAuthor: commentAuthor,
+      commentId: comment.get('id'),
+      LoginStore,
+      UserStore,
+      editor: this.editor
     };
+
+    let contents;
+    if (updating.type ==='comment' && updating.updating && updating.id === comment.get('id')) {
+      contents = (
+        <form className="ui reply form ">
+          <div className="field">
+            <div
+              id="comment_input_update"
+              ref="comment_content_update"
+              className="comment_input"
+              dangerouslySetInnerHTML={{__html: comment.get('content')}}
+            >
+            </div>
+          </div>
+          <div
+            className="ui primary submit icon button"
+            onClick={this.updateComment}
+          >
+            <i className="icon edit"></i>
+          </div>
+          <div
+            className="ui submit icon button close_update"
+            onClick={closeUpdateComment}
+          >
+            <i className="icon remove circle outline"></i>
+          </div>
+        </form>
+      )
+    } else if (commentDeleted) {
+      contents = (
+        <div>
+          [삭제된 글입니다]
+        </div>
+      )
+    } else {
+      contents = (
+        <div
+          className="comment_text"
+          dangerouslySetInnerHTML={{__html: comment.get('content')}}
+        ></div>
+      )
+    }
 
     return (
       <div className="comment"
@@ -272,10 +481,7 @@ const CommentItem = React.createClass({
             <div className="date">{comment.get('created_at')}</div>
           </div>
           <div className="text">
-            <div
-              className="comment_text"
-              dangerouslySetInnerHTML={{ __html: comment.get('content')}}
-            ></div>
+            {contents}
           </div>
           <div className="actions">
             <div className="like_box" onClick={this.sendLike}>
@@ -291,11 +497,14 @@ const CommentItem = React.createClass({
               <a className="comment_count">{comment.get('sub_comment_count')}</a>
             </div>
             <div className="report_box">
-              <Menu
-                isUser={userId === commentAuthor.get('id')}
-                targetType="comment"
-                targetId={comment.get('id')}
-              />
+              {
+                !commentDeleted &&
+                <Menu
+                  isUser={userId === commentAuthor.get('id')}
+                  targetType="comment"
+                  targetId={comment.get('id')}
+                />
+              }
             </div>
           </div>
           {
@@ -306,7 +515,7 @@ const CommentItem = React.createClass({
           }
 
           {
-            subCommentOpen &&
+            subCommentOpen && !commentDeleted &&
             <form className="ui reply form sub_comment_form">
               <div className="field">
                 <div
@@ -330,7 +539,7 @@ const CommentItem = React.createClass({
 const CommentList = React.createClass({
   render() {
     "use strict";
-    const {commentList, comments, authors, subComments, UserStore, LoginStore, location} = this.props;
+    const {commentList, comments, authors, subComments, UserStore, LoginStore, location, updating} = this.props;
 
     let commentsNode = commentList.map(function(commentId) {
       const comment = comments.get(commentId.toString());
@@ -352,6 +561,7 @@ const CommentList = React.createClass({
               subComments={subComments}
               location={location}
               subCommentList={subCommentList}
+              updating={updating}
             />
           )
         }
@@ -430,8 +640,13 @@ const CommentBox = React.createClass({
   render() {
     "use strict";
 
-    const {comments, subComments, authors, IPost} = this.props;
+    const {comments, subComments, authors, IPost, CommunityStore} = this.props;
     const commentList = IPost.get('comments');
+    const updating = {
+      updating: CommunityStore.get('updating'),
+      type: CommunityStore.get('updateType'),
+      id: CommunityStore.get('updateId')
+    };
 
     if (commentList) {
 
@@ -473,6 +688,7 @@ const CommentBox = React.createClass({
             authors={authors}
             comments={comments}
             subComments={subComments}
+            updating={updating}
           />
 
           <div className="ui center aligned container">
@@ -516,6 +732,25 @@ const PostPage = React.createClass({
       const post = Posts.get(postId.toString());
 
       if (post) {
+
+        if (post.get('deleted')) {
+          return (
+            <div id="post_box" className="ui items">
+
+              <div style={{padding: 15}}>
+                <h2 className="ui center aligned icon">
+                  <i className="bordered ban icon"></i>
+                  페이지를 찾을 수 없습니다.
+                </h2>
+              </div>
+
+              <Forum
+                {...this.props}
+              />
+            </div>
+          )
+        }
+
         const author = Users.get(post.get('author').toString());
         const user = AuthStore.get('userId') ? Users.get(AuthStore.get('userId').toString()) : null;
         const LoginModalFlag = LoginModalStore.get('openLoginModal');

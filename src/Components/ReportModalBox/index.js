@@ -20,7 +20,11 @@ const ReportModalBox = React.createClass({
     "use strict";
 
     const reportId = e.target.dataset.id;
-    this.setState({selectItem: parseInt(reportId, 10)});
+    const reportMessage = e.target.dataset.message;
+    this.setState({
+      selectItem: parseInt(reportId, 10),
+      reportMessage: reportMessage
+    });
   },
   createReportItem(item) {
     "use strict";
@@ -31,7 +35,7 @@ const ReportModalBox = React.createClass({
     });
     return (
       <div key={id} className="field">
-        <div className={activeItemStyle} onClick={this.selectReportItem} data-id={id}>{message}</div>
+        <div className={activeItemStyle} onClick={this.selectReportItem} data-id={id} data-message={message}>{message}</div>
       </div>
     )
   },
@@ -43,7 +47,8 @@ const ReportModalBox = React.createClass({
     const reportObj = {
       type: ReportStore.get('type'),
       typeId: ReportStore.get('typeId'),
-      reportId: this.state.selectItem
+      reportId: this.state.selectItem,
+      description: this.state.reportMessage
     };
 
     ReportActions.sendReport(reportObj);

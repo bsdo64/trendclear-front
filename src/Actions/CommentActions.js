@@ -23,6 +23,22 @@ class CommentActions {
     };
   }
 
+  updateComment(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .put('/community/comment', params)
+        .then((res) => {
+
+          let response = normalize(res, comment);
+          dispatch(response);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
+
   submitSubComment(params) {
     return (dispatch) => {
       Api
@@ -40,6 +56,21 @@ class CommentActions {
     };
   }
 
+  updateSubComment(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .put('/community/subComment', params)
+        .then((res) => {
+
+          let response = normalize(res, subComment);
+          dispatch(response);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
 
   likeComment(commentId) {
     return (dispatch) => {
