@@ -4,6 +4,7 @@ import {browserHistory} from 'react-router';
 
 import LoginActions from '../../../Actions/LoginActions';
 import CommentActions from '../../../Actions/CommentActions';
+import CommunityActions from '../../../Actions/CommunityActions';
 
 import BestPost from '../../PostItem/BigPost';
 import Paginator from '../../Paginator';
@@ -146,6 +147,22 @@ const CommentItem = React.createClass({
     };
   },
 
+  componentDidUpdate(prevProps, prevState) {
+    const oldUpdating = prevProps.updating;
+    const {updating} = this.props;
+    if (oldUpdating.id !== updating.id) {
+      if (oldUpdating.type !== updating.type) {
+        if (oldUpdating.updating !== updating) {
+          if (this.editor) {
+            this.editor.destroy();
+          }
+          this.editor = new MediumEditor(this.refs.comment_content_update, commentMediumConfig);
+        }
+      }
+    }
+  },
+
+
   show() {
     "use strict";
 
@@ -221,10 +238,56 @@ const CommentItem = React.createClass({
     }
   },
 
+  updateComment() {
+    "use strict";
+    const {LoginStore, UserStore, updating} = this.props;
+    const isLogin = LoginStore.get('isLogin');
+
+    if (isLogin && updating.updating) {
+
+      const skills = UserStore.get('skills');
+      const writePost = skills
+        .filter((skill, index) => skill.getIn(['skill', 'name']) === 'write_comment')
+        .get(0);
+
+      const result = checkSkillAvailable(writePost);
+
+      if (result) {
+        const allContents = this.editor.serialize();
+        const el = allContents['comment_input_update'].value;
+
+        if ($(el).text().trim()) {
+          const comment = {
+            id: updating.id,
+            content: removeWhiteSpace(el),
+            postId: this.props.location.query.postId
+          };
+
+          CommentActions.updateComment(comment);
+          this.editor.destroy();
+        } else {
+          console.log('Input comment');
+        }
+      } else {
+        console.log('not available');
+      }
+    } else {
+      const modalFlag = LoginStore.get('openLoginModal');
+      const location = this.props.location;
+      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+    }
+  },
+
+  closeUpdateComment() {
+    "use strict";
+
+    CommunityActions.closeUpdateComment();
+  },
+
   render() {
     "use strict";
 
-    const {LoginStore, UserStore} = this.props;
+    const {LoginStore, UserStore, updating} = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     let userId;
@@ -254,6 +317,42 @@ const CommentItem = React.createClass({
       commentAuthor: commentAuthor
     };
 
+    let contents;
+    if (updating.type ==='comment' && updating.updating && updating.id === comment.get('id')) {
+      contents = (
+        <form className="ui reply form ">
+          <div className="field">
+            <div
+              id="comment_input_update"
+              ref="comment_content_update"
+              className="comment_input"
+              dangerouslySetInnerHTML={{__html: comment.get('content')}}
+            >
+            </div>
+          </div>
+          <div
+            className="ui primary submit icon button"
+            onClick={this.updateComment}
+          >
+            <i className="icon edit"></i>
+          </div>
+          <div
+            className="ui submit icon button close_update"
+            onClick={this.closeUpdateComment}
+          >
+            <i className="icon remove circle outline"></i>
+          </div>
+        </form>
+      )
+    } else {
+      contents = (
+        <div
+          className="comment_text"
+          dangerouslySetInnerHTML={{__html: comment.get('content')}}
+        ></div>
+      )
+    }
+
     return (
       <div className="comment"
            key={comment.get('id')}
@@ -272,10 +371,7 @@ const CommentItem = React.createClass({
             <div className="date">{comment.get('created_at')}</div>
           </div>
           <div className="text">
-            <div
-              className="comment_text"
-              dangerouslySetInnerHTML={{ __html: comment.get('content')}}
-            ></div>
+            {contents}
           </div>
           <div className="actions">
             <div className="like_box" onClick={this.sendLike}>
@@ -330,7 +426,7 @@ const CommentItem = React.createClass({
 const CommentList = React.createClass({
   render() {
     "use strict";
-    const {commentList, comments, authors, subComments, UserStore, LoginStore, location} = this.props;
+    const {commentList, comments, authors, subComments, UserStore, LoginStore, location, updating} = this.props;
 
     let commentsNode = commentList.map(function(commentId) {
       const comment = comments.get(commentId.toString());
@@ -352,6 +448,7 @@ const CommentList = React.createClass({
               subComments={subComments}
               location={location}
               subCommentList={subCommentList}
+              updating={updating}
             />
           )
         }
@@ -430,8 +527,13 @@ const CommentBox = React.createClass({
   render() {
     "use strict";
 
-    const {comments, subComments, authors, IPost} = this.props;
+    const {comments, subComments, authors, IPost, CommunityStore} = this.props;
     const commentList = IPost.get('comments');
+    const updating = {
+      updating: CommunityStore.get('updating'),
+      type: CommunityStore.get('updateType'),
+      id: CommunityStore.get('updateId')
+    };
 
     if (commentList) {
 
@@ -473,6 +575,7 @@ const CommentBox = React.createClass({
             authors={authors}
             comments={comments}
             subComments={subComments}
+            updating={updating}
           />
 
           <div className="ui center aligned container">
@@ -516,6 +619,25 @@ const PostPage = React.createClass({
       const post = Posts.get(postId.toString());
 
       if (post) {
+
+        if (post.get('deleted')) {
+          return (
+            <div id="post_box" className="ui items">
+
+              <div style={{padding: 15}}>
+                <h2 className="ui center aligned icon">
+                  <i className="bordered ban icon"></i>
+                  페이지를 찾을 수 없습니다.
+                </h2>
+              </div>
+
+              <Forum
+                {...this.props}
+              />
+            </div>
+          )
+        }
+
         const author = Users.get(post.get('author').toString());
         const user = AuthStore.get('userId') ? Users.get(AuthStore.get('userId').toString()) : null;
         const LoginModalFlag = LoginModalStore.get('openLoginModal');

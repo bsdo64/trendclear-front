@@ -31,6 +31,14 @@ class CommunityActions {
     return true;
   }
 
+  triggerUpdate(targetObj) {
+    return targetObj;
+  }
+
+  closeUpdateComment() {
+    return true;
+  }
+
   createCommunity(category) {
     return (dispatch) => {
       Api

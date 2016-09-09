@@ -80,7 +80,7 @@ class Posts {
   onDelete(deletedItem) {
     if (deletedItem.id) {
       let deletedPosts = this.state.delete(deletedItem.id);
-      this.setMergeState(deletedPosts);
+      this.setState(deletedPosts);
     }
   }
 }

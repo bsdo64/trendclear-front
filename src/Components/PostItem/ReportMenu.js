@@ -1,6 +1,7 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 import ReportActions from '../../Actions/ReportActions';
+import CommunityActions from '../../Actions/CommunityActions';
 import DeleteActions from '../../Actions/DeleteActions';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import makeUrl from '../Lib/MakeUrl';
@@ -35,9 +36,25 @@ function createToggleModal(props) {
         console.log('포스트 수정 Id : ', targetId);
         browserHistory.push(`/community/submit?forumId=${forumId}&postId=${targetId}`)
         break;
+      case 'mod_comment':
+        console.log('댓글 수정 Id : ', targetId);
+        CommunityActions.triggerUpdate({targetId, type:'comment'});
+        break;
+      case 'mod_subComment':
+        console.log('대댓글 수정 Id : ', targetId);
+        CommunityActions.triggerUpdate({targetId, type:'subComment'});
+        break;
       case 'delete_post':
         DeleteActions.openModal(reportObj);
         console.log('포스트 삭제 Id : ', targetId);
+        break;
+      case 'delete_comment':
+        DeleteActions.openModal(reportObj);
+        console.log('댓글 삭제 Id : ', targetId);
+        break;
+      case 'delete_subComment':
+        DeleteActions.openModal(reportObj);
+        console.log('대댓글 삭제 Id : ', targetId);
         break;
       default:
         break;
@@ -49,7 +66,7 @@ function createToggleModal(props) {
 const Menu = (props) => {
   "use strict";
 
-  const {isUser} = props;
+  const {isUser, targetType} = props;
 
   return (
     <Dropdown>
@@ -61,14 +78,17 @@ const Menu = (props) => {
       <DropdownContent>
         <div className="ui dropdown">
           <div className="ui menu transition visible" tabIndex="-1">
-            <div className="item" data-action="report" onClick={createToggleModal(props)}>신고</div>
             {
-              isUser &&
-              <div className="item " data-action="mod_post" onClick={createToggleModal(props)}>수정하기</div>
+              !isUser &&
+              <div className="item" data-action="report" onClick={createToggleModal(props)}>신고</div>
             }
             {
               isUser &&
-              <div className="item " data-action="delete_post" onClick={createToggleModal(props)}>삭제하기</div>
+              <div className="item " data-action={`mod_${targetType}`} onClick={createToggleModal(props)}>수정하기</div>
+            }
+            {
+              isUser &&
+              <div className="item " data-action={`delete_${targetType}`} onClick={createToggleModal(props)}>삭제하기</div>
             }
           </div>
         </div>
