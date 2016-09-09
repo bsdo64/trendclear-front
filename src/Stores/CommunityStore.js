@@ -57,6 +57,18 @@ class CommunityStore{
     }
   }
 
+  onUpdateSubComment(comment) {
+    if (comment && comment.result) {
+      const newState = this.state.merge({
+        updateId: null,
+        updateType: null,
+        updating: false
+      });
+
+      this.setState(newState);
+    }
+  }
+
   onCloseUpdateComment(close) {
     if (close) {
       const newState = this.state.merge({

@@ -56,6 +56,21 @@ class CommentActions {
     };
   }
 
+  updateSubComment(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .put('/community/subComment', params)
+        .then((res) => {
+
+          let response = normalize(res, subComment);
+          dispatch(response);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
 
   likeComment(commentId) {
     return (dispatch) => {

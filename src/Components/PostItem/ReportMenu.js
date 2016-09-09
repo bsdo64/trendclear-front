@@ -53,6 +53,8 @@ function createToggleModal(props) {
         console.log('댓글 삭제 Id : ', targetId);
         break;
       case 'delete_subComment':
+        reportObj.type = 'sub_comment';
+
         DeleteActions.openModal(reportObj);
         console.log('대댓글 삭제 Id : ', targetId);
         break;

@@ -83,25 +83,27 @@ class ListStore {
   onDelete(deletedItem) {
     let mergeResults = this.state;
 
-    if (this.state.get('bestPostList')) {
-      const itemIndex = this.state.get('bestPostList').findIndex(postId => postId === deletedItem.id);
-      const deletedList = this.state.get('bestPostList').splice(itemIndex, 1);
-      mergeResults = mergeResults.set('bestPostList', deletedList);
-    }
+    if (!deletedItem.comment_id) {
+      if (this.state.get('bestPostList')) {
+        const itemIndex = this.state.get('bestPostList').findIndex(postId => postId === deletedItem.id);
+        const deletedList = this.state.get('bestPostList').splice(itemIndex, 1);
+        mergeResults = mergeResults.set('bestPostList', deletedList);
+      }
 
-    if (this.state.get('myWritePostList')) {
-      const itemIndex = this.state.get('myWritePostList').findIndex(postId => postId === deletedItem.id);
-      const deletedList = this.state.get('myWritePostList').splice(itemIndex, 1);
-      mergeResults = mergeResults.set('myWritePostList', deletedList);
-    }
+      if (this.state.get('myWritePostList')) {
+        const itemIndex = this.state.get('myWritePostList').findIndex(postId => postId === deletedItem.id);
+        const deletedList = this.state.get('myWritePostList').splice(itemIndex, 1);
+        mergeResults = mergeResults.set('myWritePostList', deletedList);
+      }
 
-    if (this.state.get('likePostList')) {
-      const itemIndex = this.state.get('likePostList').findIndex(postId => postId === deletedItem.id);
-      const deletedList = this.state.get('likePostList').splice(itemIndex, 1);
-      mergeResults = mergeResults.set('likePostList', deletedList);
-    }
+      if (this.state.get('likePostList')) {
+        const itemIndex = this.state.get('likePostList').findIndex(postId => postId === deletedItem.id);
+        const deletedList = this.state.get('likePostList').splice(itemIndex, 1);
+        mergeResults = mergeResults.set('likePostList', deletedList);
+      }
 
-    this.setState(mergeResults);
+      this.setState(mergeResults);
+    }
   }
 }
 

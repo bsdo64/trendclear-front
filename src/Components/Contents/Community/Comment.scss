@@ -79,6 +79,10 @@
       width: 540px;
       display: inline-block;
 
+      &.update {
+        width: 478px;
+      }
+
       .comment_input {
         border: 1px solid #cacaca;
         padding: 10px;
