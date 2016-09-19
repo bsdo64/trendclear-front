@@ -51,6 +51,28 @@ class ForumSettingStore {
     const state = this.state.mergeIn(['forumInfo'], object);
     this.setState(state);
   }
+  onAddForumPrefix(prefixObj) {
+    const state = this.state.updateIn(['forum', 'prefixes'], list => {
+      return list.push(Map(prefixObj))
+    });
+    this.setState(state);
+  }
+
+  onUpdateForumPrefix(prefixObj) {
+    const state = this.state.updateIn(['forum', 'prefixes'], list => {
+      const entry = list.findEntry(i => i.get('id') === prefixObj.id);
+      return list.update(entry[0], i => Map(prefixObj))
+    });
+    this.setState(state);
+  }
+
+  onDeleteForumPrefix({id}) {
+    const state = this.state.updateIn(['forum', 'prefixes'], list => {
+      return list.filterNot(i => i.get('id') === id)
+    });
+    this.setState(state);
+
+  }
 }
 
 export default alt.createStore(immutable(ForumSettingStore), ForumSettingStore.displayName);

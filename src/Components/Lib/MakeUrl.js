@@ -9,7 +9,8 @@ class MakeUrl {
       p:            location.query.p || 1,
       comment_p:    location.query.comment_p || 1,
       forumPrefix:  location.query.forumPrefix,
-      forumSearch:  location.query.forumSearch
+      forumSearch:  location.query.forumSearch,
+      order:        location.query.order
     }
   }
   

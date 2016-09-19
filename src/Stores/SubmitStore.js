@@ -1,6 +1,6 @@
 import alt from '../Utils/alt';
 import {browserHistory} from 'react-router';
-import Immutable, {Map} from 'immutable';
+import Immutable, {Map, List} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import UserActions from '../Actions/UserActions';
 import PostActions from '../Actions/PostActions';
@@ -12,7 +12,9 @@ class SubmitStore{
 
     this.bindActions(UserActions);
     this.bindActions(PostActions);
-    this.state = Immutable.Map({});
+    this.state = Immutable.fromJS({
+      deletedUrl: List()
+    });
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
@@ -72,6 +74,25 @@ class SubmitStore{
   }
   onGetMeta(result) {
     this.setMergeState({urlMetaData: result});
+  }
+
+  onAddImages(result) {
+    const state = this.state.update('deleteUrl', list => {
+      if (list) {
+        return list.push(result.deleteUrl)
+      } else {
+        list = List();
+        return list.push(result.deleteUrl);
+      }
+    });
+    this.setMergeState(state);
+  }
+
+  onDeleteImages(result) {
+    const state = this.state.update('deleteUrl', list => {
+      return list.filterNot(i => i === result.deleteUrl)
+    });
+    this.setMergeState(state);
   }
 }
 

@@ -55,27 +55,40 @@ const BestBox = React.createClass({
           pathname: pathname,
           params: {
             page: nextPage,
-            categoryValue: (normalize.length > 0) ? normalize: null
+            order: location.query.order || 'hot',
+            categoryValue: (normalize.length > 0) ? normalize: null,
+            listType: location.pathname === '/all' ? 'all' : null
           }
         });
       }
     }
   },
 
+  createBreadCrumbArray(array, pathname) {
+    "use strict";
+    array.push({title: '베스트', url: '/'});
+
+    switch (pathname) {
+      case '/':
+        array.push({title: '팔로잉'});
+        return array;
+      case '/all':
+        array.push({title: '전체글'});
+        return array;
+    }
+  },
+
   render() {
     const {location, listName, ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
     const Collection = PaginationStore.get(listName);
-
+    const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
     return (
       <div id="best_contents" >
 
         <Header
           type={listName}
           location={location}
-          breadcrumbs={[
-            {title: '베스트', url: '/'},
-            {title: '팔로잉'},
-          ]}
+          breadcrumbs={breadcrumbs}
         />
 
         <InfiniteList

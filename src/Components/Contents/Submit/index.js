@@ -2,6 +2,7 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
+import {withRouter} from 'react-router';
 import ReactDOM from 'react-dom/server';
 import Select from 'react-select';
 import cx from 'classnames';
@@ -322,6 +323,22 @@ const SubmitContents = React.createClass({
   displayName: 'SubmitContents',
   propTypes: {},
 
+  componentDidMount() {
+    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
+  },
+
+  routerWillLeave(nextLocation) {
+    const {SubmitStore} = this.props;
+    const deleteUrls = SubmitStore.get('deleteUrl');
+    if (deleteUrls && deleteUrls.size) {
+
+      PostActions.removeUnusingImage(deleteUrls.toJS());
+
+    } else {
+      return true;
+    }
+  },
+
   handleTitle() {
     "use strict";
     PostActions.handleTitle(this.refs.title.value);
@@ -452,4 +469,4 @@ const SubmitContents = React.createClass({
 
 });
 
-export default SubmitContents;
+export default withRouter(SubmitContents);

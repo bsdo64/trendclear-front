@@ -3,6 +3,7 @@ const router = express.Router();
 
 const routes = [
   '/',
+  '/all',
   '/collection/:collectionId',
   '/community',
   '/community/submit',

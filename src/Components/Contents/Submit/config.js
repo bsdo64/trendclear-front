@@ -2,6 +2,8 @@
  * Created by dobyeongsu on 2016. 2. 7..
  */
 
+import PostActions from '../../../Actions/PostActions';
+
 const medium = {
   placeholder: {
     text: '텍스트를 입력하세요',
@@ -57,6 +59,19 @@ const mediumInsertConfig = function mediumInsertConfig(editor) {
         messages: {
           acceptFileTypesError: '지원되지 않는 파일 형식 입니다: ',
           maxFileSizeError: '파일의 크기가 큽니다 (5MB 이하): '
+        },
+        uploadCompleted: function ($el, data) {
+          "use strict";
+
+          PostActions.addImages(data);
+        },
+        fileDeleteOptions: {
+          beforeSend: function (jqXHR, settings) {
+            "use strict";
+
+            const url = decodeURIComponent(settings.data.split('=')[1]);
+            PostActions.deleteImages({deleteUrl: url});
+          }
         }
       },
       embeds: {

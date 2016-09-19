@@ -33,16 +33,16 @@ const CollectionLeftMenu = React.createClass({
                 </h5>
 
                 <div className="sub_category item">
-                  <Link to={{pathname: `/collection/${collectionId}`}}>{'최신 글'}</Link>
+                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'new'}}}>{'최신 글'}</Link>
                 </div>
                 <div className="sub_category item">
-                  <Link to={{pathname: `/collection/${collectionId}`}}>{'인기 글'}</Link>
+                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'hot'}}}>{'인기 글'}</Link>
                 </div>
                 <div className="sub_category item">
-                  <Link to={{pathname: `/collection/${collectionId}`}}>{'많이 본 글'}</Link>
+                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'm_view'}}}>{'많이 본 글'}</Link>
                 </div>
                 <div className="sub_category item">
-                  <Link to={{pathname: `/collection/${collectionId}`}}>{'댓글 많은 글'}</Link>
+                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'm_comment'}}}>{'댓글 많은 글'}</Link>
                 </div>
               </li>
 

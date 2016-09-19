@@ -96,7 +96,7 @@ const SubscribeForumList = React.createClass({
       <li id="collection_forum_list">
         <h5 className="">
           <a>
-            <i className="fa fa-list" />{' 구독 리스트'}
+            <i className="fa fa-list" />{' 구독 게시판'}
             </a>
         </h5>
 

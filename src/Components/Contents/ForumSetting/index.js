@@ -2,6 +2,7 @@ import React from 'react';
 
 import ForumInfo from './ForumInfo';
 import ForumUrl from './ForumUrl';
+import ForumPrefix from './ForumPrefix';
 import Announce from './Announce';
 import WritePost from './WritePost';
 import WriteComment from './WriteComment';
@@ -27,6 +28,9 @@ const ForumSettingsComponent = (props) => {
       break;
     case 'forumurl':
       return <ForumUrl {...props} />;
+      break;
+    case 'forumprefix':
+      return <ForumPrefix {...props} />;
       break;
     case 'announce':
       return <Announce {...props} />;

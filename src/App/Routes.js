@@ -99,6 +99,21 @@ export default () =>
     }}/>
   </Route>
 
+  <Route path="/all" component={App}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: BestCategoryMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        ContentsContainer: ContentsContainer
+      }}/>
+  </Route>
+
   <Route path="/signin" component={App}>
     <IndexRoute
       components={{
@@ -202,6 +217,18 @@ export default () =>
             DeleteModalContainer: DeleteModalContainer,
           ContentsContainer: ForumSettingMain
         }}/>
+
+      <Route path="forumprefix" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
 
       <Route path="foruminfo" components={{
         HeaderMyMenu: HeaderMyMenu,
