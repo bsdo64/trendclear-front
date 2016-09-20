@@ -522,7 +522,7 @@ const CommentItem = React.createClass({
                   id={"sub_comment_input_" + comment.get('id')}
                   ref={"sub_comment_content_" + comment.get('id')}
                   className="comment_input sub_comment_input"
-                ></div>
+                ><p><br /></p></div>
               </div>
               <div className="ui primary submit icon button" onClick={this.submitSubComment.bind(this, comment.get('id'))}>
                 <i className="icon edit"></i>
@@ -670,7 +670,7 @@ const CommentBox = React.createClass({
                 id="comment_input"
                 ref="comment_content"
                 className="comment_input"
-              ></div>
+              ><p><br /></p></div>
             </div>
             <div
               className="ui primary submit icon button"

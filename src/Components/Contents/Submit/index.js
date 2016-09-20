@@ -44,7 +44,6 @@ const EditorBox = React.createClass({
 
       PostActions.removeServerInit();
     } else {
-      this.editor.setContent(null);
       PostActions.removeServerInit();
     }
   },
@@ -297,8 +296,8 @@ const EditorBox = React.createClass({
         </div>
 
         <div className={displayEditor}>
-          {<div className="post_editor" id="post_editor"></div>}
-          {/*<Editor />*/}
+          <div className="post_editor" id="post_editor" placeholder="텍스트를 입력하세요">
+          </div>
         </div>
 
         <div className={displayUrl}>

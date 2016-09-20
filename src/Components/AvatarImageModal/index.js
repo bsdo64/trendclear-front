@@ -67,7 +67,7 @@ const AvatarImageModal = React.createClass({
 
     if (this.state.imagePreviewUrl) {
       avatarImg = <img src={this.state.imagePreviewUrl} />;
-    } else if (avatar_img) {
+    } else {
       avatarImg = <AvatarImage
         sex={sex}
         avatarImg={avatar_img}
