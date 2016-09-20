@@ -71,10 +71,12 @@ class WidgetBox extends Component {
               내 게시판
             </div>
             <Scrollbars
-              style={{ height: 200 }}
               autoHide={true}
               autoHideTimeout={1000}
               autoHideDuration={200}
+              autoHeight
+              autoHeightMin={50}
+              autoHeightMax={200}
               universal={true}
             >
               <div className="ui list forum_created_list">
