@@ -38,7 +38,9 @@ collection.define({
 });
 
 forum.define({
-  prefixes: arrayOf(prefix)
+  prefixes: arrayOf(prefix),
+  announces: arrayOf(post),
+  managers: arrayOf(author)
 });
 
 comment.define({

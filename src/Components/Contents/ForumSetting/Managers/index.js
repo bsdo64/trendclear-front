@@ -1,33 +1,104 @@
 import React from 'react';
+import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
-export default (props) => {
-  return (
-    <div className="ui container" style={{margin: 10, width: 700}}>
-      <div className="ui segments ">
-        <div className="ui segment"><h3 className="ui header">게시판 생성</h3>
-          <div className="ui divider"></div>
-          <div className="ui list"><a className="item"><i className="right triangle icon"></i>
-            <div className="content">
-              <div className="header">사람들과 의견을 나누고 싶은 게시판을 생성하세요</div>
-              <div className="description">어떤 주제든 상관없습니다</div>
+const Managers = React.createClass({
+  componentDidMount() {
+    const self = this;
+
+    $('.ui.search')
+      .search({
+        apiSettings: {
+          url: '/ajax/search/users?type=manager&nick={query}'
+        },
+        minCharacters : 2,
+        fields: {
+          title: 'nick'
+        },
+        error : {
+          source      : '검색 할 수 없습니다 API를 참고하세요',
+          noResults   : '일치하는 닉네임이 없습니다',
+          logging     : 'Error in debug logging, exiting.',
+          noEndpoint  : 'No search endpoint was specified',
+          noTemplate  : 'A valid template name was not specified.',
+          serverError : '서버에러 입니다.',
+          maxResults  : 'Results must be an array to use maxResults setting',
+          method      : 'The method you called is not defined.'
+        },
+        onSelect: function (user) {
+          "use strict";
+
+          self.selectUser(user);
+        }
+      });
+  },
+
+  selectUser(user) {
+    "use strict";
+
+    const forumId = this.props.location.query.forumId;
+    ForumSettingActions.addManager({userId: user.id, forumId: forumId});
+  },
+
+  render() {
+    const {Users, Forums, location} = this.props;
+    const forumId = location.query.forumId;
+    const forum = Forums.get(forumId.toString());
+    const managerIds = forum.get('managers');
+
+    return (
+      <div className="ui container" style={{margin: 10, width: 700}}>
+        <div className="ui segments ">
+          <div className="ui segment">
+            <h3 className="ui header">메니저 설정</h3>
+            <div className="ui divider"></div>
+            <div className="ui list">
+              <a className="item">
+                <i className="right triangle icon"></i>
+                <div className="content">
+                  <div className="header">메니저를 설정하고 커뮤니티를 활성화하세요</div>
+                  <div className="description">누구나 메니저가 될 수 있습니다</div>
+                </div>
+              </a><a className="item"><i className="help icon"></i>
+              <div className="content">
+                <div className="description">게시판 개설자는 최초의 메니저가 됩니다</div>
+              </div>
+            </a>
             </div>
-          </a><a className="item"><i className="help icon"></i>
-            <div className="content">
-              <div className="description">게시판 이름은 중복이 허용되지 않습니다</div>
+            <div className="ui two column grid">
+              <div className="row">
+                <div className="column">
+                  <h4>메니저 추가</h4>
+                  <div className="ui search">
+                    <div className="ui left icon input">
+                      <input className="prompt" type="text" placeholder="Search GitHub" />
+                        <i className="github icon" />
+                    </div>
+                  </div>
+                </div>
+                <div className="column">
+                  <h4>메니저 리스트</h4>
+                  <ul>
+                    {
+                      managerIds &&
+                      managerIds.map(id => {
+                        "use strict";
+                        const manager = Users.get(id.toString());
+                        if (manager) {
+                          return (
+                            <li key={id}>{manager.get('nick')}</li>
+                          )
+                        }
+                      })
+                    }
+                  </ul>
+                </div>
+              </div>
             </div>
-          </a></div>
-          <form id="create_forum" className="ui form">
-            <div className="field"><label>이름 *</label><input type="text" name="forum_title"/></div>
-            <div className="field"><label>작은 제목</label><input type="text" name="forum_sub_header"/>
-            </div>
-            <div className="field"><label>설명 *</label><input type="text" name="forum_description"/>
-            </div>
-            <div className="field"><label>규칙 *</label><textarea name="forum_rule"></textarea></div>
-            <div className="ui error message"></div>
-            <div className="ui submit button primary">확인</div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
-  )
-};
+    )
+  }
+});
+
+export default Managers;

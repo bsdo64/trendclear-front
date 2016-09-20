@@ -8,6 +8,7 @@ import {author} from '../../Model/normalizr/schema';
 import UserStore from '../UserStore';
 
 import PostActions from '../../Actions/PostActions';
+import ForumSettingActions from '../../Actions/ForumSettingActions';
 import CommentActions from '../../Actions/CommentActions';
 import UserActions from '../../Actions/UserActions';
 import GnbActions from '../../Actions/GnbActions';
@@ -21,6 +22,7 @@ class Users {
     this.bindActions(PostActions);
     this.bindActions(CommentActions);
     this.bindActions(GnbActions);
+    this.bindActions(ForumSettingActions);
     this.state = Immutable.Map({
 
     });
@@ -102,6 +104,15 @@ class Users {
         user.update('follow_forums', list => list.filterNot(v => v === result.forum_id))
       );
     this.setState(newFollowState);
+  }
+
+  onAddManager(result) {
+    const user = {
+      [result.manager.user_id]: result.user
+    };
+    const newState = this.state.mergeDeep(user);
+
+    this.setState(newState);
   }
 }
 

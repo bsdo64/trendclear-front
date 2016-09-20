@@ -50,6 +50,20 @@ class ForumSettingActions {
         });
     };
   }
+
+  addManager(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .post('/forum/manager', params)
+        .then((res) => {
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
 }
 
 export default alt.createActions(ForumSettingActions);

@@ -18,6 +18,7 @@ const EditorBox = React.createClass({
   getInitialState() {
     return {
       type: 'editor',
+      isAnnounce: false,
       isLoadingUrl: false,
       isLoadedUrl: false,
       successUrl: false,
@@ -64,6 +65,11 @@ const EditorBox = React.createClass({
     this.editor.destroy();
   },
 
+  toggleAnnounce() {
+    "use strict";
+
+    this.setState({isAnnounce: !this.state.isAnnounce});
+  },
 
   handleContent() {
     "use strict";
@@ -73,7 +79,7 @@ const EditorBox = React.createClass({
   },
 
   submitPost() {
-    const {SubmitStore, UserStore} = this.props;
+    const {SubmitStore, UserStore, location} = this.props;
 
     const skills = UserStore.get('skills');
     const writePost = skills
@@ -111,7 +117,8 @@ const EditorBox = React.createClass({
           title: title,
           content: content,
           prefixId: SubmitStore.get('selectPrefixId'),
-          query: this.props.location.query
+          query: location.query,
+          isAnnounce: this.state.isAnnounce
         };
         PostActions.submitPost(newPost);
       }
@@ -122,7 +129,7 @@ const EditorBox = React.createClass({
 
   modPost() {
     "use strict";
-    const {SubmitStore, UserStore} = this.props;
+    const {SubmitStore, UserStore, location} = this.props;
 
     const title = SubmitStore.get('title');
     const content = SubmitStore.get('content');
@@ -133,7 +140,8 @@ const EditorBox = React.createClass({
         title: title,
         content: content,
         prefixId: SubmitStore.get('selectPrefixId'),
-        query: this.props.location.query
+        query: location.query,
+        isAnnounce: this.state.isAnnounce
       };
       PostActions.modPost(newPost);
     }
@@ -228,12 +236,30 @@ const EditorBox = React.createClass({
     console.log(args, a, b, c, d)
   },
 
+  checkForumManager(user, managers) {
+    "use strict";
+
+    const key = managers.findKey(u => u.get('id') === user.get('id'));
+    if (key === undefined) {
+      return false;
+    } else {
+      return user;
+    }
+  },
+
   render() {
     "use strict";
 
     const {SubmitStore, UserStore, AuthStore} = this.props;
     const type = SubmitStore.get('type');
     const urlMetaData = SubmitStore.get('urlMetaData');
+    const announces = SubmitStore.getIn(['forum', 'announces']);
+    const announcesLength = (announces && announces.size)
+      ? announces.size
+      : 0;
+    const managers = SubmitStore.getIn(['forum', 'managers']);
+
+    const isManager = this.checkForumManager(UserStore.get('user'), managers);
 
     const displayEditor = cx('ui description submit_post_box', {
       hide: this.state.type !== 'editor'
@@ -288,9 +314,10 @@ const EditorBox = React.createClass({
         {/* <TagList items={Tags} /> */}
 
         {
+          (announcesLength < 5) && (isManager) &&
           <div className="ui checkbox">
-            <input id="example-id" type="checkbox" />
-              <label htmlFor="example-id">공지 글 (최대 5개)</label>
+            <input id="is_announce" type="checkbox" onChange={this.toggleAnnounce}/>
+              <label htmlFor="announce_check">공지 글 ({`${announcesLength} / 5`})</label>
           </div>
         }
 

@@ -171,9 +171,13 @@ new Promise((resolve, reject) => {
           assign(resBody, {
             Prefixes: normalized.entities.prefixes,
             Forums: normalized.entities.forums,
+            Users: normalized.entities.author,
+            Posts: normalized.entities.posts,
             ListStore: {
               prefixList: normalized.entities.forums[normalized.result].prefixes,
-              forum: normalized.result
+              forum: normalized.result,
+              announcesList: normalized.entities.announces,
+              managersList: normalized.entities.managers
             }
           });
         }
