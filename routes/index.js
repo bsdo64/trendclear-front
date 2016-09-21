@@ -35,7 +35,10 @@ const routes = [
   '/setting/password',
   '/setting/profile',
   '/search',
-  '/signin'
+  '/signin',
+  '/policies',
+  '/policies/privacy',
+  '/policies/terms',
 ];
 
 const redirectRoutes = [

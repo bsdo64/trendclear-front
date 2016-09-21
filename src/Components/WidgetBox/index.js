@@ -118,23 +118,16 @@ class WidgetBox extends Component {
 
         <div className="_45mq" role="contentinfo" style={{marginTop: 20, fontSize: 12}}>
           <div className="fsm fwn fcg">
-            <Link to="/policies"
-               title="Facebook의 개인정보취급방침에 대해 알려드립니다.">개인정보보호</Link>
+            <Link to="/policies/privacy">개인정보보호</Link>
             <span role="presentation" aria-hidden="true"> · </span>
-            <Link accessKey="9"
-               to="/policies"
-               title="약관과 정책을 살펴보세요.">약관</Link>
+            <Link to="/policies/terms">약관</Link>
             <span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/policies"
-               title="Facebook 광고로 마케팅 성과를 높여보세요.">광고안내</Link>
+            <Link to="/policies">광고안내</Link>
             <span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/policies"
-               title="Facebook 광고로 마케팅 성과를 높여보세요.">회사소개</Link>
+            <Link to="/policies">회사소개</Link>
             <span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/policies"
-               title="Facebook 광고로 마케팅 성과를 높여보세요.">채용</Link>
-            <Link to="/policies"
-               title="Facebook 광고로 마케팅 성과를 높여보세요.">고객센터</Link>
+            <Link to="/policies">채용</Link>
+            <Link to="/policies">고객센터</Link>
           </div>
           <div>
             <span> Venacle © 2016</span>

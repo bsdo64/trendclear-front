@@ -19,9 +19,11 @@ const ForumSettingMain = require('../Container/Contents/ForumSetting');
 const SearchContainer = require('../Container/Contents/Search');
 const SettingContainer = require('../Container/Contents/Setting');
 const ActivityContainer = require('../Container/Contents/Activity');
+const PolicyContainer = require('../Container/Contents/Policy');
 
 const BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 const AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
+const PolicyMenu = require('../Container/LeftCol/PolicyMenu');
 const SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
 const ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
 
@@ -68,6 +70,54 @@ const App = (props) => {
             </div>
             <div id="right_col">
               { props.WidgetContainer }
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="modal">
+        { props.LoginModalContainer }
+        { props.ReportModalContainer }
+        { props.DeleteModalContainer }
+      </div>
+    </div>
+  )
+};
+
+const HelpApp = (props) => {
+  return (
+    <div>
+      <div id="wrap">
+        <div id="header">
+          <div className="head_contents">
+            <div className="top_area">
+              <div className="top_contents">
+                <div id="top_logo">
+                  <Link className="ui header inverted huge" to="/">
+                    <img src="/images/Venacle.png"/>
+                  </Link>
+                </div>
+                <div id="top_search">
+                  { props.HeaderSearch }
+                </div>
+                <div id="top_my_area">
+                  { props.HeaderMyMenu }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="container">
+          <div id="left_col">
+            <div id="category_menu">
+              { props.LeftColGnb }
+            </div>
+            <div id="category">
+              { props.LeftColMenu }
+            </div>
+          </div>
+          <div id="section">
+            <div id="contents">
+              { props.ContentsContainer }
             </div>
           </div>
         </div>
@@ -555,6 +605,37 @@ export default () =>
               ContentsContainer: SettingContainer
              }}
     />
+  </Route>
+
+  <Route path="/policies" component={HelpApp}>
+    <IndexRedirect to="privacy"/>
+
+    <Route path="privacy"
+           components={{
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: PolicyMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             DeleteModalContainer: DeleteModalContainer,
+             ContentsContainer: PolicyContainer
+           }}
+    />
+
+    <Route path="terms"
+           components={{
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: PolicyMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             DeleteModalContainer: DeleteModalContainer,
+             ContentsContainer: PolicyContainer
+           }}
+    />
+
   </Route>
 
   <Route path="*" component={App}>
