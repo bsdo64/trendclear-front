@@ -6,6 +6,7 @@ import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdow
 import AvatarImage from '../../AvatarImage';
 import marked from '../../Lib/Marked';
 
+import AdForum1 from '../../Ad/AddForum1';
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
 
@@ -202,7 +203,12 @@ const Forum = React.createClass({
 
     if (forumId && postIds && pagination) {
       const forum = Forums.get(forumId.toString());
-      const announceIds = forum.get('announces');
+
+      if (!forum) {
+        return (<div></div>)
+      }
+
+      const announceIds = forum.get('announces') || [];
       const managersIds = forum.get('managers') || [];
       const isUserForumFollow = isLogin
         ? Users
@@ -210,10 +216,6 @@ const Forum = React.createClass({
           .get('follow_forums')
           .find(v => v === forumId)
         : false;
-
-      if (!forum) {
-        return (<div></div>)
-      }
 
       const cFollowActive = cx('ui button primary basic tiny right floated follow_button', {
         active: isUserForumFollow
@@ -302,7 +304,7 @@ const Forum = React.createClass({
                       {
                         !userId && !isLogin &&
                         <a onClick={this.openLoginModal} className="ui button primary basic tiny right floated">
-                          <i className="fa fa-star" />
+                          <i className="fa fa-share" />
                           {' 구독'}
                         </a>
                       }
@@ -350,6 +352,8 @@ const Forum = React.createClass({
                 </div>
               </div>
             </div>
+
+            <AdForum1 url="http://www.computerhope.com/banners/banner3.gif" />
 
             <div className="ui horizontal celled list">
               <div className="item" style={{fontWeight: 'bold'}}>

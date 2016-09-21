@@ -40,7 +40,8 @@ collection.define({
 forum.define({
   prefixes: arrayOf(prefix),
   announces: arrayOf(post),
-  managers: arrayOf(author)
+  managers: arrayOf(author),
+  bans: arrayOf(author)
 });
 
 comment.define({

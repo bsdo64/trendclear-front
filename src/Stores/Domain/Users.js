@@ -114,6 +114,15 @@ class Users {
 
     this.setState(newState);
   }
+
+  onAddBanUser(result) {
+    const user = {
+      [result.bannedUser.user_id]: result.user
+    };
+    const newState = this.state.mergeDeep(user);
+
+    this.setState(newState);
+  }
 }
 
 export default alt.createStore(immutable(Users), Users.displayName);

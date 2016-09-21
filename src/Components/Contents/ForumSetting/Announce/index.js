@@ -30,11 +30,24 @@ const Announce = React.createClass({
     ForumSettingActions.changeForumData({[e.target.name]: e.target.value.trim()})
   },
 
+  removeAnnounce(announce) {
+    "use strict";
+    const {ForumSettingStore} = this.props;
+    const forumInfo = ForumSettingStore.get('forumInfo');
+    const forum = ForumSettingStore.get('forum');
+
+    ForumSettingActions.removeAnnounce({
+      forumId: forum.get('id'),
+      postId: announce.get('id')
+    })
+  },
+
   render() {
     const {ForumSettingStore} = this.props;
     const forum = ForumSettingStore.get('forum');
 
     if (forum) {
+      const announces = forum.get('announces');
       const patch = ForumSettingStore.getIn(['forumInfo', 'success']);
       const patchSuccess = patch === 'updated' ? true : patch === 'failed' ? false : null;
       let button;
@@ -63,9 +76,22 @@ const Announce = React.createClass({
               </div>
             </div>
             <div className="ui segment">
-              <Forum
-                {...this.props}
-              />
+              <ul>
+                {
+                  announces &&
+                  announces.map(announce => {
+                    "use strict";
+                    return (
+                      <li key={announce.get('id')}>
+                        <div>
+                          {announce.get('title')}
+                          <i className="fa fa-remove" onClick={this.removeAnnounce.bind(this, announce)}/>
+                        </div>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
             </div>
           </div>
         </div>

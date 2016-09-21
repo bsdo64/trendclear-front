@@ -64,6 +64,34 @@ class ForumSettingActions {
         });
     }
   }
+
+  removeAnnounce(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .delete('/forum/announce', params)
+        .then((res) => {
+          dispatch(params);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
+
+  addBanUser(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .post('/forum/banUser', params)
+        .then((res) => {
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
 }
 
 export default alt.createActions(ForumSettingActions);

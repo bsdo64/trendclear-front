@@ -36,7 +36,7 @@ const RankList = React.createClass({
               });
 
               return (
-                <li onMouseEnter={self.openForumMeta.bind(self, forum.get('id'))}
+                <li key={forum.get('id')} onMouseEnter={self.openForumMeta.bind(self, forum.get('id'))}
                 >
                   <div className="forum_button">
                     <Link to={`/community?forumId=${forum.get('id')}`} className={cButton} >

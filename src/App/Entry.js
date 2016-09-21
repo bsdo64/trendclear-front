@@ -177,7 +177,8 @@ new Promise((resolve, reject) => {
               prefixList: normalized.entities.forums[normalized.result].prefixes,
               forum: normalized.result,
               announcesList: normalized.entities.announces,
-              managersList: normalized.entities.managers
+              managersList: normalized.entities.managers,
+              banUserList: normalized.entities.banUserList
             }
           });
         }

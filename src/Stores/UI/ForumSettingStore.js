@@ -73,6 +73,26 @@ class ForumSettingStore {
     this.setState(state);
 
   }
+
+  onRemoveAnnounce(params) {
+    if (params) {
+      const state = this.state.updateIn(['forum', 'announces'], list => {
+        return list.filterNot(i => i.get('id') === params.postId)
+      });
+
+      this.setState(state);
+    }
+  }
+
+  onAddBanUser(result) {
+    if (result) {
+      const state = this.state.updateIn(['forum', 'bans'], list => {
+        return list.push(Map(result.user))
+      });
+
+      this.setState(state);
+    }
+  }
 }
 
 export default alt.createStore(immutable(ForumSettingStore), ForumSettingStore.displayName);

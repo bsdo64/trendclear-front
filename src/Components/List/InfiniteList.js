@@ -1,5 +1,6 @@
 import React from 'react';
 import BigPost from '../PostItem/BigPost';
+import Main1 from '../Ad/Main1';
 import './BestList.scss';
 
 function createItem(props, id) {
@@ -14,7 +15,7 @@ function createItem(props, id) {
     if (author) {
       const user = User.get('userId') ? AuthorItems.get(User.get('userId').toString()) : null;
 
-      return (
+      return [
         <BigPost
           key={id}
           author={author}
@@ -23,7 +24,7 @@ function createItem(props, id) {
           loginModalFlag={LoginModalFlag}
           view={false}
         />
-      )
+      ]
     }
   }
 }
@@ -35,6 +36,7 @@ module.exports = (props) => {
 
   return (
     <div className="ui items best_list">
+      <Main1 url={'http://www.computerhope.com/banners/banner3.gif'} />
       {
         okey &&
         PostIdList.map(createItem.bind(null, props))

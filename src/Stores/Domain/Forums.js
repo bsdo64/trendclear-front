@@ -38,7 +38,17 @@ class Forums {
       return managerList.push(result.manager.user_id);
     });
 
-    this.setMergeDeep(state);
+    this.setState(state);
+  }
+
+  onAddBanUser(result) {
+    if (result) {
+      const state = this.state.updateIn([result.bannedUser.forum_id, 'bans'], list => {
+        return list.push(result.bannedUser.user_id);
+      });
+
+      this.setState(state);
+    }
   }
 }
 

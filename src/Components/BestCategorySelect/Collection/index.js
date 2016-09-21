@@ -182,7 +182,7 @@ const Collection = React.createClass({
     return (
       <li id="user_best_collection">
         <h5 className="">
-          <a><i className="fa fa-folder-open" />{' 컬랙션'}</a>
+          <a><i className="fa fa-folder-open" />{' 내 컬랙션'}</a>
         </h5>
 
         {

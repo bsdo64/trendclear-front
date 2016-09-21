@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import CollectionComponent from '../BestCategorySelect/Collection';
 
+import AdForumLeft from '../Ad/AdForumLeft';
+
 require('./index.scss');
 const ForumLeftMenu = React.createClass({
   displayName: 'ForumLeftMenu',
@@ -59,6 +61,9 @@ const ForumLeftMenu = React.createClass({
 
               </ul>
             </menu>
+
+            {/* forum Ad */}
+            <AdForumLeft url="http://www.heybannerbanner.com/client_folders/QS/600s/150_sleep1_600.gif"/>
           </div>
         )
       }

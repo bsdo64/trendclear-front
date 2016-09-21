@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
 import AvatarImage from '../AvatarImage';
+import AdPost1 from '../Ad/AdPost1';
 
 import LoginActions from '../../Actions/LoginActions';
 import CommunityActions from '../../Actions/CommunityActions';
@@ -33,7 +34,7 @@ const BigPost = React.createClass({
 
   render() {
     "use strict";
-    const {post, author, user, view} = this.props;
+    const {post, author, user, view, postStyle} = this.props;
 
     const userId = user && user.get('id');
     const sex = author.getIn(['profile', 'sex']),
@@ -46,12 +47,12 @@ const BigPost = React.createClass({
     const postUrl = `/community?forumId=${forumId}&postId=${postId}`;
     const liked = post.get('liked');
 
-    const postStyle = cx('ui item best_list_item', {
-      post_item: (this.props.postStyle === 'post_item')
+    const cPost = cx('ui item best_list_item', {
+      post_item: (postStyle === 'post_item')
     });
 
     return (
-      <div key={post.get('id')} className={postStyle}>
+      <div key={post.get('id')} className={cPost}>
         {/* avatar */}
         <div className="ui image tiny">
           <AvatarImage
@@ -153,6 +154,12 @@ const BigPost = React.createClass({
               }
             </div>
           </div>
+
+          {/* post Ad*/}
+          {
+            (postStyle === 'post_item') &&
+            <AdPost1 url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSXpJWqQSSZ2s4-aw-miw-Q9spL7qCJ7rjOLav-VQpNpbdK5po" />
+          }
 
           {/* content */}
           <div className="ui description best_post_content" dangerouslySetInnerHTML={{ __html: post.get('content') }}></div>
