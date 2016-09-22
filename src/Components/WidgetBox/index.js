@@ -122,12 +122,12 @@ class WidgetBox extends Component {
             <span role="presentation" aria-hidden="true"> · </span>
             <Link to="/policies/terms">약관</Link>
             <span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/policies">광고안내</Link>
+            <Link to="/ad">광고안내</Link>
             <span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/policies">회사소개</Link>
+            <Link to="/about">회사소개</Link>
             <span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/policies">채용</Link>
-            <Link to="/policies">고객센터</Link>
+            <Link to="/careers">채용</Link>
+            <Link to="/help">고객센터</Link>
           </div>
           <div>
             <span> Venacle © 2016</span>

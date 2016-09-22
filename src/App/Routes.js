@@ -20,10 +20,12 @@ const SearchContainer = require('../Container/Contents/Search');
 const SettingContainer = require('../Container/Contents/Setting');
 const ActivityContainer = require('../Container/Contents/Activity');
 const PolicyContainer = require('../Container/Contents/Policy');
+const CompanyContainer = require('../Container/Contents/Company');
 
 const BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 const AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
 const PolicyMenu = require('../Container/LeftCol/PolicyMenu');
+const CompanyMenu = require('../Container/LeftCol/CompanyMenu');
 const SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
 const ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
 
@@ -634,6 +636,74 @@ export default () =>
              DeleteModalContainer: DeleteModalContainer,
              ContentsContainer: PolicyContainer
            }}
+    />
+
+  </Route>
+
+  <Route path="/ad" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: SearchContainer
+      }}
+    />
+
+  </Route>
+
+  <Route path="/about" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: CompanyMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: CompanyContainer
+      }}
+    />
+
+  </Route>
+
+  <Route path="/careers" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: CompanyMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: CompanyContainer
+      }}
+    />
+
+  </Route>
+
+  <Route path="/help" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: CompanyMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: CompanyContainer
+      }}
     />
 
   </Route>

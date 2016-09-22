@@ -39,6 +39,10 @@ const routes = [
   '/policies',
   '/policies/privacy',
   '/policies/terms',
+  '/ad',
+  '/about',
+  '/careers',
+  '/help'
 ];
 
 const redirectRoutes = [
