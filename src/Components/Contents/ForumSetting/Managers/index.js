@@ -1,15 +1,18 @@
 import React from 'react';
 import ForumSettingActions from '../../../../Actions/ForumSettingActions';
+import cx from 'classnames';
 
 const Managers = React.createClass({
   componentDidMount() {
     const self = this;
+    const forumId = this.props.location.query.forumId;
 
     $('.ui.search')
       .search({
         apiSettings: {
-          url: '/ajax/search/users?type=manager&nick={query}'
+          url: '/ajax/search/users?type=manager&nick={query}&forumId=' + forumId
         },
+        cache: false,
         minCharacters : 2,
         fields: {
           title: 'nick'
@@ -39,8 +42,42 @@ const Managers = React.createClass({
     ForumSettingActions.addManager({userId: user.id, forumId: forumId});
   },
 
+  removeUser(manager) {
+    "use strict";
+
+  },
+
+  createManagerItem(id) {
+    "use strict";
+    const {Users, Forums, location, AuthStore} = this.props;
+    const manager = Users.get(id.toString());
+    const forumId = location.query.forumId;
+    const forum = Forums.get(forumId.toString());
+    const creatorId = forum.get('creator_id');
+    const myId = AuthStore.get('userId');
+    const isCreator = creatorId === id;
+    const isMe = myId === id;
+    const lagelColor = cx('ui label large', {
+      teal : isCreator
+    });
+
+    if (manager) {
+      return (
+        <div className="item padded" key={id} style={{paddingBottom: 5}}>
+          <a className={lagelColor}>
+            <span className="title">{manager.get('nick')}</span>
+            {
+              (!isCreator || !isMe) &&
+              <i className="fa fa-remove" onClick={this.removeUser.bind(this, manager)}/>
+            }
+          </a>
+        </div>
+      )
+    }
+  },
+
   render() {
-    const {Users, Forums, location} = this.props;
+    const {Forums, location} = this.props;
     const forumId = location.query.forumId;
     const forum = Forums.get(forumId.toString());
     const managerIds = forum.get('managers');
@@ -70,27 +107,19 @@ const Managers = React.createClass({
                   <h4>메니저 추가</h4>
                   <div className="ui search">
                     <div className="ui left icon input">
-                      <input className="prompt" type="text" placeholder="Search GitHub" />
-                        <i className="github icon" />
+                      <input className="prompt" type="text" placeholder="유저 검색" />
+                      <i className="user icon" />
                     </div>
                   </div>
                 </div>
                 <div className="column">
                   <h4>메니저 리스트</h4>
-                  <ul>
+                  <div className="ui list">
                     {
                       managerIds &&
-                      managerIds.map(id => {
-                        "use strict";
-                        const manager = Users.get(id.toString());
-                        if (manager) {
-                          return (
-                            <li key={id}>{manager.get('nick')}</li>
-                          )
-                        }
-                      })
+                      managerIds.map(this.createManagerItem)
                     }
-                  </ul>
+                  </div>
                 </div>
               </div>
             </div>

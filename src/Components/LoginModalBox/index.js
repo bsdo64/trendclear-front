@@ -180,9 +180,7 @@ const LoginModalBox = React.createClass({
                 { loginError }
 
                 <div className="login_append">
-                  <a href="/member/find/loginId" className="link_find">아이디</a>
-                  <span> / </span>
-                  <a href="/member/find/password" className="link_find">비밀번호찾기</a>
+                  <a href="/member/find" className="link_find">아이디 / 비밀번호찾기</a>
                   <span className="txt_bar">|</span>
                   <Link to="/signin" onClick={this.handleRequestSignin}>회원 가입하기</Link>
                 </div>

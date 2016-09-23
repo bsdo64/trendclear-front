@@ -28,6 +28,8 @@ const PolicyMenu = require('../Container/LeftCol/PolicyMenu');
 const CompanyMenu = require('../Container/LeftCol/CompanyMenu');
 const SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
 const ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
+const SigninMenu = require('../Container/LeftCol/SigninMenu');
+const SearchMenu = require('../Container/LeftCol/SearchMenu');
 
 const LoginModalContainer = require('../Container/Modal/LoginModalContainer');
 const ReportModalContainer = require('../Container/Modal/ReportModalContainer');
@@ -172,11 +174,11 @@ export default () =>
       HeaderMyMenu: HeaderMyMenu,
       HeaderSearch: HeaderSearch,
       LeftColGnb: LeftColGlobalCategoryNav,
-      LeftColMenu: ForumMenu,
+      LeftColMenu: SigninMenu,
       LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
       ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+      DeleteModalContainer: DeleteModalContainer,
       ContentsContainer: SigninContainer
     }}/>
   </Route>
@@ -496,7 +498,7 @@ export default () =>
               HeaderMyMenu: HeaderMyMenu,
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: ForumMenu,
+              LeftColMenu: SearchMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
           DeleteModalContainer: DeleteModalContainer,
@@ -640,18 +642,18 @@ export default () =>
 
   </Route>
 
-  <Route path="/ad" component={HelpApp}>
+  <Route path="/advertisement" component={HelpApp}>
     <IndexRoute
       components={{
         HeaderMyMenu: HeaderMyMenu,
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumMenu,
+        LeftColMenu: CompanyMenu,
         LoginModalContainer: LoginModalContainer,
         ReportModalContainer: ReportModalContainer,
         DeleteModalContainer: DeleteModalContainer,
         WidgetContainer: WidgetContainer,
-        ContentsContainer: SearchContainer
+        ContentsContainer: CompanyContainer
       }}
     />
 

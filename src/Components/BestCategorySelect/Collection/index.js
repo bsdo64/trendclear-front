@@ -59,17 +59,29 @@ const CollectionItem = React.createClass({
     const {
       id, title, subs, forums,
       mouseOverItem,
+      location
     } = this.props;
     const itemStyle = cx('collection_list', {
       hide: (mouseOverItem !== id)
     });
+    const collectionNowId = location ? location.pathname.split('/')[2]: null;
 
     return (
       <div key={id} className='sub_category item'
            onMouseOver={this.openCollection.bind(this, id)}
            onMouseOut={this.closeCollection.bind(this, id)}
       >
-        <Link to={{pathname: `/collection/${id}`}}>{title}</Link>
+        {
+          (collectionNowId === id) &&
+          <div className="active-menu"> </div>
+        }
+
+        <Link to={{pathname: `/collection/${id}`}}>
+
+          <span className="title">{title}</span>
+
+        </Link>
+
         <div className={itemStyle}>
           <h4 className="forum_list_header">이 컬렉션의 구독 </h4>
 
@@ -153,7 +165,7 @@ const Collection = React.createClass({
     }
   },
   createCollectionItem(collections) {
-    const {forums} = this.props;
+    const {forums, location} = this.props;
     const self = this;
     return collections.entrySeq().map(([key, map]) => {
       return (
@@ -163,6 +175,7 @@ const Collection = React.createClass({
           title={map.get('title')}
           subs={map.get('forums')}
           forums={forums}
+          location={location}
           mouseOverItemHandler={self.mouseOverItemHandler}
           closeItemHandler={self.closeItemHandler}
           mouseOverItem={self.state.mouseOverItemId}

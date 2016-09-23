@@ -156,10 +156,10 @@ const BigPost = React.createClass({
           </div>
 
           {/* post Ad*/}
-          {
+          {/*
             (postStyle === 'post_item') &&
             <AdPost1 url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSXpJWqQSSZ2s4-aw-miw-Q9spL7qCJ7rjOLav-VQpNpbdK5po" />
-          }
+          */}
 
           {/* content */}
           <div className="ui description best_post_content" dangerouslySetInnerHTML={{ __html: post.get('content') }}></div>

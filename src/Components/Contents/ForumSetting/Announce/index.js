@@ -5,6 +5,7 @@ import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
 import Forum from '../../Community/Forum';
 
+require('./index.scss');
 const Announce = React.createClass({
   componentWillUnmount() {
     ForumSettingActions.resetButton();
@@ -61,7 +62,7 @@ const Announce = React.createClass({
       }
 
       return (
-        <div className="ui container" style={{margin: 10, width: 700}}>
+        <div className="ui container announce" style={{margin: 10, width: 700}}>
           <div className="ui segments ">
             <div className="ui segment">
               <h3 className="ui header">공지글 설정</h3>
@@ -76,17 +77,18 @@ const Announce = React.createClass({
               </div>
             </div>
             <div className="ui segment">
-              <ul>
+              <ul className="announce-list">
                 {
                   announces &&
                   announces.map(announce => {
                     "use strict";
                     return (
-                      <li key={announce.get('id')}>
-                        <div>
-                          {announce.get('title')}
+                      <li className="announce-item" key={announce.get('id')}>
+                        <a className="ui label large">
+                          <i className="fa fa-thumb-tack" />
+                          <span className="title">{announce.get('title')}</span>
                           <i className="fa fa-remove" onClick={this.removeAnnounce.bind(this, announce)}/>
-                        </div>
+                        </a>
                       </li>
                     )
                   })

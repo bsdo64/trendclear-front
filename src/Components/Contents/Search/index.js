@@ -24,7 +24,7 @@ const SearchBox = React.createClass({
   getMoreBest() {
     "use strict";
 
-    const {PaginationStore, SearchStore} = this.props;
+    const {PaginationStore, SearchStore, location} = this.props;
     const Pagination = PaginationStore.get('searchPostList');
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
@@ -32,6 +32,7 @@ const SearchBox = React.createClass({
       if (nextPage) {
         PostActions.getSearchPost({
           page: nextPage,
+          order: location.query.order || 'new',
           query: SearchStore.get('query')
         });
       }

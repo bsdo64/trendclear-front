@@ -8,6 +8,7 @@ import Forums from '../../Stores/Domain/Forums';
 import Collections from '../../Stores/Domain/Collections';
 import AuthStore from '../../Stores/UI/AuthStore';
 import ListStore from '../../Stores/UI/ListStore';
+import SearchStore from '../../Stores/SearchStore';
 
 import CategoryList from '../../Components/ForumLeftMenu';
 
@@ -16,12 +17,13 @@ import {Link} from 'react-router';
 const MenuContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [GnbStore, UserStore, CommunityStore, ListStore, Forums, Collections, AuthStore]
+    return [SearchStore, GnbStore, UserStore, CommunityStore, ListStore, Forums, Collections, AuthStore]
   },
 
   getPropsFromStores() {
     return {
       GnbStore: GnbStore.getState(),
+      SearchStore: SearchStore.getState(),
       CommunityStore: CommunityStore.getState(),
       UserStore: UserStore.getState(),
       AuthStore: AuthStore.getState(),
@@ -33,31 +35,15 @@ const MenuContainer = connectToStores({
     }
   }
 }, React.createClass({
-  getEndpoint(location) {
-    return location.pathname.split('/')[1];
-  },
-  getTitle(endPoint) {
-    switch(endPoint) {
-      case 'about':
-        return '소개';
-      case 'careers':
-        return '채용';
-      case 'help':
-        return '고객센터';
-      case 'advertisement':
-        return '광고안내';
-      default:
-        return '정책';
-    }
-  },
   render() {
-    const title = this.getTitle(this.getEndpoint(this.props.location));
+    const {SearchStore} = this.props;
+    const query = SearchStore.get('query');
     return (
       <div id="forum_category">
         {/* Title */}
         <div id="sub_category">
           <div className="sub_category_button">
-            <div className="sub_category_text">{title}</div>
+            <div className="sub_category_text">{'검색 : ' + query}</div>
           </div>
         </div>
 
@@ -67,21 +53,21 @@ const MenuContainer = connectToStores({
           <ul >
             <li >
               <h5 className="">
-                <a><i className="fa fa-rss"/>{' 베나클'}</a>
+                <a><i className="fa fa-search"/>{' 검색피드'}</a>
               </h5>
 
               <div className="sub_category item">
-                <Link to={{pathname: '/about'}}>{'소개'}</Link>
+                <Link to={{pathname: '/search', query: {query: query, order: 'new'}}}>{'최신 글'}</Link>
               </div>
-              {/*<div className="sub_category item">
-                <Link to={{pathname: '/careers'}}>{'채용'}</Link>
-              </div>*/}
               <div className="sub_category item">
-                <Link to={{pathname: '/help'}}>{'고객센터'}</Link>
+                <Link to={{pathname: '/search', query: {query: query, order: 'hot'}}}>{'인기 글'}</Link>
               </div>
-              {/*<div className="sub_category item">
-                <Link to={{pathname: '/advertisement'}}>{'광고안내'}</Link>
-              </div>*/}
+              <div className="sub_category item">
+                <Link to={{pathname: '/search', query: {query: query, order: 'm_view'}}}>{'많이 본 글'}</Link>
+              </div>
+              <div className="sub_category item">
+                <Link to={{pathname: '/search', query: {query: query, order: 'm_comment'}}}>{'댓글 많은 글'}</Link>
+              </div>
             </li>
           </ul>
         </menu>

@@ -3,6 +3,7 @@ import React from 'react';
 import ForumActions from '../../../../Actions/ForumActions';
 import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
+require('./index.scss');
 const PrefixBox = React.createClass({
   getInitialState() {
     return {
@@ -18,6 +19,14 @@ const PrefixBox = React.createClass({
 
     this.setState({
       updateItemId: id
+    });
+  },
+
+  closePrefixUpdate() {
+    "use strict";
+
+    this.setState({
+      updateItemId: null
     });
   },
 
@@ -64,20 +73,27 @@ const PrefixBox = React.createClass({
 
     if (p.get('id') === this.state.updateItemId) {
       return (
-        <li key={p.get('id')}>
-          <input
-            defaultValue={p.get('name')}
-            onChange={this.updateOnChange}
-            onKeyPress={this.sendUpdate}
-          />
+        <li key={p.get('id')} className="item">
+          <div className="ui action input prefix-adder-input-update" >
+            <input
+              defaultValue={p.get('name')}
+              onChange={this.updateOnChange}
+              onKeyPress={this.sendUpdate}
+            />
+            <button className="ui icon button" onClick={this.closePrefixUpdate}>
+              <i className="icon remove circle outline"></i>
+            </button>
+          </div>
         </li>
       )
     } else {
       return (
-        <li key={p.get('id')}>
-          {p.get('name')}
-          <i className="fa fa-pencil" onClick={this.openPrefixUpdate.bind(this, p.get('id'))}/>
-          <i className="fa fa-remove" onClick={this.prefixDelete.bind(this, p.get('id'))}/>
+        <li key={p.get('id')} className="item">
+          <a className="ui label large">
+            <span className="prefix-adder-item">{p.get('name')}</span>
+            <i className="fa fa-pencil" onClick={this.openPrefixUpdate.bind(this, p.get('id'))}/>
+            <i className="fa fa-remove" onClick={this.prefixDelete.bind(this, p.get('id'))}/>
+          </a>
         </li>
       )
     }
@@ -116,15 +132,22 @@ const PrefixBox = React.createClass({
     const self = this;
 
     const adder = this.state.openAdder
-      ? (<div><input ref="input_prefix" type="text" onKeyPress={this.sendPrefix} onChange={this.prefixText}/></div>)
+      ? (
+          <div className="ui action input prefix-adder-input" >
+            <input ref="input_prefix" type="text" onKeyPress={this.sendPrefix} onChange={this.prefixText}/>
+            <button className="ui icon button" onClick={this.triggerOpenAddPrefix}>
+              <i className="icon remove circle outline"></i>
+            </button>
+          </div>
+        )
       : prefixes.size < 5
-        ? <div onClick={this.triggerOpenAddPrefix}>추가 +</div>
+        ? <div className="ui button primary tiny prefix-adder-button" onClick={this.triggerOpenAddPrefix}>추가 +</div>
         : null;
 
     return (
-      <ul>
+      <ul className="prefix-list">
         {prefixes.map(self.createPrefixItem)}
-        <li >
+        <li className="item">
           {adder}
         </li>
       </ul>
@@ -175,7 +198,7 @@ const ForumPrefix = React.createClass({
       }
 
       return (
-        <div className="ui container" style={{margin: 10, width: 700}}>
+        <div className="ui container forum-prefix" style={{margin: 10, width: 700}}>
           <div className="ui segments ">
             <div className="ui segment">
               <h3 className="ui header">말머리 설정</h3>

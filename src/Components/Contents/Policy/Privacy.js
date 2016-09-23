@@ -75,8 +75,8 @@ const Privacy = (props) => {
       <h4> 개인정보에 관한 민원서비스</h4>
       <p>Venacle은 고객의 개인정보를 보호하고 개인정보와 관련한 불만을 처리하기 위하여 아래와 같이 관련 부서 및 개인정보관리책임자를 지정하고 있습니다.</p>
       <p>개인정보관리책임자<br/>
-        개인정보관리 책임자 도병수 대표  <a href="mailto:bsdo@naver.com">bsdo@naver.com</a><br/>
-        개인정보관리 담당자 도병수 대표  <a href="mailto:bsdo@naver.com">bsdo@naver.com</a>
+        개인정보관리 책임자 도병수 대표  <a href="mailto:webmaster@venacle.com">webmaster@venacle.com</a><br/>
+        개인정보관리 담당자 도병수 대표  <a href="mailto:webmaster@venacle.com">webmaster@venacle.com</a>
       </p>
       <p>귀하께서는 Venacle의 서비스를 이용하시며 발생하는 모든 개인정보보호 관련 민원을 개인정보관리책임자 혹은 담당부서로 신고하실 수 있습니다.</p>
       <p>Venacle은 이용자들의 신고사항에 대해 신속하게 충분한 답변을 드릴 것입니다.</p>

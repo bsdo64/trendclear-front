@@ -36,7 +36,9 @@ module.exports = (props) => {
 
   return (
     <div className="ui items best_list">
-      <Main1 url={'http://www.computerhope.com/banners/banner3.gif'} />
+
+      {/*<Main1 url={'http://www.computerhope.com/banners/banner3.gif'} />*/}
+
       {
         okey &&
         PostIdList.map(createItem.bind(null, props))

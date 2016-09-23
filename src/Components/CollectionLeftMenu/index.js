@@ -51,6 +51,7 @@ const CollectionLeftMenu = React.createClass({
                 <CollectionComponent
                   collections={Collections}
                   forums={Forums}
+                  {...this.props}
                 />
               }
 

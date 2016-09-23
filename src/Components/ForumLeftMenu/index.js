@@ -9,6 +9,7 @@ const ForumLeftMenu = React.createClass({
   displayName: 'ForumLeftMenu',
   render() {
     const { CommunityStore, AuthStore, UserStore, Forums, Collections, location } = this.props;
+    const order = location.query.order || null;
     const forum = CommunityStore.get('forum');
     const user = UserStore.get('user');
 
@@ -38,15 +39,31 @@ const ForumLeftMenu = React.createClass({
                   </h5>
 
                   <div className="sub_category item">
+                    {
+                      (order === 'new') &&
+                      <div className="active-menu"> </div>
+                    }
                     <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'new'}}}>{'최신 글'}</Link>
                   </div>
                   <div className="sub_category item">
+                    {
+                      (order === 'hot') &&
+                      <div className="active-menu"> </div>
+                    }
                     <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'hot'}}}>{'인기 글'}</Link>
                   </div>
                   <div className="sub_category item">
+                    {
+                      (order === 'm_view') &&
+                      <div className="active-menu"> </div>
+                    }
                     <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'm_view'}}}>{'많이 본 글'}</Link>
                   </div>
                   <div className="sub_category item">
+                    {
+                      (order === 'm_comment') &&
+                      <div className="active-menu"> </div>
+                    }
                     <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'm_comment'}}}>{'댓글 많은 글'}</Link>
                   </div>
                 </li>
@@ -63,7 +80,7 @@ const ForumLeftMenu = React.createClass({
             </menu>
 
             {/* forum Ad */}
-            <AdForumLeft url="http://www.heybannerbanner.com/client_folders/QS/600s/150_sleep1_600.gif"/>
+            {/*<AdForumLeft url="http://www.heybannerbanner.com/client_folders/QS/600s/150_sleep1_600.gif"/>*/}
           </div>
         )
       }

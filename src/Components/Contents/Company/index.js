@@ -1,15 +1,85 @@
 import React from 'react';
+import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
+import { triggerEvent } from "react-google-maps/lib/utils";
+
+const SimpleMap = React.createClass({
+  getInitialState() {
+    return {
+      markers: [{
+        position: {
+          lat: 37.533459,
+          lng: 126.8567798,
+        },
+        key: `Taiwan`,
+        defaultAnimation: 2,
+      }]
+    };
+  },
+
+  handleMapClick() {
+    "use strict";
+
+  },
+
+  handleMarkerRightclick() {
+    "use strict";
+
+  },
+
+  render() {
+    return (
+      <section style={{height: 400, width: 600}}>
+        <GoogleMapLoader
+          containerElement={
+            <div
+              {...this.props}
+              style={{
+                height: "100%",
+              }}
+            />
+          }
+          googleMapElement={
+            <GoogleMap
+              ref={(map) => (this._googleMapComponent = map) && console.log(map.getZoom())}
+              defaultZoom={15}
+              defaultCenter={{ lat: 37.533459, lng: 126.8567798 }}
+              onClick={this.handleMapClick}
+            >
+              {this.state.markers.map((marker, index) => {
+                return (
+                  <Marker
+                    {...marker}
+                    onRightclick={this.handleMarkerRightclick.bind(this, index)}
+                  />
+                );
+              })}
+            </GoogleMap>
+          }
+        />
+      </section>
+    );
+  }
+});
 
 require('./index.scss');
 const About = React.createClass({
   render() {
     return (
       <div className="about">
-        <div className="ui vertical stripe segment">
+        <div className="ui vertical stripe segment padded">
+          <h1 className="ui header">베나클 Venacle</h1>
+        </div>
 
-          <div className="ui middle aligned stackable grid container padded">
-            <h1 className="ui header">베나클 Venacle</h1>
+        <div className="ui vertical stripe segment">
+          <div className="ui text container">
+            <h3 className="ui header">베나클의 철학</h3>
+            <p style={{textAlign: 'center'}}>
+              <b>"세상의 모든 이슈를 모아 효과적으로 공유하고 소통할수 있도록 도와주는 것"</b>
+            </p>
           </div>
+        </div>
+
+        <div className="ui vertical stripe segment">
 
           <div className="ui middle aligned stackable grid container">
             <div className="row">
@@ -83,20 +153,28 @@ const About = React.createClass({
 
         <div className="ui vertical stripe segment">
           <div className="ui text container">
-            <h3 className="ui header">베나클의 철학</h3>
-            <p style={{textAlign: 'center'}}>
-              <b>"세상의 모든 이슈를 모아 효과적으로 공유하고 소통할수 있도록 도와주는 것"</b>
-            </p>
-            <p>
-              사랑해
-            </p>
-            <a className="ui large button">Read More</a>
-            <h4 className="ui horizontal header divider">
-              <a href="#">Case Studies</a>
-            </h4>
-            <h3 className="ui header">Did We Tell You About Our Bananas?</h3>
-            <p>Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.</p>
-            <a className="ui large button">I'm Still Quite Interested</a>
+            <div className="ui list">
+              <div className="item">
+                <i className="home icon"></i>
+                <div className="content">
+                  베나클
+                </div>
+              </div>
+              <div className="item">
+                <i className="marker icon"></i>
+                <div className="content">
+                  서울특별시
+                  강서구 강서로 8길 174
+                  301호 07783
+                </div>
+              </div>
+              <div className="item">
+                <i className="mail icon"></i>
+                <div className="content">
+                  <a href="mailto:webmaster@venacle.com">webmaster@venacle.com</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -112,13 +190,102 @@ const Careers = React.createClass({
   }
 });
 
+require('./Contact.scss');
 const Contact = React.createClass({
+  componentDidMount() {
+
+  },
+
   render() {
     return (
-      <div />
+      <div className="ui segment contact-info">
+        <div className="ui left aligned container">
+          <h3 className="ui header">Contact Us</h3>
+        </div>
+        <div className="ui center aligned container company-info">
+          <div className="ui list">
+            <div className="item">
+              <i className="heart icon"></i>
+              <div className="content title">
+                상호명
+              </div>
+              <div className="content description">
+                베나클
+              </div>
+            </div>
+            <div className="item">
+              <i className="marker icon"></i>
+              <div className="content title">
+                사업장 소재지
+              </div>
+              <div className="content description">
+                서울특별시 강서구 곰달래로49길 41 성우빌딩 3층
+              </div>
+            </div>
+            <div className="item">
+              <i className="sticky note icon"></i>
+              <div className="content title">
+                사업자등록번호
+              </div>
+              <div className="content description">
+                359-19-00336
+              </div>
+            </div>
+            <div className="item">
+              <i className="user icon"></i>
+              <div className="content title">
+                대표
+              </div>
+              <div className="content description">
+                도병수 (이메일 : <a href="mailto:bsdo64@gmail.com">bsdo64@gmail.com</a>)
+              </div>
+            </div>
+            <div className="item">
+              <i className="user icon"></i>
+              <div className="content title">
+                개인정보담당자
+              </div>
+              <div className="content description">
+                도병수
+              </div>
+            </div>
+            <div className="item">
+              <i className="mail icon"></i>
+              <div className="content title">
+                문의 사항
+              </div>
+              <div className="content description">
+                <a href="mailto:webmaster@venacle.com">webmaster@venacle.com</a>
+              </div>
+            </div>
+            <div className="item">
+              <i className="phone icon"></i>
+              <div className="content title">
+                Tel
+              </div>
+              <div className="content description">
+                010-4906-2685
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="map"></div>
+        <SimpleMap
+
+        />
+      </div>
     );
   }
 });
+
+const Advertisement = React.createClass({
+  render() {
+    "use strict";
+    return (
+      <div>advertisement</div>
+    )
+  }
+})
 
 const Company = React.createClass({
   getEndpoint(location) {
@@ -135,6 +302,8 @@ const Company = React.createClass({
         return <Careers />;
       case 'help':
         return <Contact />;
+      case 'advertisement':
+        return <Advertisement />
       default:
         return <About />
     }

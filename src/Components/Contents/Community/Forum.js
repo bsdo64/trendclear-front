@@ -353,7 +353,7 @@ const Forum = React.createClass({
               </div>
             </div>
 
-            <AdForum1 url="http://www.computerhope.com/banners/banner3.gif" />
+            {/*<AdForum1 url="http://www.computerhope.com/banners/banner3.gif" />*/}
 
             <div className="ui horizontal celled list">
               <div className="item" style={{fontWeight: 'bold'}}>

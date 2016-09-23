@@ -4,12 +4,14 @@ import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 const BanList = React.createClass({
   componentDidMount() {
     const self = this;
+    const forumId = this.props.location.query.forumId;
 
     $('.ui.search')
       .search({
         apiSettings: {
-          url: '/ajax/search/users?type=banList&nick={query}'
+          url: '/ajax/search/users?type=banList&nick={query}&forumId=' + forumId
         },
+        cache: false,
         minCharacters : 2,
         fields: {
           title: 'nick'
@@ -39,8 +41,30 @@ const BanList = React.createClass({
     ForumSettingActions.addBanUser({userId: user.id, forumId: forumId});
   },
 
+  removeUser(user) {
+    "use strict";
+
+  },
+
+  createUserItem(id) {
+    "use strict";
+    const {Users} = this.props;
+    const user = Users.get(id.toString());
+
+    if (user) {
+      return (
+        <div className="item padded" key={id} style={{paddingBottom: 5}}>
+          <a className="ui label large">
+            <span className="title">{user.get('nick')}</span>
+            <i className="fa fa-remove" onClick={this.removeUser.bind(this, user)}/>
+          </a>
+        </div>
+      )
+    }
+  },
+
   render() {
-    const {Users, Forums, location} = this.props;
+    const {Forums, location} = this.props;
     const forumId = location.query.forumId;
     const forum = Forums.get(forumId.toString());
     const banUserIds = forum.get('bans');
@@ -66,28 +90,19 @@ const BanList = React.createClass({
                   <h4>벤 유저 추가</h4>
                   <div className="ui search">
                     <div className="ui left icon input">
-                      <input className="prompt" type="text" placeholder="Search GitHub" />
-                      <i className="github icon" />
+                      <input className="prompt" type="text" placeholder="유저 검색" />
+                      <i className="user icon" />
                     </div>
                   </div>
                 </div>
                 <div className="column">
                   <h4>벤 유저 리스트</h4>
-                  <ul>
+                  <div className="ui list">
                     {
                       banUserIds &&
-                      banUserIds.map(id => {
-                        "use strict";
-                        const user = Users.get(id.toString());
-
-                        if (user) {
-                          return (
-                            <li key={user.get('id')}>{user.get('nick')}</li>
-                          )
-                        }
-                      })
+                      banUserIds.map(this.createUserItem)
                     }
-                  </ul>
+                  </div>
                 </div>
               </div>
             </div>

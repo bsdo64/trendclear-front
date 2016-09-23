@@ -166,7 +166,7 @@ const TrendBox = React.createClass({
       merchant_uid : 'merchant_' + new Date().getTime(),
       name : '주문명:결제테스트',
       amount : 160,
-      buyer_email : 'bsdo@naver.com',
+      buyer_email : 'webmaster@venacle.com',
       buyer_name : '베나클',
       buyer_tel : '010-1234-5678',
       buyer_addr : '서울특별시 강남구 삼성동',

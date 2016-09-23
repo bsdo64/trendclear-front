@@ -41,10 +41,6 @@ class WidgetBox extends Component {
               key="1"
               linkTo="/signin"
               text="지금 가입하세요 !"
-            />,
-            <Main2
-              key="2"
-              url="https://s-media-cache-ak0.pinimg.com/236x/d5/87/49/d5874925758d37d00237c1e527821375.jpg"
             />
           ]
         }
@@ -108,12 +104,15 @@ class WidgetBox extends Component {
                 </div>
 
               </Scrollbars>
-            </div>,
-            <Main2
-              key="Main2"
-              url="https://s-media-cache-ak0.pinimg.com/236x/d5/87/49/d5874925758d37d00237c1e527821375.jpg"
-            />
+            </div>
           ]
+        }
+
+        {
+          <Main2
+            key="Main2"
+            url="https://s-media-cache-ak0.pinimg.com/236x/d5/87/49/d5874925758d37d00237c1e527821375.jpg"
+          />
         }
 
         <div className="_45mq" role="contentinfo" style={{marginTop: 20, fontSize: 12}}>
@@ -121,12 +120,13 @@ class WidgetBox extends Component {
             <Link to="/policies/privacy">개인정보보호</Link>
             <span role="presentation" aria-hidden="true"> · </span>
             <Link to="/policies/terms">약관</Link>
-            <span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/ad">광고안내</Link>
+            {/*<span role="presentation" aria-hidden="true"> · </span>
+            <Link to="/advertisement">광고안내</Link>*/}
             <span role="presentation" aria-hidden="true"> · </span>
             <Link to="/about">회사소개</Link>
+            {/*<span role="presentation" aria-hidden="true"> · </span>
+            <Link to="/careers">채용</Link>*/}
             <span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/careers">채용</Link>
             <Link to="/help">고객센터</Link>
           </div>
           <div>
