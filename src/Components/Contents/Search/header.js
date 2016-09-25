@@ -11,7 +11,7 @@ const SearchHeader = React.createClass({
 
       return (
         <div className="search-header">
-          검색 결과 {total}개
+          포스트 {total}개
         </div>
       );
     }

@@ -138,6 +138,20 @@ new Promise((resolve, reject) => {
             ListStore: {searchPostList: normalized.result},
             PaginationStore: {searchPostList: searchPostListPagination}
           });
+
+          const searchForumList = resBody.SearchStore.forum.data.results;
+          const searchForumListPagination = resBody.SearchStore.forum.collection;
+
+          const normalizedForums = normalize(searchForumList, arrayOf(forum));
+
+          assign(resBody, {
+            // Temp
+
+            Forums: normalizedForums.entities.forums,
+            Users: normalizedForums.entities.author,
+            ListStore: {searchForumList: normalizedForums.result},
+            PaginationStore: {searchForumList: searchForumListPagination}
+          });
         }
 
         if (resBody.CommunityStore && resBody.CommunityStore.list) {

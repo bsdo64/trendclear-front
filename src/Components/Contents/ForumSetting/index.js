@@ -21,7 +21,12 @@ import StatViewRank from './StatViewRank';
 const checkManager = function checkManager(forum, userId) {
   "use strict";
 
-  return forum.get('managers').find(id => id === userId);
+  const managers = forum.get('managers');
+  if (managers) {
+    return managers.find(id => id === userId);
+  } else {
+    return false
+  }
 };
 
 const ForumSettingsComponent = (props) => {

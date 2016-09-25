@@ -9,7 +9,7 @@ const ForumLeftMenu = React.createClass({
   displayName: 'ForumLeftMenu',
   render() {
     const { CommunityStore, AuthStore, UserStore, Forums, Collections, location } = this.props;
-    const order = location.query.order || null;
+    const order = location.query.order || 'new';
     const forum = CommunityStore.get('forum');
     const user = UserStore.get('user');
 
