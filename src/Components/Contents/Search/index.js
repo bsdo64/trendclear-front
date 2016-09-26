@@ -9,7 +9,10 @@ import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 
 import PostActions from '../../../Actions/PostActions';
+import UserActions from '../../../Actions/UserActions';
+import CollectionActions from '../../../Actions/CollectionActions';
 import GnbActions from '../../../Actions/GnbActions';
+import LoginActions from '../../../Actions/LoginActions';
 
 require('./index.scss');
 const SearchBox = React.createClass({
@@ -43,18 +46,59 @@ const SearchBox = React.createClass({
       }
     }
   },
-  checkCollectionHasForums() {
+  checkCollectionHasForums(collectionForumList, forumId) {
+    "use strict";
 
+    return collectionForumList.includes(forumId);
   },
-  selectCollection() {
+  selectCollection(forumId) {
+    "use strict";
 
-},
+    return (e) => {
+      const params = {collectionId: e.target.value, forumId: forumId};
+
+      if (e.target.checked) {
+        CollectionActions.addForum(params)
+      } else {
+        CollectionActions.removeForum(params)
+      }
+    }
+  },
   openLoginModal() {
-
+    const modalFlag = this.props.LoginModalStore.get('openLoginModal');
+    const location = this.props.location;
+    LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
   },
-  toggleFollow() {
+  toggleFollow(isForumFollow, forumId) {
+    "use strict";
 
-},
+    const {AuthStore} = this.props;
+    const userId = AuthStore.get('userId');
+    if (!userId) {
+      this.openLoginModal();
+    }  else {
+      if (isForumFollow) {
+        UserActions.unFollowForum({id: forumId});
+      } else {
+        UserActions.followForum({forumId: forumId});
+      }
+    }
+  },
+  createCollectionCheckBox(Collections, forumId, collectionId) {
+    const collection = Collections.get(collectionId.toString());
+    return (
+      <li key={collectionId} className="collection_item">
+        <div className="ui checkbox">
+          <input id={`collection-id-${collectionId}-forum-id-${forumId}`}
+                 type="checkbox"
+                 value={collection.get('id')}
+                 defaultChecked={this.checkCollectionHasForums(collection.get('forums'), forumId)}
+                 onChange={this.selectCollection(forumId)} />
+          <label htmlFor={`collection-id-${collectionId}-forum-id-${forumId}`}>{collection.get('title')}</label>
+        </div>
+      </li>
+    )
+  },
   render() {
     const {SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
     const Collection = PaginationStore.get('searchPostList');
@@ -134,21 +178,7 @@ const SearchBox = React.createClass({
                                             Users
                                               .get(userId.toString())
                                               .get('collections')
-                                              .map(collectionId => {
-                                                const collection = Collections.get(collectionId.toString());
-                                                return (
-                                                  <li key={collectionId} className="collection_item">
-                                                    <div className="ui checkbox">
-                                                      <input id={`collection-id-${collectionId}`}
-                                                             type="checkbox"
-                                                             value={collection.get('id')}
-                                                             defaultChecked={self.checkCollectionHasForums(collection.get('forums'), forumId)}
-                                                             onChange={self.selectCollection} />
-                                                      <label htmlFor={`collection-id-${collectionId}`}>{collection.get('title')}</label>
-                                                    </div>
-                                                  </li>
-                                                )
-                                              })
+                                              .map(self.createCollectionCheckBox.bind(self, Collections, forumId))
                                           }
                                         </ul>
                                       </DropdownContent>

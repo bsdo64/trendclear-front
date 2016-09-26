@@ -80,7 +80,7 @@ class Posts {
   onDelete(deletedItem) {
 
     if (deletedItem.id && !deletedItem.comment_id) {
-      let deletedPosts = this.state.delete(deletedItem.id);
+      let deletedPosts = this.state.updateIn([deletedItem.id.toString(), 'deleted'], v => true);
       this.setState(deletedPosts);
     }
   }

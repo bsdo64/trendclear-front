@@ -44,6 +44,12 @@ const Managers = React.createClass({
 
   removeUser(manager) {
     "use strict";
+    const forumId = this.props.location.query.forumId;
+
+    ForumSettingActions.removeManager({
+      forumId: forumId,
+      userId: manager.get('id')
+    });
 
   },
 

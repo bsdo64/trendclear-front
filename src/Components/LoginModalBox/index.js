@@ -68,6 +68,12 @@ const LoginModalBox = React.createClass({
     }
   },
 
+  handleRequestLoginByEnter(e) {
+    if (e.key === "Enter" && e.keyCode === 13) {
+      this.handleRequestLogin();
+    }
+  },
+
   handleRequestLogin() {
     $(this.refs.loginform).form('validate form');
   },
@@ -167,7 +173,7 @@ const LoginModalBox = React.createClass({
                 </div>
                 <div className="field">
                   <label>비밀번호</label>
-                  <input type="password" name="password" />
+                  <input type="password" name="password" onKeyDown={this.handleRequestLoginByEnter} />
                 </div>
                 <div className="inline field">
                   <div className="ui checkbox">

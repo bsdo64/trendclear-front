@@ -65,6 +65,20 @@ class ForumSettingActions {
     }
   }
 
+  removeManager(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .delete('/forum/manager', params)
+        .then((res) => {
+          dispatch(params);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
+
   removeAnnounce(params) {
     return (dispatch) => {
       Api
@@ -86,6 +100,20 @@ class ForumSettingActions {
         .post('/forum/banUser', params)
         .then((res) => {
           dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
+
+  removeBanUser(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .delete('/forum/banUser', params)
+        .then((res) => {
+          dispatch(params);
         })
         .catch((err) => {
           return err;

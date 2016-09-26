@@ -43,7 +43,12 @@ const BanList = React.createClass({
 
   removeUser(user) {
     "use strict";
+    const forumId = this.props.location.query.forumId;
 
+    ForumSettingActions.removeBanUser({
+      forumId: forumId,
+      userId: user.get('id')
+    });
   },
 
   createUserItem(id) {

@@ -332,7 +332,7 @@ const Forum = React.createClass({
                       </div>
                       <div className="forum_counts" >
                         <span className="follow_counts" >팔로우 {forum.get('follow_count')} 명</span>
-                        <span className="subs_counts" >컬렉션 구독 {forum.get('subs_count')}</span>
+                        <span className="subs_counts" >컬렉션 구독 {forum.get('subs_count')} 회</span>
                       </div>
                     </div>
                   </div>

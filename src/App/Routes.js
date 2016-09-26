@@ -44,7 +44,7 @@ const App = (props) => {
           <div className="head_contents">
             <div className="top_area">
               <div className="top_contents">
-                <div id="top_logo">
+                <div id="top_logo" onClick={() => {document.body.scrollTop = 0;}}>
                   <Link className="ui header inverted huge" to="/">
                     <img src="/images/Venacle.png"/>
                   </Link>

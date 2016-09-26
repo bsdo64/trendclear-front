@@ -93,6 +93,16 @@ class ForumSettingStore {
       this.setState(state);
     }
   }
+
+  onRemoveManager(params) {
+    if (params) {
+      const state = this.state.updateIn(['forum', 'managers'], list => {
+        return list.filterNot(i => i.get('id') === params.userId)
+      });
+
+      this.setState(state);
+    }
+  }
 }
 
 export default alt.createStore(immutable(ForumSettingStore), ForumSettingStore.displayName);
