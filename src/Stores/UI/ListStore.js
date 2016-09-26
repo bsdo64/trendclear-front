@@ -105,6 +105,10 @@ class ListStore {
       this.setState(mergeResults);
     }
   }
+
+  onSetScroll(scroll) {
+    this.setMergeState(scroll)
+  }
 }
 
 export default alt.createStore(immutable(ListStore), ListStore.displayName);

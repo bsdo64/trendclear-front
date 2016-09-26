@@ -11,6 +11,7 @@ import InfiniteLoader from '../../Loader/InfiniteLoader';
 import PostActions from '../../../Actions/PostActions';
 import GnbActions from '../../../Actions/GnbActions';
 
+require('./index.scss');
 const SearchBox = React.createClass({
   componentWillUnmount() {
     // some example callbacks
@@ -66,7 +67,7 @@ const SearchBox = React.createClass({
     return (
       <div id="best_contents" >
 
-        <div>
+        <div id="search_forum_list">
           <h4>게시판</h4>
           <div className="search-forum-box">
             <ul className="search-forum-list">
@@ -75,7 +76,11 @@ const SearchBox = React.createClass({
                 searchForumList.map(forumId => {
                   "use strict";
                   const forum = Forums.get(forumId.toString());
+                  if (!forum) return null;
+
                   const creator = forum.get('creator');
+                  if (!creator) return null;
+
                   const userId = AuthStore.get('userId');
                   const isLogin = AuthStore.get('isLogin');
 
@@ -104,7 +109,7 @@ const SearchBox = React.createClass({
                             }}>
                               <div className="content">
                                 <div className="header">
-                                  {forum.get('title')}
+                                  <Link to={`/community?forumId=${forumId}`}>{forum.get('title')}</Link>
 
                                   {
                                     (userId === creator.get('id')) &&
@@ -171,8 +176,8 @@ const SearchBox = React.createClass({
                                 </div>
                                 <div className="meta forum_meta" >
                                   <div className="forum_counts" >
-                                    <span className="follow_counts" >팔로우 {forum.get('followCount')} 명</span>
-                                    <span className="subs_counts" >컬렉션 구독 {forum.get('subsCount')}</span>
+                                    <span className="follow_counts" >팔로우 {forum.get('follow_count')} 명</span>
+                                    <span className="subs_counts" >컬렉션 구독 {forum.get('subs_count')}</span>
                                   </div>
                                 </div>
                               </div>

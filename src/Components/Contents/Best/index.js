@@ -15,6 +15,13 @@ const BestBox = React.createClass({
   
   componentDidMount() {
     $('.ui.embed').embed();
+
+    window.addEventListener('resize', this.setScroll)
+  },
+
+  setScroll() {
+    const {ListStore} = this.props;
+    document.body.scrollTop = ListStore.get('scrollHeight');
   },
 
   componentDidUpdate(prevProps, prevState) {

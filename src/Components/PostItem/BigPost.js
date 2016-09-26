@@ -7,6 +7,7 @@ import AvatarImage from '../AvatarImage';
 import AdPost1 from '../Ad/AdPost1';
 
 import LoginActions from '../../Actions/LoginActions';
+import ListActions from '../../Actions/ListActions';
 import CommunityActions from '../../Actions/CommunityActions';
 
 import Menu from './ReportMenu';
@@ -14,6 +15,27 @@ import Menu from './ReportMenu';
 require('./Post.scss');
 const BigPost = React.createClass({
   mixins: [PureRenderMixin],
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+
+
+  handleScroll() {
+    const item = this.myTextInput;
+    const itemTop = item.offsetTop;
+    const itemBottom = itemTop + item.offsetHeight;
+    const currentScroll = document.body.scrollTop;
+    if (currentScroll < itemBottom && currentScroll > itemTop) {
+      ListActions.setScroll({
+        scrollHeight: itemBottom
+      });
+    }
+  },
 
   sendLike() {
     "use strict";
@@ -52,7 +74,10 @@ const BigPost = React.createClass({
     });
 
     return (
-      <div key={post.get('id')} className={cPost}>
+      <div ref={(ref) => this.myTextInput = ref}
+           key={post.get('id')}
+           className={cPost}
+      >
         {/* avatar */}
         <div className="ui image tiny">
           <AvatarImage
