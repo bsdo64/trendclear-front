@@ -6,7 +6,7 @@ import Notis from '../../Stores/Domain/Notis';
 
 import MyArea from '../../Components/MyArea';
 
-import notiIo from '../../Utils/Socket';
+import {Noti, Point} from '../../Utils/Socket';
 
 const MyMenuContainer = connectToStores({
   getStores() {
@@ -28,8 +28,8 @@ const MyMenuContainer = connectToStores({
     const { LoginStore } = this.props;
 
     if (LoginStore.get('isLogin')) {
-      notiIo.emit('join_room');
-
+      Noti.emit('join_room');
+      Point.emit('join_room');
     }
 
   },

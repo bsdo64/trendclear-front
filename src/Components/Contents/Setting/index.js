@@ -94,8 +94,6 @@ const SettingProfile = React.createClass({
       birth: moment(birth).format()
     };
 
-    console.log(profile);
-
     UserActions.updateProfile(profile);
   },
 
@@ -304,7 +302,7 @@ const SettingPassword = React.createClass({
             oldPassword: value['old-password'],
             newPassword: value['new-password']
           });
-          console.log(value);
+
         },
         onFailure: () => {
           console.log('Fail');

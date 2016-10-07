@@ -13,6 +13,7 @@ import UserActions from '../../../Actions/UserActions';
 import CollectionActions from '../../../Actions/CollectionActions';
 import GnbActions from '../../../Actions/GnbActions';
 import LoginActions from '../../../Actions/LoginActions';
+import ForumActions from '../../../Actions/ForumActions'
 
 require('./index.scss');
 const SearchBox = React.createClass({
@@ -99,12 +100,48 @@ const SearchBox = React.createClass({
       </li>
     )
   },
+
+  prevForumList() {
+    "use strict";
+    const {PaginationStore, SearchStore, location} = this.props;
+    const Pagination = PaginationStore.get('searchForumList');
+    if (Pagination) {
+      const currentPage = Pagination.get('current_page');
+
+      if (currentPage > 1) {
+        ForumActions.getSearchForumList({
+          page: currentPage - 1,
+          order: location.query.order || 'new',
+          query: SearchStore.get('query')
+        });
+      }
+    }
+  },
+
+  nextForumList() {
+    "use strict";
+    const {PaginationStore, SearchStore, location} = this.props;
+    const Pagination = PaginationStore.get('searchForumList');
+    if (Pagination) {
+      const nextPage = Pagination.get('next_page');
+
+      if (nextPage) {
+        ForumActions.getSearchForumList({
+          page: nextPage,
+          order: location.query.order || 'new',
+          query: SearchStore.get('query')
+        });
+      }
+    }
+  },
+
   render() {
     const {SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
     const Collection = PaginationStore.get('searchPostList');
     const searchPosts = SearchStore.get('search');
 
     const searchForumList = ListStore.get('searchForumList');
+    const searchForumPagination = PaginationStore.get('searchForumList');
 
     const self = this;
 
@@ -220,6 +257,16 @@ const SearchBox = React.createClass({
                 })
               }
             </ul>
+            <div className="list_pagination">
+              {
+                searchForumPagination && searchForumPagination.get('current_page') > 1 &&
+                <div className="prev_button"><a onClick={this.prevForumList}>이전</a></div>
+              }
+              {
+                searchForumPagination && searchForumPagination.get('next_page') &&
+                <div className="next_button"><a onClick={this.nextForumList}>다음</a></div>
+              }
+            </div>
           </div>
         </div>
 
@@ -231,11 +278,12 @@ const SearchBox = React.createClass({
           AuthorItems={Users}
           User={AuthStore}
           LoginModalFlag={LoginModalStore.get('openLoginModal')}
+          scrollHeight={ListStore.get('scrollHeight')}
         />
 
         <Waypoint
           onEnter={this.getMoreBest}
-          bottomOffset="-10%"
+          bottomOffset="-200px"
           scrollableAncestor={window || null}
         />
 

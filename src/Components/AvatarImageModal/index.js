@@ -36,8 +36,6 @@ const AvatarImageModal = React.createClass({
 
     reader.onloadend = () => {
 
-      console.log(file);
-      console.log(reader);
       this.setState({
         file: file,
         imagePreviewUrl: reader.result
@@ -71,6 +69,7 @@ const AvatarImageModal = React.createClass({
       avatarImg = <AvatarImage
         sex={sex}
         avatarImg={avatar_img}
+        removable={true}
       />
     }
     

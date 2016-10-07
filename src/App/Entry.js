@@ -33,17 +33,11 @@ new Promise((resolve, reject) => {
 
         if (resBody.UserStore && resBody.UserStore.user) {
           const User = resBody.UserStore.user;
-          const userInfo = Object.assign(User, {
-            trendbox: resBody.UserStore.trendbox,
-            profile: resBody.UserStore.profile,
-            grade: resBody.UserStore.grade,
-            role: resBody.UserStore.role,
-            notifications: resBody.UserStore.notifications,
-            skills: resBody.UserStore.skills,
-            collections: resBody.UserStore.collections,
-            follow_forums: resBody.UserStore.follow_forums,
-            forumCreated: resBody.UserStore.forumCreated,
-          });
+          const UserStore = resBody.UserStore;
+          const userInfo = {
+            ...UserStore,
+            ...User
+          };
 
           const normalized = normalize(userInfo, author);
 
@@ -250,11 +244,11 @@ new Promise((resolve, reject) => {
           resBody.ForumSettingStore.forum = resBody.CommunityStore.forum;
         }
 
+        alt.bootstrap(JSON.stringify(resBody));
+
         if (process.env.NODE_ENV !== 'production') {
           console.info('Bootstrap Data : ', resBody);
         }
-
-        alt.bootstrap(JSON.stringify(resBody));
 
         resolve();
       })

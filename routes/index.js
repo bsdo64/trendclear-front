@@ -1,5 +1,6 @@
-const  express = require('express');
+const express = require('express');
 const router = express.Router();
+const Api = require('superagent');
 
 const routes = [
   '/',
@@ -43,6 +44,9 @@ const routes = [
   '/careers',
   '/help',
   '/advertisement',
+  '/member/find',
+  '/link/post',
+  '/link/post/m'
 ];
 
 const redirectRoutes = [
@@ -67,15 +71,80 @@ router.get(redirectRoutes, function (req, res, next) {
   next();
 });
 
+router.get('/link/post/m/:linkId', function (req, res) {
+  "use strict";
+
+  // 메타 제공 시스템
+
+  Api
+    .get('http://localhost:3001/ajax/link/post/m/' + req.params.linkId)
+    .set(req.headers)
+    .end(function(err, result){
+
+      if (err || !result.ok) {
+        res.render('entry/meta', null);
+      } else {
+        res.render('entry/meta', result.body);
+      }
+    });
+});
+
+router.get('/link/post/:linkId', function (req, res, next) {
+  "use strict";
+
+  // 실질적인 방문자 추적 시스템
+
+  if (req.params.linkId) {
+    Api
+      .get('http://localhost:3001/ajax/link/post/' + req.params.linkId)
+      .set(req.headers)
+      .end(function(err, result){
+        const post = result.body;
+
+        if (post) {
+          res.redirect(`/community?forumId=${post.forum_id}&postId=${post.id}`);
+        } else {
+          res.redirect('/');
+        }
+      });
+  } else {
+    res.redirect('/');
+  }
+});
+
 /* GET home page. */
 router.get(routes, function(req, res, next) {
   console.log(req.headers);
   console.log(req.url);
 
-  res.render('entry/index', {
+  let defaultData = {
+    production: process.env.NODE_ENV ? true : false,
+
     title: '베나클',
-    production: process.env.NODE_ENV ? true : false
-  });
+    meta: [
+      {name: 'description', content: '공유하세요! 원하는 모든 정보와 이슈가 있는곳, 베니클입니다.'},
+      {name: 'og:title', content: '베나클'},
+      {name: 'og:description', content: '공유하세요! 원하는 모든 정보와 이슈가 있는곳, 베니클입니다.'},
+      {name: 'og:image', content: ''},
+      {name: 'og:url', content: ''},
+      {name: 'og:site_name', content: '베나클'},
+    ]
+  };
+
+  if (req.query.postId) {
+    Api
+      .get('http://localhost:3001/ajax/post/meta/' + req.query.postId)
+      .set(req.headers)
+      .end((err, result) => {
+        "use strict";
+
+        defaultData = result.body;
+
+        res.render('entry/index', defaultData);
+      })
+  } else {
+    res.render('entry/index', defaultData);
+  }
 });
 
 /* 404 page. */

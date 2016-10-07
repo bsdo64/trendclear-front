@@ -23,8 +23,10 @@ class SubmitStore{
   onHandleTitle(title) {
     this.setMergeState(Map({title: title}));
   }
-  onHandleContent(content) {
-    this.setMergeState(Map({content: content}));
+  onHandleContent(postData) {
+    this.setMergeState(Map({
+      ...postData
+    }));
   }
   onSelectPrefix(prefixId) {
     this.setMergeState(Map({selectPrefixId: prefixId}));
@@ -77,22 +79,27 @@ class SubmitStore{
   }
 
   onAddImages(result) {
-    const state = this.state.update('deleteUrl', list => {
+    const state = this.state.update('postImages', list => {
       if (list) {
-        return list.push(result.deleteUrl)
+        return list.push(result)
       } else {
         list = List();
-        return list.push(result.deleteUrl);
+        return list.push(result);
       }
     });
     this.setMergeState(state);
   }
 
   onDeleteImages(result) {
-    const state = this.state.update('deleteUrl', list => {
-      return list.filterNot(i => i === result.deleteUrl)
+    const state = this.state.update('postImages', list => {
+      return list.filterNot(i => i.deleteUrl === result.deleteUrl)
     });
     this.setMergeState(state);
+  }
+
+  onSetRepresentImage(data) {
+    const state = this.state.set('representingImage', data.index);
+    this.setState(state);
   }
 }
 

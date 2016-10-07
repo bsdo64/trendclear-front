@@ -188,6 +188,15 @@ const Forum = React.createClass({
     }
   },
 
+  isManager(managerIds, userId) {
+    "use strict";
+    if (managerIds && managerIds.size > 0) {
+      return managerIds.includes(userId);
+    } else {
+      return false;
+    }
+  },
+
   render() {
     "use strict";
 
@@ -234,6 +243,7 @@ const Forum = React.createClass({
       const creator = forum.get('creator');
       if (creator) {
         const creatorProfile = creator.get('profile');
+        const isManager = this.isManager(forum.get('managers'), userId);
 
         return (
           <div id="forum_contents">
@@ -249,16 +259,19 @@ const Forum = React.createClass({
                   width: '100%'
                 }}>
                   <div className="content">
-                    <AvatarImage
-                      sex={creatorProfile.get('sex')}
-                      avatarImg={creatorProfile.get('avatar_img')}
-                      imageClass="right floated mini ui image"
-                    />
+                    {
+                      creatorProfile &&
+                      <AvatarImage
+                        sex={creatorProfile.get('sex')}
+                        avatarImg={creatorProfile.get('avatar_img')}
+                        imageClass="right floated mini ui image"
+                      />
+                    }
                     <div className="header">
                       {forum.get('title')}
 
                       {
-                        (userId === creator.get('id')) &&
+                        (isManager) &&
                         <Link to={`/community/settings?forumId=${forumId}`}
                               className="ui button primary basic tiny right floated">
                           <i className="fa fa-gear" />

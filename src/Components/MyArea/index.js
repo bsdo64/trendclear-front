@@ -23,7 +23,6 @@ const NotiItem = React.createClass({
   },
 
   render() {
-
     const {noti} = this.props;
     const forumId = noti.get('forum_id');
     const postId = noti.get('post_id');

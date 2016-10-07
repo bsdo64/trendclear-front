@@ -20,6 +20,7 @@ class WidgetBox extends Component {
       grade: UserStore.get('grade'),
       skills: UserStore.get('skills'),
       forumCreated: UserStore.get('forumCreated'),
+      forumManaged: UserStore.get('forumManaged'),
     };
     // const logout = LoginStore.get('logout');
 
@@ -69,7 +70,7 @@ class WidgetBox extends Component {
         }
 
         {
-          isLogin && user && user.forumCreated && user.forumCreated.size > 0 &&
+          isLogin && user && user.forumManaged && user.forumManaged.size > 0 &&
           [
             <div key="1" id="my_forum">
               <div className="header">
@@ -86,7 +87,7 @@ class WidgetBox extends Component {
               >
                 <div className="ui list forum_created_list">
                   {
-                    user.forumCreated.sortBy(item => item.get('title')).map(forum => {
+                    user.forumManaged.sortBy(item => item.get('title')).map(forum => {
                       return (
                         <div key={forum.get('id')} className="item">
                           <i className="fa fa-inbox icon" />
@@ -94,6 +95,10 @@ class WidgetBox extends Component {
                             <div className="header">
                               <Link to={`/community?forumId=${forum.get('id')}`}>
                                 {forum.get('title')}
+                                {
+                                  !user.forumCreated.includes(forum) &&
+                                  ' (매)'
+                                }
                               </Link>
                             </div>
                           </div>
@@ -111,7 +116,7 @@ class WidgetBox extends Component {
         {
           <Main2
             key="Main2"
-            url="https://s-media-cache-ak0.pinimg.com/236x/d5/87/49/d5874925758d37d00237c1e527821375.jpg"
+            url="http://www.cpaad.co.kr/images/promotion/promotion_201509_06.jpg"
           />
         }
 

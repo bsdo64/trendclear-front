@@ -2,12 +2,14 @@ import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import PostActions from '../../Actions/PostActions';
+import ForumActions from '../../Actions/ForumActions';
 import GnbActions from '../../Actions/GnbActions';
 import PaginationActions from '../../Actions/PaginationActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 import Users from '../Domain/Users';
 import Posts from '../Domain/Posts';
+import Forums from '../Domain/Forums';
 import ListStore from './ListStore';
 
 class PaginationStore {
@@ -16,6 +18,7 @@ class PaginationStore {
     this.displayName = 'PaginationStore';
 
     this.bindActions(GnbActions);
+    this.bindActions(ForumActions);
     this.bindActions(PostActions);
     this.bindActions(PaginationActions);
     this.state = Immutable.Map({
@@ -52,6 +55,16 @@ class PaginationStore {
     const collection = res.collection;
 
     this.setMergeState({bestPostList: collection});
+  }
+
+  onGetSearchForumList(result) {
+    this.waitFor(Forums, Users, ListStore);
+
+    const pagination = result.collection;
+
+    if (pagination) {
+      this.setMergeState({searchForumList: pagination});
+    }
   }
 }
 

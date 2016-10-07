@@ -63,17 +63,17 @@ const Managers = React.createClass({
     const myId = AuthStore.get('userId');
     const isCreator = creatorId === id;
     const isMe = myId === id;
-    const lagelColor = cx('ui label large', {
+    const tagStyle = cx('ui label large', {
       teal : isCreator
     });
 
     if (manager) {
       return (
         <div className="item padded" key={id} style={{paddingBottom: 5}}>
-          <a className={lagelColor}>
+          <a className={tagStyle}>
             <span className="title">{manager.get('nick')}</span>
             {
-              (!isCreator || !isMe) &&
+              (!isCreator && !isMe) &&
               <i className="fa fa-remove" onClick={this.removeUser.bind(this, manager)}/>
             }
           </a>

@@ -69,7 +69,6 @@ const ReportModalBox = React.createClass({
 
       case 'comment':
         content = this.props.Comments.get(ReportStore.get('typeId').toString());
-        console.log(content);
         title = content ? <span>댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span> : null;
         break;
 

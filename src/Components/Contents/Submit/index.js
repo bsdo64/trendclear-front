@@ -2,7 +2,6 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
-import {withRouter} from 'react-router';
 import ReactDOM from 'react-dom/server';
 import Select from 'react-select';
 import cx from 'classnames';
@@ -27,6 +26,8 @@ const EditorBox = React.createClass({
   },
 
   componentDidMount() {
+    // set leave delete
+
     let that = this;
     this.editor = new MediumEditor('#post_editor', medium);
     this.editor.subscribe('editableInput', function (event, editable) {
@@ -62,6 +63,16 @@ const EditorBox = React.createClass({
 
   componentWillUnmount() {
     this.editor.destroy();
+
+    const {SubmitStore} = this.props;
+    const postImages = SubmitStore.get('postImages');
+    if (postImages && postImages.size) {
+
+      PostActions.removeUnusingImage(postImages.toJS());
+
+    } else {
+      return true;
+    }
   },
 
   toggleAnnounce() {
@@ -74,7 +85,12 @@ const EditorBox = React.createClass({
     "use strict";
     let allContents = this.editor.serialize();
     let el = allContents['post_editor'].value;
-    PostActions.handleContent(el);
+
+    PostActions.handleContent({
+      content: el,
+      width: this.refs.post_editor.offsetWidth,
+      height: this.refs.post_editor.offsetHeight
+    });
   },
 
   submitPost() {
@@ -117,7 +133,13 @@ const EditorBox = React.createClass({
           content: content,
           prefixId: SubmitStore.get('selectPrefixId'),
           query: location.query,
-          isAnnounce: this.state.isAnnounce
+          isAnnounce: this.state.isAnnounce,
+          width: SubmitStore.get('width'),
+          height: SubmitStore.get('height'),
+          postImages: SubmitStore.get('postImages') || null,
+          representingImage: (SubmitStore.get('postImages') && SubmitStore.get('representingImage'))
+            ? SubmitStore.get('postImages').get(SubmitStore.get('representingImage'))
+            : null
         };
         PostActions.submitPost(newPost);
       }
@@ -140,7 +162,9 @@ const EditorBox = React.createClass({
         content: content,
         prefixId: SubmitStore.get('selectPrefixId'),
         query: location.query,
-        isAnnounce: this.state.isAnnounce
+        isAnnounce: this.state.isAnnounce,
+        width: SubmitStore.get('width'),
+        height: SubmitStore.get('height')
       };
       PostActions.modPost(newPost);
     }
@@ -217,7 +241,7 @@ const EditorBox = React.createClass({
     const urlMetaData = this.props.SubmitStore.get('urlMetaData');
     const box = this.createUrlMetaContent(urlMetaData, false);
 
-    PostActions.handleContent(ReactDOM.renderToStaticMarkup(box));
+    PostActions.handleContent({content: ReactDOM.renderToStaticMarkup(box)});
   },
 
   checkTitleAndContent() {
@@ -244,6 +268,31 @@ const EditorBox = React.createClass({
     } else {
       return user;
     }
+  },
+
+  createThumbnailImages(image, index)  {
+    const isRepresent = this.props.SubmitStore.get('representingImage') === index;
+    const style = cx('image_item select_represent', {
+      select_represent: isRepresent
+    });
+    return (
+      <li className={style}
+          key={image.key}
+          onClick={this.setRepresentImage.bind(this, index)}
+      >
+        {
+          isRepresent &&
+          <div className="represent_box">대표</div>
+        }
+        <img src={image.thumbnailUrl} />
+      </li>
+    )
+  },
+
+  setRepresentImage(index) {
+    "use strict";
+
+    PostActions.setRepresentImage({index: index});
   },
 
   render() {
@@ -296,8 +345,24 @@ const EditorBox = React.createClass({
         </div>
 
         <div className={displayEditor}>
-          <div className="post_editor" id="post_editor" placeholder="텍스트를 입력하세요">
+          <div id="post_editor_background">
+            <div ref="post_editor" className="post_editor" id="post_editor" placeholder="텍스트를 입력하세요"></div>
           </div>
+
+          {
+            SubmitStore.get('postImages') && SubmitStore.get('postImages').size > 0 &&
+            <div className="submit_images">
+              <div className="header">
+                <h4>대표 이미지</h4>
+                <p>대표 이미지를 설정해주세요</p>
+              </div>
+              <ul className="image_list">
+                {
+                  SubmitStore.get('postImages').map(this.createThumbnailImages)
+                }
+              </ul>
+            </div>
+          }
         </div>
 
         <div className={displayUrl}>
@@ -333,7 +398,7 @@ const EditorBox = React.createClass({
               수정하기
             </button>
           }
-          <button className="ui button" onClick={this.removeContnet}>
+          <button className="ui button" onClick={this.removeContent}>
             다시 쓰기
           </button>
         </div>
@@ -341,29 +406,13 @@ const EditorBox = React.createClass({
       </div>
     )
   }
-})
+});
 
 
 require('./index.scss');
 const SubmitContents = React.createClass({
   displayName: 'SubmitContents',
   propTypes: {},
-
-  componentDidMount() {
-    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
-  },
-
-  routerWillLeave(nextLocation) {
-    const {SubmitStore} = this.props;
-    const deleteUrls = SubmitStore.get('deleteUrl');
-    if (deleteUrls && deleteUrls.size) {
-
-      PostActions.removeUnusingImage(deleteUrls.toJS());
-
-    } else {
-      return true;
-    }
-  },
 
   handleTitle() {
     "use strict";
@@ -495,4 +544,4 @@ const SubmitContents = React.createClass({
 
 });
 
-export default withRouter(SubmitContents);
+export default SubmitContents;

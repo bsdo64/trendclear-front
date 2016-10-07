@@ -139,11 +139,12 @@ const ActivityBox = React.createClass({
             AuthorItems={Users}
             User={AuthStore}
             LoginModalFlag={LoginModalStore.get('openLoginModal')}
+            scrollHeight={ListStore.get('scrollHeight')}
           />
 
           <Waypoint
             onEnter={this.getMorePosts.bind(this, context)}
-            bottomOffset='-10%'
+            bottomOffset='-200px'
             scrollableAncestor={window || null}
           />
 

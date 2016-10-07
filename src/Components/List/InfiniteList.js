@@ -23,26 +23,44 @@ function createItem(props, id) {
           user={user}
           loginModalFlag={LoginModalFlag}
           view={false}
+          shorten={true}
         />
       ]
     }
   }
 }
 
-module.exports = (props) => {
+module.exports = React.createClass({
 
-  const {PostIdList = [], PostItems = {}, AuthorItems, User} = props;
-  const okey = !!(PostItems.size && AuthorItems.size && User.size);
+  componentDidMount() {
+    $('.ui.embed').embed();
 
-  return (
-    <div className="ui items best_list">
+    window.addEventListener('resize', this.setScroll)
+  },
 
-      {/*<Main1 url={'http://www.computerhope.com/banners/banner3.gif'} />*/}
+  setScroll() {
+    const {scrollHeight} = this.props;
+    document.body.scrollTop = scrollHeight;
+  },
 
-      {
-        okey &&
-        PostIdList.map(createItem.bind(null, props))
-      }
-    </div>
-  )
-};
+  componentDidUpdate(prevProps, prevState) {
+    $('.ui.embed').embed('refresh');
+  },
+
+  render() {
+    const {PostIdList = [], PostItems = {}, AuthorItems, User} = this.props;
+    const okey = !!(PostItems.size && AuthorItems.size && User.size);
+
+    return (
+      <div className="ui items best_list">
+
+        {/*<Main1 url={'http://www.computerhope.com/banners/banner3.gif'} />*/}
+
+        {
+          okey &&
+          PostIdList.map(createItem.bind(null, this.props))
+        }
+      </div>
+    )
+  }
+});

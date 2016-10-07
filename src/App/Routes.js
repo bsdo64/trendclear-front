@@ -4,6 +4,7 @@ import {IndexRedirect, Link, IndexRoute, Router, Route, browserHistory} from 're
 const LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
 const ForumMenu = require('../Container/LeftCol/ForumMenu.js');
 const CollectionMenu = require('../Container/LeftCol/CollectionMenu');
+const DefaultMenu = require('../Container/LeftCol/DefaultMenu');
 
 const HeaderMyMenu = require('../Container/Header/MyMenu');
 const HeaderSearch = require('../Container/Header/Search');
@@ -21,6 +22,7 @@ const SettingContainer = require('../Container/Contents/Setting');
 const ActivityContainer = require('../Container/Contents/Activity');
 const PolicyContainer = require('../Container/Contents/Policy');
 const CompanyContainer = require('../Container/Contents/Company');
+const FindMemberContainer = require('../Container/Contents/FindMember');
 
 const BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 const AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
@@ -705,6 +707,23 @@ export default () =>
         DeleteModalContainer: DeleteModalContainer,
         WidgetContainer: WidgetContainer,
         ContentsContainer: CompanyContainer
+      }}
+    />
+
+  </Route>
+
+  <Route path="/member/find" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: DefaultMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: FindMemberContainer
       }}
     />
 

@@ -95,6 +95,7 @@
       }
       .comment_box {
         display: inline-block;
+        padding-right: 10px;
         .comment_icon {
           display: inline-block;
           padding-right: 5px;
@@ -106,6 +107,17 @@
         .comment_count {
           display: inline-block;
           font-size: 12px;
+        }
+      }
+      .share_link_box {
+        display: inline-block;
+        .share_link_icon {
+          display: inline-block;
+          padding-right: 5px;
+          color: #27485E;
+          font-size: 20px;
+          line-height: 20px;
+          vertical-align: middle;
         }
       }
       .report_box {

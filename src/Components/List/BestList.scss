@@ -63,10 +63,33 @@
         padding-right: 40px;
         margin-top: 2em;
 
+        &.shorten_post {
+          max-height: 1000px;
+          overflow: hidden;
+        }
+
         .medium-insert-embeds {
           &>figure {
             margin: 1em 0;
           }
+        }
+      }
+
+      .more_long_post {
+        padding-right: 40px;
+        z-index: 10;
+        position: relative;
+
+        .more_long_post_button {
+          color: #058294;
+          padding: 10px;
+          border: 0;
+          border-top: 1px solid #004858;
+          box-shadow: 0px -3px 2px -1px rgba(0, 72, 88, 0.35);
+        }
+
+        i.fa-external-link {
+          color: #058294;
         }
       }
 
@@ -101,6 +124,7 @@
         }
         .comment_box {
           display: inline-block;
+          padding-right: 10px;
           .comment_icon {
             display: inline-block;
             padding-right: 5px;
@@ -114,6 +138,23 @@
             font-size: 12px;
           }
         }
+        .share_link_box {
+          display: inline-block;
+          .share_link_icon {
+            display: inline-block;
+            padding-right: 5px;
+            color: #989898;
+            font-size: 20px;
+            line-height: 20px;
+            vertical-align: middle;
+            cursor: pointer;
+          }
+          .share_link_info {
+            padding: 10px 10px 0 10px;
+            color: #aaa;
+          }
+        }
+
         .report_box {
           display: inline-block;
           float: right;

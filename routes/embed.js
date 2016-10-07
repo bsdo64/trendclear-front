@@ -73,8 +73,9 @@ Embeds.get('/urlMeta', (req, res, next) => {
       links: false
     },
     http: {
+      headers: req.headers,
       timeout: 30000
-    }
+    },
   }, function (err, meta) {
 
     res.json(meta);

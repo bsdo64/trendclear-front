@@ -1,13 +1,14 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import { initListener, setMergeState, setMergeDeep } from '../Helper/func';
 import {normalize} from 'normalizr';
 import {author} from '../../Model/normalizr/schema';
 
 import UserStore from '../UserStore';
 
 import PostActions from '../../Actions/PostActions';
+import ForumActions from '../../Actions/ForumActions';
 import ForumSettingActions from '../../Actions/ForumSettingActions';
 import CommentActions from '../../Actions/CommentActions';
 import UserActions from '../../Actions/UserActions';
@@ -20,6 +21,7 @@ class Users {
 
     this.bindActions(UserActions);
     this.bindActions(PostActions);
+    this.bindActions(ForumActions);
     this.bindActions(CommentActions);
     this.bindActions(GnbActions);
     this.bindActions(ForumSettingActions);
@@ -29,6 +31,7 @@ class Users {
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
+    this.setMergeDeep = setMergeDeep.bind(this);
   }
 
   onAddList(users) {
@@ -122,6 +125,15 @@ class Users {
     const newState = this.state.mergeDeep(user);
 
     this.setState(newState);
+  }
+
+  onGetSearchForumList(result) {
+    const normalized = result.data;
+    const pagination = result.collection;
+
+    if (normalized) {
+      this.setMergeDeep(normalized.entities.author);
+    }
   }
 }
 

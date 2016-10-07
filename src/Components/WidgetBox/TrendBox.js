@@ -259,7 +259,7 @@ const TrendBox = React.createClass({
                     <span id="tp_point" className="ui right floated point tp_point">{user.trendbox.get('T')}</span>
                   </div>
                   <div className="point_line">
-                    <span className="ui description" onClick={this.openRPModal}>RP</span>
+                    <span className="ui description" >RP</span>
                     <span id="rp_point" className="ui right floated point rp_point">{user.trendbox.get('R')}</span>
                     <Modal
                       isOpen={this.state.RPModal}

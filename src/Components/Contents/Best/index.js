@@ -6,26 +6,12 @@ import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 import PostActions from '../../../Actions/PostActions';
 import GnbActions from '../../../Actions/GnbActions';
+import ListActions from '../../../Actions/ListActions';
 
 const BestBox = React.createClass({
   componentWillUnmount() {
     // some example callbacks
     GnbActions.resetFilter();
-  },
-  
-  componentDidMount() {
-    $('.ui.embed').embed();
-
-    window.addEventListener('resize', this.setScroll)
-  },
-
-  setScroll() {
-    const {ListStore} = this.props;
-    document.body.scrollTop = ListStore.get('scrollHeight');
-  },
-
-  componentDidUpdate(prevProps, prevState) {
-    $('.ui.embed').embed('refresh');
   },
 
   getMoreBest() {
@@ -104,11 +90,12 @@ const BestBox = React.createClass({
           AuthorItems={Users}
           User={AuthStore}
           LoginModalFlag={LoginModalStore.get('openLoginModal')}
+          scrollHeight={ListStore.get('scrollHeight')}
         />
 
         <Waypoint
           onEnter={this.getMoreBest}
-          bottomOffset='-10%'
+          bottomOffset='-200px'
           scrollableAncestor={window || null}
         />
 

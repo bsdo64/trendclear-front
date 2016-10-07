@@ -2,9 +2,9 @@ import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 import {browserHistory} from 'react-router';
 import {normalize, arrayOf} from 'normalizr';
-import {post, comment, subComment} from '../Model/normalizr/schema';
+import {forum} from '../Model/normalizr/schema';
 
-class PostActions {
+class ForumActions {
   constructor() {
     this.generateActions('addList');
   }
@@ -37,6 +37,38 @@ class PostActions {
         });
     }
   }
+
+  getSearchForumList(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .get('/search/forum/list', params)
+        .then((res) => {
+
+          res.data = normalize(res.data, arrayOf(forum));
+
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
+
+  validateBeforeCreateForum(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .get('/validate/forum/create', params)
+        .then((res) => {
+
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
 }
 
-export default alt.createActions(PostActions);
+export default alt.createActions(ForumActions);

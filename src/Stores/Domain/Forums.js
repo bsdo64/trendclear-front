@@ -6,6 +6,7 @@ import { initListener, setMergeState, setMergeDeep } from '../Helper/func';
 import GnbActions from '../../Actions/GnbActions';
 import CollectionActions from '../../Actions/CollectionActions';
 import ForumSettingActions from '../../Actions/ForumSettingActions';
+import ForumActions from '../../Actions/ForumActions';
 import UserActions from '../../Actions/UserActions';
 
 class Forums {
@@ -17,6 +18,7 @@ class Forums {
     this.bindActions(CollectionActions);
     this.bindActions(UserActions);
     this.bindActions(ForumSettingActions);
+    this.bindActions(ForumActions);
 
     this.state = Immutable.Map({
 
@@ -25,6 +27,15 @@ class Forums {
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
     this.setMergeDeep = setMergeDeep.bind(this);
+  }
+
+  onGetSearchForumList(result) {
+    const normalized = result.data;
+    const pagination = result.collection;
+
+    if (normalized) {
+      this.setMergeDeep(normalized.entities.forums);
+    }
   }
 
   onAddForum(normalized) {

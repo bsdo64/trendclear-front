@@ -49,8 +49,8 @@ function checkSkillAvailable(skill) {
   }
 
   if (cooltime && usingAt) {
-    const gapSec = (new Date() - new Date(usingAt)) / 1000;
-    if (gapSec > cooltime) {
+    const gapSec = (new Date() - new Date(usingAt));
+    if (gapSec > cooltime * 1000) {
       return true;
     }
   }
@@ -212,12 +212,24 @@ const SubCommentItem = React.createClass({
               {contents}
             </div>
             <div className="actions">
-              <div className="like_box">
-                <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')} onClick={sendSubCommentLike(this.props)}>
-                  <i className={'heart ' + (subComment.get('liked')? '' : 'outline') + ' icon'} />
+              {
+                commentDeleted &&
+                <div className="like_box" >
+                  <div className={'like_icon'}>
+                    <i className={'disabled heart outline icon'} />
+                  </div>
+                  <a className="like_count">{subComment.get('like_count')}</a>
                 </div>
-                <a className="like_count">{subComment.get('like_count')}</a>
-              </div>
+              }
+              {
+                !commentDeleted &&
+                <div className="like_box">
+                  <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')} onClick={sendSubCommentLike(this.props)}>
+                    <i className={'heart ' + (subComment.get('liked')? '' : 'outline') + ' icon'} />
+                  </div>
+                  <a className="like_count">{subComment.get('like_count')}</a>
+                </div>
+              }
               <div className="report_box">
                 {
                   !commentDeleted &&
@@ -484,12 +496,26 @@ const CommentItem = React.createClass({
             {contents}
           </div>
           <div className="actions">
-            <div className="like_box" onClick={this.sendLike}>
-              <div className={'like_icon ' + (comment.get('liked') ? 'active' : '')}>
-                <i className={'heart ' + (comment.get('liked')? '' : 'outline') + ' icon'} />
+            {
+              !commentDeleted &&
+              <div className="like_box" onClick={this.sendLike}>
+                <div className={'like_icon ' + (comment.get('liked') ? 'active' : '')}>
+                  <i className={'heart ' + (comment.get('liked')? '' : 'outline') + ' icon'} />
+                </div>
+                <a className="like_count">{comment.get('like_count')}</a>
               </div>
-              <a className="like_count">{comment.get('like_count')}</a>
-            </div>
+            }
+
+            {
+              commentDeleted &&
+              <div className="like_box disabled" >
+                <div className={'like_icon'}>
+                  <i className={'disabled heart outline icon'} />
+                </div>
+                <a className="like_count">{comment.get('like_count')}</a>
+              </div>
+            }
+
             <div className="comment_box" onClick={this.toggleSubComment}>
               <div className="comment_icon">
                 <i className="edit outline icon"></i>
@@ -767,6 +793,7 @@ const PostPage = React.createClass({
                 loginModalFlag={LoginModalFlag}
                 postStyle="post_item"
                 view={true}
+                shorten={false}
               />
             }
 

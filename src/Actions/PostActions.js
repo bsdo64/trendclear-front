@@ -6,7 +6,7 @@ import {post, comment, subComment} from '../Model/normalizr/schema';
 
 class PostActions {
   constructor() {
-    this.generateActions('addList');
+    this.generateActions('addList', 'setRepresentImage');
   }
 
   handleTitle(title) {
@@ -138,7 +138,8 @@ class PostActions {
 
   addImages(data) {
     if (data && data.result && data.result.files[0]) {
-      return {deleteUrl: data.result.files[0].deleteUrl};
+      const file = data.result.files[0];
+      return {...file};
     }
   }
 
@@ -151,7 +152,7 @@ class PostActions {
   removeUnusingImage(list) {
     const ApiList = [];
     for (let index in list) {
-      ApiList.push(Api.setEntryPoint('/image').delete('/uploaded/files', {file: list[index]}));
+      ApiList.push(Api.setEntryPoint('/image').delete('/uploaded/files', {file: list[index].deleteUrl}));
     }
     return (dispatch) => {
       Promise

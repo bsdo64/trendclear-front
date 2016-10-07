@@ -75,6 +75,7 @@ const mediumInsertConfig = function mediumInsertConfig(editor) {
         }
       },
       embeds: {
+        placeholder: 'Youtube 동영상 주소를 여기에 붙여넣기 후, Enter를 눌러주세요',
         oembedProxy: '/api/oembed?iframe=1'
       }
     }

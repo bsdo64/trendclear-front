@@ -1,8 +1,8 @@
 /**
  * Created by dobyeongsu on 2016. 2. 2..
  */
-var connectRedis = require('connect-redis');
-var session = require('express-session');
+const connectRedis = require('connect-redis');
+const session = require('express-session');
 const config = require('vn-config');
 
 const RedisStore = connectRedis(session);
