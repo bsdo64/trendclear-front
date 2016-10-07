@@ -6,7 +6,7 @@ import PostActions from './PostActions';
 
 class ListActions {
   constructor() {
-    this.generateActions('add')
+    this.generateActions('add', 'setScroll')
   }
 }
 

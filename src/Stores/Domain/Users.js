@@ -1,13 +1,15 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import { initListener, setMergeState, setMergeDeep } from '../Helper/func';
 import {normalize} from 'normalizr';
 import {author} from '../../Model/normalizr/schema';
 
 import UserStore from '../UserStore';
 
 import PostActions from '../../Actions/PostActions';
+import ForumActions from '../../Actions/ForumActions';
+import ForumSettingActions from '../../Actions/ForumSettingActions';
 import CommentActions from '../../Actions/CommentActions';
 import UserActions from '../../Actions/UserActions';
 import GnbActions from '../../Actions/GnbActions';
@@ -19,14 +21,17 @@ class Users {
 
     this.bindActions(UserActions);
     this.bindActions(PostActions);
+    this.bindActions(ForumActions);
     this.bindActions(CommentActions);
     this.bindActions(GnbActions);
+    this.bindActions(ForumSettingActions);
     this.state = Immutable.Map({
 
     });
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
+    this.setMergeDeep = setMergeDeep.bind(this);
   }
 
   onAddList(users) {
@@ -102,6 +107,33 @@ class Users {
         user.update('follow_forums', list => list.filterNot(v => v === result.forum_id))
       );
     this.setState(newFollowState);
+  }
+
+  onAddManager(result) {
+    const user = {
+      [result.manager.user_id]: result.user
+    };
+    const newState = this.state.mergeDeep(user);
+
+    this.setState(newState);
+  }
+
+  onAddBanUser(result) {
+    const user = {
+      [result.bannedUser.user_id]: result.user
+    };
+    const newState = this.state.mergeDeep(user);
+
+    this.setState(newState);
+  }
+
+  onGetSearchForumList(result) {
+    const normalized = result.data;
+    const pagination = result.collection;
+
+    if (normalized) {
+      this.setMergeDeep(normalized.entities.author);
+    }
   }
 }
 

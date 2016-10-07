@@ -68,6 +68,12 @@ const LoginModalBox = React.createClass({
     }
   },
 
+  handleRequestLoginByEnter(e) {
+    if (e.key === "Enter" && e.keyCode === 13) {
+      this.handleRequestLogin();
+    }
+  },
+
   handleRequestLogin() {
     $(this.refs.loginform).form('validate form');
   },
@@ -167,7 +173,7 @@ const LoginModalBox = React.createClass({
                 </div>
                 <div className="field">
                   <label>비밀번호</label>
-                  <input type="password" name="password" />
+                  <input type="password" name="password" onKeyDown={this.handleRequestLoginByEnter} />
                 </div>
                 <div className="inline field">
                   <div className="ui checkbox">
@@ -180,9 +186,7 @@ const LoginModalBox = React.createClass({
                 { loginError }
 
                 <div className="login_append">
-                  <a href="/member/find/loginId" className="link_find">아이디</a>
-                  <span> / </span>
-                  <a href="/member/find/password" className="link_find">비밀번호찾기</a>
+                  <Link to="/member/find" className="link_find">아이디 / 비밀번호찾기</Link>
                   <span className="txt_bar">|</span>
                   <Link to="/signin" onClick={this.handleRequestSignin}>회원 가입하기</Link>
                 </div>

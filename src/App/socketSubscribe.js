@@ -1,6 +1,11 @@
-import socket from '../Utils/Socket';
+import {Noti, Point} from '../Utils/Socket';
 import UserActions from '../Actions/UserActions';
 
-socket.on('comment_write noti', function (data) {
+Noti.on('comment_write noti', function (data) {
   UserActions.socketNoti(data);
+});
+
+Point.on('receive point', function (data) {
+  "use strict";
+  UserActions.socketPoint(data);
 });

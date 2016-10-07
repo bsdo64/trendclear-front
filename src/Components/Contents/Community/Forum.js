@@ -6,6 +6,7 @@ import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdow
 import AvatarImage from '../../AvatarImage';
 import marked from '../../Lib/Marked';
 
+import AdForum1 from '../../Ad/AddForum1';
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
 
@@ -28,7 +29,7 @@ const PostList = React.createClass({
 
 
   render: function () {
-    const item = this.props.item;
+    const {item, author, postIdNow, defaultPageUrl, isAnnounce} = this.props;
     const id = item.get('id');
     const title = item.get('title');
     const prefix= item.get('prefix');
@@ -38,10 +39,9 @@ const PostList = React.createClass({
     const comment_count = item.get('comment_count');
     const forum = item.get('forum');
 
-    const author = this.props.author;
-
     const activeClass = cx({
-      active: id == this.props.postIdNow
+      active: id == postIdNow,
+      announce: isAnnounce
     });
 
     return (
@@ -50,9 +50,13 @@ const PostList = React.createClass({
         <td className="center aligned collapsing">{like_count}</td>
         <td className="center aligned collapsing">{view_count}</td>
         <td className="left aligned">
+          {
+            isAnnounce &&
+            <i className="fa fa-bullhorn announce-icon" />
+          }
           <Link
             className="article_title"
-            to={this.props.defaultPageUrl} >
+            to={defaultPageUrl} >
             {title}
           </Link>
           <span>{ comment_count > 0 && '[' + comment_count + ']'}</span>
@@ -125,7 +129,7 @@ const Forum = React.createClass({
       )
     }
   },
-  createPostItem(makeUrl, postId) {
+  createPostItem(makeUrl, isAnnounce, postId) {
     "use strict";
 
     const {Posts, Users} = this.props;
@@ -140,6 +144,7 @@ const Forum = React.createClass({
       if (author) {
         return (
           <PostList
+            isAnnounce={isAnnounce}
             key={postId}
             author={author}
             item={item} defaultPageUrl={defaultPageUrl}
@@ -183,6 +188,15 @@ const Forum = React.createClass({
     }
   },
 
+  isManager(managerIds, userId) {
+    "use strict";
+    if (managerIds && managerIds.size > 0) {
+      return managerIds.includes(userId);
+    } else {
+      return false;
+    }
+  },
+
   render() {
     "use strict";
 
@@ -198,16 +212,19 @@ const Forum = React.createClass({
 
     if (forumId && postIds && pagination) {
       const forum = Forums.get(forumId.toString());
+
+      if (!forum) {
+        return (<div></div>)
+      }
+
+      const announceIds = forum.get('announces') || [];
+      const managersIds = forum.get('managers') || [];
       const isUserForumFollow = isLogin
         ? Users
           .get(userId.toString())
           .get('follow_forums')
           .find(v => v === forumId)
         : false;
-
-      if (!forum) {
-        return (<div></div>)
-      }
 
       const cFollowActive = cx('ui button primary basic tiny right floated follow_button', {
         active: isUserForumFollow
@@ -226,6 +243,7 @@ const Forum = React.createClass({
       const creator = forum.get('creator');
       if (creator) {
         const creatorProfile = creator.get('profile');
+        const isManager = this.isManager(forum.get('managers'), userId);
 
         return (
           <div id="forum_contents">
@@ -241,16 +259,19 @@ const Forum = React.createClass({
                   width: '100%'
                 }}>
                   <div className="content">
-                    <AvatarImage
-                      sex={creatorProfile.get('sex')}
-                      avatarImg={creatorProfile.get('avatar_img')}
-                      imageClass="right floated mini ui image"
-                    />
+                    {
+                      creatorProfile &&
+                      <AvatarImage
+                        sex={creatorProfile.get('sex')}
+                        avatarImg={creatorProfile.get('avatar_img')}
+                        imageClass="right floated mini ui image"
+                      />
+                    }
                     <div className="header">
                       {forum.get('title')}
 
                       {
-                        (userId === creator.get('id')) &&
+                        (isManager) &&
                         <Link to={`/community/settings?forumId=${forumId}`}
                               className="ui button primary basic tiny right floated">
                           <i className="fa fa-gear" />
@@ -296,7 +317,7 @@ const Forum = React.createClass({
                       {
                         !userId && !isLogin &&
                         <a onClick={this.openLoginModal} className="ui button primary basic tiny right floated">
-                          <i className="fa fa-star" />
+                          <i className="fa fa-share" />
                           {' 구독'}
                         </a>
                       }
@@ -311,6 +332,21 @@ const Forum = React.createClass({
                     </div>
                     <div className="description">
                       {forum.get('description')}
+                    </div>
+                    <div className="meta forum_meta" >
+                      <div className="managers" >{'메니저: '}
+                        {
+                          managersIds.map((userId, index) => {
+                            const user = Users.get(userId.toString());
+                            const comma = index !== (managersIds.size - 1) ? ', ' : '';
+                            return user ? `${user.get('nick')} ${comma}` : '';
+                          })
+                        }
+                      </div>
+                      <div className="forum_counts" >
+                        <span className="follow_counts" >팔로우 {forum.get('follow_count')} 명</span>
+                        <span className="subs_counts" >컬렉션 구독 {forum.get('subs_count')} 회</span>
+                      </div>
                     </div>
                   </div>
                   <div className="content">
@@ -329,6 +365,8 @@ const Forum = React.createClass({
                 </div>
               </div>
             </div>
+
+            {/*<AdForum1 url="http://www.computerhope.com/banners/banner3.gif" />*/}
 
             <div className="ui horizontal celled list">
               <div className="item" style={{fontWeight: 'bold'}}>
@@ -353,7 +391,12 @@ const Forum = React.createClass({
               <tbody>
 
               {
-                postIds.map(this.createPostItem.bind(this, makeUrl))
+                announceIds &&
+                announceIds.map(this.createPostItem.bind(this, makeUrl, true))
+              }
+
+              {
+                postIds.map(this.createPostItem.bind(this, makeUrl, false))
               }
 
               </tbody>

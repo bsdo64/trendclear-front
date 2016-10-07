@@ -10,6 +10,7 @@ const CollectionLeftMenu = React.createClass({
   render() {
     const { UserStore, ListStore, location, Forums, Collections } = this.props;
     const user = UserStore.get('user');
+    const order = location.query.order || 'new';
     const collectionId = location.pathname.split('/')[2];
     const collection = Collections.get(collectionId.toString());
 
@@ -33,16 +34,32 @@ const CollectionLeftMenu = React.createClass({
                 </h5>
 
                 <div className="sub_category item">
-                  <Link to={{pathname: `/collection/${collectionId}`}}>{'최신 글'}</Link>
+                  {
+                    (order === 'new') &&
+                    <div className="active-menu"> </div>
+                  }
+                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'new'}}}>{'최신 글'}</Link>
                 </div>
                 <div className="sub_category item">
-                  <Link to={{pathname: `/collection/${collectionId}`}}>{'인기 글'}</Link>
+                  {
+                    (order === 'hot') &&
+                    <div className="active-menu"> </div>
+                  }
+                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'hot'}}}>{'인기 글'}</Link>
                 </div>
                 <div className="sub_category item">
-                  <Link to={{pathname: `/collection/${collectionId}`}}>{'많이 본 글'}</Link>
+                  {
+                    (order === 'm_view') &&
+                    <div className="active-menu"> </div>
+                  }
+                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'm_view'}}}>{'많이 본 글'}</Link>
                 </div>
                 <div className="sub_category item">
-                  <Link to={{pathname: `/collection/${collectionId}`}}>{'댓글 많은 글'}</Link>
+                  {
+                    (order === 'm_comment') &&
+                    <div className="active-menu"> </div>
+                  }
+                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'm_comment'}}}>{'댓글 많은 글'}</Link>
                 </div>
               </li>
 
@@ -51,6 +68,7 @@ const CollectionLeftMenu = React.createClass({
                 <CollectionComponent
                   collections={Collections}
                   forums={Forums}
+                  {...this.props}
                 />
               }
 

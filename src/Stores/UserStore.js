@@ -130,6 +130,18 @@ class UserStore{
     const state = this.state.update('follow_forums', list => list.filterNot(v => v.get('id') === result.forum_id));
     this.setState(state);
   }
+
+  onSocketPoint(data) {
+    const state = this.state.updateIn(['trendbox', 'T'], point => point + data.TP);
+    this.setState(state);
+  }
+
+  onRemoveAvatarImage(deleted) {
+    if (deleted) {
+      const state = this.state.updateIn(['profile', 'avatar_img'], imageName => null);
+      this.setState(state);
+    }
+  }
 }
 
 export default alt.createStore(immutable(UserStore), UserStore.displayName);

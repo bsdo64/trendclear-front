@@ -3,6 +3,12 @@
   <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='/vendor.css' />
+    {{#if meta}}
+      {{#each meta}}
+        <meta name="{{name}}" content="{{content}}" />
+      {{/each}}
+    {{/if}}
+    <meta name="google-site-verification" content="PG3GDDT3-gKmlhXvD7-VnBJ0JsX-CtYgOLHOj2bR1BU" />
     <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <body>
@@ -11,11 +17,16 @@
       </div>
 
       <script src="/vendor.js"></script>
+      <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.1.js"></script>
 
       {{#if production}}
       <script src="/bundle.js"></script>
       {{else}}
       <script src="http://localhost:2992/_assets/bundle-Entry.js"></script>
       {{/if}}
+
+      <script async defer
+              src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDs32BDoB4rDq4-Mz5nQE6P8LBBJWW0_DQ">
+      </script>
   </body>
 </html>

@@ -5,7 +5,7 @@ import {noti} from '../Model/normalizr/schema';
 
 class UserActions {
   constructor() {
-    this.generateActions('addList');
+    this.generateActions('addList', 'socketPoint');
   }
   
   levelUp(params) {
@@ -59,6 +59,20 @@ class UserActions {
           dispatch(res);
 
           this.closeAvatarModal();
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
+
+  removeAvatarImage() {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .delete('/user/avatarImg')
+        .then((res) => {
+          dispatch(res);
         })
         .catch((err) => {
           return err;
@@ -137,6 +151,28 @@ class UserActions {
           if (res) {
             dispatch(res);
           }
+        })
+        .catch(err => {
+          return err;
+        })
+    }
+  }
+
+  loadRequestResetPassword(params) {
+    return (dispatch) => {
+      dispatch();
+      this.requestResetPassword(params);
+    }
+  }
+
+  requestResetPassword(params) {
+    return (dispatch) => {
+
+      Api
+        .setEntryPoint('/ajax')
+        .post('/user/resetPassword', params)
+        .then(res => {
+          dispatch(res);
         })
         .catch(err => {
           return err;

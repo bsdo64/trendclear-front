@@ -1,6 +1,6 @@
 import alt from '../Utils/alt';
 import {browserHistory} from 'react-router';
-import Immutable, {Map} from 'immutable';
+import Immutable, {Map, List} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import UserActions from '../Actions/UserActions';
 import PostActions from '../Actions/PostActions';
@@ -12,7 +12,9 @@ class SubmitStore{
 
     this.bindActions(UserActions);
     this.bindActions(PostActions);
-    this.state = Immutable.Map({});
+    this.state = Immutable.fromJS({
+      deletedUrl: List()
+    });
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
@@ -21,8 +23,10 @@ class SubmitStore{
   onHandleTitle(title) {
     this.setMergeState(Map({title: title}));
   }
-  onHandleContent(content) {
-    this.setMergeState(Map({content: content}));
+  onHandleContent(postData) {
+    this.setMergeState(Map({
+      ...postData
+    }));
   }
   onSelectPrefix(prefixId) {
     this.setMergeState(Map({selectPrefixId: prefixId}));
@@ -72,6 +76,30 @@ class SubmitStore{
   }
   onGetMeta(result) {
     this.setMergeState({urlMetaData: result});
+  }
+
+  onAddImages(result) {
+    const state = this.state.update('postImages', list => {
+      if (list) {
+        return list.push(result)
+      } else {
+        list = List();
+        return list.push(result);
+      }
+    });
+    this.setMergeState(state);
+  }
+
+  onDeleteImages(result) {
+    const state = this.state.update('postImages', list => {
+      return list.filterNot(i => i.deleteUrl === result.deleteUrl)
+    });
+    this.setMergeState(state);
+  }
+
+  onSetRepresentImage(data) {
+    const state = this.state.set('representingImage', data.index);
+    this.setState(state);
   }
 }
 

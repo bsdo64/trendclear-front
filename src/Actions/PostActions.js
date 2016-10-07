@@ -1,11 +1,12 @@
 import alt from '../Utils/alt';
+import Promise from 'bluebird';
 import Api from '../Utils/ApiClient';
 import {normalize, arrayOf} from 'normalizr';
 import {post, comment, subComment} from '../Model/normalizr/schema';
 
 class PostActions {
   constructor() {
-    this.generateActions('addList');
+    this.generateActions('addList', 'setRepresentImage');
   }
 
   handleTitle(title) {
@@ -133,6 +134,34 @@ class PostActions {
           return err;
         });
     };
+  }
+
+  addImages(data) {
+    if (data && data.result && data.result.files[0]) {
+      const file = data.result.files[0];
+      return {...file};
+    }
+  }
+
+  deleteImages(data) {
+    if (data && data.deleteUrl) {
+      return data;
+    }
+  }
+
+  removeUnusingImage(list) {
+    const ApiList = [];
+    for (let index in list) {
+      ApiList.push(Api.setEntryPoint('/image').delete('/uploaded/files', {file: list[index].deleteUrl}));
+    }
+    return (dispatch) => {
+      Promise
+        .all(ApiList)
+        .then(result => {
+          console.log(result);
+          return dispatch();
+        });
+    }
   }
 }
 

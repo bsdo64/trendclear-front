@@ -4,6 +4,7 @@ import {Scrollbars} from 'react-custom-scrollbars';
 
 import FlatButton from './FlatButton';
 import TrendBox from './TrendBox';
+import Main2 from '../Ad/Main2';
 
 require('./index.scss');
 
@@ -19,6 +20,7 @@ class WidgetBox extends Component {
       grade: UserStore.get('grade'),
       skills: UserStore.get('skills'),
       forumCreated: UserStore.get('forumCreated'),
+      forumManaged: UserStore.get('forumManaged'),
     };
     // const logout = LoginStore.get('logout');
 
@@ -35,10 +37,13 @@ class WidgetBox extends Component {
 
         {
           !isLogin &&
-          <FlatButton
-            linkTo="/signin"
-            text="지금 가입하세요 !"
-          />
+          [
+            <FlatButton
+              key="1"
+              linkTo="/signin"
+              text="지금 가입하세요 !"
+            />
+          ]
         }
 
         {
@@ -65,40 +70,74 @@ class WidgetBox extends Component {
         }
 
         {
-          isLogin && user && user.forumCreated && user.forumCreated.size > 0 &&
-          <div id="my_forum">
-            <div className="header">
-              내 게시판
-            </div>
-            <Scrollbars
-              style={{ height: 200 }}
-              autoHide={true}
-              autoHideTimeout={1000}
-              autoHideDuration={200}
-              universal={true}
-            >
-              <div className="ui list forum_created_list">
-                {
-                  user.forumCreated.sortBy(item => item.get('title')).map(forum => {
-                    return (
-                      <div key={forum.get('id')} className="item">
-                        <i className="fa fa-inbox icon" />
-                        <div className="content">
-                          <div className="header">
-                            <Link to={`/community?forumId=${forum.get('id')}`}>
-                              {forum.get('title')}
-                            </Link>
+          isLogin && user && user.forumManaged && user.forumManaged.size > 0 &&
+          [
+            <div key="1" id="my_forum">
+              <div className="header">
+                내 게시판
+              </div>
+              <Scrollbars
+                autoHide={true}
+                autoHideTimeout={1000}
+                autoHideDuration={200}
+                autoHeight
+                autoHeightMin={50}
+                autoHeightMax={200}
+                universal={true}
+              >
+                <div className="ui list forum_created_list">
+                  {
+                    user.forumManaged.sortBy(item => item.get('title')).map(forum => {
+                      return (
+                        <div key={forum.get('id')} className="item">
+                          <i className="fa fa-inbox icon" />
+                          <div className="content">
+                            <div className="header">
+                              <Link to={`/community?forumId=${forum.get('id')}`}>
+                                {forum.get('title')}
+                                {
+                                  !user.forumCreated.includes(forum) &&
+                                  ' (매)'
+                                }
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )
-                  })
-                }
-              </div>
+                      )
+                    })
+                  }
+                </div>
 
-            </Scrollbars>
-          </div>
+              </Scrollbars>
+            </div>
+          ]
         }
+
+        {
+          <Main2
+            key="Main2"
+            url="http://www.cpaad.co.kr/images/promotion/promotion_201509_06.jpg"
+          />
+        }
+
+        <div className="_45mq" role="contentinfo" style={{marginTop: 20, fontSize: 12}}>
+          <div className="fsm fwn fcg">
+            <Link to="/policies/privacy">개인정보보호</Link>
+            <span role="presentation" aria-hidden="true"> · </span>
+            <Link to="/policies/terms">약관</Link>
+            {/*<span role="presentation" aria-hidden="true"> · </span>
+            <Link to="/advertisement">광고안내</Link>*/}
+            <span role="presentation" aria-hidden="true"> · </span>
+            <Link to="/about">회사소개</Link>
+            {/*<span role="presentation" aria-hidden="true"> · </span>
+            <Link to="/careers">채용</Link>*/}
+            <span role="presentation" aria-hidden="true"> · </span>
+            <Link to="/help">고객센터</Link>
+          </div>
+          <div>
+            <span> Venacle © 2016</span>
+          </div>
+        </div>
       </div>
     );
   }

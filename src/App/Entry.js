@@ -33,17 +33,11 @@ new Promise((resolve, reject) => {
 
         if (resBody.UserStore && resBody.UserStore.user) {
           const User = resBody.UserStore.user;
-          const userInfo = Object.assign(User, {
-            trendbox: resBody.UserStore.trendbox,
-            profile: resBody.UserStore.profile,
-            grade: resBody.UserStore.grade,
-            role: resBody.UserStore.role,
-            notifications: resBody.UserStore.notifications,
-            skills: resBody.UserStore.skills,
-            collections: resBody.UserStore.collections,
-            follow_forums: resBody.UserStore.follow_forums,
-            forumCreated: resBody.UserStore.forumCreated,
-          });
+          const UserStore = resBody.UserStore;
+          const userInfo = {
+            ...UserStore,
+            ...User
+          };
 
           const normalized = normalize(userInfo, author);
 
@@ -138,6 +132,20 @@ new Promise((resolve, reject) => {
             ListStore: {searchPostList: normalized.result},
             PaginationStore: {searchPostList: searchPostListPagination}
           });
+
+          const searchForumList = resBody.SearchStore.forum.data.results;
+          const searchForumListPagination = resBody.SearchStore.forum.collection;
+
+          const normalizedForums = normalize(searchForumList, arrayOf(forum));
+
+          assign(resBody, {
+            // Temp
+
+            Forums: normalizedForums.entities.forums,
+            Users: normalizedForums.entities.author,
+            ListStore: {searchForumList: normalizedForums.result},
+            PaginationStore: {searchForumList: searchForumListPagination}
+          });
         }
 
         if (resBody.CommunityStore && resBody.CommunityStore.list) {
@@ -171,9 +179,14 @@ new Promise((resolve, reject) => {
           assign(resBody, {
             Prefixes: normalized.entities.prefixes,
             Forums: normalized.entities.forums,
+            Users: normalized.entities.author,
+            Posts: normalized.entities.posts,
             ListStore: {
               prefixList: normalized.entities.forums[normalized.result].prefixes,
-              forum: normalized.result
+              forum: normalized.result,
+              announcesList: normalized.entities.announces,
+              managersList: normalized.entities.managers,
+              banUserList: normalized.entities.banUserList
             }
           });
         }
@@ -231,11 +244,11 @@ new Promise((resolve, reject) => {
           resBody.ForumSettingStore.forum = resBody.CommunityStore.forum;
         }
 
+        alt.bootstrap(JSON.stringify(resBody));
+
         if (process.env.NODE_ENV !== 'production') {
           console.info('Bootstrap Data : ', resBody);
         }
-
-        alt.bootstrap(JSON.stringify(resBody));
 
         resolve();
       })

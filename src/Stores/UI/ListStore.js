@@ -3,6 +3,7 @@ import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import ListActions from '../../Actions/ListActions';
 import PostActions from '../../Actions/PostActions';
+import ForumActions from '../../Actions/ForumActions';
 import GnbActions from '../../Actions/GnbActions';
 import DeleteActions from '../../Actions/DeleteActions';
 import CollectionActions from '../../Actions/CollectionActions';
@@ -23,6 +24,7 @@ class ListStore {
 
     this.bindActions(ListActions);
     this.bindActions(DeleteActions);
+    this.bindActions(ForumActions);
     this.bindActions(PostActions);
     this.bindActions(GnbActions);
     this.bindActions(CollectionActions);
@@ -103,6 +105,22 @@ class ListStore {
       }
 
       this.setState(mergeResults);
+    }
+  }
+
+  onSetScroll(scroll) {
+    this.setMergeState(scroll)
+  }
+
+  onGetSearchForumList(result) {
+    this.waitFor(Forums, Users);
+
+    const normalized = result.data;
+    const pagination = result.collection;
+
+    if (normalized) {
+      const newState = this.state.set('searchForumList', normalized.result);
+      this.setState(newState);
     }
   }
 }

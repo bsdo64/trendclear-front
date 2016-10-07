@@ -11,13 +11,13 @@ import GnbStore from '../../Stores/GnbStore';
 import Posts from '../../Stores/Domain/Posts';
 import Users from '../../Stores/Domain/Users';
 import Forums from '../../Stores/Domain/Forums';
+import Collections from '../../Stores/Domain/Collections';
 
 import AuthStore from '../../Stores/UI/AuthStore';
 import LoginModalStore from '../../Stores/UI/LoginModalStore';
 const PaginationStore = alt.getStore('PaginationStore');
 const ListStore = alt.getStore('ListStore');
 
-import SearchHeader from '../../Components/Contents/Search/header';
 import Search from '../../Components/Contents/Search';
 
 const SearchContainer = connectToStores({
@@ -39,7 +39,8 @@ const SearchContainer = connectToStores({
       // Domain Stores
       Posts,
       Users,
-      Forums
+      Forums,
+      Collections,
     ]
   },
 
@@ -59,24 +60,16 @@ const SearchContainer = connectToStores({
 
       Forums:           Forums.getState(),
       Users:            Users.getState(),
-      Posts:            Posts.getState()
+      Posts:            Posts.getState(),
+      Collections:            Collections.getState()
     }
   }
 }, React.createClass({
   render() {
-
-    const {SearchStore} = this.props;
-    const searchPosts = SearchStore.get('search');
-
     return (
-      <div id="best_contents" ref="best_contents">
-        <SearchHeader posts={searchPosts}/>
-
-        <Search
-          {...this.props}
-        />
-        
-      </div>
+      <Search
+        {...this.props}
+      />
     )
   }
 }));

@@ -1,17 +1,18 @@
 /**
  * Created by dobyeongsu on 2015. 10. 23..
  */
-import request from 'superagent';
-import Promise from 'bluebird';
+const request = require('superagent');
+const Promise = require('bluebird');
 
 class AjaxApiClient {
   constructor() {
     this.EndPoint = '/ajax';
+    this.r = request;
   }
 
   _done(resolve, reject) {
     return (xhrErr, xhrRes) => {
-      if (!process.env.production) {
+      if (process.env.NODE_ENV !== 'production') {
         console.log('error : ', xhrErr);
         console.log('result : ', xhrRes);
       }
@@ -34,7 +35,7 @@ class AjaxApiClient {
 
   get(url, params) {
     return new Promise((resolve, reject) => {
-      return request
+      return this.r
         .get(this.EndPoint + url)
         .query(params)
         .set('Accept', 'application/json')
@@ -44,7 +45,7 @@ class AjaxApiClient {
 
   post(url, params) {
     return new Promise((resolve, reject) => {
-      return request
+      return this.r
         .post(this.EndPoint + url)
         .send(params)
         .set('Accept', 'application/json')
@@ -55,7 +56,7 @@ class AjaxApiClient {
 
   put(url, params) {
     return new Promise((resolve, reject) => {
-      return request
+      return this.r
         .put(this.EndPoint + url)
         .send(params)
         .set('Accept', 'application/json')
@@ -66,7 +67,7 @@ class AjaxApiClient {
 
   delete(url, params) {
     return new Promise((resolve, reject) => {
-      return request
+      return this.r
         .delete(this.EndPoint + url)
         .send(params)
         .set('Accept', 'application/json')
@@ -77,7 +78,7 @@ class AjaxApiClient {
   
   postImg(url, file) {
     return new Promise((resolve, reject) => {
-      return request
+      return this.r
         .post(this.EndPoint + url)
         .attach(file.name, file, file.name)
         .set('Accept', 'application/json')
@@ -87,4 +88,4 @@ class AjaxApiClient {
   }
 }
 
-export default new AjaxApiClient();
+module.exports = new AjaxApiClient();

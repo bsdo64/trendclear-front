@@ -4,6 +4,7 @@ import {IndexRedirect, Link, IndexRoute, Router, Route, browserHistory} from 're
 const LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
 const ForumMenu = require('../Container/LeftCol/ForumMenu.js');
 const CollectionMenu = require('../Container/LeftCol/CollectionMenu');
+const DefaultMenu = require('../Container/LeftCol/DefaultMenu');
 
 const HeaderMyMenu = require('../Container/Header/MyMenu');
 const HeaderSearch = require('../Container/Header/Search');
@@ -19,11 +20,18 @@ const ForumSettingMain = require('../Container/Contents/ForumSetting');
 const SearchContainer = require('../Container/Contents/Search');
 const SettingContainer = require('../Container/Contents/Setting');
 const ActivityContainer = require('../Container/Contents/Activity');
+const PolicyContainer = require('../Container/Contents/Policy');
+const CompanyContainer = require('../Container/Contents/Company');
+const FindMemberContainer = require('../Container/Contents/FindMember');
 
 const BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 const AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
+const PolicyMenu = require('../Container/LeftCol/PolicyMenu');
+const CompanyMenu = require('../Container/LeftCol/CompanyMenu');
 const SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
 const ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
+const SigninMenu = require('../Container/LeftCol/SigninMenu');
+const SearchMenu = require('../Container/LeftCol/SearchMenu');
 
 const LoginModalContainer = require('../Container/Modal/LoginModalContainer');
 const ReportModalContainer = require('../Container/Modal/ReportModalContainer');
@@ -38,7 +46,7 @@ const App = (props) => {
           <div className="head_contents">
             <div className="top_area">
               <div className="top_contents">
-                <div id="top_logo">
+                <div id="top_logo" onClick={() => {document.body.scrollTop = 0;}}>
                   <Link className="ui header inverted huge" to="/">
                     <img src="/images/Venacle.png"/>
                   </Link>
@@ -81,6 +89,54 @@ const App = (props) => {
   )
 };
 
+const HelpApp = (props) => {
+  return (
+    <div>
+      <div id="wrap">
+        <div id="header">
+          <div className="head_contents">
+            <div className="top_area">
+              <div className="top_contents">
+                <div id="top_logo">
+                  <Link className="ui header inverted huge" to="/">
+                    <img src="/images/Venacle.png"/>
+                  </Link>
+                </div>
+                <div id="top_search">
+                  { props.HeaderSearch }
+                </div>
+                <div id="top_my_area">
+                  { props.HeaderMyMenu }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="container">
+          <div id="left_col">
+            <div id="category_menu">
+              { props.LeftColGnb }
+            </div>
+            <div id="category">
+              { props.LeftColMenu }
+            </div>
+          </div>
+          <div id="section">
+            <div id="contents">
+              { props.ContentsContainer }
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="modal">
+        { props.LoginModalContainer }
+        { props.ReportModalContainer }
+        { props.DeleteModalContainer }
+      </div>
+    </div>
+  )
+};
+
 
 export default () =>
 <Router history={browserHistory}>
@@ -99,17 +155,32 @@ export default () =>
     }}/>
   </Route>
 
+  <Route path="/all" component={App}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: BestCategoryMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        ContentsContainer: ContentsContainer
+      }}/>
+  </Route>
+
   <Route path="/signin" component={App}>
     <IndexRoute
       components={{
       HeaderMyMenu: HeaderMyMenu,
       HeaderSearch: HeaderSearch,
       LeftColGnb: LeftColGlobalCategoryNav,
-      LeftColMenu: ForumMenu,
+      LeftColMenu: SigninMenu,
       LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
       ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+      DeleteModalContainer: DeleteModalContainer,
       ContentsContainer: SigninContainer
     }}/>
   </Route>
@@ -202,6 +273,18 @@ export default () =>
             DeleteModalContainer: DeleteModalContainer,
           ContentsContainer: ForumSettingMain
         }}/>
+
+      <Route path="forumprefix" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: ForumSettingMenu,
+        LoginModalContainer: LoginModalContainer,
+        WidgetContainer: WidgetContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        ContentsContainer: ForumSettingMain
+      }}/>
 
       <Route path="foruminfo" components={{
         HeaderMyMenu: HeaderMyMenu,
@@ -417,7 +500,7 @@ export default () =>
               HeaderMyMenu: HeaderMyMenu,
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: ForumMenu,
+              LeftColMenu: SearchMenu,
               LoginModalContainer: LoginModalContainer,
               ReportModalContainer: ReportModalContainer,
           DeleteModalContainer: DeleteModalContainer,
@@ -528,6 +611,122 @@ export default () =>
               ContentsContainer: SettingContainer
              }}
     />
+  </Route>
+
+  <Route path="/policies" component={HelpApp}>
+    <IndexRedirect to="privacy"/>
+
+    <Route path="privacy"
+           components={{
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: PolicyMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             DeleteModalContainer: DeleteModalContainer,
+             ContentsContainer: PolicyContainer
+           }}
+    />
+
+    <Route path="terms"
+           components={{
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: PolicyMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             DeleteModalContainer: DeleteModalContainer,
+             ContentsContainer: PolicyContainer
+           }}
+    />
+
+  </Route>
+
+  <Route path="/advertisement" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: CompanyMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: CompanyContainer
+      }}
+    />
+
+  </Route>
+
+  <Route path="/about" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: CompanyMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: CompanyContainer
+      }}
+    />
+
+  </Route>
+
+  <Route path="/careers" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: CompanyMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: CompanyContainer
+      }}
+    />
+
+  </Route>
+
+  <Route path="/help" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: CompanyMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: CompanyContainer
+      }}
+    />
+
+  </Route>
+
+  <Route path="/member/find" component={HelpApp}>
+    <IndexRoute
+      components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: DefaultMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: FindMemberContainer
+      }}
+    />
+
   </Route>
 
   <Route path="*" component={App}>

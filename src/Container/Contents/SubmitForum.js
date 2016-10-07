@@ -2,6 +2,7 @@ import React from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import GnbStore from '../../Stores/GnbStore';
 import LoginStore from '../../Stores/LoginStore';
+import SubmitForumStore from '../../Stores/UI/SubmitForumStore';
 import UserStore from '../../Stores/UserStore';
 import marked from '../../Components/Lib/Marked';
 
@@ -14,18 +15,21 @@ function isNumeric(n) {
 const SubmitForm = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [GnbStore, LoginStore, UserStore];
+    return [GnbStore, LoginStore, UserStore, SubmitForumStore];
   },
 
   getPropsFromStores() {
     return {
       GnbStore: GnbStore.getState(),
       UserStore: UserStore.getState(),
-      LoginStore: LoginStore.getState()
+      LoginStore: LoginStore.getState(),
+      SubmitForumStore: SubmitForumStore.getState()
     }
   }
 }, React.createClass({
   componentDidMount() {
+    const self = this;
+
     $('.ui.form')
       .form({
         fields: {
@@ -64,18 +68,25 @@ const SubmitForm = connectToStores({
             ]
           }
         },
+        inline : true,
+        on     : 'blur',
         onSuccess: (e, fields) => {
           e.preventDefault();
           e.stopPropagation();
 
-          const formValue = {
-            title: fields.forum_title,
-            sub_header: fields.forum_sub_header,
-            description: fields.forum_description,
-            rule: fields.forum_rule
-          };
+          const { SubmitForumStore } = self.props;
+          const error = SubmitForumStore.getIn(['form', 'error']);
 
-          ForumActions.createForum(formValue);
+          if (!error) {
+            const formValue = {
+              title: fields.forum_title,
+              sub_header: fields.forum_sub_header,
+              description: fields.forum_description,
+              rule: fields.forum_rule
+            };
+
+            ForumActions.createForum(formValue);
+          }
         }
       });
   },
@@ -90,12 +101,47 @@ const SubmitForm = connectToStores({
     return { __html: marked(this.state.value, {breaks: true}) };
   },
 
+  validate(e) {
+    "use strict";
+
+    if (e.target.value.length > 1) {
+      ForumActions.validateBeforeCreateForum({
+        title: e.target.value.trim()
+      });
+    }
+  },
+
   render() {
-    const { GnbStore } = this.props;
+    const { GnbStore, SubmitForumStore, UserStore } = this.props;
     const menus = GnbStore.get('gnbMenu');
     const nMenu = menus.getIn(['INCat', 'entities']);
-
     const forums = nMenu.get('forums');
+
+    const trendbox = UserStore.get('trendbox');
+    if (!trendbox) {
+      return <div>로그인을 해주세요</div>
+    }
+
+    const canCreate = trendbox.get('level') >= 5 && trendbox.get('T') >= 100;
+    const duplicateTitleError = SubmitForumStore.getIn(['form', 'error']);
+
+    let validateError;
+    if (duplicateTitleError || !canCreate) {
+      validateError = (
+        <div className="ui error message" style={{display: 'block'}}>
+          <ul className="list">
+            {
+              duplicateTitleError &&
+              <li>이미 존재하는 제목 입니다</li>
+            }
+            {
+              !canCreate &&
+              <li>생성 가능 레벨과 포인트를 확인해주세요</li>
+            }
+          </ul>
+        </div>
+      );
+    }
 
     return (
       <div className="ui container" style={{margin: 10, width: 700}}>
@@ -127,13 +173,21 @@ const SubmitForm = connectToStores({
                   </div>
                 </div>
               </a>
+              <a className="item">
+                <i className="help icon"></i>
+                <div className="content">
+                  <div className="description">
+                    게시판을 생성하기 위해 <b>레벨 5 이상, 100 포인트</b>가 필요합니다.
+                  </div>
+                </div>
+              </a>
             </div>
 
             {/* 게시판 입력 폼 */}
             <form id="create_forum" className="ui form">
               <div className="field">
                 <label>이름 *</label>
-                <input name="forum_title" type="text" />
+                <input name="forum_title" type="text" onChange={this.validate}/>
               </div>
               <div className="field">
                 <label>부제 :</label>
@@ -157,8 +211,12 @@ const SubmitForm = connectToStores({
                 dangerouslySetInnerHTML={this.rawMarkup()}
               />
 
-              <div className="ui error message"></div>
-              <div className={"ui submit button primary"}>확인</div>
+              {validateError}
+
+              {
+                canCreate &&
+                <div className={"ui submit button primary"}>확인</div>
+              }
             </form>
           </div>
 

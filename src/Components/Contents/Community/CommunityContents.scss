@@ -9,7 +9,15 @@
     font-weight: normal;
   }
 
+  tr.announce {
+    background: #e1f9fd;
+  }
+
   td {
+    i.announce-icon {
+      padding-right: 10px;
+      color: #e9164a;
+    }
     a.article_title {
       max-width: 350px;
       white-space: nowrap;
@@ -29,16 +37,6 @@
     }
   }
 
-  #forum_info {
-    .follow_button.active {
-      .fa.fa-star {
-        color: #058294;
-      }
-    }
-  }
-}
-
-#forum_contents {
   h3.ui.header {
     font-size: 14px;
 
@@ -59,6 +57,40 @@
       }
     }
   }
+}
+
+#forum_info {
+  .descriptioin {
+    float:left;
+  }
+
+  .meta.forum_meta {
+    float: right;
+
+    .managers {
+      text-align: right;
+    }
+    .forum_counts {
+      float: right;
+      margin-right: 0.3em;
+
+      span.follow_counts {
+        color: #165e90;
+        font-size: 15px;
+        margin-right: 25px;
+      }
+      span.subs_counts {
+        color: #004858;
+        font-size: 15px;
+      }
+    }
+  }
+
+  .follow_button.active {
+    .fa.fa-star {
+      color: #058294;
+    }
+  }
 
   .dropdown.subscribe_dropdown {
     display: inline;
@@ -71,6 +103,7 @@
       padding: 10px;
       background: #fff;
       border: 1px solid #dedede;
+      z-index: 1;
 
       ul.collection_list {
         margin: 0;

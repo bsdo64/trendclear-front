@@ -78,7 +78,6 @@ const Temp = React.createClass({
                   <i className="fa fa-star" />{' 팔로잉'}
                 </a>
               </h5>
-
               {
                 this.state.openFilter &&
                 [
@@ -102,6 +101,13 @@ const Temp = React.createClass({
                   </div>
                 ]
               }
+            </li>
+            <li>
+              <h5 className="">
+                <Link to='/all'>
+                  <i className="fa fa-globe" />{' 전체글'}
+                </Link>
+              </h5>
             </li>
             {
               user &&

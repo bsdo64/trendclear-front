@@ -2,11 +2,14 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import CollectionComponent from '../BestCategorySelect/Collection';
 
+import AdForumLeft from '../Ad/AdForumLeft';
+
 require('./index.scss');
 const ForumLeftMenu = React.createClass({
   displayName: 'ForumLeftMenu',
   render() {
-    const { CommunityStore, AuthStore, UserStore, Forums, Collections } = this.props;
+    const { CommunityStore, AuthStore, UserStore, Forums, Collections, location } = this.props;
+    const order = location.query.order || 'new';
     const forum = CommunityStore.get('forum');
     const user = UserStore.get('user');
 
@@ -36,16 +39,32 @@ const ForumLeftMenu = React.createClass({
                   </h5>
 
                   <div className="sub_category item">
-                    <Link to={{pathname: '/community'}}>{'최신 글'}</Link>
+                    {
+                      (order === 'new') &&
+                      <div className="active-menu"> </div>
+                    }
+                    <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'new'}}}>{'최신 글'}</Link>
                   </div>
                   <div className="sub_category item">
-                    <Link to={{pathname: '/community'}}>{'인기 글'}</Link>
+                    {
+                      (order === 'hot') &&
+                      <div className="active-menu"> </div>
+                    }
+                    <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'hot'}}}>{'인기 글'}</Link>
                   </div>
                   <div className="sub_category item">
-                    <Link to={{pathname: '/community'}}>{'많이 본 글'}</Link>
+                    {
+                      (order === 'm_view') &&
+                      <div className="active-menu"> </div>
+                    }
+                    <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'm_view'}}}>{'많이 본 글'}</Link>
                   </div>
                   <div className="sub_category item">
-                    <Link to={{pathname: '/community'}}>{'댓글 많은 글'}</Link>
+                    {
+                      (order === 'm_comment') &&
+                      <div className="active-menu"> </div>
+                    }
+                    <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'm_comment'}}}>{'댓글 많은 글'}</Link>
                   </div>
                 </li>
 
@@ -59,6 +78,9 @@ const ForumLeftMenu = React.createClass({
 
               </ul>
             </menu>
+
+            {/* forum Ad */}
+            {/*<AdForumLeft url="http://www.heybannerbanner.com/client_folders/QS/600s/150_sleep1_600.gif"/>*/}
           </div>
         )
       }

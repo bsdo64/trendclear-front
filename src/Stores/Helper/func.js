@@ -33,6 +33,13 @@ export function initListener(Store) {
       }
     }
   });
+
+  Store.on('error', ({error, payload, state}) => {
+    console.error(error);
+    console.error('Payload: ', payload.payload);
+    console.error('State: ', state.toJS());
+    console.groupEnd(Store.displayName);
+  });
 }
 
 export function setMergeState(changedData) {

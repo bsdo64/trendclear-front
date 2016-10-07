@@ -18,7 +18,8 @@ const noti = new Schema('notis');
 author.define({
   collections: arrayOf(collection),
   follow_forums: arrayOf(forum),
-  forumCreated: arrayOf(forum)
+  forumCreated: arrayOf(forum),
+  forumManaged: arrayOf(forum)
 });
 
 club.define({
@@ -38,7 +39,10 @@ collection.define({
 });
 
 forum.define({
-  prefixes: arrayOf(prefix)
+  prefixes: arrayOf(prefix),
+  announces: arrayOf(post),
+  managers: arrayOf(author),
+  bans: arrayOf(author)
 });
 
 comment.define({

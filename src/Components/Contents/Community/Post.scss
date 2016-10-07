@@ -86,6 +86,22 @@
           font-size: 12px;
         }
       }
+      .share_link_box {
+        display: inline-block;
+        .share_link_icon {
+          display: inline-block;
+          padding-right: 5px;
+          color: #989898;
+          font-size: 20px;
+          line-height: 20px;
+          vertical-align: middle;
+          cursor: pointer;
+        }
+        .share_link_info {
+          padding: 10px 10px 0 10px;
+          color: #aaa;
+        }
+      }
       .comment_box {
         display: inline-block;
         .comment_icon {

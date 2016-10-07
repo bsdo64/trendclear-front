@@ -6,19 +6,12 @@ import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 import PostActions from '../../../Actions/PostActions';
 import GnbActions from '../../../Actions/GnbActions';
+import ListActions from '../../../Actions/ListActions';
 
 const BestBox = React.createClass({
   componentWillUnmount() {
     // some example callbacks
     GnbActions.resetFilter();
-  },
-  
-  componentDidMount() {
-    $('.ui.embed').embed();
-  },
-
-  componentDidUpdate(prevProps, prevState) {
-    $('.ui.embed').embed('refresh');
   },
 
   getMoreBest() {
@@ -55,27 +48,40 @@ const BestBox = React.createClass({
           pathname: pathname,
           params: {
             page: nextPage,
-            categoryValue: (normalize.length > 0) ? normalize: null
+            order: location.query.order || 'hot',
+            categoryValue: (normalize.length > 0) ? normalize: null,
+            listType: location.pathname === '/all' ? 'all' : null
           }
         });
       }
     }
   },
 
+  createBreadCrumbArray(array, pathname) {
+    "use strict";
+    array.push({title: '베스트', url: '/'});
+
+    switch (pathname) {
+      case '/':
+        array.push({title: '팔로잉'});
+        return array;
+      case '/all':
+        array.push({title: '전체글'});
+        return array;
+    }
+  },
+
   render() {
     const {location, listName, ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
     const Collection = PaginationStore.get(listName);
-
+    const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
     return (
       <div id="best_contents" >
 
         <Header
           type={listName}
           location={location}
-          breadcrumbs={[
-            {title: '베스트', url: '/'},
-            {title: '팔로잉'},
-          ]}
+          breadcrumbs={breadcrumbs}
         />
 
         <InfiniteList
@@ -84,11 +90,12 @@ const BestBox = React.createClass({
           AuthorItems={Users}
           User={AuthStore}
           LoginModalFlag={LoginModalStore.get('openLoginModal')}
+          scrollHeight={ListStore.get('scrollHeight')}
         />
 
         <Waypoint
           onEnter={this.getMoreBest}
-          bottomOffset='-10%'
+          bottomOffset='-200px'
           scrollableAncestor={window || null}
         />
 

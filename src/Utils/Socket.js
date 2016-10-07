@@ -1,11 +1,15 @@
 const io = require('socket.io-client');
 
-let socket;
+let manager;
+let NotiSocket, PointSocket;
 if (process.env.NODE_ENV === 'production') {
-  socket = io.connect('http://io.venacle.com/noti');
+  manager = io.Manager('http://io.venacle.com');
 } else {
-  socket = io.connect('http://localhost:3003/noti');
+  manager = io.Manager('http://localhost:3003');
 }
 
-module.exports = socket;
- 
+NotiSocket = manager.socket('/noti', {reconnect: true});
+PointSocket = manager.socket('/point', {reconnect: true});
+
+exports.Point = PointSocket;
+exports.Noti = NotiSocket;

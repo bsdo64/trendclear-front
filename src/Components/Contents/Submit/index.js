@@ -17,6 +17,7 @@ const EditorBox = React.createClass({
   getInitialState() {
     return {
       type: 'editor',
+      isAnnounce: false,
       isLoadingUrl: false,
       isLoadedUrl: false,
       successUrl: false,
@@ -25,6 +26,8 @@ const EditorBox = React.createClass({
   },
 
   componentDidMount() {
+    // set leave delete
+
     let that = this;
     this.editor = new MediumEditor('#post_editor', medium);
     this.editor.subscribe('editableInput', function (event, editable) {
@@ -42,7 +45,6 @@ const EditorBox = React.createClass({
 
       PostActions.removeServerInit();
     } else {
-      this.editor.setContent(null);
       PostActions.removeServerInit();
     }
   },
@@ -61,18 +63,38 @@ const EditorBox = React.createClass({
 
   componentWillUnmount() {
     this.editor.destroy();
+
+    const {SubmitStore} = this.props;
+    const postImages = SubmitStore.get('postImages');
+    if (postImages && postImages.size) {
+
+      PostActions.removeUnusingImage(postImages.toJS());
+
+    } else {
+      return true;
+    }
   },
 
+  toggleAnnounce() {
+    "use strict";
+
+    this.setState({isAnnounce: !this.state.isAnnounce});
+  },
 
   handleContent() {
     "use strict";
     let allContents = this.editor.serialize();
     let el = allContents['post_editor'].value;
-    PostActions.handleContent(el);
+
+    PostActions.handleContent({
+      content: el,
+      width: this.refs.post_editor.offsetWidth,
+      height: this.refs.post_editor.offsetHeight
+    });
   },
 
   submitPost() {
-    const {SubmitStore, UserStore} = this.props;
+    const {SubmitStore, UserStore, location} = this.props;
 
     const skills = UserStore.get('skills');
     const writePost = skills
@@ -110,7 +132,14 @@ const EditorBox = React.createClass({
           title: title,
           content: content,
           prefixId: SubmitStore.get('selectPrefixId'),
-          query: this.props.location.query
+          query: location.query,
+          isAnnounce: this.state.isAnnounce,
+          width: SubmitStore.get('width'),
+          height: SubmitStore.get('height'),
+          postImages: SubmitStore.get('postImages') || null,
+          representingImage: (SubmitStore.get('postImages') && SubmitStore.get('representingImage'))
+            ? SubmitStore.get('postImages').get(SubmitStore.get('representingImage'))
+            : null
         };
         PostActions.submitPost(newPost);
       }
@@ -121,7 +150,7 @@ const EditorBox = React.createClass({
 
   modPost() {
     "use strict";
-    const {SubmitStore, UserStore} = this.props;
+    const {SubmitStore, UserStore, location} = this.props;
 
     const title = SubmitStore.get('title');
     const content = SubmitStore.get('content');
@@ -132,7 +161,10 @@ const EditorBox = React.createClass({
         title: title,
         content: content,
         prefixId: SubmitStore.get('selectPrefixId'),
-        query: this.props.location.query
+        query: location.query,
+        isAnnounce: this.state.isAnnounce,
+        width: SubmitStore.get('width'),
+        height: SubmitStore.get('height')
       };
       PostActions.modPost(newPost);
     }
@@ -209,7 +241,7 @@ const EditorBox = React.createClass({
     const urlMetaData = this.props.SubmitStore.get('urlMetaData');
     const box = this.createUrlMetaContent(urlMetaData, false);
 
-    PostActions.handleContent(ReactDOM.renderToStaticMarkup(box));
+    PostActions.handleContent({content: ReactDOM.renderToStaticMarkup(box)});
   },
 
   checkTitleAndContent() {
@@ -227,12 +259,55 @@ const EditorBox = React.createClass({
     console.log(args, a, b, c, d)
   },
 
+  checkForumManager(user, managers) {
+    "use strict";
+
+    const key = managers.findKey(u => u.get('id') === user.get('id'));
+    if (key === undefined) {
+      return false;
+    } else {
+      return user;
+    }
+  },
+
+  createThumbnailImages(image, index)  {
+    const isRepresent = this.props.SubmitStore.get('representingImage') === index;
+    const style = cx('image_item select_represent', {
+      select_represent: isRepresent
+    });
+    return (
+      <li className={style}
+          key={image.key}
+          onClick={this.setRepresentImage.bind(this, index)}
+      >
+        {
+          isRepresent &&
+          <div className="represent_box">대표</div>
+        }
+        <img src={image.thumbnailUrl} />
+      </li>
+    )
+  },
+
+  setRepresentImage(index) {
+    "use strict";
+
+    PostActions.setRepresentImage({index: index});
+  },
+
   render() {
     "use strict";
 
     const {SubmitStore, UserStore, AuthStore} = this.props;
     const type = SubmitStore.get('type');
     const urlMetaData = SubmitStore.get('urlMetaData');
+    const announces = SubmitStore.getIn(['forum', 'announces']);
+    const announcesLength = (announces && announces.size)
+      ? announces.size
+      : 0;
+    const managers = SubmitStore.getIn(['forum', 'managers']);
+
+    const isManager = this.checkForumManager(UserStore.get('user'), managers);
 
     const displayEditor = cx('ui description submit_post_box', {
       hide: this.state.type !== 'editor'
@@ -270,8 +345,24 @@ const EditorBox = React.createClass({
         </div>
 
         <div className={displayEditor}>
-          {<div className="post_editor" id="post_editor"></div>}
-          {/*<Editor />*/}
+          <div id="post_editor_background">
+            <div ref="post_editor" className="post_editor" id="post_editor" placeholder="텍스트를 입력하세요"></div>
+          </div>
+
+          {
+            SubmitStore.get('postImages') && SubmitStore.get('postImages').size > 0 &&
+            <div className="submit_images">
+              <div className="header">
+                <h4>대표 이미지</h4>
+                <p>대표 이미지를 설정해주세요</p>
+              </div>
+              <ul className="image_list">
+                {
+                  SubmitStore.get('postImages').map(this.createThumbnailImages)
+                }
+              </ul>
+            </div>
+          }
         </div>
 
         <div className={displayUrl}>
@@ -287,9 +378,10 @@ const EditorBox = React.createClass({
         {/* <TagList items={Tags} /> */}
 
         {
+          (announcesLength < 5) && (isManager) &&
           <div className="ui checkbox">
-            <input id="example-id" type="checkbox" />
-              <label htmlFor="example-id">공지 글 (최대 5개)</label>
+            <input id="is_announce" type="checkbox" onChange={this.toggleAnnounce}/>
+              <label htmlFor="announce_check">공지 글 ({`${announcesLength} / 5`})</label>
           </div>
         }
 
@@ -306,7 +398,7 @@ const EditorBox = React.createClass({
               수정하기
             </button>
           }
-          <button className="ui button" onClick={this.removeContnet}>
+          <button className="ui button" onClick={this.removeContent}>
             다시 쓰기
           </button>
         </div>
@@ -314,7 +406,7 @@ const EditorBox = React.createClass({
       </div>
     )
   }
-})
+});
 
 
 require('./index.scss');
