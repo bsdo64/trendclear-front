@@ -116,7 +116,8 @@ class WidgetBox extends Component {
         {
           <Main2
             key="Main2"
-            url="http://www.cpaad.co.kr/images/promotion/promotion_201509_06.jpg"
+            url="/images/venacle-guide.jpg"
+            link="/"
           />
         }
 

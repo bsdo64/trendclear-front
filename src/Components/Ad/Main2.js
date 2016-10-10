@@ -8,7 +8,8 @@ const Main2 = React.createClass({
         <img
           src={url}
           style={{
-            width: '100%'
+            width: '100%',
+            border: '1px solid #ddd'
           }} />
       </div>
     );

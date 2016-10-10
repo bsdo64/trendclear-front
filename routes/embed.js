@@ -67,6 +67,8 @@ Embeds.get('/oembed', (req, res, next) => {
 Embeds.get('/urlMeta', (req, res, next) => {
   let url = req.query.url;
 
+  delete req.headers.host;
+
   metafetch.fetch(url, {
     flags: {
       images: false,
