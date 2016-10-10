@@ -13,7 +13,8 @@ class SubmitStore{
     this.bindActions(UserActions);
     this.bindActions(PostActions);
     this.state = Immutable.fromJS({
-      deletedUrl: List()
+      deletedUrl: List(),
+      representingImage: null
     });
 
     initListener(this);
@@ -80,21 +81,47 @@ class SubmitStore{
 
   onAddImages(result) {
     const state = this.state.update('postImages', list => {
-      if (list) {
-        return list.push(result)
-      } else {
+      if (!list) {
         list = List();
-        return list.push(result);
       }
+      return list.push(result);
     });
-    this.setMergeState(state);
+
+    let newState;
+    if ((this.state.get('representingImage') === null) || (this.state.get('representingImage') === undefined)) {
+      newState = state.set('representingImage', 0);
+    } else {
+      newState = state;
+    }
+
+    this.setMergeState(newState);
   }
 
   onDeleteImages(result) {
+    const self = this;
+    let deleteItemIndex = null;
     const state = this.state.update('postImages', list => {
-      return list.filterNot(i => i.deleteUrl === result.deleteUrl)
+      return list.filterNot((item, index) => {
+
+        const deleteItem = item.deleteUrl === result.deleteUrl;
+        if (deleteItem) {
+          deleteItemIndex = index;
+        }
+        return deleteItem
+      })
     });
-    this.setMergeState(state);
+
+    let newState;
+    if (deleteItemIndex !== null) {
+      if (state.get('postImages').size > 0) {
+        newState = state.set('representingImage', 0);
+      } else {
+        newState = state.set('representingImage', null);
+      }
+    } else {
+      newState = state;
+    }
+    this.setMergeState(newState);
   }
 
   onSetRepresentImage(data) {
