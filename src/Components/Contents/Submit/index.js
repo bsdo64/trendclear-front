@@ -137,9 +137,9 @@ const EditorBox = React.createClass({
           width: SubmitStore.get('width'),
           height: SubmitStore.get('height'),
           postImages: SubmitStore.get('postImages') || null,
-          representingImage: (SubmitStore.get('representingImage') !== undefined || SubmitStore.get('representingImage') !== null)
-            ? SubmitStore.get('postImages').get(SubmitStore.get('representingImage'))
-            : null
+          representingImage: (SubmitStore.get('representingImage') === undefined || SubmitStore.get('representingImage') === null)
+            ? null
+            : SubmitStore.get('postImages').get(SubmitStore.get('representingImage'))
         };
         PostActions.submitPost(newPost);
       }
