@@ -98,7 +98,7 @@ class WidgetBox extends Component {
                           <i className="fa fa-inbox icon" />
                           <div className="content">
                             <div className="header">
-                              <Link to={`/community?forumId=${forum.get('id')}`}>
+                              <Link to={`/community?forumId=${forum.get('id')}`} className={styleActive}>
                                 {forum.get('title')}
                                 {
                                   !user.forumCreated.includes(forum) &&
