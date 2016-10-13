@@ -29,10 +29,15 @@
       }
 
       a {
+        color: #91a0af;
+
         &:hover {
           color: #007282;
         }
-        color: #fff;
+
+        &.active {
+          color: #fff;
+        }
       }
     }
   }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import cx from 'classnames';
 import {Scrollbars} from 'react-custom-scrollbars';
 
 import FlatButton from './FlatButton';
@@ -88,6 +89,10 @@ class WidgetBox extends Component {
                 <div className="ui list forum_created_list">
                   {
                     user.forumManaged.sortBy(item => item.get('title')).map(forum => {
+                      const styleActive = cx('', {
+                        active: location.query.forumId === forum.get('id').toString()
+                      });
+
                       return (
                         <div key={forum.get('id')} className="item">
                           <i className="fa fa-inbox icon" />
