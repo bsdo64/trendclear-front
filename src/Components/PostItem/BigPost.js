@@ -82,7 +82,13 @@ const BigPost = React.createClass({
       shorten_post: isLong
     });
 
-    const linkUrl = `http://venacle.com/link/post/m/${post.get('link_id')}`;
+    let linkUrl;
+    if (process.env.NODE_ENV === 'production') {
+      linkUrl = `http://venacle.com/link/post/m/${post.get('link_id')}`;
+    } else {
+      linkUrl = `http://localhost:3000/link/post/m/${post.get('link_id')}`;
+    }
+
 
     return (
       <div ref={(ref) => this.postItem = ref}

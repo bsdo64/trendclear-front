@@ -37,17 +37,6 @@ class WidgetBox extends Component {
       <div id="section_cldmm">
 
         {
-          !isLogin &&
-          [
-            <FlatButton
-              key="1"
-              linkTo="/signin"
-              text="지금 가입하세요 !"
-            />
-          ]
-        }
-
-        {
           isLogin && user &&
           <FlatButton
             linkTo="/community/submit/forum"
@@ -115,6 +104,17 @@ class WidgetBox extends Component {
 
               </Scrollbars>
             </div>
+          ]
+        }
+
+        {
+          !isLogin &&
+          [
+            <FlatButton
+              key="1"
+              linkTo="/signin"
+              text="지금 가입하세요 !"
+            />
           ]
         }
 
