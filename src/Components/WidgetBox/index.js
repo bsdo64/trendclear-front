@@ -11,7 +11,7 @@ require('./index.scss');
 
 class WidgetBox extends Component {
   render() {
-    const {LoginStore, UserStore, location} = this.props;
+    const {LoginStore, UserStore, ShoppingStore, location} = this.props;
     const isLogin = LoginStore.get('isLogin');
     const user = {
       user: UserStore.get('user'),
@@ -22,6 +22,7 @@ class WidgetBox extends Component {
       skills: UserStore.get('skills'),
       forumCreated: UserStore.get('forumCreated'),
       forumManaged: UserStore.get('forumManaged'),
+      inventories: UserStore.get('inventories'),
     };
     // const logout = LoginStore.get('logout');
 
@@ -56,6 +57,7 @@ class WidgetBox extends Component {
           isLogin && user &&
           <TrendBox
             user={user}
+            ShoppingStore={ShoppingStore}
           />
         }
 

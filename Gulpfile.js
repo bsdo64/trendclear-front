@@ -39,6 +39,7 @@ gulp.task('concat-css', function() {
       bowerSrc + '/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css',
       distSrc + '/stylesheets/common.css',
       distSrc + '/stylesheets/react-select.min.css',
+      distSrc + '/stylesheets/react-datepicker.min.css',
       nodeModuleSrc + '/highlight.js/styles/androidstudio.css'
     ])
     .pipe(concat('vendor.css'))

@@ -46,7 +46,11 @@ const routes = [
   '/advertisement',
   '/member/find',
   '/link/post',
-  '/link/post/m'
+  '/link/post/m',
+  '/user/points',
+  '/user/venalinks',
+  '/user/venalinks/active',
+  '/user/venalinks/share',
 ];
 
 const redirectRoutes = [

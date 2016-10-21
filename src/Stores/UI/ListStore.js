@@ -45,7 +45,7 @@ class ListStore {
     const normalizedPosts = response.data;
     const listName = response.listName;
 
-    const newState = this.state.update(listName, list => list.concat(normalizedPosts.result));
+    const newState = this.state.update(listName, list => list ? list.concat(normalizedPosts.result) : [].concat(normalizedPosts.result));
     this.setState(newState);
   }
 
@@ -53,7 +53,7 @@ class ListStore {
     this.waitFor(Users, Posts);
     const normalizedPosts = response.data;
 
-    const newState = this.state.update('searchPostList', list => list.concat(normalizedPosts.result));
+    const newState = this.state.update('searchPostList', list => list ? list.concat(normalizedPosts.result) : [].concat(normalizedPosts.result));
     this.setState(newState);
   }
 
@@ -61,7 +61,7 @@ class ListStore {
     this.waitFor(Users, Posts);
     const normalizedPosts = response.data;
 
-    const newState = this.state.update(response.type, list => list.concat(normalizedPosts.result));
+    const newState = this.state.update(response.type, list => list ? list.concat(normalizedPosts.result) : [].concat(normalizedPosts.result));
     this.setState(newState);
   }
 

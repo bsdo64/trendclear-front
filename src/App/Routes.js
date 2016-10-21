@@ -23,9 +23,13 @@ const ActivityContainer = require('../Container/Contents/Activity');
 const PolicyContainer = require('../Container/Contents/Policy');
 const CompanyContainer = require('../Container/Contents/Company');
 const FindMemberContainer = require('../Container/Contents/FindMember');
+const PointListContainer = require('../Container/Contents/PointList');
+const VenalinkActiveList = require('../Container/Contents/VenalinkActiveList');
+const VenalinkShareList = require('../Container/Contents/VenalinkShareList');
 
 const BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 const AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
+const UserPointMenu = require('../Container/LeftCol/UserPointMenu');
 const PolicyMenu = require('../Container/LeftCol/PolicyMenu');
 const CompanyMenu = require('../Container/LeftCol/CompanyMenu');
 const SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
@@ -567,6 +571,61 @@ export default () =>
              }}
     />
 
+  </Route>
+
+  <Route path="/user" component={App}>
+    <Route path="points"
+           components={{
+             HeaderMyMenu: HeaderMyMenu,
+             HeaderSearch: HeaderSearch,
+             LeftColGnb: LeftColGlobalCategoryNav,
+             LeftColMenu: UserPointMenu,
+             LoginModalContainer: LoginModalContainer,
+             ReportModalContainer: ReportModalContainer,
+             DeleteModalContainer: DeleteModalContainer,
+             WidgetContainer: WidgetContainer,
+             ContentsContainer: PointListContainer
+           }}
+    />
+
+    <Route path="venalinks">
+      <IndexRoute
+        components={{
+          HeaderMyMenu: HeaderMyMenu,
+          HeaderSearch: HeaderSearch,
+          LeftColGnb: LeftColGlobalCategoryNav,
+          LeftColMenu: UserPointMenu,
+          LoginModalContainer: LoginModalContainer,
+          ReportModalContainer: ReportModalContainer,
+          DeleteModalContainer: DeleteModalContainer,
+          WidgetContainer: WidgetContainer,
+          ContentsContainer: VenalinkActiveList
+        }}/>
+
+      <Route path="active" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: UserPointMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: VenalinkActiveList
+      }}/>
+
+      <Route path="share" components={{
+        HeaderMyMenu: HeaderMyMenu,
+        HeaderSearch: HeaderSearch,
+        LeftColGnb: LeftColGlobalCategoryNav,
+        LeftColMenu: UserPointMenu,
+        LoginModalContainer: LoginModalContainer,
+        ReportModalContainer: ReportModalContainer,
+        DeleteModalContainer: DeleteModalContainer,
+        WidgetContainer: WidgetContainer,
+        ContentsContainer: VenalinkShareList
+      }}/>
+    </Route>
   </Route>
 
   <Route path="/setting" component={App}>

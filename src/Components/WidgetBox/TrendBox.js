@@ -1,12 +1,13 @@
 import React from 'react';
 import UserActions from '../../Actions/UserActions';
+import VenaStoreActions from '../../Actions/VenaStoreActions';
 import CountUp from 'countup.js';
 import moment from 'moment';
 import AvatarImage from '../AvatarImage';
 import Modal from 'react-modal';
 import ReactTooltip from 'react-tooltip';
-
-
+import {Link} from 'react-router';
+import Draggable from 'react-draggable'; // The default
 
 import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
 
@@ -133,6 +134,7 @@ const TrendBox = React.createClass({
     this.updateCountUp("current_exp", prev_currentTotalExp, currentTotalExp, options);
     this.updateCountUp("next_exp", prev_nextTotalExp, nextTotalExp, options);
   },
+
   updateCountUp(nodeId, from, to, options) {
     "use strict";
 
@@ -165,7 +167,7 @@ const TrendBox = React.createClass({
        'jtnet':jtnet,
        'uplus':LG유플러스
        */
-      pay_method : 'card', // 'card' : 신용카드 | 'trans' : 실시간계좌이체 | 'vbank' : 가상계좌 | 'phone' : 휴대폰소액결제
+      pay_method : 'trans', // 'card' : 신용카드 | 'trans' : 실시간계좌이체 | 'vbank' : 가상계좌 | 'phone' : 휴대폰소액결제
       merchant_uid : 'merchant_' + new Date().getTime(),
       name : '주문명:결제테스트',
       amount : 160,
@@ -195,7 +197,14 @@ const TrendBox = React.createClass({
   openVenacleStore() {
     "use strict";
 
-    this.setState({VStore: !this.state.VStore}, ()=>{ReactTooltip.rebuild()});
+    VenaStoreActions.toggleVenacleStore();
+    VenaStoreActions.initItems();
+  },
+
+  rebuildTooltip(itemCode) {
+    "use strict";
+    VenaStoreActions.tooltipInit(itemCode);
+    ReactTooltip.rebuild();
   },
 
   createSkill(value, key) {
@@ -217,7 +226,6 @@ const TrendBox = React.createClass({
       <div
         data-tip
         data-for={value.getIn(['skill', 'name'])}
-        data-offset="{'bottom': -10}"
         className="skill"
         key={key}>
         <Timer init={result} type={value.getIn(['skill', 'name'])} />
@@ -245,8 +253,30 @@ const TrendBox = React.createClass({
       </div>
     )
   },
+
+  closeItemTooltip() {
+    "use strict";
+  },
+
+  showItemTooltip() {
+    "use strict";
+  },
+
+  togglePurchaseWindow(item) {
+    "use strict";
+
+    VenaStoreActions.togglePurchaseWindow(item);
+  },
+
+  confirmPurchaseItem(item) {
+    "use strict";
+
+    VenaStoreActions.requestPurchaseItem(item.toJS());
+  },
+
   render() {
-    const {user} = this.props;
+    const self = this;
+    const {user, ShoppingStore} = this.props;
 
     const sex = user.profile.get('sex'),
           avatar_img = user.profile.get('avatar_img'),
@@ -255,6 +285,9 @@ const TrendBox = React.createClass({
           grade_img = user.grade.getIn(['gradeDef', 'img']);
     let iconImg, gradeImg;
 
+    const inventory = user.inventories.find(i => i.get('type') === 'community');
+    console.log(inventory);
+
     if (icon_img) {
       iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
     }
@@ -262,6 +295,11 @@ const TrendBox = React.createClass({
     if (grade_img) {
       gradeImg = <img id="user_grade_img" src={'/images/' + grade_img}/>;
     }
+
+    const filterTooltipItem = ShoppingStore
+      .get('items')
+      .filter(item => item.get('code') === ShoppingStore.get('tooltipItemCode'))
+      .get(0);
 
     return (
       <div id="trend_box" className="widget">
@@ -368,18 +406,22 @@ const TrendBox = React.createClass({
                     </div>
                   </div>
 
-                  <div className="item" onClick={this.openVenacleStore}>
-                    <span className="item_col">포인트</span>
-                    <div className="item_num">
-                      <i className="fa fa-line-chart"></i>
-                    </div>
+                  <div className="item" >
+                    <Link to="/user/points">
+                      <span className="item_col">포인트</span>
+                      <div className="item_num">
+                        <i className="fa fa-line-chart"></i>
+                      </div>
+                    </Link>
                   </div>
 
-                  <div className="item" onClick={this.openVenacleStore}>
-                    <span className="item_col">베나링크</span>
-                    <div className="item_num">
-                      <i className="fa fa-unlink"></i>
-                    </div>
+                  <div className="item">
+                    <Link to="/user/venalinks">
+                      <span className="item_col">베나링크</span>
+                      <div className="item_num">
+                        <i className="fa fa-unlink"></i>
+                      </div>
+                    </Link>
                   </div>
 
                   <div className="item" onClick={this.openVenacleStore}>
@@ -390,11 +432,11 @@ const TrendBox = React.createClass({
                   </div>
 
                   <Modal
-                    isOpen={this.state.VStore}
+                    isOpen={ShoppingStore.get('storeModalOpen')}
                     onRequestClose={this.openVenacleStore}
                     style={{
                       overlay: {backgroundColor: 'rgba(29, 29, 29, 0.8)', zIndex: 100},
-                      content: {top: '10%', height: 900, bottom: 0, zIndex: 101}}}
+                      content: {top: '10%', height: 900, bottom: 0, zIndex: 102}}}
                   >
 
                     <h2 ref="subtitle">베나클 스토어</h2>
@@ -469,260 +511,38 @@ const TrendBox = React.createClass({
                         </div>
                         <div className="ui segment item-list">
                           <div className="ui link cards">
-                            <div className="card">
+                            {
+                              ShoppingStore.get('items').map(item => {
+                                "use strict";
+                                return (
+                                  <div className="card" key={item.get('code')} >
 
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/venacle-item1-venalink.png" />
+                                    <div
+                                      data-tip
+                                      data-for={'item'}
+                                      className="image"
+                                      onMouseOver={this.rebuildTooltip.bind(this, item.get('code'))}
+                                    >
+                                      <img src={item.get('image')} />
 
-                              </div>
-                              <div className="content">
-                                <div className="header">베나링크 부여</div>
-                                <div className="meta">
-                                  <a>포스팅</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/venacle-item3-create-community.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">커뮤니티 만들기</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
-                            <div className="card">
-                              <div
-                                data-tip
-                                data-for={'item'}
-                                className="image" >
-                                <img src="/images/sample.png" />
-                              </div>
-                              <div className="content">
-                                <div className="header">링크 요청 부여</div>
-                                <div className="meta">
-                                  <a>포스트</a>
-                                </div>
-                              </div>
-                              <div className="extra content">
-                                <span>50 TP</span>
-                              </div>
-                              <div className="ui bottom attached button primary">
-                                <i className="add icon"></i>
-                                구입하기
-                              </div>
-                            </div>
+                                    </div>
+                                    <div className="content">
+                                      <div className="header">{item.get('title')}</div>
+                                      <div className="meta">
+                                        <a>포스팅</a>
+                                      </div>
+                                    </div>
+                                    <div className="extra content">
+                                      <span>{item.get('attribute').get('price_t')} {item.get('attribute').get('price_type')}P</span>
+                                    </div>
+                                    <div className="ui bottom attached button primary" onClick={this.togglePurchaseWindow.bind(this, item)}>
+                                      <i className="add icon"></i>
+                                      구입하기
+                                    </div>
+                                  </div>
+                                )
+                              })
+                            }
                           </div>
                         </div>
                       </div>
@@ -764,71 +584,56 @@ const TrendBox = React.createClass({
                         <h4>인벤토리</h4>
                         <div className="inventory_box">
                           <ul className="inventory_tap">
-                            <li className="active">포스팅</li>
+                            <li className="active">커뮤니티</li>
                             <li>뱃지</li>
                             <li>이모티콘</li>
                           </ul>
                           <div className="inventory_scroll">
                             <table className="inventory_table">
                               <tbody>
-                              <tr>
-                                <td>
-                                  <div className="content">
-                                    <span className="item-count">12</span>
-                                    <img className="item-image" src="/images/venacle-item1-venalink.png" />
-                                  </div>
-                                </td>
-                                <td>
-                                  <div className="content">
-                                    <span className="item-count">12</span>
-                                    <img className="item-image" src="/images/venacle-item3-create-community.png" />
-                                  </div>
-                                </td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                              </tr>
-                              <tr>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                              </tr>
-                              <tr>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                              </tr>
-                              <tr>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                              </tr>
-                              <tr>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                              </tr>
-                              <tr>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                              </tr>
-                              <tr>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                              </tr>
-                              <tr>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                                <td><div className="content"></div></td>
-                              </tr>
+                              {(function (table, col, row) {
+                                let r = 0;
+                                let itemIndex = 0;
+
+                                while (++r <= row) {
+                                  let tableRow = [];
+                                  let c = 0;
+
+                                  while (++c <= col) {
+                                    const listItem = inventory.get('items').get(itemIndex);
+
+                                    tableRow.push(
+                                      <td key={c}>
+                                        {
+                                          listItem && (listItem.get('item_count') > 0) &&
+                                          <div
+                                            data-tip
+                                            data-for={'item'}
+                                            className="content"
+                                            onMouseOver={self.rebuildTooltip.bind(self, listItem.get('item').get('code'))}
+                                          >
+                                            <span className="item-count">{listItem.get('item_count')}</span>
+                                            <img className="item-image" src={listItem.get('item').get('image')} />
+                                          </div>
+                                        }
+                                        {
+                                          !listItem &&
+                                          <div className="content"></div>
+                                        }
+                                      </td>
+                                    );
+
+                                    itemIndex = itemIndex + 1;
+                                  }
+
+                                  table.push(
+                                    <tr key={r}>
+                                      {tableRow}
+                                    </tr>
+                                  );
+                                }
+                                return table;
+                              })([], 4, 8)}
                               </tbody>
                             </table>
 
@@ -839,23 +644,65 @@ const TrendBox = React.createClass({
                     </div>
 
                   </Modal>
+                  <Modal
+                    isOpen={ShoppingStore.get('openPurchaseWindow')}
+                    onRequestClose={this.togglePurchaseWindow.bind(this, null)}
+                    style={{
+                      overlay: {backgroundColor: 'rgba(29, 29, 29, 0.8)', zIndex: 100},
+                      content: {top: '35%', left: '35%', right: '35%', width: 450, bottom: null, zIndex: 102}
+                    }}
+                  >
+                    <div>
+                      {
+                        ShoppingStore.get('purchaseItem') &&
+                        <div>
+                          {ShoppingStore.get('purchaseItem').get('title')}
+                          을(를) 구입하시겠습니까?
+                          <div style={{paddingTop: 10, textAlign: 'right'}}>
+                            <div className="ui button primary" onClick={this.confirmPurchaseItem.bind(this, ShoppingStore.get('purchaseItem'))}>
+                              확인
+                            </div>
+                            <div className="ui button" onClick={this.togglePurchaseWindow.bind(this, null)}>
+                              취소
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  </Modal>
                   <ReactTooltip
                     id="item"
                     effect="solid"
                     place="bottom"
+                    afterShow={this.showItemTooltip}
+                    afterHide={this.closeItemTooltip}
                   >
-                    <div className="ui horizontal list">
-                      <div className="item">
-                        <img className="ui mini circular image" src={'/images/skill_0.jpg'} />
-                        <div className="content">
-                          <div className="ui sub header">글쓰기</div>
-                          <div className="meta level">레벨 : 1</div>
-                          <div className="meta cooltime">쿨타임 : 10 초</div>
+                    {
+                      ShoppingStore.get('tooltipItemCode') &&
+                      <div>
+                        <div className="ui horizontal list">
+                          <div className="item">
+                            <img className="ui mini circular image" src={filterTooltipItem.get('image')} />
+                            <div className="content">
+                              <div className="ui sub header">{filterTooltipItem.get('title')}</div>
+                              <div className="meta level">레벨 : {filterTooltipItem.get('attribute').get('available_level')}</div>
+                              <div className="meta cooltime">쿨타임 : {filterTooltipItem.get('attribute').get('cooltime_sec')} 초</div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr />
+                        {filterTooltipItem.get('attribute').get('description')}
+                      </div>
+                    }
+
+                    {
+                      ShoppingStore.get('tooltipItemCode') === null &&
+                      <div>
+                        <div className="ui active inverted dimmer">
+                          <div className="ui text loader">Loading</div>
                         </div>
                       </div>
-                    </div>
-                    <hr />
-                    포스트 하나에 링크 요청을 부여 할 수 있습니다
+                    }
                   </ReactTooltip>
                 </div>
               </div>
@@ -877,6 +724,78 @@ const TrendBox = React.createClass({
             </div>
           </div>
         </div>
+        <Draggable
+          defaultPosition={{x: 0, y: 0}}
+          position={null}
+          grid={[25, 25]}
+          zIndex={101}
+          onStart={this.handleStart}
+          onDrag={this.handleDrag}
+          onStop={this.handleStop}>
+          <div style={{position: 'absolute'}}>
+            <div className="user_inventory" style={{background: '#fff'}} >
+              <h4>인벤토리</h4>
+              <div className="inventory_box">
+                <ul className="inventory_tap">
+                  <li className="active">커뮤니티</li>
+                  <li>뱃지</li>
+                  <li>이모티콘</li>
+                </ul>
+                <div className="inventory_scroll">
+                  <table className="inventory_table">
+                    <tbody>
+                    {(function (table, col, row) {
+                      let r = 0;
+                      let itemIndex = 0;
+
+                      while (++r <= row) {
+                        let tableRow = [];
+                        let c = 0;
+
+                        while (++c <= col) {
+                          const listItem = inventory.get('items').get(itemIndex);
+
+                          tableRow.push(
+                            <td key={c}>
+                              {
+                                listItem && (listItem.get('item_count') > 0) &&
+                                <div
+                                  data-tip
+                                  data-for={'item'}
+                                  className="content"
+                                  onMouseOver={self.rebuildTooltip.bind(self, listItem.get('item').get('code'))}
+                                >
+                                  <span className="item-count">{listItem.get('item_count')}</span>
+                                  <img className="item-image" src={listItem.get('item').get('image')} />
+                                </div>
+                              }
+                              {
+                                !listItem &&
+                                <div className="content"></div>
+                              }
+                            </td>
+                          );
+
+                          itemIndex = itemIndex + 1;
+                        }
+
+                        table.push(
+                          <tr key={r}>
+                            {tableRow}
+                          </tr>
+                        );
+                      }
+                      return table;
+                    })([], 4, 8)}
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </Draggable>
       </div>
     );
   }

@@ -3,19 +3,21 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 
 import LoginStore from '../../Stores/LoginStore';
 import UserStore from '../../Stores/UserStore';
+import ShoppingStore from '../../Stores/UI/ShoppingStore';
 
 import WidgetBox from '../../Components/WidgetBox';
 
 const WidgetContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [LoginStore, UserStore]
+    return [LoginStore, UserStore, ShoppingStore]
   },
 
   getPropsFromStores() {
     return {
       LoginStore: LoginStore.getState(),
       UserStore: UserStore.getState(),
+      ShoppingStore: ShoppingStore.getState(),
     }
   }
 }, React.createClass({
