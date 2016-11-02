@@ -75,6 +75,47 @@ router.get(redirectRoutes, function (req, res, next) {
   next();
 });
 
+router.get('/venalink/post/m/:linkId', function (req, res) {
+  "use strict";
+
+  // 메타 제공 시스템
+
+  Api
+    .get('http://localhost:3001/ajax/venalink/post/m/' + req.params.linkId)
+    .set(req.headers)
+    .end(function(err, result){
+
+      if (err || !result.ok) {
+        res.render('entry/meta', null);
+      } else {
+        res.render('entry/meta', result.body);
+      }
+    });
+});
+
+router.get('/venalink/post/:linkId', function (req, res) {
+  "use strict";
+
+  // 실질적인 방문자 추적 시스템
+
+  if (req.params.linkId) {
+    Api
+      .get('http://localhost:3001/ajax/venalink/post/' + req.params.linkId)
+      .set(req.headers)
+      .end(function(err, result){
+        const post = result.body;
+
+        if (post) {
+          res.redirect(`/community?forumId=${post.forum_id}&postId=${post.id}`);
+        } else {
+          res.redirect('/');
+        }
+      });
+  } else {
+    res.redirect('/');
+  }
+});
+
 router.get('/link/post/m/:linkId', function (req, res) {
   "use strict";
 

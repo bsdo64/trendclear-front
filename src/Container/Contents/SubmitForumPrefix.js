@@ -1,8 +1,9 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 import LoginStore from '../../Stores/LoginStore';
-import UserStore from '../../Stores/UserStore';
 import SubmitStore from '../../Stores/SubmitStore';
+import Users from '../../Stores/Domain/Users';
+import AuthStore from '../../Stores/UI/AuthStore';
 
 import Select from 'react-select';
 
@@ -11,13 +12,13 @@ import Submit from '../../Components/Contents/Submit';
 const SubmitForumPrefix = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [SubmitStore, LoginStore, UserStore];
+    return [SubmitStore, LoginStore, Users, AuthStore];
   },
 
   getPropsFromStores() {
     return {
       SubmitStore: SubmitStore.getState(),
-      UserStore: UserStore.getState(),
+      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
       LoginStore: LoginStore.getState()
     }
   }

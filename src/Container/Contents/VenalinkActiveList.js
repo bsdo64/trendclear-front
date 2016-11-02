@@ -1,10 +1,9 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 import alt from '../../Utils/alt';
 
 import LoginStore from '../../Stores/LoginStore';
 import CommunityStore from '../../Stores/CommunityStore';
-import UserStore from '../../Stores/UserStore';
 import SearchStore from '../../Stores/SearchStore';
 import GnbStore from '../../Stores/GnbStore';
 
@@ -18,6 +17,8 @@ import LoginModalStore from '../../Stores/UI/LoginModalStore';
 const PaginationStore = alt.getStore('PaginationStore');
 const ListStore = alt.getStore('ListStore');
 
+import moment from 'moment';
+
 const VenalinkActiveList = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
@@ -25,7 +26,6 @@ const VenalinkActiveList = connectToStores({
       GnbStore,
       LoginStore,
       CommunityStore,
-      UserStore,
       SearchStore,
 
       // UI Stores
@@ -49,7 +49,7 @@ const VenalinkActiveList = connectToStores({
       CommunityStore: CommunityStore.getState(),
       SearchStore: SearchStore.getState(),
 
-      UserStore: UserStore.getState(),
+      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
       PaginationStore: PaginationStore.getState(),
       ListStore: ListStore.getState(),
 
@@ -63,7 +63,40 @@ const VenalinkActiveList = connectToStores({
     }
   }
 }, React.createClass({
+  createVenalinkItem(venalink) {
+    "use strict";
+
+    let status, positive;
+    switch(venalink.get('is_activate')) {
+      case true:
+        status = '활성화';
+        positive = 1;
+        break;
+      case false:
+        status = '종료';
+        positive = 0;
+        break;
+    }
+
+    return (
+      <tr key={venalink.get('id')}>
+        <td>포스트</td>
+        <td className="positive">{status}</td>
+        <td className="right aligned">{moment(venalink.get('active_at')).format('YY/MM/DD hh:mm:ss')}</td>
+        <td className="right aligned">{moment(venalink.get('terminate_at')).format('YY/MM/DD hh:mm:ss')}</td>
+        <td className="positive right aligned">{venalink.get('participants').size}</td>
+        <td className="right aligned ">{venalink.get('total_amount_r')}</td>
+        <td className="right aligned">{venalink.get('pay_per_click_r')}</td>
+        <td className="positive right aligned">{venalink.get('total_pay_r')/venalink.get('pay_per_click_r')}</td>
+        <td className="right aligned">{venalink.get('total_pay_r')}</td>
+        <td className="right aligned">{venalink.get('total_remain_r')}</td>
+      </tr>
+    )
+  },
   render() {
+    const {UserStore} = this.props;
+    const venalinks = UserStore.get('venalinks');
+
     return (
       <div>
         <div className="ui cards centered" style={{padding: 10}}>
@@ -133,54 +166,10 @@ const VenalinkActiveList = connectToStores({
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>포스트</td>
-              <td className="positive">활성화</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="positive right aligned">12</td>
-              <td className="right aligned ">100,000</td>
-              <td className="right aligned">5</td>
-              <td className="positive right aligned">12,000</td>
-              <td className="right aligned">60,000</td>
-              <td className="right aligned">40,000</td>
-            </tr>
-            <tr>
-              <td>포스트</td>
-              <td className="positive">활성화</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="positive right aligned">12</td>
-              <td className="right aligned ">100,000</td>
-              <td className="right aligned">5</td>
-              <td className="positive right aligned">12,000</td>
-              <td className="right aligned">60,000</td>
-              <td className="right aligned">40,000</td>
-            </tr>
-            <tr>
-              <td>포스트</td>
-              <td className="positive">활성화</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="positive right aligned">12</td>
-              <td className="right aligned ">100,000</td>
-              <td className="right aligned">5</td>
-              <td className="positive right aligned">12,000</td>
-              <td className="right aligned">60,000</td>
-              <td className="right aligned">40,000</td>
-            </tr>
-            <tr>
-              <td>포스트</td>
-              <td className="positive">활성화</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="positive right aligned">12</td>
-              <td className="right aligned ">100,000</td>
-              <td className="right aligned">5</td>
-              <td className="positive right aligned">12,000</td>
-              <td className="right aligned">60,000</td>
-              <td className="right aligned">40,000</td>
-            </tr>
+            {
+              venalinks &&
+              venalinks.map(this.createVenalinkItem)
+            }
             </tbody>
             <tfoot>
             <tr>

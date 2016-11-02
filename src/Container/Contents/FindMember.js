@@ -1,7 +1,7 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 import UserActions from '../../Actions/UserActions';
 import ResetPasswordStore from '../../Stores/UI/ResetPasswordStore';
 import AuthStore from '../../Stores/UI/AuthStore';

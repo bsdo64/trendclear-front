@@ -778,7 +778,7 @@ const PostPage = React.createClass({
         }
 
         const author = Users.get(post.get('author').toString());
-        const user = AuthStore.get('userId') ? Users.get(AuthStore.get('userId').toString()) : null;
+        const user = AuthStore.get('userId') ? Users.get(String(AuthStore.get('userId'))) : null;
         const LoginModalFlag = LoginModalStore.get('openLoginModal');
 
         return (

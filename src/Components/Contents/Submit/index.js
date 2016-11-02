@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom/server';
 import Select from 'react-select';
 import cx from 'classnames';
 import Recaptcha from 'react-recaptcha';
-import {mapKeys} from 'lodash';
 import {medium, mediumInsertConfig} from './config';
 
 import AvatarImage from '../../AvatarImage';
@@ -458,9 +457,14 @@ const SubmitContents = React.createClass({
       if (prefixesData) {
         prefixes = prefixesData.toJS();
         options = prefixes.map(function (item) {
-          return mapKeys(item, function (value, key) {
-            return key === 'id' ? 'value' : (key === 'name' ? 'label' : key)
-          })
+          let result = {};
+          for (let key in item) {
+            if (item.hasOwnProperty(key)) {
+              const k = key === 'id' ? 'value' : (key === 'name' ? 'label' : key);
+              result[k] = item[key];
+            }
+          }
+          return result;
         });
       }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import alt from '../../Utils/alt';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 
 import Best from '../../Components/Contents/Best';
 

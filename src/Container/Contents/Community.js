@@ -1,9 +1,8 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 
 import LoginStore from '../../Stores/LoginStore';
 import CommunityStore from '../../Stores/CommunityStore';
-import UserStore from '../../Stores/UserStore';
 
 import Posts from '../../Stores/Domain/Posts';
 import Comments from '../../Stores/Domain/Comments';
@@ -27,7 +26,6 @@ const CommunityContainer = connectToStores({
       // Old
       LoginStore,
       CommunityStore,
-      UserStore,
 
       // UI Stores
       AuthStore,
@@ -50,7 +48,7 @@ const CommunityContainer = connectToStores({
     return {
       LoginStore: LoginStore.getState(),
       CommunityStore: CommunityStore.getState(),
-      UserStore: UserStore.getState(),
+      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
 
       // UI Stores
       AuthStore: AuthStore.getState(),

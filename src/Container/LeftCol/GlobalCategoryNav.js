@@ -1,5 +1,5 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 import GnbStore from '../../Stores/GnbStore';
 
 import CategoryNav from '../../Components/CategoryNav';

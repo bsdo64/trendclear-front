@@ -6,7 +6,7 @@ var root = path.resolve(__dirname, '../');
 var autoprefixer = require('autoprefixer');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-source-map',
   debug: true,
   entry: {
     Entry: [

@@ -10,3 +10,8 @@
 .dropdown--active .dropdown__content {
   display: block;
 }
+
+.react-draggable {
+  position: fixed !important;
+  z-index: 100;
+}

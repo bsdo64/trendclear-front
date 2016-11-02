@@ -1,7 +1,6 @@
 import React from 'react';
 import alt from '../../Utils/alt';
-import connectToStores from 'alt-utils/lib/connectToStores';
-import UserStore from '../../Stores/UserStore';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 import ForumSettingStore from '../../Stores/UI/ForumSettingStore';
 
 import ForumSettingsComponent from '../../Components/Contents/ForumSetting';
@@ -10,8 +9,6 @@ const ForumSettingsContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
     return [
-      UserStore,
-
       // UI Stores
       alt.getStore('AuthStore'),
       alt.getStore('PaginationStore'),
@@ -30,7 +27,7 @@ const ForumSettingsContainer = connectToStores({
 
   getPropsFromStores() {
     return {
-      UserStore: UserStore.getState(),
+      UserStore: getLoginUser(alt.getStore('Users').getState(), alt.getStore('AuthStore').getState()),
 
       // UI Stores
       AuthStore: alt.getStore('AuthStore').getState(),

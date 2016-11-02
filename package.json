@@ -34,7 +34,6 @@
     "immutable": "^3.8.1",
     "jquery": "latest",
     "js-video-url-parser": "^0.1.6",
-    "lodash": "^4.14.0",
     "marked": "^0.3.6",
     "metafetch": "github:bsdo64/metafetch",
     "moment": "^2.14.1",
@@ -52,7 +51,7 @@
     "react-dom": "^15.3.2",
     "react-draggable": "^2.2.2",
     "react-google-maps": "^4.11.0",
-    "react-modal": "^1.4.0",
+    "react-modal": "^1.5.2",
     "react-pagify": "^2.1.1",
     "react-recaptcha": "^2.1.1",
     "react-router": "^2.6.0",
@@ -66,7 +65,8 @@
     "serve-favicon": "~2.3.0",
     "socket.io-client": "^1.4.8",
     "superagent": "^2.1.0",
-    "vn-config": "github:bsdo64/vn-config"
+    "vn-config": "github:bsdo64/vn-config",
+    "webpack-dev-server": "^1.16.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.7",
@@ -93,6 +93,7 @@
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
+    "webpack-bundle-analyzer": "^1.3.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.12.1"

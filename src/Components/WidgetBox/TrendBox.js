@@ -11,6 +11,112 @@ import Draggable from 'react-draggable'; // The default
 
 import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
 
+const rebuildTooltip = function rebuildTooltip(itemCode) {
+  "use strict";
+  VenaStoreActions.tooltipInit(itemCode);
+  ReactTooltip.rebuild();
+};
+
+const Inventory = React.createClass({
+
+  createTableColum(listItem, c) {
+    "use strict";
+
+    let item;
+    if (listItem && (listItem.get('item_count') > 0)) {
+      item = (
+        <div
+          data-tip
+          data-for={'item'}
+          className="content"
+          onMouseOver={rebuildTooltip.bind(this, listItem.get('item').get('code'))}
+        >
+          <span className="item-count">{listItem.get('item_count')}</span>
+          <img className="item-image" src={listItem.get('item').get('image')} />
+        </div>
+      )
+    } else {
+      item = <div className="content"></div>
+    }
+
+    return (
+      <td key={c}>
+        {item}
+      </td>
+    )
+  },
+  createTableRow(inventory, col, row) {
+    "use strict";
+    const self = this;
+    let tableRows = [];
+    let r = 0;
+    let itemIndex = 0;
+
+    while (++r <= row) {
+      let tableCols = [];
+      let c = 0;
+
+      while (++c <= col) {
+        const listItem = inventory.get('items').get(itemIndex);
+
+        tableCols.push(this.createTableColum(listItem, c));
+
+        itemIndex = itemIndex + 1;
+      }
+
+      tableRows.push(
+        <tr key={r}>
+          {tableCols}
+        </tr>
+      );
+    }
+    return tableRows;
+  },
+  createTable(inventory, colNum, rowNum) {
+    "use strict";
+
+    return (
+      <table className="inventory_table">
+        <tbody>
+        {
+          this.createTableRow(inventory, colNum, rowNum)
+        }
+        </tbody>
+      </table>
+    );
+  },
+  render() {
+
+    const inventory = this.props.inventory;
+    const table = this.createTable(inventory, 4, 8);
+
+    return (
+      <div className="user_inventory"
+           style={{
+             background: '#fff',
+             border: '1px solid #eee',
+             width: 202
+           }}
+      >
+        <h4>인벤토리</h4>
+        <div className="inventory_box">
+          <ul className="inventory_tap">
+            <li className="active">커뮤니티</li>
+            <li>뱃지</li>
+            <li>이모티콘</li>
+          </ul>
+          <div className="inventory_scroll">
+            {
+              table
+            }
+          </div>
+
+        </div>
+      </div>
+    );
+  }
+});
+
 const Timer = React.createClass({
   getInitialState: function() {
     return {init: this.props.init || 0};
@@ -201,22 +307,16 @@ const TrendBox = React.createClass({
     VenaStoreActions.initItems();
   },
 
-  rebuildTooltip(itemCode) {
-    "use strict";
-    VenaStoreActions.tooltipInit(itemCode);
-    ReactTooltip.rebuild();
-  },
-
   createSkill(value, key) {
     "use strict";
 
     let usingTime, cooltimeSec, endTime, gap, result;
     if (value.get('using_at')) {
-      usingTime = new Date(value.get('using_at'));
+      usingTime = moment(value.get('using_at'));
       cooltimeSec = value.getIn(['skill', 'property', 'cooltime']);
-      endTime = new Date(moment(usingTime) + cooltimeSec * 1000);
+      endTime = moment(usingTime).add(cooltimeSec, 'seconds');
 
-      gap = (endTime.getTime() - new Date().getTime()) / 1000;
+      gap = (endTime - moment() ) / 1000;
       result = gap > 0 ? parseInt(gap, 10) : 0;
     } else {
       result = 0;
@@ -286,7 +386,6 @@ const TrendBox = React.createClass({
     let iconImg, gradeImg;
 
     const inventory = user.inventories.find(i => i.get('type') === 'community');
-    console.log(inventory);
 
     if (icon_img) {
       iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
@@ -521,7 +620,7 @@ const TrendBox = React.createClass({
                                       data-tip
                                       data-for={'item'}
                                       className="image"
-                                      onMouseOver={this.rebuildTooltip.bind(this, item.get('code'))}
+                                      onMouseOver={rebuildTooltip.bind(this, item.get('code'))}
                                     >
                                       <img src={item.get('image')} />
 
@@ -580,67 +679,9 @@ const TrendBox = React.createClass({
                           </div>
                         </div>
                       </div>
-                      <div className="user_inventory" >
-                        <h4>인벤토리</h4>
-                        <div className="inventory_box">
-                          <ul className="inventory_tap">
-                            <li className="active">커뮤니티</li>
-                            <li>뱃지</li>
-                            <li>이모티콘</li>
-                          </ul>
-                          <div className="inventory_scroll">
-                            <table className="inventory_table">
-                              <tbody>
-                              {(function (table, col, row) {
-                                let r = 0;
-                                let itemIndex = 0;
-
-                                while (++r <= row) {
-                                  let tableRow = [];
-                                  let c = 0;
-
-                                  while (++c <= col) {
-                                    const listItem = inventory.get('items').get(itemIndex);
-
-                                    tableRow.push(
-                                      <td key={c}>
-                                        {
-                                          listItem && (listItem.get('item_count') > 0) &&
-                                          <div
-                                            data-tip
-                                            data-for={'item'}
-                                            className="content"
-                                            onMouseOver={self.rebuildTooltip.bind(self, listItem.get('item').get('code'))}
-                                          >
-                                            <span className="item-count">{listItem.get('item_count')}</span>
-                                            <img className="item-image" src={listItem.get('item').get('image')} />
-                                          </div>
-                                        }
-                                        {
-                                          !listItem &&
-                                          <div className="content"></div>
-                                        }
-                                      </td>
-                                    );
-
-                                    itemIndex = itemIndex + 1;
-                                  }
-
-                                  table.push(
-                                    <tr key={r}>
-                                      {tableRow}
-                                    </tr>
-                                  );
-                                }
-                                return table;
-                              })([], 4, 8)}
-                              </tbody>
-                            </table>
-
-                          </div>
-
-                        </div>
-                      </div>
+                      <Inventory
+                        inventory={inventory}
+                      />
                     </div>
 
                   </Modal>
@@ -725,75 +766,18 @@ const TrendBox = React.createClass({
           </div>
         </div>
         <Draggable
-          defaultPosition={{x: 0, y: 0}}
+
+          defaultPosition={{x: 150, y: 0}}
           position={null}
-          grid={[25, 25]}
+          grid={[10, 10]}
           zIndex={101}
           onStart={this.handleStart}
           onDrag={this.handleDrag}
           onStop={this.handleStop}>
           <div style={{position: 'absolute'}}>
-            <div className="user_inventory" style={{background: '#fff'}} >
-              <h4>인벤토리</h4>
-              <div className="inventory_box">
-                <ul className="inventory_tap">
-                  <li className="active">커뮤니티</li>
-                  <li>뱃지</li>
-                  <li>이모티콘</li>
-                </ul>
-                <div className="inventory_scroll">
-                  <table className="inventory_table">
-                    <tbody>
-                    {(function (table, col, row) {
-                      let r = 0;
-                      let itemIndex = 0;
-
-                      while (++r <= row) {
-                        let tableRow = [];
-                        let c = 0;
-
-                        while (++c <= col) {
-                          const listItem = inventory.get('items').get(itemIndex);
-
-                          tableRow.push(
-                            <td key={c}>
-                              {
-                                listItem && (listItem.get('item_count') > 0) &&
-                                <div
-                                  data-tip
-                                  data-for={'item'}
-                                  className="content"
-                                  onMouseOver={self.rebuildTooltip.bind(self, listItem.get('item').get('code'))}
-                                >
-                                  <span className="item-count">{listItem.get('item_count')}</span>
-                                  <img className="item-image" src={listItem.get('item').get('image')} />
-                                </div>
-                              }
-                              {
-                                !listItem &&
-                                <div className="content"></div>
-                              }
-                            </td>
-                          );
-
-                          itemIndex = itemIndex + 1;
-                        }
-
-                        table.push(
-                          <tr key={r}>
-                            {tableRow}
-                          </tr>
-                        );
-                      }
-                      return table;
-                    })([], 4, 8)}
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-            </div>
+            <Inventory
+              inventory={inventory}
+            />
           </div>
         </Draggable>
       </div>

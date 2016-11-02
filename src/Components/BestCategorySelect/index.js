@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
-import {map} from 'lodash';
 import GnbActions from '../../Actions/GnbActions';
 
 import Collection from './Collection';
@@ -47,8 +46,8 @@ const Temp = React.createClass({
     const categoriesMap = UserStore.get('follow_forums')
       ? UserStore
         .get('follow_forums')
-        .map(forumData => {
-          return {value: forumData.get('id'), label: forumData.get('title')}
+        .map(forumId => {
+          return {value: forumId, label: Forums.getIn([forumId.toString(), 'title'])}
         })
         .sortBy(item => item.label)
         .toJS()

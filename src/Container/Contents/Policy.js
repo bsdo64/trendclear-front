@@ -2,7 +2,8 @@ import React from 'react';
 import alt from '../../Utils/alt';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import ActivityStore from '../../Stores/ActivityStore';
-import UserStore from '../../Stores/UserStore';
+import {Map} from 'immutable';
+import {getLoginUser} from '../Util/func'
 
 import Policy from '../../Components/Contents/Policy';
 
@@ -10,8 +11,7 @@ const ActivityContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
     return [
-      ActivityStore, 
-      UserStore,
+      ActivityStore,
 
       // UI Stores
       alt.getStore('LoginModalStore'),
@@ -26,9 +26,10 @@ const ActivityContainer = connectToStores({
   },
 
   getPropsFromStores() {
+
     return {
       ActivityStore: ActivityStore.getState(),
-      UserStore: UserStore.getState(),
+      UserStore: getLoginUser(alt.getStore('Users').getState(), alt.getStore('AuthStore').getState()),
 
       // UI Stores
       LoginModalStore: alt.getStore('LoginModalStore').getState(),

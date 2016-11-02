@@ -37,7 +37,7 @@ const NotiItem = React.createClass({
         return (
           <div className={notiItemClass} onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
             <div className="label">
-              <img src="http://dummyimage.com/40x40" />
+              <img src="/images/40x40.png" />
             </div>
             <div className="content">
               <div className="summary" onClick={this.props.close}>
@@ -54,7 +54,7 @@ const NotiItem = React.createClass({
         return (
           <div className={notiItemClass} onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
             <div className="label">
-              <img src="http://dummyimage.com/40x40" />
+              <img src="/images/40x40.png" />
             </div>
             <div className="content">
               <div className="summary">

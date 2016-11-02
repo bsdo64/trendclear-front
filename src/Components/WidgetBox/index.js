@@ -11,7 +11,7 @@ require('./index.scss');
 
 class WidgetBox extends Component {
   render() {
-    const {LoginStore, UserStore, ShoppingStore, location} = this.props;
+    const {LoginStore, UserStore, ShoppingStore, Forums, location} = this.props;
     const isLogin = LoginStore.get('isLogin');
     const user = {
       user: UserStore.get('user'),
@@ -79,28 +79,31 @@ class WidgetBox extends Component {
               >
                 <div className="ui list forum_created_list">
                   {
-                    user.forumManaged.sortBy(item => item.get('title')).map(forum => {
-                      const styleActive = cx('', {
-                        active: location.query.forumId === forum.get('id').toString()
-                      });
+                    user.forumManaged
+                      .map(forumId => Forums.get(forumId.toString()))
+                      .sortBy(item => item.get('title'))
+                      .map(forum => {
+                        const styleActive = cx('', {
+                          active: location.query.forumId === forum.get('id').toString()
+                        });
 
-                      return (
-                        <div key={forum.get('id')} className="item">
-                          <i className="fa fa-inbox icon" />
-                          <div className="content">
-                            <div className="header">
-                              <Link to={`/community?forumId=${forum.get('id')}`} className={styleActive}>
-                                {forum.get('title')}
-                                {
-                                  !user.forumCreated.includes(forum) &&
-                                  ' (매)'
-                                }
-                              </Link>
+                        return (
+                          <div key={forum.get('id')} className="item">
+                            <i className="fa fa-inbox icon" />
+                            <div className="content">
+                              <div className="header">
+                                <Link to={`/community?forumId=${forum.get('id')}`} className={styleActive}>
+                                  {forum.get('title')}
+                                  {
+                                    !user.forumCreated.includes(forum.get('id')) &&
+                                    ' (매)'
+                                  }
+                                </Link>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )
-                    })
+                        )
+                      })
                   }
                 </div>
 

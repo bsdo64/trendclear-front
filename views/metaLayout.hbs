@@ -10,26 +10,10 @@
   </head>
 
   <script>
-    var sBrowser, sUsrAg = navigator.userAgent;
+    var element = document.querySelector('meta[name="og:url"]') || document.querySelector('meta[property="og:url"]');
+    var url = element && element.getAttribute("content");
 
-    if(sUsrAg.indexOf("Chrome") > -1) {
-      sBrowser = "Google Chrome";
-    } else if (sUsrAg.indexOf("Safari") > -1) {
-      sBrowser = "Apple Safari";
-    } else if (sUsrAg.indexOf("Opera") > -1) {
-      sBrowser = "Opera";
-    } else if (sUsrAg.indexOf("Firefox") > -1) {
-      sBrowser = "Mozilla Firefox";
-    } else if (sUsrAg.indexOf("MSIE") > -1) {
-      sBrowser = "Microsoft Internet Explorer";
-    }
-
-    if (sBrowser) {
-      var element = document.querySelector('meta[name="og:url"]') || document.querySelector('meta[property="og:url"]');
-      var url = element && element.getAttribute("content");
-
-      window.location.href = url || window.location.href;
-    }
+    window.location.href = url || window.location.href;
 
   </script>
   <body>

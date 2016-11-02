@@ -1,10 +1,9 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 import alt from '../../Utils/alt';
 
 import LoginStore from '../../Stores/LoginStore';
 import CommunityStore from '../../Stores/CommunityStore';
-import UserStore from '../../Stores/UserStore';
 import SearchStore from '../../Stores/SearchStore';
 import GnbStore from '../../Stores/GnbStore';
 
@@ -18,6 +17,9 @@ import LoginModalStore from '../../Stores/UI/LoginModalStore';
 const PaginationStore = alt.getStore('PaginationStore');
 const ListStore = alt.getStore('ListStore');
 
+import cx from 'classnames';
+import moment from 'moment';
+
 const PointListContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
@@ -25,7 +27,6 @@ const PointListContainer = connectToStores({
       GnbStore,
       LoginStore,
       CommunityStore,
-      UserStore,
       SearchStore,
 
       // UI Stores
@@ -49,7 +50,7 @@ const PointListContainer = connectToStores({
       CommunityStore: CommunityStore.getState(),
       SearchStore: SearchStore.getState(),
 
-      UserStore: UserStore.getState(),
+      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
       PaginationStore: PaginationStore.getState(),
       ListStore: ListStore.getState(),
 
@@ -63,7 +64,94 @@ const PointListContainer = connectToStores({
     }
   }
 }, React.createClass({
+  getInitialState() {
+    return {
+      pointType: 'TP',
+
+    };
+  },
+
+  togglePointType(point) {
+    "use strict";
+
+    this.setState({pointType: point});
+  },
+
+  createAccount(account) {
+    "use strict";
+
+    const {AuthStore} = this.props;
+    const userId = AuthStore.get('userId');
+
+    let type, itemType, totalPoint, amountPoint, positive;
+    switch(account.get('type')) {
+      case 'initial':
+        type = '초기화';
+        positive = 1;
+        break;
+      case 'withdraw':
+        type = '소비';
+        positive = 0;
+        break;
+      case 'deposit':
+        type = '획득';
+        positive = 1;
+        break;
+      default:
+        type = '오류';
+    }
+
+    switch(account.getIn(['trade', 'action'])) {
+      case 'purchaseItem':
+        itemType = '아이템 구입';
+        break;
+      case 'activateVenalink':
+        itemType = '베나링크 활성화';
+        break;
+      case undefined:
+        itemType = '';
+        break;
+      default:
+        itemType = '알 수 없는 타입';
+    }
+
+    switch(this.state.pointType) {
+      case 'TP':
+        totalPoint = account.get('total_t');
+        amountPoint = account.getIn(['trade', 'amount_t']);
+        break;
+      case 'RP':
+        totalPoint = account.get('total_r');
+        amountPoint = account.getIn(['trade', 'amount_r']);
+        break;
+    }
+
+    const positiveRightStyle = cx('right aligned', {
+      positive: positive,
+      negative: !positive
+    });
+    const positiveCenterStyle = cx('center aligned', {
+      positive: positive,
+      negative: !positive
+    });
+
+    return (
+      <tr key={account.get('id')}>
+        <td className={positiveCenterStyle}>{type}</td>
+        <td>{itemType}</td>
+        <td className="right aligned">{moment(account.get('created_at')).format('YYYY/MM/DD hh:mm')}</td>
+        <td className="right aligned ">{account.getIn(['trade', 'target_count'])}</td>
+        <td className={positiveRightStyle}>{positive  ? '+' : '-'} {amountPoint}</td>
+        <td className="right aligned">{totalPoint}</td>
+      </tr>
+    )
+  },
+
   render() {
+    const {UserStore} = this.props;
+    const accounts = UserStore.get('account');
+    const trendbox = UserStore.get('trendbox');
+
     return (
       <div>
         <div className="ui cards centered" style={{paddingTop: 20}}>
@@ -74,10 +162,10 @@ const PointListContainer = connectToStores({
 
               </div>
               <div className="description" style={{paddingBottom: 10, fontSize: 42, textAlign: 'right'}}>
-                100,000,000 P
+                {trendbox.get('T')} P
               </div>
             </div>
-            <div className="ui bottom attached button">
+            <div className="ui bottom attached button" onClick={this.togglePointType.bind(this, 'TP')}>
               내역 보기
             </div>
           </div>
@@ -85,13 +173,13 @@ const PointListContainer = connectToStores({
             <div className="content">
               <div className="header">나의 RP</div>
               <div className="description" style={{paddingBottom: 10, fontSize: 42, textAlign: 'right'}}>
-                0 P
+                {trendbox.get('R')} P
               </div>
               <div className="description" style={{textAlign: 'right'}}>
                 충전하기
               </div>
             </div>
-            <div className="ui bottom attached button">
+            <div className="ui bottom attached button" onClick={this.togglePointType.bind(this, 'RP')}>
               내역 보기
             </div>
           </div>
@@ -101,71 +189,21 @@ const PointListContainer = connectToStores({
           <table className="ui celled table">
             <thead>
             <tr>
-              <th className="one wide">획득 / 사용</th>
-              <th className="four wide">타입</th>
-              <th className="two wide">시간</th>
-              <th>금액</th>
+              <th className="two wide">획득 / 사용</th>
+              <th className="two wide">타입</th>
+              <th className="three wide">시간</th>
               <th className="two wide">수량</th>
+              <th>금액</th>
               <th>총계</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td className="positive">획득</td>
-              <td>글쓰기</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="positive right aligned">+ 150</td>
-              <td className="right aligned ">1</td>
-              <td className="right aligned">3150</td>
-            </tr>
-            <tr><td><div>
-              <div className="ui content">
-                <div className="meta best_post_meta">
-                  <div className="ui horizontal divided list">
-                    <div className="item"><a href="/community?forumId=141">aasdfadsfadf</a></div>
-                  </div>
-                </div>
-                <h3 className="best_post_title"><a href="/community?forumId=141&amp;postId=231">asdf</a>
-                </h3>
-                <div className="meta best_post_meta">
-                  <div className="ui horizontal divided list">
-                    <div className="item">
-                      <div className="author_nick"><a >nick1</a>
-                        <div className="__react_component_tooltip type-dark " data-id="tooltip"></div>
-                      </div>
-                      <div className="author_icon"></div>
-                    </div>
-                    <div className="item">하루 전</div>
-                  </div>
-                </div>
-                <div className="ui description best_post_content"><p className="">asdvasdfe</p></div>
-
-              </div>
-            </div></td></tr>
-            <tr>
-              <td className="negative">사용</td>
-              <td>글쓰기</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="negative right aligned">- 150</td>
-              <td className="right aligned ">1</td>
-              <td className="right aligned">3150</td>
-            </tr>
-            <tr>
-              <td className="positive">획득</td>
-              <td>글쓰기</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="positive right aligned">+ 150</td>
-              <td className="right aligned ">1</td>
-              <td className="right aligned">3150</td>
-            </tr>
-            <tr>
-              <td className="positive">획득</td>
-              <td>글쓰기</td>
-              <td className="right aligned">2013-11-11<br />15:43</td>
-              <td className="positive right aligned">+ 150</td>
-              <td className="right aligned ">1</td>
-              <td className="right aligned">3150</td>
-            </tr>
+            {
+              accounts &&
+              accounts
+                .filter(a => (a.get('point_type') === this.state.pointType) || (a.get('point_type') === 'Both'))
+                .map(this.createAccount)
+            }
             </tbody>
             <tfoot>
               <tr>

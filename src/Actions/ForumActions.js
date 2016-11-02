@@ -16,7 +16,7 @@ class ForumActions {
       .then((forum) => {
 
         if (forum && forum.id) {
-          browserHistory.push(`/community?forumId=${forum.id}`)
+          return browserHistory.push(`/community?forumId=${forum.id}`)
         }
       })
       .catch((err) => {

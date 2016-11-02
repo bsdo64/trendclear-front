@@ -1,9 +1,10 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 import GnbStore from '../../Stores/GnbStore';
 import LoginStore from '../../Stores/LoginStore';
 import SubmitForumStore from '../../Stores/UI/SubmitForumStore';
-import UserStore from '../../Stores/UserStore';
+import Users from '../../Stores/Domain/Users';
+import AuthStore from '../../Stores/UI/AuthStore';
 import marked from '../../Components/Lib/Marked';
 
 import ForumActions from '../../Actions/ForumActions';
@@ -15,13 +16,13 @@ function isNumeric(n) {
 const SubmitForm = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [GnbStore, LoginStore, UserStore, SubmitForumStore];
+    return [GnbStore, LoginStore, Users, AuthStore, SubmitForumStore];
   },
 
   getPropsFromStores() {
     return {
       GnbStore: GnbStore.getState(),
-      UserStore: UserStore.getState(),
+      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
       LoginStore: LoginStore.getState(),
       SubmitForumStore: SubmitForumStore.getState()
     }

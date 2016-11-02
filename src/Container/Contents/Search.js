@@ -1,10 +1,9 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 import alt from '../../Utils/alt';
 
 import LoginStore from '../../Stores/LoginStore';
 import CommunityStore from '../../Stores/CommunityStore';
-import UserStore from '../../Stores/UserStore';
 import SearchStore from '../../Stores/SearchStore';
 import GnbStore from '../../Stores/GnbStore';
 
@@ -27,7 +26,6 @@ const SearchContainer = connectToStores({
       GnbStore,
       LoginStore,
       CommunityStore,
-      UserStore,
       SearchStore,
 
       // UI Stores
@@ -51,7 +49,7 @@ const SearchContainer = connectToStores({
       CommunityStore: CommunityStore.getState(),
       SearchStore: SearchStore.getState(),
 
-      UserStore: UserStore.getState(),
+      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
       PaginationStore: PaginationStore.getState(),
       ListStore: ListStore.getState(),
 

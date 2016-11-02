@@ -6,7 +6,6 @@ require('./header.scss');
 const BestHeader = React.createClass({
   displayName: 'BestHeader',
   createBreadCrumbs(array = []) {
-    "use strict";
 
     return array.map((v, index) => {
       const component = [];

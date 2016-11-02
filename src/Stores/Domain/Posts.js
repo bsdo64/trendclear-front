@@ -6,6 +6,7 @@ import DeleteActions from '../../Actions/DeleteActions';
 import GnbActions from '../../Actions/GnbActions';
 import CommunityActions from '../../Actions/CommunityActions';
 import CommentActions from '../../Actions/CommentActions';
+import VenaStoreActions from '../../Actions/VenaStoreActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
 
 import GnbStore from '../../Stores/GnbStore';
@@ -20,6 +21,7 @@ class Posts {
     this.bindActions(GnbActions);
     this.bindActions(CommunityActions);
     this.bindActions(CommentActions);
+    this.bindActions(VenaStoreActions);
     this.state = Immutable.Map({
 
     });
@@ -82,6 +84,13 @@ class Posts {
     if (deletedItem.id && !deletedItem.comment_id) {
       let deletedPosts = this.state.updateIn([deletedItem.id.toString(), 'deleted'], v => true);
       this.setState(deletedPosts);
+    }
+  }
+
+  onRequestActivateVenalink(result) {
+    if (result.success) {
+      let newPosts = this.state.updateIn([result.venalink.post_id.toString(), 'venalinks'], v => v.push(Map(result.venalink)));
+      this.setState(newPosts);
     }
   }
 }

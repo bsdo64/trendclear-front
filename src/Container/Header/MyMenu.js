@@ -1,8 +1,9 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
 import LoginStore from '../../Stores/LoginStore';
-import UserStore from '../../Stores/UserStore';
 import Notis from '../../Stores/Domain/Notis';
+import Users from '../../Stores/Domain/Users';
+import AuthStore from '../../Stores/UI/AuthStore';
 
 import MyArea from '../../Components/MyArea';
 
@@ -11,14 +12,14 @@ import {Noti, Point} from '../../Utils/Socket';
 const MyMenuContainer = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [LoginStore, UserStore, Notis]
+    return [LoginStore, Users, AuthStore, Notis]
   },
 
   getPropsFromStores() {
     return {
       Notis: Notis.getState(),
       LoginStore: LoginStore.getState(),
-      UserStore: UserStore.getState()
+      UserStore: getLoginUser(Users.getState(), AuthStore.getState())
     }
   }
 }, React.createClass({

@@ -49,6 +49,20 @@ class VenaStoreActions {
         });
     }
   }
+
+  requestParticipateVenalink(params) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .post('/venalink/participate', params)
+        .then((res) => {
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    }
+  }
 }
 
 export default alt.createActions(VenaStoreActions);

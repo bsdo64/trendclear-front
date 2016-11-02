@@ -46,6 +46,13 @@ class ShoppingStore {
     });
     this.setState(newState);
   }
+
+  onRequestPurchaseItem(result) {
+    const newState = this.state.merge({
+      openPurchaseWindow: !this.state.get('openPurchaseWindow')
+    });
+    this.setState(newState);
+  }
 }
 
 export default alt.createStore(immutable(ShoppingStore), ShoppingStore.displayName);
