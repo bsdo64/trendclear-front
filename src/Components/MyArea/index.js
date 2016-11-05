@@ -194,7 +194,6 @@ const MyArea = React.createClass({
   render() {
     const { LoginStore } = this.props;
     const isLogin = LoginStore.get('isLogin');
-    const openLoginModal = LoginStore.get('openLoginModal');
     
     return (
       <div className="my_area">
@@ -204,7 +203,6 @@ const MyArea = React.createClass({
             !isLogin &&
             <LoginButton
               location={this.props.location}
-              openLoginModal={openLoginModal}
             />
           }
 

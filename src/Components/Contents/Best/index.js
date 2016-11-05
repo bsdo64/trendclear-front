@@ -72,7 +72,7 @@ const BestBox = React.createClass({
   },
 
   render() {
-    const {location, listName, ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
+    const {location, listName, ListStore, Posts, Users, AuthStore, PaginationStore} = this.props;
     const Collection = PaginationStore.get(listName);
     const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
     return (
@@ -89,7 +89,6 @@ const BestBox = React.createClass({
           PostItems={Posts}
           AuthorItems={Users}
           User={AuthStore}
-          LoginModalFlag={LoginModalStore.get('openLoginModal')}
           scrollHeight={ListStore.get('scrollHeight')}
         />
 

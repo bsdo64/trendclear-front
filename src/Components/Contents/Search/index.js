@@ -68,7 +68,10 @@ const SearchBox = React.createClass({
   openLoginModal() {
     const modalFlag = this.props.LoginModalStore.get('openLoginModal');
     const location = this.props.location;
-    LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+    LoginActions.toggleLoginModal({
+      contentType: 'Login',
+      location: location.pathname + location.search
+    });
   },
   toggleFollow(isForumFollow, forumId) {
     "use strict";
@@ -277,7 +280,6 @@ const SearchBox = React.createClass({
           PostItems={Posts}
           AuthorItems={Users}
           User={AuthStore}
-          LoginModalFlag={LoginModalStore.get('openLoginModal')}
           scrollHeight={ListStore.get('scrollHeight')}
         />
 

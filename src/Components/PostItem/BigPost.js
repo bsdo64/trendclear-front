@@ -37,9 +37,12 @@ const BigPost = React.createClass({
   sendLike() {
     "use strict";
 
-    const {post, user, loginModalFlag} = this.props;
+    const {post, user} = this.props;
     if (!user) {
-      LoginActions.toggleLoginModal(loginModalFlag, '/');
+      LoginActions.toggleLoginModal({
+        contentType: 'Login',
+        location: '/'
+      });
     } else {
       CommunityActions.likePost(post.get('id'));
     }

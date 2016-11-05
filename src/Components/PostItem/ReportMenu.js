@@ -26,7 +26,10 @@ function createToggleModal(props) {
 
       case 'report':
         console.log('포스트 신고 Id : ', targetId);
-        ReportActions.openReportModal(reportObj);
+        ReportActions.toggleReportModal({
+          data: reportObj,
+          contentType: 'Report'
+        });
         break;
       case 'report_ad':
 
@@ -45,17 +48,26 @@ function createToggleModal(props) {
         CommunityActions.triggerUpdate({targetId, type:'subComment'});
         break;
       case 'delete_post':
-        DeleteActions.openModal(reportObj);
+        DeleteActions.toggleModal({
+          data: reportObj,
+          contentType: 'DeleteItem'
+        });
         console.log('포스트 삭제 Id : ', targetId);
         break;
       case 'delete_comment':
-        DeleteActions.openModal(reportObj);
+        DeleteActions.toggleModal({
+          data: reportObj,
+          contentType: 'DeleteItem'
+        });
         console.log('댓글 삭제 Id : ', targetId);
         break;
       case 'delete_subComment':
         reportObj.type = 'sub_comment';
 
-        DeleteActions.openModal(reportObj);
+        DeleteActions.toggleModal({
+          data: reportObj,
+          contentType: 'DeleteItem'
+        });
         console.log('대댓글 삭제 Id : ', targetId);
         break;
       default:

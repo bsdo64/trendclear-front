@@ -4,7 +4,7 @@ import LoginStore from '../../Stores/LoginStore';
 import Users from '../../Stores/Domain/Users';
 import AuthStore from '../../Stores/UI/AuthStore';
 
-import LoginModalBox from '../../Components/LoginModalBox';
+import LoginModalBox from '../../Components/Modal/Components/Login/index';
 
 const LoginModalContainer = connectToStores({
   getStores() {

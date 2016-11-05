@@ -8,7 +8,7 @@ import Users from '../../Stores/Domain/Users';
 import AuthStore from '../../Stores/UI/AuthStore';
 import SubComments from '../../Stores/Domain/SubComments';
 
-import ReportModalBox from '../../Components/ReportModalBox';
+import ReportModalBox from '../../Components/Modal/Components/Report/index';
 
 const ReportModalContainer = connectToStores({
   getStores() {

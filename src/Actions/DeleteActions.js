@@ -3,17 +3,7 @@ import Api from '../Utils/ApiClient';
 
 class DeleteActions {
   constructor() {
-
-  }
-  openModal(payload = {}) {
-    payload.openModal = true;
-    return payload;
-  }
-  closeModal() {
-    return {open: false};
-  }
-  toggleModal(props) {
-    return props;
+    this.generateActions('toggleModal');
   }
 
   delete(params) {

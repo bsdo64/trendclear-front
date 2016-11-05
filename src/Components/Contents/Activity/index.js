@@ -90,7 +90,7 @@ const ActivityBox = React.createClass({
 
   render() {
     const {UserStore, ActivityStore, location} = this.props;
-    const {ListStore, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
+    const {ListStore, Posts, Users, AuthStore, PaginationStore} = this.props;
     let context, Collection, PostIdList;
 
     if (location.pathname === '/activity' || location.pathname === '/activity/likes') {
@@ -138,7 +138,6 @@ const ActivityBox = React.createClass({
             PostItems={Posts}
             AuthorItems={Users}
             User={AuthStore}
-            LoginModalFlag={LoginModalStore.get('openLoginModal')}
             scrollHeight={ListStore.get('scrollHeight')}
           />
 

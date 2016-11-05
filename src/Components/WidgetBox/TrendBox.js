@@ -9,8 +9,6 @@ import ReactTooltip from 'react-tooltip';
 import {Link} from 'react-router';
 import Draggable from 'react-draggable'; // The default
 
-import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
-
 const rebuildTooltip = function rebuildTooltip(itemCode) {
   "use strict";
   VenaStoreActions.tooltipInit(itemCode);
@@ -252,7 +250,9 @@ const TrendBox = React.createClass({
   openAvatarModal() {
     "use strict";
 
-    UserActions.openAvatarModalOpen();
+    UserActions.toggleAvatarModal({
+      contentType: 'AvatarImage'
+    });
   },
   openRPModal() {
     "use strict";
@@ -412,7 +412,6 @@ const TrendBox = React.createClass({
                   avatarImg={avatar_img}
                 />
               </a>
-              <AvatarImageContainer />
 
               <div className="content">
                 <div className="user_info_header">
@@ -455,16 +454,6 @@ const TrendBox = React.createClass({
                   <div className="point_line">
                     <span className="ui description" >RP</span>
                     <span id="rp_point" className="ui right floated point rp_point">{user.trendbox.get('R')}</span>
-                    <Modal
-                      isOpen={this.state.RPModal}
-                      onRequestClose={this.openRPModal}
-                      >
-
-                      <h2 ref="subtitle">Hello</h2>
-                      <button onClick={this.openRPModal}>close</button>
-                      <div>I am a modal</div>
-                      <button onClick={this.sendPayment}>Pay </button>
-                    </Modal>
                   </div>
                 </div>
                 <div className="colum">

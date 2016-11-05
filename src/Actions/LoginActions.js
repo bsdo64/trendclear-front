@@ -2,18 +2,8 @@ import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 
 class LoginActions {
-  /**
-   * 
-   * Login Modal 
-   * 
-   * @param openned
-   * @returns {*}
-   */
-  toggleLoginModal(openned, location) {
-    return {opened: openned, location: location};
-  }
-  closeLoginModal() {
-    return false;
+  constructor() {
+    this.generateActions('toggleLoginModal', 'closeLoginModal');
   }
 
   sendLogin(params) {

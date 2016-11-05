@@ -76,8 +76,6 @@ router.get(redirectRoutes, function (req, res, next) {
 });
 
 router.get('/venalink/post/m/:linkId', function (req, res) {
-  "use strict";
-
   // 메타 제공 시스템
 
   Api
@@ -94,8 +92,6 @@ router.get('/venalink/post/m/:linkId', function (req, res) {
 });
 
 router.get('/venalink/post/:linkId', function (req, res) {
-  "use strict";
-
   // 실질적인 방문자 추적 시스템
 
   if (req.params.linkId) {
@@ -117,8 +113,6 @@ router.get('/venalink/post/:linkId', function (req, res) {
 });
 
 router.get('/link/post/m/:linkId', function (req, res) {
-  "use strict";
-
   // 메타 제공 시스템
 
   Api
@@ -135,8 +129,6 @@ router.get('/link/post/m/:linkId', function (req, res) {
 });
 
 router.get('/link/post/:linkId', function (req, res, next) {
-  "use strict";
-
   // 실질적인 방문자 추적 시스템
 
   if (req.params.linkId) {
@@ -181,8 +173,6 @@ router.get(routes, function(req, res, next) {
       .get('http://localhost:3001/ajax/post/meta/' + req.query.postId)
       .set(req.headers)
       .end((err, result) => {
-        "use strict";
-
         defaultData = result.body;
 
         res.render('entry/index', defaultData);

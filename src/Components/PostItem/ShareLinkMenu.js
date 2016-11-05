@@ -69,7 +69,21 @@ const LinkMenu = React.createClass({
   toggleVenalink() {
     "use strict";
 
-    this.setState({openVenalink: !this.state.openVenalink})
+    if (!this.state.openVenalink && this.el) {
+      this.el.removeEventListener('click', this.stopPropagation, false);
+    }
+
+    this.setState({openVenalink: !this.state.openVenalink});
+  },
+
+  stopBeforeEvent() {
+
+    this.el = document.getElementsByClassName('activate-modal')[0];
+    this.el.addEventListener('click', this.stopPropagation, false);
+  },
+
+  stopPropagation(e) {
+    e.stopPropagation();
   },
 
   requestParticipateVenalink(venalinkId, participateItem) {
@@ -156,12 +170,6 @@ const LinkMenu = React.createClass({
     } else {
       return null;
     }
-  },
-
-  stopBeforeEvent(e) {
-    "use strict";
-
-    e.stopPropagation();
   },
 
   createShareLinkIcon(isUsersPost, venalink, myParticipate) {
@@ -333,8 +341,7 @@ const LinkMenu = React.createClass({
         </DropdownContent>
       </Dropdown>
         <Modal
-          onClick={this.stopBeforeEvent}
-          overlayClassName={'report-modal md-overlay'}
+          overlayClassName={'activate-modal report-modal md-overlay'}
           isOpen={this.state.openVenalink}
           closeTimeoutMS={300}
           style={{
@@ -354,8 +361,9 @@ const LinkMenu = React.createClass({
               width: 450
             }
           }}
-          onAfterOpen={this.initStore}
+          onAfterOpen={this.stopBeforeEvent}
           onRequestClose={this.toggleVenalink}
+
         >
           베나링크
           <div className="ui items">

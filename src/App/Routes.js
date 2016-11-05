@@ -37,9 +37,7 @@ const ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
 const SigninMenu = require('../Container/LeftCol/SigninMenu');
 const SearchMenu = require('../Container/LeftCol/SearchMenu');
 
-const LoginModalContainer = require('../Container/Modal/LoginModalContainer');
-const ReportModalContainer = require('../Container/Modal/ReportModalContainer');
-const DeleteModalContainer = require('../Container/Modal/DeleteModalContainer');
+const ModalContainer = require('../Container/Modal/ModalContainer');
 const WidgetContainer = require('../Container/RightCol/WidgetContainer');
 
 const App = (props) => {
@@ -85,9 +83,7 @@ const App = (props) => {
         </div>
       </div>
       <div id="modal">
-        { props.LoginModalContainer }
-        { props.ReportModalContainer }
-        { props.DeleteModalContainer }
+        { props.ModalContainer }
       </div>
     </div>
   )
@@ -133,9 +129,7 @@ const HelpApp = (props) => {
         </div>
       </div>
       <div id="modal">
-        { props.LoginModalContainer }
-        { props.ReportModalContainer }
-        { props.DeleteModalContainer }
+        { props.ModalContainer }
       </div>
     </div>
   )
@@ -151,10 +145,8 @@ export default () =>
       HeaderSearch: HeaderSearch,
       LeftColGnb: LeftColGlobalCategoryNav,
       LeftColMenu: BestCategoryMenu,
-      LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
-      ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+      ModalContainer: ModalContainer,
       ContentsContainer: ContentsContainer
     }}/>
   </Route>
@@ -166,10 +158,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: BestCategoryMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-        DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ContentsContainer
       }}/>
   </Route>
@@ -181,10 +171,8 @@ export default () =>
       HeaderSearch: HeaderSearch,
       LeftColGnb: LeftColGlobalCategoryNav,
       LeftColMenu: SigninMenu,
-      LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
-      ReportModalContainer: ReportModalContainer,
-      DeleteModalContainer: DeleteModalContainer,
+      ModalContainer: ModalContainer,
       ContentsContainer: SigninContainer
     }}/>
   </Route>
@@ -200,10 +188,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: CollectionMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: CollectionContentsContainer
       }}/>
   </Route>
@@ -215,10 +201,8 @@ export default () =>
       HeaderSearch: HeaderSearch,
       LeftColGnb: LeftColGlobalCategoryNav,
       LeftColMenu: ForumMenu,
-      LoginModalContainer: LoginModalContainer,
       WidgetContainer: WidgetContainer,
-      ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+      ModalContainer: ModalContainer,
       ContentsContainer: CommunityContainer
     }}/>
 
@@ -228,10 +212,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: ForumMenu,
-              LoginModalContainer: LoginModalContainer,
               WidgetContainer: WidgetContainer,
-              ReportModalContainer: ReportModalContainer,
-              DeleteModalContainer: DeleteModalContainer,
+              ModalContainer: ModalContainer,
               ContentsContainer: SubmitContainer
              }}
     />
@@ -242,10 +224,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: SubmitCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
               WidgetContainer: WidgetContainer,
-              ReportModalContainer: ReportModalContainer,
-              DeleteModalContainer: DeleteModalContainer,
+              ModalContainer: ModalContainer,
               ContentsContainer: SubmitForumContainer
              }}
     />
@@ -256,10 +236,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: SubmitCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
               WidgetContainer: WidgetContainer,
-              ReportModalContainer: ReportModalContainer,
-              DeleteModalContainer: DeleteModalContainer,
+              ModalContainer: ModalContainer,
               ContentsContainer: SubmitForumPrefixContainer
              }}
     />
@@ -271,10 +249,8 @@ export default () =>
           HeaderSearch: HeaderSearch,
           LeftColGnb: LeftColGlobalCategoryNav,
           LeftColMenu: ForumSettingMenu,
-          LoginModalContainer: LoginModalContainer,
           WidgetContainer: WidgetContainer,
-          ReportModalContainer: ReportModalContainer,
-            DeleteModalContainer: DeleteModalContainer,
+          ModalContainer: ModalContainer,
           ContentsContainer: ForumSettingMain
         }}/>
 
@@ -283,10 +259,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-        DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -295,10 +269,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -307,10 +279,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -319,10 +289,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -331,10 +299,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -343,10 +309,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -355,10 +319,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -367,10 +329,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -379,10 +339,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -391,10 +349,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -403,10 +359,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -415,10 +369,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -427,10 +379,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -439,10 +389,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -451,10 +399,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -463,10 +409,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -475,10 +419,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -487,10 +429,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: ForumSettingMenu,
-        LoginModalContainer: LoginModalContainer,
         WidgetContainer: WidgetContainer,
-        ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: ForumSettingMain
       }}/>
 
@@ -505,10 +445,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: SearchMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
               ContentsContainer: SearchContainer
              }}
     />
@@ -521,10 +459,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
               ContentsContainer: ActivityContainer
              }}
     />
@@ -535,10 +471,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
+             ModalContainer: ModalContainer,
               ContentsContainer: ActivityContainer
              }}
     />
@@ -549,10 +483,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
+             ModalContainer: ModalContainer,
               ContentsContainer: ActivityContainer
              }}
     />
@@ -563,10 +495,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
+             ModalContainer: ModalContainer,
               ContentsContainer: ActivityContainer
              }}
     />
@@ -580,10 +510,8 @@ export default () =>
              HeaderSearch: HeaderSearch,
              LeftColGnb: LeftColGlobalCategoryNav,
              LeftColMenu: UserPointMenu,
-             LoginModalContainer: LoginModalContainer,
-             ReportModalContainer: ReportModalContainer,
-             DeleteModalContainer: DeleteModalContainer,
              WidgetContainer: WidgetContainer,
+             ModalContainer: ModalContainer,
              ContentsContainer: PointListContainer
            }}
     />
@@ -595,10 +523,8 @@ export default () =>
           HeaderSearch: HeaderSearch,
           LeftColGnb: LeftColGlobalCategoryNav,
           LeftColMenu: UserPointMenu,
-          LoginModalContainer: LoginModalContainer,
-          ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
           WidgetContainer: WidgetContainer,
+          ModalContainer: ModalContainer,
           ContentsContainer: VenalinkActiveList
         }}/>
 
@@ -607,10 +533,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: UserPointMenu,
-        LoginModalContainer: LoginModalContainer,
-        ReportModalContainer: ReportModalContainer,
-        DeleteModalContainer: DeleteModalContainer,
         WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: VenalinkActiveList
       }}/>
 
@@ -619,10 +543,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: UserPointMenu,
-        LoginModalContainer: LoginModalContainer,
-        ReportModalContainer: ReportModalContainer,
-        DeleteModalContainer: DeleteModalContainer,
         WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: VenalinkShareList
       }}/>
     </Route>
@@ -635,10 +557,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-          DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
               ContentsContainer: SettingContainer
              }}
     />
@@ -649,10 +569,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
+             ModalContainer: ModalContainer,
               ContentsContainer: SettingContainer
              }}
     />
@@ -663,10 +581,8 @@ export default () =>
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
               LeftColMenu: AccountCategoryMenu,
-              LoginModalContainer: LoginModalContainer,
-              ReportModalContainer: ReportModalContainer,
-              DeleteModalContainer: DeleteModalContainer,
               WidgetContainer: WidgetContainer,
+             ModalContainer: ModalContainer,
               ContentsContainer: SettingContainer
              }}
     />
@@ -681,9 +597,6 @@ export default () =>
              HeaderSearch: HeaderSearch,
              LeftColGnb: LeftColGlobalCategoryNav,
              LeftColMenu: PolicyMenu,
-             LoginModalContainer: LoginModalContainer,
-             ReportModalContainer: ReportModalContainer,
-             DeleteModalContainer: DeleteModalContainer,
              ContentsContainer: PolicyContainer
            }}
     />
@@ -694,9 +607,6 @@ export default () =>
              HeaderSearch: HeaderSearch,
              LeftColGnb: LeftColGlobalCategoryNav,
              LeftColMenu: PolicyMenu,
-             LoginModalContainer: LoginModalContainer,
-             ReportModalContainer: ReportModalContainer,
-             DeleteModalContainer: DeleteModalContainer,
              ContentsContainer: PolicyContainer
            }}
     />
@@ -710,10 +620,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: CompanyMenu,
-        LoginModalContainer: LoginModalContainer,
-        ReportModalContainer: ReportModalContainer,
-        DeleteModalContainer: DeleteModalContainer,
         WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: CompanyContainer
       }}
     />
@@ -727,10 +635,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: CompanyMenu,
-        LoginModalContainer: LoginModalContainer,
-        ReportModalContainer: ReportModalContainer,
-        DeleteModalContainer: DeleteModalContainer,
         WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: CompanyContainer
       }}
     />
@@ -744,10 +650,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: CompanyMenu,
-        LoginModalContainer: LoginModalContainer,
-        ReportModalContainer: ReportModalContainer,
-        DeleteModalContainer: DeleteModalContainer,
         WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: CompanyContainer
       }}
     />
@@ -761,10 +665,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: CompanyMenu,
-        LoginModalContainer: LoginModalContainer,
-        ReportModalContainer: ReportModalContainer,
-        DeleteModalContainer: DeleteModalContainer,
         WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: CompanyContainer
       }}
     />
@@ -778,10 +680,8 @@ export default () =>
         HeaderSearch: HeaderSearch,
         LeftColGnb: LeftColGlobalCategoryNav,
         LeftColMenu: DefaultMenu,
-        LoginModalContainer: LoginModalContainer,
-        ReportModalContainer: ReportModalContainer,
-        DeleteModalContainer: DeleteModalContainer,
         WidgetContainer: WidgetContainer,
+        ModalContainer: ModalContainer,
         ContentsContainer: FindMemberContainer
       }}
     />
