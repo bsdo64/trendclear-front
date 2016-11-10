@@ -34,8 +34,8 @@ class SubComments {
     this.setState(addSubComment);
   }
 
-  onSubmitComment(IPost) {
-    let addCommentState = this.state.merge(IPost.entities.subComments);
+  onSubmitComment(normalized) {
+    let addCommentState = this.state.merge(normalized.entities.subComments);
     this.setState(addCommentState);
   }
 

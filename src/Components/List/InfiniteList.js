@@ -6,7 +6,7 @@ import './BestList.scss';
 function createItem(props, id) {
   "use strict";
 
-  const {PostItems, AuthorItems, User, LoginModalFlag} = props;
+  const {PostItems, AuthorItems, User} = props;
 
   const post = PostItems.get(id.toString());
   if (post) {
@@ -21,9 +21,9 @@ function createItem(props, id) {
           author={author}
           post={post}
           user={user}
-          loginModalFlag={LoginModalFlag}
           view={false}
           shorten={true}
+          setScrollPosition={props.setScrollPosition}
         />
       ]
     }

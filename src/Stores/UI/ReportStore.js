@@ -1,8 +1,10 @@
 import alt from '../../Utils/alt';
 import Immutable, {Map} from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import ReportActions from '../../Actions/ReportActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
+
+import ReportActions from '../../Actions/ReportActions';
+import ModalActions from '../../Actions/ModalActions';
 
 class ReportStore{
   static displayName = 'ReportStore';
@@ -10,6 +12,9 @@ class ReportStore{
     this.displayName = 'ReportStore';
 
     this.bindActions(ReportActions);
+    this.bindListeners({
+      onCloseModal: [ModalActions.closeModal]
+    });
     this.state = Immutable.Map({
       reportItem: [
         {
@@ -34,11 +39,12 @@ class ReportStore{
     this.setMergeState = setMergeState.bind(this);
   }
 
-  onOpenReportModal(payload) {
-    this.setMergeState(Map(payload))
-  }
-  onCloseReportModal() {
+  onCloseModal() {
     this.setMergeState(Map({openReportModal: false, selectItem: 1, successReport: false}))
+  }
+
+  onToggleReportModal(result) {
+    this.setMergeState(Map(result.data))
   }
   
   onSendReport() {

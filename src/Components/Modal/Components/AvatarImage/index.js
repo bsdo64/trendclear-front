@@ -1,14 +1,9 @@
 /**
- * Created by dobyeongsu on 2016. 5. 3..
- */
-
-/**
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
-import UserActions from '../../Actions/UserActions';
-import Modal from 'react-modal';
-import AvatarImage from '../AvatarImage';
+import UserActions from '../../../../Actions/UserActions';
+import AvatarImage from '../../../../Components/AvatarImage';
 
 require('./index.scss');
 const AvatarImageModal = React.createClass({
@@ -67,6 +62,7 @@ const AvatarImageModal = React.createClass({
       avatarImg = <img src={this.state.imagePreviewUrl} />;
     } else {
       avatarImg = <AvatarImage
+        imageClass="image_preview"
         sex={sex}
         avatarImg={avatar_img}
         removable={true}
@@ -74,15 +70,8 @@ const AvatarImageModal = React.createClass({
     }
     
     return (
-      <Modal
-        overlayClassName={'ui dimmer modals page transition visible active ' + (openAvatarModal ? '' : 'fade out')}
-        className="ui modal avatar_img scrolling transition visible active "
-        isOpen={openAvatarModal}
-        closeTimeoutMS={500}
-        onRequestClose={this.modalClose}
-      >
-
-        <div className="ui items">
+      <div className="avatar_img">
+        <div className="ui items ">
           <div className="header">
             <div className="header_title">프로필 이미지 변경</div>
           </div>
@@ -103,7 +92,7 @@ const AvatarImageModal = React.createClass({
             </div>
           </div>
         </div>
-        </Modal>
+      </div>
     );
   }
 });

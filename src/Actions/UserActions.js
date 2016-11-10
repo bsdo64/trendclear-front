@@ -5,7 +5,7 @@ import {noti} from '../Model/normalizr/schema';
 
 class UserActions {
   constructor() {
-    this.generateActions('addList', 'socketPoint');
+    this.generateActions('addList', 'socketPoint', 'toggleAvatarModal');
   }
   
   levelUp(params) {
@@ -34,13 +34,6 @@ class UserActions {
         });
     };
   }
-  openAvatarModalOpen() {
-    return true;
-  }
-
-  closeAvatarModal() {
-    return true;
-  }
   uploadAvatarImage(file) {
     return (dispatch) => {
       Api
@@ -58,7 +51,9 @@ class UserActions {
         .then((res) => {
           dispatch(res);
 
-          this.closeAvatarModal();
+          this.toggleAvatarModal({
+            contentType: 'AvatarImage'
+          });
         })
         .catch((err) => {
           return err;

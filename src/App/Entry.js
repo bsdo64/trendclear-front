@@ -1,6 +1,8 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {browserHistory} from 'react-router';
+import {Provider} from 'react-redux';
+import Immutable from 'immutable';
 
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
@@ -10,6 +12,7 @@ import {normalize, arrayOf} from 'normalizr';
 import {author, category, post, noti, forum} from '../Model/normalizr/schema';
 
 import Router from './Routes';
+import configStore from '../Stores/ConfigStore';
 
 if (process.env.NODE_ENV !== 'production') {
 
@@ -29,7 +32,6 @@ new Promise((resolve, reject) => {
       .setEntryPoint('/ajax')
       .get('/store' + location.pathname, location.query)
       .then(function CallStoreApi(resBody, errBody) {
-        "use strict";
 
         if (resBody.UserStore && resBody.UserStore.user) {
           const User = resBody.UserStore.user;
@@ -55,13 +57,10 @@ new Promise((resolve, reject) => {
           const normalized = normalize(collectionBestPostList, arrayOf(post));
 
           assign(resBody, {
-            // Temp
-            CollectionBestPostStore: {posts: {postList: normalized}},
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
-            ListStore: {collectionBestPostList: normalized.result},
-            PaginationStore: {collectionBestPostList: collectionBestPostListPagination}
+            ListStore: { collectionBestPostList: normalized.result },
+            PaginationStore: { collectionBestPostList: collectionBestPostListPagination }
           });
         }
 
@@ -72,13 +71,10 @@ new Promise((resolve, reject) => {
           const normalized = normalize(bestPostList, arrayOf(post));
 
           assign(resBody, {
-            // Temp
-            BestPostStore: {posts: {postList: normalized}},
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
-            ListStore: {bestPostList: normalized.result},
-            PaginationStore: {bestPostList: bestPostListPagination}
+            ListStore: { bestPostList: normalized.result },
+            PaginationStore: { bestPostList: bestPostListPagination }
           });
         }
 
@@ -89,7 +85,7 @@ new Promise((resolve, reject) => {
           const normalized = normalize(data, arrayOf(post));
 
           let context, type = resBody.ActivityStore.type;
-          switch(type) {
+          switch (type) {
             case 'likePostList':
               context = 'likePostList';
               break;
@@ -107,13 +103,10 @@ new Promise((resolve, reject) => {
           }
 
           assign(resBody, {
-            // Temp
-            ActivityStore: {posts: {postList: normalized}},
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
-            ListStore: {[context]: normalized.result},
-            PaginationStore: {[context]: collection}
+            ListStore: { [context]: normalized.result },
+            PaginationStore: { [context]: collection }
           });
         }
 
@@ -124,13 +117,10 @@ new Promise((resolve, reject) => {
           const normalized = normalize(searchPostList, arrayOf(post));
 
           assign(resBody, {
-            // Temp
-            SearchStore: {search: {postList: normalized}},
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
-            ListStore: {searchPostList: normalized.result},
-            PaginationStore: {searchPostList: searchPostListPagination}
+            ListStore: { searchPostList: normalized.result },
+            PaginationStore: { searchPostList: searchPostListPagination }
           });
 
           const searchForumList = resBody.SearchStore.forum.data.results;
@@ -139,12 +129,10 @@ new Promise((resolve, reject) => {
           const normalizedForums = normalize(searchForumList, arrayOf(forum));
 
           assign(resBody, {
-            // Temp
-
             Forums: normalizedForums.entities.forums,
             Users: normalizedForums.entities.author,
-            ListStore: {searchForumList: normalizedForums.result},
-            PaginationStore: {searchForumList: searchForumListPagination}
+            ListStore: { searchForumList: normalizedForums.result },
+            PaginationStore: { searchForumList: searchForumListPagination }
           });
         }
 
@@ -154,18 +142,13 @@ new Promise((resolve, reject) => {
 
           const normalized = normalize(forumPostList, arrayOf(post));
 
-          resBody.CommunityStore.list.postList = normalized;
-
           assign(resBody, {
-            // Temp
-            BestPostStore: {posts: {postList: normalized}},
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             Comments: normalized.entities.comments,
             SubComments: normalized.entities.subComments,
-            ListStore: {forumPostList: normalized.result},
-            PaginationStore: {forumPostList: forumPostListPagination}
+            ListStore: { forumPostList: normalized.result },
+            PaginationStore: { forumPostList: forumPostListPagination }
           });
         }
 
@@ -173,8 +156,6 @@ new Promise((resolve, reject) => {
           const forumData = resBody.CommunityStore.forum;
 
           const normalized = normalize(forumData, forum);
-
-          resBody.CommunityStore.forum.IForum = normalized;
 
           assign(resBody, {
             Prefixes: normalized.entities.prefixes,
@@ -192,11 +173,9 @@ new Promise((resolve, reject) => {
         }
 
         if (resBody.CommunityStore && resBody.CommunityStore.post) {
-          const IPost = resBody.CommunityStore.post;
+          const Post = resBody.CommunityStore.post;
 
-          const normalized = normalize(IPost, post);
-
-          resBody.CommunityStore.post.IPost = normalized;
+          const normalized = normalize(Post, post);
 
           assign(resBody, {
             Prefixes: normalized.entities.prefixes,
@@ -207,7 +186,7 @@ new Promise((resolve, reject) => {
             SubComments: normalized.entities.subComments,
 
             ListStore: {
-              IPost: normalized.result
+              CurrentPostId: normalized.result
             }
           });
         }
@@ -222,7 +201,7 @@ new Promise((resolve, reject) => {
           assign(resBody, {
             Categories: normalized.entities.categories,
             Forums: normalized.entities.forums,
-            ListStore: {CategoryList: normalized.result}
+            ListStore: { CategoryList: normalized.result }
           });
         }
 
@@ -235,7 +214,7 @@ new Promise((resolve, reject) => {
 
           assign(resBody, {
             Notis: normalized.entities.notis,
-            ListStore: {NotiList: normalized.result}
+            ListStore: { NotiList: normalized.result }
           });
         }
 
@@ -250,14 +229,56 @@ new Promise((resolve, reject) => {
           console.info('Bootstrap Data : ', resBody);
         }
 
-        resolve();
+        resolve({resBody});
       })
   })
 })
-.then(function () {
+.then(function ({resBody}) {
   "use strict";
 
-  render(Router(), document.getElementById('app'));
-});
+  const state = Immutable.fromJS({
+    Stores: {
+      UI: {
+        Auth: resBody.AuthStore,
+        ForumSetting: resBody.ForumSettingStore,
+        Gnb: resBody.GnbStore,
+        Community: resBody.CommunityStore,
+        Submit: resBody.SubmitStore,
+        ShareLink: resBody.ShareLinkStore,
+        Shopping: resBody.ShoppingStore,
+        RemoveModal: resBody.RemoveModalStore,
+        Report: resBody.ReportStore,
+        Modal: resBody.ModalStore,
+        ResetPassword: resBody.ResetPasswordStore,
+        Activity: resBody.ActivityStore,
+        SubmitForum: resBody.SubmitForumStore,
+        Pagination: resBody.PaginationStore,
+        SigninForm: resBody.SigninFormStore,
+        Search: resBody.SearchStore,
+        Login: resBody.LoginStore,
+        List: resBody.ListStore,
+      },
+      Domains: {
+        Users: resBody.Users,
+        Forums: resBody.Forums,
+        Collections: resBody.Collections,
+        Posts: resBody.Posts,
+        Comments: resBody.Comments,
+        SubComments: resBody.SubComments,
+        Categories: resBody.Categories,
+        Notis: resBody.Notis,
+        Prefixes: resBody.Prefixes
+      }
+    }
+  });
 
+  const store = configStore(state);
+
+  render(
+    <Provider store={store}>
+      {Router(store)}
+    </Provider>
+    , document.getElementById('app'));
+});
+// Socket Actions
 require('./socketSubscribe');

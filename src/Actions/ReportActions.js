@@ -3,17 +3,7 @@ import Api from '../Utils/ApiClient';
 
 class ReportActions {
   constructor() {
-
-  }
-  openReportModal(payload = {}) {
-    payload.openReportModal = true;
-    return payload;
-  }
-  closeReportModal() {
-    return {open: false};
-  }
-  toggleReportModal(props) {
-    return props;
+    this.generateActions('toggleReportModal');
   }
   
   submitReport() {

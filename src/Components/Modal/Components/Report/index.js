@@ -1,7 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import ReportActions from '../../Actions/ReportActions.js';
-import Modal from 'react-modal';
+import ReportActions from '../../../../Actions/ReportActions.js';
 
 require('./index.scss');
 const ReportModalBox = React.createClass({
@@ -84,19 +83,8 @@ const ReportModalBox = React.createClass({
 
     const reportSuccess = ReportStore.get('successReport');
 
-    const openModalStyle = cx('md-modal md-effect-1', {
-      'md-show': openReportModal
-    });
-
     return (
-      <Modal
-        overlayClassName={'report-modal md-overlay'}
-        className={openModalStyle}
-        isOpen={openReportModal}
-        closeTimeoutMS={300}
-        onAfterOpen={this.afterOpenModal}
-        onRequestClose={this.closeModal}
-      >
+      <div className="report-modal">
         {
           !reportSuccess &&
           <div className="md-content content">
@@ -139,7 +127,7 @@ const ReportModalBox = React.createClass({
             </div>
           </div>
         }
-      </Modal>
+      </div>
     );
   }
 });

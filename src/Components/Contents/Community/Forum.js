@@ -110,7 +110,10 @@ const Forum = React.createClass({
 
     const modalFlag = this.props.LoginModalStore.get('openLoginModal');
     const location = this.props.location;
-    LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+    LoginActions.toggleLoginModal({
+      contentType: 'Login',
+      location: location.pathname + location.search
+    });
   },
 
   createPrefixItem(Prefixes, prefixId) {

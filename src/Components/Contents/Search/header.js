@@ -4,7 +4,7 @@ const SearchHeader = React.createClass({
   displayName: 'SearchHeader',
   render() {
     "use strict";
-    const {posts, postList} = this.props;
+    const {posts} = this.props;
     if (posts) {
       const postData = posts.get('posts');
       const total = postData.get('total') ? postData.get('total'): 0;

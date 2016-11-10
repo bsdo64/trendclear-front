@@ -144,7 +144,7 @@ class Users {
   onLevelUp(newTrendbox) {
     const loginUser = this._findLoginUser();
     if (loginUser) {
-      const updateUser = loginUser.set('trendbox', newTrendbox);
+      const updateUser = loginUser.set('trendbox', fromJS(newTrendbox));
 
       const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 
@@ -182,10 +182,10 @@ class Users {
     }
   }
 
-  onSubmitComment(IPost) {
+  onSubmitComment(normalized) {
     this.waitFor(CommunityStore);
 
-    const addCommentState = this.state.mergeDeep(IPost.entities.author);
+    const addCommentState = this.state.mergeDeep(normalized.entities.author);
     const loginUser = this._findLoginUser();
     if (loginUser) {
       const updateUser = loginUser
@@ -217,7 +217,7 @@ class Users {
       const newProfile = result[0];
       const loginUser = this._findLoginUser();
       if (loginUser) {
-        const updateUser = loginUser.set('profile', newProfile);
+        const updateUser = loginUser.set('profile', fromJS(newProfile));
 
         const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 

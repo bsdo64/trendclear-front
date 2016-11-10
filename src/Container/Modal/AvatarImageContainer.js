@@ -1,7 +1,9 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
+import connectToStores from 'alt-utils/lib/connectToStores';
+import {getLoginUser} from '../Util/func';
 
-import AvatarImageModal from '../../Components/AvatarImageModal';
+import AvatarImageModal from '../../Components/Modal/Components/AvatarImage';
+
 import Users from '../../Stores/Domain/Users';
 import AuthStore from '../../Stores/UI/AuthStore';
 

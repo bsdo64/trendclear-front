@@ -1,12 +1,13 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
+import connectToStores from 'alt-utils/lib/connectToStores';
+import {getLoginUser} from '../Util/func';
 import LoginStore from '../../Stores/LoginStore';
 import RemoveModalStore from '../../Stores/UI/RemoveModalStore';
 import Posts from '../../Stores/Domain/Posts';
 import Comments from '../../Stores/Domain/Comments';
 import SubComments from '../../Stores/Domain/SubComments';
 
-import DeleteModalBox from '../../Components/DeleteModalBox';
+import DeleteModalBox from '../../Components/Modal/Components/DeleteItem';
 import Users from '../../Stores/Domain/Users';
 import AuthStore from '../../Stores/UI/AuthStore';
 

@@ -65,10 +65,13 @@ function closeUpdateComment() {
 }
 
 function sendSubCommentLike(props) {
-  const {location, modalFlag, isLogin, subCommentId} = props;
+  const {location, isLogin, subCommentId} = props;
   return function createSendSubCommentLike() {
     if (!isLogin) {
-      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+      LoginActions.toggleLoginModal({
+        contentType: 'Login',
+        location: location.pathname + location.search
+      });
     } else {
       CommentActions.likeSubComment(subCommentId);
     }
@@ -129,9 +132,11 @@ const SubCommentItem = React.createClass({
         console.log('not available');
       }
     } else {
-      const modalFlag = LoginStore.get('openLoginModal');
       const location = this.props.location;
-      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+      LoginActions.toggleLoginModal({
+        contentType: 'Login',
+        location: location.pathname + location.search
+      });
     }
   },
 
@@ -295,10 +300,12 @@ const CommentItem = React.createClass({
     "use strict";
 
     const {LoginStore} = this.props;
-    const modalFlag = LoginStore.get('openLoginModal');
     const isLogin = LoginStore.get('isLogin');
     if (!isLogin) {
-      LoginActions.toggleLoginModal(modalFlag, '/');
+      LoginActions.toggleLoginModal({
+        contentType: 'Login',
+        location: '/'
+      });
     } else {
       CommentActions.likeComment(this.props.comment.get('id'));
     }
@@ -348,9 +355,11 @@ const CommentItem = React.createClass({
         console.log('not available');
       }
     } else {
-      const modalFlag = LoginStore.get('openLoginModal');
       const location = this.props.location;
-      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+      LoginActions.toggleLoginModal({
+        contentType: 'Login',
+        location: location.pathname + location.search
+      });
     }
   },
 
@@ -388,9 +397,11 @@ const CommentItem = React.createClass({
         console.log('not available');
       }
     } else {
-      const modalFlag = LoginStore.get('openLoginModal');
       const location = this.props.location;
-      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+      LoginActions.toggleLoginModal({
+        contentType: 'Login',
+        location: location.pathname + location.search
+      });
     }
   },
 
@@ -419,7 +430,6 @@ const CommentItem = React.createClass({
     }
 
     const subCommentProps = {
-      modalFlag: LoginStore.get('openLoginModal'),
       authors: this.props.authors,
       subComments: this.props.subComments,
       location: this.props.location,
@@ -657,17 +667,19 @@ const CommentBox = React.createClass({
         console.log('not available');
       }
     } else {
-      const modalFlag = LoginStore.get('openLoginModal');
       const location = this.props.location;
-      LoginActions.toggleLoginModal(modalFlag, location.pathname + location.search);
+      LoginActions.toggleLoginModal({
+        contentType: 'Login',
+        location: location.pathname + location.search
+      });
     }
   },
 
   render() {
     "use strict";
 
-    const {comments, subComments, authors, IPost, CommunityStore} = this.props;
-    const commentList = IPost.get('comments');
+    const {comments, subComments, authors, post, CommunityStore} = this.props;
+    const commentList = post.get('comments');
     const updating = {
       updating: CommunityStore.get('updating'),
       type: CommunityStore.get('updateType'),
@@ -677,7 +689,7 @@ const CommentBox = React.createClass({
     if (commentList) {
 
       const commentPage = this.props.location.query.comment_p ? this.props.location.query.comment_p : 1;
-      const commentLength = IPost.get('comment_count');
+      const commentLength = post.get('comment_count');
 
       return (
         <div id="comment_box" className="ui comments">
@@ -751,9 +763,9 @@ const PostPage = React.createClass({
   render() {
     "use strict";
 
-    const {Users, Posts, ListStore, AuthStore, LoginModalStore, LoginStore, UserStore} = this.props;
+    const {Users, Posts, ListStore, AuthStore, LoginStore, UserStore} = this.props;
 
-    const postId = ListStore.get('IPost');
+    const postId = ListStore.get('CurrentPostId');
     if (postId) {
       const post = Posts.get(postId.toString());
 
@@ -779,7 +791,6 @@ const PostPage = React.createClass({
 
         const author = Users.get(post.get('author').toString());
         const user = AuthStore.get('userId') ? Users.get(String(AuthStore.get('userId'))) : null;
-        const LoginModalFlag = LoginModalStore.get('openLoginModal');
 
         return (
           <div id="post_box" className="ui items">
@@ -790,7 +801,6 @@ const PostPage = React.createClass({
                 author={author}
                 post={post}
                 user={user}
-                loginModalFlag={LoginModalFlag}
                 postStyle="post_item"
                 view={true}
                 shorten={false}
@@ -801,7 +811,7 @@ const PostPage = React.createClass({
               post &&
               <CommentBox
                 {...this.props}
-                IPost={post}
+                post={post}
                 comments={this.props.Comments}
                 subComments={this.props.SubComments}
                 authors={this.props.Users}

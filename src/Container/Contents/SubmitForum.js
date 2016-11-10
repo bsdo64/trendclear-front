@@ -4,6 +4,8 @@ import GnbStore from '../../Stores/GnbStore';
 import LoginStore from '../../Stores/LoginStore';
 import SubmitForumStore from '../../Stores/UI/SubmitForumStore';
 import Users from '../../Stores/Domain/Users';
+import Categories from '../../Stores/Domain/Categories';
+import Forums from '../../Stores/Domain/Forums';
 import AuthStore from '../../Stores/UI/AuthStore';
 import marked from '../../Components/Lib/Marked';
 
@@ -16,11 +18,13 @@ function isNumeric(n) {
 const SubmitForm = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [GnbStore, LoginStore, Users, AuthStore, SubmitForumStore];
+    return [Forums, Categories, GnbStore, LoginStore, Users, AuthStore, SubmitForumStore];
   },
 
   getPropsFromStores() {
     return {
+      Forums: Forums.getState(),
+      Categories: Categories.getState(),
       GnbStore: GnbStore.getState(),
       UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
       LoginStore: LoginStore.getState(),
@@ -113,10 +117,7 @@ const SubmitForm = connectToStores({
   },
 
   render() {
-    const { GnbStore, SubmitForumStore, UserStore } = this.props;
-    const menus = GnbStore.get('gnbMenu');
-    const nMenu = menus.getIn(['INCat', 'entities']);
-    const forums = nMenu.get('forums');
+    const { SubmitForumStore, UserStore } = this.props;
 
     const trendbox = UserStore.get('trendbox');
     if (!trendbox) {

@@ -41,7 +41,7 @@ const Temp = React.createClass({
   render() {
     "use strict";
 
-    const {UserStore, GnbStore, Forums, Collections} = this.props;
+    const {ListStore, Categories, UserStore, GnbStore, Forums, Collections} = this.props;
     const user = UserStore.get('user');
     const categoriesMap = UserStore.get('follow_forums')
       ? UserStore
@@ -51,8 +51,17 @@ const Temp = React.createClass({
         })
         .sortBy(item => item.label)
         .toJS()
-      : GnbStore
-        .getIn(['gnbMenu', 'INCat', 'entities', 'forums'])
+      : ListStore
+        .get('CategoryList')
+        .map(categoryId => {
+          return Categories.getIn([categoryId.toString(), 'forums']);
+        })
+        .reduce((list, i) => {
+          return list.concat(i);
+        })
+        .map(forumId => {
+          return Forums.get(forumId.toString());
+        })
         .map(forum => {
           return {value: forum.get('id'), label: forum.get('title')}
         })
