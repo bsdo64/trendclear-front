@@ -1,6 +1,9 @@
 import React from 'react';
 import alt from '../../Utils/alt';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
+import connectToStores from 'alt-utils/lib/connectToStores';
+import {getLoginUser} from '../Util/func';
+import {connect} from 'react-redux';
+import List from '../../Actions/List';
 
 import Best from '../../Components/Contents/Best';
 
@@ -49,4 +52,26 @@ const BestContainer = connectToStores({
   }
 }));
 
-module.exports = BestContainer;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  return {
+    UI_List: getUIState('List'),
+    UI_Auth: getUIState('Auth')
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setScrollPosition: (scrollHeight) => {
+      dispatch(List.setScrollPosition(scrollHeight))
+    }
+  }
+};
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BestContainer);

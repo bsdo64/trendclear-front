@@ -1,34 +1,22 @@
-import React from 'react';
-import {render} from 'react-dom';
-import {browserHistory} from 'react-router';
-import {Provider} from 'react-redux';
-import Immutable from 'immutable';
-
-import alt from '../Utils/alt';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { combineReducers } from 'redux-immutable';
+import RouterReducer from '../Reducers/RouteReducer';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import Stores from '../Reducers';
 import Api from '../Utils/ApiClient';
 
 import assign from 'deep-assign';
 import {normalize, arrayOf} from 'normalizr';
 import {author, category, post, noti, forum} from '../Model/normalizr/schema';
 
-import Router from './Routes';
-import configStore from '../Stores/ConfigStore';
 
-if (process.env.NODE_ENV !== 'production') {
+const initRouteState = store => dispatch => action => {
+  if (action.type === '@@router/LOCATION_CHANGE') {
 
-  window.Perf = require('react-addons-perf');
+    const location = action.payload;
 
-}
-
-require('core-js');
-
-new Promise((resolve, reject) => {
-  browserHistory.listen((location) => {
-    "use strict";
-    // 1. location에 따라 모든 Store 데이터를 가져온다
-    // 2. 가져온 데이터를 각 Store에 삽입한다
-
-    Api
+    return Api
       .setEntryPoint('/ajax')
       .get('/store' + location.pathname, location.query)
       .then(function CallStoreApi(resBody, errBody) {
@@ -57,6 +45,9 @@ new Promise((resolve, reject) => {
           const normalized = normalize(collectionBestPostList, arrayOf(post));
 
           assign(resBody, {
+            // Temp
+            CollectionBestPostStore: { posts: { postList: normalized } },
+
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { collectionBestPostList: normalized.result },
@@ -71,6 +62,9 @@ new Promise((resolve, reject) => {
           const normalized = normalize(bestPostList, arrayOf(post));
 
           assign(resBody, {
+            // Temp
+            BestPostStore: { posts: { postList: normalized } },
+
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { bestPostList: normalized.result },
@@ -103,6 +97,9 @@ new Promise((resolve, reject) => {
           }
 
           assign(resBody, {
+            // Temp
+            ActivityStore: { posts: { postList: normalized } },
+
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { [context]: normalized.result },
@@ -117,6 +114,9 @@ new Promise((resolve, reject) => {
           const normalized = normalize(searchPostList, arrayOf(post));
 
           assign(resBody, {
+            // Temp
+            SearchStore: { search: { postList: normalized } },
+
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { searchPostList: normalized.result },
@@ -129,6 +129,8 @@ new Promise((resolve, reject) => {
           const normalizedForums = normalize(searchForumList, arrayOf(forum));
 
           assign(resBody, {
+            // Temp
+
             Forums: normalizedForums.entities.forums,
             Users: normalizedForums.entities.author,
             ListStore: { searchForumList: normalizedForums.result },
@@ -142,7 +144,12 @@ new Promise((resolve, reject) => {
 
           const normalized = normalize(forumPostList, arrayOf(post));
 
+          resBody.CommunityStore.list.postList = normalized;
+
           assign(resBody, {
+            // Temp
+            BestPostStore: { posts: { postList: normalized } },
+
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             Comments: normalized.entities.comments,
@@ -156,6 +163,8 @@ new Promise((resolve, reject) => {
           const forumData = resBody.CommunityStore.forum;
 
           const normalized = normalize(forumData, forum);
+
+          resBody.CommunityStore.forum.IForum = normalized;
 
           assign(resBody, {
             Prefixes: normalized.entities.prefixes,
@@ -173,9 +182,11 @@ new Promise((resolve, reject) => {
         }
 
         if (resBody.CommunityStore && resBody.CommunityStore.post) {
-          const Post = resBody.CommunityStore.post;
+          const IPost = resBody.CommunityStore.post;
 
-          const normalized = normalize(Post, post);
+          const normalized = normalize(IPost, post);
+
+          resBody.CommunityStore.post.IPost = normalized;
 
           assign(resBody, {
             Prefixes: normalized.entities.prefixes,
@@ -186,7 +197,7 @@ new Promise((resolve, reject) => {
             SubComments: normalized.entities.subComments,
 
             ListStore: {
-              CurrentPostId: normalized.result
+              IPost: normalized.result
             }
           });
         }
@@ -223,62 +234,64 @@ new Promise((resolve, reject) => {
           resBody.ForumSettingStore.forum = resBody.CommunityStore.forum;
         }
 
-        alt.bootstrap(JSON.stringify(resBody));
-
         if (process.env.NODE_ENV !== 'production') {
           console.info('Bootstrap Data : ', resBody);
         }
 
-        resolve({resBody});
-      })
-  })
-})
-.then(function ({resBody}) {
-  "use strict";
+        const state = {
+          UI: {
+            Auth: resBody.AuthStore,
+            ForumSetting: resBody.ForumSettingStore,
+            Gnb: resBody.GnbStore,
+            Community: resBody.CommunityStore,
+            Submit: resBody.SubmitStore,
+            ShareLink: resBody.ShareLinkStore,
+            Shopping: resBody.ShoppingStore,
+            RemoveModal: resBody.RemoveModalStore,
+            Report: resBody.ReportStore,
+            Modal: resBody.ModalStore,
+            ResetPassword: resBody.ResetPasswordStore,
+            Activity: resBody.ActivityStore,
+            SubmitForum: resBody.SubmitForumStore,
+            Pagination: resBody.PaginationStore,
+            SigninForm: resBody.SigninFormStore,
+            Search: resBody.SearchStore,
+            Login: resBody.LoginStore,
+            List: resBody.ListStore,
+          },
+          Domains: {
+            Users: resBody.Users,
+            Forums: resBody.Forums,
+            Collections: resBody.Collections,
+            Posts: resBody.Posts,
+            Comments: resBody.Comments,
+            SubComments: resBody.SubComments,
+            Categories: resBody.Categories,
+            Notis: resBody.Notis,
+            Prefixes: resBody.Prefixes
+          }
+        };
 
-  const state = Immutable.fromJS({
-    Stores: {
-      UI: {
-        Auth: resBody.AuthStore,
-        ForumSetting: resBody.ForumSettingStore,
-        Gnb: resBody.GnbStore,
-        Community: resBody.CommunityStore,
-        Submit: resBody.SubmitStore,
-        ShareLink: resBody.ShareLinkStore,
-        Shopping: resBody.ShoppingStore,
-        RemoveModal: resBody.RemoveModalStore,
-        Report: resBody.ReportStore,
-        Modal: resBody.ModalStore,
-        ResetPassword: resBody.ResetPasswordStore,
-        Activity: resBody.ActivityStore,
-        SubmitForum: resBody.SubmitForumStore,
-        Pagination: resBody.PaginationStore,
-        SigninForm: resBody.SigninFormStore,
-        Search: resBody.SearchStore,
-        Login: resBody.LoginStore,
-        List: resBody.ListStore,
-      },
-      Domains: {
-        Users: resBody.Users,
-        Forums: resBody.Forums,
-        Collections: resBody.Collections,
-        Posts: resBody.Posts,
-        Comments: resBody.Comments,
-        SubComments: resBody.SubComments,
-        Categories: resBody.Categories,
-        Notis: resBody.Notis,
-        Prefixes: resBody.Prefixes
-      }
-    }
-  });
+        action.serverInitData = state;
+        return dispatch(action);
+      });
+  } else {
+    return dispatch(action);
+  }
+};
 
-  const store = configStore(state);
-
-  render(
-    <Provider store={store}>
-      {Router(store)}
-    </Provider>
-    , document.getElementById('app'));
-});
-// Socket Actions
-require('./socketSubscribe');
+export default (initialImmutableState) => {
+  return createStore(
+    combineReducers({
+      Stores,
+      routing: RouterReducer
+    }),
+    initialImmutableState,
+    composeWithDevTools(
+      applyMiddleware(
+        initRouteState,
+        thunk,
+      )
+    )
+  );
+}

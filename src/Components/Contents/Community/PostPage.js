@@ -678,8 +678,8 @@ const CommentBox = React.createClass({
   render() {
     "use strict";
 
-    const {comments, subComments, authors, IPost, CommunityStore} = this.props;
-    const commentList = IPost.get('comments');
+    const {comments, subComments, authors, post, CommunityStore} = this.props;
+    const commentList = post.get('comments');
     const updating = {
       updating: CommunityStore.get('updating'),
       type: CommunityStore.get('updateType'),
@@ -689,7 +689,7 @@ const CommentBox = React.createClass({
     if (commentList) {
 
       const commentPage = this.props.location.query.comment_p ? this.props.location.query.comment_p : 1;
-      const commentLength = IPost.get('comment_count');
+      const commentLength = post.get('comment_count');
 
       return (
         <div id="comment_box" className="ui comments">
@@ -765,7 +765,7 @@ const PostPage = React.createClass({
 
     const {Users, Posts, ListStore, AuthStore, LoginStore, UserStore} = this.props;
 
-    const postId = ListStore.get('IPost');
+    const postId = ListStore.get('CurrentPostId');
     if (postId) {
       const post = Posts.get(postId.toString());
 
@@ -811,7 +811,7 @@ const PostPage = React.createClass({
               post &&
               <CommentBox
                 {...this.props}
-                IPost={post}
+                post={post}
                 comments={this.props.Comments}
                 subComments={this.props.SubComments}
                 authors={this.props.Users}

@@ -182,10 +182,10 @@ class Users {
     }
   }
 
-  onSubmitComment(IPost) {
+  onSubmitComment(normalized) {
     this.waitFor(CommunityStore);
 
-    const addCommentState = this.state.mergeDeep(IPost.entities.author);
+    const addCommentState = this.state.mergeDeep(normalized.entities.author);
     const loginUser = this._findLoginUser();
     if (loginUser) {
       const updateUser = loginUser

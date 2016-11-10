@@ -9,111 +9,7 @@ import ReactTooltip from 'react-tooltip';
 import {Link} from 'react-router';
 import Draggable from 'react-draggable'; // The default
 
-const rebuildTooltip = function rebuildTooltip(itemCode) {
-  "use strict";
-  VenaStoreActions.tooltipInit(itemCode);
-  ReactTooltip.rebuild();
-};
-
-const Inventory = React.createClass({
-
-  createTableColum(listItem, c) {
-    "use strict";
-
-    let item;
-    if (listItem && (listItem.get('item_count') > 0)) {
-      item = (
-        <div
-          data-tip
-          data-for={'item'}
-          className="content"
-          onMouseOver={rebuildTooltip.bind(this, listItem.get('item').get('code'))}
-        >
-          <span className="item-count">{listItem.get('item_count')}</span>
-          <img className="item-image" src={listItem.get('item').get('image')} />
-        </div>
-      )
-    } else {
-      item = <div className="content"></div>
-    }
-
-    return (
-      <td key={c}>
-        {item}
-      </td>
-    )
-  },
-  createTableRow(inventory, col, row) {
-    "use strict";
-    const self = this;
-    let tableRows = [];
-    let r = 0;
-    let itemIndex = 0;
-
-    while (++r <= row) {
-      let tableCols = [];
-      let c = 0;
-
-      while (++c <= col) {
-        const listItem = inventory.get('items').get(itemIndex);
-
-        tableCols.push(this.createTableColum(listItem, c));
-
-        itemIndex = itemIndex + 1;
-      }
-
-      tableRows.push(
-        <tr key={r}>
-          {tableCols}
-        </tr>
-      );
-    }
-    return tableRows;
-  },
-  createTable(inventory, colNum, rowNum) {
-    "use strict";
-
-    return (
-      <table className="inventory_table">
-        <tbody>
-        {
-          this.createTableRow(inventory, colNum, rowNum)
-        }
-        </tbody>
-      </table>
-    );
-  },
-  render() {
-
-    const inventory = this.props.inventory;
-    const table = this.createTable(inventory, 4, 8);
-
-    return (
-      <div className="user_inventory"
-           style={{
-             background: '#fff',
-             border: '1px solid #eee',
-             width: 202
-           }}
-      >
-        <h4>인벤토리</h4>
-        <div className="inventory_box">
-          <ul className="inventory_tap">
-            <li className="active">커뮤니티</li>
-            <li>뱃지</li>
-            <li>이모티콘</li>
-          </ul>
-          <div className="inventory_scroll">
-            {
-              table
-            }
-          </div>
-
-        </div>
-      </div>
-    );
-  }
-});
+import Inventory from '../Inventory';
 
 const Timer = React.createClass({
   getInitialState: function() {
@@ -303,7 +199,9 @@ const TrendBox = React.createClass({
   openVenacleStore() {
     "use strict";
 
-    VenaStoreActions.toggleVenacleStore();
+    VenaStoreActions.toggleVenacleStore({
+      contentType: 'Shopping'
+    });
     VenaStoreActions.initItems();
   },
 
@@ -520,166 +418,11 @@ const TrendBox = React.createClass({
                   </div>
 
                   <Modal
-                    isOpen={ShoppingStore.get('storeModalOpen')}
-                    onRequestClose={this.openVenacleStore}
-                    style={{
-                      overlay: {backgroundColor: 'rgba(29, 29, 29, 0.8)', zIndex: 100},
-                      content: {top: '10%', height: 900, bottom: 0, zIndex: 102}}}
-                  >
-
-                    <h2 ref="subtitle">베나클 스토어</h2>
-
-                    <div id="venacle_store">
-                      <div className="top_menu">
-                        <div className="ui secondary pointing menu">
-                          <a className="active item">
-                            커뮤니티
-                          </a>
-                          <a className="item">
-                            티켓
-                          </a>
-                          <a className="item">
-                            이벤트
-                          </a>
-                          <div className="right menu">
-                            <a className="ui item" onClick={this.openVenacleStore}>
-                              나가기
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="main_menu" >
-                        <div className="ui vertical menu">
-                          <a className="active teal item">
-                            메인
-                            <div className="ui teal left pointing label">1</div>
-                          </a>
-                          <a className="item">
-                            포스팅
-                            <div className="ui label">51</div>
-                          </a>
-                          <a className="item">
-                            뱃지
-                            <div className="ui label">1</div>
-                          </a>
-                          <a className="item">
-                            포인트
-                            <div className="ui label">1</div>
-                          </a>
-                          <div className="item">
-                            <div className="ui transparent icon input">
-                              <input type="text" placeholder="Search mail..." />
-                                <i className="search icon"></i>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="contents" >
-                        <div className="ui pointing menu">
-                          <a className="active item">
-                            Home
-                          </a>
-                          <a className="item">
-                            Messages
-                          </a>
-                          <a className="item">
-                            Friends
-                          </a>
-                          <div className="right menu">
-                            <div className="item">
-                              <div className="ui transparent icon input">
-                                <input type="text" placeholder="Search..." />
-                                  <i className="search link icon"></i>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="ui segment">
-                          <p >인기순</p>
-                        </div>
-                        <div className="ui segment item-list">
-                          <div className="ui link cards">
-                            {
-                              ShoppingStore.get('items').map(item => {
-                                "use strict";
-                                return (
-                                  <div className="card" key={item.get('code')} >
-
-                                    <div
-                                      data-tip
-                                      data-for={'item'}
-                                      className="image"
-                                      onMouseOver={rebuildTooltip.bind(this, item.get('code'))}
-                                    >
-                                      <img src={item.get('image')} />
-
-                                    </div>
-                                    <div className="content">
-                                      <div className="header">{item.get('title')}</div>
-                                      <div className="meta">
-                                        <a>포스팅</a>
-                                      </div>
-                                    </div>
-                                    <div className="extra content">
-                                      <span>{item.get('attribute').get('price_t')} {item.get('attribute').get('price_type')}P</span>
-                                    </div>
-                                    <div className="ui bottom attached button primary" onClick={this.togglePurchaseWindow.bind(this, item)}>
-                                      <i className="add icon"></i>
-                                      구입하기
-                                    </div>
-                                  </div>
-                                )
-                              })
-                            }
-                          </div>
-                        </div>
-                      </div>
-                      <div className="user_info">
-
-                        <div className="ui card">
-                          <div className="ui slide masked reveal image">
-                            <AvatarImage
-                              sex={sex}
-                              avatarImg={avatar_img}
-                              noWrap={true}
-                            />
-                          </div>
-                          <div className="content">
-                            <a className="header">{user.user.get('nick')} {iconImg}</a>
-                            <div className="meta">
-                              <span className="date">레벨 {user.trendbox.get('level')}</span>
-                              <span className="date">명성 {user.trendbox.get('reputation')}</span>
-                              <span className="date">랭크 </span>
-                            </div>
-                          </div>
-                          <div className="content">
-                            <div className="colum" style={{paddingBottom: 5}}>
-                              <h4 className="ui description title" style={{marginBottom: 5}}>트랜드 포인트</h4>
-                              <div className="point_line">
-                                <span className="ui description">TP</span>
-                                <span id="tp_point" className="ui right floated point tp_point">{user.trendbox.get('T')}</span>
-                              </div>
-                              <div className="point_line">
-                                <span className="ui description" >RP</span>
-                                <span id="rp_point" className="ui right floated point rp_point">{user.trendbox.get('R')}</span>
-                              </div>
-                            </div>
-                            <span className="ui right floated point rp_point" onClick={this.sendPayment}>RP 충전</span>
-                          </div>
-                        </div>
-                      </div>
-                      <Inventory
-                        inventory={inventory}
-                      />
-                    </div>
-
-                  </Modal>
-                  <Modal
                     isOpen={ShoppingStore.get('openPurchaseWindow')}
                     onRequestClose={this.togglePurchaseWindow.bind(this, null)}
                     style={{
-                      overlay: {backgroundColor: 'rgba(29, 29, 29, 0.8)', zIndex: 100},
-                      content: {top: '35%', left: '35%', right: '35%', width: 450, bottom: null, zIndex: 102}
+                      overlay: {backgroundColor: 'rgba(29, 29, 29, 0.8)', zIndex: 104},
+                      content: {top: '35%', left: '35%', right: '35%', width: 450, bottom: null, zIndex: 104}
                     }}
                   >
                     <div>
@@ -766,6 +509,7 @@ const TrendBox = React.createClass({
           <div style={{position: 'absolute'}}>
             <Inventory
               inventory={inventory}
+              ShoppingStore={ShoppingStore}
             />
           </div>
         </Draggable>

@@ -6,7 +6,6 @@ import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 import PostActions from '../../../Actions/PostActions';
 import GnbActions from '../../../Actions/GnbActions';
-import ListActions from '../../../Actions/ListActions';
 
 const BestBox = React.createClass({
   componentWillUnmount() {
@@ -90,6 +89,7 @@ const BestBox = React.createClass({
           AuthorItems={Users}
           User={AuthStore}
           scrollHeight={ListStore.get('scrollHeight')}
+          setScrollPosition={this.props.setScrollPosition}
         />
 
         <Waypoint

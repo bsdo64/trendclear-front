@@ -6,7 +6,7 @@ import {post, comment, subComment} from '../Model/normalizr/schema';
 
 class PostActions {
   constructor() {
-    this.generateActions('addList', 'setRepresentImage');
+    this.generateActions('addList', 'setRepresentImage', 'toggleActivateVenalinkModal');
   }
 
   handleTitle(title) {
@@ -163,6 +163,7 @@ class PostActions {
         });
     }
   }
+
 }
 
 export default alt.createActions(PostActions);

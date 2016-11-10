@@ -52,8 +52,8 @@ class Comments {
     this.setState(addIncrement);
   }
 
-  onSubmitComment(IPost) {
-    let addCommentState = this.state.merge(IPost.entities.comments);
+  onSubmitComment(comment) {
+    let addCommentState = this.state.merge(comment.entities.comments);
     this.setMergeState(addCommentState);
   }
 

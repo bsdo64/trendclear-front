@@ -4,6 +4,8 @@ import GnbStore from '../../Stores/GnbStore';
 import Forums from '../../Stores/Domain/Forums';
 import Collections from '../../Stores/Domain/Collections';
 import Users from '../../Stores/Domain/Users';
+import Categories from '../../Stores/Domain/Categories';
+import ListStore from '../../Stores/UI/ListStore';
 import AuthStore from '../../Stores/UI/AuthStore';
 
 import BestCategorySelect from '../../Components/BestCategorySelect';
@@ -11,7 +13,7 @@ import BestCategorySelect from '../../Components/BestCategorySelect';
 const BestCategoryMenu = connectToStores({
   getStores() {
     // this will handle the listening/unlistening for you
-    return [GnbStore, Users, AuthStore, Forums, Collections]
+    return [GnbStore, Users, AuthStore, Forums, Collections, Categories, ListStore]
   },
 
   getPropsFromStores() {
@@ -19,7 +21,9 @@ const BestCategoryMenu = connectToStores({
       GnbStore: GnbStore.getState(),
       UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
       Forums: Forums.getState(),
-      Collections: Collections.getState()
+      Categories: Categories.getState(),
+      ListStore: ListStore.getState(),
+      Collections: Collections.getState(),
     }
   }
 }, React.createClass({

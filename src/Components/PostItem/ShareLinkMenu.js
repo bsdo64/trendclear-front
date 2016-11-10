@@ -4,10 +4,9 @@
 import React from 'react';
 import Dropdown, {DropdownTrigger, DropdownContent} from 'react-simple-dropdown';
 import Modal from 'react-modal';
-import InputNumber from 'rc-input-number';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
+import PostActions from '../../Actions/PostActions';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
 
 const LinkMenu = React.createClass({
@@ -20,7 +19,6 @@ const LinkMenu = React.createClass({
   },
 
   checkMaxRP(v) {
-    "use strict";
     const {user} = this.props;
     const maxRP = user.get('trendbox').get('R');
 
@@ -32,15 +30,7 @@ const LinkMenu = React.createClass({
     }
   },
 
-  handleChangeDate(moment) {
-
-    this.setState({
-      startDate: moment
-    });
-  },
-
   requestActivateVenalink(activateItem) {
-    "use strict";
     if (activateItem) {
       const item = activateItem.get('item');
       const {post} = this.props;
@@ -62,32 +52,18 @@ const LinkMenu = React.createClass({
   },
 
   copyLink(refId) {
-    "use strict";
     this.refs[refId].select();
     document.execCommand('copy');
   },
   toggleVenalink() {
-    "use strict";
 
-    if (!this.state.openVenalink && this.el) {
-      this.el.removeEventListener('click', this.stopPropagation, false);
-    }
-
-    this.setState({openVenalink: !this.state.openVenalink});
-  },
-
-  stopBeforeEvent() {
-
-    this.el = document.getElementsByClassName('activate-modal')[0];
-    this.el.addEventListener('click', this.stopPropagation, false);
-  },
-
-  stopPropagation(e) {
-    e.stopPropagation();
+    PostActions.toggleActivateVenalinkModal({
+      contentType: 'ActivateVenalink',
+      venalinkActivateRequestPostId: this.props.post.get('id')
+    })
   },
 
   requestParticipateVenalink(venalinkId, participateItem) {
-    "use strict";
     if (participateItem) {
       const item = participateItem.get('item');
 
@@ -106,13 +82,11 @@ const LinkMenu = React.createClass({
   },
 
   isUsersPost(author, userId) {
-    "use strict";
 
     return userId === author.get('id');
   },
 
   isActivateVenalinkPost(post) {
-    "use strict";
 
     if (post.get('venalinks') && post.get('venalinks').size > 0) {
       return post.get('venalinks').find(i => i.get('is_activate') === true)
@@ -122,7 +96,6 @@ const LinkMenu = React.createClass({
   },
 
   isParticipateVenalink(venalink) {
-    "use strict";
 
     const {userId} = this.props;
 
@@ -137,7 +110,6 @@ const LinkMenu = React.createClass({
   },
 
   createShareLink(linkId) {
-    "use strict";
     if (process.env.NODE_ENV === 'production') {
       return `http://venacle.com/link/post/m/${linkId}`;
     } else {
@@ -146,7 +118,6 @@ const LinkMenu = React.createClass({
   },
 
   createMyVenalinkUrl(myParticipate) {
-    "use strict";
 
     if (myParticipate) {
       if (process.env.NODE_ENV === 'production') {
@@ -160,7 +131,6 @@ const LinkMenu = React.createClass({
   },
 
   findInventoryItem(user, options) {
-    "use strict";
     if (user && user.get('inventories')) {
       const inventory = user.get('inventories');
       return inventory
@@ -173,7 +143,6 @@ const LinkMenu = React.createClass({
   },
 
   createShareLinkIcon(isUsersPost, venalink, myParticipate) {
-    "use strict";
 
     if (isUsersPost) {
       if (!venalink) {
@@ -214,7 +183,6 @@ const LinkMenu = React.createClass({
   },
 
   createShareLinkMenu(isUsersPost, venalink, myParticipate) {
-    "use strict";
 
     const {user, post} = this.props;
     const myVenalinkUrl = this.createMyVenalinkUrl(myParticipate);
@@ -299,17 +267,12 @@ const LinkMenu = React.createClass({
   },
 
   render() {
-    const {userId, author, post, user} = this.props;
+    const {userId, author, post} = this.props;
 
     const linkUrl = this.createShareLink(post.get('link_id'));
     const venalink = this.isActivateVenalinkPost(post);
     const isUsersPost = this.isUsersPost(author, userId);
     const myParticipate = this.isParticipateVenalink(venalink);
-
-
-    const activateItem = this.findInventoryItem(
-      user, {type: 'community', title: '베나링크 활성화'}
-    );
 
     const shareLinkIcon = this.createShareLinkIcon(isUsersPost, venalink, myParticipate);
     const shareLinkMenu = this.createShareLinkMenu(isUsersPost, venalink, myParticipate);
@@ -340,100 +303,6 @@ const LinkMenu = React.createClass({
           </div>
         </DropdownContent>
       </Dropdown>
-        <Modal
-          overlayClassName={'activate-modal report-modal md-overlay'}
-          isOpen={this.state.openVenalink}
-          closeTimeoutMS={300}
-          style={{
-            content : {
-              position                   : 'absolute',
-              top                        : '35%',
-              left                       : '35%',
-              bottom: null,
-              right: null,
-              border                     : '1px solid #ccc',
-              background                 : '#fff',
-              overflow                   : 'auto',
-              WebkitOverflowScrolling    : 'touch',
-              borderRadius               : '4px',
-              outline                    : 'none',
-              padding                    : '20px',
-              width: 450
-            }
-          }}
-          onAfterOpen={this.stopBeforeEvent}
-          onRequestClose={this.toggleVenalink}
-
-        >
-          베나링크
-          <div className="ui items">
-            <div className="item">
-              <a className="ui tiny image">
-                <img src="/images/venacle-item1-venalink.png" />
-              </a>
-              {
-                activateItem &&
-                <div className="middle aligned content">
-                  <div className="header">
-                    베나링크 활성화
-                  </div>
-                  <div className="description">
-                    <form className="ui form">
-                      <div className="field">
-                        <label>
-                          예산 RP
-                          <div className="ui button tiny" style={{width: 40, height: 21, padding: 5, marginLeft: 10}}>충전</div>
-                        </label>
-                        <div className="ui right labeled input">
-                          <InputNumber
-                            step={100}
-                            min={0}
-                            max={user.get('trendbox').get('R')}
-                            onChange={this.checkMaxRP}
-                            type="text"
-                          />
-                          <div className="ui basic label">
-                            RP
-                          </div>
-                        </div>
-                      </div>
-                      <div className="field">
-                        <label>활성화 기간</label>
-                        <div className="ui input">
-
-                          <DatePicker
-                            selected={this.state.startDate}
-                            dateFormat="YYYY-MM-DD"
-                            onChange={this.handleChangeDate}
-                            minDate={moment().add(1, "days")}
-                            maxDate={moment().add(1, "month")}
-                            placeholderText="기한을 입력하세요" />
-                        </div>
-                      </div>
-                      <div className="field">
-                        <div>
-                          RP : {user.get('trendbox').get('R')} => {user.get('trendbox').get('R') - this.state.venalinkRP}
-                        </div>
-                      </div>
-                      <div className="ui button primary" onClick={this.requestActivateVenalink.bind(this, activateItem)}>활성화</div>
-                    </form>
-                  </div>
-                </div>
-              }
-              {
-                !activateItem &&
-                <div className="middle aligned content">
-                  <div className="header">
-                    현재 인벤토리에 사용가능한 베나링크 활성화 아이템이 없습니다
-                  </div>
-                  <div className="extra">
-                    <div className="ui label">베나링크 활성화 구입하기 (50 TP)</div>
-                  </div>
-                </div>
-              }
-            </div>
-          </div>
-        </Modal>
       </div>
     );
   }

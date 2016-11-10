@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip';
 import AvatarImage from '../AvatarImage';
 import AdPost1 from '../Ad/AdPost1';
 
+import List from '../../Actions/List';
 import LoginActions from '../../Actions/LoginActions';
 import ListActions from '../../Actions/ListActions';
 import CommunityActions from '../../Actions/CommunityActions';
@@ -25,17 +26,17 @@ const BigPost = React.createClass({
   },
 
   setScroll() {
-    "use strict";
 
     const currentScroll = document.body.scrollTop;
 
     ListActions.setScroll({
       scrollHeight: currentScroll
     });
+
+    this.props.setScrollPosition(currentScroll)
   },
 
   sendLike() {
-    "use strict";
 
     const {post, user} = this.props;
     if (!user) {
@@ -55,7 +56,6 @@ const BigPost = React.createClass({
   },
 
   render() {
-    "use strict";
     const {post, author, user, view, postStyle, shorten} = this.props;
 
     const userId = user && user.get('id');

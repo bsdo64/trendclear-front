@@ -7,24 +7,22 @@ import LoginContainer from '../../Container/Modal/LoginModalContainer';
 import ReportContainer from '../../Container/Modal/ReportModalContainer';
 import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
 import DeleteItemContainer from '../../Container/Modal/DeleteModalContainer';
+import ShoppingContainer from '../../Container/Modal/ShoppingContainer';
+import ActivateVenalinkContainer from '../../Container/Modal/ActivateVenalinkContainer';
 import ModalActions from '../../Actions/ModalActions';
 
+require('./index.scss');
 const ModalBox = React.createClass({
   componentWillUnmount() {
-    if (this.el) {
-      this.el.removeEventListener('click', this.eventHandler, false);
-    }
+    $(document).off('click', '.ui.dimmer.modals', this.stopPropagation, false);
   },
 
-  afterOpenModal() {
-    this.el = this.refs.modal.node;
-    if (this.el) {
-      this.el.addEventListener('click', this.eventHandler, false);
-    }
+  componentDidMount() {
+    // Listener bound to `document`, event delegation
+    $(document).on('click', '.ui.dimmer.modals', this.stopPropagation, false);
   },
 
-  eventHandler(e) {
-    console.log(e.target);
+  stopPropagation(e) {
     e.stopPropagation();
   },
 
@@ -38,6 +36,10 @@ const ModalBox = React.createClass({
         return <AvatarImageContainer />;
       case 'DeleteItem':
         return <DeleteItemContainer />;
+      case 'Shopping':
+        return <ShoppingContainer />;
+      case 'ActivateVenalink':
+        return <ActivateVenalinkContainer />;
 
       case 'Close':
         return <div></div>;
@@ -60,19 +62,18 @@ const ModalBox = React.createClass({
     const children = this.proxyContainer(contentType);
 
     return (
-      <div onClick={this.eventHandler}>
-        <Modal
-          ref={'modal'}
-          overlayClassName={'ui dimmer modals page transition visible active ' + (openModal ? '' : 'fade out')}
-          className="ui small modal gb_login scrolling transition visible active "
-          isOpen={openModal}
-          closeTimeoutMS={500}
-          //{/*onAfterOpen={/!*this.afterOpenModal*!/}*/}
-          onRequestClose={this.closeModal}
-        >
-          {children}
-        </Modal>
-      </div>
+      <Modal
+        ref={'modal'}
+        overlayClassName={'ui dimmer modals page transition visible active ' + (openModal ? '' : 'fade out')}
+        className={`ui small modal scrolling transition visible active Content-${contentType}`}
+        isOpen={openModal}
+        closeTimeoutMS={500}
+        onAfterOpen={this.afterOpenModal}
+        onRequestClose={this.closeModal}
+      >
+        {children}
+
+      </Modal>
     );
   }
 });

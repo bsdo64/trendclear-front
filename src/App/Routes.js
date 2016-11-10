@@ -1,5 +1,6 @@
 import React from 'react';
 import {IndexRedirect, Link, IndexRoute, Router, Route, browserHistory} from 'react-router';
+import {syncHistoryWithStore} from 'react-router-redux';
 
 const LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
 const ForumMenu = require('../Container/LeftCol/ForumMenu.js');
@@ -135,560 +136,569 @@ const HelpApp = (props) => {
   )
 };
 
+export default (store) => {
 
-export default () =>
-<Router history={browserHistory}>
-  <Route path="/" component={App}>
-    <IndexRoute
-      components={{
-      HeaderMyMenu: HeaderMyMenu,
-      HeaderSearch: HeaderSearch,
-      LeftColGnb: LeftColGlobalCategoryNav,
-      LeftColMenu: BestCategoryMenu,
-      WidgetContainer: WidgetContainer,
-      ModalContainer: ModalContainer,
-      ContentsContainer: ContentsContainer
-    }}/>
-  </Route>
+  const enhancedHistory = syncHistoryWithStore(browserHistory, store, {
+    selectLocationState (state) {
+      return state.get('routing').toObject();
+    }
+  });
 
-  <Route path="/all" component={App}>
-    <IndexRoute
-      components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: BestCategoryMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ContentsContainer
-      }}/>
-  </Route>
+  return (
+    <Router history={enhancedHistory}>
+      <Route path="/" component={App}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: BestCategoryMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ContentsContainer
+          }}/>
+      </Route>
 
-  <Route path="/signin" component={App}>
-    <IndexRoute
-      components={{
-      HeaderMyMenu: HeaderMyMenu,
-      HeaderSearch: HeaderSearch,
-      LeftColGnb: LeftColGlobalCategoryNav,
-      LeftColMenu: SigninMenu,
-      WidgetContainer: WidgetContainer,
-      ModalContainer: ModalContainer,
-      ContentsContainer: SigninContainer
-    }}/>
-  </Route>
+      <Route path="/all" component={App}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: BestCategoryMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ContentsContainer
+          }}/>
+      </Route>
 
-  <Route path="/collection" component={App}>
-    <IndexRedirect to="/" />
-  </Route>
+      <Route path="/signin" component={App}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: SigninMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: SigninContainer
+          }}/>
+      </Route>
 
-  <Route path="/collection/:collectionId" component={App}>
-    <IndexRoute
-      components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: CollectionMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: CollectionContentsContainer
-      }}/>
-  </Route>
+      <Route path="/collection" component={App}>
+        <IndexRedirect to="/" />
+      </Route>
 
-  <Route path="/community" component={App}>
-    <IndexRoute
-      components={{
-      HeaderMyMenu: HeaderMyMenu,
-      HeaderSearch: HeaderSearch,
-      LeftColGnb: LeftColGlobalCategoryNav,
-      LeftColMenu: ForumMenu,
-      WidgetContainer: WidgetContainer,
-      ModalContainer: ModalContainer,
-      ContentsContainer: CommunityContainer
-    }}/>
+      <Route path="/collection/:collectionId" component={App}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: CollectionMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: CollectionContentsContainer
+          }}/>
+      </Route>
 
-    <Route path="submit"
-           components={{
+      <Route path="/community" component={App}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: CommunityContainer
+          }}/>
+
+        <Route path="submit"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: ForumMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: SubmitContainer
+               }}
+        />
+
+        <Route path="submit/forum"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: SubmitCategoryMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: SubmitForumContainer
+               }}
+        />
+
+        <Route path="submit/forum/prefix"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: SubmitCategoryMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: SubmitForumPrefixContainer
+               }}
+        />
+
+        <Route path="settings">
+          <IndexRoute
+            components={{
               HeaderMyMenu: HeaderMyMenu,
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: ForumMenu,
+              LeftColMenu: ForumSettingMenu,
               WidgetContainer: WidgetContainer,
               ModalContainer: ModalContainer,
-              ContentsContainer: SubmitContainer
-             }}
-    />
+              ContentsContainer: ForumSettingMain
+            }}/>
 
-    <Route path="submit/forum"
-           components={{
+          <Route path="forumprefix" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="foruminfo" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="forumurl" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="announce" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="writepost" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="writecomment" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="share" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="promotion" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="managers" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="banlist" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="spams" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="spamreports" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="stat/forum" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="stat/views" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="stat/visitors" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="stat/likerank" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="stat/commentrank" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+          <Route path="stat/viewrank" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: ForumSettingMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ForumSettingMain
+          }}/>
+
+        </Route>
+
+      </Route>
+
+      <Route path="/search" component={App}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: SearchMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: SearchContainer
+          }}
+        />
+      </Route>
+
+      <Route path="/activity" component={App}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: AccountCategoryMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: ActivityContainer
+          }}
+        />
+
+        <Route path="likes"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: AccountCategoryMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: ActivityContainer
+               }}
+        />
+
+        <Route path="posts"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: AccountCategoryMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: ActivityContainer
+               }}
+        />
+
+        <Route path="comments"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: AccountCategoryMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: ActivityContainer
+               }}
+        />
+
+      </Route>
+
+      <Route path="/user" component={App}>
+        <Route path="points"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: UserPointMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: PointListContainer
+               }}
+        />
+
+        <Route path="venalinks">
+          <IndexRoute
+            components={{
               HeaderMyMenu: HeaderMyMenu,
               HeaderSearch: HeaderSearch,
               LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: SubmitCategoryMenu,
+              LeftColMenu: UserPointMenu,
               WidgetContainer: WidgetContainer,
               ModalContainer: ModalContainer,
-              ContentsContainer: SubmitForumContainer
-             }}
-    />
+              ContentsContainer: VenalinkActiveList
+            }}/>
 
-    <Route path="submit/forum/prefix"
-           components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: SubmitCategoryMenu,
-              WidgetContainer: WidgetContainer,
-              ModalContainer: ModalContainer,
-              ContentsContainer: SubmitForumPrefixContainer
-             }}
-    />
+          <Route path="active" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: UserPointMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: VenalinkActiveList
+          }}/>
 
-    <Route path="settings">
-      <IndexRoute
-        components={{
-          HeaderMyMenu: HeaderMyMenu,
-          HeaderSearch: HeaderSearch,
-          LeftColGnb: LeftColGlobalCategoryNav,
-          LeftColMenu: ForumSettingMenu,
-          WidgetContainer: WidgetContainer,
-          ModalContainer: ModalContainer,
-          ContentsContainer: ForumSettingMain
-        }}/>
+          <Route path="share" components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: UserPointMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: VenalinkShareList
+          }}/>
+        </Route>
+      </Route>
 
-      <Route path="forumprefix" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      <Route path="/setting" component={App}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: AccountCategoryMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: SettingContainer
+          }}
+        />
 
-      <Route path="foruminfo" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+        <Route path="password"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: AccountCategoryMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: SettingContainer
+               }}
+        />
 
-      <Route path="forumurl" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+        <Route path="profile"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: AccountCategoryMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: SettingContainer
+               }}
+        />
+      </Route>
 
-      <Route path="announce" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      <Route path="/policies" component={HelpApp}>
+        <IndexRedirect to="privacy"/>
 
-      <Route path="writepost" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+        <Route path="privacy"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: PolicyMenu,
+                 ContentsContainer: PolicyContainer
+               }}
+        />
 
-      <Route path="writecomment" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+        <Route path="terms"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: PolicyMenu,
+                 ContentsContainer: PolicyContainer
+               }}
+        />
 
-      <Route path="share" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      </Route>
 
-      <Route path="promotion" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      <Route path="/advertisement" component={HelpApp}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: CompanyMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: CompanyContainer
+          }}
+        />
 
-      <Route path="managers" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      </Route>
 
-      <Route path="banlist" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      <Route path="/about" component={HelpApp}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: CompanyMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: CompanyContainer
+          }}
+        />
 
-      <Route path="spams" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      </Route>
 
-      <Route path="spamreports" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      <Route path="/careers" component={HelpApp}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: CompanyMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: CompanyContainer
+          }}
+        />
 
-      <Route path="stat/forum" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      </Route>
 
-      <Route path="stat/views" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      <Route path="/help" component={HelpApp}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: CompanyMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: CompanyContainer
+          }}
+        />
 
-      <Route path="stat/visitors" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      </Route>
 
-      <Route path="stat/likerank" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      <Route path="/member/find" component={HelpApp}>
+        <IndexRoute
+          components={{
+            HeaderMyMenu: HeaderMyMenu,
+            HeaderSearch: HeaderSearch,
+            LeftColGnb: LeftColGlobalCategoryNav,
+            LeftColMenu: DefaultMenu,
+            WidgetContainer: WidgetContainer,
+            ModalContainer: ModalContainer,
+            ContentsContainer: FindMemberContainer
+          }}
+        />
 
-      <Route path="stat/commentrank" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
+      </Route>
 
-      <Route path="stat/viewrank" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: ForumSettingMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: ForumSettingMain
-      }}/>
-
-    </Route>
-
-  </Route>
-
-  <Route path="/search" component={App}>
-    <IndexRoute
-      components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: SearchMenu,
-              WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-              ContentsContainer: SearchContainer
-             }}
-    />
-  </Route>
-
-  <Route path="/activity" component={App}>
-    <IndexRoute
-      components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-              ContentsContainer: ActivityContainer
-             }}
-    />
-
-    <Route path="likes"
-           components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              WidgetContainer: WidgetContainer,
-             ModalContainer: ModalContainer,
-              ContentsContainer: ActivityContainer
-             }}
-    />
-
-    <Route path="posts"
-           components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              WidgetContainer: WidgetContainer,
-             ModalContainer: ModalContainer,
-              ContentsContainer: ActivityContainer
-             }}
-    />
-
-    <Route path="comments"
-           components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              WidgetContainer: WidgetContainer,
-             ModalContainer: ModalContainer,
-              ContentsContainer: ActivityContainer
-             }}
-    />
-
-  </Route>
-
-  <Route path="/user" component={App}>
-    <Route path="points"
-           components={{
-             HeaderMyMenu: HeaderMyMenu,
-             HeaderSearch: HeaderSearch,
-             LeftColGnb: LeftColGlobalCategoryNav,
-             LeftColMenu: UserPointMenu,
-             WidgetContainer: WidgetContainer,
-             ModalContainer: ModalContainer,
-             ContentsContainer: PointListContainer
-           }}
-    />
-
-    <Route path="venalinks">
-      <IndexRoute
-        components={{
-          HeaderMyMenu: HeaderMyMenu,
-          HeaderSearch: HeaderSearch,
-          LeftColGnb: LeftColGlobalCategoryNav,
-          LeftColMenu: UserPointMenu,
-          WidgetContainer: WidgetContainer,
-          ModalContainer: ModalContainer,
-          ContentsContainer: VenalinkActiveList
-        }}/>
-
-      <Route path="active" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: UserPointMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: VenalinkActiveList
-      }}/>
-
-      <Route path="share" components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: UserPointMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: VenalinkShareList
-      }}/>
-    </Route>
-  </Route>
-
-  <Route path="/setting" component={App}>
-    <IndexRoute
-      components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-              ContentsContainer: SettingContainer
-             }}
-    />
-
-    <Route path="password"
-           components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              WidgetContainer: WidgetContainer,
-             ModalContainer: ModalContainer,
-              ContentsContainer: SettingContainer
-             }}
-    />
-
-    <Route path="profile"
-           components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: AccountCategoryMenu,
-              WidgetContainer: WidgetContainer,
-             ModalContainer: ModalContainer,
-              ContentsContainer: SettingContainer
-             }}
-    />
-  </Route>
-
-  <Route path="/policies" component={HelpApp}>
-    <IndexRedirect to="privacy"/>
-
-    <Route path="privacy"
-           components={{
-             HeaderMyMenu: HeaderMyMenu,
-             HeaderSearch: HeaderSearch,
-             LeftColGnb: LeftColGlobalCategoryNav,
-             LeftColMenu: PolicyMenu,
-             ContentsContainer: PolicyContainer
-           }}
-    />
-
-    <Route path="terms"
-           components={{
-             HeaderMyMenu: HeaderMyMenu,
-             HeaderSearch: HeaderSearch,
-             LeftColGnb: LeftColGlobalCategoryNav,
-             LeftColMenu: PolicyMenu,
-             ContentsContainer: PolicyContainer
-           }}
-    />
-
-  </Route>
-
-  <Route path="/advertisement" component={HelpApp}>
-    <IndexRoute
-      components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: CompanyMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: CompanyContainer
-      }}
-    />
-
-  </Route>
-
-  <Route path="/about" component={HelpApp}>
-    <IndexRoute
-      components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: CompanyMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: CompanyContainer
-      }}
-    />
-
-  </Route>
-
-  <Route path="/careers" component={HelpApp}>
-    <IndexRoute
-      components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: CompanyMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: CompanyContainer
-      }}
-    />
-
-  </Route>
-
-  <Route path="/help" component={HelpApp}>
-    <IndexRoute
-      components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: CompanyMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: CompanyContainer
-      }}
-    />
-
-  </Route>
-
-  <Route path="/member/find" component={HelpApp}>
-    <IndexRoute
-      components={{
-        HeaderMyMenu: HeaderMyMenu,
-        HeaderSearch: HeaderSearch,
-        LeftColGnb: LeftColGlobalCategoryNav,
-        LeftColMenu: DefaultMenu,
-        WidgetContainer: WidgetContainer,
-        ModalContainer: ModalContainer,
-        ContentsContainer: FindMemberContainer
-      }}
-    />
-
-  </Route>
-
-  <Route path="*" component={App}>
-    <IndexRedirect to="/"/>
-  </Route>
-</Router>
+      <Route path="*" component={App}>
+        <IndexRedirect to="/"/>
+      </Route>
+    </Router>
+  )
+}

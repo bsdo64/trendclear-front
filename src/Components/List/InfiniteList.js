@@ -23,6 +23,7 @@ function createItem(props, id) {
           user={user}
           view={false}
           shorten={true}
+          setScrollPosition={props.setScrollPosition}
         />
       ]
     }

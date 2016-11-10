@@ -73,9 +73,9 @@ class Posts {
     }
   }
   
-  onSubmitComment(IPost) {
+  onSubmitComment(normalized) {
 
-    let addCommentState = this.state.mergeDeep(IPost.entities.posts);
+    let addCommentState = this.state.mergeDeep(normalized.entities.posts);
     this.setMergeState(addCommentState);
   }
 

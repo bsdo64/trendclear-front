@@ -8,6 +8,8 @@ import UserActions from '../../Actions/UserActions';
 import ReportActions from '../../Actions/ReportActions';
 import DeleteActions from '../../Actions/DeleteActions';
 import ModalActions from '../../Actions/ModalActions';
+import VenaStoreActions from '../../Actions/VenaStoreActions';
+import PostActions from '../../Actions/PostActions';
 
 class ModalStore {
   static displayName = 'ModalStore';
@@ -24,7 +26,9 @@ class ModalStore {
         UserActions.toggleAvatarModal,
         DeleteActions.toggleModal,
         LoginActions.toggleLoginModal,
-        ReportActions.toggleReportModal
+        ReportActions.toggleReportModal,
+        VenaStoreActions.toggleVenacleStore,
+        PostActions.toggleActivateVenalinkModal
       ],
     });
 
