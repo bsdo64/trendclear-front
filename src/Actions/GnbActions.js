@@ -5,7 +5,7 @@ import {post, comment, subComment} from '../Model/normalizr/schema';
 
 class GnbActions {
   constructor() {
-    this.generateActions('addClub', 'addCategory', 'addCategoryGroup', 'addForum', 'toggleGnb');
+    this.generateActions('addForum', 'toggleGnb');
   }
   openSideCategory(clubId) {
     return clubId;
@@ -36,9 +36,14 @@ class GnbActions {
         });
     };
   }
+
+  /**
+   * @name GnbActions.resetFilter
+   * @returns {boolean}
+   */
   resetFilter() {
     return true;
   }
 }
 
-module.exports = alt.createActions(GnbActions);
+export default alt.createActions(GnbActions);

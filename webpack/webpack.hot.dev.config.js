@@ -36,7 +36,7 @@ module.exports = {
       include: path.resolve(root, 'src')
     }, {
       test: /\.css$/,
-      loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+      loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=1!postcss'
     }, {
       test: /\.scss$/,
       loaders: ["style", "css", "postcss", "sass"],

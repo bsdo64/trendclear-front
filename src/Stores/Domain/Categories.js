@@ -17,10 +17,6 @@ class Categories {
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
   }
-
-  onAddCategory(categories) {
-    this.setMergeState(categories);
-  }
 }
 
 export default alt.createStore(immutable(Categories), Categories.displayName);

@@ -17,10 +17,6 @@ class Clubs {
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
   }
-
-  onAddClub(clubs) {
-    this.setMergeState(clubs);
-  }
 }
 
 export default alt.createStore(immutable(Clubs), Clubs.displayName);
