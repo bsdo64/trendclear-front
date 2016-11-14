@@ -45,9 +45,6 @@ const initRouteState = store => dispatch => action => {
           const normalized = normalize(collectionBestPostList, arrayOf(post));
 
           assign(resBody, {
-            // Temp
-            CollectionBestPostStore: { posts: { postList: normalized } },
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { collectionBestPostList: normalized.result },
@@ -62,9 +59,6 @@ const initRouteState = store => dispatch => action => {
           const normalized = normalize(bestPostList, arrayOf(post));
 
           assign(resBody, {
-            // Temp
-            BestPostStore: { posts: { postList: normalized } },
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { bestPostList: normalized.result },
@@ -97,9 +91,6 @@ const initRouteState = store => dispatch => action => {
           }
 
           assign(resBody, {
-            // Temp
-            ActivityStore: { posts: { postList: normalized } },
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { [context]: normalized.result },
@@ -114,9 +105,6 @@ const initRouteState = store => dispatch => action => {
           const normalized = normalize(searchPostList, arrayOf(post));
 
           assign(resBody, {
-            // Temp
-            SearchStore: { search: { postList: normalized } },
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { searchPostList: normalized.result },
@@ -129,8 +117,6 @@ const initRouteState = store => dispatch => action => {
           const normalizedForums = normalize(searchForumList, arrayOf(forum));
 
           assign(resBody, {
-            // Temp
-
             Forums: normalizedForums.entities.forums,
             Users: normalizedForums.entities.author,
             ListStore: { searchForumList: normalizedForums.result },
@@ -144,12 +130,7 @@ const initRouteState = store => dispatch => action => {
 
           const normalized = normalize(forumPostList, arrayOf(post));
 
-          resBody.CommunityStore.list.postList = normalized;
-
           assign(resBody, {
-            // Temp
-            BestPostStore: { posts: { postList: normalized } },
-
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             Comments: normalized.entities.comments,
@@ -163,8 +144,6 @@ const initRouteState = store => dispatch => action => {
           const forumData = resBody.CommunityStore.forum;
 
           const normalized = normalize(forumData, forum);
-
-          resBody.CommunityStore.forum.IForum = normalized;
 
           assign(resBody, {
             Prefixes: normalized.entities.prefixes,
@@ -182,11 +161,9 @@ const initRouteState = store => dispatch => action => {
         }
 
         if (resBody.CommunityStore && resBody.CommunityStore.post) {
-          const IPost = resBody.CommunityStore.post;
+          const Post = resBody.CommunityStore.post;
 
-          const normalized = normalize(IPost, post);
-
-          resBody.CommunityStore.post.IPost = normalized;
+          const normalized = normalize(Post, post);
 
           assign(resBody, {
             Prefixes: normalized.entities.prefixes,
@@ -197,7 +174,7 @@ const initRouteState = store => dispatch => action => {
             SubComments: normalized.entities.subComments,
 
             ListStore: {
-              IPost: normalized.result
+              CurrentPostId: normalized.result
             }
           });
         }
@@ -272,7 +249,21 @@ const initRouteState = store => dispatch => action => {
           }
         };
 
+        function clean(obj) {
+          const propNames = Object.getOwnPropertyNames(obj);
+          for (let i = 0; i < propNames.length; i++) {
+            const propName = propNames[i];
+            if (obj[propName] === null || obj[propName] === undefined) {
+              delete obj[propName];
+            }
+          }
+        }
+
+        clean(state.UI);
+        clean(state.Domains);
+
         action.serverInitData = state;
+
         return dispatch(action);
       });
   } else {

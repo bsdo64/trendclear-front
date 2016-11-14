@@ -1,25 +1,29 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
-import ModalStore from '../../Stores/UI/ModalStore';
-
+import {connect} from 'react-redux';
 import Modal from '../../Components/Modal';
 
-const DefaultModalContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [ModalStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      ModalStore: ModalStore.getState(),
-    }
-  }
-}, React.createClass({
+const DefaultModalContainer = React.createClass({
   render() {
     return (<Modal {...this.props} />)
   }
-}));
+});
 
 
-module.exports = DefaultModalContainer;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  return {
+    ModalStore: getUIState('Modal')
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DefaultModalContainer);

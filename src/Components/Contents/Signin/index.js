@@ -12,10 +12,6 @@ import SigninFormContents from './SigninFormContents';
 require('./Signin.scss');
 const SigninContents = React.createClass({
   displayName: 'SigninContents',
-  propTypes: {},
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
-  },
   componentWillMount() {
     const {UserStore} = this.props;
     if (UserStore.get('user')) {

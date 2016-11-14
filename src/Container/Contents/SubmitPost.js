@@ -1,34 +1,39 @@
 import React from 'react';
-import alt from '../../Utils/alt';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-import LoginStore from '../../Stores/LoginStore';
-import SubmitStore from '../../Stores/SubmitStore';
-import Users from '../../Stores/Domain/Users';
-
-import Posts from '../../Stores/Domain/Posts';
-import AuthStore from '../../Stores/UI/AuthStore';
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 
 import Submit from '../../Components/Contents/Submit';
 
-const SubmitPostContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [Posts, SubmitStore, LoginStore, Users, AuthStore];
-  },
-
-  getPropsFromStores() {
-    return {
-      Posts: Posts.getState(),
-      SubmitStore: SubmitStore.getState(),
-      AuthStore: AuthStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      LoginStore: LoginStore.getState()
-    }
-  }
-}, React.createClass({
+const SubmitPostContainer = React.createClass({
   render() {
     return (<Submit {...this.props} />);
   }
-}));
+});
 
-module.exports = SubmitPostContainer;
+
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    SubmitStore: getUIState('Submit'),
+    AuthStore: getUIState('Auth'),
+    LoginStore: getUIState('Login'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    Posts: getDomainState('Posts')
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+};
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SubmitPostContainer);

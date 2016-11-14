@@ -7,33 +7,37 @@ require('./index.scss');
 const SearchBar = React.createClass({
 
   setQuery(e) {
-    "use strict";
-
     SearchActions.handleSearchQuery(e.target.value);
   },
 
   submitQuery(e) {
-    "use strict";
-
     e.preventDefault();
 
     const {SearchStore} = this.props;
-    const query = SearchStore.get('query');
+    if (SearchStore) {
+      const query = SearchStore.get('query');
 
-    browserHistory.push({pathname: '/search', query: {query: query}});
+      browserHistory.push({pathname: '/search', query: {query: query}});
+    }
+  },
+
+  getQueryValue() {
+    const {SearchStore} = this.props;
+    let query = '';
+
+    if (SearchStore) {
+      query = SearchStore.get('query') || '';
+    }
+
+    return query;
   },
 
   render() {
-    "use strict";
-
-    const {SearchStore} = this.props;
-    const query = SearchStore.get('query');
-
     return (
       <form onSubmit={this.submitQuery}>
         <div className="ui input fluid small">
           <input type="text" placeholder="여기에 검색.."
-                 value={query}
+                 value={this.getQueryValue()}
                  onChange={this.setQuery}
           />
 

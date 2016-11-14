@@ -1,7 +1,7 @@
-import {List} from 'immutable';
+import {List, Map} from 'immutable';
 import {combineReducers} from 'redux-immutable';
 
-const initList = List([]);
+const initList = Map({});
 
 const Users = (state = initList, action) => {
 
@@ -19,9 +19,37 @@ const Comments = (state = initList, action) => {
 
 };
 
+const Forums = (state = initList, action) => {
+
+  return state;
+
+};
+
+const Categories = (state = initList, action) => {
+
+  return state;
+
+};
+
+const Prefixes = (state = initList, action) => {
+
+  return state;
+
+};
+
+const SubComments = (state = initList, action) => {
+
+  return state;
+
+};
+
 // Domain reducer
 export default combineReducers({
   Users,
   Posts,
-  Comments
+  Comments,
+  Forums,
+  Categories,
+  Prefixes,
+  SubComments,
 });

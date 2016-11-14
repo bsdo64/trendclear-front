@@ -18,22 +18,6 @@ class GnbStore{
     this.setMergeState = setMergeState.bind(this);
   }
 
-  onToggleGnb() {
-    let state = this.state.set('openGnb', !this.state.get('openGnb'));
-
-    this.setMergeState(state);
-  }
-
-  onOpenSideCategory(clubId) {
-    let state = this.state.setIn(['gnbMenu', 'openSideNow'], clubId);
-    this.setMergeState(state);
-  }
-
-  openForumMeta(forumId) {
-    let state = this.state.setIn(['gnbMenu', 'openForumMeta'], forumId);
-    this.setMergeState(state);
-  }
-
   onUpdateFilter(val) {
     this.setMergeState(val);
   }

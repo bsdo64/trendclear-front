@@ -1,39 +1,41 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 
-import GnbStore from '../../Stores/GnbStore';
-import CommunityStore from '../../Stores/CommunityStore';
-import Forums from '../../Stores/Domain/Forums';
-import Collections from '../../Stores/Domain/Collections';
-import AuthStore from '../../Stores/UI/AuthStore';
-import ListStore from '../../Stores/UI/ListStore';
+import ForumLeftMenu from '../../Components/ForumLeftMenu'
 
-import CategoryList from '../../Components/ForumLeftMenu';
-import Users from '../../Stores/Domain/Users';
-
-const MenuContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [GnbStore, Users, CommunityStore, ListStore, Forums, Collections, AuthStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      GnbStore: GnbStore.getState(),
-      CommunityStore: CommunityStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      AuthStore: AuthStore.getState(),
-
-      ListStore: ListStore.getState(),
-
-      Collections: Collections.getState(),
-      Forums: Forums.getState(),
-    }
-  }
-}, React.createClass({
+const MenuContainer = React.createClass({
   render() {
-    return (<CategoryList {...this.props} />)
+    return (<ForumLeftMenu {...this.props} />)
   }
-}));
+});
 
-module.exports = MenuContainer;
+const mapStateToProps = (state, props) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    ListStore: getUIState('List'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+
+    Forums: getDomainState('Forums'),
+    Collections: getDomainState('Collections'),
+
+    // New Type
+    forum: getUIState('Community').get('forum')
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MenuContainer);

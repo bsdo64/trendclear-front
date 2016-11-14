@@ -1,29 +1,35 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-import LoginStore from '../../Stores/LoginStore';
-import SearchStore from '../../Stores/SearchStore';
-import Users from '../../Stores/Domain/Users';
-import AuthStore from '../../Stores/UI/AuthStore';
-
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 import SearchBar from '../../Components/Header/search';
 
-const MyMenuContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [LoginStore, Users, AuthStore, SearchStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      LoginStore: LoginStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      SearchStore: SearchStore.getState()
-    }
-  }
-}, React.createClass({
+const Search = React.createClass({
   render() {
     return (<SearchBar {...this.props} />)
   }
-}));
+});
 
-module.exports = MyMenuContainer;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    LoginStore: getUIState('Login'),
+    SearchStore: getUIState('Search'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+};
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Search);

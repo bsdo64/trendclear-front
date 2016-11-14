@@ -1,31 +1,37 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-
-import GnbStore from '../../Stores/GnbStore';
-import Forums from '../../Stores/Domain/Forums';
-import CommunityStore from '../../Stores/CommunityStore';
-import AuthStore from '../../Stores/UI/AuthStore';
+import {connect} from 'react-redux';
 
 import LeftMenu from '../../Components/ForumSettingLeftMenu';
 
-const ForumSettingLeftMenu = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [GnbStore, CommunityStore, Forums, AuthStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      GnbStore: GnbStore.getState(),
-      CommunityStore: CommunityStore.getState(),
-      Forums: Forums.getState(),
-      AuthStore: AuthStore.getState()
-    }
-  }
-}, React.createClass({
+const ForumSettingLeftMenu = React.createClass({
   render() {
     return (<LeftMenu {...this.props} />)
   }
-}));
+});
 
-module.exports = ForumSettingLeftMenu;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    GnbStore: getUIState('Gnb'),
+    AuthStore: getUIState('Auth'),
+    CommunityStore: getUIState('Community'),
+
+    Forums: getDomainState('Forums'),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ForumSettingLeftMenu);

@@ -1,27 +1,9 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
-
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
+import {connect} from 'react-redux';
 import UserActions from '../../Actions/UserActions';
-import ResetPasswordStore from '../../Stores/UI/ResetPasswordStore';
-import AuthStore from '../../Stores/UI/AuthStore';
 
-const FindMemberContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [
-      ResetPasswordStore,
-      AuthStore
-    ]
-  },
-
-  getPropsFromStores() {
-    return {
-      ResetPasswordStore: ResetPasswordStore.getState(),
-      AuthStore: AuthStore.getState()
-    }
-  }
-}, React.createClass({
+const FindMemberContainer = React.createClass({
   getInitialState() {
     return {
       error: null,
@@ -141,6 +123,28 @@ const FindMemberContainer = connectToStores({
       </div>
     )
   }
-}));
+});
 
-module.exports = FindMemberContainer;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    ResetPassword: getUIState('ResetPassword'),
+    AuthStore: getUIState('Auth')
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+};
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FindMemberContainer);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
+import {List} from 'immutable';
 import GnbActions from '../../Actions/GnbActions';
 
 import Collection from './Collection';
@@ -58,7 +59,7 @@ const Temp = React.createClass({
         })
         .reduce((list, i) => {
           return list.concat(i);
-        })
+        }, List([]))
         .map(forumId => {
           return Forums.get(forumId.toString());
         })

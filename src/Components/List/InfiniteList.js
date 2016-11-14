@@ -30,7 +30,7 @@ function createItem(props, id) {
   }
 }
 
-module.exports = React.createClass({
+const InfiniteList = React.createClass({
 
   componentDidMount() {
     $('.ui.embed').embed();
@@ -64,3 +64,5 @@ module.exports = React.createClass({
     )
   }
 });
+
+export default InfiniteList

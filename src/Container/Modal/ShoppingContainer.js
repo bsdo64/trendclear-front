@@ -1,30 +1,40 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import {connect} from 'react-redux';
 import {getLoginUser} from '../Util/func';
 
 import Shopping from '../../Components/Modal/Components/Shopping';
 
-import Users from '../../Stores/Domain/Users';
-import AuthStore from '../../Stores/UI/AuthStore';
-import ShoppingStore from '../../Stores/UI/ShoppingStore';
-
-const ShoppingContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [Users, AuthStore, ShoppingStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      ShoppingStore: ShoppingStore.getState()
-    }
-  }
-}, React.createClass({
+const ShoppingContainer = React.createClass({
   render() {
     return (<Shopping {...this.props} />)
   }
-}));
+});
 
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
 
-module.exports = ShoppingContainer;
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    ShoppingStore: getUIState('Shopping'),
+    ReportStore: getUIState('Report'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+
+    Posts: getDomainState('Posts'),
+    Comments: getDomainState('Comments'),
+    SubComments: getDomainState('SubComments'),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ShoppingContainer);

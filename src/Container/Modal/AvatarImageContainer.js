@@ -1,28 +1,35 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import {connect} from 'react-redux';
 import {getLoginUser} from '../Util/func';
 
 import AvatarImageModal from '../../Components/Modal/Components/AvatarImage';
 
-import Users from '../../Stores/Domain/Users';
-import AuthStore from '../../Stores/UI/AuthStore';
-
-const AvatarImageContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [Users, AuthStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState())
-    }
-  }
-}, React.createClass({
+const AvatarImageContainer = React.createClass({
   render() {
     return (<AvatarImageModal {...this.props} />)
   }
-}));
+});
 
 
-module.exports = AvatarImageContainer;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AvatarImageContainer);

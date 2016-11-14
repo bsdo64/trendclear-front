@@ -21,7 +21,7 @@ const PolicyMenu = React.createClass({
     }
   },
   render() {
-    const { CommunityStore, AuthStore, UserStore, Forums, Collections, location } = this.props;
+    const { location } = this.props;
     const title = this.getTitle(this.getEndpoint(location));
 
     return (

@@ -1,32 +1,10 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-import GnbStore from '../../Stores/GnbStore';
-import Forums from '../../Stores/Domain/Forums';
-import Collections from '../../Stores/Domain/Collections';
-import Users from '../../Stores/Domain/Users';
-import Categories from '../../Stores/Domain/Categories';
-import ListStore from '../../Stores/UI/ListStore';
-import AuthStore from '../../Stores/UI/AuthStore';
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 
 import BestCategorySelect from '../../Components/BestCategorySelect';
 
-const BestCategoryMenu = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [GnbStore, Users, AuthStore, Forums, Collections, Categories, ListStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      GnbStore: GnbStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      Forums: Forums.getState(),
-      Categories: Categories.getState(),
-      ListStore: ListStore.getState(),
-      Collections: Collections.getState(),
-    }
-  }
-}, React.createClass({
+const BestCategoryMenu = React.createClass({
   render() {
     return (
       <div>
@@ -34,6 +12,33 @@ const BestCategoryMenu = connectToStores({
       </div>
     )
   }
-}));
+});
 
-module.exports = BestCategoryMenu;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    ListStore: getUIState('List'),
+    GnbStore: getUIState('Gnb'),
+    AuthStore: getUIState('Auth'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    Forums: getDomainState('Forums'),
+    Categories: getDomainState('Categories'),
+    Collections: getDomainState('Collections')
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BestCategoryMenu);

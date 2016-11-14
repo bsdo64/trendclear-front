@@ -1,10 +1,26 @@
 import {combineReducers} from 'redux-immutable';
 
-import List from './List.js';
-import Auth from './Auth.js';
+import Auth from './Auth';
+import Community from './Community';
+import Gnb from './Gnb';
+import List from './List';
+import Login from './Login';
+import Modal from './Modal';
+import Pagination from './Pagination';
+import Report from './Report';
+import Search from './Search';
+import SigninForm from './SigninForm';
 
 // UI reducer
 export default combineReducers({
+  Auth,
+  Community,
+  Gnb,
   List,
-  Auth
+  Login,
+  Modal,
+  Pagination,
+  Report,
+  Search,
+  SigninForm,
 });

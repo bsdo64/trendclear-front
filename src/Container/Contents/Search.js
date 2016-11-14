@@ -1,68 +1,10 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-import alt from '../../Utils/alt';
-
-import LoginStore from '../../Stores/LoginStore';
-import CommunityStore from '../../Stores/CommunityStore';
-import SearchStore from '../../Stores/SearchStore';
-import GnbStore from '../../Stores/GnbStore';
-
-import Posts from '../../Stores/Domain/Posts';
-import Users from '../../Stores/Domain/Users';
-import Forums from '../../Stores/Domain/Forums';
-import Collections from '../../Stores/Domain/Collections';
-
-import AuthStore from '../../Stores/UI/AuthStore';
-import LoginModalStore from '../../Stores/UI/LoginModalStore';
-const PaginationStore = alt.getStore('PaginationStore');
-const ListStore = alt.getStore('ListStore');
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 
 import Search from '../../Components/Contents/Search';
 
-const SearchContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [
-      GnbStore,
-      LoginStore,
-      CommunityStore,
-      SearchStore,
-
-      // UI Stores
-      LoginModalStore,
-      AuthStore,
-      PaginationStore,
-      ListStore,
-
-      // Domain Stores
-      Posts,
-      Users,
-      Forums,
-      Collections,
-    ]
-  },
-
-  getPropsFromStores() {
-    return {
-      GnbStore: GnbStore.getState(),
-      LoginStore: LoginStore.getState(),
-      CommunityStore: CommunityStore.getState(),
-      SearchStore: SearchStore.getState(),
-
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      PaginationStore: PaginationStore.getState(),
-      ListStore: ListStore.getState(),
-
-      AuthStore:        AuthStore.getState(),
-      LoginModalStore:  LoginModalStore.getState(),
-
-      Forums:           Forums.getState(),
-      Users:            Users.getState(),
-      Posts:            Posts.getState(),
-      Collections:            Collections.getState()
-    }
-  }
-}, React.createClass({
+const SearchContainer = React.createClass({
   render() {
     return (
       <Search
@@ -70,6 +12,42 @@ const SearchContainer = connectToStores({
       />
     )
   }
-}));
+});
 
-module.exports = SearchContainer;
+
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    GnbStore: getUIState('Gnb'),
+    LoginStore: getUIState('Login'),
+    CommunityStore: getUIState('Community'),
+    SearchStore: getUIState('Search'),
+
+    ListStore: getUIState('List'),
+    AuthStore: getUIState('Auth'),
+    PaginationStore: getUIState('Pagination'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+
+    Collections: getDomainState('Collections'),
+    Forums: getDomainState('Forums'),
+    Users: getDomainState('Users'),
+    Posts: getDomainState('Posts')
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+};
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchContainer);
+

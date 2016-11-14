@@ -1,30 +1,36 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import {connect} from 'react-redux';
 import {getLoginUser} from '../Util/func';
 
 import ActivateVenalink from '../../Components/Modal/Components/ActivateVenalink';
 
-import Users from '../../Stores/Domain/Users';
-import AuthStore from '../../Stores/UI/AuthStore';
-import ShareLinkStore from '../../Stores/UI/ShareLinkStore';
-
-const ActivateVenalinkContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [ShareLinkStore,Users, AuthStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      ShareLinkStore: ShareLinkStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState())
-    }
-  }
-}, React.createClass({
+const ActivateVenalinkContainer = React.createClass({
   render() {
     return (<ActivateVenalink {...this.props} />)
   }
-}));
+});
 
 
-module.exports = ActivateVenalinkContainer;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    ShareLinkStore: getUIState('ShareLink'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ActivateVenalinkContainer);

@@ -12,19 +12,14 @@ import GnbActions from '../../Actions/GnbActions';
 const RankList = React.createClass({
   displayName: 'RankList',
   openForumMeta (forumId) {
-    "use strict";
-
-    GnbActions.openForumMeta(forumId);
+    this.props.FireOpenForumMeta(forumId);
   },
   stopEvent(e) {
-    "use strict";
     e.preventDefault();
     e.stopPropagation();
   },
   render() {
-    "use strict";
     const {openForumMeta, forums} = this.props;
-    const self = this;
     return (
       <div className="forum_rank">
         <ul>
@@ -36,7 +31,7 @@ const RankList = React.createClass({
               });
 
               return (
-                <li key={forum.get('id')} onMouseEnter={self.openForumMeta.bind(self, forum.get('id'))}
+                <li key={forum.get('id')} onMouseEnter={this.openForumMeta.bind(null, forum.get('id'))}
                 >
                   <div className="forum_button">
                     <Link to={`/community?forumId=${forum.get('id')}`} className={cButton} >
@@ -107,20 +102,13 @@ const RankList = React.createClass({
 
 const ClubList = React.createClass({
   displayName: 'ClubList',
-  openSideCategories(e) {
-    "use strict";
-    e.preventDefault();
-    e.stopPropagation();
-
-    GnbActions.openSideCategory(e.target.dataset.clubid);
-  },
-  toggleGnb() {
-    GnbActions.toggleGnb();
+  openSideCategories(clubId) {
+    this.props.FireOpenSideCategory(clubId);
   },
 
   createCategory(item) {
     return (
-      <li key={item.get('id')} onClick={this.toggleGnb}>
+      <li key={item.get('id')}>
         <Link to={"/community?forumId=" + item.get('id')}>{item.get('title')}</Link>
       </li>
     )
@@ -152,9 +140,8 @@ const ClubList = React.createClass({
         <li key={item.get('id')} className="gnbm">
           <a className="category_btn"
              ref={'menu_btn_' + item.get('id')}
-             data-clubid={item.get('id')}
-             onMouseEnter={this.openSideCategories}
-             onClick={this.openSideCategories}>
+             onMouseEnter={this.openSideCategories.bind(null, item.get('id'))}
+             onClick={this.openSideCategories.bind(null, item.get('id'))}>
             {
               (openSideNow == item.get('id')) &&
               <i className="fa fa-arrow-right"></i>
@@ -172,6 +159,7 @@ const ClubList = React.createClass({
                     <RankList
                       forums={item.get('groups')}
                       openForumMeta={gnbMenu.get('openForumMeta')}
+                      FireOpenForumMeta={this.props.FireOpenForumMeta}
                     />
                   }
 
@@ -180,6 +168,7 @@ const ClubList = React.createClass({
                     <RankList
                       forums={item.get('groups')}
                       openForumMeta={gnbMenu.get('openForumMeta')}
+                      FireOpenForumMeta={this.props.FireOpenForumMeta}
                     />
                   }
                 </div>
@@ -193,9 +182,8 @@ const ClubList = React.createClass({
         <li key={item.get('id')} className="gnbm">
           <a className="category_btn"
              ref={'menu_btn_' + item.get('id')}
-             data-clubid={item.get('id')}
-             onMouseEnter={this.openSideCategories}
-             onClick={this.openSideCategories}>
+             onMouseEnter={this.openSideCategories.bind(null, item.get('id'))}
+             onClick={this.openSideCategories.bind(null, item.get('id'))}>
             {
               (openSideNow == item.get('id')) &&
               <i className="fa fa-arrow-right"></i>
@@ -219,7 +207,6 @@ const ClubList = React.createClass({
   },
 
   render() {
-    "use strict";
     const { gnbMenu, newForums, hotForums } = this.props;
     const groups = gnbMenu.get('data');
     const data = fromJS([{
@@ -251,7 +238,6 @@ const ClubList = React.createClass({
 const ClubListMain = React.createClass({
   displayName: 'ClubListMain',
   render() {
-    "use strict";
 
     return (
       <div className="category_box_main">
@@ -265,9 +251,8 @@ require('./index.scss');
 const CategoryNav = React.createClass({
   displayName: 'CategoryNav',
   handleToggleGnb() {
-    "use strict";
 
-    GnbActions.toggleGnb();
+    this.props.FireToggleGnbPanel();
   },
   render() {
     const { GnbStore } = this.props;
@@ -295,6 +280,8 @@ const CategoryNav = React.createClass({
                 categorySet={categorySet}
                 newForums={newForums}
                 hotForums={hotForums}
+                FireOpenSideCategory={this.props.FireOpenSideCategory}
+                FireOpenForumMeta={this.props.FireOpenForumMeta}
               />
               <ClubListMain />
             </div>

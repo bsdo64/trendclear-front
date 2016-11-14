@@ -1,28 +1,11 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-import LoginStore from '../../Stores/LoginStore';
-import Notis from '../../Stores/Domain/Notis';
-import Users from '../../Stores/Domain/Users';
-import AuthStore from '../../Stores/UI/AuthStore';
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 
 import MyArea from '../../Components/MyArea';
-
 import {Noti, Point} from '../../Utils/Socket';
 
-const MyMenuContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [LoginStore, Users, AuthStore, Notis]
-  },
-
-  getPropsFromStores() {
-    return {
-      Notis: Notis.getState(),
-      LoginStore: LoginStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState())
-    }
-  }
-}, React.createClass({
+const MyMenuContainer = React.createClass({
   componentDidMount() {
     "use strict";
 
@@ -37,6 +20,30 @@ const MyMenuContainer = connectToStores({
   render() {
     return (<MyArea {...this.props} />)
   }
-}));
+});
 
-module.exports = MyMenuContainer;
+
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    LoginStore: getUIState('Login'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    Notis: getDomainState('Notis'),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+};
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyMenuContainer);

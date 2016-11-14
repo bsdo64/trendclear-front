@@ -2,26 +2,22 @@
  * Created by dobyeongsu on 2016. 11. 9..
  */
 import { combineReducers } from 'redux-immutable';
-import {fromJS, Map} from 'immutable';
-
+import {fromJS} from 'immutable';
 import Domains from './Domains';
 import UI from './UI';
-const StoresReducer = combineReducers({
+const Stores = combineReducers({
   UI,
   Domains
 });
-
-function InitReducer(state, action, StoreName) {
-  return state.mergeDeep(fromJS(action.serverInitData[StoreName]));
-}
 
 function selectReducer(state, action) {
 
   switch(action.type) {
     case "@@router/LOCATION_CHANGE" : {
-      return Map({
-        UI : InitReducer(state.get('UI'), action, 'UI'),
-        Domains : InitReducer(state.get('Domains'), action, 'Domains')
+      const InitialData = fromJS(action.serverInitData);
+      return state.mergeDeep({
+        UI: InitialData.get('UI'),
+        Domains: InitialData.get('Domains')
       })
     }
     default :
@@ -30,7 +26,7 @@ function selectReducer(state, action) {
 }
 
 // Root Reducer
-export default function Stores(state, action) {
-  const intermediateState = StoresReducer(state, action);
+export default function (state, action) {
+  const intermediateState = Stores(state, action);
   return selectReducer(intermediateState, action);
 }

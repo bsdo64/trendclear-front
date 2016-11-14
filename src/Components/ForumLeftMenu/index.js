@@ -8,15 +8,17 @@ require('./index.scss');
 const ForumLeftMenu = React.createClass({
   displayName: 'ForumLeftMenu',
   render() {
-    const { CommunityStore, AuthStore, UserStore, Forums, Collections, location } = this.props;
+    const {
+      UserStore, Forums, Collections, location,
+      forum
+    } = this.props;
+
     const order = location.query.order || 'new';
-    const forum = CommunityStore.get('forum');
     const user = UserStore.get('user');
 
     if (forum) {
       const creator = forum.get('creator');
       if (creator) {
-        const userId = AuthStore.get('userId');
 
         return (
           <div id="forum_category">

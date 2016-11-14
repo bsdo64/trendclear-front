@@ -1,36 +1,41 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-import LoginStore from '../../Stores/LoginStore';
-import ReportStore from '../../Stores/UI/ReportStore';
-import Posts from '../../Stores/Domain/Posts';
-import Comments from '../../Stores/Domain/Comments';
-import Users from '../../Stores/Domain/Users';
-import AuthStore from '../../Stores/UI/AuthStore';
-import SubComments from '../../Stores/Domain/SubComments';
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 
 import ReportModalBox from '../../Components/Modal/Components/Report/index';
 
-const ReportModalContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [Posts, Comments, SubComments, LoginStore, ReportStore, AuthStore, Users]
-  },
-
-  getPropsFromStores() {
-    return {
-      LoginStore: LoginStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      ReportStore: ReportStore.getState(),
-      Posts: Posts.getState(),
-      Comments: Comments.getState(),
-      SubComments: SubComments.getState(),
-    }
-  }
-}, React.createClass({
+const ReportModalContainer = React.createClass({
   render() {
     return (<ReportModalBox {...this.props} />)
   }
-}));
+});
 
 
-module.exports = ReportModalContainer;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    LoginStore: getUIState('Login'),
+    ReportStore: getUIState('Report'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+
+    Posts: getDomainState('Posts'),
+    Comments: getDomainState('Comments'),
+    SubComments: getDomainState('SubComments'),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReportModalContainer);

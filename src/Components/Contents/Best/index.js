@@ -14,50 +14,49 @@ const BestBox = React.createClass({
   },
 
   getMoreBest() {
-    "use strict";
+    if ((document && document.body) && document.body.clientHeight > 768) {
+      const {PaginationStore, GnbStore, listName, location} = this.props;
+      const Pagination = PaginationStore.get(listName);
+      if (Pagination) {
+        const nextPage = Pagination.get('next_page');
 
-    const {PaginationStore, GnbStore, listName, location} = this.props;
-    const Pagination = PaginationStore.get(listName);
-    if (Pagination) {
-      const nextPage = Pagination.get('next_page');
-
-      const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
-      const normalize = categoryValue.map((object, key) => {
-        return parseInt(object.value);
-      });
-
-      if (nextPage) {
-
-        let pathname;
-        switch(listName) {
-          case 'bestPostList':
-            pathname = '/best';
-            break;
-
-          case 'collectionBestPostList':
-            pathname = location.pathname + '/posts';
-            break;
-
-          default:
-            pathname = '/best';
-        }
-
-        PostActions.getBestPost({
-          listName: listName,
-          pathname: pathname,
-          params: {
-            page: nextPage,
-            order: location.query.order || 'hot',
-            categoryValue: (normalize.length > 0) ? normalize: null,
-            listType: location.pathname === '/all' ? 'all' : null
-          }
+        const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
+        const normalize = categoryValue.map((object, key) => {
+          return parseInt(object.value);
         });
+
+        if (nextPage) {
+
+          let pathname;
+          switch(listName) {
+            case 'bestPostList':
+              pathname = '/best';
+              break;
+
+            case 'collectionBestPostList':
+              pathname = location.pathname + '/posts';
+              break;
+
+            default:
+              pathname = '/best';
+          }
+
+          PostActions.getBestPost({
+            listName: listName,
+            pathname: pathname,
+            params: {
+              page: nextPage,
+              order: location.query.order || 'hot',
+              categoryValue: (normalize.length > 0) ? normalize: null,
+              listType: location.pathname === '/all' ? 'all' : null
+            }
+          });
+        }
       }
     }
   },
 
   createBreadCrumbArray(array, pathname) {
-    "use strict";
     array.push({title: '베스트', url: '/'});
 
     switch (pathname) {
@@ -75,7 +74,7 @@ const BestBox = React.createClass({
     const Collection = PaginationStore.get(listName);
     const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
     return (
-      <div id="best_contents" >
+      <div id="best_contents" ref="best_contents" >
 
         <Header
           type={listName}

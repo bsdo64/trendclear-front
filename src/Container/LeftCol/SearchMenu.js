@@ -1,40 +1,10 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-
-import GnbStore from '../../Stores/GnbStore';
-import CommunityStore from '../../Stores/CommunityStore';
-import Forums from '../../Stores/Domain/Forums';
-import Collections from '../../Stores/Domain/Collections';
-import AuthStore from '../../Stores/UI/AuthStore';
-import ListStore from '../../Stores/UI/ListStore';
-import SearchStore from '../../Stores/SearchStore';
-
-import CategoryList from '../../Components/ForumLeftMenu';
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 
 import {Link} from 'react-router';
-import Users from '../../Stores/Domain/Users';
 
-const MenuContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [SearchStore, GnbStore, Users, CommunityStore, ListStore, Forums, Collections, AuthStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      GnbStore: GnbStore.getState(),
-      SearchStore: SearchStore.getState(),
-      CommunityStore: CommunityStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      AuthStore: AuthStore.getState(),
-
-      ListStore: ListStore.getState(),
-
-      Collections: Collections.getState(),
-      Forums: Forums.getState(),
-    }
-  }
-}, React.createClass({
+const MenuContainer = React.createClass({
   render() {
     const {SearchStore} = this.props;
     const query = SearchStore.get('query');
@@ -74,6 +44,23 @@ const MenuContainer = connectToStores({
       </div>
     );
   }
-}));
+});
 
-module.exports = MenuContainer;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  return {
+    SearchStore: getUIState('Search')
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MenuContainer);

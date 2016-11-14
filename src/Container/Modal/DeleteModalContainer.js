@@ -1,37 +1,41 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
+import {connect} from 'react-redux';
 import {getLoginUser} from '../Util/func';
-import LoginStore from '../../Stores/LoginStore';
-import RemoveModalStore from '../../Stores/UI/RemoveModalStore';
-import Posts from '../../Stores/Domain/Posts';
-import Comments from '../../Stores/Domain/Comments';
-import SubComments from '../../Stores/Domain/SubComments';
 
 import DeleteModalBox from '../../Components/Modal/Components/DeleteItem';
-import Users from '../../Stores/Domain/Users';
-import AuthStore from '../../Stores/UI/AuthStore';
 
-const ReportModalContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [Posts, Comments, SubComments, LoginStore, Users, AuthStore, RemoveModalStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      LoginStore: LoginStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      RemoveModalStore: RemoveModalStore.getState(),
-      Posts: Posts.getState(),
-      Comments: Comments.getState(),
-      SubComments: SubComments.getState(),
-    }
-  }
-}, React.createClass({
+const DeleteModalContainer = React.createClass({
   render() {
     return (<DeleteModalBox {...this.props} />)
   }
-}));
+});
 
 
-module.exports = ReportModalContainer;
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    LoginStore: getUIState('Login'),
+    RemoveModalStore: getUIState('RemoveModal'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+
+    Posts: getDomainState('Posts'),
+    Comments: getDomainState('Comments'),
+    SubComments: getDomainState('SubComments'),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DeleteModalContainer);

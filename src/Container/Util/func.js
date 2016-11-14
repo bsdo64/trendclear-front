@@ -4,7 +4,7 @@
 import {Map} from 'immutable';
 
 export function getLoginUser (Users, AuthStore) {
-  const user = Users.get(String(AuthStore.get('userId')));
+  const user = Users ? Users.get(String(AuthStore.get('userId'))) : null;
   if (user) {
     return user;
   } else {

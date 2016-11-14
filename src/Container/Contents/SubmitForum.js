@@ -1,37 +1,15 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-import GnbStore from '../../Stores/GnbStore';
-import LoginStore from '../../Stores/LoginStore';
-import SubmitForumStore from '../../Stores/UI/SubmitForumStore';
-import Users from '../../Stores/Domain/Users';
-import Categories from '../../Stores/Domain/Categories';
-import Forums from '../../Stores/Domain/Forums';
-import AuthStore from '../../Stores/UI/AuthStore';
-import marked from '../../Components/Lib/Marked';
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 
+import marked from '../../Components/Lib/Marked';
 import ForumActions from '../../Actions/ForumActions';
 
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-const SubmitForm = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [Forums, Categories, GnbStore, LoginStore, Users, AuthStore, SubmitForumStore];
-  },
-
-  getPropsFromStores() {
-    return {
-      Forums: Forums.getState(),
-      Categories: Categories.getState(),
-      GnbStore: GnbStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-      LoginStore: LoginStore.getState(),
-      SubmitForumStore: SubmitForumStore.getState()
-    }
-  }
-}, React.createClass({
+const SubmitForm = React.createClass({
   componentDidMount() {
     const self = this;
 
@@ -226,6 +204,34 @@ const SubmitForm = connectToStores({
       </div>
     )
   }
-}));
+});
 
-module.exports = SubmitForm;
+
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
+
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    SigninFormStore: getUIState('SigninForm'),
+    GnbStore: getUIState('Gnb'),
+    LoginStore: getUIState('Login'),
+    SubmitFormStore: getUIState('SubmitForm'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    Forums: getDomainState('Forums'),
+    Categories: getDomainState('Categories'),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+};
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SubmitForm);

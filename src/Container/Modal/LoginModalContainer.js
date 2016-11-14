@@ -1,28 +1,35 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores'; import {getLoginUser} from '../Util/func';
-import LoginStore from '../../Stores/LoginStore';
-import Users from '../../Stores/Domain/Users';
-import AuthStore from '../../Stores/UI/AuthStore';
+import {connect} from 'react-redux';
+import {getLoginUser} from '../Util/func';
 
 import LoginModalBox from '../../Components/Modal/Components/Login/index';
 
-const LoginModalContainer = connectToStores({
-  getStores() {
-    // this will handle the listening/unlistening for you
-    return [LoginStore, Users, AuthStore]
-  },
-
-  getPropsFromStores() {
-    return {
-      LoginStore: LoginStore.getState(),
-      UserStore: getLoginUser(Users.getState(), AuthStore.getState()),
-    }
-  }
-}, React.createClass({
+const LoginModalContainer = React.createClass({
   render() {
     return (<LoginModalBox {...this.props} />)
   }
-}));
+});
 
+const mapStateToProps = (state) => {
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args))
+  };
 
-module.exports = LoginModalContainer;
+  const getDomainState = function getUIState(args) {
+    return state.getIn(['Stores', 'Domains'].concat(args))
+  };
+
+  return {
+    LoginStore: getUIState('Login'),
+    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+module.exports = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginModalContainer);
