@@ -52,7 +52,7 @@
     .item {
       font-size: 12px;
 
-      .content{
+      .content {
         cursor: pointer;
       }
     }
@@ -61,7 +61,7 @@
 
 #forum_info {
   .descriptioin {
-    float:left;
+    float: left;
   }
 
   .meta.forum_meta {
@@ -115,7 +115,7 @@
           padding: 0;
 
           input[type="checkbox"] {
-            &~label {
+            & ~ label {
               cursor: pointer;
               font-size: 13px;
               font-weight: normal;

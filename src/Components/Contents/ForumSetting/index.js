@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { PropTypes } from 'react';
 import ForumInfo from './ForumInfo';
 import ForumUrl from './ForumUrl';
 import ForumPrefix from './ForumPrefix';
@@ -13,14 +12,13 @@ import BanList from './BanList';
 import Spams from './Spams';
 import SpamReports from './SpamReports';
 import StatForum from './StatForum';
+import StatViews from './StatViews';
 import StatVisitors from './StatVisitors';
 import StatLikeRank from './StatLikeRank';
 import StatCommentRank from './StatCommentRank';
 import StatViewRank from './StatViewRank';
 
 const checkManager = function checkManager(forum, userId) {
-  "use strict";
-
   const managers = forum.get('managers');
   if (managers) {
     return managers.find(id => id === userId);
@@ -30,7 +28,7 @@ const checkManager = function checkManager(forum, userId) {
 };
 
 const ForumSettingsComponent = (props) => {
-  const {ForumSettingStore, Forums, AuthStore, location} = props;
+  const { ForumSettingStore, Forums, AuthStore, location } = props;
   const content = ForumSettingStore.get('content');
   const forumId = location.query.forumId;
   const isManager = checkManager(Forums.get(forumId.toString()), AuthStore.get('userId'));
@@ -39,58 +37,40 @@ const ForumSettingsComponent = (props) => {
     switch (content) {
       case 'foruminfo':
         return <ForumInfo {...props} />;
-        break;
       case 'forumurl':
         return <ForumUrl {...props} />;
-        break;
       case 'forumprefix':
         return <ForumPrefix {...props} />;
-        break;
       case 'announce':
         return <Announce {...props} />;
-        break;
       case 'writepost':
         return <WritePost {...props} />;
-        break;
       case 'writecomment':
         return <WriteComment {...props} />;
-        break;
       case 'share':
         return <Share {...props} />;
-        break;
       case 'promotion':
         return <Promotion {...props} />;
-        break;
       case 'managers':
         return <Managers {...props} />;
-        break;
       case 'banlist':
         return <BanList {...props} />;
-        break;
       case 'spams':
         return <Spams {...props} />;
-        break;
       case 'spamreports':
         return <SpamReports {...props} />;
-        break;
       case 'stat_forum':
         return <StatForum {...props} />;
-        break;
       case 'stat_views':
         return <StatViews {...props} />;
-        break;
       case 'stat_visitors':
         return <StatVisitors {...props} />;
-        break;
       case 'stat_likerank':
         return <StatLikeRank {...props} />;
-        break;
       case 'stat_commentrank':
         return <StatCommentRank {...props} />;
-        break;
       case 'stat_viewrank':
         return <StatViewRank {...props} />;
-        break;
       default:
         return (
           <div className="ui segments">
@@ -108,5 +88,12 @@ const ForumSettingsComponent = (props) => {
     )
   }
 };
+
+ForumSettingsComponent.propTypes = {
+  ForumSettingStore: PropTypes.object.isRequired,
+  Forums: PropTypes.object.isRequired,
+  AuthStore: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+}
 
 export default ForumSettingsComponent;

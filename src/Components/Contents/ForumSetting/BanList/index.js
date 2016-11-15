@@ -12,19 +12,19 @@ const BanList = React.createClass({
           url: '/ajax/search/users?type=banList&nick={query}&forumId=' + forumId
         },
         cache: false,
-        minCharacters : 2,
+        minCharacters: 2,
         fields: {
           title: 'nick'
         },
-        error : {
-          source      : '검색 할 수 없습니다 API를 참고하세요',
-          noResults   : '일치하는 닉네임이 없습니다',
-          logging     : 'Error in debug logging, exiting.',
-          noEndpoint  : 'No search endpoint was specified',
-          noTemplate  : 'A valid template name was not specified.',
-          serverError : '서버에러 입니다.',
-          maxResults  : 'Results must be an array to use maxResults setting',
-          method      : 'The method you called is not defined.'
+        error: {
+          source: '검색 할 수 없습니다 API를 참고하세요',
+          noResults: '일치하는 닉네임이 없습니다',
+          logging: 'Error in debug logging, exiting.',
+          noEndpoint: 'No search endpoint was specified',
+          noTemplate: 'A valid template name was not specified.',
+          serverError: '서버에러 입니다.',
+          maxResults: 'Results must be an array to use maxResults setting',
+          method: 'The method you called is not defined.'
         },
         onSelect: function (user) {
           "use strict";
@@ -38,7 +38,7 @@ const BanList = React.createClass({
     "use strict";
 
     const forumId = this.props.location.query.forumId;
-    ForumSettingActions.addBanUser({userId: user.id, forumId: forumId});
+    ForumSettingActions.addBanUser({ userId: user.id, forumId: forumId });
   },
 
   removeUser(user) {
@@ -53,12 +53,12 @@ const BanList = React.createClass({
 
   createUserItem(id) {
     "use strict";
-    const {Users} = this.props;
+    const { Users } = this.props;
     const user = Users.get(id.toString());
 
     if (user) {
       return (
-        <div className="item padded" key={id} style={{paddingBottom: 5}}>
+        <div className="item padded" key={id} style={{ paddingBottom: 5 }}>
           <a className="ui label large">
             <span className="title">{user.get('nick')}</span>
             <i className="fa fa-remove" onClick={this.removeUser.bind(this, user)}/>
@@ -69,13 +69,13 @@ const BanList = React.createClass({
   },
 
   render() {
-    const {Forums, location} = this.props;
+    const { Forums, location } = this.props;
     const forumId = location.query.forumId;
     const forum = Forums.get(forumId.toString());
     const banUserIds = forum.get('bans');
 
     return (
-      <div className="ui container" style={{margin: 10, width: 700}}>
+      <div className="ui container" style={{ margin: 10, width: 700 }}>
         <div className="ui segments ">
           <div className="ui segment"><h3 className="ui header">벤 유저 설정</h3>
             <div className="ui divider"></div>
@@ -95,8 +95,8 @@ const BanList = React.createClass({
                   <h4>벤 유저 추가</h4>
                   <div className="ui search">
                     <div className="ui left icon input">
-                      <input className="prompt" type="text" placeholder="유저 검색" />
-                      <i className="user icon" />
+                      <input className="prompt" type="text" placeholder="유저 검색"/>
+                      <i className="user icon"/>
                     </div>
                   </div>
                 </div>

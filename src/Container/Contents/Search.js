@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import Search from '../../Components/Contents/Search';
 
 const SearchContainer = React.createClass({
@@ -13,7 +12,6 @@ const SearchContainer = React.createClass({
     )
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

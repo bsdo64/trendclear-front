@@ -1,8 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
-import ForumLeftMenu from '../../Components/ForumLeftMenu'
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
+import ForumLeftMenu from '../../Components/ForumLeftMenu';
 
 const MenuContainer = React.createClass({
   render() {

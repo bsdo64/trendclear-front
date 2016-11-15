@@ -1,11 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {
-  toggleGnbPanel,
-  openSideCategory,
-  openForumMeta
-} from '../../Actions/Gnb';
-
+import { connect } from 'react-redux';
+import { toggleGnbPanel, openSideCategory, openForumMeta } from '../../Actions/Gnb';
 import CategoryNav from '../../Components/CategoryNav';
 
 const LeftColCategoryNav = React.createClass({

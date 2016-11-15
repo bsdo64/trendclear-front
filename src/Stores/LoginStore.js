@@ -1,13 +1,12 @@
 import alt from '../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable, { Map } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import LoginActions from '../Actions/LoginActions';
 import { initListener, setMergeState, locationHref } from './Helper/func';
-import {browserHistory} from 'react-router';
 
-class LoginStore{
+class LoginStore {
   static displayName = 'LoginStore';
-  
+
   constructor() {
     this.displayName = 'LoginStore';
 

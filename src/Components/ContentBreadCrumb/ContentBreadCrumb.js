@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import Collections from '../../Stores/Domain/Collections';
 
 require('./header.scss');
@@ -23,10 +23,10 @@ const BestHeader = React.createClass({
   },
   render() {
     "use strict";
-    const {type, location, breadcrumbs} = this.props;
+    const { type, location, breadcrumbs } = this.props;
     let breadcrumb;
 
-    switch(type) {
+    switch (type) {
       case 'bestPostList':
         breadcrumb = this.createBreadCrumbs(breadcrumbs);
 
@@ -44,8 +44,8 @@ const BestHeader = React.createClass({
         const collection = c.get(collectionId.toString());
 
         breadcrumb = this.createBreadCrumbs([
-          { title: '나의 컬렉션'},
-          { title: collection.get('title'), url: `/collection/${collectionId}`},
+          { title: '나의 컬렉션' },
+          { title: collection.get('title'), url: `/collection/${collectionId}` },
         ]);
 
         if (collection) {

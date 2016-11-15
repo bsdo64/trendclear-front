@@ -1,11 +1,15 @@
-import React from 'react';
-import {getLoginUser} from '../Util/func';
-import {connect} from 'react-redux';
-
+import React, { PropTypes } from 'react';
+import { getLoginUser } from '../Util/func';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 import moment from 'moment';
 
-const PointListContainer = React.createClass({
+const PointListBox = React.createClass({
+  displayName: 'PointListBox',
+  propTypes: {
+    UserStore: PropTypes.object.isRequired,
+  },
+
   getInitialState() {
     return {
       pointType: 'TP',
@@ -14,19 +18,12 @@ const PointListContainer = React.createClass({
   },
 
   togglePointType(point) {
-    "use strict";
-
-    this.setState({pointType: point});
+    this.setState({ pointType: point });
   },
 
   createAccount(account) {
-    "use strict";
-
-    const {AuthStore} = this.props;
-    const userId = AuthStore.get('userId');
-
     let type, itemType, totalPoint, amountPoint, positive;
-    switch(account.get('type')) {
+    switch (account.get('type')) {
       case 'initial':
         type = '초기화';
         positive = 1;
@@ -43,7 +40,7 @@ const PointListContainer = React.createClass({
         type = '오류';
     }
 
-    switch(account.getIn(['trade', 'action'])) {
+    switch (account.getIn(['trade', 'action'])) {
       case 'purchaseItem':
         itemType = '아이템 구입';
         break;
@@ -57,7 +54,7 @@ const PointListContainer = React.createClass({
         itemType = '알 수 없는 타입';
     }
 
-    switch(this.state.pointType) {
+    switch (this.state.pointType) {
       case 'TP':
         totalPoint = account.get('total_t');
         amountPoint = account.getIn(['trade', 'amount_t']);
@@ -83,27 +80,27 @@ const PointListContainer = React.createClass({
         <td>{itemType}</td>
         <td className="right aligned">{moment(account.get('created_at')).format('YYYY/MM/DD hh:mm')}</td>
         <td className="right aligned ">{account.getIn(['trade', 'target_count'])}</td>
-        <td className={positiveRightStyle}>{positive  ? '+' : '-'} {amountPoint}</td>
+        <td className={positiveRightStyle}>{positive ? '+' : '-'} {amountPoint}</td>
         <td className="right aligned">{totalPoint}</td>
       </tr>
     )
   },
 
   render() {
-    const {UserStore} = this.props;
+    const { UserStore } = this.props;
     const accounts = UserStore.get('account');
     const trendbox = UserStore.get('trendbox');
 
     return (
       <div>
-        <div className="ui cards centered" style={{paddingTop: 20}}>
-          <div className="card" style={{width: 350}}>
+        <div className="ui cards centered" style={{ paddingTop: 20 }}>
+          <div className="card" style={{ width: 350 }}>
             <div className="content">
               <div className="header">
                 나의 TP
 
               </div>
-              <div className="description" style={{paddingBottom: 10, fontSize: 42, textAlign: 'right'}}>
+              <div className="description" style={{ paddingBottom: 10, fontSize: 42, textAlign: 'right' }}>
                 {trendbox.get('T')} P
               </div>
             </div>
@@ -111,13 +108,13 @@ const PointListContainer = React.createClass({
               내역 보기
             </div>
           </div>
-          <div className="card" style={{width: 350}}>
+          <div className="card" style={{ width: 350 }}>
             <div className="content">
               <div className="header">나의 RP</div>
-              <div className="description" style={{paddingBottom: 10, fontSize: 42, textAlign: 'right'}}>
+              <div className="description" style={{ paddingBottom: 10, fontSize: 42, textAlign: 'right' }}>
                 {trendbox.get('R')} P
               </div>
-              <div className="description" style={{textAlign: 'right'}}>
+              <div className="description" style={{ textAlign: 'right' }}>
                 충전하기
               </div>
             </div>
@@ -126,7 +123,7 @@ const PointListContainer = React.createClass({
             </div>
           </div>
         </div>
-        <div style={{padding: 10}}>
+        <div style={{ padding: 10 }}>
           <h4>TP 내역</h4>
           <table className="ui celled table">
             <thead>
@@ -148,22 +145,22 @@ const PointListContainer = React.createClass({
             }
             </tbody>
             <tfoot>
-              <tr>
-                <th colSpan="6">
+            <tr>
+              <th colSpan="6">
                 <div className="ui right floated pagination menu">
                   <a className="icon item">
-                    <i className="left chevron icon"></i>
+                    <i className="left chevron icon"/>
                   </a>
                   <a className="item active">1</a>
                   <a className="item">2</a>
                   <a className="item">3</a>
                   <a className="item">4</a>
                   <a className="icon item">
-                    <i className="right chevron icon"></i>
+                    <i className="right chevron icon"/>
                   </a>
                 </div>
               </th>
-              </tr>
+            </tr>
             </tfoot>
           </table>
         </div>
@@ -171,7 +168,6 @@ const PointListContainer = React.createClass({
     )
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -188,7 +184,6 @@ const mapStateToProps = (state) => {
     CommunityStore: getUIState('Community'),
     SearchStore: getUIState('Search'),
     ListStore: getUIState('List'),
-    AuthStore: getUIState('Auth'),
     PaginationStore: getUIState('Pagination'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
 
@@ -196,11 +191,11 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (/* dispatch */) => {
   return {}
 };
 
 module.exports = connect(
   mapStateToProps,
   mapDispatchToProps
-)(PointListContainer);
+)(PointListBox);

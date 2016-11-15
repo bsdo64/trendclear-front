@@ -13,7 +13,7 @@ const PolicyBox = React.createClass({
     return location.pathname.split('/')[2];
   },
   render() {
-    const {location} = this.props;
+    const { location } = this.props;
     const endPoint = this.getEndpoint(location);
 
     switch (endPoint) {

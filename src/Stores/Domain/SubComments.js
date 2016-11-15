@@ -1,26 +1,26 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import SubCommentActions from '../../Actions/SubCommentActions';
 import CommentActions from '../../Actions/CommentActions';
 import DeleteActions from '../../Actions/DeleteActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import { initListener, setMergeState } from '../Helper/func';
 
 class SubComments {
   static displayName = 'SubComments';
+
   constructor() {
     this.displayName = 'SubComments';
 
     this.bindActions(SubCommentActions);
     this.bindActions(CommentActions);
     this.bindActions(DeleteActions);
-    this.state = Immutable.Map({
-
-    });
+    this.state = Immutable.Map({});
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
   }
+
   onAddList(subComments) {
     this.setMergeState(subComments);
   }

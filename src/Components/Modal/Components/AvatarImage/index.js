@@ -23,7 +23,7 @@ const AvatarImageModal = React.createClass({
 
     UserActions.closeAvatarModal();
   },
-  handleFile: function(e) {
+  handleFile: function (e) {
     e.preventDefault();
 
     const reader = new FileReader();
@@ -41,7 +41,7 @@ const AvatarImageModal = React.createClass({
   },
   uploadAvatarImage() {
     "use strict";
-    
+
     UserActions.uploadAvatarImage(this.state.file);
   },
   render() {
@@ -55,11 +55,11 @@ const AvatarImageModal = React.createClass({
     const openAvatarModal = UserStore.get('openAvatarModal');
 
     const sex = profile.get('sex'),
-          avatar_img = profile.get('avatar_img');
+      avatar_img = profile.get('avatar_img');
     let avatarImg;
 
     if (this.state.imagePreviewUrl) {
-      avatarImg = <img src={this.state.imagePreviewUrl} />;
+      avatarImg = <img src={this.state.imagePreviewUrl}/>;
     } else {
       avatarImg = <AvatarImage
         imageClass="image_preview"
@@ -68,7 +68,7 @@ const AvatarImageModal = React.createClass({
         removable={true}
       />
     }
-    
+
     return (
       <div className="avatar_img">
         <div className="ui items ">
@@ -86,7 +86,7 @@ const AvatarImageModal = React.createClass({
                 <span className="cinema">이미지를 변경합니다</span>
               </div>
               <div className="extra">
-                <input type="file" onChange={this.handleFile} />
+                <input type="file" onChange={this.handleFile}/>
                 <div className="ui label button" onClick={this.uploadAvatarImage}>이미지 업로드</div>
               </div>
             </div>

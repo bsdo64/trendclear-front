@@ -1,5 +1,5 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable, { Map } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import PostActions from '../../Actions/PostActions';
 import DeleteActions from '../../Actions/DeleteActions';
@@ -7,12 +7,11 @@ import GnbActions from '../../Actions/GnbActions';
 import CommunityActions from '../../Actions/CommunityActions';
 import CommentActions from '../../Actions/CommentActions';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
-
-import GnbStore from '../../Stores/GnbStore';
+import { initListener, setMergeState } from '../Helper/func';
 
 class Posts {
   static displayName = 'Posts';
+
   constructor() {
     this.displayName = 'Posts';
 
@@ -22,14 +21,12 @@ class Posts {
     this.bindActions(CommunityActions);
     this.bindActions(CommentActions);
     this.bindActions(VenaStoreActions);
-    this.state = Immutable.Map({
-
-    });
+    this.state = Immutable.Map({});
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
   }
-  
+
   onAddList(posts) {
     this.setMergeState(posts);
   }
@@ -72,7 +69,7 @@ class Posts {
       this.setState(newState);
     }
   }
-  
+
   onSubmitComment(normalized) {
 
     let addCommentState = this.state.mergeDeep(normalized.entities.posts);

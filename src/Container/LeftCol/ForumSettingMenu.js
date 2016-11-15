@@ -1,6 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
-
+import { connect } from 'react-redux';
 import LeftMenu from '../../Components/ForumSettingLeftMenu';
 
 const ForumSettingLeftMenu = React.createClass({

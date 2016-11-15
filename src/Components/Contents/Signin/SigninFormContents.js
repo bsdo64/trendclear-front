@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import { browserHistory } from 'react-router'
-
+import { browserHistory } from 'react-router';
 import SigninActions from '../../../Actions/SigninActions';
 
 const SigninFormContents = React.createClass({
+  displayName: 'SigninFormContents',
+  propTypes: {
+    submitResult: PropTypes.bool.isRequired,
+    emailVerifySuccess: PropTypes.bool.isRequired,
+    emailDup: PropTypes.bool.isRequired,
+    nickDup: PropTypes.bool.isRequired,
+    emailVerifyFail: PropTypes.bool.isRequired,
+    emailVerifyFormOpen: PropTypes.bool.isRequired,
+    emailRequested: PropTypes.bool.isRequired,
+  },
+
   componentWillReceiveProps(nextProps) {
-    "use strict";
     const oldSubmitResult = this.props.submitResult;
     const oldEmailVerifySuccess = this.props.emailVerifySuccess;
-    const {submitResult, emailVerifySuccess} = nextProps;
-    if (oldSubmitResult !== submitResult ) {
+    const { submitResult, emailVerifySuccess } = nextProps;
+    if (oldSubmitResult !== submitResult) {
       if (oldEmailVerifySuccess === emailVerifySuccess) {
         if (submitResult && emailVerifySuccess) {
           browserHistory.push('/');
@@ -21,112 +30,112 @@ const SigninFormContents = React.createClass({
   componentDidMount() {
     $('form select').dropdown();
     $(this.refs.signinform).form({
-        inline : true,
-        keyboardShortcuts: false,
-        on: 'blur',
-        fields: {
-          email : {
-            identifier  : 'signinEmail',
-            rules: [
-              {
-                type   : 'empty',
-                prompt : '이메일을 입력해주세요'
-              },
-              {
-                type   : 'email',
-                prompt : 'Email 형식을 입력해 주세요.'
-              }
-            ]
-          },
-          password: {
-            identifier  : 'password',
-            rules: [
-              {
-                type   : 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
-                prompt : '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
-              }
-            ]
-          },
-          password_re: {
-            identifier  : 'password_re',
-            rules: [
-              {
-                type   : 'match[password]',
-                prompt : '입력한 비밀번호가 서로 다릅니다.'
-              }
-            ]
-          },
-          nick : {
-            identifier  : 'signinNick',
-            rules: [
-              {
-                type   : 'empty',
-                prompt : '닉네임을 입력해주세요'
-              },
-              {
-                type   : 'regExp[/^[a-z가-힣A-Z0-9_]+( [a-z가-힣A-Z0-9_]+)*$/]',
-                prompt : '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
-              },
-              {
-                type   : 'minLength[2]',
-                prompt : '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
-              },
-              {
-                type   : 'maxLength[10]',
-                prompt : '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
-              }
-            ]
-          },
-          sex: {
-            identifier  : 'sex',
-            rules: [
-              {
-                type   : 'minCount[1]',
-                prompt : '성별을 선택해주세요'
-              }
-            ]
-          },
-          year: {
-            identifier  : 'year',
-            rules: [
-              {
-                type   : 'exactCount[1]',
-                prompt : '태어난 연도를 선택해 주세요'
-              }
-            ]
-          },
-          month: {
-            identifier  : 'month',
-            rules: [
-              {
-                type   : 'exactCount[1]',
-                prompt : '태어난 월을 선택해 주세요'
-              }
-            ]
-          },
-          day: {
-            identifier  : 'day',
-            rules: [
-              {
-                type   : 'exactCount[1]',
-                prompt : '태어난 일을 선택해 주세요'
-              }
-            ]
-          }
+      inline: true,
+      keyboardShortcuts: false,
+      on: 'blur',
+      fields: {
+        email: {
+          identifier: 'signinEmail',
+          rules: [
+            {
+              type: 'empty',
+              prompt: '이메일을 입력해주세요'
+            },
+            {
+              type: 'email',
+              prompt: 'Email 형식을 입력해 주세요.'
+            }
+          ]
         },
-        onSuccess: function(err, result) {
-          result.birth = new Date(result.year, result.month - 1, result.day);
-          SigninActions.submit(result);
+        password: {
+          identifier: 'password',
+          rules: [
+            {
+              type: 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
+              prompt: '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
+            }
+          ]
+        },
+        password_re: {
+          identifier: 'password_re',
+          rules: [
+            {
+              type: 'match[password]',
+              prompt: '입력한 비밀번호가 서로 다릅니다.'
+            }
+          ]
+        },
+        nick: {
+          identifier: 'signinNick',
+          rules: [
+            {
+              type: 'empty',
+              prompt: '닉네임을 입력해주세요'
+            },
+            {
+              type: 'regExp[/^[a-z가-힣A-Z0-9_]+( [a-z가-힣A-Z0-9_]+)*$/]',
+              prompt: '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
+            },
+            {
+              type: 'minLength[2]',
+              prompt: '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
+            },
+            {
+              type: 'maxLength[10]',
+              prompt: '닉네임은 한글과 영문 숫자로 이루어진 2~10 사이를 입력해주세요. <br />한칸 이상 공백은 허용하지 않습니다'
+            }
+          ]
+        },
+        sex: {
+          identifier: 'sex',
+          rules: [
+            {
+              type: 'minCount[1]',
+              prompt: '성별을 선택해주세요'
+            }
+          ]
+        },
+        year: {
+          identifier: 'year',
+          rules: [
+            {
+              type: 'exactCount[1]',
+              prompt: '태어난 연도를 선택해 주세요'
+            }
+          ]
+        },
+        month: {
+          identifier: 'month',
+          rules: [
+            {
+              type: 'exactCount[1]',
+              prompt: '태어난 월을 선택해 주세요'
+            }
+          ]
+        },
+        day: {
+          identifier: 'day',
+          rules: [
+            {
+              type: 'exactCount[1]',
+              prompt: '태어난 일을 선택해 주세요'
+            }
+          ]
         }
-      });
+      },
+      onSuccess: function (err, result) {
+        result.birth = new Date(result.year, result.month - 1, result.day);
+        SigninActions.submit(result);
+      }
+    });
   },
   render() {
-    const {emailDup, nickDup, emailVerifyFail, emailVerifyFormOpen} = this.props;
+    const { emailDup, nickDup, emailVerifyFail, emailVerifyFormOpen } = this.props;
 
     let dupError = '';
     if (emailDup || nickDup || emailVerifyFail) {
       dupError = (
-        <div className="ui error message" style={{display: 'block'}}>
+        <div className="ui error message" style={{ display: 'block' }}>
           <ul className="list">
             {
               emailDup &&
@@ -157,21 +166,22 @@ const SigninFormContents = React.createClass({
           회원 가입
           <div className="sub header">회원가입을 하시면 다양항 서비스를 이용하실 수 있습니다.</div>
         </h3>
-        <form ref="signinform" className="ui form" name="fregister" id="fregister" >
+        <form ref="signinform" className="ui form" name="fregister" id="fregister">
 
           <div className="ui basic segment">
             <h4>로그인 정보</h4>
             <div className={formCx.default}>
               <label>이메일</label>
-              <input ref="signinEmail" type="text" name="signinEmail" placeholder="이메일을 입력하세요" onBlur={this.handleEmail} />
+              <input ref="signinEmail" type="text" name="signinEmail" placeholder="이메일을 입력하세요"
+                     onBlur={this.handleEmail}/>
             </div>
             <div className={formCx.default}>
               <label>비밀번호</label>
-              <input type="password" name="password" placeholder="비밀번호를 입력하세요" />
+              <input type="password" name="password" placeholder="비밀번호를 입력하세요"/>
             </div>
             <div className={formCx.default}>
               <label>비밀번호 재입력</label>
-              <input type="password" name="password_re" placeholder="비밀번호를 다시한번 입력하세요" />
+              <input type="password" name="password_re" placeholder="비밀번호를 다시한번 입력하세요"/>
             </div>
           </div>
 
@@ -370,7 +380,8 @@ const SigninFormContents = React.createClass({
               emailVerifyFormOpen &&
               <div className="field">
                 <label>이메일 확인</label>
-                <input ref="emailVerify" type="text" name="nick" placeholder="이메일을 확인해주세요" onBlur={this.handleCheckEmailCodeVerify}/>
+                <input ref="emailVerify" type="text" name="nick" placeholder="이메일을 확인해주세요"
+                       onBlur={this.handleCheckEmailCodeVerify}/>
               </div>
             }
           </div>
@@ -388,14 +399,14 @@ const SigninFormContents = React.createClass({
   handleEmail() {
     const emailValue = this.refs.signinEmail.value;
     if (emailValue.length > 3) {
-      SigninActions.checkEmailDup({email: emailValue});
+      SigninActions.checkEmailDup({ email: emailValue });
     }
   },
 
   handleNick() {
     const nickValue = this.refs.signinNick.value;
     if (nickValue.length > 1) {
-      SigninActions.checkNickDup({nick: nickValue});
+      SigninActions.checkNickDup({ nick: nickValue });
     }
   },
 
@@ -405,7 +416,7 @@ const SigninFormContents = React.createClass({
     });
   },
   handleSubmit() {
-    const {emailDup, nickDup, emailVerifyFail ,emailVerifySuccess, emailRequested} = this.props;
+    const { emailDup, nickDup, emailVerifyFail, emailVerifySuccess, emailRequested } = this.props;
 
     if (emailVerifyFail) {
       return;
@@ -424,7 +435,7 @@ const SigninFormContents = React.createClass({
   },
 
   handleCheckEmailCodeVerify() {
-    SigninActions.checkVerifyCode({verifyCode: this.refs.emailVerify.value});
+    SigninActions.checkVerifyCode({ verifyCode: this.refs.emailVerify.value });
   }
 });
 

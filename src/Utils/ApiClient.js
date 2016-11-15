@@ -3,6 +3,9 @@
  */
 const request = require('superagent');
 const Promise = require('bluebird');
+const debug = require('debug');
+const apiErrorLog = debug('vn:api:error');
+const apiResultLog = debug('vn:api:result');
 
 class AjaxApiClient {
   constructor() {
@@ -13,8 +16,8 @@ class AjaxApiClient {
   _done(resolve, reject) {
     return (xhrErr, xhrRes) => {
       if (process.env.NODE_ENV !== 'production') {
-        console.log('error : ', xhrErr);
-        console.log('result : ', xhrRes);
+        apiErrorLog(xhrErr);
+        apiResultLog(xhrRes);
       }
 
       if (xhrErr) {
@@ -75,7 +78,7 @@ class AjaxApiClient {
         .end(this._done(resolve, reject));
     });
   }
-  
+
   postImg(url, file) {
     return new Promise((resolve, reject) => {
       return this.r

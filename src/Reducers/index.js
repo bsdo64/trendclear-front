@@ -2,7 +2,7 @@
  * Created by dobyeongsu on 2016. 11. 9..
  */
 import { combineReducers } from 'redux-immutable';
-import {fromJS} from 'immutable';
+import { fromJS } from 'immutable';
 import Domains from './Domains';
 import UI from './UI';
 const Stores = combineReducers({
@@ -12,7 +12,7 @@ const Stores = combineReducers({
 
 function selectReducer(state, action) {
 
-  switch(action.type) {
+  switch (action.type) {
     case "@@router/LOCATION_CHANGE" : {
       const InitialData = fromJS(action.serverInitData);
       return state.mergeDeep({

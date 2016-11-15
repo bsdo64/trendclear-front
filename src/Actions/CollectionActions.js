@@ -1,12 +1,13 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
-import {normalize, arrayOf} from 'normalizr';
-import {forum} from '../Model/normalizr/schema';
+import { normalize, arrayOf } from 'normalizr';
+import { forum } from '../Model/normalizr/schema';
 
 class CollectionActions {
   constructor() {
     this.generateActions('addPrefixes');
   }
+
   createCollection(params) {
     return (dispatch) => {
       Api
@@ -24,6 +25,7 @@ class CollectionActions {
         });
     };
   }
+
   updateCollection(params) {
     return (dispatch) => {
       Api
@@ -41,6 +43,7 @@ class CollectionActions {
         });
     };
   }
+
   deleteCollection(params) {
     return (dispatch) => {
       Api
@@ -63,7 +66,7 @@ class CollectionActions {
     return (dispatch) => {
       Api
         .setEntryPoint('/ajax')
-        .post(`/collection/${params.collectionId}/forum`, {forumId: params.forumId})
+        .post(`/collection/${params.collectionId}/forum`, { forumId: params.forumId })
         .then((res) => {
           if (res) {
             res = normalize(res, forum);
@@ -79,6 +82,7 @@ class CollectionActions {
         });
     };
   }
+
   removeForum(params) {
     return (dispatch) => {
       Api
@@ -111,7 +115,7 @@ class CollectionActions {
         .then((res) => {
           if (res) {
             res = normalize(res, arrayOf(forum)),
-            dispatch(res);
+              dispatch(res);
           } else {
             dispatch(false);
           }

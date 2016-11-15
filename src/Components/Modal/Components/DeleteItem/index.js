@@ -1,11 +1,17 @@
 import React from 'react';
-import cx from 'classnames';
 import DeleteActions from '../../../../Actions/DeleteActions';
 
 require('./index.scss');
 const DeleteModalBox = React.createClass({
   displayName: 'DeleteModalBox',
-  
+  propTypes: {
+    RemoveModalStore: React.PropTypes.object.isRequired,
+    LoginStore: React.PropTypes.object.isRequired,
+    Posts: React.PropTypes.object.isRequired,
+    Comments: React.PropTypes.object.isRequired,
+    SubComments: React.PropTypes.object.isRequired,
+  },
+
   getInitialState() {
     return {
       selectItem: 1
@@ -14,7 +20,7 @@ const DeleteModalBox = React.createClass({
   sendReport() {
     "use strict";
 
-    const {RemoveModalStore, LoginStore} = this.props;
+    const { RemoveModalStore, LoginStore } = this.props;
 
     const isLogin = LoginStore.get('isLogin');
     if (isLogin) {
@@ -27,9 +33,7 @@ const DeleteModalBox = React.createClass({
     }
   },
   render() {
-    const { LoginStore, RemoveModalStore} = this.props;
-    const loginFail = LoginStore.get('loginFail');
-    const loginSuccess = LoginStore.get('loginSuccess');
+    const { RemoveModalStore } = this.props;
 
     let content, title;
     switch (RemoveModalStore.get('type')) {
@@ -40,12 +44,14 @@ const DeleteModalBox = React.createClass({
 
       case 'comment':
         content = this.props.Comments.get(RemoveModalStore.get('typeId').toString());
-        title = content ? <span>댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span> : null;
+        title = content ? <span>댓글: <div
+          dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span> : null;
         break;
 
       case 'subComment':
         content = this.props.SubComments.get(RemoveModalStore.get('typeId').toString());
-        title = content ? (<span>대댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
+        title = content ? (<span>대댓글: <div
+          dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
         break;
 
       default:

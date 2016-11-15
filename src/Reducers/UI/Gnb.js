@@ -1,16 +1,12 @@
-import {Map} from 'immutable';
-import {
-  TOGGLE_GNB_PANEL,
-  OPEN_SIDE_CATEGORY,
-  OPEN_FORUM_META,
-} from '../../Actions/Gnb';
+import { Map } from 'immutable';
+import { TOGGLE_GNB_PANEL, OPEN_SIDE_CATEGORY, OPEN_FORUM_META } from '../../Actions/Gnb';
 
 const initState = Map({
   openGnb: false
 });
 
 const Gnb = (state = initState, action) => {
-  switch(action.type) {
+  switch (action.type) {
 
     case TOGGLE_GNB_PANEL: {
       return state.set('openGnb', !state.get('openGnb'))
@@ -24,7 +20,8 @@ const Gnb = (state = initState, action) => {
       return state.setIn(['gnbMenu', 'openForumMeta'], action.forumId);
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 

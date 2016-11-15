@@ -1,23 +1,15 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable, { Map } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import ForumActions from '../../Actions/ForumActions';
 import ForumSettingActions from '../../Actions/ForumSettingActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
-
-import Users from '../Domain/Users';
-import Forums from '../Domain/Forums';
-import Posts from '../Domain/Posts';
-import GnbStore from '../GnbStore';
-
-import {normalize, arrayOf} from 'normalizr';
-import {club, post, prefix, comment, noti} from '../../Model/normalizr/schema';
+import { initListener, setMergeState } from '../Helper/func';
 
 class ForumSettingStore {
   static displayName = 'ForumSettingStore';
+
   constructor() {
     this.displayName = 'ForumSettingStore';
-
 
     this.bindActions(ForumActions);
     this.bindActions(ForumSettingActions);
@@ -51,6 +43,7 @@ class ForumSettingStore {
     const state = this.state.mergeIn(['forumInfo'], object);
     this.setState(state);
   }
+
   onAddForumPrefix(prefixObj) {
     const state = this.state.updateIn(['forum', 'prefixes'], list => {
       return list.push(Map(prefixObj))
@@ -66,7 +59,7 @@ class ForumSettingStore {
     this.setState(state);
   }
 
-  onDeleteForumPrefix({id}) {
+  onDeleteForumPrefix({ id }) {
     const state = this.state.updateIn(['forum', 'prefixes'], list => {
       return list.filterNot(i => i.get('id') === id)
     });

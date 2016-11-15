@@ -1,5 +1,5 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import ListActions from '../../Actions/ListActions';
 import PostActions from '../../Actions/PostActions';
@@ -7,18 +7,15 @@ import ForumActions from '../../Actions/ForumActions';
 import GnbActions from '../../Actions/GnbActions';
 import DeleteActions from '../../Actions/DeleteActions';
 import CollectionActions from '../../Actions/CollectionActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
-
+import { initListener, setMergeState } from '../Helper/func';
 import Users from '../Domain/Users';
 import Forums from '../Domain/Forums';
 import Posts from '../Domain/Posts';
 import GnbStore from '../GnbStore';
 
-import {normalize, arrayOf} from 'normalizr';
-import {club, post, prefix, comment, noti} from '../../Model/normalizr/schema';
-
 class ListStore {
   static displayName = 'ListStore';
+
   constructor() {
     this.displayName = 'ListStore';
 
@@ -28,9 +25,7 @@ class ListStore {
     this.bindActions(PostActions);
     this.bindActions(GnbActions);
     this.bindActions(CollectionActions);
-    this.state = Immutable.Map({
-      
-    });
+    this.state = Immutable.Map({});
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
@@ -79,7 +74,7 @@ class ListStore {
   onFindForumByTitle(normalizedForums) {
     this.waitFor(Forums);
 
-    this.setMergeState({searchCollectionForumList: normalizedForums.result});
+    this.setMergeState({ searchCollectionForumList: normalizedForums.result });
   }
 
   onDelete(deletedItem) {

@@ -1,5 +1,4 @@
 import alt from '../Utils/alt';
-import Api from '../Utils/ApiClient';
 
 class SettingActions {
   closeMessage(payload) {

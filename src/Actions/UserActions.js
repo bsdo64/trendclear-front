@@ -1,14 +1,14 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
-import {normalize, arrayOf} from 'normalizr';
-import {noti} from '../Model/normalizr/schema';
+import { normalize, arrayOf } from 'normalizr';
+import { noti } from '../Model/normalizr/schema';
 
 class UserActions {
   constructor() {
     this.generateActions('addList', 'socketPoint', 'toggleAvatarModal');
   }
-  
-  levelUp(params) {
+
+  levelUp() {
     return (dispatch) => {
       Api
         .setEntryPoint('/ajax')
@@ -21,6 +21,7 @@ class UserActions {
         });
     };
   }
+
   requestLogout() {
     return (dispatch) => {
       Api
@@ -34,6 +35,7 @@ class UserActions {
         });
     };
   }
+
   uploadAvatarImage(file) {
     return (dispatch) => {
       Api
@@ -43,9 +45,9 @@ class UserActions {
 
           return Api
             .setEntryPoint('/ajax')
-            .post('/user/avatarImg', {file: res.files[0]})
+            .post('/user/avatarImg', { file: res.files[0] })
             .then((res2) => {
-              return {file: res, user: res2}
+              return { file: res, user: res2 }
             })
         })
         .then((res) => {
@@ -106,12 +108,13 @@ class UserActions {
   socketNoti(data) {
     return normalize(data, arrayOf(noti))
   }
+
   readNoti(params) {
     return (dispatch) => {
       Api
         .setEntryPoint('/ajax')
         .put('/user/noti/read', params)
-        .then(res => {
+        .then(() => {
           dispatch(params);
         })
         .catch(err => {

@@ -1,4 +1,4 @@
-import {Map, fromJS} from 'immutable';
+import { Map } from 'immutable';
 
 const initMap = Map({
   isLogin: false,

@@ -1,15 +1,17 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
-import {normalize, arrayOf} from 'normalizr';
-import {post, comment, subComment} from '../Model/normalizr/schema';
+import { normalize, arrayOf } from 'normalizr';
+import { post } from '../Model/normalizr/schema';
 
 class GnbActions {
   constructor() {
     this.generateActions('addForum', 'toggleGnb');
   }
+
   openSideCategory(clubId) {
     return clubId;
   }
+
   openForumMeta(forumId) {
     return forumId;
   }
@@ -21,6 +23,7 @@ class GnbActions {
   getForums(categoryId) {
     return categoryId;
   }
+
   saveFilter(categoryValue) {
     return (dispatch) => {
       Api
@@ -28,7 +31,7 @@ class GnbActions {
         .get('/best', categoryValue)
         .then((res) => {
 
-          res.data = normalize(res.data, arrayOf(post)),
+          res.data = normalize(res.data, arrayOf(post));
           dispatch(res);
         })
         .catch((err) => {

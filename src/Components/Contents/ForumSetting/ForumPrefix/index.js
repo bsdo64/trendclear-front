@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ForumActions from '../../../../Actions/ForumActions';
 import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
@@ -43,7 +42,7 @@ const PrefixBox = React.createClass({
 
     const charCode = e.charCode;
     const text = e.target.value;
-    const {forum} = this.props;
+    const { forum } = this.props;
 
     if (charCode == 13) {
       ForumSettingActions.updateForumPrefix({
@@ -74,7 +73,7 @@ const PrefixBox = React.createClass({
     if (p.get('id') === this.state.updateItemId) {
       return (
         <li key={p.get('id')} className="item">
-          <div className="ui action input prefix-adder-input-update" >
+          <div className="ui action input prefix-adder-input-update">
             <input
               defaultValue={p.get('name')}
               onChange={this.updateOnChange}
@@ -101,13 +100,13 @@ const PrefixBox = React.createClass({
   triggerOpenAddPrefix() {
     "use strict";
 
-    this.setState({openAdder: !this.state.openAdder})
+    this.setState({ openAdder: !this.state.openAdder })
 
   },
   sendPrefix(e) {
     "use strict";
     const charCode = e.charCode;
-    const {forum} = this.props;
+    const { forum } = this.props;
 
     if (charCode == 13) {
       ForumSettingActions.addForumPrefix({
@@ -128,21 +127,21 @@ const PrefixBox = React.createClass({
     })
   },
   render() {
-    const {prefixes} = this.props;
+    const { prefixes } = this.props;
     const self = this;
 
     const adder = this.state.openAdder
       ? (
-          <div className="ui action input prefix-adder-input" >
-            <input ref="input_prefix" type="text" onKeyPress={this.sendPrefix} onChange={this.prefixText}/>
-            <button className="ui icon button" onClick={this.triggerOpenAddPrefix}>
-              <i className="icon remove circle outline"></i>
-            </button>
-          </div>
-        )
+      <div className="ui action input prefix-adder-input">
+        <input ref="input_prefix" type="text" onKeyPress={this.sendPrefix} onChange={this.prefixText}/>
+        <button className="ui icon button" onClick={this.triggerOpenAddPrefix}>
+          <i className="icon remove circle outline"></i>
+        </button>
+      </div>
+    )
       : prefixes.size < 5
-        ? <div className="ui button primary tiny prefix-adder-button" onClick={this.triggerOpenAddPrefix}>추가 +</div>
-        : null;
+      ? <div className="ui button primary tiny prefix-adder-button" onClick={this.triggerOpenAddPrefix}>추가 +</div>
+      : null;
 
     return (
       <ul className="prefix-list">
@@ -164,7 +163,7 @@ const ForumPrefix = React.createClass({
     e.preventDefault();
     e.stopPropagation();
 
-    const {ForumSettingStore} = this.props;
+    const { ForumSettingStore } = this.props;
     const forumInfo = ForumSettingStore.get('forumInfo');
     const forum = ForumSettingStore.get('forum');
 
@@ -177,18 +176,18 @@ const ForumPrefix = React.createClass({
   },
 
   changeForm(e) {
-    ForumSettingActions.changeForumData({[e.target.name]: e.target.value.trim()})
+    ForumSettingActions.changeForumData({ [e.target.name]: e.target.value.trim() })
   },
 
   render() {
-    const {ForumSettingStore} = this.props;
+    const { ForumSettingStore } = this.props;
     const forum = ForumSettingStore.get('forum');
 
     if (forum) {
       const patch = ForumSettingStore.getIn(['forumInfo', 'success']);
       const patchSuccess = patch === 'updated' ? true : patch === 'failed' ? false : null;
       let button;
-      
+
       if (patchSuccess === true) {
         button = <div className="ui submit button positive">변경 완료</div>
       } else if (patchSuccess === false) {
@@ -198,7 +197,7 @@ const ForumPrefix = React.createClass({
       }
 
       return (
-        <div className="ui container forum-prefix" style={{margin: 10, width: 700}}>
+        <div className="ui container forum-prefix" style={{ margin: 10, width: 700 }}>
           <div className="ui segments ">
             <div className="ui segment">
               <h3 className="ui header">말머리 설정</h3>

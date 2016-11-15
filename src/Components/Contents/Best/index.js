@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Waypoint from 'react-waypoint';
-
 import Header from '../../ContentBreadCrumb/ContentBreadCrumb';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
@@ -8,6 +7,21 @@ import PostActions from '../../../Actions/PostActions';
 import GnbActions from '../../../Actions/GnbActions';
 
 const BestBox = React.createClass({
+  displayName: 'BestBox',
+  propTypes: {
+    PaginationStore: PropTypes.object.isRequired,
+    GnbStore: PropTypes.object.isRequired,
+    ListStore: PropTypes.object.isRequired,
+    Posts: PropTypes.object.isRequired,
+    Users: PropTypes.object.isRequired,
+    AuthStore: PropTypes.object.isRequired,
+    listName: PropTypes.string.isRequired,
+    location: PropTypes.object.isRequired,
+
+    FireSetScrollPosition: PropTypes.func.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired,
+  },
+
   componentWillUnmount() {
     // some example callbacks
     GnbActions.resetFilter();
@@ -15,20 +29,20 @@ const BestBox = React.createClass({
 
   getMoreBest() {
     if ((document && document.body) && document.body.clientHeight > 768) {
-      const {PaginationStore, GnbStore, listName, location} = this.props;
+      const { PaginationStore, GnbStore, listName, location } = this.props;
       const Pagination = PaginationStore.get(listName);
       if (Pagination) {
         const nextPage = Pagination.get('next_page');
 
         const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
-        const normalize = categoryValue.map((object, key) => {
+        const normalize = categoryValue.map((object) => {
           return parseInt(object.value);
         });
 
         if (nextPage) {
 
           let pathname;
-          switch(listName) {
+          switch (listName) {
             case 'bestPostList':
               pathname = '/best';
               break;
@@ -47,7 +61,7 @@ const BestBox = React.createClass({
             params: {
               page: nextPage,
               order: location.query.order || 'hot',
-              categoryValue: (normalize.length > 0) ? normalize: null,
+              categoryValue: (normalize.length > 0) ? normalize : null,
               listType: location.pathname === '/all' ? 'all' : null
             }
           });
@@ -57,24 +71,27 @@ const BestBox = React.createClass({
   },
 
   createBreadCrumbArray(array, pathname) {
-    array.push({title: '베스트', url: '/'});
+    array.push({ title: '베스트', url: '/' });
 
     switch (pathname) {
       case '/':
-        array.push({title: '팔로잉'});
+        array.push({ title: '팔로잉' });
         return array;
       case '/all':
-        array.push({title: '전체글'});
+        array.push({ title: '전체글' });
         return array;
     }
   },
 
   render() {
-    const {location, listName, ListStore, Posts, Users, AuthStore, PaginationStore} = this.props;
+    const {
+      location, listName, ListStore, Posts, Users, AuthStore, PaginationStore,
+      FireSetScrollPosition, FireToggleLoginModal
+    } = this.props;
     const Collection = PaginationStore.get(listName);
     const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
     return (
-      <div id="best_contents" ref="best_contents" >
+      <div id="best_contents" ref="best_contents">
 
         <Header
           type={listName}
@@ -88,7 +105,8 @@ const BestBox = React.createClass({
           AuthorItems={Users}
           User={AuthStore}
           scrollHeight={ListStore.get('scrollHeight')}
-          setScrollPosition={this.props.setScrollPosition}
+          FireSetScrollPosition={FireSetScrollPosition}
+          FireToggleLoginModal={FireToggleLoginModal}
         />
 
         <Waypoint
@@ -97,7 +115,7 @@ const BestBox = React.createClass({
           scrollableAncestor={window || null}
         />
 
-        <InfiniteLoader collection={Collection} />
+        <InfiniteLoader collection={Collection}/>
 
       </div>
     )

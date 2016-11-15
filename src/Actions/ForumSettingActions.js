@@ -1,8 +1,5 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
-import {browserHistory} from 'react-router';
-import {normalize, arrayOf} from 'normalizr';
-import {post, comment, subComment} from '../Model/normalizr/schema';
 
 class ForumSettingActions {
   constructor() {
@@ -42,7 +39,7 @@ class ForumSettingActions {
       Api
         .setEntryPoint('/ajax')
         .delete('/forum/prefix', params)
-        .then((res) => {
+        .then(() => {
           dispatch(params);
         })
         .catch((err) => {
@@ -70,7 +67,7 @@ class ForumSettingActions {
       Api
         .setEntryPoint('/ajax')
         .delete('/forum/manager', params)
-        .then((res) => {
+        .then(() => {
           dispatch(params);
         })
         .catch((err) => {
@@ -84,7 +81,7 @@ class ForumSettingActions {
       Api
         .setEntryPoint('/ajax')
         .delete('/forum/announce', params)
-        .then((res) => {
+        .then(() => {
           dispatch(params);
         })
         .catch((err) => {
@@ -112,7 +109,7 @@ class ForumSettingActions {
       Api
         .setEntryPoint('/ajax')
         .delete('/forum/banUser', params)
-        .then((res) => {
+        .then(() => {
           dispatch(params);
         })
         .catch((err) => {

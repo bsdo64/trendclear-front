@@ -1,13 +1,14 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Modal from '../../Components/Modal';
+
+import { closeModal } from '../../Actions/Modal';
 
 const DefaultModalContainer = React.createClass({
   render() {
     return (<Modal {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -19,11 +20,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireCloseModal: closeModal
+  }
 )(DefaultModalContainer);

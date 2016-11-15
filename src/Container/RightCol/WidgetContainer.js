@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import WidgetBox from '../../Components/WidgetBox';
 
 const WidgetContainer = React.createClass({
@@ -10,7 +9,6 @@ const WidgetContainer = React.createClass({
     return (<WidgetBox {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

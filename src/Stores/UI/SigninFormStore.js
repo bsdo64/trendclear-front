@@ -1,5 +1,5 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable, { Map } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import SigninActions from '../../Actions/SigninActions';
 import { initListener, setMergeState, locationHref } from '../Helper/func';
@@ -33,7 +33,7 @@ const defaultProps = {
 
 class SigninFormStore {
   static displayName = 'SigninFormStore';
-  
+
   constructor() {
 
     this.bindActions(SigninActions);
@@ -65,15 +65,18 @@ class SigninFormStore {
     const newState = this.state.update('emailDup', v => !!dup);
     this.setState(newState);
   }
+
   onCheckNickDup(result) {
     const dup = parseInt(result.dup, 10);
     const newState = this.state.update('nickDup', v => !!dup);
     this.setState(newState);
   }
+
   onEmailVerifyFormOpen() {
     const newState = this.state.update('emailVerifyFormOpen', v => true);
     this.setState(newState);
   }
+
   onRequestEmailVerify(result) {
     if (result.result === 'ok') {
       this.setMergeState({
@@ -85,11 +88,13 @@ class SigninFormStore {
       });
     }
   }
+
   onSubmit(result) {
     if (result.result === 'ok') {
       locationHref('/');
     }
   }
+
   checkVerifyCode(result) {
     if (result.result === 'ok') {
       this.setMergeState({

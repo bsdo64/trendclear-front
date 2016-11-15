@@ -1,6 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import SearchBar from '../../Components/Header/search';
 
 const Search = React.createClass({

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InfiniteLoader = ({collection}) => {
+const InfiniteLoader = ({ collection }) => {
   if (collection && collection.get('next_page')) {
     return (
       <div className="ui items">

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import LoginActions from '../../Actions/LoginActions';
 
 const LoginButton = React.createClass({

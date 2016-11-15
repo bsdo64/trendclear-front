@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
 export const Radio = React.createClass({
   displayName: 'Radio',
@@ -7,13 +7,13 @@ export const Radio = React.createClass({
     radioGroup: React.PropTypes.object
   },
 
-  render: function() {
-    const {name, selectedValue, onChange} = this.context.radioGroup;
+  render: function () {
+    const { name, selectedValue, onChange } = this.context.radioGroup;
     const optional = {};
-    if(selectedValue !== undefined) {
+    if (selectedValue !== undefined) {
       optional.checked = (this.props.value === selectedValue);
     }
-    if(typeof onChange === 'function') {
+    if (typeof onChange === 'function') {
       optional.onChange = onChange.bind(null, this.props.value);
     }
 
@@ -46,7 +46,7 @@ export const RadioGroup = React.createClass({
     ])
   },
 
-  getDefaultProps: function() {
+  getDefaultProps: function () {
     return {
       Component: "div"
     };
@@ -56,8 +56,8 @@ export const RadioGroup = React.createClass({
     radioGroup: React.PropTypes.object
   },
 
-  getChildContext: function() {
-    const {name, selectedValue, onChange} = this.props;
+  getChildContext: function () {
+    const { name, selectedValue, onChange } = this.props;
     return {
       radioGroup: {
         name, selectedValue, onChange
@@ -65,8 +65,8 @@ export const RadioGroup = React.createClass({
     }
   },
 
-  render: function() {
-    const {Component, name, selectedValue, onChange, children, ...rest} = this.props;
+  render: function () {
+    const { Component, name, selectedValue, onChange, children, ...rest } = this.props;
     return <Component {...rest}>{children}</Component>;
   }
 });

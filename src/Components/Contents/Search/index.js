@@ -1,22 +1,33 @@
-import React from 'react';
-import {Link} from 'react-router';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import Waypoint from 'react-waypoint';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import cx from 'classnames';
-
 import SearchHeader from './header';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
-
 import PostActions from '../../../Actions/PostActions';
 import UserActions from '../../../Actions/UserActions';
 import CollectionActions from '../../../Actions/CollectionActions';
 import GnbActions from '../../../Actions/GnbActions';
 import LoginActions from '../../../Actions/LoginActions';
-import ForumActions from '../../../Actions/ForumActions'
+import ForumActions from '../../../Actions/ForumActions';
 
 require('./index.scss');
 const SearchBox = React.createClass({
+  displayName: 'SearchBox',
+  propTypes: {
+    SearchStore: PropTypes.object.isRequired,
+    PaginationStore: PropTypes.object.isRequired,
+    AuthStore: PropTypes.object.isRequired,
+    Collections: PropTypes.object.isRequired,
+    ListStore: PropTypes.object.isRequired,
+    Forums: PropTypes.object.isRequired,
+    Posts: PropTypes.object.isRequired,
+    Users: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+  },
+
   componentWillUnmount() {
     // some example callbacks
 
@@ -26,14 +37,14 @@ const SearchBox = React.createClass({
     $('.ui.embed').embed();
   },
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     $('.ui.embed').embed('refresh');
   },
 
   getMoreBest() {
     "use strict";
 
-    const {PaginationStore, SearchStore, location} = this.props;
+    const { PaginationStore, SearchStore, location } = this.props;
     const Pagination = PaginationStore.get('searchPostList');
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
@@ -56,7 +67,7 @@ const SearchBox = React.createClass({
     "use strict";
 
     return (e) => {
-      const params = {collectionId: e.target.value, forumId: forumId};
+      const params = { collectionId: e.target.value, forumId: forumId };
 
       if (e.target.checked) {
         CollectionActions.addForum(params)
@@ -66,7 +77,6 @@ const SearchBox = React.createClass({
     }
   },
   openLoginModal() {
-    const modalFlag = this.props.LoginModalStore.get('openLoginModal');
     const location = this.props.location;
     LoginActions.toggleLoginModal({
       contentType: 'Login',
@@ -76,15 +86,15 @@ const SearchBox = React.createClass({
   toggleFollow(isForumFollow, forumId) {
     "use strict";
 
-    const {AuthStore} = this.props;
+    const { AuthStore } = this.props;
     const userId = AuthStore.get('userId');
     if (!userId) {
       this.openLoginModal();
-    }  else {
+    } else {
       if (isForumFollow) {
-        UserActions.unFollowForum({id: forumId});
+        UserActions.unFollowForum({ id: forumId });
       } else {
-        UserActions.followForum({forumId: forumId});
+        UserActions.followForum({ forumId: forumId });
       }
     }
   },
@@ -97,7 +107,7 @@ const SearchBox = React.createClass({
                  type="checkbox"
                  value={collection.get('id')}
                  defaultChecked={this.checkCollectionHasForums(collection.get('forums'), forumId)}
-                 onChange={this.selectCollection(forumId)} />
+                 onChange={this.selectCollection(forumId)}/>
           <label htmlFor={`collection-id-${collectionId}-forum-id-${forumId}`}>{collection.get('title')}</label>
         </div>
       </li>
@@ -106,7 +116,7 @@ const SearchBox = React.createClass({
 
   prevForumList() {
     "use strict";
-    const {PaginationStore, SearchStore, location} = this.props;
+    const { PaginationStore, SearchStore, location } = this.props;
     const Pagination = PaginationStore.get('searchForumList');
     if (Pagination) {
       const currentPage = Pagination.get('current_page');
@@ -123,7 +133,7 @@ const SearchBox = React.createClass({
 
   nextForumList() {
     "use strict";
-    const {PaginationStore, SearchStore, location} = this.props;
+    const { PaginationStore, SearchStore, location } = this.props;
     const Pagination = PaginationStore.get('searchForumList');
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
@@ -139,7 +149,7 @@ const SearchBox = React.createClass({
   },
 
   render() {
-    const {SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore, LoginModalStore} = this.props;
+    const { SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore } = this.props;
     const Collection = PaginationStore.get('searchPostList');
     const searchPosts = SearchStore.get('search');
 
@@ -149,7 +159,7 @@ const SearchBox = React.createClass({
     const self = this;
 
     return (
-      <div id="best_contents" >
+      <div id="best_contents">
 
         <div id="search_forum_list">
           <h4>게시판</h4>
@@ -199,7 +209,7 @@ const SearchBox = React.createClass({
                                     (userId === creator.get('id')) &&
                                     <Link to={`/community/settings?forumId=${forumId}`}
                                           className="ui button primary basic tiny right floated">
-                                      <i className="fa fa-gear" />
+                                      <i className="fa fa-gear"/>
                                       {' 설정'}
                                     </Link>
                                   }
@@ -208,7 +218,7 @@ const SearchBox = React.createClass({
                                     userId && isLogin &&
                                     <Dropdown className="subscribe_dropdown" ref="subscribe_dropdown">
                                       <DropdownTrigger className="ui button primary basic tiny right floated">
-                                        <i className="fa fa-share" />
+                                        <i className="fa fa-share"/>
                                         {' 구독'}
                                       </DropdownTrigger>
                                       <DropdownContent>
@@ -227,14 +237,16 @@ const SearchBox = React.createClass({
 
                                   {
                                     !userId && !isLogin &&
-                                    <a onClick={self.openLoginModal} className="ui button primary basic tiny right floated">
-                                      <i className="fa fa-share" />
+                                    <a onClick={self.openLoginModal}
+                                       className="ui button primary basic tiny right floated">
+                                      <i className="fa fa-share"/>
                                       {' 구독'}
                                     </a>
                                   }
 
-                                  <a className={cFollowActive} onClick={self.toggleFollow.bind(self, isUserForumFollow, forumId)}>
-                                    <i className="fa fa-star" />
+                                  <a className={cFollowActive}
+                                     onClick={self.toggleFollow.bind(self, isUserForumFollow, forumId)}>
+                                    <i className="fa fa-star"/>
                                     {' 팔로우'}
                                   </a>
                                 </div>
@@ -244,10 +256,10 @@ const SearchBox = React.createClass({
                                 <div className="description">
                                   {forum.get('description')}
                                 </div>
-                                <div className="meta forum_meta" >
-                                  <div className="forum_counts" >
-                                    <span className="follow_counts" >팔로우 {forum.get('follow_count')} 명</span>
-                                    <span className="subs_counts" >컬렉션 구독 {forum.get('subs_count')}</span>
+                                <div className="meta forum_meta">
+                                  <div className="forum_counts">
+                                    <span className="follow_counts">팔로우 {forum.get('follow_count')} 명</span>
+                                    <span className="subs_counts">컬렉션 구독 {forum.get('subs_count')}</span>
                                   </div>
                                 </div>
                               </div>
@@ -289,7 +301,7 @@ const SearchBox = React.createClass({
           scrollableAncestor={window || null}
         />
 
-        <InfiniteLoader collection={Collection} />
+        <InfiniteLoader collection={Collection}/>
 
       </div>
     )

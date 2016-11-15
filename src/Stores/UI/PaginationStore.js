@@ -1,12 +1,11 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import PostActions from '../../Actions/PostActions';
 import ForumActions from '../../Actions/ForumActions';
 import GnbActions from '../../Actions/GnbActions';
 import PaginationActions from '../../Actions/PaginationActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
-
+import { initListener, setMergeState } from '../Helper/func';
 import Users from '../Domain/Users';
 import Posts from '../Domain/Posts';
 import Forums from '../Domain/Forums';
@@ -14,6 +13,7 @@ import ListStore from './ListStore';
 
 class PaginationStore {
   static displayName = 'PaginationStore';
+
   constructor() {
     this.displayName = 'PaginationStore';
 
@@ -21,9 +21,7 @@ class PaginationStore {
     this.bindActions(ForumActions);
     this.bindActions(PostActions);
     this.bindActions(PaginationActions);
-    this.state = Immutable.Map({
-
-    });
+    this.state = Immutable.Map({});
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
@@ -36,25 +34,25 @@ class PaginationStore {
   onGetBestPost(response) {
     this.waitFor(Users, Posts, ListStore);
 
-    this.setMergeState({[response.listName]: response.collection});
+    this.setMergeState({ [response.listName]: response.collection });
   }
 
   onGetSearchPost(response) {
     this.waitFor(Users, Posts, ListStore);
 
-    this.setMergeState({searchPostList: response.collection});
+    this.setMergeState({ searchPostList: response.collection });
   }
 
   onGetMoreMyPost(response) {
     this.waitFor(Users, Posts, ListStore);
 
-    this.setMergeState({[response.type]: response.collection});
+    this.setMergeState({ [response.type]: response.collection });
   }
 
   onSaveFilter(res) {
     const collection = res.collection;
 
-    this.setMergeState({bestPostList: collection});
+    this.setMergeState({ bestPostList: collection });
   }
 
   onGetSearchForumList(result) {
@@ -63,7 +61,7 @@ class PaginationStore {
     const pagination = result.collection;
 
     if (pagination) {
-      this.setMergeState({searchForumList: pagination});
+      this.setMergeState({ searchForumList: pagination });
     }
   }
 }

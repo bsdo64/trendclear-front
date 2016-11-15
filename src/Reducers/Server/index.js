@@ -1,4 +1,4 @@
-import {Map, fromJS} from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 const initList = Map({});
 

@@ -1,9 +1,9 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
 import PostActions from '../../Actions/PostActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import { initListener, setMergeState } from '../Helper/func';
 import moment from 'moment';
 
 const defaultProps = {
@@ -27,9 +27,9 @@ class ShareLinkStore {
 
   onToggleActivateVenalinkModal(data) {
     if (data.venalinkActivateRequestPostId) {
-      this.setMergeState({venalinkActivateRequestPostId: data.venalinkActivateRequestPostId});
+      this.setMergeState({ venalinkActivateRequestPostId: data.venalinkActivateRequestPostId });
     } else {
-      this.setMergeState({venalinkActivateRequestPostId: null});
+      this.setMergeState({ venalinkActivateRequestPostId: null });
     }
   }
 }

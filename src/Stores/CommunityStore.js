@@ -1,16 +1,15 @@
 import alt from '../Utils/alt';
-import Immutable, {Map, List} from 'immutable';
+import Immutable, { Map } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import GnbActions from '../Actions/GnbActions';
 import CommentActions from '../Actions/CommentActions';
 import CommunityActions from '../Actions/CommunityActions';
 import PostActions from '../Actions/PostActions';
 import { initListener, setMergeState } from './Helper/func';
-import {browserHistory} from 'react-router';
 
-class CommunityStore{
+class CommunityStore {
   static displayName = 'CommunityStore';
-  
+
   constructor() {
     this.displayName = 'CommunityStore';
 

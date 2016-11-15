@@ -1,12 +1,13 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable, { Map } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import DeleteActions from '../../Actions/DeleteActions';
 import ModalActions from '../../Actions/ModalActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import { initListener, setMergeState } from '../Helper/func';
 
-class RemoveModalStore{
+class RemoveModalStore {
   static displayName = 'RemoveModalStore';
+
   constructor() {
     this.displayName = 'RemoveModalStore';
 
@@ -30,7 +31,7 @@ class RemoveModalStore{
 
   onDelete(deletedItem) {
     if (deletedItem.id) {
-      this.setMergeState(Map({openModal: false}))
+      this.setMergeState(Map({ openModal: false }))
     }
   }
 }

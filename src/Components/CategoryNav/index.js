@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
-import {fromJS} from 'immutable';
+import { fromJS } from 'immutable';
 import { Scrollbars } from 'react-custom-scrollbars';
 import cx from 'classnames';
 import marked from '../Lib/Marked';
-
 import AvatarImage from '../AvatarImage';
-
-import GnbActions from '../../Actions/GnbActions';
 
 const RankList = React.createClass({
   displayName: 'RankList',
@@ -19,7 +16,7 @@ const RankList = React.createClass({
     e.stopPropagation();
   },
   render() {
-    const {openForumMeta, forums} = this.props;
+    const { openForumMeta, forums } = this.props;
     return (
       <div className="forum_rank">
         <ul>
@@ -34,7 +31,7 @@ const RankList = React.createClass({
                 <li key={forum.get('id')} onMouseEnter={this.openForumMeta.bind(null, forum.get('id'))}
                 >
                   <div className="forum_button">
-                    <Link to={`/community?forumId=${forum.get('id')}`} className={cButton} >
+                    <Link to={`/community?forumId=${forum.get('id')}`} className={cButton}>
                       {`${index + 1}. ${forum.get('title')}`}
                     </Link>
                   </div>
@@ -60,7 +57,7 @@ const RankList = React.createClass({
                                   imageClass="right floated mini ui image"
                                 />
                                 <div className="header">
-                                  <Link to={`/community?forumId=${forum.get('id')}`} >
+                                  <Link to={`/community?forumId=${forum.get('id')}`}>
                                     {forum.get('title')}
                                   </Link>
                                 </div>
@@ -79,7 +76,7 @@ const RankList = React.createClass({
                                       클럽 규칙
                                     </div>
                                     <div className="description"
-                                         dangerouslySetInnerHTML={{__html: marked(forum.get('rule'))}}
+                                         dangerouslySetInnerHTML={{ __html: marked(forum.get('rule')) }}
                                     ></div>
                                   </div>
                                 }
@@ -119,7 +116,7 @@ const ClubList = React.createClass({
       <div className="four wide column group" key={item.get('id')}>
         <h3 >{item.get('title')}</h3>
         <ul className="category_lists">
-          <Scrollbars style={{height: 80}}>
+          <Scrollbars style={{ height: 80 }}>
             {
               item.get('forums').map(this.createCategory)
             }

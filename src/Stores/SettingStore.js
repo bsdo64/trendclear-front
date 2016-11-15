@@ -1,12 +1,13 @@
 import alt from '../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import { Map } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import UserActions from '../Actions/UserActions';
 import SettingActions from '../Actions/SettingActions';
 import { initListener, setMergeState } from './Helper/func';
 
-class SettingStore{
+class SettingStore {
   static displayName = 'SettingStore';
+
   constructor() {
 
     this.bindActions(UserActions);

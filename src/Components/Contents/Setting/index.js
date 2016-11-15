@@ -1,11 +1,9 @@
 /**
  * Created by dobyeongsu on 2016. 3. 23..
  */
-import React from 'react';
-import {Link} from 'react-router';
+import React, { PropTypes } from 'react';
 import UserActions from '../../../Actions/UserActions';
 import SettingActions from '../../../Actions/SettingActions';
-
 import moment from 'moment';
 
 const SettingProfile = React.createClass({
@@ -20,7 +18,7 @@ const SettingProfile = React.createClass({
   },
 
   getInitialState() {
-    const {UserStore} = this.props;
+    const { UserStore } = this.props;
     const sex = UserStore.getIn(['profile', 'sex']);
     const birthday = UserStore.getIn(['profile', 'birth']);
 
@@ -67,19 +65,19 @@ const SettingProfile = React.createClass({
 
   changeYear(e) {
     "use strict";
-    this.setState({year: e.target.value})
+    this.setState({ year: e.target.value })
   },
   changeMonth(e) {
     "use strict";
-    this.setState({month: e.target.value})
+    this.setState({ month: e.target.value })
   },
   changeDate(e) {
     "use strict";
-    this.setState({date: e.target.value})
+    this.setState({ date: e.target.value })
   },
   changeSex(sex) {
     "use strict";
-    this.setState({sex: sex})
+    this.setState({ sex: sex })
   },
 
   updateProfile() {
@@ -104,7 +102,7 @@ const SettingProfile = React.createClass({
       .closest('.message')
       .transition('fade');
 
-    SettingActions.closeMessage({type: type});
+    SettingActions.closeMessage({ type: type });
   },
 
   setErrorMessage(SettingStore) {
@@ -139,7 +137,7 @@ const SettingProfile = React.createClass({
 
   render() {
     "use strict";
-    const {SettingStore} = this.props;
+    const { SettingStore } = this.props;
     return (
       <div id="setting">
         <h3 className="ui dividing header">
@@ -262,12 +260,12 @@ const SettingPassword = React.createClass({
     $('.ui.form')
       .form({
         fields: {
-          oldPassword : {
+          oldPassword: {
             identifier: 'old-password',
             rules: [
               {
-                type   : 'empty',
-                prompt : '빈칸을 모두 채워주세요'
+                type: 'empty',
+                prompt: '빈칸을 모두 채워주세요'
               }
             ]
           },
@@ -275,13 +273,13 @@ const SettingPassword = React.createClass({
             identifier: 'new-password',
             rules: [
               {
-                type   : 'empty',
-                prompt : '빈칸을 채워주세요'
+                type: 'empty',
+                prompt: '빈칸을 채워주세요'
               },
 
               {
-                type   : 'minLength[6]',
-                prompt : '적어도 {ruleValue}글자 이상 입력해주세요'
+                type: 'minLength[6]',
+                prompt: '적어도 {ruleValue}글자 이상 입력해주세요'
               }
             ]
           },
@@ -289,8 +287,8 @@ const SettingPassword = React.createClass({
             identifier: 're-new-password',
             rules: [
               {
-                type   : 'match[new-password]',
-                prompt : '입력한 비밀번호와 서로 다릅니다.'
+                type: 'match[new-password]',
+                prompt: '입력한 비밀번호와 서로 다릅니다.'
               }
             ]
           }
@@ -318,7 +316,7 @@ const SettingPassword = React.createClass({
       .closest('.message')
       .transition('fade');
 
-    SettingActions.closeMessage({type: type});
+    SettingActions.closeMessage({ type: type });
   },
 
   setErrorMessage(SettingStore) {
@@ -351,7 +349,7 @@ const SettingPassword = React.createClass({
 
   },
   render() {
-    const {SettingStore} = this.props;
+    const { SettingStore } = this.props;
     return (
       <div id="setting">
 
@@ -364,15 +362,15 @@ const SettingPassword = React.createClass({
           <div className="ui form ">
             <div className="field">
               <label>이전 비밀번호</label>
-              <input type="password" name="old-password" placeholder="예전 비밀번호" />
+              <input type="password" name="old-password" placeholder="예전 비밀번호"/>
             </div>
             <div className="field">
               <label>새 비밀번호</label>
-              <input type="password" name="new-password" placeholder="새로운 비밀번호" />
+              <input type="password" name="new-password" placeholder="새로운 비밀번호"/>
             </div>
             <div className="field">
               <label>새 비밀번호 확인</label>
-              <input type="password" name="re-new-password" placeholder="새로운 비밀번호 확인" />
+              <input type="password" name="re-new-password" placeholder="새로운 비밀번호 확인"/>
             </div>
             <div className="ui submit button primary">저장</div>
             <div className="ui error message "></div>
@@ -389,20 +387,18 @@ const SettingPassword = React.createClass({
 require('./index.scss');
 const SettingBox = React.createClass({
   displayName: 'SettingBox',
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
+  propTypes: {
+    SettingStore: PropTypes.object.isRequired,
   },
 
   render() {
-    const {SettingStore} = this.props;
+    const { SettingStore } = this.props;
     switch (SettingStore.get('page')) {
       case 'password' :
         return <SettingPassword {...this.props} />;
-      break;
 
       case 'profile' :
         return <SettingProfile {...this.props} />;
-      break;
 
       default :
         return (<div></div>)

@@ -13,19 +13,19 @@ const Managers = React.createClass({
           url: '/ajax/search/users?type=manager&nick={query}&forumId=' + forumId
         },
         cache: false,
-        minCharacters : 2,
+        minCharacters: 2,
         fields: {
           title: 'nick'
         },
-        error : {
-          source      : '검색 할 수 없습니다 API를 참고하세요',
-          noResults   : '일치하는 닉네임이 없습니다',
-          logging     : 'Error in debug logging, exiting.',
-          noEndpoint  : 'No search endpoint was specified',
-          noTemplate  : 'A valid template name was not specified.',
-          serverError : '서버에러 입니다.',
-          maxResults  : 'Results must be an array to use maxResults setting',
-          method      : 'The method you called is not defined.'
+        error: {
+          source: '검색 할 수 없습니다 API를 참고하세요',
+          noResults: '일치하는 닉네임이 없습니다',
+          logging: 'Error in debug logging, exiting.',
+          noEndpoint: 'No search endpoint was specified',
+          noTemplate: 'A valid template name was not specified.',
+          serverError: '서버에러 입니다.',
+          maxResults: 'Results must be an array to use maxResults setting',
+          method: 'The method you called is not defined.'
         },
         onSelect: function (user) {
           "use strict";
@@ -39,7 +39,7 @@ const Managers = React.createClass({
     "use strict";
 
     const forumId = this.props.location.query.forumId;
-    ForumSettingActions.addManager({userId: user.id, forumId: forumId});
+    ForumSettingActions.addManager({ userId: user.id, forumId: forumId });
   },
 
   removeUser(manager) {
@@ -55,7 +55,7 @@ const Managers = React.createClass({
 
   createManagerItem(id) {
     "use strict";
-    const {Users, Forums, location, AuthStore} = this.props;
+    const { Users, Forums, location, AuthStore } = this.props;
     const manager = Users.get(id.toString());
     const forumId = location.query.forumId;
     const forum = Forums.get(forumId.toString());
@@ -64,12 +64,12 @@ const Managers = React.createClass({
     const isCreator = creatorId === id;
     const isMe = myId === id;
     const tagStyle = cx('ui label large', {
-      teal : isCreator
+      teal: isCreator
     });
 
     if (manager) {
       return (
-        <div className="item padded" key={id} style={{paddingBottom: 5}}>
+        <div className="item padded" key={id} style={{ paddingBottom: 5 }}>
           <a className={tagStyle}>
             <span className="title">{manager.get('nick')}</span>
             {
@@ -83,13 +83,13 @@ const Managers = React.createClass({
   },
 
   render() {
-    const {Forums, location} = this.props;
+    const { Forums, location } = this.props;
     const forumId = location.query.forumId;
     const forum = Forums.get(forumId.toString());
     const managerIds = forum.get('managers');
 
     return (
-      <div className="ui container" style={{margin: 10, width: 700}}>
+      <div className="ui container" style={{ margin: 10, width: 700 }}>
         <div className="ui segments ">
           <div className="ui segment">
             <h3 className="ui header">메니저 설정</h3>
@@ -113,8 +113,8 @@ const Managers = React.createClass({
                   <h4>메니저 추가</h4>
                   <div className="ui search">
                     <div className="ui left icon input">
-                      <input className="prompt" type="text" placeholder="유저 검색" />
-                      <i className="user icon" />
+                      <input className="prompt" type="text" placeholder="유저 검색"/>
+                      <i className="user icon"/>
                     </div>
                   </div>
                 </div>

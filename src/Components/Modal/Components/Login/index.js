@@ -1,9 +1,6 @@
-import React, {
-  PropTypes,
-} from 'react';
-import {Link} from 'react-router';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import LoginActions from '../../../../Actions/LoginActions.js';
-import {browserHistory} from 'react-router';
 
 require('./index.scss');
 
@@ -12,34 +9,34 @@ const Login = React.createClass({
   componentDidMount() {
     $(this.refs.loginform)
       .form({
-        inline : true,
-        on     : 'blur',
+        inline: true,
+        on: 'blur',
         keyboardShortcuts: false,
         fields: {
-          loginEmail     : {
-            identifier  : 'loginEmail',
+          loginEmail: {
+            identifier: 'loginEmail',
             rules: [
               {
-                type   : 'empty',
-                prompt : '이메일을 입력해주세요'
+                type: 'empty',
+                prompt: '이메일을 입력해주세요'
               },
               {
-                type   : 'email',
-                prompt : 'Email 형식을 입력해 주세요.'
+                type: 'email',
+                prompt: 'Email 형식을 입력해 주세요.'
               }
             ]
           },
-          password   : {
-            identifier  : 'password',
+          password: {
+            identifier: 'password',
             rules: [
               {
-                type   : 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
-                prompt : '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
+                type: 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
+                prompt: '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
               }
             ]
           }
         },
-        onSuccess: function(event, fields) {
+        onSuccess: function (event, fields) {
           LoginActions.sendLogin({
             email: fields.loginEmail,
             password: fields.password
@@ -65,38 +62,38 @@ const Login = React.createClass({
     $(this.refs.loginmodal).modal('hide');
   },
 
-  afterOpenModal: function() {
+  afterOpenModal: function () {
     // references are now sync'd and can be accessed.
     $(this.refs.loginform)
       .form({
-        inline : true,
-        on     : 'blur',
+        inline: true,
+        on: 'blur',
         keyboardShortcuts: false,
         fields: {
-          loginEmail     : {
-            identifier  : 'loginEmail',
+          loginEmail: {
+            identifier: 'loginEmail',
             rules: [
               {
-                type   : 'empty',
-                prompt : '이메일을 입력해주세요'
+                type: 'empty',
+                prompt: '이메일을 입력해주세요'
               },
               {
-                type   : 'email',
-                prompt : 'Email 형식을 입력해 주세요.'
+                type: 'email',
+                prompt: 'Email 형식을 입력해 주세요.'
               }
             ]
           },
-          password   : {
-            identifier  : 'password',
+          password: {
+            identifier: 'password',
             rules: [
               {
-                type   : 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
-                prompt : '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
+                type: 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
+                prompt: '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
               }
             ]
           }
         },
-        onSuccess: function(event, fields) {
+        onSuccess: function (event, fields) {
           LoginActions.sendLogin({
             email: fields.loginEmail,
             password: fields.password
@@ -109,7 +106,7 @@ const Login = React.createClass({
       });
   },
 
-  closeModal: function() {
+  closeModal: function () {
     LoginActions.closeLoginModal();
   },
 
@@ -121,7 +118,7 @@ const Login = React.createClass({
 
     if (loginFail) {
       loginError = (
-        <div className="ui error message" style={{display: 'block'}}>
+        <div className="ui error message" style={{ display: 'block' }}>
           <ul className="list">
             <li>이메일과 비밀번호를 다시 확인해주세요</li>
           </ul>
@@ -144,15 +141,15 @@ const Login = React.createClass({
             <form className="ui form" ref="loginform">
               <div className="field">
                 <label>이메일</label>
-                <input type="text" name="loginEmail"  />
+                <input type="text" name="loginEmail"/>
               </div>
               <div className="field">
                 <label>비밀번호</label>
-                <input type="password" name="password" onKeyDown={this.handleRequestLoginByEnter} />
+                <input type="password" name="password" onKeyDown={this.handleRequestLoginByEnter}/>
               </div>
               <div className="inline field">
                 <div className="ui checkbox">
-                  <input type="checkbox" id="agreement-checkbox" />
+                  <input type="checkbox" id="agreement-checkbox"/>
                   <label htmlFor="agreement-checkbox">아이디를 저장합니다</label>
                 </div>
               </div>

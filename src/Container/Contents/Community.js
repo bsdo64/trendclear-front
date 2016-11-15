@@ -1,8 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import Community from '../../Components/Contents/Community';
+
+import { setScrollPosition } from '../../Actions/List';
+import { toggleLoginModal } from '../../Actions/Login';
 
 const CommunityContainer = React.createClass({
   render() {
@@ -38,11 +40,10 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireSetScrollPosition: setScrollPosition,
+    FireToggleLoginModal: toggleLoginModal,
+  }
 )(CommunityContainer);

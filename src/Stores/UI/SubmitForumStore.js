@@ -1,8 +1,8 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import ForumActions from '../../Actions/ForumActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import { initListener, setMergeState } from '../Helper/func';
 
 const defaultProps = {
 
@@ -47,7 +47,7 @@ class SubmitForumStore {
         .setIn(['form', 'error'], null);
 
       this.setState(newState);
-    } else if(!result.success && result.type === 'Error' ) {
+    } else if (!result.success && result.type === 'Error') {
       const newState = this.state
         .updateIn(['form', 'didValidate'], item => {
           return item.set('title', true);

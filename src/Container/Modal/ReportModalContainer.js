@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import ReportModalBox from '../../Components/Modal/Components/Report/index';
 
 const ReportModalContainer = React.createClass({
@@ -9,7 +8,6 @@ const ReportModalContainer = React.createClass({
     return (<ReportModalBox {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

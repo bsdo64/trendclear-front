@@ -1,22 +1,27 @@
-import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {Link} from 'react-router';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
 import AvatarImage from '../AvatarImage';
-import AdPost1 from '../Ad/AdPost1';
-
-import List from '../../Actions/List';
-import LoginActions from '../../Actions/LoginActions';
-import ListActions from '../../Actions/ListActions';
 import CommunityActions from '../../Actions/CommunityActions';
-
 import Menu from './ReportMenu';
-import ShareLinkMenu from './ShareLinkMenu'
+import ShareLinkMenu from './ShareLinkMenu';
 
 require('./Post.scss');
 
 const BigPost = React.createClass({
+  displayName: 'BigPost',
+  propTypes: {
+    post: PropTypes.object.isRequired,
+    author: PropTypes.object.isRequired,
+    user: PropTypes.object,
+    view: PropTypes.bool.isRequired,
+    postStyle: PropTypes.string,
+    shorten: PropTypes.bool.isRequired,
+    FireSetScrollPosition: PropTypes.func.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired,
+  },
+
   componentDidMount() {
     this.postItem.addEventListener('click', this.setScroll);
   },
@@ -28,19 +33,14 @@ const BigPost = React.createClass({
   setScroll() {
 
     const currentScroll = document.body.scrollTop;
-
-    ListActions.setScroll({
-      scrollHeight: currentScroll
-    });
-
-    this.props.setScrollPosition(currentScroll)
+    this.props.FireSetScrollPosition(currentScroll)
   },
 
   sendLike() {
 
-    const {post, user} = this.props;
+    const { post, user } = this.props;
     if (!user) {
-      LoginActions.toggleLoginModal({
+      this.props.FireToggleLoginModal({
         contentType: 'Login',
         location: '/'
       });
@@ -56,7 +56,7 @@ const BigPost = React.createClass({
   },
 
   render() {
-    const {post, author, user, view, postStyle, shorten} = this.props;
+    const { post, author, user, view, postStyle, shorten } = this.props;
 
     const userId = user && user.get('id');
     const sex = author.getIn(['profile', 'sex']),
@@ -127,7 +127,7 @@ const BigPost = React.createClass({
                         <div className="ui items">
                           <div className="ui item">
 
-                            <a id="user_avatar_img" className="ui mini image" >
+                            <a id="user_avatar_img" className="ui mini image">
                               <AvatarImage
                                 sex={sex}
                                 avatarImg={avatar_img}
@@ -141,7 +141,7 @@ const BigPost = React.createClass({
                               </div>
                               <div className="description">
 
-                                <div className="item" >
+                                <div className="item">
                                   <span className="item_col">레벨</span>
                                   <div className="item_num">
                                     <span>{author.getIn(['trendbox', 'level'])}</span>
@@ -187,9 +187,9 @@ const BigPost = React.createClass({
 
           {/* post Ad*/}
           {/*
-            (postStyle === 'post_item') &&
-            <AdPost1 url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSXpJWqQSSZ2s4-aw-miw-Q9spL7qCJ7rjOLav-VQpNpbdK5po" />
-          */}
+           (postStyle === 'post_item') &&
+           <AdPost1 url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSXpJWqQSSZ2s4-aw-miw-Q9spL7qCJ7rjOLav-VQpNpbdK5po" />
+           */}
 
           {/* content */}
           <div className={contentStyle} dangerouslySetInnerHTML={{ __html: post.get('content') }}></div>
@@ -200,7 +200,7 @@ const BigPost = React.createClass({
             <div className="more_long_post">
               <div className="more_long_post_button">
                 <Link to={postUrl} target="_blank">
-                  <i className="fa fa-external-link" />
+                  <i className="fa fa-external-link"/>
                 </Link>
                 <Link to={postUrl}>
                   {' 더 보기'}
@@ -215,7 +215,7 @@ const BigPost = React.createClass({
           <div className="ui extra best_post_buttons">
             <div className="like_box">
               <div className={'like_icon ' + (liked ? 'active' : '')} onClick={this.sendLike}>
-                <i className={'heart ' + (liked? '' : 'outline') + ' icon'} />
+                <i className={'heart ' + (liked ? '' : 'outline') + ' icon'}/>
               </div>
               <a className="like_count">{post.get('like_count')}</a>
             </div>

@@ -27,7 +27,5 @@ const MenuContainer = React.createClass({
   }
 });
 
-
-
 module.exports = MenuContainer;
 

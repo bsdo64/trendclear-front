@@ -35,7 +35,7 @@
       .like_icon {
         color: grey;
         :hover {
-          color:red;
+          color: red;
         }
 
         &.active {
@@ -87,8 +87,8 @@
         border: 1px solid #cacaca;
         padding: 10px;
         outline: none;
-        min-height:37px;
-        font-size:0.9em;
+        min-height: 37px;
+        font-size: 0.9em;
 
         p {
           margin-bottom: 5px;
@@ -132,5 +132,5 @@
 }
 
 .report_icon.none {
-  display:none !important;
+  display: none !important;
 }

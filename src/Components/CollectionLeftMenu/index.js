@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, browserHistory } from 'react-router';
-
+import { Link } from 'react-router';
 import CollectionComponent from '../BestCategorySelect/Collection';
 import SubscribeForumList from '../SubscribeForumList';
 
@@ -30,36 +29,37 @@ const CollectionLeftMenu = React.createClass({
             <ul >
               <li >
                 <h5 className="">
-                  <a><i className="fa fa-feed" />{' 뉴스피드'}</a>
+                  <a><i className="fa fa-feed"/>{' 뉴스피드'}</a>
                 </h5>
 
                 <div className="sub_category item">
                   {
                     (order === 'new') &&
-                    <div className="active-menu"> </div>
+                    <div className="active-menu"></div>
                   }
-                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'new'}}}>{'최신 글'}</Link>
+                  <Link to={{ pathname: `/collection/${collectionId}`, query: { order: 'new' } }}>{'최신 글'}</Link>
                 </div>
                 <div className="sub_category item">
                   {
                     (order === 'hot') &&
-                    <div className="active-menu"> </div>
+                    <div className="active-menu"></div>
                   }
-                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'hot'}}}>{'인기 글'}</Link>
+                  <Link to={{ pathname: `/collection/${collectionId}`, query: { order: 'hot' } }}>{'인기 글'}</Link>
                 </div>
                 <div className="sub_category item">
                   {
                     (order === 'm_view') &&
-                    <div className="active-menu"> </div>
+                    <div className="active-menu"></div>
                   }
-                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'm_view'}}}>{'많이 본 글'}</Link>
+                  <Link to={{ pathname: `/collection/${collectionId}`, query: { order: 'm_view' } }}>{'많이 본 글'}</Link>
                 </div>
                 <div className="sub_category item">
                   {
                     (order === 'm_comment') &&
-                    <div className="active-menu"> </div>
+                    <div className="active-menu"></div>
                   }
-                  <Link to={{pathname: `/collection/${collectionId}`, query: {order: 'm_comment'}}}>{'댓글 많은 글'}</Link>
+                  <Link
+                    to={{ pathname: `/collection/${collectionId}`, query: { order: 'm_comment' } }}>{'댓글 많은 글'}</Link>
                 </div>
               </li>
 

@@ -1,24 +1,21 @@
 import alt from '../../Utils/alt';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import { initListener, setMergeState, setMergeDeep, locationHref } from '../Helper/func';
-import Immutable, {List, Map, fromJS} from 'immutable';
-import {normalize} from 'normalizr';
-import {author} from '../../Model/normalizr/schema';
-
+import Immutable, { List, Map, fromJS } from 'immutable';
 import PostActions from '../../Actions/PostActions';
 import ForumActions from '../../Actions/ForumActions';
 import ForumSettingActions from '../../Actions/ForumSettingActions';
 import CommentActions from '../../Actions/CommentActions';
 import UserActions from '../../Actions/UserActions';
 import GnbActions from '../../Actions/GnbActions';
-
 import AuthStore from '../UI/AuthStore';
 import SettingStore from '../SettingStore';
-import VenaStoreActions from '../../Actions/VenaStoreActions'
+import VenaStoreActions from '../../Actions/VenaStoreActions';
 import CommunityStore from '../CommunityStore';
 
 class Users {
   static displayName = 'Users';
+
   constructor() {
     this.displayName = 'Users';
 
@@ -29,9 +26,7 @@ class Users {
     this.bindActions(GnbActions);
     this.bindActions(ForumSettingActions);
     this.bindActions(VenaStoreActions);
-    this.state = Immutable.Map({
-
-    });
+    this.state = Immutable.Map({});
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);

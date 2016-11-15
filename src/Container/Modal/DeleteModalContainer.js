@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import DeleteModalBox from '../../Components/Modal/Components/DeleteItem';
 
 const DeleteModalContainer = React.createClass({
@@ -9,7 +8,6 @@ const DeleteModalContainer = React.createClass({
     return (<DeleteModalBox {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

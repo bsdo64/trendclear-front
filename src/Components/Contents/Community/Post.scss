@@ -51,7 +51,7 @@
       margin-top: 2em;
 
       .medium-insert-embeds {
-        &>figure {
+        & > figure {
           margin: 1em 0;
         }
       }
@@ -70,7 +70,7 @@
           line-height: 20px;
           vertical-align: middle;
           :hover {
-            color:red;
+            color: red;
           }
 
           &.active {

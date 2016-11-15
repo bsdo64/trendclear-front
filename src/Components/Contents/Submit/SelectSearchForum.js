@@ -1,6 +1,5 @@
 import React from 'react';
-import {browserHistory} from 'react-router';
-
+import { browserHistory } from 'react-router';
 import AvatarImage from '../../AvatarImage';
 
 const SelectSearchForum = React.createClass({
@@ -13,15 +12,15 @@ const SelectSearchForum = React.createClass({
         apiSettings: {
           url: '/ajax/search/forum?q={query}'
         },
-        error : {
-          source      : '검색 할 수 없습니다 API를 참고하세요',
-          noResults   : '일치하는 제목의 게시판이 없습니다',
-          logging     : 'Error in debug logging, exiting.',
-          noEndpoint  : 'No search endpoint was specified',
-          noTemplate  : 'A valid template name was not specified.',
-          serverError : '서버에러 입니다.',
-          maxResults  : 'Results must be an array to use maxResults setting',
-          method      : 'The method you called is not defined.'
+        error: {
+          source: '검색 할 수 없습니다 API를 참고하세요',
+          noResults: '일치하는 제목의 게시판이 없습니다',
+          logging: 'Error in debug logging, exiting.',
+          noEndpoint: 'No search endpoint was specified',
+          noTemplate: 'A valid template name was not specified.',
+          serverError: '서버에러 입니다.',
+          maxResults: 'Results must be an array to use maxResults setting',
+          method: 'The method you called is not defined.'
         },
         onSelect: function (forum) {
           "use strict";
@@ -40,7 +39,7 @@ const SelectSearchForum = React.createClass({
   },
 
   render() {
-    const {profile} = this.props;
+    const { profile } = this.props;
     const sex = profile.get('sex');
     const avatarImg = profile.get('avatar_img');
 
@@ -65,7 +64,7 @@ const SelectSearchForum = React.createClass({
 
               <div className="ui search search_forums">
                 <div className="ui icon input">
-                  <input className="prompt" type="text" placeholder="게시판 찾아보기" />
+                  <input className="prompt" type="text" placeholder="게시판 찾아보기"/>
                   <i className="search icon"></i>
                 </div>
                 <div className="results"></div>

@@ -1,7 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import cx from 'classnames';
-
 import CollectionActions from '../../../Actions/CollectionActions';
 
 const Subs = React.createClass({
@@ -9,7 +8,7 @@ const Subs = React.createClass({
 
   render() {
     "use strict";
-    const {subs, forums} = this.props;
+    const { subs, forums } = this.props;
     return (
       <ul className="forum_list">
         {
@@ -64,7 +63,7 @@ const CollectionItem = React.createClass({
     const itemStyle = cx('collection_list', {
       hide: (mouseOverItem !== id)
     });
-    const collectionNowId = location ? location.pathname.split('/')[2]: null;
+    const collectionNowId = location ? location.pathname.split('/')[2] : null;
 
     return (
       <div key={id} className='sub_category item'
@@ -73,10 +72,10 @@ const CollectionItem = React.createClass({
       >
         {
           (collectionNowId === id) &&
-          <div className="active-menu"> </div>
+          <div className="active-menu"></div>
         }
 
-        <Link to={{pathname: `/collection/${id}`}}>
+        <Link to={{ pathname: `/collection/${id}` }}>
 
           <span className="title">{title}</span>
 
@@ -97,7 +96,6 @@ const CollectionItem = React.createClass({
   }
 });
 
-
 require('./index.scss');
 const Collection = React.createClass({
   displayName: 'Collection',
@@ -115,22 +113,22 @@ const Collection = React.createClass({
   closeItemHandler() {
     "use strict";
 
-    this.setState({mouseOverItemId: null});
+    this.setState({ mouseOverItemId: null });
   },
   mouseOverItemHandler(itemId) {
     "use strict";
 
-    this.setState({mouseOverItemId: itemId});
+    this.setState({ mouseOverItemId: itemId });
   },
   toggleCreateCollection() {
     "use strict";
 
-    this.setState({hideCreateCollectionBox: !this.state.hideCreateCollectionBox})
+    this.setState({ hideCreateCollectionBox: !this.state.hideCreateCollectionBox })
   },
   closeCreateCollection() {
     "use strict";
 
-    this.setState({hideCreateCollectionBox: true})
+    this.setState({ hideCreateCollectionBox: true })
   },
   handleChangeTitle(event) {
     "use strict";
@@ -158,14 +156,14 @@ const Collection = React.createClass({
     e.preventDefault();
     e.stopPropagation();
 
-    const {title, description} = this.state.createCollection;
+    const { title, description } = this.state.createCollection;
     if (title && description) {
       CollectionActions.createCollection(this.state.createCollection);
       this.closeCreateCollection();
     }
   },
   createCollectionItem(collections) {
-    const {forums, location} = this.props;
+    const { forums, location } = this.props;
     const self = this;
     return collections.entrySeq().map(([key, map]) => {
       return (
@@ -187,7 +185,7 @@ const Collection = React.createClass({
   render() {
     "use strict";
 
-    const {collections} = this.props;
+    const { collections } = this.props;
     const createCollectionBoxStyle = cx('create_box', {
       hide: this.state.hideCreateCollectionBox
     });
@@ -195,7 +193,7 @@ const Collection = React.createClass({
     return (
       <li id="user_best_collection">
         <h5 className="">
-          <a><i className="fa fa-folder-open" />{' 내 컬랙션'}</a>
+          <a><i className="fa fa-folder-open"/>{' 내 컬랙션'}</a>
         </h5>
 
         {
@@ -225,7 +223,7 @@ const Collection = React.createClass({
                   /> 비공개
                 </label>
               </div>
-              <button className="ui primary button tiny" type="submit" >만들기</button>
+              <button className="ui primary button tiny" type="submit">만들기</button>
             </form>
 
           </div>

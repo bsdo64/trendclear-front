@@ -1,4 +1,10 @@
-import {Map, fromJS} from 'immutable';
+import { Map } from 'immutable';
+
+import {
+  TOGGLE_AGREE_TERM,
+  TOGGLE_AGREE_PRIVACY,
+  CONFIRM_AGREE
+} from '../../Actions/Signin';
 
 const initMap = Map({
 
@@ -28,8 +34,22 @@ const initMap = Map({
 });
 
 const SigninForm = (state = initMap, action) => {
+  switch (action.type) {
 
-  return state;
+    case TOGGLE_AGREE_TERM: {
+      return state.update('agreeTerm', v => !v)
+    }
+
+    case TOGGLE_AGREE_PRIVACY: {
+      return state.update('agreePrivacy', v => !v);
+    }
+
+    case CONFIRM_AGREE: {
+      return state.update('confirmAgree', () => true);
+    }
+
+    default: return state;
+  }
 };
 
 export default SigninForm;

@@ -1,18 +1,14 @@
-let count = 0;
+
 export function initListener(Store) {
-  "use strict";
   Store.on('bootstrap', function initBootStrapListener(nextState) {
 
     const prevState = Store.state;
     if (!nextState.equals(prevState)) {
-      count++;
       Store.setState(nextState);
     }
   });
 
   Store.on('beforeEach', function beforeEachHandler(value) {
-    "use strict";
-
     if (process.env.NODE_ENV !== 'production') {
       const { payload, state } = value;
       if (Array.isArray(Store.actionListeners[payload.type])) {
@@ -23,8 +19,6 @@ export function initListener(Store) {
     }
   });
   Store.on('afterEach', function afterEachHandler(value) {
-    "use strict";
-
     if (process.env.NODE_ENV !== 'production') {
       const { payload, state } = value;
       if (Array.isArray(Store.actionListeners[payload.type])) {
@@ -34,7 +28,7 @@ export function initListener(Store) {
     }
   });
 
-  Store.on('error', ({error, payload, state}) => {
+  Store.on('error', ({ error, payload, state }) => {
     console.error(error);
     console.error('Payload: ', payload.payload);
     console.error('State: ', state.toJS());
@@ -43,8 +37,6 @@ export function initListener(Store) {
 }
 
 export function setMergeState(changedData) {
-  "use strict";
-
   let nextState = this.state.merge(changedData);
   if (this.state.equals(nextState)) {
     return null;
@@ -54,8 +46,6 @@ export function setMergeState(changedData) {
 }
 
 export function setMergeDeep(changedData) {
-  "use strict";
-
   let nextState = this.state.mergeDeep(changedData);
   if (this.state.equals(nextState)) {
     return null;
@@ -65,7 +55,5 @@ export function setMergeDeep(changedData) {
 }
 
 export function locationHref(url) {
-  "use strict";
-
   window.location.href = url;
 }

@@ -5,9 +5,9 @@ class ReportActions {
   constructor() {
     this.generateActions('toggleReportModal');
   }
-  
+
   submitReport() {
-    
+
   }
 
   sendReport(params) {
@@ -23,7 +23,7 @@ class ReportActions {
         });
     };
   }
-  
+
   submitSearchQuery(params) {
     return (dispatch) => {
       Api

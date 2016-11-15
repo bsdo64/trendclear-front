@@ -2,14 +2,12 @@ import React from 'react';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
 
 const rebuildTooltip = function rebuildTooltip(itemCode) {
-  "use strict";
   VenaStoreActions.tooltipInit(itemCode);
 };
 
 const Inventory = React.createClass({
 
   createTableColum(listItem, c) {
-    "use strict";
 
     let item;
     if (listItem && (listItem.get('item_count') > 0)) {
@@ -21,7 +19,7 @@ const Inventory = React.createClass({
           onMouseOver={rebuildTooltip.bind(this, listItem.get('item').get('code'))}
         >
           <span className="item-count">{listItem.get('item_count')}</span>
-          <img className="item-image" src={listItem.get('item').get('image')} />
+          <img className="item-image" src={listItem.get('item').get('image')}/>
         </div>
       )
     } else {
@@ -35,7 +33,6 @@ const Inventory = React.createClass({
     )
   },
   createTableRow(inventory, col, row) {
-    "use strict";
     const self = this;
     let tableRows = [];
     let r = 0;
@@ -62,7 +59,6 @@ const Inventory = React.createClass({
     return tableRows;
   },
   createTable(inventory, colNum, rowNum) {
-    "use strict";
 
     return (
       <table className="inventory_table">
@@ -76,7 +72,7 @@ const Inventory = React.createClass({
   },
   render() {
 
-    const {ShoppingStore, inventory} = this.props;
+    const { ShoppingStore, inventory } = this.props;
     const table = this.createTable(inventory, 4, 8);
 
     const filterTooltipItem = ShoppingStore

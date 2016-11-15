@@ -1,18 +1,24 @@
 /**
  * Created by dobyeongsu on 2016. 3. 23..
  */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom/server';
 import Select from 'react-select';
 import cx from 'classnames';
-import Recaptcha from 'react-recaptcha';
-import {medium, mediumInsertConfig} from './config';
-
+// import Recaptcha from 'react-recaptcha';
+import { medium, mediumInsertConfig } from './config';
 import AvatarImage from '../../AvatarImage';
 import SelectSearchForum from './SelectSearchForum';
 import PostActions from '../../../Actions/PostActions';
 
 const EditorBox = React.createClass({
+  displayName: 'EditorBox',
+  propTypes: {
+    SubmitStore: PropTypes.object.isRequired,
+    UserStore: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+  },
+
   getInitialState() {
     return {
       type: 'editor',
@@ -29,8 +35,7 @@ const EditorBox = React.createClass({
 
     let that = this;
     this.editor = new MediumEditor('#post_editor', medium);
-    this.editor.subscribe('editableInput', function (event, editable) {
-      "use strict";
+    this.editor.subscribe('editableInput', () => {
       that.handleContent()
     });
     $('#post_editor').mediumInsert(mediumInsertConfig(this.editor));
@@ -63,7 +68,7 @@ const EditorBox = React.createClass({
   componentWillUnmount() {
     this.editor.destroy();
 
-    const {SubmitStore} = this.props;
+    const { SubmitStore } = this.props;
     const postImages = SubmitStore.get('postImages');
     if (postImages && postImages.size) {
 
@@ -77,7 +82,7 @@ const EditorBox = React.createClass({
   toggleAnnounce() {
     "use strict";
 
-    this.setState({isAnnounce: !this.state.isAnnounce});
+    this.setState({ isAnnounce: !this.state.isAnnounce });
   },
 
   handleContent() {
@@ -93,11 +98,11 @@ const EditorBox = React.createClass({
   },
 
   submitPost() {
-    const {SubmitStore, UserStore, location} = this.props;
+    const { SubmitStore, UserStore, location } = this.props;
 
     const skills = UserStore.get('skills');
     const writePost = skills
-      .filter((skill, index) => skill.getIn(['skill', 'name']) === 'write_post')
+      .filter(skill => skill.getIn(['skill', 'name']) === 'write_post')
       .get(0);
 
     function checkSkillAvailable(writePostSkill) {
@@ -149,7 +154,7 @@ const EditorBox = React.createClass({
 
   modPost() {
     "use strict";
-    const {SubmitStore, UserStore, location} = this.props;
+    const { SubmitStore, location } = this.props;
 
     const title = SubmitStore.get('title');
     const content = SubmitStore.get('content');
@@ -169,7 +174,6 @@ const EditorBox = React.createClass({
     }
   },
 
-
   removeContnet() {
     "use strict";
     PostActions.removeContent();
@@ -186,13 +190,13 @@ const EditorBox = React.createClass({
   selectEditor() {
     "use strict";
 
-    this.setState({type: 'editor'});
+    this.setState({ type: 'editor' });
   },
 
   selectUrl() {
     "use strict";
 
-    this.setState({type: 'url'});
+    this.setState({ type: 'url' });
   },
 
   createUrlMetaContent(urlMetaData, askButton) {
@@ -240,17 +244,17 @@ const EditorBox = React.createClass({
     const urlMetaData = this.props.SubmitStore.get('urlMetaData');
     const box = this.createUrlMetaContent(urlMetaData, false);
 
-    PostActions.handleContent({content: ReactDOM.renderToStaticMarkup(box)});
+    PostActions.handleContent({ content: ReactDOM.renderToStaticMarkup(box) });
   },
 
   checkTitleAndContent() {
     "use strict";
 
-    const {SubmitStore} = this.props;
+    const { SubmitStore } = this.props;
     return !SubmitStore.get('title') || !$(SubmitStore.get('content')).text().trim();
   },
 
-  handleRecaptcha(a,b,c,d) {
+  handleRecaptcha(a, b, c, d) {
     "use strict";
 
     const args = Array.prototype.slice.call(arguments, 1);
@@ -283,7 +287,7 @@ const EditorBox = React.createClass({
           isRepresent &&
           <div className="represent_box">대표</div>
         }
-        <img src={image.thumbnailUrl} />
+        <img src={image.thumbnailUrl}/>
       </li>
     )
   },
@@ -291,13 +295,13 @@ const EditorBox = React.createClass({
   setRepresentImage(index) {
     "use strict";
 
-    PostActions.setRepresentImage({index: index});
+    PostActions.setRepresentImage({ index: index });
   },
 
   render() {
     "use strict";
 
-    const {SubmitStore, UserStore, AuthStore} = this.props;
+    const { SubmitStore, UserStore } = this.props;
     const type = SubmitStore.get('type');
     const urlMetaData = SubmitStore.get('urlMetaData');
     const announces = SubmitStore.getIn(['forum', 'announces']);
@@ -380,7 +384,7 @@ const EditorBox = React.createClass({
           (announcesLength < 5) && (isManager) &&
           <div className="ui checkbox">
             <input id="is_announce" type="checkbox" onChange={this.toggleAnnounce}/>
-              <label htmlFor="announce_check">공지 글 ({`${announcesLength} / 5`})</label>
+            <label htmlFor="announce_check">공지 글 ({`${announcesLength} / 5`})</label>
           </div>
         }
 
@@ -407,11 +411,14 @@ const EditorBox = React.createClass({
   }
 });
 
-
 require('./index.scss');
 const SubmitContents = React.createClass({
   displayName: 'SubmitContents',
-  propTypes: {},
+  propTypes: {
+    AuthStore: PropTypes.object.isRequired,
+    UserStore: PropTypes.object.isRequired,
+    SubmitStore: PropTypes.object.isRequired,
+  },
 
   handleTitle() {
     "use strict";
@@ -426,17 +433,12 @@ const SubmitContents = React.createClass({
     }
   },
 
-  setContent(content) {
-    "use strict";
-
-  },
-
   render() {
-    const {AuthStore, UserStore, SubmitStore} = this.props;
+    const { AuthStore, UserStore, SubmitStore } = this.props;
 
     const isLogin = AuthStore.get('isLogin');
 
-    const forumInfo = this.props.SubmitStore.get('forum');
+    const forumInfo = SubmitStore.get('forum');
 
     if (isLogin) {
       const prefixesData = SubmitStore.get('prefixes');
@@ -447,7 +449,7 @@ const SubmitContents = React.createClass({
         avatar_img = profile.get('avatar_img'),
         icon_img = icon ? icon.get('img') : null;
 
-      let avatarImg, iconImg, options;
+      let iconImg, options;
 
       if (icon_img) {
         iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;

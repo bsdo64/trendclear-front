@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import moment from 'moment';
 
 const VenalinkShareList = React.createClass({
@@ -9,7 +8,7 @@ const VenalinkShareList = React.createClass({
     "use strict";
 
     let status, positive, venalink = participatedList.get('venalink');
-    switch(participatedList.get('venalink').get('is_activate')) {
+    switch (participatedList.get('venalink').get('is_activate')) {
       case true:
         status = '활성화';
         positive = 1;
@@ -36,18 +35,18 @@ const VenalinkShareList = React.createClass({
   },
 
   render() {
-    const {UserStore} = this.props;
+    const { UserStore } = this.props;
     const participatedVenalinks = UserStore.get('participatedVenalinks');
 
     return (
       <div>
-        <div className="ui cards centered" style={{padding: 10}}>
-          <div className="card" style={{width: '100%'}}>
+        <div className="ui cards centered" style={{ padding: 10 }}>
+          <div className="card" style={{ width: '100%' }}>
             <div className="content">
               <div className="header">
                 베나링크 참여 현황
               </div>
-              <div className="description" >
+              <div className="description">
                 <div className="ui two statistics">
                   <div className="statistic">
                     <div className="value">
@@ -89,18 +88,18 @@ const VenalinkShareList = React.createClass({
             </div>
           </div>
         </div>
-        <div style={{padding: 10}}>
+        <div style={{ padding: 10 }}>
           <h4>베나링크 참여 리스트</h4>
           <table className="ui celled table">
             <thead>
             <tr>
-              <th className="center aligned" style={{width: 60}}>타입</th>
-              <th className="center aligned" style={{width: 60}}>상태</th>
-              <th className="center aligned" style={{width: 82}}>요청 시간</th>
-              <th className="center aligned" style={{width: 82}}>종료 시간</th>
-              <th className="center aligned" style={{width: 70}}>참여<br />유저(명)</th>
-              <th className="center aligned" style={{width: 70}}>방문당<br/>지급 RP</th>
-              <th className="center aligned" >나의 베나링크<br/>순 방문(명)</th>
+              <th className="center aligned" style={{ width: 60 }}>타입</th>
+              <th className="center aligned" style={{ width: 60 }}>상태</th>
+              <th className="center aligned" style={{ width: 82 }}>요청 시간</th>
+              <th className="center aligned" style={{ width: 82 }}>종료 시간</th>
+              <th className="center aligned" style={{ width: 70 }}>참여<br />유저(명)</th>
+              <th className="center aligned" style={{ width: 70 }}>방문당<br/>지급 RP</th>
+              <th className="center aligned">나의 베나링크<br/>순 방문(명)</th>
               <th className="center aligned">총 지급 받은 RP</th>
               <th className="center aligned">남은 RP</th>
             </tr>

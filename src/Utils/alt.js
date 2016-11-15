@@ -2,6 +2,7 @@ import Alt from 'alt';
 
 const alt = new Alt({});
 
+
 if (process.env.NODE_ENV !== 'production') {
   // Debug
   Alt.debug('alt', alt);

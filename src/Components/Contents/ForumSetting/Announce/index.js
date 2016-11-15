@@ -1,9 +1,6 @@
 import React from 'react';
-
 import ForumActions from '../../../../Actions/ForumActions';
 import ForumSettingActions from '../../../../Actions/ForumSettingActions';
-
-import Forum from '../../Community/Forum';
 
 require('./index.scss');
 const Announce = React.createClass({
@@ -15,7 +12,7 @@ const Announce = React.createClass({
     e.preventDefault();
     e.stopPropagation();
 
-    const {ForumSettingStore} = this.props;
+    const { ForumSettingStore } = this.props;
     const forumInfo = ForumSettingStore.get('forumInfo');
     const forum = ForumSettingStore.get('forum');
 
@@ -28,12 +25,12 @@ const Announce = React.createClass({
   },
 
   changeForm(e) {
-    ForumSettingActions.changeForumData({[e.target.name]: e.target.value.trim()})
+    ForumSettingActions.changeForumData({ [e.target.name]: e.target.value.trim() })
   },
 
   removeAnnounce(announce) {
     "use strict";
-    const {ForumSettingStore} = this.props;
+    const { ForumSettingStore } = this.props;
     const forumInfo = ForumSettingStore.get('forumInfo');
     const forum = ForumSettingStore.get('forum');
 
@@ -44,7 +41,7 @@ const Announce = React.createClass({
   },
 
   render() {
-    const {ForumSettingStore} = this.props;
+    const { ForumSettingStore } = this.props;
     const forum = ForumSettingStore.get('forum');
 
     if (forum) {
@@ -52,7 +49,7 @@ const Announce = React.createClass({
       const patch = ForumSettingStore.getIn(['forumInfo', 'success']);
       const patchSuccess = patch === 'updated' ? true : patch === 'failed' ? false : null;
       let button;
-      
+
       if (patchSuccess === true) {
         button = <div className="ui submit button positive">변경 완료</div>
       } else if (patchSuccess === false) {
@@ -62,7 +59,7 @@ const Announce = React.createClass({
       }
 
       return (
-        <div className="ui container announce" style={{margin: 10, width: 700}}>
+        <div className="ui container announce" style={{ margin: 10, width: 700 }}>
           <div className="ui segments ">
             <div className="ui segment">
               <h3 className="ui header">공지글 설정</h3>
@@ -85,7 +82,7 @@ const Announce = React.createClass({
                     return (
                       <li className="announce-item" key={announce.get('id')}>
                         <a className="ui label large">
-                          <i className="fa fa-thumb-tack" />
+                          <i className="fa fa-thumb-tack"/>
                           <span className="title">{announce.get('title')}</span>
                           <i className="fa fa-remove" onClick={this.removeAnnounce.bind(this, announce)}/>
                         </a>

@@ -53,7 +53,7 @@
     float: left;
 
     .gnbm {
-      &>a {
+      & > a {
         padding: 10px;
         display: block;
         border-bottom: 1px solid #ccc;
@@ -70,7 +70,7 @@
         left: 150px;
         top: 0;
 
-        .gnb_inner>.grouping {
+        .gnb_inner > .grouping {
           overflow: auto;
           float: left;
           border-right: 1px solid #aaa;
@@ -144,7 +144,7 @@
           ul.category_lists {
             margin: 11px;
 
-            &>li {
+            & > li {
               padding-left: 8px;
             }
 
@@ -154,7 +154,7 @@
             }
           }
         }
-        .gnb_inner>.banner {
+        .gnb_inner > .banner {
           float: left;
           width: 276px;
           a {

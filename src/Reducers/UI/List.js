@@ -1,4 +1,4 @@
-import {Map, List} from 'immutable';
+import { Map, List } from 'immutable';
 
 // ListStore
 const initListState = Map({
@@ -7,7 +7,7 @@ const initListState = Map({
 });
 
 const ListReducer = (state = initListState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'SET_SCROLL':
       return state.set('scrollHeight', action.scrollHeight);
     default:

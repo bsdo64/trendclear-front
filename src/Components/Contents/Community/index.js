@@ -1,17 +1,18 @@
-/**
- * Created by dobyeongsu on 2016. 3. 25..
- */
-/**
- * Created by dobyeongsu on 2016. 3. 23..
- */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import CommunityActions from '../../../Actions/CommunityActions';
-
 import Forum from './Forum';
 import PostPage from './PostPage';
 
 const CommunityContents = React.createClass({
   displayName: 'CommunityContents',
+  propTypes: {
+    Forums: PropTypes.object.isRequired,
+    AuthStore: PropTypes.object.isRequired,
+    ListStore: PropTypes.object.isRequired,
+    CommunityStore: PropTypes.object.isRequired,
+    FireSetScrollPosition: PropTypes.func.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired,
+  },
   // mixins: [PureRenderMixin],
 
   componentWillUnmount() {
@@ -19,12 +20,10 @@ const CommunityContents = React.createClass({
   },
 
   checkBanned() {
-    "use strict";
 
-    const {Forums, AuthStore, ListStore} = this.props;
+    const { Forums, AuthStore, ListStore } = this.props;
 
     const userId = AuthStore.get('userId');
-    const isLogin = AuthStore.get('isLogin');
 
     const forumId = ListStore.get('forum');
 
@@ -48,14 +47,13 @@ const CommunityContents = React.createClass({
   },
 
   render() {
-    "use strict";
     const type = this.props.CommunityStore.get('type');
     const isLogin = this.props.AuthStore.get('isLogin');
     const isBanned = this.checkBanned();
     if (isLogin && isBanned) {
 
       return (
-        <div style={{textAlign: 'center', paddingTop: 60}}>
+        <div style={{ textAlign: 'center', paddingTop: 60 }}>
           <h2 className="ui icon header">
             <i className="remove icon"></i>
             <div className="content">

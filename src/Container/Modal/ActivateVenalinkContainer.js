@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import ActivateVenalink from '../../Components/Modal/Components/ActivateVenalink';
 
 const ActivateVenalinkContainer = React.createClass({
@@ -9,7 +8,6 @@ const ActivateVenalinkContainer = React.createClass({
     return (<ActivateVenalink {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

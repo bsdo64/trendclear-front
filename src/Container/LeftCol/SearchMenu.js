@@ -1,12 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
-import {Link} from 'react-router';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 const MenuContainer = React.createClass({
   render() {
-    const {SearchStore} = this.props;
+    const { SearchStore } = this.props;
     const query = SearchStore.get('query');
     return (
       <div id="forum_category">
@@ -27,16 +25,16 @@ const MenuContainer = React.createClass({
               </h5>
 
               <div className="sub_category item">
-                <Link to={{pathname: '/search', query: {query: query, order: 'new'}}}>{'최신 글'}</Link>
+                <Link to={{ pathname: '/search', query: { query: query, order: 'new' } }}>{'최신 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/search', query: {query: query, order: 'hot'}}}>{'인기 글'}</Link>
+                <Link to={{ pathname: '/search', query: { query: query, order: 'hot' } }}>{'인기 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/search', query: {query: query, order: 'm_view'}}}>{'많이 본 글'}</Link>
+                <Link to={{ pathname: '/search', query: { query: query, order: 'm_view' } }}>{'많이 본 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/search', query: {query: query, order: 'm_comment'}}}>{'댓글 많은 글'}</Link>
+                <Link to={{ pathname: '/search', query: { query: query, order: 'm_comment' } }}>{'댓글 많은 글'}</Link>
               </div>
             </li>
           </ul>

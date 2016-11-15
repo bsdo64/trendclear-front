@@ -1,15 +1,20 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import Signin from '../../Components/Contents/Signin';
+
+import {
+  toggleAgreePrivacy,
+  toggleAgreeTerm,
+  confirmAgree,
+  resetSigninForm
+} from '../../Actions/Signin'
 
 const SigninContainer = React.createClass({
   render() {
     return (<Signin {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -26,11 +31,12 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireToggleAgreePrivacy: toggleAgreePrivacy,
+    FireToggleAgreeTerm: toggleAgreeTerm,
+    FireConfirmAgree: confirmAgree,
+    FireResetSigninForm: resetSigninForm,
+  }
 )(SigninContainer);

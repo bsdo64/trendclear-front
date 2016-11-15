@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router';
+import React, { Component } from 'react';
+import { Link } from 'react-router';
 import cx from 'classnames';
-import {Scrollbars} from 'react-custom-scrollbars';
-
+import { Scrollbars } from 'react-custom-scrollbars';
 import FlatButton from './FlatButton';
 import TrendBox from './TrendBox';
 import Main2 from '../Ad/Main2';
@@ -11,7 +10,7 @@ require('./index.scss');
 
 class WidgetBox extends Component {
   render() {
-    const {LoginStore, UserStore, ShoppingStore, Forums, location} = this.props;
+    const { LoginStore, UserStore, ShoppingStore, Forums, location } = this.props;
     const isLogin = LoginStore.get('isLogin');
     const user = {
       user: UserStore.get('user'),
@@ -89,7 +88,7 @@ class WidgetBox extends Component {
 
                         return (
                           <div key={forum.get('id')} className="item">
-                            <i className="fa fa-inbox icon" />
+                            <i className="fa fa-inbox icon"/>
                             <div className="content">
                               <div className="header">
                                 <Link to={`/community?forumId=${forum.get('id')}`} className={styleActive}>
@@ -131,17 +130,17 @@ class WidgetBox extends Component {
           />
         }
 
-        <div className="_45mq" role="contentinfo" style={{marginTop: 20, fontSize: 12}}>
+        <div className="_45mq" role="contentinfo" style={{ marginTop: 20, fontSize: 12 }}>
           <div className="fsm fwn fcg">
             <Link to="/policies/privacy">개인정보보호</Link>
             <span role="presentation" aria-hidden="true"> · </span>
             <Link to="/policies/terms">약관</Link>
             {/*<span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/advertisement">광고안내</Link>*/}
+             <Link to="/advertisement">광고안내</Link>*/}
             <span role="presentation" aria-hidden="true"> · </span>
             <Link to="/about">회사소개</Link>
             {/*<span role="presentation" aria-hidden="true"> · </span>
-            <Link to="/careers">채용</Link>*/}
+             <Link to="/careers">채용</Link>*/}
             <span role="presentation" aria-hidden="true"> · </span>
             <Link to="/help">고객센터</Link>
           </div>

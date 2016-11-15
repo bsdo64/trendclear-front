@@ -1,8 +1,5 @@
 import React from 'react';
-import { Link, browserHistory } from 'react-router';
-import CollectionComponent from '../BestCategorySelect/Collection';
-
-import AdForumLeft from '../Ad/AdForumLeft';
+import { Link } from 'react-router';
 
 require('./index.scss');
 const PolicyMenu = React.createClass({
@@ -11,7 +8,7 @@ const PolicyMenu = React.createClass({
     return location.pathname.split('/')[2];
   },
   getTitle(endPoint) {
-    switch(endPoint) {
+    switch (endPoint) {
       case 'privacy':
         return '개인정보보호';
       case 'terms':
@@ -43,10 +40,10 @@ const PolicyMenu = React.createClass({
               </h5>
 
               <div className="sub_category item">
-                <Link to={{pathname: '/policies/privacy'}}>{'개인정보보호'}</Link>
+                <Link to={{ pathname: '/policies/privacy' }}>{'개인정보보호'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/policies/terms'}}>{'서비스 약관'}</Link>
+                <Link to={{ pathname: '/policies/terms' }}>{'서비스 약관'}</Link>
               </div>
             </li>
           </ul>

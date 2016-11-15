@@ -1,8 +1,7 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import { initListener, setMergeState, setMergeDeep } from '../Helper/func';
-
 import GnbActions from '../../Actions/GnbActions';
 import CollectionActions from '../../Actions/CollectionActions';
 import ForumSettingActions from '../../Actions/ForumSettingActions';
@@ -11,6 +10,7 @@ import UserActions from '../../Actions/UserActions';
 
 class Forums {
   static displayName = 'Forums';
+
   constructor() {
     this.displayName = 'Forums';
 
@@ -20,9 +20,7 @@ class Forums {
     this.bindActions(ForumSettingActions);
     this.bindActions(ForumActions);
 
-    this.state = Immutable.Map({
-
-    });
+    this.state = Immutable.Map({});
 
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
@@ -52,7 +50,7 @@ class Forums {
 
   onRemoveForum(result) {
     if (result) {
-      const {forumId} = result;
+      const { forumId } = result;
 
       const state = this.state.update(forumId.toString(), forum => {
         return forum.update('subs_count', v => v - 1);
@@ -94,6 +92,7 @@ class Forums {
       this.setState(state);
     }
   }
+
   onUnFollowForum(result) {
     if (result) {
       const forumId = result.forum_id;

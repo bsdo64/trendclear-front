@@ -1,10 +1,11 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import { initListener, setMergeState } from '../Helper/func';
 
 class AuthStore {
   static displayName = 'AuthStore';
+
   constructor() {
     this.displayName = 'AuthStore';
 

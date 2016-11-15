@@ -37,7 +37,6 @@ $url_2: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_unlock.gif);
 $url_3: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_success.gif);
 $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
 
-
 .gb_login {
   width: 650px;
 }
@@ -53,16 +52,19 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     font-size: 50px;
   }
 }
+
 #tc_ServiceLogo {
   width: 125px;
   height: 25px;
   margin-left: 1px;
   background-position: 0 0;
 }
+
 #tc_Content {
   margin: 0;
   padding: 0;
 }
+
 #mArticle {
   width: 250px;
   margin: 0 auto;
@@ -72,12 +74,14 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     border: 0;
   }
 }
+
 #tc_Foot {
   position: static;
   width: 490px;
   margin: 0 auto;
   text-align: center;
 }
+
 .inner_footer {
   margin: 0;
   padding: 0;
@@ -89,6 +93,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     padding: 20px 0;
   }
 }
+
 .tistory_login {
   position: relative;
   padding: 40px;
@@ -176,6 +181,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     }
   }
 }
+
 .input_info {
   position: relative;
   width: 80%;
@@ -208,6 +214,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     outline: 0;
   }
 }
+
 .input_on {
   border-bottom-color: $color_rose_bud_approx;
   .lab_g {
@@ -217,6 +224,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     text-indent: -9999px;
   }
 }
+
 .box_noti {
   position: relative;
   height: 18px;
@@ -244,6 +252,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     background-position: 0 -400px;
   }
 }
+
 .box_captcha {
   position: relative;
   height: 100px;
@@ -330,6 +339,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     letter-spacing: -1px;
   }
 }
+
 .voice_on {
   .img_captcha {
     display: none;
@@ -348,6 +358,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     }
   }
 }
+
 .wrap_error {
   #tc_Head {
     width: 590px;
@@ -396,6 +407,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     letter-spacing: -1px;
   }
 }
+
 .cont_error {
   padding: 140px 0 50px;
   background: $url_0 no-repeat 50% 50px;
@@ -463,6 +475,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     }
   }
 }
+
 .box_error {
   width: 512px;
   padding: 27px 29px 30px;
@@ -543,6 +556,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     text-decoration: underline;
   }
 }
+
 .box_error2 {
   width: 550px;
   padding: 15px 10px;
@@ -556,6 +570,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     text-decoration: underline;
   }
 }
+
 .cont_dormant {
   padding: 46px 60px;
   .desc_error {
@@ -584,9 +599,11 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     }
   }
 }
+
 .cont_unlock {
   background: $url_2 no-repeat 50% 50px;
 }
+
 .cont_password {
   padding: 46px 40px;
   .tbl_regist {
@@ -616,6 +633,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     }
   }
 }
+
 .cont_complete {
   padding-top: 150px;
   background: $url_3 no-repeat 50% 50px;
@@ -623,6 +641,7 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     padding-top: 67px;
   }
 }
+
 .cont_deny {
   padding-top: 150px;
   background: $url_4 no-repeat 50% 50px;
@@ -630,9 +649,11 @@ $url_4: url(//i1.tc_cdn.net/cfs.tistory/static/top/bg_deny.gif);
     padding-top: 67px;
   }
 }
+
 .footer_tistory .link_tc_ {
   color: $color_trendmaster;
 }
+
 .captcha_noti .ico_arrow {
   top: 42px;
   background-position: 0 -875px;

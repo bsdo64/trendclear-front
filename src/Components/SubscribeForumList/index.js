@@ -1,7 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import {Link} from 'react-router';
-
+import { Link } from 'react-router';
 import CollectionActions from '../../Actions/CollectionActions';
 
 require('./index.scss');
@@ -17,7 +16,7 @@ const SubscribeForumList = React.createClass({
   toggleCreateCollection() {
     "use strict";
 
-    this.setState({hideCreateCollectionBox: !this.state.hideCreateCollectionBox})
+    this.setState({ hideCreateCollectionBox: !this.state.hideCreateCollectionBox })
   },
   searchForum(e) {
     "use strict";
@@ -33,7 +32,7 @@ const SubscribeForumList = React.createClass({
   handleChangeName(e) {
     "use strict";
 
-    this.setState({searchForumTitle: e.target.value.trim()})
+    this.setState({ searchForumTitle: e.target.value.trim() })
   },
   toggleForumCandidate(forumId, e) {
     "use strict";
@@ -59,7 +58,7 @@ const SubscribeForumList = React.createClass({
     }
   },
   createListItem(forumId) {
-    const {forums} = this.props;
+    const { forums } = this.props;
     const forum = forums.get(forumId.toString());
     return (
       <div key={forumId} className="item">
@@ -67,7 +66,7 @@ const SubscribeForumList = React.createClass({
           {
             this.props.subscribeForumList.includes(forumId) &&
             <div className="ui icon button blue" onClick={this.toggleForumCandidate.bind(this, forumId)}>
-              <i className="checkmark icon" />선택됨
+              <i className="checkmark icon"/>선택됨
             </div>
           }
 
@@ -87,7 +86,7 @@ const SubscribeForumList = React.createClass({
   render() {
     "use strict";
 
-    const {collection, forums, searchForumList} = this.props;
+    const { collection, forums, searchForumList } = this.props;
     const createCollectionBoxStyle = cx('create_box', {
       hide: this.state.hideCreateCollectionBox
     });
@@ -96,8 +95,8 @@ const SubscribeForumList = React.createClass({
       <li id="collection_forum_list">
         <h5 className="">
           <a>
-            <i className="fa fa-list" />{' 구독 게시판'}
-            </a>
+            <i className="fa fa-list"/>{' 구독 게시판'}
+          </a>
         </h5>
 
         {
@@ -107,7 +106,7 @@ const SubscribeForumList = React.createClass({
             return (
               <div key={forumId} className="sub_category item create_collection_subscribe">
                 <Link to={`/community?forumId=${forumId}`}
-                      className="create_collection_btn" >{forum.get('title')}</Link>
+                      className="create_collection_btn">{forum.get('title')}</Link>
               </div>
             )
           })

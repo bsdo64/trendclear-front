@@ -1,8 +1,9 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import List from '../../Actions/List';
-
+import { connect } from 'react-redux';
 import Best from '../../Components/Contents/Best';
+
+import { setScrollPosition } from '../../Actions/List';
+import { toggleLoginModal } from '../../Actions/Login';
 
 const BestContainer = React.createClass({
   render() {
@@ -37,15 +38,10 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setScrollPosition: (scrollHeight) => {
-      dispatch(List.setScrollPosition(scrollHeight))
-    }
-  }
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireSetScrollPosition: setScrollPosition,
+    FireToggleLoginModal: toggleLoginModal,
+  }
 )(BestContainer);

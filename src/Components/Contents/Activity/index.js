@@ -2,13 +2,12 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import cx from 'classnames';
 import AvatarImage from '../../AvatarImage';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 import PostActions from '../../../Actions/PostActions';
-
 import Waypoint from 'react-waypoint';
 
 require('./index.scss');
@@ -24,7 +23,7 @@ const ActivityBox = React.createClass({
 
     const user = UserStore.get('user');
     const sex = UserStore.getIn(['profile', 'sex']),
-          avatar_img = UserStore.getIn(['profile', 'avatar_img']);
+      avatar_img = UserStore.getIn(['profile', 'avatar_img']);
 
     return (
       <h2 className="ui center aligned icon header">
@@ -66,7 +65,7 @@ const ActivityBox = React.createClass({
   getMorePosts(context) {
     "use strict";
 
-    const {PaginationStore} = this.props;
+    const { PaginationStore } = this.props;
     const Pagination = PaginationStore.get(context);
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
@@ -89,8 +88,8 @@ const ActivityBox = React.createClass({
   },
 
   render() {
-    const {UserStore, ActivityStore, location} = this.props;
-    const {ListStore, Posts, Users, AuthStore, PaginationStore} = this.props;
+    const { UserStore, ActivityStore, location } = this.props;
+    const { ListStore, Posts, Users, AuthStore, PaginationStore } = this.props;
     let context, Collection, PostIdList;
 
     if (location.pathname === '/activity' || location.pathname === '/activity/likes') {
@@ -147,7 +146,7 @@ const ActivityBox = React.createClass({
             scrollableAncestor={window || null}
           />
 
-          <InfiniteLoader collection={Collection} />
+          <InfiniteLoader collection={Collection}/>
 
         </div>
 

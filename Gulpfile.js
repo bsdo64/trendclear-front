@@ -1,7 +1,11 @@
+const path = require('path');
 const gulp = require('gulp');
 const pump = require('pump');
+const watch = require('gulp-watch');
+const cache = require('gulp-cached');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
+const eslint = require('gulp-eslint');
 const cleanCSS = require('gulp-clean-css');
 const del = require('del');
 const runSequence = require('run-sequence');
@@ -73,13 +77,37 @@ gulp.task('semantic-themes', function() {
 });
 
 gulp.task('clean', function () {
-  "use strict";
   return del(['dist/vendor.css', 'dist/vendor.js', 'dist/themes']);
 });
 
-gulp.task('default', ['clean'], function (done) {
-  "use strict";
 
+gulp.task('cached-lint', () => {
+  // Read all js files within test/fixtures
+  return gulp.src('./src/**/*.js')
+    .pipe(cache('eslint'))
+    // Only uncached and changed files past this point
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.result(result => {
+      if (result.warningCount > 0 || result.errorCount > 0) {
+        // If a file has errors/warnings remove uncache it
+        delete cache.caches.eslint[path.resolve(result.filePath)];
+      }
+    }));
+});
+
+// Run the "cached-lint" task initially...
+gulp.task('cached-lint-watch', ['cached-lint'], () => {
+  // ...and whenever a watched file changes
+  return gulp.watch('./src/**/*.js', ['cached-lint'], event => {
+    if (event.type === 'deleted' && cache.caches.eslint) {
+      // remove deleted files from cache
+      delete cache.caches.eslint[event.path];
+    }
+  });
+});
+
+gulp.task('default', ['clean'], function (done) {
   runSequence('concat-js', 'concat-css', 'minify-css', 'compress-js', 'font-awesome-font', 'semantic-themes', function () {
     console.log('all done');
     done();

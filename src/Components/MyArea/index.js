@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Link, browserHistory} from 'react-router';
+import React, { Component } from 'react';
+import { Link, browserHistory } from 'react-router';
 import LoginButton from './LoginButton';
 import UserActions from '../../Actions/UserActions';
 import cx from 'classnames';
@@ -13,7 +13,7 @@ require('./index.scss');
 const NotiItem = React.createClass({
   readNoti(notiId) {
     "use strict";
-    const {noti} = this.props;
+    const { noti } = this.props;
 
     if (!noti.get('read')) {
       UserActions.readNoti({
@@ -23,7 +23,7 @@ const NotiItem = React.createClass({
   },
 
   render() {
-    const {noti} = this.props;
+    const { noti } = this.props;
     const forumId = noti.get('forum_id');
     const postId = noti.get('post_id');
     const linkUrl = `/community?forumId=${forumId}&postId=${postId}`
@@ -32,16 +32,17 @@ const NotiItem = React.createClass({
       'is-read': !noti.get('read')
     });
 
-    switch(noti.get('type')) {
+    switch (noti.get('type')) {
       case 'comment_write':
         return (
           <div className={notiItemClass} onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
             <div className="label">
-              <img src="/images/40x40.png" />
+              <img src="/images/40x40.png"/>
             </div>
             <div className="content">
               <div className="summary" onClick={this.props.close}>
-                글 <Link to={linkUrl}>{noti.get('title')}</Link>에 <Link to={linkUrl}>{noti.get('count')}</Link>개의 댓글이 달렸습니다.
+                글 <Link to={linkUrl}>{noti.get('title')}</Link>에 <Link to={linkUrl}>{noti.get('count')}</Link>개의 댓글이
+                달렸습니다.
 
                 <div className="date">
                   {moment(noti.get('receive_at')).fromNow()}
@@ -54,7 +55,7 @@ const NotiItem = React.createClass({
         return (
           <div className={notiItemClass} onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
             <div className="label">
-              <img src="/images/40x40.png" />
+              <img src="/images/40x40.png"/>
             </div>
             <div className="content">
               <div className="summary">
@@ -75,18 +76,19 @@ const NotiItem = React.createClass({
   }
 });
 
-
 class NotiButtons extends Component {
   constructor(props) {
     super(props);
 
     this.handleCloseDropdown = this.handleCloseDropdown.bind(this);
   }
+
   handleCloseDropdown() {
     this.refs.noti_dropdown.hide();
   }
+
   render() {
-    const {UserStore} = this.props;
+    const { UserStore } = this.props;
     const Noti = UserStore.getIn(['notifications', 'INoti']);
     const notiEntities = Noti ? Noti.getIn(['entities', 'notis']) : null;
 
@@ -97,7 +99,7 @@ class NotiButtons extends Component {
     return (
       <Dropdown id='noti_button' className="item noti" ref="noti_dropdown">
         <DropdownTrigger>
-          <i className="large alarm icon inverted" />
+          <i className="large alarm icon inverted"/>
           {
             Noti && !!notiEntities && !!countNoti &&
             <div className="ui red label">
@@ -115,7 +117,8 @@ class NotiButtons extends Component {
               <div className="ui feed ">
                 {
                   Noti &&
-                  Noti.get('result').map(notiId => <NotiItem close={this.handleCloseDropdown} key={notiId} noti={notiEntities.get(notiId.toString())} />)
+                  Noti.get('result').map(notiId => <NotiItem close={this.handleCloseDropdown} key={notiId}
+                                                             noti={notiEntities.get(notiId.toString())}/>)
                 }
               </div>
 
@@ -157,12 +160,12 @@ const UserButtons = React.createClass({
 
     let avatarImg;
     if (avatar_img) {
-      avatarImg = <img className="ui avatar image" src={'/image/uploaded/files/' + avatar_img} />;
+      avatarImg = <img className="ui avatar image" src={'/image/uploaded/files/' + avatar_img}/>;
     } else {
       if (sex) {
-        avatarImg = <img className="ui avatar image" src="/images/default-male.png" />;
+        avatarImg = <img className="ui avatar image" src="/images/default-male.png"/>;
       } else {
-        avatarImg = <img className="ui avatar image" src="/images/default-female.png" />;
+        avatarImg = <img className="ui avatar image" src="/images/default-female.png"/>;
       }
     }
 
@@ -194,7 +197,7 @@ const MyArea = React.createClass({
   render() {
     const { LoginStore } = this.props;
     const isLogin = LoginStore.get('isLogin');
-    
+
     return (
       <div className="my_area">
         <div className="ui horizontal list">

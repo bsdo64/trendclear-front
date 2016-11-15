@@ -5,6 +5,7 @@ class SearchActions {
   handleSearchQuery(query) {
     return query;
   }
+
   submitSearchQuery(params) {
     return (dispatch) => {
       Api

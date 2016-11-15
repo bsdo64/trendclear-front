@@ -2,7 +2,7 @@ import React from 'react';
 
 const AddForum1 = React.createClass({
   render() {
-    const {url} = this.props;
+    const { url } = this.props;
     return (
       <div>
         <img
@@ -12,7 +12,7 @@ const AddForum1 = React.createClass({
             width: '100%',
             borderTop: '1px solid #abc',
             borderBottom: '1px solid #abc'
-          }} />
+          }}/>
       </div>
     );
   }

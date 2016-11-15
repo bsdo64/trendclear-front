@@ -1,11 +1,12 @@
 import alt from '../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import GnbActions from '../Actions/GnbActions';
 import { initListener, setMergeState } from './Helper/func';
 
-class GnbStore{
+class GnbStore {
   static displayName = 'GnbStore';
+
   constructor() {
     this.displayName = 'GnbStore';
 
@@ -30,6 +31,7 @@ class GnbStore{
   onSaveFilter() {
     this.setState(this.state);
   }
+
   onResetFilter() {
     let state = this.state.set('categoryValue', null);
     this.setState(state);

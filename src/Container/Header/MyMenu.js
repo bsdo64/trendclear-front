@@ -1,9 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import MyArea from '../../Components/MyArea';
-import {Noti, Point} from '../../Utils/Socket';
+import { Noti, Point } from '../../Utils/Socket';
 
 const MyMenuContainer = React.createClass({
   componentDidMount() {
@@ -21,7 +20,6 @@ const MyMenuContainer = React.createClass({
     return (<MyArea {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

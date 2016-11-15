@@ -1,12 +1,20 @@
-import React from 'react';
-import { Link, browserHistory } from 'react-router';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import CollectionComponent from '../BestCategorySelect/Collection';
 
-import AdForumLeft from '../Ad/AdForumLeft';
+// import AdForumLeft from '../Ad/AdForumLeft';
 
 require('./index.scss');
 const ForumLeftMenu = React.createClass({
   displayName: 'ForumLeftMenu',
+  propTypes: {
+    UserStore: PropTypes.object.isRequired,
+    Forums: PropTypes.object.isRequired,
+    Collections: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    forum: PropTypes.object,
+  },
+
   render() {
     const {
       UserStore, Forums, Collections, location,
@@ -43,30 +51,38 @@ const ForumLeftMenu = React.createClass({
                   <div className="sub_category item">
                     {
                       (order === 'new') &&
-                      <div className="active-menu"> </div>
+                      <div className="active-menu"></div>
                     }
-                    <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'new'}}}>{'최신 글'}</Link>
+                    <Link
+                      to={{ pathname: '/community', query: { forumId: forum.get('id'), order: 'new' } }}>{'최신 글'}</Link>
                   </div>
                   <div className="sub_category item">
                     {
                       (order === 'hot') &&
-                      <div className="active-menu"> </div>
+                      <div className="active-menu"></div>
                     }
-                    <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'hot'}}}>{'인기 글'}</Link>
+                    <Link
+                      to={{ pathname: '/community', query: { forumId: forum.get('id'), order: 'hot' } }}>{'인기 글'}</Link>
                   </div>
                   <div className="sub_category item">
                     {
                       (order === 'm_view') &&
-                      <div className="active-menu"> </div>
+                      <div className="active-menu"></div>
                     }
-                    <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'm_view'}}}>{'많이 본 글'}</Link>
+                    <Link to={{
+                      pathname: '/community',
+                      query: { forumId: forum.get('id'), order: 'm_view' }
+                    }}>{'많이 본 글'}</Link>
                   </div>
                   <div className="sub_category item">
                     {
                       (order === 'm_comment') &&
-                      <div className="active-menu"> </div>
+                      <div className="active-menu"></div>
                     }
-                    <Link to={{pathname: '/community', query: {forumId: forum.get('id'), order: 'm_comment'}}}>{'댓글 많은 글'}</Link>
+                    <Link to={{
+                      pathname: '/community',
+                      query: { forumId: forum.get('id'), order: 'm_comment' }
+                    }}>{'댓글 많은 글'}</Link>
                   </div>
                 </li>
 
@@ -107,16 +123,16 @@ const ForumLeftMenu = React.createClass({
               </h5>
 
               <div className="sub_category item">
-                <Link to={{pathname: '/community'}}>{'최신 글'}</Link>
+                <Link to={{ pathname: '/community' }}>{'최신 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/community'}}>{'인기 글'}</Link>
+                <Link to={{ pathname: '/community' }}>{'인기 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/community'}}>{'많이 본 글'}</Link>
+                <Link to={{ pathname: '/community' }}>{'많이 본 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/community'}}>{'댓글 많은 글'}</Link>
+                <Link to={{ pathname: '/community' }}>{'댓글 많은 글'}</Link>
               </div>
             </li>
           </ul>

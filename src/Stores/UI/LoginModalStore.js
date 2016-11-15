@@ -1,11 +1,12 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable, { Map } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import LoginActions from '../../Actions/LoginActions';
 import { setMergeState } from '../Helper/func';
 
 class LoginModalStore {
   static displayName = 'LoginModalStore';
+
   constructor() {
     this.displayName = 'LoginModalStore';
 

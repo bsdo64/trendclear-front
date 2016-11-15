@@ -13,7 +13,7 @@ const AvatarImage = (props) => {
 
     if (type === 'gif') {
       if (noWrap) {
-        return <img className={imageClass} src={'/image/uploaded/files/' + avatarImg} />
+        return <img className={imageClass} src={'/image/uploaded/files/' + avatarImg}/>
       } else {
         return (
           <div>
@@ -22,16 +22,16 @@ const AvatarImage = (props) => {
               <div className="delete_avatar_btn"
                    onClick={removeImage}
               >
-                <i className="fa fa-remove" />
+                <i className="fa fa-remove"/>
               </div>
             }
-            <img className={imageClass} src={'/image/uploaded/files/' + avatarImg} />
+            <img className={imageClass} src={'/image/uploaded/files/' + avatarImg}/>
           </div>
         )
       }
     } else {
       if (noWrap) {
-        return <img className={imageClass} src={'/image/uploaded/files/small/' + avatarImg} />
+        return <img className={imageClass} src={'/image/uploaded/files/small/' + avatarImg}/>
       } else {
         return (
           <div>
@@ -40,19 +40,19 @@ const AvatarImage = (props) => {
               <div className="delete_avatar_btn"
                    onClick={removeImage}
               >
-                <i className="fa fa-remove" />
+                <i className="fa fa-remove"/>
               </div>
             }
-            <img className={imageClass} src={'/image/uploaded/files/small/' + avatarImg} />
+            <img className={imageClass} src={'/image/uploaded/files/small/' + avatarImg}/>
           </div>
         )
       }
     }
   } else {
     if (sex) {
-      return <img className={imageClass} src="/images/default-male.png" />;
+      return <img className={imageClass} src="/images/default-male.png"/>;
     } else {
-      return <img className={imageClass} src="/images/default-female.png" />;
+      return <img className={imageClass} src="/images/default-female.png"/>;
     }
   }
 };

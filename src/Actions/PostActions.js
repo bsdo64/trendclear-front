@@ -1,8 +1,8 @@
 import alt from '../Utils/alt';
 import Promise from 'bluebird';
 import Api from '../Utils/ApiClient';
-import {normalize, arrayOf} from 'normalizr';
-import {post, comment, subComment} from '../Model/normalizr/schema';
+import { normalize, arrayOf } from 'normalizr';
+import { post } from '../Model/normalizr/schema';
 
 class PostActions {
   constructor() {
@@ -12,12 +12,15 @@ class PostActions {
   handleTitle(title) {
     return title;
   }
+
   handleContent(content) {
     return content;
   }
+
   selectPrefix(prefixId) {
     return prefixId;
   }
+
   submitPost(post) {
     return (dispatch) => {
       Api
@@ -31,6 +34,7 @@ class PostActions {
         });
     };
   }
+
   modPost(post) {
     return (dispatch) => {
       Api
@@ -44,13 +48,15 @@ class PostActions {
         });
     };
   }
+
   removeServerInit() {
     return true;
   }
+
   removeContent() {
     return true;
   }
-  
+
   getBestPost(data) {
     return (dispatch) => {
       Api
@@ -125,7 +131,7 @@ class PostActions {
     return (dispatch) => {
       Api
         .setEntryPoint('/api')
-        .get('/urlMeta', {url: url})
+        .get('/urlMeta', { url: url })
         .then((res) => {
 
           dispatch(res);
@@ -139,7 +145,7 @@ class PostActions {
   addImages(data) {
     if (data && data.result && data.result.files[0]) {
       const file = data.result.files[0];
-      return {...file};
+      return { ...file };
     }
   }
 
@@ -152,7 +158,7 @@ class PostActions {
   removeUnusingImage(list) {
     const ApiList = [];
     for (let index in list) {
-      ApiList.push(Api.setEntryPoint('/image').delete('/uploaded/files', {file: list[index].deleteUrl}));
+      ApiList.push(Api.setEntryPoint('/image').delete('/uploaded/files', { file: list[index].deleteUrl }));
     }
     return (dispatch) => {
       Promise

@@ -2,7 +2,6 @@
 import React from 'react';
 import segmentize from 'segmentize';
 import Paginator from 'react-pagify';
-
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 require('./Paginator.scss');
@@ -11,7 +10,7 @@ const PaginatorApp = React.createClass({
   mixins: [PureRenderMixin],
 
   selectPage(newPage) {
-    const {page, limit, total } = this.props;
+    const { page, limit, total } = this.props;
     const pagination = {
       page: page || 1,
       perPage: limit || 10
@@ -25,7 +24,7 @@ const PaginatorApp = React.createClass({
   },
 
   render() {
-    const {page, limit, total } = this.props;
+    const { page, limit, total } = this.props;
     const pagination = {
       page: page || 1,
       perPage: limit || 10
@@ -40,19 +39,19 @@ const PaginatorApp = React.createClass({
         <Paginator.Context
           className="ui pagination menu small"
           tags={{
-          button: {
-            tag: 'a'
-          },
-          segment: {
-            tag: 'div'
-          },
-          ellipsis: {
-            tag: 'div'
-          },
-          link: {
-            tag: 'a'
-          }
-        }}
+            button: {
+              tag: 'a'
+            },
+            segment: {
+              tag: 'div'
+            },
+            ellipsis: {
+              tag: 'div'
+            },
+            link: {
+              tag: 'a'
+            }
+          }}
           segments={segmentize({
             page: pagination.page,
             pages: pages,

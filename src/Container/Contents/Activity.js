@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import Activity from '../../Components/Contents/Activity';
 
 const ActivityContainer = React.createClass({
@@ -9,7 +8,6 @@ const ActivityContainer = React.createClass({
     return (<Activity {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

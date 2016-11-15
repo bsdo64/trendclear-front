@@ -2,14 +2,17 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { combineReducers } from 'redux-immutable';
 import RouterReducer from '../Reducers/RouteReducer';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import Stores from '../Reducers';
 import Api from '../Utils/ApiClient';
-
 import assign from 'deep-assign';
-import {normalize, arrayOf} from 'normalizr';
-import {author, category, post, noti, forum} from '../Model/normalizr/schema';
+import { normalize, arrayOf } from 'normalizr';
+import { author, category, post, noti, forum } from '../Model/normalizr/schema';
 
+let bootStrapLogger;
+if (process.env.NODE_ENV !== 'production') {
+  bootStrapLogger = require('debug')('vn:api:Bootstrap');
+}
 
 const initRouteState = store => dispatch => action => {
   if (action.type === '@@router/LOCATION_CHANGE') {
@@ -211,10 +214,6 @@ const initRouteState = store => dispatch => action => {
           resBody.ForumSettingStore.forum = resBody.CommunityStore.forum;
         }
 
-        if (process.env.NODE_ENV !== 'production') {
-          console.info('Bootstrap Data : ', resBody);
-        }
-
         const state = {
           UI: {
             Auth: resBody.AuthStore,
@@ -263,6 +262,10 @@ const initRouteState = store => dispatch => action => {
         clean(state.Domains);
 
         action.serverInitData = state;
+
+        if (process.env.NODE_ENV !== 'production') {
+          bootStrapLogger(resBody);
+        }
 
         return dispatch(action);
       });

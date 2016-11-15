@@ -3,12 +3,11 @@
 }
 
 .avatar_img {
-  &>.items > .item {
+  & > .items > .item {
     padding: 12px;
 
-
   }
-  &>.items > .header {
+  & > .items > .header {
     height: 35px;
     background: #405EB3;
     color: #fff;

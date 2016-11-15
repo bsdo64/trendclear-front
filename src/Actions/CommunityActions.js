@@ -5,6 +5,7 @@ class CommunityActions {
   constructor() {
     this.generateActions('addPrefixes');
   }
+
   likePost(postId) {
     return (dispatch) => {
       Api

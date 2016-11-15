@@ -36,19 +36,19 @@
         cursor: pointer;
       }
       .ui.link.menu .item:active, .ui.menu .link.item:active, .ui.menu a.item:active {
-        background: rgba(0,0,0,.03);
-        color: rgba(0,0,0,.95);
+        background: rgba(0, 0, 0, .03);
+        color: rgba(0, 0, 0, .95);
       }
       .ui.link.menu .item:hover, .ui.menu .dropdown.item:hover, .ui.menu .link.item:hover, .ui.menu a.item:hover {
         cursor: pointer;
-        background: rgba(0,0,0,.03);
-        color: rgba(0,0,0,.95);
+        background: rgba(0, 0, 0, .03);
+        color: rgba(0, 0, 0, .95);
       }
       .ui.pagination.menu .item {
         min-width: 3em;
         text-align: center;
       }
-      .ui.menu>.item:first-child {
+      .ui.menu > .item:first-child {
         border-radius: .16666667rem 0 0 .16666667rem;
       }
 

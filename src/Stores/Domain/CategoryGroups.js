@@ -1,11 +1,12 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import GnbActions from '../../Actions/GnbActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import { initListener, setMergeState } from '../Helper/func';
 
 class Categorygroups {
   static displayName = 'CategoryGroups';
+
   constructor() {
     this.displayName = 'Categorygroups';
 

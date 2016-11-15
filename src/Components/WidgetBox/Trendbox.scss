@@ -101,7 +101,7 @@
             span.ui.description {
               line-height: 11px;
             }
-            .point{
+            .point {
               font-size: 12px;
             }
             .tp_point {
@@ -160,7 +160,7 @@
             span.ui.description {
               line-height: 11px;
             }
-            .point{
+            .point {
               font-size: 12px;
             }
             .tp_point {
@@ -240,14 +240,35 @@
 }
 
 @-webkit-keyframes puffIn {
-  0%   {opacity: 0.7;}
-  25%  {opacity: 1; transform: scale(1.1, 1.1)}
-  75%  {opacity: 0.7; transform: scale(1, 1)}
-  100% {opacity: 0;}
+  0% {
+    opacity: 0.7;
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.1, 1.1)
+  }
+  75% {
+    opacity: 0.7;
+    transform: scale(1, 1)
+  }
+  100% {
+    opacity: 0;
+  }
 }
+
 @keyframes puffIn {
-  0%   {opacity: 0.7;}
-  25%  {opacity: 1; transform: scale(1.1, 1.1)}
-  75%  {opacity: 0.7; transform: scale(1, 1)}
-  100% {opacity: 0;}
+  0% {
+    opacity: 0.7;
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.1, 1.1)
+  }
+  75% {
+    opacity: 0.7;
+    transform: scale(1, 1)
+  }
+  100% {
+    opacity: 0;
+  }
 }

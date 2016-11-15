@@ -1,20 +1,18 @@
 import React from 'react';
-import {browserHistory} from 'react-router';
+import { browserHistory } from 'react-router';
 import ReportActions from '../../Actions/ReportActions';
 import CommunityActions from '../../Actions/CommunityActions';
 import DeleteActions from '../../Actions/DeleteActions';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import makeUrl from '../Lib/MakeUrl';
 import memoize from 'fast-memoize';
-
 import './ReportBox.scss';
 
 function createToggleModal(props) {
   "use strict";
 
-  const {forumId, targetId, targetType} = props;
+  const { forumId, targetId, targetType } = props;
 
-  return function toggleModal (e) {
+  return function toggleModal(e) {
     "use strict";
 
     const action = e.target.dataset.action;
@@ -41,11 +39,11 @@ function createToggleModal(props) {
         break;
       case 'mod_comment':
         console.log('댓글 수정 Id : ', targetId);
-        CommunityActions.triggerUpdate({targetId, type:'comment'});
+        CommunityActions.triggerUpdate({ targetId, type: 'comment' });
         break;
       case 'mod_subComment':
         console.log('대댓글 수정 Id : ', targetId);
-        CommunityActions.triggerUpdate({targetId, type:'subComment'});
+        CommunityActions.triggerUpdate({ targetId, type: 'subComment' });
         break;
       case 'delete_post':
         DeleteActions.toggleModal({
@@ -76,11 +74,10 @@ function createToggleModal(props) {
   }
 }
 
-
 const Menu = (props) => {
   "use strict";
 
-  const {isUser, targetType} = props;
+  const { isUser, targetType } = props;
 
   return (
     <Dropdown>

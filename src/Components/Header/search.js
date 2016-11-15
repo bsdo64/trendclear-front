@@ -1,6 +1,5 @@
 import React from 'react';
-import {browserHistory} from 'react-router';
-
+import { browserHistory } from 'react-router';
 import SearchActions from '../../Actions/SearchActions';
 
 require('./index.scss');
@@ -13,16 +12,16 @@ const SearchBar = React.createClass({
   submitQuery(e) {
     e.preventDefault();
 
-    const {SearchStore} = this.props;
+    const { SearchStore } = this.props;
     if (SearchStore) {
       const query = SearchStore.get('query');
 
-      browserHistory.push({pathname: '/search', query: {query: query}});
+      browserHistory.push({ pathname: '/search', query: { query: query } });
     }
   },
 
   getQueryValue() {
-    const {SearchStore} = this.props;
+    const { SearchStore } = this.props;
     let query = '';
 
     if (SearchStore) {

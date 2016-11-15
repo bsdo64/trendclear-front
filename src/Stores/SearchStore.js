@@ -1,11 +1,12 @@
 import alt from '../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable, { Map } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import SearchActions from '../Actions/SearchActions';
 import { initListener, setMergeState } from './Helper/func';
 
-class SearchStore{
+class SearchStore {
   static displayName = 'SearchStore';
+
   constructor() {
 
     this.bindActions(SearchActions);
@@ -20,6 +21,7 @@ class SearchStore{
       query: query
     })
   }
+
   onSubmitSearchQuery(query) {
     this.setState(Map({
       query: query

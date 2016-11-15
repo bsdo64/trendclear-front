@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import BigPost from '../PostItem/BigPost';
-import Main1 from '../Ad/Main1';
 import './BestList.scss';
 
 function createItem(props, id) {
-  "use strict";
 
-  const {PostItems, AuthorItems, User} = props;
+  const { PostItems, AuthorItems, User } = props;
 
   const post = PostItems.get(id.toString());
   if (post) {
@@ -23,7 +21,8 @@ function createItem(props, id) {
           user={user}
           view={false}
           shorten={true}
-          setScrollPosition={props.setScrollPosition}
+          FireSetScrollPosition={props.FireSetScrollPosition}
+          FireToggleLoginModal={props.FireToggleLoginModal}
         />
       ]
     }
@@ -31,6 +30,20 @@ function createItem(props, id) {
 }
 
 const InfiniteList = React.createClass({
+  displayName: 'InfiniteList',
+  propTypes: {
+    PostIdList: PropTypes.object,
+    PostItems: PropTypes.object.isRequired,
+    AuthorItems: PropTypes.object.isRequired,
+    User: PropTypes.object.isRequired,
+    scrollHeight: PropTypes.number.isRequired,
+    FireSetScrollPosition: PropTypes.func.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired
+  },
+  defaultProps: {
+    PostIdList: [],
+    PostItems: {},
+  },
 
   componentDidMount() {
     $('.ui.embed').embed();
@@ -39,16 +52,16 @@ const InfiniteList = React.createClass({
   },
 
   setScroll() {
-    const {scrollHeight} = this.props;
+    const { scrollHeight } = this.props;
     document.body.scrollTop = scrollHeight;
   },
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     $('.ui.embed').embed('refresh');
   },
 
   render() {
-    const {PostIdList = [], PostItems = {}, AuthorItems, User} = this.props;
+    const { PostIdList = [], PostItems = {}, AuthorItems, User } = this.props;
     const okey = !!(PostItems.size && AuthorItems.size && User.size);
 
     return (

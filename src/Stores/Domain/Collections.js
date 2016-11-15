@@ -1,16 +1,15 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import CollectionActions from '../../Actions/CollectionActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
-
+import { initListener, setMergeState } from '../Helper/func';
 import Forums from '../../Stores/Domain/Forums';
 
 class Collections {
   static displayName = 'Collections';
+
   constructor() {
     this.displayName = 'Collections';
-
 
     this.bindActions(CollectionActions);
     this.state = Immutable.Map({});
@@ -21,7 +20,7 @@ class Collections {
 
   onCreateCollection(collection) {
     collection.forums = [];
-    this.setMergeState({[collection.id]: collection});
+    this.setMergeState({ [collection.id]: collection });
   }
 
   onUpdateCollection(collection) {

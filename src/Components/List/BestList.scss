@@ -69,7 +69,7 @@
         }
 
         .medium-insert-embeds {
-          &>figure {
+          & > figure {
             margin: 1em 0;
           }
         }
@@ -106,7 +106,7 @@
             line-height: 20px;
             vertical-align: middle;
             :hover {
-              color:red;
+              color: red;
             }
 
             &.active {
@@ -194,7 +194,7 @@
   .load_more_loading {
 
   }
-  
+
   .no-more-post {
     text-align: center;
     padding: 10px;

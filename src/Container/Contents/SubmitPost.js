@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import Submit from '../../Components/Contents/Submit';
 
 const SubmitPostContainer = React.createClass({
@@ -9,7 +8,6 @@ const SubmitPostContainer = React.createClass({
     return (<Submit {...this.props} />);
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

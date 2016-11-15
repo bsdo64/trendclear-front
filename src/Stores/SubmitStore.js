@@ -1,13 +1,14 @@
 import alt from '../Utils/alt';
-import {browserHistory} from 'react-router';
-import Immutable, {Map, List} from 'immutable';
+import { browserHistory } from 'react-router';
+import Immutable, { Map, List } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import UserActions from '../Actions/UserActions';
 import PostActions from '../Actions/PostActions';
-import { initListener, setMergeState, locationHref } from './Helper/func';
+import { initListener, setMergeState } from './Helper/func';
 
-class SubmitStore{
+class SubmitStore {
   static displayName = 'SubmitStore';
+
   constructor() {
 
     this.bindActions(UserActions);
@@ -22,19 +23,23 @@ class SubmitStore{
   }
 
   onHandleTitle(title) {
-    this.setMergeState(Map({title: title}));
+    this.setMergeState(Map({ title: title }));
   }
+
   onHandleContent(postData) {
     this.setMergeState(Map({
       ...postData
     }));
   }
+
   onSelectPrefix(prefixId) {
-    this.setMergeState(Map({selectPrefixId: prefixId}));
+    this.setMergeState(Map({ selectPrefixId: prefixId }));
   }
+
   onCheckAnnounce(checked) {
-    this.setMergeState(Map({announce: checked}));
+    this.setMergeState(Map({ announce: checked }));
   }
+
   onSubmitPost(result) {
     if (result) {
       let forum = result.forum;
@@ -46,10 +51,11 @@ class SubmitStore{
 
       browserHistory.replace(
         '/community?forumId=' + forum.id +
-                  '&postId=' + result.id
+        '&postId=' + result.id
       );
     }
   }
+
   onModPost(result) {
     if (result) {
       let forum = result.forum;
@@ -65,9 +71,11 @@ class SubmitStore{
       );
     }
   }
+
   onRemoveServerInit() {
-    this.setMergeState(Map({server: null}));
+    this.setMergeState(Map({ server: null }));
   }
+
   onRemoveContent() {
     this.setMergeState(Map({
       selectPrefixId: null,
@@ -75,8 +83,9 @@ class SubmitStore{
       content: null
     }));
   }
+
   onGetMeta(result) {
-    this.setMergeState({urlMetaData: result});
+    this.setMergeState({ urlMetaData: result });
   }
 
   onAddImages(result) {

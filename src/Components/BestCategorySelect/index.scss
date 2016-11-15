@@ -9,10 +9,12 @@
     font-size: 16px;
 
     .sub_category_text {
-      position: absolute;right: 25px;
+      position: absolute;
+      right: 25px;
     }
   }
 }
+
 menu.sub_category_list {
   background: #058294;
   color: #fff;
@@ -32,7 +34,7 @@ menu.sub_category_list {
     list-style: none;
 
     li {
-      &>h5 {
+      & > h5 {
         text-align: left;
         margin-bottom: 2px;
 
@@ -41,10 +43,10 @@ menu.sub_category_list {
           display: block;
         }
       }
-      &>.sub_category.item {
+      & > .sub_category.item {
         margin-bottom: 2px;
 
-        &>a {
+        & > a {
           text-align: right;
           color: #fff;
           width: 100%;
@@ -67,7 +69,8 @@ menu.sub_category_list {
       font-size: 16px;
 
       .sub_category_text {
-        position: absolute;right: 25px;
+        position: absolute;
+        right: 25px;
       }
     }
   }
@@ -94,7 +97,7 @@ menu.sub_category_list {
       }
       li {
         padding-top: 8px;
-        &>h5 {
+        & > h5 {
           text-align: left;
           margin-bottom: 2px;
 
@@ -103,12 +106,12 @@ menu.sub_category_list {
             display: block;
           }
         }
-        &>.sub_category.item {
+        & > .sub_category.item {
           margin-bottom: 2px;
           position: relative;
           cursor: pointer;
 
-          &>a {
+          & > a {
             text-align: right;
             color: #fff;
             width: 100%;
@@ -123,7 +126,6 @@ menu.sub_category_list {
           margin-bottom: 10px;
         }
 
-
         .Select {
           .Select-control {
             background-color: #058294;
@@ -132,7 +134,7 @@ menu.sub_category_list {
 
             .Select-placeholder {
               line-height: 24px;
-              color:#fff;
+              color: #fff;
             }
           }
 
@@ -148,7 +150,7 @@ menu.sub_category_list {
             height: 24px;
             color: #fff;
 
-            &>input {
+            & > input {
               padding: 2px 0 2px;
               line-height: 22px;
             }
@@ -170,7 +172,6 @@ menu.sub_category_list {
       }
     }
   }
-
 
   .ReactModal__Overlay {
     z-index: 150;

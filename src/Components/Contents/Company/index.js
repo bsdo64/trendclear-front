@@ -1,6 +1,5 @@
 import React from 'react';
-import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
-import { triggerEvent } from "react-google-maps/lib/utils";
+import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps';
 
 const SimpleMap = React.createClass({
   getInitialState() {
@@ -28,7 +27,7 @@ const SimpleMap = React.createClass({
 
   render() {
     return (
-      <section style={{height: 400, width: 600}}>
+      <section style={{ height: 400, width: 600 }}>
         <GoogleMapLoader
           containerElement={
             <div
@@ -73,7 +72,7 @@ const About = React.createClass({
         <div className="ui vertical stripe segment">
           <div className="ui text container">
             <h3 className="ui header">베나클의 철학</h3>
-            <p style={{textAlign: 'center'}}>
+            <p style={{ textAlign: 'center' }}>
               <b>"세상의 모든 이슈를 모아 효과적으로 공유하고 소통할수 있도록 도와주는 것"</b>
             </p>
           </div>
@@ -110,7 +109,7 @@ const About = React.createClass({
                 </p>
               </div>
               <div className="six wide right floated column">
-                <div className="company-info" >
+                <div className="company-info">
                   <h4 className="ui header">
                     Venacle
                   </h4>
@@ -295,7 +294,7 @@ const Company = React.createClass({
 
   },
   render() {
-    switch(this.getEndpoint(this.props.location)) {
+    switch (this.getEndpoint(this.props.location)) {
       case 'about':
         return <About />;
       case 'careers':

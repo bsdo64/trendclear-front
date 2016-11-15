@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import ReportActions from '../../../../Actions/ReportActions.js';
 
 require('./index.scss');
 const ReportModalBox = React.createClass({
   displayName: 'ReportModalBox',
-  
+  propTypes: {
+    ReportStore: PropTypes.object.isRequired,
+    Posts: PropTypes.object.isRequired,
+    Comments: PropTypes.object.isRequired,
+    SubComments: PropTypes.object.isRequired,
+  },
+
   getInitialState() {
     return {
       selectItem: 1
     }
   },
 
-  closeModal: function() {
+  closeModal() {
     ReportActions.closeReportModal();
   },
   selectReportItem(e) {
-    "use strict";
 
     const reportId = e.target.dataset.id;
     const reportMessage = e.target.dataset.message;
@@ -26,7 +31,6 @@ const ReportModalBox = React.createClass({
     });
   },
   createReportItem(item) {
-    "use strict";
     const id = item.get('id');
     const message = item.get('message');
     const activeItemStyle = cx('report_item', {
@@ -34,14 +38,14 @@ const ReportModalBox = React.createClass({
     });
     return (
       <div key={id} className="field">
-        <div className={activeItemStyle} onClick={this.selectReportItem} data-id={id} data-message={message}>{message}</div>
+        <div className={activeItemStyle} onClick={this.selectReportItem} data-id={id}
+             data-message={message}>{message}</div>
       </div>
     )
   },
   sendReport() {
-    "use strict";
 
-    const {ReportStore} = this.props;
+    const { ReportStore } = this.props;
 
     const reportObj = {
       type: ReportStore.get('type'),
@@ -53,11 +57,7 @@ const ReportModalBox = React.createClass({
     ReportActions.sendReport(reportObj);
   },
   render() {
-    const { LoginStore, ReportStore} = this.props;
-    const loginFail = LoginStore.get('loginFail');
-    const openReportModal = ReportStore.get('openReportModal');
-    const loginSuccess = LoginStore.get('loginSuccess');
-
+    const { ReportStore } = this.props;
 
     let content, title;
     switch (ReportStore.get('type')) {
@@ -68,12 +68,14 @@ const ReportModalBox = React.createClass({
 
       case 'comment':
         content = this.props.Comments.get(ReportStore.get('typeId').toString());
-        title = content ? <span>댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span> : null;
+        title = content ? <span>댓글: <div
+          dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span> : null;
         break;
 
       case 'subComment':
         content = this.props.SubComments.get(ReportStore.get('typeId').toString());
-        title = content ? (<span>대댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
+        title = content ? (<span>대댓글: <div
+          dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
         break;
 
       default:

@@ -2,14 +2,7 @@
  * Created by dobyeongsu on 2016. 5. 24..
  */
 import React from 'react';
-import {
-  AtomicBlockUtils,
-  Editor,
-  EditorState,
-  Entity,
-  RichUtils,
-  convertToRaw,
-} from 'draft-js';
+import { AtomicBlockUtils, Editor, EditorState, Entity, RichUtils, convertToRaw } from 'draft-js';
 
 class MediaEditorExample extends React.Component {
   constructor(props) {
@@ -20,7 +13,7 @@ class MediaEditorExample extends React.Component {
     };
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({editorState});
+    this.onChange = (editorState) => this.setState({ editorState });
     this.logState = () => {
       const content = this.state.editorState.getCurrentContent();
       console.log(convertToRaw(content));
@@ -34,7 +27,7 @@ class MediaEditorExample extends React.Component {
   }
 
   _handleKeyCommand(command) {
-    const {editorState} = this.state;
+    const { editorState } = this.state;
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       this.onChange(newState);
@@ -49,7 +42,7 @@ class MediaEditorExample extends React.Component {
       return;
     }
 
-    const entityKey = Entity.create(type, 'IMMUTABLE', {src});
+    const entityKey = Entity.create(type, 'IMMUTABLE', { src });
 
     return AtomicBlockUtils.insertAtomicBlock(
       this.state.editorState,
@@ -73,10 +66,10 @@ class MediaEditorExample extends React.Component {
   render() {
     return (
       <div style={styles.root}>
-        <div style={{marginBottom: 10}}>
+        <div style={{ marginBottom: 10 }}>
           Use the buttons to add audio, image, or video.
         </div>
-        <div style={{marginBottom: 10}}>
+        <div style={{ marginBottom: 10 }}>
           Here are some local examples that can be entered as a URL:
           <ul>
             <li>media.mp3</li>
@@ -85,13 +78,13 @@ class MediaEditorExample extends React.Component {
           </ul>
         </div>
         <div style={styles.buttons}>
-          <button onMouseDown={this.addAudio} style={{marginRight: 10}}>
+          <button onMouseDown={this.addAudio} style={{ marginRight: 10 }}>
             Add Audio
           </button>
-          <button onMouseDown={this.addImage} style={{marginRight: 10}}>
+          <button onMouseDown={this.addImage} style={{ marginRight: 10 }}>
             Add Image
           </button>
-          <button onMouseDown={this.addVideo} style={{marginRight: 10}}>
+          <button onMouseDown={this.addVideo} style={{ marginRight: 10 }}>
             Add Video
           </button>
         </div>
@@ -128,29 +121,29 @@ function mediaBlockRenderer(block) {
 }
 
 const Audio = (props) => {
-  return <audio controls src={props.src} style={styles.media} />;
+  return <audio controls src={props.src} style={styles.media}/>;
 };
 
 const Image = (props) => {
-  return <img src={props.src} style={styles.media} />;
+  return <img src={props.src} style={styles.media}/>;
 };
 
 const Video = (props) => {
-  return <video controls src={props.src} style={styles.media} />;
+  return <video controls src={props.src} style={styles.media}/>;
 };
 
 const Media = (props) => {
   const entity = Entity.get(props.block.getEntityAt(0));
-  const {src} = entity.getData();
+  const { src } = entity.getData();
   const type = entity.getType();
 
   let media;
   if (type === 'audio') {
-    media = <Audio src={src} />;
+    media = <Audio src={src}/>;
   } else if (type === 'image') {
-    media = <Image src={src} />;
+    media = <Image src={src}/>;
   } else if (type === 'video') {
-    media = <Video src={src} />;
+    media = <Video src={src}/>;
   }
 
   return media;

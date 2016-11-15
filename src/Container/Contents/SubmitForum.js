@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import marked from '../../Components/Lib/Marked';
 import ForumActions from '../../Actions/ForumActions';
 
@@ -20,12 +19,12 @@ const SubmitForm = React.createClass({
             identifier: 'forum_title',
             rules: [
               {
-                type   : 'empty',
-                prompt : '게시판 이름을 입력하세요'
+                type: 'empty',
+                prompt: '게시판 이름을 입력하세요'
               },
               {
-                type   : 'regExp[/^[가-힣a-z0-9_]{2,14}$/]',
-                prompt : '한글, 영문 2-14 내로 입력해주세요'
+                type: 'regExp[/^[가-힣a-z0-9_]{2,14}$/]',
+                prompt: '한글, 영문 2-14 내로 입력해주세요'
               }
             ]
           },
@@ -36,8 +35,8 @@ const SubmitForm = React.createClass({
             identifier: 'forum_description',
             rules: [
               {
-                type   : 'empty',
-                prompt : '게시판 설명을 입력하세요'
+                type: 'empty',
+                prompt: '게시판 설명을 입력하세요'
               }
             ]
           },
@@ -45,14 +44,14 @@ const SubmitForm = React.createClass({
             identifier: 'forum_rule',
             rules: [
               {
-                type   : 'empty',
-                prompt : '게시판 규칙을 입력하세요'
+                type: 'empty',
+                prompt: '게시판 규칙을 입력하세요'
               }
             ]
           }
         },
-        inline : true,
-        on     : 'blur',
+        inline: true,
+        on: 'blur',
         onSuccess: (e, fields) => {
           e.preventDefault();
           e.stopPropagation();
@@ -74,14 +73,14 @@ const SubmitForm = React.createClass({
       });
   },
 
-  getInitialState: function() {
-    return {value: ''};
+  getInitialState: function () {
+    return { value: '' };
   },
-  handleChange: function() {
-    this.setState({value: this.refs.rule_textarea.value});
+  handleChange: function () {
+    this.setState({ value: this.refs.rule_textarea.value });
   },
-  rawMarkup: function() {
-    return { __html: marked(this.state.value, {breaks: true}) };
+  rawMarkup: function () {
+    return { __html: marked(this.state.value, { breaks: true }) };
   },
 
   validate(e) {
@@ -108,7 +107,7 @@ const SubmitForm = React.createClass({
     let validateError;
     if (duplicateTitleError || !canCreate) {
       validateError = (
-        <div className="ui error message" style={{display: 'block'}}>
+        <div className="ui error message" style={{ display: 'block' }}>
           <ul className="list">
             {
               duplicateTitleError &&
@@ -124,8 +123,8 @@ const SubmitForm = React.createClass({
     }
 
     return (
-      <div className="ui container" style={{margin: 10, width: 700}}>
-        <div className={"ui segments "} >
+      <div className="ui container" style={{ margin: 10, width: 700 }}>
+        <div className={"ui segments "}>
 
           <div className={"ui segment"}>
             <h3 className="ui header">게시판 생성</h3>
@@ -171,23 +170,23 @@ const SubmitForm = React.createClass({
               </div>
               <div className="field">
                 <label>부제 :</label>
-                <input name="forum_sub_header" type="text" />
+                <input name="forum_sub_header" type="text"/>
               </div>
               <div className="field">
                 <label>설명 *</label>
-                <input name="forum_description" type="text" />
+                <input name="forum_description" type="text"/>
               </div>
               <div className="field">
                 <label>규칙 *</label>
                 <textarea name="forum_rule"
                           onChange={this.handleChange}
                           ref="rule_textarea"
-                          defaultValue={this.state.value} />
+                          defaultValue={this.state.value}/>
               </div>
               <h5>클럽 규칙</h5>
               <div
                 className="markdown_output"
-                style={{paddingBottom: 10}}
+                style={{ paddingBottom: 10 }}
                 dangerouslySetInnerHTML={this.rawMarkup()}
               />
 
@@ -205,7 +204,6 @@ const SubmitForm = React.createClass({
     )
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

@@ -2,7 +2,7 @@ import React from 'react';
 
 const AdForumLeft = React.createClass({
   render() {
-    const {url} = this.props;
+    const { url } = this.props;
     return (
       <div>
         <img
@@ -10,7 +10,7 @@ const AdForumLeft = React.createClass({
           style={{
             padding: 10,
             float: 'right'
-          }} />
+          }}/>
       </div>
     )
   }

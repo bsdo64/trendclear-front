@@ -1,6 +1,6 @@
 import React from 'react';
-import {IndexRedirect, Link, IndexRoute, Router, Route, browserHistory} from 'react-router';
-import {syncHistoryWithStore} from 'react-router-redux';
+import { IndexRedirect, Link, IndexRoute, Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 const LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
 const ForumMenu = require('../Container/LeftCol/ForumMenu.js');
@@ -49,7 +49,9 @@ const App = (props) => {
           <div className="head_contents">
             <div className="top_area">
               <div className="top_contents">
-                <div id="top_logo" onClick={() => {document.body.scrollTop = 0;}}>
+                <div id="top_logo" onClick={() => {
+                  document.body.scrollTop = 0;
+                }}>
                   <Link className="ui header inverted huge" to="/">
                     <img src="/images/Venacle.png"/>
                   </Link>
@@ -88,6 +90,16 @@ const App = (props) => {
       </div>
     </div>
   )
+};
+
+App.propTypes = {
+  HeaderSearch: React.PropTypes.element.isRequired,
+  HeaderMyMenu: React.PropTypes.element.isRequired,
+  LeftColGnb: React.PropTypes.element.isRequired,
+  LeftColMenu: React.PropTypes.element.isRequired,
+  ContentsContainer: React.PropTypes.element.isRequired,
+  WidgetContainer: React.PropTypes.element.isRequired,
+  ModalContainer: React.PropTypes.element.isRequired,
 };
 
 const HelpApp = (props) => {
@@ -134,6 +146,15 @@ const HelpApp = (props) => {
       </div>
     </div>
   )
+};
+
+HelpApp.propTypes = {
+  HeaderSearch: React.PropTypes.element.isRequired,
+  HeaderMyMenu: React.PropTypes.element.isRequired,
+  LeftColGnb: React.PropTypes.element.isRequired,
+  LeftColMenu: React.PropTypes.element.isRequired,
+  ContentsContainer: React.PropTypes.element.isRequired,
+  ModalContainer: React.PropTypes.element.isRequired,
 };
 
 export default (store) => {
@@ -186,7 +207,7 @@ export default (store) => {
       </Route>
 
       <Route path="/collection" component={App}>
-        <IndexRedirect to="/" />
+        <IndexRedirect to="/"/>
       </Route>
 
       <Route path="/collection/:collectionId" component={App}>
@@ -605,6 +626,7 @@ export default (store) => {
                  HeaderSearch: HeaderSearch,
                  LeftColGnb: LeftColGlobalCategoryNav,
                  LeftColMenu: PolicyMenu,
+                 ModalContainer: ModalContainer,
                  ContentsContainer: PolicyContainer
                }}
         />
@@ -615,6 +637,7 @@ export default (store) => {
                  HeaderSearch: HeaderSearch,
                  LeftColGnb: LeftColGlobalCategoryNav,
                  LeftColMenu: PolicyMenu,
+                 ModalContainer: ModalContainer,
                  ContentsContainer: PolicyContainer
                }}
         />

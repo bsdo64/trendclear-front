@@ -1,5 +1,5 @@
-import {List, Map} from 'immutable';
-import {combineReducers} from 'redux-immutable';
+import { Map } from 'immutable';
+import { combineReducers } from 'redux-immutable';
 
 const initList = Map({});
 
@@ -14,6 +14,12 @@ const Posts = (state = initList, action) => {
 
 };
 const Comments = (state = initList, action) => {
+
+  return state;
+
+};
+
+const Collections = (state = initList, action) => {
 
   return state;
 
@@ -48,6 +54,7 @@ export default combineReducers({
   Users,
   Posts,
   Comments,
+  Collections,
   Forums,
   Categories,
   Prefixes,

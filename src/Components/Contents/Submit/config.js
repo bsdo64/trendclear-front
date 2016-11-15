@@ -1,7 +1,6 @@
 /**
  * Created by dobyeongsu on 2016. 2. 7..
  */
-
 import PostActions from '../../../Actions/PostActions';
 
 const medium = {
@@ -70,7 +69,7 @@ const mediumInsertConfig = function mediumInsertConfig(editor) {
             "use strict";
 
             const url = decodeURIComponent(settings.data.split('=')[1]);
-            PostActions.deleteImages({deleteUrl: url});
+            PostActions.deleteImages({ deleteUrl: url });
           }
         }
       },
@@ -82,4 +81,4 @@ const mediumInsertConfig = function mediumInsertConfig(editor) {
   };
 };
 
-export {medium, mediumInsertConfig};
+export { medium, mediumInsertConfig };

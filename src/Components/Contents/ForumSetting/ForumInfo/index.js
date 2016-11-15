@@ -11,7 +11,7 @@ const ForumInfo = React.createClass({
     e.preventDefault();
     e.stopPropagation();
 
-    const {ForumSettingStore} = this.props;
+    const { ForumSettingStore } = this.props;
     const forumInfo = ForumSettingStore.get('forumInfo');
     const forum = ForumSettingStore.get('forum');
 
@@ -24,11 +24,11 @@ const ForumInfo = React.createClass({
   },
 
   changeForm(e) {
-    ForumSettingActions.changeForumData({[e.target.name]: e.target.value.trim()})
+    ForumSettingActions.changeForumData({ [e.target.name]: e.target.value.trim() })
   },
 
   render() {
-    const {ForumSettingStore} = this.props;
+    const { ForumSettingStore } = this.props;
     const forum = ForumSettingStore.get('forum');
 
     if (forum) {
@@ -45,7 +45,7 @@ const ForumInfo = React.createClass({
       }
 
       return (
-        <div className="ui container" style={{margin: 10, width: 700}}>
+        <div className="ui container" style={{ margin: 10, width: 700 }}>
           <div className="ui segments ">
             <div className="ui segment"><h3 className="ui header">게시판 정보</h3>
               <div className="ui divider"></div>
@@ -73,7 +73,7 @@ const ForumInfo = React.createClass({
                 </div>
                 <div className="field">
                   <label>규칙 *</label>
-                  <textarea name="forum_rule" defaultValue={forum.get('rule')} />
+                  <textarea name="forum_rule" defaultValue={forum.get('rule')}/>
                 </div>
                 <div className="ui error message"></div>
                 {button}

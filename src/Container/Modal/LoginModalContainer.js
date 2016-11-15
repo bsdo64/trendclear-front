@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import LoginModalBox from '../../Components/Modal/Components/Login/index';
 
 const LoginModalContainer = React.createClass({

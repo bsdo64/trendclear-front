@@ -1,5 +1,4 @@
-import {combineReducers} from 'redux-immutable';
-
+import { combineReducers } from 'redux-immutable';
 import Auth from './Auth';
 import Community from './Community';
 import Gnb from './Gnb';

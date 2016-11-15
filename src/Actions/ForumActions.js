@@ -1,8 +1,8 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
-import {browserHistory} from 'react-router';
-import {normalize, arrayOf} from 'normalizr';
-import {forum} from '../Model/normalizr/schema';
+import { browserHistory } from 'react-router';
+import { normalize, arrayOf } from 'normalizr';
+import { forum } from '../Model/normalizr/schema';
 
 class ForumActions {
   constructor() {

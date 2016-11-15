@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import CollectionLeftMenu from '../../Components/CollectionLeftMenu';
 
 const CollectionMenu = React.createClass({
@@ -9,7 +8,6 @@ const CollectionMenu = React.createClass({
     return (<CollectionLeftMenu {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

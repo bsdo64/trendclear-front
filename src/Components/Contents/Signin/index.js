@@ -1,31 +1,37 @@
 /**
  * Created by dobyeongsu on 2016. 3. 23..
  */
-import React from 'react';
-import {browserHistory} from 'react-router';
-
-import SigninActions from '../../../Actions/SigninActions';
-
+import React, { PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import SigninAgree from './SigninAgree';
 import SigninFormContents from './SigninFormContents';
 
 require('./Signin.scss');
 const SigninContents = React.createClass({
   displayName: 'SigninContents',
+  propTypes: {
+    UserStore: PropTypes.object.isRequired,
+    SigninFormStore: PropTypes.object.isRequired,
+    FireToggleAgreePrivacy: PropTypes.func.isRequired,
+    FireToggleAgreeTerm: PropTypes.func.isRequired,
+    FireConfirmAgree: PropTypes.func.isRequired,
+    FireResetSigninForm: PropTypes.func.isRequired,
+  },
+
   componentWillMount() {
-    const {UserStore} = this.props;
+    const { UserStore } = this.props;
     if (UserStore.get('user')) {
       browserHistory.replace('/');
     }
   },
-  
+
   componentWillUnmount() {
-    SigninActions.resetForm();
+    this.props.FireResetSigninForm();
   },
 
   render() {
-    const {SigninFormStore} = this.props;
-    
+    const { SigninFormStore } = this.props;
+
     const agreeTerm = SigninFormStore.get('agreeTerm');
     const agreePrivacy = SigninFormStore.get('agreePrivacy');
     const confirmAgree = SigninFormStore.get('confirmAgree');
@@ -59,10 +65,15 @@ const SigninContents = React.createClass({
         }
 
         {
-          !confirmAgree && <SigninAgree
+          !confirmAgree &&
+          <SigninAgree
             agreeTerm={agreeTerm}
             agreePrivacy={agreePrivacy}
             confirmAgree={confirmAgree}
+            FireToggleAgreePrivacy={this.props.FireToggleAgreePrivacy}
+            FireToggleAgreeTerm={this.props.FireToggleAgreeTerm}
+            FireConfirmAgree={this.props.FireConfirmAgree}
+            FireResetSigninForm={this.props.FireResetSigninForm}
           />
         }
       </div>

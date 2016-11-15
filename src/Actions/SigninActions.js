@@ -1,6 +1,3 @@
-/**
- * Created by dobyeongsu on 2016. 3. 25..
- */
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 
@@ -10,7 +7,7 @@ class SigninActions {
     this.generateActions('emailVerifyFormOpen');
     this.generateActions('resetForm');
   }
-  
+
   checkEmailDup(params) {
     return (dispatch) => {
       Api
@@ -40,7 +37,6 @@ class SigninActions {
   }
 
   submit(params) {
-    console.log(params);
     return (dispatch) => {
       Api
         .setEntryPoint('/ajax')
@@ -53,7 +49,7 @@ class SigninActions {
         });
     };
   }
-  
+
   requestEmailVerify(params) {
     return (dispatch) => {
       Api

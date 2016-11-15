@@ -1,7 +1,5 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
-import {normalize, arrayOf} from 'normalizr';
-import {forum} from '../Model/normalizr/schema';
 
 class VenaStoreActions {
   constructor() {

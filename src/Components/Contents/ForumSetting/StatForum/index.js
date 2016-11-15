@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default (props) => {
+export default () => {
   return (
-    <div className="ui container" style={{margin: 10, width: 700}}>
+    <div className="ui container" style={{ margin: 10, width: 700 }}>
       <div className="ui segments ">
         <div className="ui segment"><h3 className="ui header">게시판 생성</h3>
           <div className="ui divider"></div>

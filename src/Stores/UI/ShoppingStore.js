@@ -1,8 +1,8 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map} from 'immutable';
+import Immutable from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
-import { initListener, setMergeState, locationHref } from '../Helper/func';
+import { initListener, setMergeState } from '../Helper/func';
 
 const defaultProps = {
   items: [],
@@ -35,7 +35,7 @@ class ShoppingStore {
   }
 
   onTooltipInit(itemCode) {
-    const newState = this.state.merge({tooltipItemCode: itemCode});
+    const newState = this.state.merge({ tooltipItemCode: itemCode });
     this.setState(newState);
   }
 

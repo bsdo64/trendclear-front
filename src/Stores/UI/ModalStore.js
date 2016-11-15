@@ -1,8 +1,7 @@
 import alt from '../../Utils/alt';
-import Immutable, {Map, fromJS} from 'immutable';
+import Immutable, { fromJS } from 'immutable';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import { initListener, setMergeState } from '../Helper/func';
-
 import LoginActions from '../../Actions/LoginActions';
 import UserActions from '../../Actions/UserActions';
 import ReportActions from '../../Actions/ReportActions';
@@ -13,6 +12,7 @@ import PostActions from '../../Actions/PostActions';
 
 class ModalStore {
   static displayName = 'ModalStore';
+
   constructor() {
     this.displayName = 'ModalStore';
 
@@ -42,7 +42,7 @@ class ModalStore {
     this.setMergeState = setMergeState.bind(this);
   }
 
-  toggleModal({location, contentType}) {
+  toggleModal({ location, contentType }) {
     const modalState = this.state.get('openModal');
     this.setState(this.state.merge({
       contentType: contentType,

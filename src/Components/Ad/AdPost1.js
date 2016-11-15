@@ -2,7 +2,7 @@ import React from 'react';
 
 const AddPost1 = React.createClass({
   render() {
-    const {url} = this.props;
+    const { url } = this.props;
     return (
       <div>
         <img
@@ -10,7 +10,7 @@ const AddPost1 = React.createClass({
           style={{
             padding: 10,
             width: '100%'
-          }} />
+          }}/>
       </div>
     )
   }

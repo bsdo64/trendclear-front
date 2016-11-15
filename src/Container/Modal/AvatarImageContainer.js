@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {getLoginUser} from '../Util/func';
-
+import { connect } from 'react-redux';
+import { getLoginUser } from '../Util/func';
 import AvatarImageModal from '../../Components/Modal/Components/AvatarImage';
 
 const AvatarImageContainer = React.createClass({
@@ -9,7 +8,6 @@ const AvatarImageContainer = React.createClass({
     return (<AvatarImageModal {...this.props} />)
   }
 });
-
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

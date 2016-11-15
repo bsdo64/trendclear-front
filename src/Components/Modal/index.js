@@ -1,7 +1,7 @@
 /**
  * Created by dobyeongsu on 2016. 11. 4..
  */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Modal from 'react-modal';
 import LoginContainer from '../../Container/Modal/LoginModalContainer';
 import ReportContainer from '../../Container/Modal/ReportModalContainer';
@@ -9,10 +9,15 @@ import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
 import DeleteItemContainer from '../../Container/Modal/DeleteModalContainer';
 import ShoppingContainer from '../../Container/Modal/ShoppingContainer';
 import ActivateVenalinkContainer from '../../Container/Modal/ActivateVenalinkContainer';
-import ModalActions from '../../Actions/ModalActions';
 
 require('./index.scss');
 const ModalBox = React.createClass({
+  displayName: 'ModalBox',
+  propTypes: {
+    FireCloseModal: PropTypes.func.isRequired,
+    ModalStore: PropTypes.object.isRequired,
+  },
+
   componentWillUnmount() {
     $(document).off('click', '.ui.dimmer.modals', this.stopPropagation, false);
   },
@@ -53,7 +58,7 @@ const ModalBox = React.createClass({
     }
   },
   closeModal() {
-    ModalActions.closeModal();
+    this.props.FireCloseModal();
   },
   render() {
     const { ModalStore } = this.props;
