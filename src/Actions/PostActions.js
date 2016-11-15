@@ -163,8 +163,7 @@ class PostActions {
     return (dispatch) => {
       Promise
         .all(ApiList)
-        .then(result => {
-          console.log(result);
+        .then(() => {
           return dispatch();
         });
     }

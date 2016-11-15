@@ -5,6 +5,6 @@
     "bower_components/**"
   ],
   "env": {
-    "NODE": "5.10.1"
+    "NODE": "6.9.1"
   }
 }

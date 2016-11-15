@@ -1,9 +1,7 @@
-'use strict';
-
-var _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
+const _extends = Object.assign || function (target) {
+    for (let i = 1; i < arguments.length; i++) {
+      const source = arguments[i];
+      for (let key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
           target[key] = source[key];
         }
@@ -12,12 +10,12 @@ var _extends = Object.assign || function (target) {
     return target;
   };
 
-var React = require('react');
+const React = require('react');
 
 function checkbox(name, checkedValues, onChange) {
   return function Checkbox(props) {
-    var checked = checkedValues.indexOf(props.value) >= 0;
-    var boxChange = onChange.bind(null, props.value);
+    const checked = checkedValues.indexOf(props.value) >= 0;
+    const boxChange = onChange.bind(null, props.value);
 
     return React.createElement('input', _extends({}, props, {
       type: 'checkbox',
@@ -45,7 +43,7 @@ module.exports = React.createClass({
   },
 
   onCheckboxChange: function onCheckboxChange(checkboxValue, event) {
-    var newValue;
+    let newValue;
     if (event.target.checked) {
       newValue = this.state.value.concat(checkboxValue);
     } else {
@@ -68,19 +66,19 @@ module.exports = React.createClass({
     return this.state.value;
   },
   render: function render() {
-    var _props = this.props;
-    var name = _props.name;
-    var value = _props.value;
-    var children = _props.children;
+    const _props = this.props;
+    const name = _props.name;
+    const value = _props.value;
+    const children = _props.children;
 
-    var checkedValues;
+    let checkedValues;
     if (!this.isControlledComponent()) {
       checkedValues = this.state.value;
     } else {
       checkedValues = value;
     }
 
-    var renderedChildren = children(checkbox(name, checkedValues, this.onCheckboxChange));
+    const renderedChildren = children(checkbox(name, checkedValues, this.onCheckboxChange));
     return renderedChildren && React.Children.only(renderedChildren);
   }
 });

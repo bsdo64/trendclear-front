@@ -11,7 +11,7 @@ import VenaStoreActions from '../../Actions/VenaStoreActions';
 import PostActions from '../../Actions/PostActions';
 
 class ModalStore {
-  static displayName = 'ModalStore';
+  static get displayName() { return 'ModalStore' }
 
   constructor() {
     this.displayName = 'ModalStore';

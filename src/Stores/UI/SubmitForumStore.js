@@ -24,7 +24,7 @@ const defaultProps = {
 };
 
 class SubmitForumStore {
-  static displayName = 'SubmitForumStore';
+  static get displayName() { return 'SubmitForumStore' }
 
   constructor() {
 

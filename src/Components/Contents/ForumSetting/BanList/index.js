@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
 const BanList = React.createClass({
+  displayName: 'BanList',
+  propTypes: {
+    location: PropTypes.object.isRequired,
+    Users: PropTypes.object.isRequired,
+    Forums: PropTypes.object.isRequired,
+  },
   componentDidMount() {
     const self = this;
     const forumId = this.props.location.query.forumId;
@@ -27,7 +33,6 @@ const BanList = React.createClass({
           method: 'The method you called is not defined.'
         },
         onSelect: function (user) {
-          "use strict";
 
           self.selectUser(user);
         }
@@ -35,14 +40,12 @@ const BanList = React.createClass({
   },
 
   selectUser(user) {
-    "use strict";
 
     const forumId = this.props.location.query.forumId;
     ForumSettingActions.addBanUser({ userId: user.id, forumId: forumId });
   },
 
   removeUser(user) {
-    "use strict";
     const forumId = this.props.location.query.forumId;
 
     ForumSettingActions.removeBanUser({
@@ -52,7 +55,6 @@ const BanList = React.createClass({
   },
 
   createUserItem(id) {
-    "use strict";
     const { Users } = this.props;
     const user = Users.get(id.toString());
 

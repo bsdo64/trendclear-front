@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import Collections from '../../Stores/Domain/Collections';
 
 require('./header.scss');
 const BestHeader = React.createClass({
   displayName: 'BestHeader',
+  propTypes: {
+    type: PropTypes.string,
+    location: PropTypes.object,
+    breadcrumbs: PropTypes.array,
+  },
   createBreadCrumbs(array = []) {
 
     return array.map((v, index) => {
@@ -22,12 +27,11 @@ const BestHeader = React.createClass({
     });
   },
   render() {
-    "use strict";
     const { type, location, breadcrumbs } = this.props;
     let breadcrumb;
 
     switch (type) {
-      case 'bestPostList':
+      case 'bestPostList': {
         breadcrumb = this.createBreadCrumbs(breadcrumbs);
 
         return (
@@ -36,9 +40,10 @@ const BestHeader = React.createClass({
             {breadcrumb}
           </div>
         );
-        break;
+      }
 
-      case 'collectionBestPostList':
+      case 'collectionBestPostList': {
+
         const c = Collections.getState();
         const collectionId = location.pathname.split('/')[2];
         const collection = c.get(collectionId.toString());
@@ -58,8 +63,7 @@ const BestHeader = React.createClass({
         }
 
         return <div></div>;
-
-        break;
+      }
 
       default:
         return (
@@ -68,7 +72,6 @@ const BestHeader = React.createClass({
             {breadcrumb}
           </div>
         );
-        break;
     }
   }
 });

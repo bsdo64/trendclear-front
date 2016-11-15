@@ -14,7 +14,7 @@ if (process.env.NODE_ENV !== 'production') {
   bootStrapLogger = require('debug')('vn:api:Bootstrap');
 }
 
-const initRouteState = store => dispatch => action => {
+const initRouteState = (/* store */) => dispatch => action => {
   if (action.type === '@@router/LOCATION_CHANGE') {
 
     const location = action.payload;
@@ -23,6 +23,10 @@ const initRouteState = store => dispatch => action => {
       .setEntryPoint('/ajax')
       .get('/store' + location.pathname, location.query)
       .then(function CallStoreApi(resBody, errBody) {
+
+        if (errBody) {
+          return;
+        }
 
         if (resBody.UserStore && resBody.UserStore.user) {
           const User = resBody.UserStore.user;
@@ -274,7 +278,7 @@ const initRouteState = store => dispatch => action => {
   }
 };
 
-export default (initialImmutableState) => {
+export default (initialImmutableState, sagaMiddleware) => {
   return createStore(
     combineReducers({
       Stores,
@@ -285,6 +289,7 @@ export default (initialImmutableState) => {
       applyMiddleware(
         initRouteState,
         thunk,
+        sagaMiddleware
       )
     )
   );

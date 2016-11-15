@@ -7,7 +7,13 @@ import {
   toggleAgreePrivacy,
   toggleAgreeTerm,
   confirmAgree,
-  resetSigninForm
+  resetSigninForm,
+
+  requestCheckEmailDup,
+  requestCheckNickDup,
+  requestEmailVerify,
+  requestCheckVerifyCode,
+  requestSignin
 } from '../../Actions/Signin'
 
 const SigninContainer = React.createClass({
@@ -38,5 +44,11 @@ module.exports = connect(
     FireToggleAgreeTerm: toggleAgreeTerm,
     FireConfirmAgree: confirmAgree,
     FireResetSigninForm: resetSigninForm,
+
+    FireRequestCheckEmailDup: requestCheckEmailDup,
+    FireRequestCheckNickDup: requestCheckNickDup,
+    FireRequestEmailVerify: requestEmailVerify,
+    FireRequestCheckVerifyCode: requestCheckVerifyCode,
+    FireRequestSignin: requestSignin,
   }
 )(SigninContainer);

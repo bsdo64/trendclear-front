@@ -5,7 +5,7 @@ import UserActions from '../../Actions/UserActions';
 import { initListener, setMergeState } from '../Helper/func';
 
 class ResetPasswordStore {
-  static displayName = 'ResetPasswordStore';
+  static get displayName() { return 'ResetPasswordStore' }
 
   constructor() {
     this.displayName = 'ResetPasswordStore';

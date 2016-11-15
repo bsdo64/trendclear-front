@@ -6,7 +6,7 @@ import ModalActions from '../../Actions/ModalActions';
 import { initListener, setMergeState } from '../Helper/func';
 
 class RemoveModalStore {
-  static displayName = 'RemoveModalStore';
+  static get displayName() { return 'RemoveModalStore' }
 
   constructor() {
     this.displayName = 'RemoveModalStore';

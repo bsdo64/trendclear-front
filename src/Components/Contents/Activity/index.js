@@ -1,7 +1,7 @@
 /**
  * Created by dobyeongsu on 2016. 3. 23..
  */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import cx from 'classnames';
 import AvatarImage from '../../AvatarImage';
@@ -13,13 +13,18 @@ import Waypoint from 'react-waypoint';
 require('./index.scss');
 const ActivityBox = React.createClass({
   displayName: 'ActivityBox',
-  propTypes: {},
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
+  propTypes: {
+    UserStore: PropTypes.object.isRequired,
+    ActivityStore: PropTypes.object.isRequired,
+    ListStore: PropTypes.object.isRequired,
+    AuthStore: PropTypes.object.isRequired,
+    PaginationStore: PropTypes.object.isRequired,
+    Posts: PropTypes.object.isRequired,
+    Users: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   },
 
   createActivityUserHeader(UserStore) {
-    "use strict";
 
     const user = UserStore.get('user');
     const sex = UserStore.getIn(['profile', 'sex']),
@@ -37,7 +42,6 @@ const ActivityBox = React.createClass({
     )
   },
   createActivityMeta(meta) {
-    "use strict";
 
     return (
       <div className="activity-meta">
@@ -63,7 +67,6 @@ const ActivityBox = React.createClass({
   },
 
   getMorePosts(context) {
-    "use strict";
 
     const { PaginationStore } = this.props;
     const Pagination = PaginationStore.get(context);
@@ -80,7 +83,6 @@ const ActivityBox = React.createClass({
   },
 
   createStyle(context, linkContext) {
-    "use strict";
 
     return cx('item', {
       active: context === linkContext

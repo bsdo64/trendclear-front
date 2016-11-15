@@ -5,7 +5,6 @@ const categoryGroup = new Schema('categoryGroups');
 const category = new Schema('categories');
 const collection = new Schema('collections');
 const forum = new Schema('forums');
-const follow_forums = new Schema('follow_forums');
 const prefix = new Schema('prefixes');
 
 const post = new Schema('posts');

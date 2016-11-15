@@ -1,15 +1,15 @@
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var path = require('path');
-var root = path.resolve(__dirname, '../');
+const webpack = require('webpack');
+const path = require('path');
+const root = path.resolve(__dirname, '../');
 
-var autoprefixer = require('autoprefixer');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'cheap-source-map',
   debug: true,
   entry: {
     Entry: [
+      'babel-polyfill',
       'webpack-dev-server/client?http://localhost:2992',
       'webpack/hot/only-dev-server',
       path.resolve(root, './src/App/Entry')

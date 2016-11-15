@@ -6,7 +6,7 @@ import ForumSettingActions from '../../Actions/ForumSettingActions';
 import { initListener, setMergeState } from '../Helper/func';
 
 class ForumSettingStore {
-  static displayName = 'ForumSettingStore';
+  static get displayName() { return 'ForumSettingStore' }
 
   constructor() {
     this.displayName = 'ForumSettingStore';

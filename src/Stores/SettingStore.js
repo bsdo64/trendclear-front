@@ -6,7 +6,7 @@ import SettingActions from '../Actions/SettingActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class SettingStore {
-  static displayName = 'SettingStore';
+  static get displayName() { return 'SettingStore' }
 
   constructor() {
 

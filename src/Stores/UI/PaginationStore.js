@@ -12,7 +12,7 @@ import Forums from '../Domain/Forums';
 import ListStore from './ListStore';
 
 class PaginationStore {
-  static displayName = 'PaginationStore';
+  static get displayName() { return 'PaginationStore' }
 
   constructor() {
     this.displayName = 'PaginationStore';

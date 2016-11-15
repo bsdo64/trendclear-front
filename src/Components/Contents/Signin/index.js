@@ -16,6 +16,12 @@ const SigninContents = React.createClass({
     FireToggleAgreeTerm: PropTypes.func.isRequired,
     FireConfirmAgree: PropTypes.func.isRequired,
     FireResetSigninForm: PropTypes.func.isRequired,
+
+    FireRequestCheckEmailDup: PropTypes.func.isRequired,
+    FireRequestCheckNickDup: PropTypes.func.isRequired,
+    FireRequestEmailVerify: PropTypes.func.isRequired,
+    FireRequestCheckVerifyCode: PropTypes.func.isRequired,
+    FireRequestSignin: PropTypes.func.isRequired,
   },
 
   componentWillMount() {
@@ -61,6 +67,11 @@ const SigninContents = React.createClass({
           confirmAgree &&
           <SigninFormContents
             {...signinContentsProps}
+            FireRequestCheckEmailDup={this.props.FireRequestCheckEmailDup}
+            FireRequestCheckNickDup={this.props.FireRequestCheckNickDup}
+            FireRequestEmailVerify={this.props.FireRequestEmailVerify}
+            FireRequestCheckVerifyCode={this.props.FireRequestCheckVerifyCode}
+            FireRequestSignin={this.props.FireRequestSignin}
           />
         }
 

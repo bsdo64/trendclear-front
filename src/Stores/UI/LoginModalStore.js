@@ -5,7 +5,7 @@ import LoginActions from '../../Actions/LoginActions';
 import { setMergeState } from '../Helper/func';
 
 class LoginModalStore {
-  static displayName = 'LoginModalStore';
+  static get displayName() { return 'LoginModalStore' }
 
   constructor() {
     this.displayName = 'LoginModalStore';

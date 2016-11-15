@@ -13,10 +13,10 @@ const defaultProps = {
 };
 
 class ShareLinkStore {
-  static displayName = 'ShareLinkStore';
+  static get displayName() { return 'ShareLinkStore' }
 
   constructor() {
-
+    this.displayName = 'ShareLinkStore';
     this.bindActions(VenaStoreActions);
     this.bindActions(PostActions);
     this.state = Immutable.fromJS(defaultProps);

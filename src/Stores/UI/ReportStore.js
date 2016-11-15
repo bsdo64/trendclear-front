@@ -6,7 +6,7 @@ import ReportActions from '../../Actions/ReportActions';
 import ModalActions from '../../Actions/ModalActions';
 
 class ReportStore {
-  static displayName = 'ReportStore';
+  static get displayName() { return 'ReportStore' }
 
   constructor() {
     this.displayName = 'ReportStore';

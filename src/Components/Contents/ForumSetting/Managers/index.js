@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 import cx from 'classnames';
 
 const Managers = React.createClass({
+  displayName: 'Managers',
+  propTypes: {
+    location: PropTypes.object.isRequired,
+    Users: PropTypes.object.isRequired,
+    Forums: PropTypes.object.isRequired,
+    AuthStore: PropTypes.object.isRequired,
+  },
   componentDidMount() {
     const self = this;
     const forumId = this.props.location.query.forumId;
@@ -28,7 +35,6 @@ const Managers = React.createClass({
           method: 'The method you called is not defined.'
         },
         onSelect: function (user) {
-          "use strict";
 
           self.selectUser(user);
         }
@@ -36,14 +42,12 @@ const Managers = React.createClass({
   },
 
   selectUser(user) {
-    "use strict";
 
     const forumId = this.props.location.query.forumId;
     ForumSettingActions.addManager({ userId: user.id, forumId: forumId });
   },
 
   removeUser(manager) {
-    "use strict";
     const forumId = this.props.location.query.forumId;
 
     ForumSettingActions.removeManager({
@@ -54,7 +58,6 @@ const Managers = React.createClass({
   },
 
   createManagerItem(id) {
-    "use strict";
     const { Users, Forums, location, AuthStore } = this.props;
     const manager = Users.get(id.toString());
     const forumId = location.query.forumId;

@@ -5,7 +5,7 @@ import SearchActions from '../Actions/SearchActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class SearchStore {
-  static displayName = 'SearchStore';
+  static get displayName() { return 'SearchStore' }
 
   constructor() {
 

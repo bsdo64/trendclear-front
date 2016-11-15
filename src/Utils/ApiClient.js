@@ -1,6 +1,3 @@
-/**
- * Created by dobyeongsu on 2015. 10. 23..
- */
 const request = require('superagent');
 const Promise = require('bluebird');
 const debug = require('debug');

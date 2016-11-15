@@ -7,6 +7,7 @@ import Login from './Login';
 import Modal from './Modal';
 import Pagination from './Pagination';
 import Report from './Report';
+import ResetPassword from './ResetPassword';
 import Search from './Search';
 import SigninForm from './SigninForm';
 
@@ -20,6 +21,7 @@ export default combineReducers({
   Modal,
   Pagination,
   Report,
+  ResetPassword,
   Search,
   SigninForm,
 });

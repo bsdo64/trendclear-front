@@ -14,7 +14,7 @@ import Posts from '../Domain/Posts';
 import GnbStore from '../GnbStore';
 
 class ListStore {
-  static displayName = 'ListStore';
+  static get displayName() { return 'ListStore' }
 
   constructor() {
     this.displayName = 'ListStore';

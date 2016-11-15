@@ -5,7 +5,7 @@ import GnbActions from '../Actions/GnbActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class GnbStore {
-  static displayName = 'GnbStore';
+  static get displayName() { return 'GnbStore' }
 
   constructor() {
     this.displayName = 'GnbStore';

@@ -8,7 +8,7 @@ import PostActions from '../Actions/PostActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class CommunityStore {
-  static displayName = 'CommunityStore';
+  static get displayName() { return 'CommunityStore' }
 
   constructor() {
     this.displayName = 'CommunityStore';

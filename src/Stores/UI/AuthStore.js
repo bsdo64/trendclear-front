@@ -4,7 +4,7 @@ import immutable from 'alt-utils/lib/ImmutableUtil';
 import { initListener, setMergeState } from '../Helper/func';
 
 class AuthStore {
-  static displayName = 'AuthStore';
+  static get displayName() { return 'AuthStore' }
 
   constructor() {
     this.displayName = 'AuthStore';

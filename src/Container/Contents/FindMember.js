@@ -4,14 +4,6 @@ import { connect } from 'react-redux';
 import UserActions from '../../Actions/UserActions';
 
 const FindMemberContainer = React.createClass({
-  getInitialState() {
-    return {
-      error: null,
-      requestFindEmail: null,
-      userExist: null,
-      resetEmailSent: null
-    };
-  },
 
   componentDidMount() {
     $('.ui.form')
@@ -44,7 +36,7 @@ const FindMemberContainer = React.createClass({
       });
   },
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     $('.ui.form').form('refresh');
   },
 
@@ -129,21 +121,12 @@ const mapStateToProps = (state) => {
     return state.getIn(['Stores', 'UI'].concat(args))
   };
 
-  const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
-  };
-
   return {
-    ResetPassword: getUIState('ResetPassword'),
+    ResetPasswordStore: getUIState('ResetPassword'),
     AuthStore: getUIState('Auth')
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-};
-
 module.exports = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(FindMemberContainer);

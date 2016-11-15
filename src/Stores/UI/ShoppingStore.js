@@ -13,7 +13,7 @@ const defaultProps = {
 };
 
 class ShoppingStore {
-  static displayName = 'ShoppingStore';
+  static get displayName() { return 'ShoppingStore' }
 
   constructor() {
 
@@ -47,7 +47,7 @@ class ShoppingStore {
     this.setState(newState);
   }
 
-  onRequestPurchaseItem(result) {
+  onRequestPurchaseItem() {
     const newState = this.state.merge({
       openPurchaseWindow: !this.state.get('openPurchaseWindow')
     });

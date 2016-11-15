@@ -7,7 +7,7 @@ import PostActions from '../Actions/PostActions';
 import { initListener, setMergeState } from './Helper/func';
 
 class SubmitStore {
-  static displayName = 'SubmitStore';
+  static get displayName() { return 'SubmitStore' }
 
   constructor() {
 
@@ -107,7 +107,6 @@ class SubmitStore {
   }
 
   onDeleteImages(result) {
-    const self = this;
     let deleteItemIndex = null;
     const state = this.state.update('postImages', list => {
       return list.filterNot((item, index) => {
