@@ -1,8 +1,7 @@
-import { Map } from 'immutable';
+import { UI } from '../InitialStates';
 
-const initState = Map({});
 
-const Community = (state = initState, action) => {
+const Community = (state = UI.Community, action) => {
   return state;
 };
 

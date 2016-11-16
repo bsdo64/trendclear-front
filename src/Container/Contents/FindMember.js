@@ -2,6 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import UserActions from '../../Actions/UserActions';
+import { UI } from '../../Reducers/InitialStates';
 
 const FindMemberContainer = React.createClass({
 
@@ -115,6 +116,11 @@ const FindMemberContainer = React.createClass({
     )
   }
 });
+
+FindMemberContainer.defaultProps = {
+  AuthStore: UI.Auth,
+  ResetPasswordStore: UI.ResetPassword,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

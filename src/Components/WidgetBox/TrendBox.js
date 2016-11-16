@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import UserActions from '../../Actions/UserActions';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
 import CountUp from 'countup.js';
@@ -9,14 +9,18 @@ import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router';
 import Draggable from 'react-draggable'; // The default
 import Inventory from '../Inventory';
+import { UI } from '../../Reducers/InitialStates';
 
 const Timer = React.createClass({
+  propTypes: {
+    init: PropTypes.number,
+    type: PropTypes.string
+  },
+
   getInitialState: function () {
     return { init: this.props.init || 0 };
   },
   tick: function () {
-    const type = this.props.type || 'default';
-
     this.setState({ init: this.state.init - 1 });
   },
   componentDidMount: function () {
@@ -34,8 +38,7 @@ const Timer = React.createClass({
     const type = nextProps.type || 'default';
 
     if (nextProps.init > 0 && !this[type]) {
-      this.setState({ init: nextProps.init }, (state) => {
-        "use strict";
+      this.setState({ init: nextProps.init }, () => {
 
         clearInterval(self[type]);
         self[type] = null;
@@ -67,6 +70,11 @@ const Timer = React.createClass({
 
 require('./Trendbox.scss');
 const TrendBox = React.createClass({
+  propTypes: {
+    user: PropTypes.object.isRequired,
+    ShoppingStore: PropTypes.object.isRequired,
+  },
+
   getInitialState() {
     return {
       RPModal: false,
@@ -135,7 +143,6 @@ const TrendBox = React.createClass({
   },
 
   updateCountUp(nodeId, from, to, options) {
-    "use strict";
 
     if (from != to) {
       const count = new CountUp(nodeId, from, to, 0, 1.5, options);
@@ -143,19 +150,16 @@ const TrendBox = React.createClass({
     }
   },
   openAvatarModal() {
-    "use strict";
 
     UserActions.toggleAvatarModal({
       contentType: 'AvatarImage'
     });
   },
   openRPModal() {
-    "use strict";
 
     this.setState({ RPModal: !this.state.RPModal });
   },
   sendPayment() {
-    "use strict";
     const IMP = window.IMP;
     IMP.init('imp27018207');
 
@@ -179,7 +183,7 @@ const TrendBox = React.createClass({
       buyer_postcode: '123-456'
     }, function (rsp) {
       if (rsp.success) {
-        var msg = '결제가 완료되었습니다.';
+        let msg = '결제가 완료되었습니다.';
         msg += '고유ID : ' + rsp.imp_uid;
         msg += '상점 거래ID : ' + rsp.merchant_uid;
         msg += '결제 금액 : ' + rsp.paid_amount;
@@ -187,7 +191,7 @@ const TrendBox = React.createClass({
 
         console.log(msg);
       } else {
-        var msg = '결제에 실패하였습니다.';
+        let msg = '결제에 실패하였습니다.';
         msg += '에러내용 : ' + rsp.error_msg;
 
         console.log(msg);
@@ -196,7 +200,6 @@ const TrendBox = React.createClass({
   },
 
   openVenacleStore() {
-    "use strict";
 
     VenaStoreActions.toggleVenacleStore({
       contentType: 'Shopping'
@@ -205,7 +208,6 @@ const TrendBox = React.createClass({
   },
 
   createSkill(value, key) {
-    "use strict";
 
     let usingTime, cooltimeSec, endTime, gap, result;
     if (value.get('using_at')) {
@@ -252,27 +254,22 @@ const TrendBox = React.createClass({
   },
 
   closeItemTooltip() {
-    "use strict";
   },
 
   showItemTooltip() {
-    "use strict";
   },
 
   togglePurchaseWindow(item) {
-    "use strict";
 
     VenaStoreActions.togglePurchaseWindow(item);
   },
 
   confirmPurchaseItem(item) {
-    "use strict";
 
     VenaStoreActions.requestPurchaseItem(item.toJS());
   },
 
   render() {
-    const self = this;
     const { user, ShoppingStore } = this.props;
 
     const sex = user.profile.get('sex'),
@@ -520,5 +517,9 @@ const TrendBox = React.createClass({
     );
   }
 });
+
+TrendBox.defaultProps = {
+  ShoppingStore: UI.Shopping
+};
 
 export default TrendBox;

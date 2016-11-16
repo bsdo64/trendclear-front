@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import BestCategorySelect from '../../Components/BestCategorySelect';
 
+import {
+  updateFollowingFilter,
+  requestSaveFollowingFilter,
+} from '../../Actions/Gnb';
+
 const BestCategoryMenu = React.createClass({
   render() {
     return (
@@ -33,11 +38,10 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireUpdateFollowingFilter: updateFollowingFilter,
+    FireRequestSaveFollowingFilter: requestSaveFollowingFilter,
+  }
 )(BestCategoryMenu);

@@ -2,12 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Submit from '../../Components/Contents/Submit';
+import { UI } from '../../Reducers/InitialStates';
 
 const SubmitPostContainer = React.createClass({
   render() {
     return (<Submit {...this.props} />);
   }
 });
+
+SubmitPostContainer.defaultProps = {
+  AuthStore: UI.Auth,
+  UserStore: UI.User,
+  SubmitStore: UI.Submit,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

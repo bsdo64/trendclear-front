@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import cx from 'classnames';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import moment from 'moment';
 
 const VenalinkActiveList = React.createClass({
+  propTypes: {
+    UserStore: PropTypes.object.isRequired
+  },
+
   createVenalinkItem(venalink) {
-    "use strict";
 
     let status, positive;
     switch (venalink.get('is_activate')) {
@@ -19,10 +23,15 @@ const VenalinkActiveList = React.createClass({
         break;
     }
 
+    const statusStyle = cx({
+      positive: positive,
+      negative: !positive
+    }) ;
+
     return (
       <tr key={venalink.get('id')}>
         <td>포스트</td>
-        <td className="positive">{status}</td>
+        <td className={statusStyle}>{status}</td>
         <td className="right aligned">{moment(venalink.get('active_at')).format('YY/MM/DD hh:mm:ss')}</td>
         <td className="right aligned">{moment(venalink.get('terminate_at')).format('YY/MM/DD hh:mm:ss')}</td>
         <td className="positive right aligned">{venalink.get('participants').size}</td>
@@ -151,11 +160,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+
+  }
 )(VenalinkActiveList);

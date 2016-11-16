@@ -236,6 +236,7 @@ const initRouteState = (/* store */) => dispatch => action => {
             Pagination: resBody.PaginationStore,
             SigninForm: resBody.SigninFormStore,
             Search: resBody.SearchStore,
+            Setting: resBody.SettingStore,
             Login: resBody.LoginStore,
             List: resBody.ListStore,
           },

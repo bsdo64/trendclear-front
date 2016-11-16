@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { UI } from '../InitialStates';
 import debug from 'debug';
 const errorLog = debug('vn:action:error');
 
@@ -6,6 +6,7 @@ import {
   TOGGLE_AGREE_TERM,
   TOGGLE_AGREE_PRIVACY,
   CONFIRM_AGREE,
+  EMAIL_VERIFY_FORM_OPEN,
 
   SUCCESS_CHECK_EMAILDUP,
   FAILURE_CHECK_EMAILDUP,
@@ -13,36 +14,13 @@ import {
   FAILURE_CHECK_NICKDUP,
   SUCCESS_CHECK_VERIFYCODE,
   FAILURE_CHECK_VERIFYCODE,
+  SUCCESS_SIGNIN,
+  FAILURE_SIGNIN,
+  SUCCESS_EMAILVERIFY,
+  FAILURE_EMAILVERIFY,
 } from '../../Actions/Signin';
 
-const initMap = Map({
-
-  // agree ui
-  agreeTerm: false,
-  agreePrivacy: false,
-  confirmAgree: false,
-
-  // form ui
-  emailDup: null,
-  nickDup: null,
-  emailRequested: false,
-  submitResult: false,
-  emailVerifySuccess: false,
-  emailVerifyFail: false,
-  emailVerifyFormOpen: false,
-
-  // form Value
-  email: null,
-  password: null,
-  nick: null,
-  sex: null,
-  year: null,
-  month: null,
-  day: null,
-  birth: null
-});
-
-const SigninForm = (state = initMap, action) => {
+const SigninForm = (state = UI.SiginForm, action) => {
   switch (action.type) {
 
     case TOGGLE_AGREE_TERM: {
@@ -57,21 +35,39 @@ const SigninForm = (state = initMap, action) => {
       return state.update('confirmAgree', () => true);
     }
 
+    case EMAIL_VERIFY_FORM_OPEN: {
+      return state.update('emailVerifyFormOpen', () => true);
+    }
+
     case SUCCESS_CHECK_EMAILDUP: {
-      return state.update('emailDup', () => action.dup);
+      return state.update('emailDup', () => !!action.dup);
     }
 
     case SUCCESS_CHECK_NICKDUP: {
-      return state.update('nickDup', () => action.dup);
+      return state.update('nickDup', () => !!action.dup);
     }
 
     case SUCCESS_CHECK_VERIFYCODE: {
-      return state.update('emailDup', () => action.dup);
+      return state.update('emailRequested', () => action.result === 'ok');
+    }
+
+    case SUCCESS_EMAILVERIFY: {
+      const result = (action.result === 'ok')
+        ? { emailVerifySuccess: true, emailVerifyFail: false }
+        : { emailVerifySuccess: false, emailVerifyFail: true };
+
+      return state.merge(result);
+    }
+
+    case SUCCESS_SIGNIN: {
+      return state.update('submitResult', () => action.result === 'ok');
     }
 
     case FAILURE_CHECK_NICKDUP:
     case FAILURE_CHECK_EMAILDUP:
-    case FAILURE_CHECK_VERIFYCODE: {
+    case FAILURE_CHECK_VERIFYCODE:
+    case FAILURE_SIGNIN:
+    case FAILURE_EMAILVERIFY: {
       errorLog(action.error);
       break;
     }

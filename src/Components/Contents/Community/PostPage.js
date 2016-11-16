@@ -1,15 +1,28 @@
 import React, { PropTypes } from 'react';
+import { Map } from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { browserHistory } from 'react-router';
+import debug from 'debug';
+
 import LoginActions from '../../../Actions/LoginActions';
 import CommentActions from '../../../Actions/CommentActions';
 import CommunityActions from '../../../Actions/CommunityActions';
+
 import BestPost from '../../PostItem/BigPost';
 import Paginator from '../../Paginator';
 import Menu from '../../PostItem/ReportMenu';
 import MakeUrl from '../../Lib/MakeUrl';
 import AvatarImage from '../../AvatarImage';
 import Forum from './Forum';
+
+const logger = debug('vn:Components:PostPage');
+const errorLog = function (text) {
+  if (process.env.NODE_ENV !== 'production') {
+    return logger(text);
+  } else {
+    return null;
+  }
+};
 
 const commentMediumConfig = {
   toolbar: false,
@@ -129,10 +142,10 @@ const SubCommentItem = React.createClass({
 
           CommentActions.updateSubComment(comment);
         } else {
-          console.log('Input sub comment');
+          errorLog('Input sub comment');
         }
       } else {
-        console.log('not available');
+        errorLog('not available');
       }
     } else {
       const { location } = this.props;
@@ -327,7 +340,6 @@ const CommentItem = React.createClass({
     this.setState({ subCommentOpen: !this.state.subCommentOpen }, () => {
 
       const commentId = this.props.comment.get('id');
-      const subCommentOpen = this.state.subCommentOpen;
       this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], commentMediumConfig);
     });
   },
@@ -357,10 +369,10 @@ const CommentItem = React.createClass({
           CommentActions.submitSubComment(comment);
           this.editor.setContent('');
         } else {
-          console.log('Input sub comment');
+          errorLog('Input sub comment');
         }
       } else {
-        console.log('not available');
+        errorLog('not available');
       }
     } else {
       const location = this.props.location;
@@ -398,10 +410,10 @@ const CommentItem = React.createClass({
           CommentActions.updateComment(comment);
           this.editor.destroy();
         } else {
-          console.log('Input comment');
+          errorLog('Input comment');
         }
       } else {
-        console.log('not available');
+        errorLog('not available');
       }
     } else {
       const location = this.props.location;
@@ -689,10 +701,10 @@ const CommentBox = React.createClass({
           CommentActions.submitComment(comment);
           this.editor.setContent('');
         } else {
-          console.log('Input comment');
+          errorLog('Input comment');
         }
       } else {
-        console.log('not available');
+        errorLog('not available');
       }
     } else {
       const location = location;
@@ -870,5 +882,11 @@ const PostPage = React.createClass({
     }
   }
 });
+
+PostPage.defaultProps = {
+  Comments: Map({}),
+  SubComments: Map({}),
+  Prefixes: Map({})
+};
 
 export default PostPage;

@@ -32,7 +32,7 @@ const defaultProps = {
 };
 
 class SigninFormStore {
-  static displayName = 'SigninFormStore';
+  static get displayName() { return 'SigninFormStore' }
 
   constructor() {
 
@@ -56,24 +56,24 @@ class SigninFormStore {
   }
 
   onConfirmAgree() {
-    const newState = this.state.update('confirmAgree', v => true);
+    const newState = this.state.update('confirmAgree', () => true);
     this.setState(newState);
   }
 
   onCheckEmailDup(result) {
     const dup = parseInt(result.dup, 10);
-    const newState = this.state.update('emailDup', v => !!dup);
+    const newState = this.state.update('emailDup', () => !!dup);
     this.setState(newState);
   }
 
   onCheckNickDup(result) {
     const dup = parseInt(result.dup, 10);
-    const newState = this.state.update('nickDup', v => !!dup);
+    const newState = this.state.update('nickDup', () => !!dup);
     this.setState(newState);
   }
 
   onEmailVerifyFormOpen() {
-    const newState = this.state.update('emailVerifyFormOpen', v => true);
+    const newState = this.state.update('emailVerifyFormOpen', () => true);
     this.setState(newState);
   }
 

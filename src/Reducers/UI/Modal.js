@@ -1,14 +1,8 @@
-import { Map } from 'immutable';
+import { UI } from '../InitialStates';
 import { TOGGLE_LOGIN_MODAL, CLOSE_LOGIN_MODAL } from '../../Actions/Login';
 import { CLOSE_MODAL } from '../../Actions/Modal';
 
-const initState = Map({
-  contentType: null,
-  openModal: false,
-  location: null
-});
-
-const Modal = (state = initState, action) => {
+const Modal = (state = UI.Modal, action) => {
   switch (action.type) {
 
     case TOGGLE_LOGIN_MODAL: {

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ForumActions from '../../../../Actions/ForumActions';
 import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
 require('./index.scss');
 const PrefixBox = React.createClass({
+  propTypes: {
+    forum: PropTypes.object.isRequired,
+    prefixes: PropTypes.object.isRequired,
+  },
+
   getInitialState() {
     return {
       openAdder: false,
@@ -14,7 +19,6 @@ const PrefixBox = React.createClass({
   },
 
   openPrefixUpdate(id) {
-    "use strict";
 
     this.setState({
       updateItemId: id
@@ -22,7 +26,6 @@ const PrefixBox = React.createClass({
   },
 
   closePrefixUpdate() {
-    "use strict";
 
     this.setState({
       updateItemId: null
@@ -30,7 +33,6 @@ const PrefixBox = React.createClass({
   },
 
   updateOnChange(e) {
-    "use strict";
 
     this.setState({
       updateItemText: e.target.value
@@ -38,7 +40,6 @@ const PrefixBox = React.createClass({
   },
 
   sendUpdate(e) {
-    "use strict";
 
     const charCode = e.charCode;
     const text = e.target.value;
@@ -59,8 +60,7 @@ const PrefixBox = React.createClass({
     }
   },
 
-  prefixDelete(id, e) {
-    "use strict";
+  prefixDelete(id) {
 
     ForumSettingActions.deleteForumPrefix({
       id: id
@@ -68,7 +68,6 @@ const PrefixBox = React.createClass({
   },
 
   createPrefixItem (p) {
-    "use strict";
 
     if (p.get('id') === this.state.updateItemId) {
       return (
@@ -98,13 +97,11 @@ const PrefixBox = React.createClass({
     }
   },
   triggerOpenAddPrefix() {
-    "use strict";
 
     this.setState({ openAdder: !this.state.openAdder })
 
   },
   sendPrefix(e) {
-    "use strict";
     const charCode = e.charCode;
     const { forum } = this.props;
 
@@ -120,7 +117,6 @@ const PrefixBox = React.createClass({
     }
   },
   prefixText() {
-    "use strict";
 
     this.setState({
       prefixText: this.refs.input_prefix.value.trim()
@@ -155,6 +151,10 @@ const PrefixBox = React.createClass({
 });
 
 const ForumPrefix = React.createClass({
+  propTypes: {
+    ForumSettingStore: PropTypes.object.isRequired,
+  },
+
   componentWillUnmount() {
     ForumSettingActions.resetButton();
   },

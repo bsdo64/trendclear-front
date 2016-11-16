@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Community from '../../Components/Contents/Community';
+import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
@@ -11,6 +12,22 @@ const CommunityContainer = React.createClass({
     return (<Community {...this.props} />)
   }
 });
+
+CommunityContainer.defaultProps = {
+  LoginStore: UI.Login,
+  CommunityStore: UI.Community,
+  ListStore: UI.List,
+  AuthStore: UI.Auth,
+  PaginationStore: UI.Pagination,
+
+  Collections: Domains.Collections,
+  Forums: Domains.Forums,
+  Users: Domains.Users,
+  Posts: Domains.Posts,
+  Comments: Domains.Comments,
+  SubComments: Domains.SubComments,
+  Prefixes: Domains.Prefixes,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

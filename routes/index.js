@@ -81,7 +81,7 @@ router.get('/venalink/post/m/:linkId', function (req, res) {
   Api
     .get('http://localhost:3001/ajax/venalink/post/m/' + req.params.linkId)
     .set(req.headers)
-    .end(function(err, result){
+    .end(function (err, result) {
 
       if (err || !result.ok) {
         res.render('entry/meta', null);
@@ -98,7 +98,7 @@ router.get('/venalink/post/:linkId', function (req, res) {
     Api
       .get('http://localhost:3001/ajax/venalink/post/' + req.params.linkId)
       .set(req.headers)
-      .end(function(err, result){
+      .end(function (err, result) {
         const post = result.body;
 
         if (post) {
@@ -118,7 +118,7 @@ router.get('/link/post/m/:linkId', function (req, res) {
   Api
     .get('http://localhost:3001/ajax/link/post/m/' + req.params.linkId)
     .set(req.headers)
-    .end(function(err, result){
+    .end(function (err, result) {
 
       if (err || !result.ok) {
         res.render('entry/meta', null);
@@ -135,7 +135,7 @@ router.get('/link/post/:linkId', function (req, res, next) {
     Api
       .get('http://localhost:3001/ajax/link/post/' + req.params.linkId)
       .set(req.headers)
-      .end(function(err, result){
+      .end(function (err, result) {
         const post = result.body;
 
         if (post) {
@@ -150,21 +150,21 @@ router.get('/link/post/:linkId', function (req, res, next) {
 });
 
 /* GET home page. */
-router.get(routes, function(req, res, next) {
+router.get(routes, function (req, res, next) {
   console.log(req.headers);
   console.log(req.url);
 
   let defaultData = {
-    production: process.env.NODE_ENV ? true : false,
+    production: !!process.env.NODE_ENV,
 
     title: '베나클',
     meta: [
-      {name: 'description', content: '공유하세요! 원하는 모든 정보와 이슈가 있는곳, 베니클입니다.'},
-      {name: 'og:title', content: '베나클'},
-      {name: 'og:description', content: '공유하세요! 원하는 모든 정보와 이슈가 있는곳, 베니클입니다.'},
-      {name: 'og:image', content: ''},
-      {name: 'og:url', content: ''},
-      {name: 'og:site_name', content: '베나클'},
+      { name: 'description', content: '공유하세요! 원하는 모든 정보와 이슈가 있는곳, 베니클입니다.' },
+      { name: 'og:title', content: '베나클' },
+      { name: 'og:description', content: '공유하세요! 원하는 모든 정보와 이슈가 있는곳, 베니클입니다.' },
+      { name: 'og:image', content: '' },
+      { name: 'og:url', content: '' },
+      { name: 'og:site_name', content: '베나클' },
     ]
   };
 
@@ -183,7 +183,7 @@ router.get(routes, function(req, res, next) {
 });
 
 /* 404 page. */
-router.get('*', function(req, res, next) {
+router.get('*', function (req, res, next) {
   console.log(req.headers);
   console.log(req.url);
 

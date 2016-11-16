@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ForumActions from '../../../../Actions/ForumActions';
 import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
 require('./index.scss');
 const Announce = React.createClass({
+  propTypes: {
+    ForumSettingStore: PropTypes.object.isRequired,
+  },
+
   componentWillUnmount() {
     ForumSettingActions.resetButton();
   },
@@ -31,7 +35,7 @@ const Announce = React.createClass({
   removeAnnounce(announce) {
     "use strict";
     const { ForumSettingStore } = this.props;
-    const forumInfo = ForumSettingStore.get('forumInfo');
+    // const forumInfo = ForumSettingStore.get('forumInfo');
     const forum = ForumSettingStore.get('forum');
 
     ForumSettingActions.removeAnnounce({

@@ -54,7 +54,7 @@ class ForumSettingStore {
   onUpdateForumPrefix(prefixObj) {
     const state = this.state.updateIn(['forum', 'prefixes'], list => {
       const entry = list.findEntry(i => i.get('id') === prefixObj.id);
-      return list.update(entry[0], i => Map(prefixObj))
+      return list.update(entry[0], () => Map(prefixObj))
     });
     this.setState(state);
   }

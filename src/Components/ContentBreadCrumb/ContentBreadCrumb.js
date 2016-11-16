@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import Collections from '../../Stores/Domain/Collections';
 
 require('./header.scss');
 const BestHeader = React.createClass({
@@ -9,6 +8,7 @@ const BestHeader = React.createClass({
     type: PropTypes.string,
     location: PropTypes.object,
     breadcrumbs: PropTypes.array,
+    collections: PropTypes.object,
   },
   createBreadCrumbs(array = []) {
 
@@ -27,7 +27,7 @@ const BestHeader = React.createClass({
     });
   },
   render() {
-    const { type, location, breadcrumbs } = this.props;
+    const { type, location, breadcrumbs, collections } = this.props;
     let breadcrumb;
 
     switch (type) {
@@ -44,22 +44,24 @@ const BestHeader = React.createClass({
 
       case 'collectionBestPostList': {
 
-        const c = Collections.getState();
-        const collectionId = location.pathname.split('/')[2];
-        const collection = c.get(collectionId.toString());
+        if (collections) {
+          const collectionId = location.pathname.split('/')[2];
+          const collection = collections.get(collectionId.toString());
 
-        breadcrumb = this.createBreadCrumbs([
-          { title: '나의 컬렉션' },
-          { title: collection.get('title'), url: `/collection/${collectionId}` },
-        ]);
+          if (collection) {
 
-        if (collection) {
-          return (
-            <div className="ui breadcrumb content_header">
-              <i className="fa fa-angle-right"/>
-              {breadcrumb}
-            </div>
-          );
+            breadcrumb = this.createBreadCrumbs([
+              { title: '나의 컬렉션' },
+              { title: collection.get('title'), url: `/collection/${collectionId}` },
+            ]);
+
+            return (
+              <div className="ui breadcrumb content_header">
+                <i className="fa fa-angle-right"/>
+                {breadcrumb}
+              </div>
+            );
+          }
         }
 
         return <div></div>;

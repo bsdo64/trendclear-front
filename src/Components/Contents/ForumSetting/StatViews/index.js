@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default (props) => {
+const StatViews = () => {
   return (
     <div className="ui container" style={{ margin: 10, width: 700 }}>
       <div className="ui segments ">
@@ -31,3 +31,5 @@ export default (props) => {
     </div>
   )
 };
+
+export default StatViews;

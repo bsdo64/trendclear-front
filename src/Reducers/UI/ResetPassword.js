@@ -1,14 +1,6 @@
-import { Map } from 'immutable';
+import { UI } from '../InitialStates';
 
-const initState = Map({
-  error: null,
-  requestFindEmail: null,
-  userExist: null,
-  resetEmailSent: null,
-  isLoading: false
-});
-
-const ResetPassword = (state = initState, action) => {
+const ResetPassword = (state = UI.ResetPassword, action) => {
   switch (action.type) {
 
     default:

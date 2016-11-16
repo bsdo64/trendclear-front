@@ -80,13 +80,11 @@ const EditorBox = React.createClass({
   },
 
   toggleAnnounce() {
-    "use strict";
 
     this.setState({ isAnnounce: !this.state.isAnnounce });
   },
 
   handleContent() {
-    "use strict";
     let allContents = this.editor.serialize();
     let el = allContents['post_editor'].value;
 
@@ -106,7 +104,6 @@ const EditorBox = React.createClass({
       .get(0);
 
     function checkSkillAvailable(writePostSkill) {
-      "use strict";
 
       const property = writePostSkill.getIn(['skill', 'property']);
       const cooltime = property.get('cooltime');
@@ -153,7 +150,6 @@ const EditorBox = React.createClass({
   },
 
   modPost() {
-    "use strict";
     const { SubmitStore, location } = this.props;
 
     const title = SubmitStore.get('title');
@@ -175,32 +171,27 @@ const EditorBox = React.createClass({
   },
 
   removeContnet() {
-    "use strict";
     PostActions.removeContent();
     this.editor.setContent(null);
   },
 
   getUrlPost() {
-    "use strict";
 
     const url = this.refs.url_input.value.trim();
     PostActions.getMeta(url);
   },
 
   selectEditor() {
-    "use strict";
 
     this.setState({ type: 'editor' });
   },
 
   selectUrl() {
-    "use strict";
 
     this.setState({ type: 'url' });
   },
 
   createUrlMetaContent(urlMetaData, askButton) {
-    "use strict";
 
     return (
       <div className="url-meta-data-box">
@@ -237,7 +228,6 @@ const EditorBox = React.createClass({
   },
 
   setUrlMetaContent(e) {
-    "use strict";
     e.preventDefault();
     e.stopPropagation();
 
@@ -248,14 +238,12 @@ const EditorBox = React.createClass({
   },
 
   checkTitleAndContent() {
-    "use strict";
 
     const { SubmitStore } = this.props;
     return !SubmitStore.get('title') || !$(SubmitStore.get('content')).text().trim();
   },
 
   handleRecaptcha(a, b, c, d) {
-    "use strict";
 
     const args = Array.prototype.slice.call(arguments, 1);
 
@@ -263,7 +251,6 @@ const EditorBox = React.createClass({
   },
 
   checkForumManager(user, managers) {
-    "use strict";
 
     const key = managers.findKey(u => u.get('id') === user.get('id'));
     if (key === undefined) {
@@ -293,13 +280,11 @@ const EditorBox = React.createClass({
   },
 
   setRepresentImage(index) {
-    "use strict";
 
     PostActions.setRepresentImage({ index: index });
   },
 
   render() {
-    "use strict";
 
     const { SubmitStore, UserStore } = this.props;
     const type = SubmitStore.get('type');
@@ -421,11 +406,9 @@ const SubmitContents = React.createClass({
   },
 
   handleTitle() {
-    "use strict";
     PostActions.handleTitle(this.refs.title.value);
   },
   handlePrefix(option) {
-    "use strict";
     if (option) {
       PostActions.selectPrefix(option.value);
     } else if (option === null) {

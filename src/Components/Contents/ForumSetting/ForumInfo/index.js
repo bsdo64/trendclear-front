@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ForumActions from '../../../../Actions/ForumActions';
 import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
 const ForumInfo = React.createClass({
+  propTypes: {
+    ForumSettingStore: PropTypes.object.isRequired,
+  },
+
   componentWillUnmount() {
     ForumSettingActions.resetButton();
   },

@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import { browserHistory } from 'react-router';
-import SigninActions from '../../../Actions/SigninActions';
 
 const SigninFormContents = React.createClass({
   displayName: 'SigninFormContents',
@@ -17,6 +16,7 @@ const SigninFormContents = React.createClass({
     FireRequestCheckEmailDup: PropTypes.func.isRequired,
     FireRequestCheckNickDup: PropTypes.func.isRequired,
     FireRequestEmailVerify: PropTypes.func.isRequired,
+    FireEmailVerifyFormOpen: PropTypes.func.isRequired,
     FireRequestCheckVerifyCode: PropTypes.func.isRequired,
     FireRequestSignin: PropTypes.func.isRequired,
   },
@@ -25,14 +25,13 @@ const SigninFormContents = React.createClass({
     const oldSubmitResult = this.props.submitResult;
     const oldEmailVerifySuccess = this.props.emailVerifySuccess;
     const { submitResult, emailVerifySuccess } = nextProps;
-    if (oldSubmitResult !== submitResult) {
-      if (oldEmailVerifySuccess === emailVerifySuccess) {
-        if (submitResult && emailVerifySuccess) {
-          browserHistory.push('/');
-        }
+    if (oldSubmitResult === false && submitResult === true) {
+      if (oldEmailVerifySuccess === true && emailVerifySuccess === true) {
+        browserHistory.push('/');
       }
     }
   },
+
   componentDidMount() {
     $('form select').dropdown();
     $(this.refs.signinform).form({
@@ -129,7 +128,7 @@ const SigninFormContents = React.createClass({
           ]
         }
       },
-      onSuccess: function (err, result) {
+      onSuccess: (err, result) => {
         result.birth = new Date(result.year, result.month - 1, result.day);
         this.props.FireRequestSignin(result);
       }
@@ -138,7 +137,7 @@ const SigninFormContents = React.createClass({
   createYear() {
     const currentYear = new Date().getYear() + 1900;
     const options = [];
-    for (let i = 0; i < 100; i++ ) {
+    for (let i = 0; i < 100; i++) {
       const y = currentYear - i;
       options.push(<option key={y} value={y}>{y}</option>)
     }
@@ -333,7 +332,7 @@ const SigninFormContents = React.createClass({
     if ((emailDup === false) && (nickDup === false) &&
       (emailVerifySuccess === false) && (emailVerifyFail === false) &&
       (!emailRequested)) {
-      SigninActions.emailVerifyFormOpen();
+      this.props.FireEmailVerifyFormOpen();
       this._sendEmailVerify();
     }
 

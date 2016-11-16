@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import marked from '../../Components/Lib/Marked';
 import ForumActions from '../../Actions/ForumActions';
+import { UI, Domains } from '../../Reducers/InitialStates';
 
-function isNumeric(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
+const SubmitForum = React.createClass({
+  propTypes: {
+    SubmitForumStore: PropTypes.object.isRequired,
+    UserStore: PropTypes.object.isRequired,
+  },
 
-const SubmitForm = React.createClass({
   componentDidMount() {
-    const self = this;
-
     $('.ui.form')
       .form({
         fields: {
@@ -56,7 +56,7 @@ const SubmitForm = React.createClass({
           e.preventDefault();
           e.stopPropagation();
 
-          const { SubmitForumStore } = self.props;
+          const { SubmitForumStore } = this.props;
           const error = SubmitForumStore.getIn(['form', 'error']);
 
           if (!error) {
@@ -84,7 +84,6 @@ const SubmitForm = React.createClass({
   },
 
   validate(e) {
-    "use strict";
 
     if (e.target.value.length > 1) {
       ForumActions.validateBeforeCreateForum({
@@ -205,6 +204,10 @@ const SubmitForm = React.createClass({
   }
 });
 
+SubmitForum.defaultProps = {
+  SubmitForumStore: UI.SubmitForum,
+};
+
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args))
@@ -215,21 +218,14 @@ const mapStateToProps = (state) => {
   };
 
   return {
-    SigninFormStore: getUIState('SigninForm'),
-    GnbStore: getUIState('Gnb'),
-    LoginStore: getUIState('Login'),
-    SubmitFormStore: getUIState('SubmitForm'),
+    SubmitForumStore: getUIState('SubmitForum'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
-    Forums: getDomainState('Forums'),
-    Categories: getDomainState('Categories'),
   }
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {}
 };
 
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
-)(SubmitForm);
+  {
+
+  }
+)(SubmitForum);

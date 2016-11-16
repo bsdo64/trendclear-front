@@ -1,6 +1,3 @@
-/**
- * Created by dobyeongsu on 2016. 3. 23..
- */
 import React, { PropTypes } from 'react';
 import UserActions from '../../../Actions/UserActions';
 import SettingActions from '../../../Actions/SettingActions';
@@ -8,6 +5,13 @@ import moment from 'moment';
 
 const SettingProfile = React.createClass({
   displayName: 'SettingProfile',
+  propTypes: {
+    UserStore: PropTypes.object.isRequired,
+    defaultYear: PropTypes.number.isRequired,
+    defaultMonth: PropTypes.number.isRequired,
+    SettingStore: PropTypes.object.isRequired,
+  },
+
   getDefaultProps() {
     const d = new Date();
     return {
@@ -32,7 +36,6 @@ const SettingProfile = React.createClass({
   },
 
   createYear() {
-    "use strict";
 
     const list = [];
     for (let i = 0; i < 100; i++) {
@@ -44,7 +47,6 @@ const SettingProfile = React.createClass({
   },
 
   createMonth() {
-    "use strict";
 
     const list = [];
     const month = this.props.defaultMonth;
@@ -64,24 +66,19 @@ const SettingProfile = React.createClass({
   },
 
   changeYear(e) {
-    "use strict";
     this.setState({ year: e.target.value })
   },
   changeMonth(e) {
-    "use strict";
     this.setState({ month: e.target.value })
   },
   changeDate(e) {
-    "use strict";
     this.setState({ date: e.target.value })
   },
   changeSex(sex) {
-    "use strict";
     this.setState({ sex: sex })
   },
 
   updateProfile() {
-    "use strict";
     const birth = {
       year: this.state.year,
       month: this.state.month,
@@ -96,7 +93,6 @@ const SettingProfile = React.createClass({
   },
 
   closeMessageBox(type) {
-    "use strict";
 
     $(this.refs[type + 'Message'])
       .closest('.message')
@@ -106,7 +102,6 @@ const SettingProfile = React.createClass({
   },
 
   setErrorMessage(SettingStore) {
-    "use strict";
     const errMessage = SettingStore.get('error');
     const successMessage = SettingStore.get('success');
 
@@ -136,7 +131,6 @@ const SettingProfile = React.createClass({
   },
 
   render() {
-    "use strict";
     const { SettingStore } = this.props;
     return (
       <div id="setting">
@@ -153,7 +147,7 @@ const SettingProfile = React.createClass({
                 <div className="field">
                   <div className="ui radio checkbox" onClick={this.changeSex.bind(this, true)}>
                     <input type="radio" name="sex"
-                           checked={this.state.sex}
+                           defaultChecked={this.state.sex}
                            className="hidden" value="1"
                     />
                     <label>남자</label>
@@ -162,7 +156,7 @@ const SettingProfile = React.createClass({
                 <div className="field">
                   <div className="ui radio checkbox" onClick={this.changeSex.bind(this, false)}>
                     <input type="radio" name="sex"
-                           checked={!this.state.sex}
+                           defaultChecked={!this.state.sex}
                            className="hidden" value="0"
                     />
                     <label>여자</label>
@@ -256,6 +250,10 @@ const SettingProfile = React.createClass({
 
 const SettingPassword = React.createClass({
   displayName: 'SettingPassword',
+  propTypes: {
+    SettingStore: PropTypes.object.isRequired,
+  },
+
   componentDidMount() {
     $('.ui.form')
       .form({
@@ -310,7 +308,6 @@ const SettingPassword = React.createClass({
   },
 
   closeMessageBox(type) {
-    "use strict";
 
     $(this.refs[type + 'Message'])
       .closest('.message')
@@ -320,7 +317,6 @@ const SettingPassword = React.createClass({
   },
 
   setErrorMessage(SettingStore) {
-    "use strict";
     const errMessage = SettingStore.get('error');
     const successMessage = SettingStore.get('success');
 

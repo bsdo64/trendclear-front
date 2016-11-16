@@ -1,4 +1,4 @@
-import { take, put, call, fork, cancel, cancelled } from 'redux-saga/effects';
+import { take, put, call } from 'redux-saga/effects';
 import Api from '../../Utils/ApiClient';
 
 import {
@@ -27,22 +27,50 @@ const WORKING = true;
 const API = Api.setEntryPoint('/ajax');
 
 function* SagaSignin() {
-  try {
-    yield put({ type: SUCCESS_CHECK_EMAILDUP })
-  }
+  while (WORKING) {
+    // REQUEST_EMAILVERIFY
+    const { payload } = yield take(REQUEST_SIGNIN);
 
-  catch (error) {
-    yield put({ type: FAILURE_CHECK_EMAILDUP, error })
+    try {
+      const { result }= yield call([Api, API.post], '/signin', payload);
+      yield put({ type: SUCCESS_SIGNIN, result })
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_SIGNIN, error })
+    }
+  }
+}
+
+function* SagaEmailVerify() {
+  while (WORKING) {
+    // REQUEST_EMAILVERIFY
+    const { payload } = yield take(REQUEST_EMAILVERIFY);
+
+    try {
+      const { result }= yield call([Api, API.post], '/signin/requestEmailVerify', payload);
+      yield put({ type: SUCCESS_EMAILVERIFY, result })
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_EMAILVERIFY, error })
+    }
   }
 }
 
 function* SagaCheckVerifyCode() {
-  try {
-    yield put({ type: SUCCESS_CHECK_EMAILDUP })
-  }
+  while (WORKING) {
+    // REQUEST_CHECK_VERIFYCODE
+    const { payload } = yield take(REQUEST_CHECK_VERIFYCODE);
 
-  catch (error) {
-    yield put({ type: FAILURE_CHECK_EMAILDUP, error })
+    try {
+      const { result }= yield call([Api, API.post], '/signin/checkEmailCodeVerify', payload);
+      yield put({ type: SUCCESS_CHECK_VERIFYCODE, result })
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_CHECK_VERIFYCODE, error })
+    }
   }
 }
 
@@ -83,6 +111,7 @@ export default function* signinSaga() {
     SagaCheckEmailDup(),
     SagaCheckNickDup(),
     SagaCheckVerifyCode(),
+    SagaEmailVerify(),
     SagaSignin()
   ]
 }

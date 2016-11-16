@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Privacy = (props) => {
+const Privacy = () => {
   return (
     <div className="ui segment">
       <h4 className="ui header">개인정보취급방침</h4>

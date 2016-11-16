@@ -1,11 +1,6 @@
-import { Map } from 'immutable';
+import { UI } from '../InitialStates';
 
-const initMap = Map({
-  isLogin: false,
-  userId: null
-});
-
-const Auth = (state = initMap, action) => {
+const Auth = (state = UI.Auth, action) => {
 
   return state;
 };

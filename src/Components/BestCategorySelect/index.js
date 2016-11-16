@@ -15,6 +15,9 @@ const BestCategorySelect = React.createClass({
     Categories: PropTypes.object.isRequired,
     Forums: PropTypes.object.isRequired,
     Collections: PropTypes.object.isRequired,
+
+    FireUpdateFollowingFilter: PropTypes.func.isRequired,
+    FireRequestSaveFollowingFilter: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -24,7 +27,7 @@ const BestCategorySelect = React.createClass({
   },
 
   updateFilterValue(club, selectArray) {
-    GnbActions.updateFilter({ [club]: selectArray });
+    this.props.FireUpdateFollowingFilter({ [club]: selectArray });
   },
 
   toggleFilter() {
@@ -37,7 +40,7 @@ const BestCategorySelect = React.createClass({
     const normalize = categoryValue.map((object) => {
       return parseInt(object.value);
     });
-    GnbActions.saveFilter({ categoryValue: normalize });
+    this.props.FireRequestSaveFollowingFilter({ categoryValue: normalize });
   },
 
   render() {

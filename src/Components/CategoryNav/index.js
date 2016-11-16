@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { fromJS } from 'immutable';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -8,6 +8,12 @@ import AvatarImage from '../AvatarImage';
 
 const RankList = React.createClass({
   displayName: 'RankList',
+  propTypes: {
+    forums: PropTypes.object.isRequired,
+    openForumMeta: PropTypes.number,
+    FireOpenForumMeta: PropTypes.func.isRequired,
+  },
+
   openForumMeta (forumId) {
     this.props.FireOpenForumMeta(forumId);
   },
@@ -99,6 +105,15 @@ const RankList = React.createClass({
 
 const ClubList = React.createClass({
   displayName: 'ClubList',
+  propTypes: {
+    gnbMenu: PropTypes.object.isRequired,
+    categorySet: PropTypes.object,
+    newForums: PropTypes.object.isRequired,
+    hotForums: PropTypes.object.isRequired,
+    FireOpenSideCategory: PropTypes.func.isRequired,
+    FireOpenForumMeta: PropTypes.func.isRequired,
+  },
+
   openSideCategories(clubId) {
     this.props.FireOpenSideCategory(clubId);
   },
@@ -247,6 +262,13 @@ const ClubListMain = React.createClass({
 require('./index.scss');
 const CategoryNav = React.createClass({
   displayName: 'CategoryNav',
+  propTypes: {
+    FireToggleGnbPanel: PropTypes.func.isRequired,
+    FireOpenForumMeta: PropTypes.func.isRequired,
+    FireOpenSideCategory: PropTypes.func.isRequired,
+    GnbStore: PropTypes.object.isRequired,
+  },
+
   handleToggleGnb() {
 
     this.props.FireToggleGnbPanel();

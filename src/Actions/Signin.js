@@ -2,6 +2,7 @@ export const TOGGLE_AGREE_TERM = 'TOGGLE_AGREE_TERM';
 export const TOGGLE_AGREE_PRIVACY = 'TOGGLE_AGREE_PRIVACY';
 export const CONFIRM_AGREE = 'CONFIRM_AGREE';
 export const RESET_SIGNIN_FORM = 'RESET_SIGNIN_FORM';
+export const EMAIL_VERIFY_FORM_OPEN = 'EMAIL_VERIFY_FORM_OPEN';
 
 export const REQUEST_CHECK_EMAILDUP = 'REQUEST_CHECK_EMAILDUP';
 export const SUCCESS_CHECK_EMAILDUP = 'SUCCESS_CHECK_EMAILDUP';
@@ -47,6 +48,12 @@ export function resetSigninForm() {
   }
 }
 
+export function emailVerifyFormOpen() {
+  return {
+    type: EMAIL_VERIFY_FORM_OPEN
+  }
+}
+
 // Ajax
 export function requestCheckEmailDup(payload) {
   return {
@@ -81,17 +88,4 @@ export function requestSignin(payload) {
     type: REQUEST_SIGNIN,
     payload
   }
-}
-
-export default {
-  toggleAgreePrivacy,
-  toggleAgreeTerm,
-  confirmAgree,
-  resetSigninForm,
-
-  requestCheckEmailDup,
-  requestCheckNickDup,
-  requestCheckVerifyCode,
-  requestEmailVerify,
-  requestSignin
 }

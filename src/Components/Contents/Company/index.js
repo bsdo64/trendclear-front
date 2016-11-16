@@ -16,12 +16,10 @@ const SimpleMap = React.createClass({
   },
 
   handleMapClick() {
-    "use strict";
 
   },
 
   handleMarkerRightclick() {
-    "use strict";
 
   },
 
@@ -279,7 +277,6 @@ const Contact = React.createClass({
 
 const Advertisement = React.createClass({
   render() {
-    "use strict";
     return (
       <div>advertisement</div>
     )

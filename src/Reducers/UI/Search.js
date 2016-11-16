@@ -1,10 +1,6 @@
-import { Map } from 'immutable';
+import { UI } from '../InitialStates';
 
-const initMap = Map({
-  query: null
-});
-
-const Search = (state = initMap, action) => {
+const Search = (state = UI.Search, action) => {
 
   return state;
 };

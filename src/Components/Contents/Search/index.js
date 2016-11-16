@@ -26,6 +26,9 @@ const SearchBox = React.createClass({
     Posts: PropTypes.object.isRequired,
     Users: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
+
+    FireSetScrollPosition: PropTypes.func.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired,
   },
 
   componentWillUnmount() {
@@ -42,7 +45,6 @@ const SearchBox = React.createClass({
   },
 
   getMoreBest() {
-    "use strict";
 
     const { PaginationStore, SearchStore, location } = this.props;
     const Pagination = PaginationStore.get('searchPostList');
@@ -59,12 +61,10 @@ const SearchBox = React.createClass({
     }
   },
   checkCollectionHasForums(collectionForumList, forumId) {
-    "use strict";
 
     return collectionForumList.includes(forumId);
   },
   selectCollection(forumId) {
-    "use strict";
 
     return (e) => {
       const params = { collectionId: e.target.value, forumId: forumId };
@@ -84,7 +84,6 @@ const SearchBox = React.createClass({
     });
   },
   toggleFollow(isForumFollow, forumId) {
-    "use strict";
 
     const { AuthStore } = this.props;
     const userId = AuthStore.get('userId');
@@ -115,7 +114,6 @@ const SearchBox = React.createClass({
   },
 
   prevForumList() {
-    "use strict";
     const { PaginationStore, SearchStore, location } = this.props;
     const Pagination = PaginationStore.get('searchForumList');
     if (Pagination) {
@@ -132,7 +130,6 @@ const SearchBox = React.createClass({
   },
 
   nextForumList() {
-    "use strict";
     const { PaginationStore, SearchStore, location } = this.props;
     const Pagination = PaginationStore.get('searchForumList');
     if (Pagination) {
@@ -149,7 +146,10 @@ const SearchBox = React.createClass({
   },
 
   render() {
-    const { SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore } = this.props;
+    const {
+      SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore,
+      FireSetScrollPosition, FireToggleLoginModal
+    } = this.props;
     const Collection = PaginationStore.get('searchPostList');
     const searchPosts = SearchStore.get('search');
 
@@ -168,7 +168,6 @@ const SearchBox = React.createClass({
               {
                 searchForumList &&
                 searchForumList.map(forumId => {
-                  "use strict";
                   const forum = Forums.get(forumId.toString());
                   if (!forum) return null;
 
@@ -293,6 +292,8 @@ const SearchBox = React.createClass({
           AuthorItems={Users}
           User={AuthStore}
           scrollHeight={ListStore.get('scrollHeight')}
+          FireSetScrollPosition={FireSetScrollPosition}
+          FireToggleLoginModal={FireToggleLoginModal}
         />
 
         <Waypoint

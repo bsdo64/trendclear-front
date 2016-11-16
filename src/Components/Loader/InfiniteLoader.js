@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const InfiniteLoader = ({ collection }) => {
   if (collection && collection.get('next_page')) {
@@ -18,6 +18,10 @@ const InfiniteLoader = ({ collection }) => {
       </div>
     )
   }
+};
+
+InfiniteLoader.propTypes = {
+  collection: PropTypes.object
 };
 
 module.exports = InfiniteLoader;

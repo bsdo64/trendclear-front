@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import AvatarImage from '../../AvatarImage';
 
 const SelectSearchForum = React.createClass({
+  propTypes: {
+    profile: PropTypes.object.isRequired,
+  },
+
   componentDidMount() {
     const self = this;
 
@@ -23,7 +27,6 @@ const SelectSearchForum = React.createClass({
           method: 'The method you called is not defined.'
         },
         onSelect: function (forum) {
-          "use strict";
 
           self.selectForum(forum);
         }
@@ -31,7 +34,6 @@ const SelectSearchForum = React.createClass({
   },
 
   selectForum(forum) {
-    "use strict";
 
     if (forum && forum.id) {
       browserHistory.push('/community/submit?forumId=' + forum.id)

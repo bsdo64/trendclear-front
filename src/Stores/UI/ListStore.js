@@ -111,7 +111,6 @@ class ListStore {
     this.waitFor(Forums, Users);
 
     const normalized = result.data;
-    const pagination = result.collection;
 
     if (normalized) {
       const newState = this.state.set('searchForumList', normalized.result);

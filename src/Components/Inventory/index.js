@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
 
 const rebuildTooltip = function rebuildTooltip(itemCode) {
@@ -6,9 +6,12 @@ const rebuildTooltip = function rebuildTooltip(itemCode) {
 };
 
 const Inventory = React.createClass({
+  propTypes: {
+    ShoppingStore: PropTypes.object.isRequired,
+    inventory: PropTypes.object.isRequired,
+  },
 
   createTableColum(listItem, c) {
-
     let item;
     if (listItem && (listItem.get('item_count') > 0)) {
       item = (
@@ -33,7 +36,6 @@ const Inventory = React.createClass({
     )
   },
   createTableRow(inventory, col, row) {
-    const self = this;
     let tableRows = [];
     let r = 0;
     let itemIndex = 0;

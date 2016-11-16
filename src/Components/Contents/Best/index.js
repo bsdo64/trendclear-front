@@ -10,7 +10,8 @@ const BestBox = React.createClass({
   displayName: 'BestBox',
   propTypes: {
     PaginationStore: PropTypes.object.isRequired,
-    GnbStore: PropTypes.object.isRequired,
+    GnbStore: PropTypes.object,
+    Collections: PropTypes.object,
     ListStore: PropTypes.object.isRequired,
     Posts: PropTypes.object.isRequired,
     Users: PropTypes.object.isRequired,
@@ -27,44 +28,47 @@ const BestBox = React.createClass({
     GnbActions.resetFilter();
   },
 
-  getMoreBest() {
-    if ((document && document.body) && document.body.clientHeight > 768) {
-      const { PaginationStore, GnbStore, listName, location } = this.props;
-      const Pagination = PaginationStore.get(listName);
-      if (Pagination) {
-        const nextPage = Pagination.get('next_page');
+  getMoreBest({ previousPosition, currentPosition, event }) {
+    if (previousPosition === 'below' && currentPosition === 'inside' && event) {
+      const body = event.target.body;
+      if ((body) && body.clientHeight > 768) {
+        const { PaginationStore, GnbStore, listName, location } = this.props;
+        const Pagination = PaginationStore.get(listName);
+        if (Pagination) {
+          const nextPage = Pagination.get('next_page');
 
-        const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
-        const normalize = categoryValue.map((object) => {
-          return parseInt(object.value);
-        });
-
-        if (nextPage) {
-
-          let pathname;
-          switch (listName) {
-            case 'bestPostList':
-              pathname = '/best';
-              break;
-
-            case 'collectionBestPostList':
-              pathname = location.pathname + '/posts';
-              break;
-
-            default:
-              pathname = '/best';
-          }
-
-          PostActions.getBestPost({
-            listName: listName,
-            pathname: pathname,
-            params: {
-              page: nextPage,
-              order: location.query.order || 'hot',
-              categoryValue: (normalize.length > 0) ? normalize : null,
-              listType: location.pathname === '/all' ? 'all' : null
-            }
+          const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
+          const normalize = categoryValue.map((object) => {
+            return parseInt(object.value);
           });
+
+          if (nextPage) {
+
+            let pathname;
+            switch (listName) {
+              case 'bestPostList':
+                pathname = '/best';
+                break;
+
+              case 'collectionBestPostList':
+                pathname = location.pathname + '/posts';
+                break;
+
+              default:
+                pathname = '/best';
+            }
+
+            PostActions.getBestPost({
+              listName: listName,
+              pathname: pathname,
+              params: {
+                page: nextPage,
+                order: location.query.order || 'hot',
+                categoryValue: (normalize.length > 0) ? normalize : null,
+                listType: location.pathname === '/all' ? 'all' : null
+              }
+            });
+          }
         }
       }
     }
@@ -85,7 +89,7 @@ const BestBox = React.createClass({
 
   render() {
     const {
-      location, listName, ListStore, Posts, Users, AuthStore, PaginationStore,
+      location, listName, ListStore, Posts, Users, Collections, AuthStore, PaginationStore,
       FireSetScrollPosition, FireToggleLoginModal
     } = this.props;
     const Collection = PaginationStore.get(listName);
@@ -97,6 +101,7 @@ const BestBox = React.createClass({
           type={listName}
           location={location}
           breadcrumbs={breadcrumbs}
+          collections={Collections}
         />
 
         <InfiniteList

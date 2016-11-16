@@ -3,9 +3,12 @@ import { Link } from 'react-router';
 import LoginActions from '../../../../Actions/LoginActions.js';
 
 require('./index.scss');
-
 const Login = React.createClass({
   displayName: 'LoginModalBox',
+  propTypes: {
+    LoginStore: PropTypes.object.isRequired,
+  },
+
   componentDidMount() {
     $(this.refs.loginform)
       .form({
@@ -36,13 +39,13 @@ const Login = React.createClass({
             ]
           }
         },
-        onSuccess: function (event, fields) {
+        onSuccess: (event, fields) => {
           LoginActions.sendLogin({
             email: fields.loginEmail,
             password: fields.password
           });
         },
-        onFailure: function (formErrors, fields) {
+        onFailure: (formErrors, fields) => {
           console.log(formErrors);
           console.log(fields);
         }

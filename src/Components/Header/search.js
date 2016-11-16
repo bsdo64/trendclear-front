@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
+import { UI } from '../../Reducers/InitialStates';
 import SearchActions from '../../Actions/SearchActions';
 
 require('./index.scss');
-const SearchBar = React.createClass({
-
+class SearchBar extends Component {
   setQuery(e) {
     SearchActions.handleSearchQuery(e.target.value);
-  },
+  }
 
   submitQuery(e) {
     e.preventDefault();
@@ -18,7 +18,7 @@ const SearchBar = React.createClass({
 
       browserHistory.push({ pathname: '/search', query: { query: query } });
     }
-  },
+  }
 
   getQueryValue() {
     const { SearchStore } = this.props;
@@ -29,7 +29,7 @@ const SearchBar = React.createClass({
     }
 
     return query;
-  },
+  }
 
   render() {
     return (
@@ -45,6 +45,13 @@ const SearchBar = React.createClass({
       </form>
     )
   }
-});
+}
+
+SearchBar.propTypes = {
+  SearchStore: PropTypes.object.isRequired,
+};
+SearchBar.defaultProps = {
+  SearchStore: UI.Search
+};
 
 export default SearchBar;

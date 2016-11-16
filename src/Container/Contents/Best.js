@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Best from '../../Components/Contents/Best';
+import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
@@ -16,6 +17,17 @@ const BestContainer = React.createClass({
     )
   }
 });
+
+BestContainer.defaultProps = {
+  GnbStore: UI.Gnb,
+  ListStore: UI.List,
+  AuthStore: UI.Auth,
+  PaginationStore: UI.Pagination,
+
+  Forums: Domains.Forums,
+  Users: Domains.Users,
+  Posts: Domains.Posts,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -34,7 +46,7 @@ const mapStateToProps = (state) => {
 
     Forums: getDomainState('Forums'),
     Users: getDomainState('Users'),
-    Posts: getDomainState('Posts')
+    Posts: getDomainState('Posts'),
   }
 };
 

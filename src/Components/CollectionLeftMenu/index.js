@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import CollectionComponent from '../BestCategorySelect/Collection';
 import SubscribeForumList from '../SubscribeForumList';
@@ -6,6 +6,14 @@ import SubscribeForumList from '../SubscribeForumList';
 require('./index.scss');
 const CollectionLeftMenu = React.createClass({
   displayName: 'CollectionLeftMenu',
+  propTypes: {
+    UserStore: PropTypes.object.isRequired,
+    ListStore: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    Forums: PropTypes.object.isRequired,
+    Collections: PropTypes.object.isRequired,
+  },
+
   render() {
     const { UserStore, ListStore, location, Forums, Collections } = this.props;
     const user = UserStore.get('user');

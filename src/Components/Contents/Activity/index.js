@@ -22,6 +22,8 @@ const ActivityBox = React.createClass({
     Posts: PropTypes.object.isRequired,
     Users: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
+    FireSetScrollPosition: PropTypes.func.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired,
   },
 
   createActivityUserHeader(UserStore) {
@@ -110,50 +112,58 @@ const ActivityBox = React.createClass({
       PostIdList = ListStore.get(context);
     }
 
-    return (
-      <div id="activity">
-        <div className="activity-header">
-          <div className="activity-background">
+    if (UserStore.get('user')) {
+      return (
+        <div id="activity">
+          <div className="activity-header">
+            <div className="activity-background">
 
-            {this.createActivityUserHeader(UserStore)}
-            {this.createActivityMeta(ActivityStore.get('meta'))}
+              {this.createActivityUserHeader(UserStore)}
+              {this.createActivityMeta(ActivityStore.get('meta'))}
+            </div>
+
+            <div className="ui menu activity-menu">
+              <Link to="/activity/likes" className={this.createStyle(context, 'likePostList')}>
+                좋아요
+              </Link>
+              <Link to="/activity/posts" className={this.createStyle(context, 'myWritePostList')}>
+                글
+              </Link>
+              <Link to="/activity/comments" className={this.createStyle(context, 'myWriteCommentPostList')}>
+                댓글
+              </Link>
+            </div>
           </div>
 
-          <div className="ui menu activity-menu">
-            <Link to="/activity/likes" className={this.createStyle(context, 'likePostList')}>
-              좋아요
-            </Link>
-            <Link to="/activity/posts" className={this.createStyle(context, 'myWritePostList')}>
-              글
-            </Link>
-            <Link to="/activity/comments" className={this.createStyle(context, 'myWriteCommentPostList')}>
-              댓글
-            </Link>
+          <div id="best_contents">
+
+            <InfiniteList
+              PostIdList={PostIdList}
+              PostItems={Posts}
+              AuthorItems={Users}
+              User={AuthStore}
+              scrollHeight={ListStore.get('scrollHeight')}
+              FireSetScrollPosition={this.props.FireSetScrollPosition}
+              FireToggleLoginModal={this.props.FireToggleLoginModal}
+            />
+
+            <Waypoint
+              onEnter={this.getMorePosts.bind(this, context)}
+              bottomOffset='-200px'
+              scrollableAncestor={window || null}
+            />
+
+            <InfiniteLoader collection={Collection}/>
+
           </div>
-        </div>
-
-        <div id="best_contents">
-
-          <InfiniteList
-            PostIdList={PostIdList}
-            PostItems={Posts}
-            AuthorItems={Users}
-            User={AuthStore}
-            scrollHeight={ListStore.get('scrollHeight')}
-          />
-
-          <Waypoint
-            onEnter={this.getMorePosts.bind(this, context)}
-            bottomOffset='-200px'
-            scrollableAncestor={window || null}
-          />
-
-          <InfiniteLoader collection={Collection}/>
 
         </div>
-
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="ui active loader"></div>
+      )
+    }
   }
 });
 

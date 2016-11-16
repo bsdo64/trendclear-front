@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Terms = (props) => {
+const Terms = () => {
   return (
     <div className="ui segment">
       <h4 className="ui header">이용 약관</h4>

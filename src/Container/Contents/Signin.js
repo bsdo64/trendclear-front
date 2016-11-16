@@ -8,6 +8,7 @@ import {
   toggleAgreeTerm,
   confirmAgree,
   resetSigninForm,
+  emailVerifyFormOpen,
 
   requestCheckEmailDup,
   requestCheckNickDup,
@@ -44,6 +45,7 @@ module.exports = connect(
     FireToggleAgreeTerm: toggleAgreeTerm,
     FireConfirmAgree: confirmAgree,
     FireResetSigninForm: resetSigninForm,
+    FireEmailVerifyFormOpen: emailVerifyFormOpen,
 
     FireRequestCheckEmailDup: requestCheckEmailDup,
     FireRequestCheckNickDup: requestCheckNickDup,

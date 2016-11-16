@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Search from '../../Components/Contents/Search';
 
+import { setScrollPosition } from '../../Actions/List';
+import { toggleLoginModal } from '../../Actions/Login';
+
 const SearchContainer = React.createClass({
   render() {
     return (
@@ -40,12 +43,11 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireSetScrollPosition: setScrollPosition,
+    FireToggleLoginModal: toggleLoginModal,
+  }
 )(SearchContainer);
 

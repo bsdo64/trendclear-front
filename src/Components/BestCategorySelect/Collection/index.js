@@ -1,39 +1,51 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import cx from 'classnames';
 import CollectionActions from '../../../Actions/CollectionActions';
 
-const Subs = React.createClass({
-  displayName: 'Subs',
+const Subs = (props) => {
+  const { subs, forums } = props;
+  return (
+    <ul className="forum_list">
+      {
+        subs &&
+        subs.map(subId => {
+          const forum = forums.get(subId.toString());
+          if (forum) {
+            return (
+              <li key={forum.get('id')} className="forum_list_item">
+                <a>{forum.get('title')}</a>
+                <i className="fa fa-minus un_subscribe"/>
+              </li>
+            )
+          } else {
+            return <li />
+          }
+        })
+      }
+    </ul>
+  )
+};
 
-  render() {
-    "use strict";
-    const { subs, forums } = this.props;
-    return (
-      <ul className="forum_list">
-        {
-          subs &&
-          subs.map(subId => {
-            const forum = forums.get(subId.toString());
-            if (forum) {
-              return (
-                <li key={forum.get('id')} className="forum_list_item">
-                  <a>{forum.get('title')}</a>
-                  <i className="fa fa-minus un_subscribe"/>
-                </li>
-              )
-            } else {
-              return <li></li>
-            }
-          })
-        }
-      </ul>
-    )
-  }
-});
+Subs.propTypes = {
+  subs: PropTypes.object,
+  forums: PropTypes.object.isRequired,
+};
 
 const CollectionItem = React.createClass({
   displayName: 'CollectionItem',
+  propTypes: {
+    id: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    subs: PropTypes.object,
+    forums: PropTypes.object.isRequired,
+    mouseOverItem: PropTypes.string,
+    location: PropTypes.object,
+
+    closeItemHandler: PropTypes.func.isRequired,
+    mouseOverItemHandler: PropTypes.func.isRequired,
+  },
+
   getInitialState() {
     return {
       hide: true
@@ -41,19 +53,16 @@ const CollectionItem = React.createClass({
   },
 
   openCollection(itemId) {
-    "use strict";
 
     this.props.mouseOverItemHandler(itemId)
   },
 
   closeCollection() {
-    "use strict";
 
     this.props.closeItemHandler();
   },
 
   render() {
-    "use strict";
 
     const {
       id, title, subs, forums,
@@ -99,6 +108,12 @@ const CollectionItem = React.createClass({
 require('./index.scss');
 const Collection = React.createClass({
   displayName: 'Collection',
+  propTypes: {
+    forums: PropTypes.object.isRequired,
+    location: PropTypes.object,
+    collections: PropTypes.object.isRequired,
+  },
+
   getInitialState() {
     return {
       createCollection: {
@@ -111,48 +126,46 @@ const Collection = React.createClass({
     };
   },
   closeItemHandler() {
-    "use strict";
 
     this.setState({ mouseOverItemId: null });
   },
   mouseOverItemHandler(itemId) {
-    "use strict";
 
     this.setState({ mouseOverItemId: itemId });
   },
   toggleCreateCollection() {
-    "use strict";
 
     this.setState({ hideCreateCollectionBox: !this.state.hideCreateCollectionBox })
   },
   closeCreateCollection() {
-    "use strict";
 
     this.setState({ hideCreateCollectionBox: true })
   },
-  handleChangeTitle(event) {
-    "use strict";
+  handleChangeTitle(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
     const newState = this.state;
-    newState.createCollection.title = event.target.value;
+    newState.createCollection.title = e.target.value;
     this.setState(newState);
   },
-  handleChangeDescription(event) {
-    "use strict";
+  handleChangeDescription(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
     const newState = this.state;
-    newState.createCollection.description = event.target.value;
+    newState.createCollection.description = e.target.value;
     this.setState(newState);
   },
-  handleChangePrivate(event) {
-    "use strict";
+  handleChangePrivate(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
     const newState = this.state;
     newState.createCollection.isPrivate = !newState.createCollection.isPrivate;
     this.setState(newState);
   },
   submitNewCollection(e) {
-    "use strict";
     e.preventDefault();
     e.stopPropagation();
 
@@ -183,7 +196,6 @@ const Collection = React.createClass({
   },
 
   render() {
-    "use strict";
 
     const { collections } = this.props;
     const createCollectionBoxStyle = cx('create_box', {

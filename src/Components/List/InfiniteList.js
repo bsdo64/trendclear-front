@@ -31,6 +31,7 @@ function createItem(props, id) {
 
 const InfiniteList = React.createClass({
   displayName: 'InfiniteList',
+
   propTypes: {
     PostIdList: PropTypes.object,
     PostItems: PropTypes.object.isRequired,
@@ -39,10 +40,6 @@ const InfiniteList = React.createClass({
     scrollHeight: PropTypes.number.isRequired,
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired
-  },
-  defaultProps: {
-    PostIdList: [],
-    PostItems: {},
   },
 
   componentDidMount() {
@@ -77,5 +74,9 @@ const InfiniteList = React.createClass({
     )
   }
 });
+
+InfiniteList.defaultProps = {
+  scrollHeight: 0,
+};
 
 export default InfiniteList

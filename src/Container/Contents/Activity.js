@@ -2,12 +2,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Activity from '../../Components/Contents/Activity';
+import { UI, Domains } from '../../Reducers/InitialStates';
+
+import { setScrollPosition } from '../../Actions/List';
+import { toggleLoginModal } from '../../Actions/Login';
 
 const ActivityContainer = React.createClass({
   render() {
     return (<Activity {...this.props} />)
   }
 });
+
+ActivityContainer.defaultProps = {
+  ActivityStore: UI.Activity,
+  ListStore: UI.List,
+  AuthStore: UI.Auth,
+  PaginationStore: UI.Pagination,
+
+  Forums: Domains.Forums,
+  Users: Domains.Users,
+  Posts: Domains.Posts
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -31,11 +46,10 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireSetScrollPosition: setScrollPosition,
+    FireToggleLoginModal: toggleLoginModal,
+  }
 )(ActivityContainer);

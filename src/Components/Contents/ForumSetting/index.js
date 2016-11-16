@@ -94,6 +94,6 @@ ForumSettingsComponent.propTypes = {
   Forums: PropTypes.object.isRequired,
   AuthStore: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-}
+};
 
 export default ForumSettingsComponent;

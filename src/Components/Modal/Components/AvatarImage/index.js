@@ -1,13 +1,14 @@
-/**
- * Created by dobyeongsu on 2016. 3. 23..
- */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import UserActions from '../../../../Actions/UserActions';
 import AvatarImage from '../../../../Components/AvatarImage';
 
 require('./index.scss');
 const AvatarImageModal = React.createClass({
   displayName: 'AvatarImageModal',
+  propTypes: {
+    UserStore: PropTypes.object.isRequired,
+  },
+
   getInitialState() {
     return {
       file: null,
@@ -19,7 +20,6 @@ const AvatarImageModal = React.createClass({
     UserActions.closeAvatarModal();
   },
   modalCloseSignal() {
-    "use strict";
 
     UserActions.closeAvatarModal();
   },
@@ -40,19 +40,13 @@ const AvatarImageModal = React.createClass({
     reader.readAsDataURL(file);
   },
   uploadAvatarImage() {
-    "use strict";
 
     UserActions.uploadAvatarImage(this.state.file);
   },
   render() {
-    const { UserStore, AvatarStore } = this.props;
+    const { UserStore } = this.props;
     const user = UserStore.get('user');
     const profile = UserStore.get('profile');
-    const icon = UserStore.get('icon');
-    const grade = UserStore.get('grade');
-    const trendbox = UserStore.get('trendbox');
-
-    const openAvatarModal = UserStore.get('openAvatarModal');
 
     const sex = profile.get('sex'),
       avatar_img = profile.get('avatar_img');

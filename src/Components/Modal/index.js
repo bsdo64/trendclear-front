@@ -3,6 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import Modal from 'react-modal';
+import { UI } from '../../Reducers/InitialStates';
 import LoginContainer from '../../Container/Modal/LoginModalContainer';
 import ReportContainer from '../../Container/Modal/ReportModalContainer';
 import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
@@ -82,5 +83,9 @@ const ModalBox = React.createClass({
     );
   }
 });
+
+ModalBox.defaultProps = {
+  ModalStore: UI.Modal
+};
 
 export default ModalBox;

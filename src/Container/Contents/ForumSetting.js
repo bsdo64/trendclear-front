@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import ForumSettingsComponent from '../../Components/Contents/ForumSetting';
+import { UI, Domains } from '../../Reducers/InitialStates';
 
 const ForumSettingsContainer = React.createClass({
   render() {
@@ -9,6 +10,21 @@ const ForumSettingsContainer = React.createClass({
     return (<ForumSettingsComponent {...this.props} />)
   }
 });
+
+ForumSettingsContainer.defaultProps = {
+  LoginStore: UI.Login,
+  CommunityStore: UI.Community,
+  ListStore: UI.List,
+  AuthStore: UI.Auth,
+  PaginationStore: UI.Pagination,
+  ForumSettingStore: UI.ForumSetting,
+
+  Collections: Domains.Collections,
+  Forums: Domains.Forums,
+  Users: Domains.Users,
+  Posts: Domains.Posts,
+  Prefixes: Domains.Prefixes,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

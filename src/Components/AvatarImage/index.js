@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ImageType from '../Lib/ImageType';
 import UserActions from '../../Actions/UserActions';
 
@@ -55,6 +55,14 @@ const AvatarImage = (props) => {
       return <img className={imageClass} src="/images/default-female.png"/>;
     }
   }
+};
+
+AvatarImage.propTypes = {
+  avatarImg: PropTypes.string,
+  sex: PropTypes.bool,
+  imageClass : PropTypes.string,
+  removable: PropTypes.bool,
+  noWrap: PropTypes.bool,
 };
 
 export default AvatarImage;

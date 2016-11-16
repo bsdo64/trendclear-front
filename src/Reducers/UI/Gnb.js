@@ -1,11 +1,12 @@
-import { Map } from 'immutable';
-import { TOGGLE_GNB_PANEL, OPEN_SIDE_CATEGORY, OPEN_FORUM_META } from '../../Actions/Gnb';
+import { UI } from '../InitialStates';
+import {
+  TOGGLE_GNB_PANEL,
+  OPEN_SIDE_CATEGORY,
+  OPEN_FORUM_META,
+  UPDATE_FOLLOWING_FILTER,
+} from '../../Actions/Gnb';
 
-const initState = Map({
-  openGnb: false
-});
-
-const Gnb = (state = initState, action) => {
+const Gnb = (state = UI.Gnb, action) => {
   switch (action.type) {
 
     case TOGGLE_GNB_PANEL: {
@@ -18,6 +19,10 @@ const Gnb = (state = initState, action) => {
 
     case OPEN_FORUM_META: {
       return state.setIn(['gnbMenu', 'openForumMeta'], action.forumId);
+    }
+
+    case UPDATE_FOLLOWING_FILTER: {
+      return state.merge(action.data);
     }
 
     default:
