@@ -130,6 +130,10 @@ class NotiButtons extends Component {
 }
 
 const UserButtons = React.createClass({
+  propTypes: {
+    UserStore: PropTypes.object.isRequired,
+    FireRequestLogout: PropTypes.func.isRequired,
+  },
 
   gotoActivity() {
 
@@ -144,13 +148,12 @@ const UserButtons = React.createClass({
   },
 
   handleLogout() {
-    UserActions.requestLogout();
+    this.props.FireRequestLogout();
   },
 
   render() {
     const { UserStore } = this.props;
     const user = UserStore.get('user');
-    const trendbox = UserStore.get('trendbox');
     const profile = UserStore.get('profile');
     const avatar_img = profile.get('avatar_img'),
       sex = profile.get('sex');
@@ -195,6 +198,13 @@ const MyArea = React.createClass({
     location: PropTypes.object.isRequired,
     LoginStore: PropTypes.object.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
+    FireRequestLogout: PropTypes.func.isRequired,
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.LoginStore.get('logoutSuccess') && nextProps.LoginStore.get('logoutSuccess')) {
+      window.location.href = '/'
+    }
   },
 
   render() {

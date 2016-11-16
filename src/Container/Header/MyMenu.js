@@ -5,7 +5,8 @@ import MyArea from '../../Components/MyArea';
 import { Noti, Point } from '../../Utils/Socket';
 import { UI } from '../../Reducers/InitialStates';
 import {
-  toggleLoginModal
+  toggleLoginModal,
+  requestLogout
 } from '../../Actions/Login';
 
 class MyMenuContainer extends React.Component {
@@ -50,6 +51,7 @@ const mapStateToProps = (state) => {
 module.exports = connect(
   mapStateToProps,
   {
-    FireToggleLoginModal: toggleLoginModal
+    FireToggleLoginModal: toggleLoginModal,
+    FireRequestLogout: requestLogout
   }
 )(MyMenuContainer);

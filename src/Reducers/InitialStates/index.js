@@ -32,7 +32,14 @@ export const UI = {
     scrollHeight: 0,
     CategoryList: List([])
   }),
-  Login: Map({}),
+  Login: Map({
+    isLoading: false,
+    isLogin: false,
+    loginSuccess: false,
+    loginFail: false,
+    logoutSuccess: false,
+    logoutFail: false
+  }),
   Modal: Map({
     contentType: null,
     openModal: false,

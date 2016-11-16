@@ -32,7 +32,7 @@ function* SagaSaveFollowingFilter() {
   }
 }
 
-export default function* signinSaga() {
+export default function* followingList() {
   yield [
     SagaSaveFollowingFilter(),
   ]

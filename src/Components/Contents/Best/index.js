@@ -21,6 +21,7 @@ const BestBox = React.createClass({
 
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
+    FireRequestGetMoreList: PropTypes.func.isRequired,
   },
 
   componentWillUnmount() {
@@ -32,7 +33,7 @@ const BestBox = React.createClass({
     if (previousPosition === 'below' && currentPosition === 'inside' && event) {
       const body = event.target.body;
       if ((body) && body.clientHeight > 768) {
-        const { PaginationStore, GnbStore, listName, location } = this.props;
+        const { PaginationStore, GnbStore, listName, location, FireRequestGetMoreList } = this.props;
         const Pagination = PaginationStore.get(listName);
         if (Pagination) {
           const nextPage = Pagination.get('next_page');
@@ -44,23 +45,23 @@ const BestBox = React.createClass({
 
           if (nextPage) {
 
-            let pathname;
+            let pathName;
             switch (listName) {
               case 'bestPostList':
-                pathname = '/best';
+                pathName = '/best';
                 break;
 
               case 'collectionBestPostList':
-                pathname = location.pathname + '/posts';
+                pathName = location.pathname + '/posts';
                 break;
 
               default:
-                pathname = '/best';
+                pathName = '/best';
             }
 
-            PostActions.getBestPost({
+            FireRequestGetMoreList({
               listName: listName,
-              pathname: pathname,
+              pathName: pathName,
               params: {
                 page: nextPage,
                 order: location.query.order || 'hot',

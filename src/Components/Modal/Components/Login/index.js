@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 import { Link } from 'react-router';
 import LoginActions from '../../../../Actions/LoginActions.js';
 
@@ -7,6 +8,13 @@ const Login = React.createClass({
   displayName: 'LoginModalBox',
   propTypes: {
     LoginStore: PropTypes.object.isRequired,
+    FireRequestLogin: PropTypes.func.isRequired,
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.LoginStore.get('loginSuccess') && nextProps.LoginStore.get('loginSuccess')) {
+      window.location.href = nextProps.LoginStore.get('location') || '/'
+    }
   },
 
   componentDidMount() {
@@ -40,7 +48,7 @@ const Login = React.createClass({
           }
         },
         onSuccess: (event, fields) => {
-          LoginActions.sendLogin({
+          this.props.FireRequestLogin({
             email: fields.loginEmail,
             password: fields.password
           });
@@ -65,7 +73,7 @@ const Login = React.createClass({
     $(this.refs.loginmodal).modal('hide');
   },
 
-  afterOpenModal: function () {
+  afterOpenModal() {
     // references are now sync'd and can be accessed.
     $(this.refs.loginform)
       .form({
@@ -96,27 +104,26 @@ const Login = React.createClass({
             ]
           }
         },
-        onSuccess: function (event, fields) {
-          LoginActions.sendLogin({
+        onSuccess: (event, fields) => {
+          this.props.FireRequestLogin({
             email: fields.loginEmail,
             password: fields.password
           });
         },
-        onFailure: function (formErrors, fields) {
+        onFailure: (formErrors, fields) => {
           console.log(formErrors);
           console.log(fields);
         }
       });
   },
 
-  closeModal: function () {
+  closeModal() {
     LoginActions.closeLoginModal();
   },
 
   render() {
     const { LoginStore } = this.props;
     const loginFail = LoginStore.get('loginFail');
-    const loginSuccess = LoginStore.get('loginSuccess');
     let loginError;
 
     if (loginFail) {
@@ -128,6 +135,11 @@ const Login = React.createClass({
         </div>
       );
     }
+
+    const loginButton = cx('ui primary button fluid', {
+      loading: LoginStore.get('isLoading'),
+      disabled: LoginStore.get('isLoading'),
+    });
 
     return (
       <div className="content">
@@ -156,7 +168,7 @@ const Login = React.createClass({
                   <label htmlFor="agreement-checkbox">아이디를 저장합니다</label>
                 </div>
               </div>
-              <div className="ui primary button fluid" onClick={this.handleRequestLogin}>로그인</div>
+              <div className={loginButton} onClick={this.handleRequestLogin}>로그인</div>
 
               { loginError }
 

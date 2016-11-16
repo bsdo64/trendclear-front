@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import LoginModalBox from '../../Components/Modal/Components/Login/index';
+import {
+  requestLogin
+} from '../../Actions/Login';
 
 const LoginModalContainer = React.createClass({
   render() {
@@ -24,11 +27,10 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
 
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireRequestLogin: requestLogin
+  }
 )(LoginModalContainer);
