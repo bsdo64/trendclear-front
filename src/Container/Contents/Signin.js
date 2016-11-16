@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Signin from '../../Components/Contents/Signin';
+import { UI } from '../../Reducers/InitialStates';
 
 import {
   toggleAgreePrivacy,
@@ -22,6 +23,11 @@ const SigninContainer = React.createClass({
     return (<Signin {...this.props} />)
   }
 });
+
+SigninContainer.defaultProps = {
+  UserStore: UI.User,
+  SigninFormStore: UI.SigninForm,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

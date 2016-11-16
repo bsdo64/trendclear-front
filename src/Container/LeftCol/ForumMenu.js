@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import ForumLeftMenu from '../../Components/ForumLeftMenu';
+import { UI, Domains } from '../../Reducers/InitialStates';
 
 const MenuContainer = React.createClass({
   render() {
@@ -9,7 +10,15 @@ const MenuContainer = React.createClass({
   }
 });
 
-const mapStateToProps = (state, props) => {
+MenuContainer.defaultProps = {
+  ListStore: UI.List,
+  UserStore: UI.User,
+
+  Forums: Domains.Forums,
+  Collections: Domains.Collections,
+};
+
+const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args))
   };
@@ -26,15 +35,13 @@ const mapStateToProps = (state, props) => {
     Collections: getDomainState('Collections'),
 
     // New Type
-    forum: getUIState('Community').get('forum')
+    forum: getUIState(['Community', 'forum'])
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+
+  }
 )(MenuContainer);

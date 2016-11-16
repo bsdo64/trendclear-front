@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import BestCategorySelect from '../../Components/BestCategorySelect';
+import { UI, Domains } from '../../Reducers/InitialStates';
 
 import {
   updateFollowingFilter,
@@ -17,6 +18,15 @@ const BestCategoryMenu = React.createClass({
     )
   }
 });
+
+BestCategoryMenu.defaultProps = {
+  GnbStore: UI.Gnb,
+  ListStore: UI.List,
+  UserStore: UI.User,
+  Categories: Domains.Categories,
+  Forums: Domains.Forums,
+  Collections: Domains.Collections,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

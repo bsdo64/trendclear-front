@@ -20,7 +20,7 @@ import {
   FAILURE_EMAILVERIFY,
 } from '../../Actions/Signin';
 
-const SigninForm = (state = UI.SiginForm, action) => {
+const SigninForm = (state = UI.SigninForm, action) => {
   switch (action.type) {
 
     case TOGGLE_AGREE_TERM: {

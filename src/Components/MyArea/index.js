@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import LoginButton from './LoginButton';
 import UserActions from '../../Actions/UserActions';
@@ -12,7 +12,6 @@ require('./index.scss');
 
 const NotiItem = React.createClass({
   readNoti(notiId) {
-    "use strict";
     const { noti } = this.props;
 
     if (!noti.get('read')) {
@@ -133,14 +132,12 @@ class NotiButtons extends Component {
 const UserButtons = React.createClass({
 
   gotoActivity() {
-    "use strict";
 
     this.refs.profile_dropdown.hide();
     browserHistory.push('/activity');
   },
 
   gotoSettings() {
-    "use strict";
 
     this.refs.profile_dropdown.hide();
     browserHistory.push('/setting');
@@ -194,8 +191,14 @@ const UserButtons = React.createClass({
 });
 
 const MyArea = React.createClass({
+  propTypes: {
+    location: PropTypes.object.isRequired,
+    LoginStore: PropTypes.object.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired,
+  },
+
   render() {
-    const { LoginStore } = this.props;
+    const { LoginStore, location } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     return (
@@ -205,7 +208,8 @@ const MyArea = React.createClass({
           {
             !isLogin &&
             <LoginButton
-              location={this.props.location}
+              location={location}
+              FireToggleLoginModal={this.props.FireToggleLoginModal}
             />
           }
 

@@ -76,7 +76,7 @@ export const UI = {
     purchaseItem: null,
     openPurchaseWindow: false
   }),
-  SiginForm: Map({
+  SigninForm: Map({
 
     // agree ui
     agreeTerm: false,

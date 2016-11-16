@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import MyArea from '../../Components/MyArea';
 import { Noti, Point } from '../../Utils/Socket';
+import { UI } from '../../Reducers/InitialStates';
+import {
+  toggleLoginModal
+} from '../../Actions/Login';
 
-const MyMenuContainer = React.createClass({
+class MyMenuContainer extends React.Component {
   componentDidMount() {
-    "use strict";
 
     const { LoginStore } = this.props;
 
@@ -15,11 +18,18 @@ const MyMenuContainer = React.createClass({
       Point.emit('join_room');
     }
 
-  },
+  }
   render() {
     return (<MyArea {...this.props} />)
   }
-});
+}
+
+MyMenuContainer.propTypes = {
+  LoginStore: PropTypes.object.isRequired
+};
+MyMenuContainer.defaultProps = {
+  LoginStore: UI.Login
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -37,11 +47,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireToggleLoginModal: toggleLoginModal
+  }
 )(MyMenuContainer);
