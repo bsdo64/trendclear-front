@@ -1,10 +1,11 @@
-var webpack = require('webpack');
-var path = require('path');
-var root = path.resolve(__dirname, '../');
+const webpack = require('webpack');
+const path = require('path');
+const root = path.resolve(__dirname, '../');
 
 module.exports = {
   entry: {
     Entry: [
+      'babel-polyfill',
       path.resolve(root, './src/App/Entry')
     ]
   },
