@@ -17,7 +17,7 @@ const ForumLeftMenu = React.createClass({
 
   render() {
     const {
-      UserStore, Forums, Collections, location,
+      UserStore, location,
       forum
     } = this.props;
 
@@ -89,8 +89,7 @@ const ForumLeftMenu = React.createClass({
                 {
                   user &&
                   <CollectionComponent
-                    collections={Collections}
-                    forums={Forums}
+                    {...this.props}
                   />
                 }
 

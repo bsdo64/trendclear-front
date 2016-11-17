@@ -2,6 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import CollectionLeftMenu from '../../Components/CollectionLeftMenu';
+import {
+  requestCreateCollection,
+  requestAddForumInCollection,
+  requestRemoveForumInCollection,
+  requestSearchForumToCollectionSubs,
+} from '../../Actions/Collection';
 
 const CollectionMenu = React.createClass({
   render() {
@@ -31,11 +37,12 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireRequestCreateCollection: requestCreateCollection,
+    FireRequestAddForumInCollection: requestAddForumInCollection,
+    FireRequestRemoveForumInCollection: requestRemoveForumInCollection,
+    FireRequestSearchForumToCollectionSubs: requestSearchForumToCollectionSubs,
+  }
 )(CollectionMenu);

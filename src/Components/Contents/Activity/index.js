@@ -22,8 +22,10 @@ const ActivityBox = React.createClass({
     Posts: PropTypes.object.isRequired,
     Users: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
+
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
+    FireToggleReportModal: PropTypes.func.isRequired,
   },
 
   createActivityUserHeader(UserStore) {
@@ -94,23 +96,18 @@ const ActivityBox = React.createClass({
   render() {
     const { UserStore, ActivityStore, location } = this.props;
     const { ListStore, Posts, Users, AuthStore, PaginationStore } = this.props;
-    let context, Collection, PostIdList;
 
+    let context, Collection, PostIdList;
     if (location.pathname === '/activity' || location.pathname === '/activity/likes') {
       context = 'likePostList';
-      Collection = PaginationStore.get(context);
-      PostIdList = ListStore.get(context);
-
     } else if (location.pathname === ('/activity/posts')) {
       context = 'myWritePostList';
-      Collection = PaginationStore.get(context);
-      PostIdList = ListStore.get(context);
-
     } else if (location.pathname === ('/activity/comments')) {
       context = 'myWriteCommentPostList';
-      Collection = PaginationStore.get(context);
-      PostIdList = ListStore.get(context);
     }
+
+    Collection = PaginationStore.get(context);
+    PostIdList = ListStore.get(context);
 
     if (UserStore.get('user')) {
       return (
@@ -145,6 +142,7 @@ const ActivityBox = React.createClass({
               scrollHeight={ListStore.get('scrollHeight')}
               FireSetScrollPosition={this.props.FireSetScrollPosition}
               FireToggleLoginModal={this.props.FireToggleLoginModal}
+              FireToggleReportModal={this.props.FireToggleReportModal}
             />
 
             <Waypoint

@@ -8,6 +8,9 @@ import {
   updateFollowingFilter,
   requestSaveFollowingFilter,
 } from '../../Actions/Gnb';
+import {
+  requestCreateCollection,
+} from '../../Actions/Collection';
 
 const BestCategoryMenu = React.createClass({
   render() {
@@ -53,5 +56,6 @@ module.exports = connect(
   {
     FireUpdateFollowingFilter: updateFollowingFilter,
     FireRequestSaveFollowingFilter: requestSaveFollowingFilter,
+    FireRequestCreateCollection: requestCreateCollection,
   }
 )(BestCategoryMenu);

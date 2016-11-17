@@ -3,6 +3,12 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import ForumLeftMenu from '../../Components/ForumLeftMenu';
 import { UI, Domains } from '../../Reducers/InitialStates';
+import {
+  requestCreateCollection,
+  requestAddForumInCollection,
+  requestRemoveForumInCollection,
+  requestSearchForumToCollectionSubs,
+} from '../../Actions/Collection';
 
 const MenuContainer = React.createClass({
   render() {
@@ -42,6 +48,9 @@ const mapStateToProps = (state) => {
 module.exports = connect(
   mapStateToProps,
   {
-
+    FireRequestCreateCollection: requestCreateCollection,
+    FireRequestAddForumInCollection: requestAddForumInCollection,
+    FireRequestRemoveForumInCollection: requestRemoveForumInCollection,
+    FireRequestSearchForumToCollectionSubs: requestSearchForumToCollectionSubs,
   }
 )(MenuContainer);

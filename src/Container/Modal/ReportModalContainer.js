@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import ReportModalBox from '../../Components/Modal/Components/Report/index';
 
+import { requestReport } from '../../Actions/Report';
+
 const ReportModalContainer = React.createClass({
   render() {
     return (<ReportModalBox {...this.props} />)
@@ -29,11 +31,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireRequestReport: requestReport
+  }
 )(ReportModalContainer);

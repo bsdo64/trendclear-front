@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import { Link } from 'react-router';
-import CollectionActions from '../../Actions/CollectionActions';
 
 require('./index.scss');
 const SubscribeForumList = React.createClass({
   displayName: 'SubscribeForumList',
+  propTypes: {
+    subscribeForumList: PropTypes.object.isRequired,
+    collection: PropTypes.object.isRequired,
+    forums: PropTypes.object.isRequired,
+    searchForumList: PropTypes.object,
+    FireRequestAddForumInCollection: PropTypes.func.isRequired,
+    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+    FireRequestSearchForumToCollectionSubs: PropTypes.func.isRequired,
+  },
+
   getInitialState() {
     return {
       hideCreateCollectionBox: true,
@@ -14,28 +23,24 @@ const SubscribeForumList = React.createClass({
   },
 
   toggleCreateCollection() {
-    "use strict";
 
     this.setState({ hideCreateCollectionBox: !this.state.hideCreateCollectionBox })
   },
   searchForum(e) {
-    "use strict";
     e.preventDefault();
     e.stopPropagation();
 
     if (this.state.searchForumTitle) {
-      CollectionActions.findForumByTitle({
+      this.props.FireRequestSearchForumToCollectionSubs({
         title: this.state.searchForumTitle
       });
     }
   },
   handleChangeName(e) {
-    "use strict";
 
     this.setState({ searchForumTitle: e.target.value.trim() })
   },
-  toggleForumCandidate(forumId, e) {
-    "use strict";
+  toggleForumCandidate(forumId) {
 
     let newForumCandidate = this.props.subscribeForumList;
     if (newForumCandidate.includes(forumId)) {
@@ -43,18 +48,18 @@ const SubscribeForumList = React.createClass({
       const findIndex = newForumCandidate.findIndex(element => element === forumId);
       newForumCandidate.splice(findIndex, 1);
 
-      CollectionActions.removeForum({
+      this.props.FireRequestRemoveForumInCollection({
         forumId: forumId,
         collectionId: this.props.collection.get('id')
-      })
+      });
 
     } else {
 
       newForumCandidate.push(forumId);
-      CollectionActions.addForum({
+      this.props.FireRequestAddForumInCollection({
         forumId: forumId,
         collectionId: this.props.collection.get('id')
-      })
+      });
     }
   },
   createListItem(forumId) {
@@ -84,7 +89,6 @@ const SubscribeForumList = React.createClass({
   },
 
   render() {
-    "use strict";
 
     const { collection, forums, searchForumList } = this.props;
     const createCollectionBoxStyle = cx('create_box', {

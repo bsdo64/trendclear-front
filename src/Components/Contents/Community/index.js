@@ -12,6 +12,8 @@ const CommunityContents = React.createClass({
     CommunityStore: PropTypes.object.isRequired,
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
+    FireToggleReportModal: PropTypes.func.isRequired,
+
   },
   // mixins: [PureRenderMixin],
 

@@ -1,11 +1,11 @@
 import { Noti, Point } from '../Utils/Socket';
-import UserActions from '../Actions/UserActions';
 
-Noti.on('comment_write noti', function (data) {
-  UserActions.socketNoti(data);
-});
+export default (store) => {
+  Noti.on('comment_write noti', function (data) {
+    store.dispatch(/*UserActions.socketNoti(data);*/);
+  });
 
-Point.on('receive point', function (data) {
-  "use strict";
-  UserActions.socketPoint(data);
-});
+  Point.on('receive point', function (data) {
+    store.dispatch(/*UserActions.socketPoint(data);*/);
+  });
+}

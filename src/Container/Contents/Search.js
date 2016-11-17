@@ -5,6 +5,7 @@ import Search from '../../Components/Contents/Search';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
+import { toggleReportModal } from '../../Actions/Report';
 
 const SearchContainer = React.createClass({
   render() {
@@ -48,6 +49,7 @@ module.exports = connect(
   {
     FireSetScrollPosition: setScrollPosition,
     FireToggleLoginModal: toggleLoginModal,
+    FireToggleReportModal: toggleReportModal,
   }
 )(SearchContainer);
 

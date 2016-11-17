@@ -3,7 +3,8 @@ import {
   SUCCESS_SAVE_FOLLOWING_FILTER,
 } from '../../Actions/Gnb';
 import {
-  SUCCESS_GET_MORE_LIST
+  SUCCESS_GET_MORE_LIST,
+  SUCCESS_GET_INIT_LIST,
 } from '../../Actions/Post';
 
 const Pagination = (state = UI.Pagination, action) => {
@@ -12,6 +13,7 @@ const Pagination = (state = UI.Pagination, action) => {
       return state.merge({ bestPostList: action.collection })
     }
 
+    case SUCCESS_GET_INIT_LIST:
     case SUCCESS_GET_MORE_LIST: {
       const { listName, collection } = action;
 

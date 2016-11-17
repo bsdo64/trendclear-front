@@ -20,6 +20,7 @@ const BigPost = React.createClass({
     shorten: PropTypes.bool.isRequired,
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
+    FireToggleReportModal: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -243,6 +244,7 @@ const BigPost = React.createClass({
                   forumId={post.get('forum_id')}
                   targetId={post.get('id')}
                   isUser={userId && (userId === author.get('id'))}
+                  FireToggleReportModal={this.props.FireToggleReportModal}
                 />
               </div>
             }

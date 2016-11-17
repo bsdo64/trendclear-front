@@ -6,6 +6,7 @@ import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
+import { toggleReportModal } from '../../Actions/Report';
 
 const CommunityContainer = React.createClass({
   render() {
@@ -62,5 +63,6 @@ module.exports = connect(
   {
     FireSetScrollPosition: setScrollPosition,
     FireToggleLoginModal: toggleLoginModal,
+    FireToggleReportModal: toggleReportModal,
   }
 )(CommunityContainer);

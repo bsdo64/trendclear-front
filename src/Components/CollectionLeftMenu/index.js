@@ -12,6 +12,10 @@ const CollectionLeftMenu = React.createClass({
     location: PropTypes.object.isRequired,
     Forums: PropTypes.object.isRequired,
     Collections: PropTypes.object.isRequired,
+    FireRequestCreateCollection: PropTypes.func.isRequired,
+    FireRequestAddForumInCollection: PropTypes.func.isRequired,
+    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+    FireRequestSearchForumToCollectionSubs: PropTypes.func.isRequired,
   },
 
   render() {
@@ -74,8 +78,6 @@ const CollectionLeftMenu = React.createClass({
               {
                 user &&
                 <CollectionComponent
-                  collections={Collections}
-                  forums={Forums}
                   {...this.props}
                 />
               }
@@ -87,6 +89,7 @@ const CollectionLeftMenu = React.createClass({
                   subscribeForumList={collection.get('forums')}
                   collection={collection}
                   forums={Forums}
+                  {...this.props}
                 />
               }
 

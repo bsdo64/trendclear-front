@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import ReportActions from '../../../../Actions/ReportActions.js';
 
 require('./index.scss');
 const ReportModalBox = React.createClass({
@@ -10,6 +9,7 @@ const ReportModalBox = React.createClass({
     Posts: PropTypes.object.isRequired,
     Comments: PropTypes.object.isRequired,
     SubComments: PropTypes.object.isRequired,
+    FireRequestReport: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -18,9 +18,6 @@ const ReportModalBox = React.createClass({
     }
   },
 
-  closeModal() {
-    ReportActions.closeReportModal();
-  },
   selectReportItem(e) {
 
     const reportId = e.target.dataset.id;
@@ -45,16 +42,14 @@ const ReportModalBox = React.createClass({
   },
   sendReport() {
 
-    const { ReportStore } = this.props;
+    const { ReportStore, FireRequestReport } = this.props;
 
-    const reportObj = {
+    FireRequestReport({
       type: ReportStore.get('type'),
       typeId: ReportStore.get('typeId'),
       reportId: this.state.selectItem,
       description: this.state.reportMessage
-    };
-
-    ReportActions.sendReport(reportObj);
+    });
   },
   render() {
     const { ReportStore } = this.props;

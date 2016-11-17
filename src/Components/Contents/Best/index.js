@@ -3,7 +3,6 @@ import Waypoint from 'react-waypoint';
 import Header from '../../ContentBreadCrumb/ContentBreadCrumb';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
-import PostActions from '../../../Actions/PostActions';
 import GnbActions from '../../../Actions/GnbActions';
 
 const BestBox = React.createClass({
@@ -22,6 +21,8 @@ const BestBox = React.createClass({
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireRequestGetMoreList: PropTypes.func.isRequired,
+    FireToggleReportModal: PropTypes.func.isRequired,
+
   },
 
   componentWillUnmount() {
@@ -91,7 +92,7 @@ const BestBox = React.createClass({
   render() {
     const {
       location, listName, ListStore, Posts, Users, Collections, AuthStore, PaginationStore,
-      FireSetScrollPosition, FireToggleLoginModal
+      FireSetScrollPosition, FireToggleLoginModal, FireToggleReportModal
     } = this.props;
     const Collection = PaginationStore.get(listName);
     const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
@@ -113,6 +114,7 @@ const BestBox = React.createClass({
           scrollHeight={ListStore.get('scrollHeight')}
           FireSetScrollPosition={FireSetScrollPosition}
           FireToggleLoginModal={FireToggleLoginModal}
+          FireToggleReportModal={FireToggleReportModal}
         />
 
         <Waypoint

@@ -1,16 +1,15 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import cx from 'classnames';
-import CollectionActions from '../../../Actions/CollectionActions';
 
 const Subs = (props) => {
-  const { subs, forums } = props;
+  const { subs, Forums } = props;
   return (
     <ul className="forum_list">
       {
         subs &&
         subs.map(subId => {
-          const forum = forums.get(subId.toString());
+          const forum = Forums.get(subId.toString());
           if (forum) {
             return (
               <li key={forum.get('id')} className="forum_list_item">
@@ -29,7 +28,7 @@ const Subs = (props) => {
 
 Subs.propTypes = {
   subs: PropTypes.object,
-  forums: PropTypes.object.isRequired,
+  Forums: PropTypes.object.isRequired,
 };
 
 const CollectionItem = React.createClass({
@@ -38,7 +37,7 @@ const CollectionItem = React.createClass({
     id: PropTypes.string,
     title: PropTypes.string.isRequired,
     subs: PropTypes.object,
-    forums: PropTypes.object.isRequired,
+    Forums: PropTypes.object.isRequired,
     mouseOverItem: PropTypes.string,
     location: PropTypes.object,
 
@@ -65,7 +64,7 @@ const CollectionItem = React.createClass({
   render() {
 
     const {
-      id, title, subs, forums,
+      id, title, subs, Forums,
       mouseOverItem,
       location
     } = this.props;
@@ -94,7 +93,7 @@ const CollectionItem = React.createClass({
           <h4 className="forum_list_header">이 컬렉션의 구독 </h4>
 
           <Subs subs={subs}
-                forums={forums}
+                Forums={Forums}
                 onMouseOver={this.openCollection}
                 onMouseOut={this.closeCollection}
           />
@@ -109,9 +108,10 @@ require('./index.scss');
 const Collection = React.createClass({
   displayName: 'Collection',
   propTypes: {
-    forums: PropTypes.object.isRequired,
+    Forums: PropTypes.object.isRequired,
     location: PropTypes.object,
-    collections: PropTypes.object.isRequired,
+    Collections: PropTypes.object.isRequired,
+    FireRequestCreateCollection: PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -171,12 +171,12 @@ const Collection = React.createClass({
 
     const { title, description } = this.state.createCollection;
     if (title && description) {
-      CollectionActions.createCollection(this.state.createCollection);
+      this.props.FireRequestCreateCollection(this.state.createCollection);
       this.closeCreateCollection();
     }
   },
   createCollectionItem(collections) {
-    const { forums, location } = this.props;
+    const { Forums, location } = this.props;
     const self = this;
     return collections.entrySeq().map(([key, map]) => {
       return (
@@ -185,7 +185,7 @@ const Collection = React.createClass({
           id={key}
           title={map.get('title')}
           subs={map.get('forums')}
-          forums={forums}
+          Forums={Forums}
           location={location}
           mouseOverItemHandler={self.mouseOverItemHandler}
           closeItemHandler={self.closeItemHandler}
@@ -197,7 +197,7 @@ const Collection = React.createClass({
 
   render() {
 
-    const { collections } = this.props;
+    const { Collections } = this.props;
     const createCollectionBoxStyle = cx('create_box', {
       hide: this.state.hideCreateCollectionBox
     });
@@ -209,8 +209,8 @@ const Collection = React.createClass({
         </h5>
 
         {
-          collections &&
-          this.createCollectionItem(collections)
+          Collections &&
+          this.createCollectionItem(Collections)
         }
 
         <div className="sub_category item create_collection">

@@ -5,6 +5,8 @@ import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
+import { toggleReportModal } from '../../Actions/Report';
+import { requestGetMoreList } from '../../Actions/Post';
 
 const BestContainer = React.createClass({
   render() {
@@ -19,6 +21,7 @@ BestContainer.defaultProps = {
   ListStore: UI.List,
   AuthStore: UI.Auth,
   PaginationStore: UI.Pagination,
+  GnbStore: UI.Gnb,
   Collections: Domains.Collections,
   Forums: Domains.Forums,
   Users: Domains.Users,
@@ -52,5 +55,7 @@ module.exports = connect(
   {
     FireSetScrollPosition: setScrollPosition,
     FireToggleLoginModal: toggleLoginModal,
+    FireToggleReportModal: toggleReportModal,
+    FireRequestGetMoreList: requestGetMoreList,
   }
 )(BestContainer);

@@ -6,10 +6,6 @@ class ReportActions {
     this.generateActions('toggleReportModal');
   }
 
-  submitReport() {
-
-  }
-
   sendReport(params) {
     return (dispatch) => {
       Api
