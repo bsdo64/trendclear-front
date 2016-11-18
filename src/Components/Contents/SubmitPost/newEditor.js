@@ -1,8 +1,8 @@
 /**
  * Created by dobyeongsu on 2016. 5. 24..
  */
-import React from 'react';
-import { AtomicBlockUtils, Editor, EditorState, Entity, RichUtils, convertToRaw } from 'draft-js';
+import React, { PropTypes } from 'react';
+import { AtomicBlockUtils, Editor, EditorState, Entity, RichUtils, /* convertToRaw */ } from 'draft-js';
 
 class MediaEditorExample extends React.Component {
   constructor(props) {
@@ -14,10 +14,10 @@ class MediaEditorExample extends React.Component {
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => this.setState({ editorState });
-    this.logState = () => {
-      const content = this.state.editorState.getCurrentContent();
-      console.log(convertToRaw(content));
-    };
+    // this.logState = () => {
+    //   const content = this.state.editorState.getCurrentContent();
+    //   console.log(convertToRaw(content));
+    // };
 
     this.handleKeyCommand = this._handleKeyCommand.bind(this);
     this.addMedia = this._addMedia.bind(this);
@@ -99,7 +99,7 @@ class MediaEditorExample extends React.Component {
           />
         </div>
         <input
-          onClick={this.logState}
+          // onClick={this.logState}
           style={styles.button}
           type="button"
           value="Log State"
@@ -124,12 +124,24 @@ const Audio = (props) => {
   return <audio controls src={props.src} style={styles.media}/>;
 };
 
+Audio.propTypes = {
+  src: PropTypes.string
+};
+
 const Image = (props) => {
   return <img src={props.src} style={styles.media}/>;
 };
 
+Image.propTypes = {
+  src: PropTypes.string
+};
+
 const Video = (props) => {
   return <video controls src={props.src} style={styles.media}/>;
+};
+
+Video.propTypes = {
+  src: PropTypes.string
 };
 
 const Media = (props) => {

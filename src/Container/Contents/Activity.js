@@ -6,7 +6,9 @@ import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
+import { requestGetMorePostList } from '../../Actions/Post';
 import { toggleReportModal } from '../../Actions/Report';
+import { toggleDeleteModal } from '../../Actions/DeleteItem';
 
 const ActivityContainer = React.createClass({
   render() {
@@ -52,6 +54,8 @@ module.exports = connect(
   {
     FireSetScrollPosition: setScrollPosition,
     FireToggleLoginModal: toggleLoginModal,
+    FireRequestGetMorePostList: requestGetMorePostList,
+    FireToggleDeleteModal: toggleDeleteModal,
     FireToggleReportModal: toggleReportModal,
   }
 )(ActivityContainer);

@@ -13,7 +13,9 @@ const CommunityContents = React.createClass({
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
-
+    FireRequestAddForumInCollection: PropTypes.func.isRequired,
+    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired,
   },
   // mixins: [PureRenderMixin],
 

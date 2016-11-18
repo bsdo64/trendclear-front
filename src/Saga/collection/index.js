@@ -23,7 +23,7 @@ import {
   FAILURE_SEARCH_FORUM_TO_COLLECTION_SUBS,
 } from '../../Actions/Collection';
 import {
-  requestGetInitList
+  requestGetInitPostList
 } from '../../Actions/Post';
 
 const WORKING = true;
@@ -57,7 +57,7 @@ function* updateCollectionPostList(collectionId) {
         order: 'hot'
       }
     };
-    yield put(requestGetInitList(payload));
+    yield put(requestGetInitPostList(payload));
   }
   catch (error) {
     yield put({ type: FAILURE_ADD_FORUM_IN_COLLECTION, error })

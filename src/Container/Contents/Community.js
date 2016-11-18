@@ -7,6 +7,8 @@ import { UI, Domains } from '../../Reducers/InitialStates';
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
 import { toggleReportModal } from '../../Actions/Report';
+import { requestAddForumInCollection, requestRemoveForumInCollection } from '../../Actions/Collection';
+import { toggleDeleteModal } from '../../Actions/DeleteItem';
 
 const CommunityContainer = React.createClass({
   render() {
@@ -64,5 +66,8 @@ module.exports = connect(
     FireSetScrollPosition: setScrollPosition,
     FireToggleLoginModal: toggleLoginModal,
     FireToggleReportModal: toggleReportModal,
+    FireToggleDeleteModal: toggleDeleteModal,
+    FireRequestAddForumInCollection: requestAddForumInCollection,
+    FireRequestRemoveForumInCollection: requestRemoveForumInCollection,
   }
 )(CommunityContainer);

@@ -6,7 +6,8 @@ import { UI, Domains } from '../../Reducers/InitialStates';
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
 import { toggleReportModal } from '../../Actions/Report';
-import { requestGetMoreList } from '../../Actions/Post';
+import { requestGetMorePostList } from '../../Actions/Post';
+import { toggleDeleteModal } from '../../Actions/DeleteItem';
 
 const BestContainer = React.createClass({
   render() {
@@ -56,6 +57,7 @@ module.exports = connect(
     FireSetScrollPosition: setScrollPosition,
     FireToggleLoginModal: toggleLoginModal,
     FireToggleReportModal: toggleReportModal,
-    FireRequestGetMoreList: requestGetMoreList,
+    FireToggleDeleteModal: toggleDeleteModal,
+    FireRequestGetMorePostList: requestGetMorePostList,
   }
 )(BestContainer);

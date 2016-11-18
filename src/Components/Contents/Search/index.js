@@ -6,12 +6,9 @@ import cx from 'classnames';
 import SearchHeader from './header';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
-import PostActions from '../../../Actions/PostActions';
+
 import UserActions from '../../../Actions/UserActions';
-import CollectionActions from '../../../Actions/CollectionActions';
 import GnbActions from '../../../Actions/GnbActions';
-import LoginActions from '../../../Actions/LoginActions';
-import ForumActions from '../../../Actions/ForumActions';
 
 require('./index.scss');
 const SearchBox = React.createClass({
@@ -28,7 +25,14 @@ const SearchBox = React.createClass({
     location: PropTypes.object.isRequired,
 
     FireSetScrollPosition: PropTypes.func.isRequired,
+    FireRequestGetMorePostList: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
+    FireToggleReportModal: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestAddForumInCollection: PropTypes.func.isRequired,
+    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+    FireRequestGetMoreForumList: PropTypes.func.isRequired,
+
   },
 
   componentWillUnmount() {
@@ -46,16 +50,20 @@ const SearchBox = React.createClass({
 
   getMoreBest() {
 
-    const { PaginationStore, SearchStore, location } = this.props;
+    const { PaginationStore, SearchStore, location, FireRequestGetMorePostList } = this.props;
     const Pagination = PaginationStore.get('searchPostList');
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
 
       if (nextPage) {
-        PostActions.getSearchPost({
-          page: nextPage,
-          order: location.query.order || 'new',
-          query: SearchStore.get('query')
+        FireRequestGetMorePostList({
+          listName: 'searchPostList',
+          pathName: '/search',
+          params: {
+            page: nextPage,
+            order: location.query.order || 'new',
+            query: SearchStore.get('query')
+          }
         });
       }
     }
@@ -65,20 +73,24 @@ const SearchBox = React.createClass({
     return collectionForumList.includes(forumId);
   },
   selectCollection(forumId) {
+    const {
+      FireRequestAddForumInCollection,
+      FireRequestRemoveForumInCollection
+    } = this.props;
 
     return (e) => {
       const params = { collectionId: e.target.value, forumId: forumId };
 
       if (e.target.checked) {
-        CollectionActions.addForum(params)
+        FireRequestAddForumInCollection(params)
       } else {
-        CollectionActions.removeForum(params)
+        FireRequestRemoveForumInCollection(params)
       }
     }
   },
   openLoginModal() {
-    const location = this.props.location;
-    LoginActions.toggleLoginModal({
+    const { location, FireToggleLoginModal } = this.props;
+    FireToggleLoginModal({
       contentType: 'Login',
       location: location.pathname + location.search
     });
@@ -114,32 +126,40 @@ const SearchBox = React.createClass({
   },
 
   prevForumList() {
-    const { PaginationStore, SearchStore, location } = this.props;
+    const { PaginationStore, SearchStore, location, FireRequestGetMoreForumList } = this.props;
     const Pagination = PaginationStore.get('searchForumList');
     if (Pagination) {
       const currentPage = Pagination.get('current_page');
 
       if (currentPage > 1) {
-        ForumActions.getSearchForumList({
-          page: currentPage - 1,
-          order: location.query.order || 'new',
-          query: SearchStore.get('query')
+        FireRequestGetMoreForumList({
+          listName: 'searchForumList',
+          pathName: '/search/forum/list',
+          params: {
+            page: currentPage - 1,
+            order: location.query.order || 'new',
+            query: SearchStore.get('query')
+          }
         });
       }
     }
   },
 
   nextForumList() {
-    const { PaginationStore, SearchStore, location } = this.props;
+    const { PaginationStore, SearchStore, location, FireRequestGetMoreForumList } = this.props;
     const Pagination = PaginationStore.get('searchForumList');
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
 
       if (nextPage) {
-        ForumActions.getSearchForumList({
-          page: nextPage,
-          order: location.query.order || 'new',
-          query: SearchStore.get('query')
+        FireRequestGetMoreForumList({
+          listName: 'searchForumList',
+          pathName: '/search/forum/list',
+          params: {
+            page: nextPage,
+            order: location.query.order || 'new',
+            query: SearchStore.get('query')
+          }
         });
       }
     }
@@ -148,7 +168,7 @@ const SearchBox = React.createClass({
   render() {
     const {
       SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore,
-      FireSetScrollPosition, FireToggleLoginModal
+      FireSetScrollPosition, FireToggleLoginModal, FireToggleReportModal, FireToggleDeleteModal,
     } = this.props;
     const Collection = PaginationStore.get('searchPostList');
     const searchPosts = SearchStore.get('search');
@@ -294,6 +314,8 @@ const SearchBox = React.createClass({
           scrollHeight={ListStore.get('scrollHeight')}
           FireSetScrollPosition={FireSetScrollPosition}
           FireToggleLoginModal={FireToggleLoginModal}
+          FireToggleReportModal={FireToggleReportModal}
+          FireToggleDeleteModal={FireToggleDeleteModal}
         />
 
         <Waypoint

@@ -20,8 +20,9 @@ const BestBox = React.createClass({
 
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
-    FireRequestGetMoreList: PropTypes.func.isRequired,
+    FireRequestGetMorePostList: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired,
 
   },
 
@@ -34,7 +35,7 @@ const BestBox = React.createClass({
     if (previousPosition === 'below' && currentPosition === 'inside' && event) {
       const body = event.target.body;
       if ((body) && body.clientHeight > 768) {
-        const { PaginationStore, GnbStore, listName, location, FireRequestGetMoreList } = this.props;
+        const { PaginationStore, GnbStore, listName, location, FireRequestGetMorePostList } = this.props;
         const Pagination = PaginationStore.get(listName);
         if (Pagination) {
           const nextPage = Pagination.get('next_page');
@@ -60,7 +61,7 @@ const BestBox = React.createClass({
                 pathName = '/best';
             }
 
-            FireRequestGetMoreList({
+            FireRequestGetMorePostList({
               listName: listName,
               pathName: pathName,
               params: {
@@ -92,7 +93,7 @@ const BestBox = React.createClass({
   render() {
     const {
       location, listName, ListStore, Posts, Users, Collections, AuthStore, PaginationStore,
-      FireSetScrollPosition, FireToggleLoginModal, FireToggleReportModal
+      FireSetScrollPosition, FireToggleLoginModal, FireToggleReportModal, FireToggleDeleteModal
     } = this.props;
     const Collection = PaginationStore.get(listName);
     const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
@@ -115,6 +116,7 @@ const BestBox = React.createClass({
           FireSetScrollPosition={FireSetScrollPosition}
           FireToggleLoginModal={FireToggleLoginModal}
           FireToggleReportModal={FireToggleReportModal}
+          FireToggleDeleteModal={FireToggleDeleteModal}
         />
 
         <Waypoint

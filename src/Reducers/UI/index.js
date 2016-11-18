@@ -10,6 +10,7 @@ import Modal from './Modal';
 import Pagination from './Pagination';
 import Report from './Report';
 import ResetPassword from './ResetPassword';
+import RemoveModal from './RemoveModal';
 import Search from './Search';
 import Setting from './Setting';
 import Shopping from './Shopping';
@@ -30,6 +31,7 @@ export default combineReducers({
   Pagination,
   Report,
   ResetPassword,
+  RemoveModal,
   Search,
   Setting,
   Shopping,

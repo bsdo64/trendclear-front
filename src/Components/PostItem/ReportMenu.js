@@ -4,7 +4,6 @@ import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdow
 import memoize from 'fast-memoize';
 
 import CommunityActions from '../../Actions/CommunityActions';
-import DeleteActions from '../../Actions/DeleteActions';
 
 import './ReportBox.scss';
 function createToggleModal(props) {
@@ -40,13 +39,13 @@ function createToggleModal(props) {
         });
         break;
       case 'delete_post':
-        DeleteActions.toggleModal({
+        props.FireToggleDeleteModal({
           data: reportObj,
           contentType: 'DeleteItem'
         });
         break;
       case 'delete_comment':
-        DeleteActions.toggleModal({
+        props.FireToggleDeleteModal({
           data: reportObj,
           contentType: 'DeleteItem'
         });
@@ -54,7 +53,7 @@ function createToggleModal(props) {
       case 'delete_subComment':
         reportObj.type = 'sub_comment';
 
-        DeleteActions.toggleModal({
+        props.FireToggleDeleteModal({
           data: reportObj,
           contentType: 'DeleteItem'
         });
@@ -101,6 +100,7 @@ Menu.propTypes = {
   isUser: PropTypes.bool.isRequired,
   targetType: PropTypes.string.isRequired,
   FireToggleReportModal: PropTypes.func.isRequired,
+  FireToggleDeleteModal: PropTypes.func.isRequired,
 };
 
 export default memoize(Menu);

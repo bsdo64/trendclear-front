@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import { Link } from 'react-router';
 import LoginActions from '../../../../Actions/LoginActions.js';
+import debug from 'debug';
+const errorLog = debug('vn:Components:Modal:Login:Form');
 
 require('./index.scss');
 const Login = React.createClass({
@@ -54,8 +56,7 @@ const Login = React.createClass({
           });
         },
         onFailure: (formErrors, fields) => {
-          console.log(formErrors);
-          console.log(fields);
+          errorLog(formErrors, fields);
         }
       });
   },
@@ -111,8 +112,7 @@ const Login = React.createClass({
           });
         },
         onFailure: (formErrors, fields) => {
-          console.log(formErrors);
-          console.log(fields);
+          errorLog(formErrors, fields);
         }
       });
   },

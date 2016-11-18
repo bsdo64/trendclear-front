@@ -2,10 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Search from '../../Components/Contents/Search';
+import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
+import { requestGetMorePostList } from '../../Actions/Post';
+import { requestGetMoreForumList } from '../../Actions/Forum';
 import { toggleLoginModal } from '../../Actions/Login';
+import { toggleDeleteModal } from '../../Actions/DeleteItem';
 import { toggleReportModal } from '../../Actions/Report';
+import { requestAddForumInCollection, requestRemoveForumInCollection } from '../../Actions/Collection';
 
 const SearchContainer = React.createClass({
   render() {
@@ -16,6 +21,21 @@ const SearchContainer = React.createClass({
     )
   }
 });
+
+SearchContainer.defaultProps = {
+  GnbStore: UI.Gnb,
+  SearchStore: UI.Search,
+  LoginStore: UI.Login,
+  CommunityStore: UI.Community,
+  ListStore: UI.List,
+  AuthStore: UI.Auth,
+  PaginationStore: UI.Pagination,
+
+  Collections: Domains.Collections,
+  Forums: Domains.Forums,
+  Users: Domains.Users,
+  Posts: Domains.Posts,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -48,8 +68,13 @@ module.exports = connect(
   mapStateToProps,
   {
     FireSetScrollPosition: setScrollPosition,
+    FireRequestGetMorePostList: requestGetMorePostList,
+    FireRequestGetMoreForumList: requestGetMoreForumList,
     FireToggleLoginModal: toggleLoginModal,
     FireToggleReportModal: toggleReportModal,
+    FireToggleDeleteModal: toggleDeleteModal,
+    FireRequestAddForumInCollection: requestAddForumInCollection,
+    FireRequestRemoveForumInCollection: requestRemoveForumInCollection,
   }
 )(SearchContainer);
 

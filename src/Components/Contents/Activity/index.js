@@ -7,7 +7,6 @@ import cx from 'classnames';
 import AvatarImage from '../../AvatarImage';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
-import PostActions from '../../../Actions/PostActions';
 import Waypoint from 'react-waypoint';
 
 require('./index.scss');
@@ -26,6 +25,9 @@ const ActivityBox = React.createClass({
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestGetMorePostList: PropTypes.func.isRequired,
+
   },
 
   createActivityUserHeader(UserStore) {
@@ -72,15 +74,41 @@ const ActivityBox = React.createClass({
 
   getMorePosts(context) {
 
-    const { PaginationStore } = this.props;
+    const { PaginationStore, FireRequestGetMorePostList } = this.props;
     const Pagination = PaginationStore.get(context);
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
 
       if (nextPage) {
-        PostActions.getMoreMyPost({
-          type: context,
-          page: nextPage
+
+        let pathName, listName;
+        switch (context) {
+          case 'likePostList':
+            pathName = '/user/likes';
+            listName = 'likePostList';
+            break;
+
+          case 'myWritePostList':
+            pathName = '/user/posts';
+            listName = 'myWritePostList';
+            break;
+
+          case 'myWriteCommentPostList':
+            pathName = '/user/comments';
+            listName = 'myWriteCommentPostList';
+            break;
+
+          default:
+            pathName = '/user/likes';
+            listName = 'likePostList';
+        }
+
+        FireRequestGetMorePostList({
+          listName,
+          pathName,
+          params: {
+            page: nextPage
+          }
         });
       }
     }
@@ -140,9 +168,7 @@ const ActivityBox = React.createClass({
               AuthorItems={Users}
               User={AuthStore}
               scrollHeight={ListStore.get('scrollHeight')}
-              FireSetScrollPosition={this.props.FireSetScrollPosition}
-              FireToggleLoginModal={this.props.FireToggleLoginModal}
-              FireToggleReportModal={this.props.FireToggleReportModal}
+              {...this.props}
             />
 
             <Waypoint

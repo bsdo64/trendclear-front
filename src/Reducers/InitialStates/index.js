@@ -72,6 +72,7 @@ export const UI = {
     resetEmailSent: null,
     isLoading: false
   }),
+  RemoveModal: Map({}),
   Search: Map({
     query: null
   }),

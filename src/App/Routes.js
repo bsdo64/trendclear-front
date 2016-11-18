@@ -16,7 +16,6 @@ const SigninContainer = require('../Container/Contents/Signin');
 const CommunityContainer = require('../Container/Contents/Community');
 const SubmitContainer = require('../Container/Contents/SubmitPost');
 const SubmitForumContainer = require('../Container/Contents/SubmitForum');
-const SubmitForumPrefixContainer = require('../Container/Contents/SubmitForumPrefix');
 const ForumSettingMain = require('../Container/Contents/ForumSetting');
 const SearchContainer = require('../Container/Contents/Search');
 const SettingContainer = require('../Container/Contents/Setting');
@@ -256,18 +255,6 @@ export default (store) => {
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: SubmitForumContainer
-               }}
-        />
-
-        <Route path="submit/forum/prefix"
-               components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: SubmitCategoryMenu,
-                 WidgetContainer: WidgetContainer,
-                 ModalContainer: ModalContainer,
-                 ContentsContainer: SubmitForumPrefixContainer
                }}
         />
 

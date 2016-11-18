@@ -5,15 +5,21 @@ import {
   SUCCESS_SAVE_FOLLOWING_FILTER,
 } from '../../Actions/Gnb';
 import {
-  SUCCESS_GET_MORE_LIST,
-  SUCCESS_GET_INIT_LIST,
+  SUCCESS_GET_MORE_POST_LIST,
+  SUCCESS_GET_INIT_POST_LIST,
 } from '../../Actions/Post';
+import {
+  SUCCESS_GET_MORE_FORUM_LIST,
+} from '../../Actions/Forum';
 import {
   SUCCESS_CREATE_COLLECTION,
   SUCCESS_ADD_FORUM_IN_COLLECTION,
   SUCCESS_REMOVE_FORUM_IN_COLLECTION,
   SUCCESS_SEARCH_FORUM_TO_COLLECTION_SUBS,
 } from '../../Actions/Collection';
+import {
+  SUCCESS_DELETE_ITEM
+} from '../../Actions/DeleteItem';
 
 const initList = Map({});
 
@@ -23,8 +29,9 @@ const Users = (state = initList, action) => {
       return state.mergeDeep(action.data.entities.author)
     }
 
-    case SUCCESS_GET_INIT_LIST:
-    case SUCCESS_GET_MORE_LIST: {
+    case SUCCESS_GET_INIT_POST_LIST:
+    case SUCCESS_GET_MORE_POST_LIST:
+    case SUCCESS_GET_MORE_FORUM_LIST: {
       return state.mergeDeep(action.data.entities.author);
     }
 
@@ -38,9 +45,18 @@ const Posts = (state = initList, action) => {
       return state.mergeDeep(action.data.entities.posts)
     }
 
-    case SUCCESS_GET_INIT_LIST:
-    case SUCCESS_GET_MORE_LIST: {
+    case SUCCESS_GET_INIT_POST_LIST:
+    case SUCCESS_GET_MORE_POST_LIST: {
       return state.mergeDeep(action.data.entities.posts);
+    }
+
+    case SUCCESS_DELETE_ITEM: {
+      const item = action.item;
+      if (item && item.id && !item.comment_id && !item.post_id) {
+        return state.updateIn([item.id.toString(), 'deleted'], () => true);
+      }
+
+      return state;
     }
 
     default: return state;
@@ -48,8 +64,18 @@ const Posts = (state = initList, action) => {
 };
 
 const Comments = (state = initList, action) => {
+  switch (action.type) {
+    case SUCCESS_DELETE_ITEM: {
+      const item = action.item;
+      if (item && item.id && !item.comment_id && item.post_id) {
+        return state.updateIn([item.id.toString(), 'deleted'], () => true);
+      }
 
-  return state;
+      return state;
+    }
+
+    default: return state;
+  }
 };
 
 const Collections = (state = initList, action) => {
@@ -100,6 +126,10 @@ const Forums = (state = initList, action) => {
       return state.mergeDeep(action.normalizedForums.entities.forums);
     }
 
+    case SUCCESS_GET_MORE_FORUM_LIST: {
+      return state.mergeDeep(action.data.entities.forums);
+    }
+
     default: return state;
   }
 };
@@ -115,13 +145,34 @@ const Prefixes = (state = initList, action) => {
 };
 
 const SubComments = (state = initList, action) => {
+  switch (action.type) {
+    case SUCCESS_DELETE_ITEM: {
+      const item = action.item;
+      if (item && item.id && item.comment_id && !item.post_id) {
+        return state.updateIn([item.id.toString(), 'deleted'], () => true);
+      }
 
-  return state;
+      return state;
+    }
+
+    default: return state;
+  }
 };
 
 const Notis = (state = initList, action) => {
+  switch (action.type) {
+    case SUCCESS_DELETE_ITEM: {
+      const item = action.item;
+      // Post
+      if (item && item.id && !item.comment_id && !item.post_id) {
+        return state.filter(noti => noti.get('post_id') !== item.id);
+      }
 
-  return state;
+      return state;
+    }
+
+    default: return state;
+  }
 };
 
 // Domain reducer

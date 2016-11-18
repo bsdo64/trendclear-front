@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
-import Submit from '../../Components/Contents/Submit';
+import SubmitPost from '../../Components/Contents/SubmitPost';
 import { UI } from '../../Reducers/InitialStates';
 
 const SubmitPostContainer = React.createClass({
   render() {
-    return (<Submit {...this.props} />);
+    return (<SubmitPost {...this.props} />);
   }
 });
 

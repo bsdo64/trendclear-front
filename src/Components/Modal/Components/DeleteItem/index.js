@@ -1,15 +1,17 @@
-import React from 'react';
-import DeleteActions from '../../../../Actions/DeleteActions';
+import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
 require('./index.scss');
 const DeleteModalBox = React.createClass({
   displayName: 'DeleteModalBox',
   propTypes: {
-    RemoveModalStore: React.PropTypes.object.isRequired,
-    LoginStore: React.PropTypes.object.isRequired,
-    Posts: React.PropTypes.object.isRequired,
-    Comments: React.PropTypes.object.isRequired,
-    SubComments: React.PropTypes.object.isRequired,
+    RemoveModalStore: PropTypes.object.isRequired,
+    LoginStore: PropTypes.object.isRequired,
+    Posts: PropTypes.object.isRequired,
+    Comments: PropTypes.object.isRequired,
+    SubComments: PropTypes.object.isRequired,
+
+    FireRequestDeleteItem: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -18,8 +20,6 @@ const DeleteModalBox = React.createClass({
     }
   },
   sendReport() {
-    "use strict";
-
     const { RemoveModalStore, LoginStore } = this.props;
 
     const isLogin = LoginStore.get('isLogin');
@@ -29,27 +29,29 @@ const DeleteModalBox = React.createClass({
         typeId: RemoveModalStore.get('typeId')
       };
 
-      DeleteActions.delete(reportObj);
+      this.props.FireRequestDeleteItem(reportObj);
     }
   },
   render() {
-    const { RemoveModalStore } = this.props;
+    const {
+      Posts, Comments, SubComments, RemoveModalStore
+    } = this.props;
 
     let content, title;
     switch (RemoveModalStore.get('type')) {
       case 'post':
-        content = this.props.Posts.get(RemoveModalStore.get('typeId').toString());
+        content = Posts.get(RemoveModalStore.get('typeId').toString());
         title = ('제목 : ' + content.get('title')) || null;
         break;
 
       case 'comment':
-        content = this.props.Comments.get(RemoveModalStore.get('typeId').toString());
+        content = Comments.get(RemoveModalStore.get('typeId').toString());
         title = content ? <span>댓글: <div
           dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span> : null;
         break;
 
       case 'subComment':
-        content = this.props.SubComments.get(RemoveModalStore.get('typeId').toString());
+        content = SubComments.get(RemoveModalStore.get('typeId').toString());
         title = content ? (<span>대댓글: <div
           dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
         break;
@@ -58,6 +60,10 @@ const DeleteModalBox = React.createClass({
         content = null;
         title = null;
     }
+
+    const buttonStyle = cx('ui primary approve button', {
+      loading: RemoveModalStore.get('isLoading')
+    });
 
     return (
       <div className="delete-modal">
@@ -72,7 +78,7 @@ const DeleteModalBox = React.createClass({
             정말로 이 글을 삭제 하시겠습니까?
           </div>
           <div className="ui actions">
-            <div className="ui primary approve button" onClick={this.sendReport}>확인</div>
+            <div className={buttonStyle} onClick={this.sendReport}>확인</div>
           </div>
         </div>
       </div>

@@ -19,12 +19,16 @@ import StatCommentRank from './StatCommentRank';
 import StatViewRank from './StatViewRank';
 
 const checkManager = function checkManager(forum, userId) {
-  const managers = forum.get('managers');
-  if (managers) {
-    return managers.find(id => id === userId);
-  } else {
-    return false
+  if (forum && userId) {
+    const managers = forum.get('managers');
+    if (managers) {
+      return managers.find(id => id === userId);
+    } else {
+      return false
+    }
   }
+
+  return false;
 };
 
 const ForumSettingsComponent = (props) => {

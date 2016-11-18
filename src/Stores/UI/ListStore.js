@@ -80,7 +80,7 @@ class ListStore {
   onDelete(deletedItem) {
     let mergeResults = this.state;
 
-    if (!deletedItem.comment_id) {
+    if (!deletedItem.comment_id && !deletedItem.post_id) {
       if (this.state.get('bestPostList')) {
         const itemIndex = this.state.get('bestPostList').findIndex(postId => postId === deletedItem.id);
         const deletedList = this.state.get('bestPostList').splice(itemIndex, 1);

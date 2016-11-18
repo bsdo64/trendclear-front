@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import WidgetBox from '../../Components/WidgetBox';
+import { UI, Domains } from '../../Reducers/InitialStates';
 
 const WidgetContainer = React.createClass({
   render() {
@@ -9,6 +10,13 @@ const WidgetContainer = React.createClass({
     return (<WidgetBox {...this.props} />)
   }
 });
+
+WidgetContainer.defaultProps = {
+  ShoppingStore: UI.Shopping,
+  LoginStore: UI.Login,
+  UserStore: UI.User,
+  Forums: Domains.Forums
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -28,11 +36,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+
+  }
 )(WidgetContainer);

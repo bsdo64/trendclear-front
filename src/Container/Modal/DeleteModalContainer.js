@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import DeleteModalBox from '../../Components/Modal/Components/DeleteItem';
+import { requestDeleteItem } from '../../Actions/DeleteItem';
 
 const DeleteModalContainer = React.createClass({
   render() {
     return (<DeleteModalBox {...this.props} />)
   }
 });
+
+DeleteModalContainer.propTypes = {
+  LoginStore: PropTypes.object.isRequired,
+  RemoveModalStore: PropTypes.object.isRequired,
+  Posts: PropTypes.object.isRequired,
+  Comments: PropTypes.object.isRequired,
+  SubComments: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -29,11 +38,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireRequestDeleteItem: requestDeleteItem
+  }
 )(DeleteModalContainer);

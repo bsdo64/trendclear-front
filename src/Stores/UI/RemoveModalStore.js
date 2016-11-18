@@ -28,12 +28,6 @@ class RemoveModalStore {
   onToggleModal(payload) {
     this.setMergeState(Map(payload.data))
   }
-
-  onDelete(deletedItem) {
-    if (deletedItem.id) {
-      this.setMergeState(Map({ openModal: false }))
-    }
-  }
 }
 
 export default alt.createStore(immutable(RemoveModalStore), RemoveModalStore.displayName);

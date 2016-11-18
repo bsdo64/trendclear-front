@@ -6,11 +6,16 @@ import cx from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import moment from 'moment';
-moment.locale('ko')
+moment.locale('ko');
 
 require('./index.scss');
 
 const NotiItem = React.createClass({
+  propTypes: {
+    noti: PropTypes.object.isRequired,
+    close: PropTypes.func.isRequired,
+  },
+
   readNoti(notiId) {
     const { noti } = this.props;
 
@@ -22,7 +27,7 @@ const NotiItem = React.createClass({
   },
 
   render() {
-    const { noti } = this.props;
+    const { noti, close } = this.props;
     const forumId = noti.get('forum_id');
     const postId = noti.get('post_id');
     const linkUrl = `/community?forumId=${forumId}&postId=${postId}`
@@ -39,7 +44,7 @@ const NotiItem = React.createClass({
               <img src="/images/40x40.png"/>
             </div>
             <div className="content">
-              <div className="summary" onClick={this.props.close}>
+              <div className="summary" onClick={close}>
                 글 <Link to={linkUrl}>{noti.get('title')}</Link>에 <Link to={linkUrl}>{noti.get('count')}</Link>개의 댓글이
                 달렸습니다.
 
@@ -129,6 +134,11 @@ class NotiButtons extends Component {
   }
 }
 
+NotiButtons.propTypes = {
+  UserStore: PropTypes.object.isRequired,
+};
+
+
 const UserButtons = React.createClass({
   propTypes: {
     UserStore: PropTypes.object.isRequired,
@@ -197,6 +207,7 @@ const MyArea = React.createClass({
   propTypes: {
     location: PropTypes.object.isRequired,
     LoginStore: PropTypes.object.isRequired,
+    UserStore: PropTypes.object.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireRequestLogout: PropTypes.func.isRequired,
   },

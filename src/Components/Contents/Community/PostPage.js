@@ -17,7 +17,7 @@ const PostPage = React.createClass({
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
-
+    FireToggleDeleteModal: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -71,22 +71,18 @@ const PostPage = React.createClass({
                 postStyle="post_item"
                 view={true}
                 shorten={false}
-                FireSetScrollPosition={this.props.FireSetScrollPosition}
-                FireToggleLoginModal={this.props.FireToggleLoginModal}
-                FireToggleReportModal={this.props.FireToggleReportModal}
+                {...this.props}
               />
             }
 
             {
               post &&
               <CommentBox
-                {...this.props}
                 post={post}
                 comments={Comments}
                 subComments={SubComments}
                 authors={Users}
-                FireToggleReportModal={this.props.FireToggleReportModal}
-                FireToggleLoginModal={this.props.FireToggleLoginModal}
+                {...this.props}
               />
             }
 

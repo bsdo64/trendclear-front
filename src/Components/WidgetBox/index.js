@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import cx from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -152,5 +152,13 @@ class WidgetBox extends Component {
     );
   }
 }
+
+WidgetBox.propTypes = {
+  LoginStore: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+  ShoppingStore: PropTypes.object.isRequired,
+  Forums: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+};
 
 export default WidgetBox;

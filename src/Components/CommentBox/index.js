@@ -99,6 +99,7 @@ const SubCommentItem = React.createClass({
     location: PropTypes.object.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired,
   },
 
   componentDidUpdate(prevProps) {
@@ -256,6 +257,7 @@ const SubCommentItem = React.createClass({
                       targetType="subComment"
                       targetId={subComment.get('id')}
                       FireToggleReportModal={this.props.FireToggleReportModal}
+                      FireToggleDeleteModal={this.props.FireToggleDeleteModal}
                     />
                   }
                 </div>
@@ -287,6 +289,7 @@ const CommentItem = React.createClass({
     subComments: PropTypes.object.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired,
   },
   mixins: [PureRenderMixin],
 
@@ -434,8 +437,7 @@ const CommentItem = React.createClass({
     }
 
     const {
-      comment, commentAuthor, subCommentList, authors, subComments, location,
-      FireToggleLoginModal, FireToggleReportModal
+      comment, commentAuthor, subCommentList
     } = this.props;
     const subCommentOpen = this.state.subCommentOpen;
     const commentDeleted = comment.get('deleted');
@@ -449,20 +451,13 @@ const CommentItem = React.createClass({
       iconImg = <img className="user_icon_img" src={'/images/' + icon_img}/>;
     }
 
+    const props = this.props;
     const subCommentProps = {
-      authors: authors,
-      subComments: subComments,
-      location: location,
-      updating: updating,
       isLogin: isLogin,
       userId: userId,
-      commentAuthor: commentAuthor,
       commentId: comment.get('id'),
-      LoginStore,
-      UserStore,
       editor: this.editor,
-      FireToggleLoginModal,
-      FireToggleReportModal,
+      ...props
     };
 
     let contents;
@@ -562,6 +557,7 @@ const CommentItem = React.createClass({
                   targetType="comment"
                   targetId={comment.get('id')}
                   FireToggleReportModal={this.props.FireToggleReportModal}
+                  FireToggleDeleteModal={this.props.FireToggleDeleteModal}
                 />
               }
             </div>
@@ -608,16 +604,17 @@ const CommentList = React.createClass({
     location: PropTypes.object.isRequired,
     updating: PropTypes.object.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired
+    FireToggleReportModal: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired
+
   },
 
   render() {
     const {
-      commentList, comments, authors, subComments, UserStore, LoginStore, location, updating,
-      FireToggleLoginModal, FireToggleReportModal
+      commentList, comments, authors
     } = this.props;
 
-    let commentsNode = commentList.map(function (commentId) {
+    let commentsNode = commentList.map((commentId) => {
       const comment = comments.get(commentId.toString());
 
       if (comment) {
@@ -628,18 +625,11 @@ const CommentList = React.createClass({
 
           return (
             <CommentItem
-              LoginStore={LoginStore}
-              UserStore={UserStore}
               key={commentId}
               comment={comment}
               commentAuthor={commentAuthor}
-              authors={authors}
-              subComments={subComments}
-              location={location}
               subCommentList={subCommentList}
-              updating={updating}
-              FireToggleLoginModal={FireToggleLoginModal}
-              FireToggleReportModal={FireToggleReportModal}
+              {...this.props}
             />
           )
         }
@@ -668,7 +658,8 @@ const CommentBox = React.createClass({
     post: PropTypes.object.isRequired,
     CommunityStore: PropTypes.object.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired
+    FireToggleReportModal: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired,
   },
 
   //mixins: [PureRenderMixin],
@@ -730,8 +721,7 @@ const CommentBox = React.createClass({
 
   render() {
     const {
-      LoginStore, UserStore, location, comments, subComments, authors, post, CommunityStore,
-      FireToggleLoginModal, FireToggleReportModal
+      location, post, CommunityStore
     } = this.props;
     const commentList = post.get('comments');
     const updating = {
@@ -773,16 +763,9 @@ const CommentBox = React.createClass({
           </form>
 
           <CommentList
-            LoginStore={LoginStore}
-            UserStore={UserStore}
-            location={location}
-            commentList={commentList}
-            authors={authors}
-            comments={comments}
-            subComments={subComments}
             updating={updating}
-            FireToggleLoginModal={FireToggleLoginModal}
-            FireToggleReportModal={FireToggleReportModal}
+            commentList={commentList}
+            {...this.props}
           />
 
           <div className="ui center aligned container">

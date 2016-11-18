@@ -21,12 +21,6 @@ class SearchStore {
       query: query
     })
   }
-
-  onSubmitSearchQuery(query) {
-    this.setState(Map({
-      query: query
-    }))
-  }
 }
 
 export default alt.createStore(immutable(SearchStore), SearchStore.displayName);

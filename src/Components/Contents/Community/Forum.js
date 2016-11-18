@@ -8,8 +8,6 @@ import marked from '../../Lib/Marked';
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
 import UserActions from '../../../Actions/UserActions';
-import LoginActions from '../../../Actions/LoginActions';
-import CollectionActions from '../../../Actions/CollectionActions';
 
 // import AdForum1 from '../../Ad/AddForum1';
 
@@ -85,7 +83,10 @@ const Forum = React.createClass({
     Forums: PropTypes.object.isRequired,
     Prefixes: PropTypes.object.isRequired,
     Collections: PropTypes.object.isRequired,
-    Posts: PropTypes.object.isRequired
+    Posts: PropTypes.object.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired,
+    FireRequestAddForumInCollection: PropTypes.func.isRequired,
+    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -122,9 +123,8 @@ const Forum = React.createClass({
   },
 
   openLoginModal() {
-
-    const location = this.props.location;
-    LoginActions.toggleLoginModal({
+    const { location, FireToggleLoginModal } = this.props;
+    FireToggleLoginModal({
       contentType: 'Login',
       location: location.pathname + location.search
     });
@@ -147,8 +147,8 @@ const Forum = React.createClass({
   },
   createPostItem(makeUrl, isAnnounce, postId) {
 
-    const { Posts, Users } = this.props;
-    const postIdNow = this.props.location.query.postId;
+    const { Posts, Users, location } = this.props;
+    const postIdNow = location.query.postId;
 
     makeUrl.setQuery('postId', postId);
     const defaultPageUrl = makeUrl.removeQuery('comment_p');
@@ -170,14 +170,18 @@ const Forum = React.createClass({
   },
 
   selectCollection(e) {
-    const { ListStore } = this.props;
+    const {
+      ListStore,
+      FireRequestAddForumInCollection,
+      FireRequestRemoveForumInCollection
+    } = this.props;
     const forumId = ListStore.get('forum');
     const params = { collectionId: e.target.value, forumId: forumId };
 
     if (e.target.checked) {
-      CollectionActions.addForum(params)
+      FireRequestAddForumInCollection(params)
     } else {
-      CollectionActions.removeForum(params)
+      FireRequestRemoveForumInCollection(params)
     }
   },
   checkCollectionHasForums(collectionForumList, forumId) {

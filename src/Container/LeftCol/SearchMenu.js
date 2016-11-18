@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 const MenuContainer = React.createClass({
+  propTypes: {
+    SearchStore: PropTypes.object.isRequired,
+  },
   render() {
     const { SearchStore } = this.props;
     const query = SearchStore.get('query');
@@ -54,11 +57,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+
+  }
 )(MenuContainer);

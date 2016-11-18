@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import UserActions from '../../Actions/UserActions';
 import { UI } from '../../Reducers/InitialStates';
 
 const FindMemberContainer = React.createClass({
+  propTypes: {
+    AuthStore: PropTypes.object.isRequired,
+    ResetPasswordStore: PropTypes.object.isRequired,
+  },
 
   componentDidMount() {
     $('.ui.form')
