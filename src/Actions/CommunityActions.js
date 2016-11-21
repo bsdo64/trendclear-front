@@ -2,10 +2,6 @@ import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
 
 class CommunityActions {
-  constructor() {
-    this.generateActions('addPrefixes');
-  }
-
   likePost(postId) {
     return (dispatch) => {
       Api
@@ -38,24 +34,6 @@ class CommunityActions {
 
   closeUpdateComment() {
     return true;
-  }
-
-  createCommunity(category) {
-    return (dispatch) => {
-      Api
-        .setEntryPoint('/ajax')
-        .post('/community/category', category)
-        .then((res) => {
-          if (res === 'ok') {
-            dispatch(res);
-          } else {
-            dispatch(false);
-          }
-        })
-        .catch((err) => {
-          return err;
-        });
-    };
   }
 }
 

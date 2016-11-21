@@ -42,7 +42,7 @@ class ResetPasswordStore {
         isLoading: false
       })
 
-    } else if (res.result === 'ok') {
+    } else if (res === 'ok') {
       this.setMergeState({
         error: null,
         requestFindEmail: true,

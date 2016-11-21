@@ -70,7 +70,7 @@ function sendSubCommentLike(props) {
   const { location, isLogin, subCommentId } = props;
   return function createSendSubCommentLike() {
     if (!isLogin) {
-      this.props.FireToggleLoginModal({
+      props.FireToggleLoginModal({
         contentType: 'Login',
         location: location.pathname + location.search
       });
@@ -95,7 +95,7 @@ const SubCommentItem = React.createClass({
     subComments: PropTypes.object.isRequired,
     authors: PropTypes.object.isRequired,
     subCommentId: PropTypes.number.isRequired,
-    userId: PropTypes.number.isRequired,
+    userId: PropTypes.number,
     location: PropTypes.object.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,

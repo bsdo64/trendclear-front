@@ -6,13 +6,22 @@ const SubmitForumBox = React.createClass({
   propTypes: {
     SubmitForumStore: PropTypes.object.isRequired,
     UserStore: PropTypes.object.isRequired,
+    FireRequestValidateTitleForumCreate: PropTypes.func.isRequired,
   },
 
+  getInitialState() {
+    return { value: '' };
+  },
+  componentDidUpdate() {
+    $(this.form)
+      .form('refresh');
+  },
   componentDidMount() {
-    $('.ui.form')
+
+    $(this.form)
       .form({
         fields: {
-          title: {
+          forum_title: {
             identifier: 'forum_title',
             rules: [
               {
@@ -20,15 +29,15 @@ const SubmitForumBox = React.createClass({
                 prompt: '게시판 이름을 입력하세요'
               },
               {
-                type: 'regExp[/^[가-힣a-z0-9_]{2,14}$/]',
+                type: 'regExp[/^[가-힣A-Za-z0-9_]{2,14}$/]',
                 prompt: '한글, 영문 2-14 내로 입력해주세요'
               }
             ]
           },
-          sub_header: {
+          forum_sub_header: {
             identifier: 'forum_sub_header',
           },
-          description: {
+          forum_description: {
             identifier: 'forum_description',
             rules: [
               {
@@ -37,7 +46,7 @@ const SubmitForumBox = React.createClass({
               }
             ]
           },
-          rule: {
+          forum_rule: {
             identifier: 'forum_rule',
             rules: [
               {
@@ -66,13 +75,13 @@ const SubmitForumBox = React.createClass({
 
             ForumActions.createForum(formValue);
           }
+        },
+        onFailure: (e, fields) => {
+          console.log(e, fields)
         }
       });
   },
 
-  getInitialState: function () {
-    return { value: '' };
-  },
   handleChange: function () {
     this.setState({ value: this.refs.rule_textarea.value });
   },
@@ -81,10 +90,12 @@ const SubmitForumBox = React.createClass({
   },
 
   validate(e) {
+    const value = e.target.value.trim();
+    const isRegex = /^( ?[a-z가-힣A-Z0-9_]){2,14}$/.test(value);
+    if (e.target.value.length > 1 && isRegex) {
 
-    if (e.target.value.length > 1) {
-      ForumActions.validateBeforeCreateForum({
-        title: e.target.value.trim()
+      this.props.FireRequestValidateTitleForumCreate({
+        title: value
       });
     }
   },
@@ -126,20 +137,20 @@ const SubmitForumBox = React.createClass({
             <h3 className="ui header">게시판 생성</h3>
             <div className="ui divider"></div>
             <div className="ui list">
-              <a className="item">
+              <span className="item">
                 <i className="right triangle icon"></i>
                 <div className="content">
                   <div className="header">사람들과 의견을 나누고 싶은 게시판을 생성하세요</div>
                   <div className="description">어떤 주제든 상관없습니다</div>
                 </div>
-              </a>
-              <a className="item">
+              </span>
+              <span className="item">
                 <i className="help icon"></i>
                 <div className="content">
                   <div className="description">게시판 이름은 중복이 허용되지 않습니다</div>
                 </div>
-              </a>
-              <a className="item">
+              </span>
+              <span className="item">
                 <i className="help icon"></i>
                 <div className="content">
                   <div className="description">게시판 규칙은
@@ -147,22 +158,22 @@ const SubmitForumBox = React.createClass({
                     을 지원합니다
                   </div>
                 </div>
-              </a>
-              <a className="item">
+              </span>
+              <span className="item">
                 <i className="help icon"></i>
                 <div className="content">
                   <div className="description">
                     게시판을 생성하기 위해 <b>레벨 5 이상, 100 포인트</b>가 필요합니다.
                   </div>
                 </div>
-              </a>
+              </span>
             </div>
 
             {/* 게시판 입력 폼 */}
-            <form id="create_forum" className="ui form">
+            <form ref={ref => this.form = ref} id="create_forum" className="ui form">
               <div className="field">
                 <label>이름 *</label>
-                <input name="forum_title" type="text" onChange={this.validate}/>
+                <input name="forum_title" type="text" onChange={this.validate} />
               </div>
               <div className="field">
                 <label>부제 :</label>

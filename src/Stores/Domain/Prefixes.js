@@ -16,10 +16,6 @@ class Prefixes {
     initListener(this);
     this.setMergeState = setMergeState.bind(this);
   }
-
-  onAddPrefixes(prefixes) {
-    this.setMergeState(prefixes);
-  }
 }
 
 export default alt.createStore(immutable(Prefixes), Prefixes.displayName);

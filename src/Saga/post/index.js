@@ -12,10 +12,31 @@ import {
   REQUEST_GET_INIT_POST_LIST,
   SUCCESS_GET_INIT_POST_LIST,
   FAILURE_GET_INIT_POST_LIST,
+
+  REQUEST_SUBMIT_POST,
+  SUCCESS_SUBMIT_POST,
+  FAILURE_SUBMIT_POST,
 } from '../../Actions/Post';
 
 const WORKING = true;
 const API = Api.setEntryPoint('/ajax');
+
+function* SagaSubmitPost() {
+  while (WORKING) {
+    // REQUEST_SUBMIT_POST
+    const { payload } = yield take(REQUEST_SUBMIT_POST);
+
+    try {
+      const result = yield call([Api, API.post], '/community/submit', payload);
+
+      yield put({ type: SUCCESS_SUBMIT_POST, result })
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_SUBMIT_POST, error })
+    }
+  }
+}
 
 function* SagaInitList() {
   while (WORKING) {
@@ -61,5 +82,6 @@ export default function* postSaga() {
   yield [
     SagaMoreList(),
     SagaInitList(),
+    SagaSubmitPost(),
   ]
 }

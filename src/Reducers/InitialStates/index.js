@@ -1,4 +1,4 @@
-import { Map, List } from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 
 export const App = {
 
@@ -114,7 +114,7 @@ export const UI = {
     deletedUrl: List(),
     representingImage: null
   }),
-  SubmitForum: Map({
+  SubmitForum: fromJS({
     form: {
       inputValue: {
         title: null,

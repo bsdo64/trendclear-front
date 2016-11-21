@@ -10,6 +10,8 @@ import {
 } from '../../Actions/Post';
 import {
   SUCCESS_GET_MORE_FORUM_LIST,
+  SUCCESS_FOLLOW_FORUM,
+  SUCCESS_UN_FOLLOW_FORUM,
 } from '../../Actions/Forum';
 import {
   SUCCESS_CREATE_COLLECTION,
@@ -24,6 +26,14 @@ import {
 const initList = Map({});
 
 const Users = (state = initList, action) => {
+  const findUserById = (userId) => {
+    if (userId) {
+      return state.get(userId.toString())
+    } else {
+      return null;
+    }
+  };
+
   switch (action.type) {
     case SUCCESS_SAVE_FOLLOWING_FILTER: {
       return state.mergeDeep(action.data.entities.author)
@@ -33,6 +43,32 @@ const Users = (state = initList, action) => {
     case SUCCESS_GET_MORE_POST_LIST:
     case SUCCESS_GET_MORE_FORUM_LIST: {
       return state.mergeDeep(action.data.entities.author);
+    }
+
+    case SUCCESS_FOLLOW_FORUM: {
+      const userId = action.result.userId;
+      const loginUser = findUserById(userId);
+      if (loginUser) {
+        const updateUser = loginUser
+          .update('follow_forums', list => list.push(action.result.forum_id));
+
+        return state.update(userId.toString(), () => updateUser);
+      }
+
+      return state;
+    }
+
+    case SUCCESS_UN_FOLLOW_FORUM: {
+      const userId = action.result.userId;
+      const loginUser = findUserById(userId);
+      if (loginUser) {
+        const updateUser = loginUser
+          .update('follow_forums', list => list.filterNot(v => v === action.result.forum_id));
+
+        return state.update(userId.toString(), () => updateUser);
+      }
+
+      return state;
     }
 
     default: return state;
@@ -128,6 +164,20 @@ const Forums = (state = initList, action) => {
 
     case SUCCESS_GET_MORE_FORUM_LIST: {
       return state.mergeDeep(action.data.entities.forums);
+    }
+
+    case SUCCESS_FOLLOW_FORUM: {
+      const forumId = action.result.forum_id;
+      return state.update(forumId.toString(), forum => {
+        return forum.update('follow_count', v => v + 1);
+      });
+    }
+
+    case SUCCESS_UN_FOLLOW_FORUM: {
+      const forumId = action.result.forum_id;
+      return state.update(forumId.toString(), forum => {
+        return forum.update('follow_count', v => v - 1);
+      });
     }
 
     default: return state;

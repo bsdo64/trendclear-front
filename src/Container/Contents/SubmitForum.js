@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import SubmitForumBox from '../../Components/Contents/SubmitForum';
 import { UI } from '../../Reducers/InitialStates';
+import { requestValidateTitleForumCreate } from '../../Actions/Forum';
 
 const SubmitForum = React.createClass({
   propTypes: {
@@ -36,6 +37,6 @@ const mapStateToProps = (state) => {
 module.exports = connect(
   mapStateToProps,
   {
-
+    FireRequestValidateTitleForumCreate: requestValidateTitleForumCreate
   }
 )(SubmitForum);

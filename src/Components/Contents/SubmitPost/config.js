@@ -40,9 +40,9 @@ const medium = {
   }
 };
 
-const mediumInsertConfig = function mediumInsertConfig(editor) {
+const mediumInsertConfig = (EditorBox) => {
   return {
-    editor: editor,
+    editor: EditorBox.editor,
     addons: {
       images: {
         deleteScript: '/image/uploaded/files/',
@@ -59,17 +59,18 @@ const mediumInsertConfig = function mediumInsertConfig(editor) {
           acceptFileTypesError: '지원되지 않는 파일 형식 입니다: ',
           maxFileSizeError: '파일의 크기가 큽니다 (5MB 이하): '
         },
-        uploadCompleted: function ($el, data) {
-          "use strict";
-
-          PostActions.addImages(data);
+        uploadCompleted: ($el, data) => {
+          if (data && data.result && data.result.files[0]) {
+            const file = data.result.files[0];
+            EditorBox.props.FireHandleAddPostImages({ ...file });
+          }
         },
         fileDeleteOptions: {
-          beforeSend: function (jqXHR, settings) {
-            "use strict";
-
-            const url = decodeURIComponent(settings.data.split('=')[1]);
-            PostActions.deleteImages({ deleteUrl: url });
+          beforeSend: (jqXHR, settings) => {
+            const deleteUrl = decodeURIComponent(settings.data.split('=')[1]);
+            if (deleteUrl) {
+              EditorBox.props.FireHandleDeletePostImages(deleteUrl);
+            }
           }
         }
       },

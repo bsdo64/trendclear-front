@@ -3,6 +3,17 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import SubmitPost from '../../Components/Contents/SubmitPost';
 import { UI } from '../../Reducers/InitialStates';
+import {
+  removeServerInit,
+  handlePostContent,
+  handlePostTitle,
+  handleResetPostContent,
+  requestSubmitPost,
+  handleSelectPrefix,
+  handleAddPostImages,
+  handleDeletePostImages,
+  handleSetRepresentImage,
+} from '../../Actions/Post';
 
 const SubmitPostContainer = React.createClass({
   render() {
@@ -34,11 +45,17 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireRemoveServerInit: removeServerInit,
+    FireHandlePostContent: handlePostContent,
+    FireHandlePostTitle: handlePostTitle,
+    FireHandleResetPostContent: handleResetPostContent,
+    FireRequestSubmitPost: requestSubmitPost,
+    FireHandleSelectPrefix: handleSelectPrefix,
+    FireHandleAddPostImages: handleAddPostImages,
+    FireHandleDeletePostImages: handleDeletePostImages,
+    FireHandleSetRepresentImage: handleSetRepresentImage,
+  }
 )(SubmitPostContainer);

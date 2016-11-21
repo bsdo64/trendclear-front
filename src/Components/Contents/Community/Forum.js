@@ -7,7 +7,6 @@ import AvatarImage from '../../AvatarImage';
 import marked from '../../Lib/Marked';
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
-import UserActions from '../../../Actions/UserActions';
 
 // import AdForum1 from '../../Ad/AddForum1';
 
@@ -87,6 +86,8 @@ const Forum = React.createClass({
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireRequestAddForumInCollection: PropTypes.func.isRequired,
     FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+    FireRequestFollowForum: PropTypes.func.isRequired,
+    FireRequestUnFollowForum: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -191,15 +192,18 @@ const Forum = React.createClass({
 
   toggleFollow(isForumFollow, forumId) {
 
-    const { AuthStore } = this.props;
+    const {
+      AuthStore,
+      FireRequestFollowForum, FireRequestUnFollowForum
+    } = this.props;
     const userId = AuthStore.get('userId');
     if (!userId) {
       this.openLoginModal();
     } else {
       if (isForumFollow) {
-        UserActions.unFollowForum({ id: forumId });
+        FireRequestUnFollowForum({ id: forumId, userId });
       } else {
-        UserActions.followForum({ forumId: forumId });
+        FireRequestFollowForum({ forumId: forumId, userId });
       }
     }
   },

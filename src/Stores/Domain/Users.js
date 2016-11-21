@@ -1,7 +1,7 @@
 import alt from '../../Utils/alt';
 import immutable from 'alt-utils/lib/ImmutableUtil';
 import { initListener, setMergeState, setMergeDeep, locationHref } from '../Helper/func';
-import Immutable, { List, Map, fromJS } from 'immutable';
+import Immutable, { List, Map } from 'immutable';
 import PostActions from '../../Actions/PostActions';
 import ForumActions from '../../Actions/ForumActions';
 import ForumSettingActions from '../../Actions/ForumSettingActions';
@@ -52,9 +52,9 @@ class Users {
 
   _setUserUpdateById(UserState, userId, userData) {
     if (userId) {
-      return UserState.set(userId.toString(), fromJS(userData));
+      return UserState.mergeDeep({[userId]: userData});
     } else {
-      return null;
+      return UserState;
     }
   }
 
@@ -69,10 +69,7 @@ class Users {
     const loginUser = this._findLoginUser();
     if (loginUser) {
       const updateUsers = this._setUserUpdateById(this.state, loginUser.get('id'), loginUser.set('openAvatarModal', true));
-
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -81,9 +78,7 @@ class Users {
     if (loginUser) {
       const updateUsers = this._setUserUpdateById(this.state, loginUser.get('id'), loginUser.set('openAvatarModal', false));
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -128,10 +123,7 @@ class Users {
           .set('openAvatarModal', false);
 
         const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
-
-        if (updateUsers) {
-          this.setState(updateUsers);
-        }
+         this.setState(updateUsers);
       }
     }
   }
@@ -139,13 +131,11 @@ class Users {
   onLevelUp(newTrendbox) {
     const loginUser = this._findLoginUser();
     if (loginUser) {
-      const updateUser = loginUser.set('trendbox', fromJS(newTrendbox));
+      const updateUser = loginUser.mergeDeep({ trendbox: newTrendbox });
 
       const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -171,9 +161,7 @@ class Users {
 
       const updateUsers = this._setUserUpdateById(addSubCommentAuthor, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -199,9 +187,7 @@ class Users {
 
       const updateUsers = this._setUserUpdateById(addCommentState, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -212,13 +198,10 @@ class Users {
       const newProfile = result[0];
       const loginUser = this._findLoginUser();
       if (loginUser) {
-        const updateUser = loginUser.set('profile', fromJS(newProfile));
+        const updateUser = loginUser.mergeDeep({profile: newProfile});
 
         const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
-
-        if (updateUsers) {
-          this.setState(updateUsers);
-        }
+         this.setState(updateUsers);
       }
     }
   }
@@ -226,13 +209,11 @@ class Users {
   onSocketNoti(normalizedNoti) {
     const loginUser = this._findLoginUser();
     if (loginUser) {
-      const updateUser = loginUser.setIn(['notifications', 'INoti'], fromJS(normalizedNoti));
+      const updateUser = loginUser.mergeDeepIn(['notifications'], {INoti: normalizedNoti});
 
       const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -248,9 +229,7 @@ class Users {
 
       const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -262,9 +241,7 @@ class Users {
 
       const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -276,9 +253,7 @@ class Users {
 
       const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -291,9 +266,7 @@ class Users {
 
       const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -305,10 +278,7 @@ class Users {
           .updateIn(['profile', 'avatar_img'], imageName => null);
 
         const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
-
-        if (updateUsers) {
-          this.setState(updateUsers);
-        }
+         this.setState(updateUsers);
       }
     }
   }
@@ -322,9 +292,7 @@ class Users {
 
       const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -337,9 +305,7 @@ class Users {
 
       const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
 
-      if (updateUsers) {
-        this.setState(updateUsers);
-      }
+      this.setState(updateUsers);
     }
   }
 
@@ -353,10 +319,7 @@ class Users {
             list ? list.push(Map(result.participateVenalink)) : List(Map(result.participateVenalink))
           );
         const updateUsers = this._setUserUpdateById(this.state, updateUser.get('id'), updateUser);
-
-        if (updateUsers) {
-          this.setState(updateUsers);
-        }
+        this.setState(updateUsers);
       }
     }
   }

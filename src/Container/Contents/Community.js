@@ -7,6 +7,7 @@ import { UI, Domains } from '../../Reducers/InitialStates';
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
 import { toggleReportModal } from '../../Actions/Report';
+import { requestFollowForum, requestUnFollowForum } from '../../Actions/Forum';
 import { requestAddForumInCollection, requestRemoveForumInCollection } from '../../Actions/Collection';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
 
@@ -69,5 +70,7 @@ module.exports = connect(
     FireToggleDeleteModal: toggleDeleteModal,
     FireRequestAddForumInCollection: requestAddForumInCollection,
     FireRequestRemoveForumInCollection: requestRemoveForumInCollection,
+    FireRequestFollowForum: requestFollowForum,
+    FireRequestUnFollowForum: requestUnFollowForum,
   }
 )(CommunityContainer);

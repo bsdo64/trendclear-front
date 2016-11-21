@@ -16,6 +16,8 @@ const CommunityContents = React.createClass({
     FireRequestAddForumInCollection: PropTypes.func.isRequired,
     FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestFollowForum: PropTypes.func.isRequired,
+    FireRequestUnFollowForum: PropTypes.func.isRequired,
   },
   // mixins: [PureRenderMixin],
 
