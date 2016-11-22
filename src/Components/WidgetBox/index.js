@@ -10,7 +10,7 @@ require('./index.scss');
 
 class WidgetBox extends Component {
   render() {
-    const { LoginStore, UserStore, ShoppingStore, Forums, location } = this.props;
+    const { LoginStore, UserStore, ShoppingStore, Forums, location, FireToggleVenacleStoreModal } = this.props;
     const isLogin = LoginStore.get('isLogin');
     const user = {
       user: UserStore.get('user'),
@@ -57,6 +57,7 @@ class WidgetBox extends Component {
           <TrendBox
             user={user}
             ShoppingStore={ShoppingStore}
+            FireToggleVenacleStoreModal={FireToggleVenacleStoreModal}
           />
         }
 
@@ -159,6 +160,7 @@ WidgetBox.propTypes = {
   ShoppingStore: PropTypes.object.isRequired,
   Forums: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  FireToggleVenacleStoreModal: PropTypes.func.isRequired,
 };
 
 export default WidgetBox;

@@ -1,8 +1,3 @@
-/**
- * Created by dobyeongsu on 2016. 2. 7..
- */
-import PostActions from '../../../Actions/PostActions';
-
 const medium = {
   placeholder: {
     text: '텍스트를 입력하세요',

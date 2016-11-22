@@ -23,13 +23,6 @@ class CommunityStore {
     this.setMergeState = setMergeState.bind(this);
   }
 
-  onResetPost() {
-    this.setState(Map({
-      posts: {},
-      noMore: false
-    }));
-  }
-
   onResetData() {
     this.setState(Map({}));
   }

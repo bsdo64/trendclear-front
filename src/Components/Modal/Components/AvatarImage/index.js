@@ -16,13 +16,6 @@ const AvatarImageModal = React.createClass({
     };
   },
 
-  modalClose() {
-    UserActions.closeAvatarModal();
-  },
-  modalCloseSignal() {
-
-    UserActions.closeAvatarModal();
-  },
   handleFile: function (e) {
     e.preventDefault();
 

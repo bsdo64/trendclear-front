@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Link } from 'react-router';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
 import AvatarImage from '../AvatarImage';
-import CommunityActions from '../../Actions/CommunityActions';
 import Menu from './ReportMenu';
 import ShareLinkMenu from './ShareLinkMenu';
 
@@ -22,7 +22,10 @@ const BigPost = React.createClass({
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestLikePost: PropTypes.func.isRequired,
   },
+
+  mixins: [PureRenderMixin],
 
   componentDidMount() {
     this.postItem.addEventListener('click', this.setScroll);
@@ -40,14 +43,14 @@ const BigPost = React.createClass({
 
   sendLike() {
 
-    const { post, user } = this.props;
+    const { post, user, FireRequestLikePost } = this.props;
     if (!user) {
       this.props.FireToggleLoginModal({
         contentType: 'Login',
         location: '/'
       });
     } else {
-      CommunityActions.likePost(post.get('id'));
+      FireRequestLikePost({ postId: post.get('id') });
     }
   },
 

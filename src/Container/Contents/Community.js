@@ -10,6 +10,14 @@ import { toggleReportModal } from '../../Actions/Report';
 import { requestFollowForum, requestUnFollowForum } from '../../Actions/Forum';
 import { requestAddForumInCollection, requestRemoveForumInCollection } from '../../Actions/Collection';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
+import { requestLikePost } from '../../Actions/Post';
+import {
+  requestSubmitSubComment, requestSubmitComment,
+  requestLikeComment, requestLikeSubComment,
+  requestUpdateComment, requestUpdateSubComment,
+  openCommentUpdateView, closeCommentUpdateView,
+} from '../../Actions/Comment';
+
 
 const CommunityContainer = React.createClass({
   render() {
@@ -72,5 +80,14 @@ module.exports = connect(
     FireRequestRemoveForumInCollection: requestRemoveForumInCollection,
     FireRequestFollowForum: requestFollowForum,
     FireRequestUnFollowForum: requestUnFollowForum,
+    FireRequestLikePost: requestLikePost,
+    FireRequestLikeComment: requestLikeComment,
+    FireRequestLikeSubComment: requestLikeSubComment,
+    FireRequestSubmitComment: requestSubmitComment,
+    FireRequestSubmitSubComment: requestSubmitSubComment,
+    FireRequestUpdateComment: requestUpdateComment,
+    FireRequestUpdateSubComment: requestUpdateSubComment,
+    FireOpenCommentUpdateView: openCommentUpdateView,
+    FireCloseCommentUpdateView: closeCommentUpdateView,
   }
 )(CommunityContainer);

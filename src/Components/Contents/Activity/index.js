@@ -27,6 +27,7 @@ const ActivityBox = React.createClass({
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
     FireRequestGetMorePostList: PropTypes.func.isRequired,
+    FireRequestLikePost: PropTypes.func.isRequired,
 
   },
 

@@ -7,7 +7,19 @@ import {
 import {
   SUCCESS_GET_MORE_POST_LIST,
   SUCCESS_GET_INIT_POST_LIST,
+  SUCCESS_LIKE_POST,
+  FAILURE_LIKE_POST,
 } from '../../Actions/Post';
+import {
+  SUCCESS_LIKE_COMMENT,
+  SUCCESS_LIKE_SUB_COMMENT,
+  FAILURE_LIKE_COMMENT,
+  FAILURE_LIKE_SUB_COMMENT,
+  SUCCESS_SUBMIT_COMMENT,
+  SUCCESS_SUBMIT_SUB_COMMENT,
+  SUCCESS_UPDATE_COMMENT,
+  SUCCESS_UPDATE_SUB_COMMENT,
+} from '../../Actions/Comment';
 import {
   SUCCESS_GET_MORE_FORUM_LIST,
   SUCCESS_FOLLOW_FORUM,
@@ -71,6 +83,16 @@ const Users = (state = initList, action) => {
       return state;
     }
 
+    case SUCCESS_SUBMIT_COMMENT: {
+      const normalized = action.normalized;
+      return state.mergeDeep(normalized.entities.author);
+    }
+
+    case SUCCESS_SUBMIT_SUB_COMMENT: {
+      const normalized = action.normalized;
+      return state.mergeDeep(normalized.entities.author);
+    }
+
     default: return state;
   }
 };
@@ -95,6 +117,22 @@ const Posts = (state = initList, action) => {
       return state;
     }
 
+    case SUCCESS_LIKE_POST: {
+      const postId = action.postId;
+      return state.update(postId.toString(), v => {
+        return v.set('like_count', v.get('like_count') + 1).set('liked', true);
+      });
+    }
+
+    case FAILURE_LIKE_POST: {
+      return state;
+    }
+
+    case SUCCESS_SUBMIT_COMMENT: {
+      const normalized = action.normalized;
+      return state.mergeDeep(normalized.entities.posts);
+    }
+
     default: return state;
   }
 };
@@ -108,6 +146,40 @@ const Comments = (state = initList, action) => {
       }
 
       return state;
+    }
+
+    case SUCCESS_LIKE_COMMENT: {
+      const itemId = action.commentId;
+      return state.update(itemId.toString(), v => {
+        return v.set('like_count', v.get('like_count') + 1).set('liked', true);
+      });
+    }
+
+    case FAILURE_LIKE_COMMENT: {
+      return state;
+    }
+
+    case SUCCESS_SUBMIT_COMMENT: {
+      const normalized = action.normalized;
+      return state.mergeDeep(normalized.entities.comments);
+    }
+
+    case SUCCESS_SUBMIT_SUB_COMMENT: {
+      const { normalized, commentId } = action;
+      const subCommentId = normalized.result;
+
+      return state
+        .updateIn([commentId.toString(), 'subComments'], list =>
+          list.push(subCommentId)
+        )
+        .updateIn([commentId.toString(), 'sub_comment_count'], value =>
+          value + 1
+        );
+    }
+
+    case SUCCESS_UPDATE_COMMENT: {
+      const normalized = action.normalized;
+      return state.mergeDeep(normalized.entities.comments);
     }
 
     default: return state;
@@ -203,6 +275,32 @@ const SubComments = (state = initList, action) => {
       }
 
       return state;
+    }
+
+    case SUCCESS_LIKE_SUB_COMMENT: {
+      const itemId = action.subCommentId;
+      return state.update(itemId.toString(), v => {
+        return v.set('like_count', v.get('like_count') + 1).set('liked', true);
+      });
+    }
+
+    case FAILURE_LIKE_SUB_COMMENT: {
+      return state;
+    }
+
+    case SUCCESS_SUBMIT_COMMENT: {
+      const normalized = action.normalized;
+      return state.merge(normalized.entities.subComments);
+    }
+
+    case SUCCESS_SUBMIT_SUB_COMMENT: {
+      const normalized = action.normalized;
+      return state.merge(normalized.entities.subComments);
+    }
+
+    case SUCCESS_UPDATE_SUB_COMMENT: {
+      const normalized = action.normalized;
+      return state.mergeDeep(normalized.entities.subComments);
     }
 
     default: return state;

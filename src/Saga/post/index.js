@@ -16,10 +16,35 @@ import {
   REQUEST_SUBMIT_POST,
   SUCCESS_SUBMIT_POST,
   FAILURE_SUBMIT_POST,
+
+  REQUEST_LIKE_POST,
+  SUCCESS_LIKE_POST,
+  FAILURE_LIKE_POST,
 } from '../../Actions/Post';
 
 const WORKING = true;
 const API = Api.setEntryPoint('/ajax');
+
+function* SagaLikePost() {
+  while (WORKING) {
+    // REQUEST_LIKE_POST
+    const { payload } = yield take(REQUEST_LIKE_POST);
+
+    try {
+      const result = yield call([Api, API.post], '/like/post', payload);
+
+      if (result === 'ok') {
+        yield put({ type: SUCCESS_LIKE_POST, postId: payload.postId })
+      } else {
+        yield put({ type: FAILURE_LIKE_POST })
+      }
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_LIKE_POST, error })
+    }
+  }
+}
 
 function* SagaSubmitPost() {
   while (WORKING) {
@@ -81,6 +106,7 @@ function* SagaMoreList() {
 export default function* postSaga() {
   yield [
     SagaMoreList(),
+    SagaLikePost(),
     SagaInitList(),
     SagaSubmitPost(),
   ]

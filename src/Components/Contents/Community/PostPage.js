@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import BestPost from '../../PostItem/BigPost';
+import BigPost from '../../PostItem/BigPost';
 import Forum from './Forum';
 import CommentBox from '../../CommentBox';
 
@@ -18,6 +18,14 @@ const PostPage = React.createClass({
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestLikePost: PropTypes.func.isRequired,
+    FireRequestLikeComment: PropTypes.func.isRequired,
+    FireRequestLikeSubComment: PropTypes.func.isRequired,
+    FireRequestSubmitComment: PropTypes.func.isRequired,
+    FireRequestSubmitSubComment: PropTypes.func.isRequired,
+    FireRequestUpdateComment: PropTypes.func.isRequired,
+    FireRequestUpdateSubComment: PropTypes.func.isRequired,
+    FireCloseCommentUpdateView: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -64,7 +72,7 @@ const PostPage = React.createClass({
 
             {
               post &&
-              <BestPost
+              <BigPost
                 author={author}
                 post={post}
                 user={user}

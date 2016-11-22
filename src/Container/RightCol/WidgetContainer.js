@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import WidgetBox from '../../Components/WidgetBox';
 import { UI, Domains } from '../../Reducers/InitialStates';
+import { toggleVenacleStoreModal, } from '../../Actions/VenacleStore';
 
 const WidgetContainer = React.createClass({
   render() {
@@ -39,6 +40,7 @@ const mapStateToProps = (state) => {
 module.exports = connect(
   mapStateToProps,
   {
+    FireToggleVenacleStoreModal: toggleVenacleStoreModal,
 
   }
 )(WidgetContainer);

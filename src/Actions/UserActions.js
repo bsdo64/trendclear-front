@@ -12,7 +12,7 @@ class UserActions {
     return (dispatch) => {
       Api
         .setEntryPoint('/ajax')
-        .post('/user/levelup')
+        .get('/user/levelup')
         .then((res) => {
           dispatch(res);
         })

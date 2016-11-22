@@ -344,7 +344,6 @@ class Users {
 
   onGetSearchForumList(result) {
     const normalized = result.data;
-    const pagination = result.collection;
 
     if (normalized) {
       this.setMergeDeep(normalized.entities.author);

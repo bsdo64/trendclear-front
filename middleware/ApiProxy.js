@@ -1,6 +1,6 @@
 var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
-var apiServer = 'http://localhost:3001';
+var apiServer = 'http://127.0.0.1:3001';
 
 module.exports = function(req, res) {
   console.log('proxy to ApiServer');

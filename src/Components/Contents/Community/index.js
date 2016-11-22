@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import CommunityActions from '../../../Actions/CommunityActions';
 import Forum from './Forum';
 import PostPage from './PostPage';
 
@@ -18,11 +17,15 @@ const CommunityContents = React.createClass({
     FireToggleDeleteModal: PropTypes.func.isRequired,
     FireRequestFollowForum: PropTypes.func.isRequired,
     FireRequestUnFollowForum: PropTypes.func.isRequired,
-  },
-  // mixins: [PureRenderMixin],
-
-  componentWillUnmount() {
-    CommunityActions.resetData();
+    FireRequestLikePost: PropTypes.func.isRequired,
+    FireRequestLikeComment: PropTypes.func.isRequired,
+    FireRequestLikeSubComment: PropTypes.func.isRequired,
+    FireRequestSubmitComment: PropTypes.func.isRequired,
+    FireRequestSubmitSubComment: PropTypes.func.isRequired,
+    FireRequestUpdateComment: PropTypes.func.isRequired,
+    FireRequestUpdateSubComment: PropTypes.func.isRequired,
+    FireOpenCommentUpdateView: PropTypes.func.isRequired,
+    FireCloseCommentUpdateView: PropTypes.func.isRequired,
   },
 
   checkBanned() {

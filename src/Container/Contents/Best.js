@@ -5,7 +5,7 @@ import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
-import { requestGetMorePostList } from '../../Actions/Post';
+import { requestLikePost, requestGetMorePostList } from '../../Actions/Post';
 import { toggleReportModal } from '../../Actions/Report';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
 
@@ -61,5 +61,6 @@ module.exports = connect(
     FireToggleDeleteModal: toggleDeleteModal,
     FireToggleReportModal: toggleReportModal,
     FireRequestGetMorePostList: requestGetMorePostList,
+    FireRequestLikePost: requestLikePost,
   }
 )(BestContainer);

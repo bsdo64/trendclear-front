@@ -2,6 +2,7 @@ import user from './user';
 import signin from './signin';
 import login from './login';
 import post from './post';
+import comment from './comment';
 import forum from './forum';
 import deleteItem from './deleteItem';
 import report from './report';
@@ -14,6 +15,7 @@ export default function* rootSaga() {
     signin(),
     login(),
     post(),
+    comment(),
     forum(),
     deleteItem(),
     report(),

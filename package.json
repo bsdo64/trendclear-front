@@ -52,6 +52,7 @@
     "react-dom": "^15.3.2",
     "react-draggable": "^2.2.2",
     "react-google-maps": "^4.11.0",
+    "react-lazyload": "^2.2.0",
     "react-modal": "^1.5.2",
     "react-pagify": "^2.1.1",
     "react-recaptcha": "^2.1.1",

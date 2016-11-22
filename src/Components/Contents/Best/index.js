@@ -3,7 +3,6 @@ import Waypoint from 'react-waypoint';
 import Header from '../../ContentBreadCrumb/ContentBreadCrumb';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
-import GnbActions from '../../../Actions/GnbActions';
 
 const BestBox = React.createClass({
   displayName: 'BestBox',
@@ -23,12 +22,8 @@ const BestBox = React.createClass({
     FireRequestGetMorePostList: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestLikePost: PropTypes.func.isRequired,
 
-  },
-
-  componentWillUnmount() {
-    // some example callbacks
-    GnbActions.resetFilter();
   },
 
   getMoreBest({ previousPosition, currentPosition, event }) {
@@ -93,7 +88,8 @@ const BestBox = React.createClass({
   render() {
     const {
       location, listName, ListStore, Posts, Users, Collections, AuthStore, PaginationStore,
-      FireSetScrollPosition, FireToggleLoginModal, FireToggleReportModal, FireToggleDeleteModal
+      FireSetScrollPosition, FireToggleLoginModal, FireToggleReportModal, FireToggleDeleteModal,
+      FireRequestLikePost
     } = this.props;
     const Collection = PaginationStore.get(listName);
     const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
@@ -117,6 +113,7 @@ const BestBox = React.createClass({
           FireToggleLoginModal={FireToggleLoginModal}
           FireToggleReportModal={FireToggleReportModal}
           FireToggleDeleteModal={FireToggleDeleteModal}
+          FireRequestLikePost={FireRequestLikePost}
         />
 
         <Waypoint

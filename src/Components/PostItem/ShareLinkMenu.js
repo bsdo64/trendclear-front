@@ -1,13 +1,23 @@
 /**
  * Created by dobyeongsu on 2016. 10. 26..
  */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import moment from 'moment';
 import PostActions from '../../Actions/PostActions';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const LinkMenu = React.createClass({
+  propTypes: {
+    userId: PropTypes.number.isRequired,
+    author: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+  },
+
+  mixins: [PureRenderMixin],
+
   getInitialState() {
     return {
       openVenalink: false,

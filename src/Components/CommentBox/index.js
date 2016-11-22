@@ -6,8 +6,6 @@ import Paginator from '../Paginator';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import debug from 'debug';
 
-import CommentActions from '../../Actions/CommentActions';
-import CommunityActions from '../../Actions/CommunityActions';
 import Menu from '../PostItem/ReportMenu';
 import AvatarImage from '../AvatarImage';
 
@@ -62,12 +60,11 @@ function checkSkillAvailable(skill) {
 }
 
 function closeUpdateComment() {
-
-  CommunityActions.closeUpdateComment();
+  this.props.FireCloseCommentUpdateView();
 }
 
 function sendSubCommentLike(props) {
-  const { location, isLogin, subCommentId } = props;
+  const { location, isLogin, subCommentId, FireRequestLikeSubComment } = props;
   return function createSendSubCommentLike() {
     if (!isLogin) {
       props.FireToggleLoginModal({
@@ -75,7 +72,7 @@ function sendSubCommentLike(props) {
         location: location.pathname + location.search
       });
     } else {
-      CommentActions.likeSubComment(subCommentId);
+      FireRequestLikeSubComment({ subCommentId });
     }
   }
 }
@@ -100,6 +97,10 @@ const SubCommentItem = React.createClass({
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestLikeSubComment: PropTypes.func.isRequired,
+    FireRequestUpdateSubComment: PropTypes.func.isRequired,
+    FireOpenCommentUpdateView: PropTypes.func.isRequired,
+    FireCloseCommentUpdateView: PropTypes.func.isRequired,
   },
 
   componentDidUpdate(prevProps) {
@@ -119,7 +120,7 @@ const SubCommentItem = React.createClass({
 
   updateSubComment(commentId) {
 
-    const { LoginStore, UserStore, location, FireToggleLoginModal } = this.props;
+    const { LoginStore, UserStore, location, FireToggleLoginModal, FireRequestUpdateSubComment } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
@@ -139,7 +140,7 @@ const SubCommentItem = React.createClass({
             content: removeWhiteSpace(el)
           };
 
-          CommentActions.updateSubComment(comment);
+          FireRequestUpdateSubComment(comment);
         } else {
           errorLog('Input sub comment');
         }
@@ -189,7 +190,7 @@ const SubCommentItem = React.createClass({
               </div>
               <div
                 className="ui submit icon button close_update"
-                onClick={closeUpdateComment}
+                onClick={closeUpdateComment.bind(this)}
               >
                 <i className="icon remove circle outline"/>
               </div>
@@ -258,6 +259,7 @@ const SubCommentItem = React.createClass({
                       targetId={subComment.get('id')}
                       FireToggleReportModal={this.props.FireToggleReportModal}
                       FireToggleDeleteModal={this.props.FireToggleDeleteModal}
+                      FireOpenCommentUpdateView={this.props.FireOpenCommentUpdateView}
                     />
                   }
                 </div>
@@ -290,7 +292,15 @@ const CommentItem = React.createClass({
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestLikeComment: PropTypes.func.isRequired,
+    FireRequestLikeSubComment: PropTypes.func.isRequired,
+    FireRequestSubmitSubComment: PropTypes.func.isRequired,
+    FireRequestUpdateComment: PropTypes.func.isRequired,
+    FireRequestUpdateSubComment: PropTypes.func.isRequired,
+    FireOpenCommentUpdateView: PropTypes.func.isRequired,
+    FireCloseCommentUpdateView: PropTypes.func.isRequired,
   },
+
   mixins: [PureRenderMixin],
 
   getInitialState() {
@@ -328,7 +338,7 @@ const CommentItem = React.createClass({
 
   sendLike() {
 
-    const { LoginStore, FireToggleLoginModal } = this.props;
+    const { comment, LoginStore, FireToggleLoginModal, FireRequestLikeComment } = this.props;
     const isLogin = LoginStore.get('isLogin');
     if (!isLogin) {
       FireToggleLoginModal({
@@ -336,7 +346,7 @@ const CommentItem = React.createClass({
         location: '/'
       });
     } else {
-      CommentActions.likeComment(this.props.comment.get('id'));
+      FireRequestLikeComment({ commentId: comment.get('id') });
     }
   },
 
@@ -350,7 +360,7 @@ const CommentItem = React.createClass({
 
   submitSubComment(commentId) {
 
-    const { LoginStore, UserStore, location, FireToggleLoginModal } = this.props;
+    const { LoginStore, UserStore, location, FireToggleLoginModal, FireRequestSubmitSubComment } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
@@ -370,7 +380,7 @@ const CommentItem = React.createClass({
             commentId: commentId
           };
 
-          CommentActions.submitSubComment(comment);
+          FireRequestSubmitSubComment(comment);
           this.editor.setContent('');
         } else {
           errorLog('Input sub comment');
@@ -387,7 +397,10 @@ const CommentItem = React.createClass({
   },
 
   updateComment() {
-    const { LoginStore, UserStore, updating, location, FireToggleLoginModal } = this.props;
+    const {
+      LoginStore, UserStore, updating, location,
+      FireToggleLoginModal, FireRequestUpdateComment
+    } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin && updating.updating) {
@@ -407,10 +420,10 @@ const CommentItem = React.createClass({
           const comment = {
             id: updating.id,
             content: removeWhiteSpace(el),
-            postId: this.props.location.query.postId
+            postId: location.query.postId
           };
 
-          CommentActions.updateComment(comment);
+          FireRequestUpdateComment(comment);
           this.editor.destroy();
         } else {
           errorLog('Input comment');
@@ -481,7 +494,7 @@ const CommentItem = React.createClass({
           </div>
           <div
             className="ui submit icon button close_update"
-            onClick={closeUpdateComment}
+            onClick={closeUpdateComment.bind(this)}
           >
             <i className="icon remove circle outline"/>
           </div>
@@ -558,6 +571,7 @@ const CommentItem = React.createClass({
                   targetId={comment.get('id')}
                   FireToggleReportModal={this.props.FireToggleReportModal}
                   FireToggleDeleteModal={this.props.FireToggleDeleteModal}
+                  FireOpenCommentUpdateView={this.props.FireOpenCommentUpdateView}
                 />
               }
             </div>
@@ -605,8 +619,14 @@ const CommentList = React.createClass({
     updating: PropTypes.object.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired
-
+    FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestLikeComment: PropTypes.func.isRequired,
+    FireRequestLikeSubComment: PropTypes.func.isRequired,
+    FireRequestSubmitSubComment: PropTypes.func.isRequired,
+    FireRequestUpdateComment: PropTypes.func.isRequired,
+    FireRequestUpdateSubComment: PropTypes.func.isRequired,
+    FireOpenCommentUpdateView: PropTypes.func.isRequired,
+    FireCloseCommentUpdateView: PropTypes.func.isRequired,
   },
 
   render() {
@@ -660,6 +680,14 @@ const CommentBox = React.createClass({
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestLikeComment: PropTypes.func.isRequired,
+    FireRequestLikeSubComment: PropTypes.func.isRequired,
+    FireRequestSubmitComment: PropTypes.func.isRequired,
+    FireRequestSubmitSubComment: PropTypes.func.isRequired,
+    FireRequestUpdateComment: PropTypes.func.isRequired,
+    FireRequestUpdateSubComment: PropTypes.func.isRequired,
+    FireOpenCommentUpdateView: PropTypes.func.isRequired,
+    FireCloseCommentUpdateView: PropTypes.func.isRequired,
   },
 
   //mixins: [PureRenderMixin],
@@ -681,7 +709,7 @@ const CommentBox = React.createClass({
 
   submitComment() {
 
-    const { LoginStore, UserStore, location, FireToggleLoginModal } = this.props;
+    const { LoginStore, UserStore, location, FireToggleLoginModal, FireRequestSubmitComment } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
@@ -703,7 +731,7 @@ const CommentBox = React.createClass({
             postId: location.query.postId
           };
 
-          CommentActions.submitComment(comment);
+          FireRequestSubmitComment(comment);
           this.editor.setContent('');
         } else {
           errorLog('Input comment');

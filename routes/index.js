@@ -79,7 +79,7 @@ router.get('/venalink/post/m/:linkId', function (req, res) {
   // 메타 제공 시스템
 
   Api
-    .get('http://localhost:3001/ajax/venalink/post/m/' + req.params.linkId)
+    .get('http://127.0.0.1:3001/ajax/venalink/post/m/' + req.params.linkId)
     .set(req.headers)
     .end(function (err, result) {
 
@@ -96,7 +96,7 @@ router.get('/venalink/post/:linkId', function (req, res) {
 
   if (req.params.linkId) {
     Api
-      .get('http://localhost:3001/ajax/venalink/post/' + req.params.linkId)
+      .get('http://127.0.0.1:3001/ajax/venalink/post/' + req.params.linkId)
       .set(req.headers)
       .end(function (err, result) {
         const post = result.body;
@@ -116,7 +116,7 @@ router.get('/link/post/m/:linkId', function (req, res) {
   // 메타 제공 시스템
 
   Api
-    .get('http://localhost:3001/ajax/link/post/m/' + req.params.linkId)
+    .get('http://127.0.0.1:3001/ajax/link/post/m/' + req.params.linkId)
     .set(req.headers)
     .end(function (err, result) {
 
@@ -133,7 +133,7 @@ router.get('/link/post/:linkId', function (req, res, next) {
 
   if (req.params.linkId) {
     Api
-      .get('http://localhost:3001/ajax/link/post/' + req.params.linkId)
+      .get('http://127.0.0.1:3001/ajax/link/post/' + req.params.linkId)
       .set(req.headers)
       .end(function (err, result) {
         const post = result.body;
@@ -170,7 +170,7 @@ router.get(routes, function (req, res, next) {
 
   if (req.query.postId) {
     Api
-      .get('http://localhost:3001/ajax/post/meta/' + req.query.postId)
+      .get('http://127.0.0.1:3001/ajax/post/meta/' + req.query.postId)
       .set(req.headers)
       .end((err, result) => {
         defaultData = result.body;

@@ -25,6 +25,7 @@ function createItem(props, id) {
           FireToggleLoginModal={props.FireToggleLoginModal}
           FireToggleReportModal={props.FireToggleReportModal}
           FireToggleDeleteModal={props.FireToggleDeleteModal}
+          FireRequestLikePost={props.FireRequestLikePost}
         />
       ]
     }
@@ -44,6 +45,7 @@ const InfiniteList = React.createClass({
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestLikePost: PropTypes.func.isRequired,
 
   },
 

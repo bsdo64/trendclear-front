@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
-import UserActions from '../../Actions/UserActions';
-import VenaStoreActions from '../../Actions/VenaStoreActions';
-import CountUp from 'countup.js';
-import moment from 'moment';
-import AvatarImage from '../AvatarImage';
 import Modal from 'react-modal';
 import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router';
 import Draggable from 'react-draggable'; // The default
+import CountUp from 'countup.js';
+import moment from 'moment';
+
+import UserActions from '../../Actions/UserActions';
+import VenaStoreActions from '../../Actions/VenaStoreActions';
+import AvatarImage from '../AvatarImage';
 import Inventory from '../Inventory';
-import { UI } from '../../Reducers/InitialStates';
 
 const Timer = React.createClass({
   propTypes: {
@@ -73,6 +73,7 @@ const TrendBox = React.createClass({
   propTypes: {
     user: PropTypes.object.isRequired,
     ShoppingStore: PropTypes.object.isRequired,
+    FireToggleVenacleStoreModal: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -201,7 +202,7 @@ const TrendBox = React.createClass({
 
   openVenacleStore() {
 
-    VenaStoreActions.toggleVenacleStore({
+    this.props.FireToggleVenacleStoreModal({
       contentType: 'Shopping'
     });
     VenaStoreActions.initItems();
@@ -517,9 +518,5 @@ const TrendBox = React.createClass({
     );
   }
 });
-
-TrendBox.defaultProps = {
-  ShoppingStore: UI.Shopping
-};
 
 export default TrendBox;

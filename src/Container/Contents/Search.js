@@ -5,8 +5,8 @@ import Search from '../../Components/Contents/Search';
 import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
-import { requestGetMorePostList } from '../../Actions/Post';
-import { requestGetMoreForumList } from '../../Actions/Forum';
+import { requestLikePost, requestGetMorePostList } from '../../Actions/Post';
+import { requestFollowForum, requestUnFollowForum, requestGetMoreForumList } from '../../Actions/Forum';
 import { toggleLoginModal } from '../../Actions/Login';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
 import { toggleReportModal } from '../../Actions/Report';
@@ -75,6 +75,9 @@ module.exports = connect(
     FireToggleDeleteModal: toggleDeleteModal,
     FireRequestAddForumInCollection: requestAddForumInCollection,
     FireRequestRemoveForumInCollection: requestRemoveForumInCollection,
+    FireRequestFollowForum: requestFollowForum,
+    FireRequestUnFollowForum: requestUnFollowForum,
+    FireRequestLikePost: requestLikePost,
   }
 )(SearchContainer);
 

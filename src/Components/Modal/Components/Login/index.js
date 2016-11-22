@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import { Link } from 'react-router';
-import LoginActions from '../../../../Actions/LoginActions.js';
 import debug from 'debug';
 const errorLog = debug('vn:Components:Modal:Login:Form');
 
@@ -115,10 +114,6 @@ const Login = React.createClass({
           errorLog(formErrors, fields);
         }
       });
-  },
-
-  closeModal() {
-    LoginActions.closeLoginModal();
   },
 
   render() {

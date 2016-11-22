@@ -7,9 +7,6 @@ import SearchHeader from './header';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 
-import UserActions from '../../../Actions/UserActions';
-import GnbActions from '../../../Actions/GnbActions';
-
 require('./index.scss');
 const SearchBox = React.createClass({
   displayName: 'SearchBox',
@@ -32,14 +29,12 @@ const SearchBox = React.createClass({
     FireRequestAddForumInCollection: PropTypes.func.isRequired,
     FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
     FireRequestGetMoreForumList: PropTypes.func.isRequired,
+    FireRequestFollowForum: PropTypes.func.isRequired,
+    FireRequestUnFollowForum: PropTypes.func.isRequired,
+    FireRequestLikePost: PropTypes.func.isRequired,
 
   },
 
-  componentWillUnmount() {
-    // some example callbacks
-
-    GnbActions.resetFilter();
-  },
   componentDidMount() {
     $('.ui.embed').embed();
   },
@@ -89,7 +84,9 @@ const SearchBox = React.createClass({
     }
   },
   openLoginModal() {
-    const { location, FireToggleLoginModal } = this.props;
+    const { location,
+      FireToggleLoginModal
+    } = this.props;
     FireToggleLoginModal({
       contentType: 'Login',
       location: location.pathname + location.search
@@ -97,15 +94,15 @@ const SearchBox = React.createClass({
   },
   toggleFollow(isForumFollow, forumId) {
 
-    const { AuthStore } = this.props;
+    const { AuthStore, FireRequestFollowForum, FireRequestUnFollowForum  } = this.props;
     const userId = AuthStore.get('userId');
     if (!userId) {
       this.openLoginModal();
     } else {
       if (isForumFollow) {
-        UserActions.unFollowForum({ id: forumId });
+        FireRequestUnFollowForum({ id: forumId, userId });
       } else {
-        UserActions.followForum({ forumId: forumId });
+        FireRequestFollowForum({ forumId: forumId, userId });
       }
     }
   },
@@ -169,6 +166,7 @@ const SearchBox = React.createClass({
     const {
       SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore,
       FireSetScrollPosition, FireToggleLoginModal, FireToggleReportModal, FireToggleDeleteModal,
+      FireRequestLikePost,
     } = this.props;
     const Collection = PaginationStore.get('searchPostList');
     const searchPosts = SearchStore.get('search');
@@ -316,6 +314,7 @@ const SearchBox = React.createClass({
           FireToggleLoginModal={FireToggleLoginModal}
           FireToggleReportModal={FireToggleReportModal}
           FireToggleDeleteModal={FireToggleDeleteModal}
+          FireRequestLikePost={FireRequestLikePost}
         />
 
         <Waypoint

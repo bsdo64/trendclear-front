@@ -15,14 +15,15 @@ const Shopping = React.createClass({
   propTypes: {
     UserStore: PropTypes.object.isRequired,
     ShoppingStore: PropTypes.object.isRequired,
+    FireToggleVenacleStoreModal: PropTypes.func.isRequired,
   },
 
   togglePurchaseWindow(item) {
     VenaStoreActions.togglePurchaseWindow(item);
   },
 
-  openVenacleStore() {
-    VenaStoreActions.toggleVenacleStore({
+  toggleVenacleStore() {
+    this.props.FireToggleVenacleStoreModal({
       contentType: 'Shopping'
     });
     VenaStoreActions.initItems();
@@ -65,7 +66,7 @@ const Shopping = React.createClass({
                 이벤트
               </a>
               <div className="right menu">
-                <a className="ui item" onClick={this.openVenacleStore}>
+                <a className="ui item" onClick={this.toggleVenacleStore}>
                   나가기
                 </a>
               </div>

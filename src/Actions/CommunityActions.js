@@ -20,10 +20,6 @@ class CommunityActions {
     };
   }
 
-  resetPost() {
-    return true;
-  }
-
   resetData() {
     return true;
   }

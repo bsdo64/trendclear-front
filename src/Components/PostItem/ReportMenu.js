@@ -3,8 +3,6 @@ import { browserHistory } from 'react-router';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import memoize from 'fast-memoize';
 
-import CommunityActions from '../../Actions/CommunityActions';
-
 import './ReportBox.scss';
 function createToggleModal(props) {
   const { forumId, targetId, targetType } = props;
@@ -27,13 +25,13 @@ function createToggleModal(props) {
         browserHistory.push(`/community/submit?forumId=${forumId}&postId=${targetId}`);
         break;
       case 'mod_comment':
-        CommunityActions.triggerUpdate({
+        props.FireOpenCommentUpdateView({
           targetId,
           type: 'comment'
         });
         break;
       case 'mod_subComment':
-        CommunityActions.triggerUpdate({
+        props.FireOpenCommentUpdateView({
           targetId,
           type: 'subComment'
         });
@@ -101,6 +99,7 @@ Menu.propTypes = {
   targetType: PropTypes.string.isRequired,
   FireToggleReportModal: PropTypes.func.isRequired,
   FireToggleDeleteModal: PropTypes.func.isRequired,
+  FireOpenCommentUpdateView: PropTypes.func,
 };
 
 export default memoize(Menu);

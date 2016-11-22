@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 require('./index.scss');
 const PolicyMenu = React.createClass({
   displayName: 'PolicyMenu',
+  propTypes: {
+    location: PropTypes.object.isRequired,
+  },
+
   getEndpoint(location) {
     return location.pathname.split('/')[2];
   },

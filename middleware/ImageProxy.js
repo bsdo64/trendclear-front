@@ -1,6 +1,6 @@
 var httpProxy = require('http-proxy');
 var imageProxy = httpProxy.createProxyServer();
-var imageServer = 'http://localhost:3002';
+var imageServer = 'http://127.0.0.1:3002';
 
 module.exports = function(req, res) {
   console.log('proxy to ImageServer');

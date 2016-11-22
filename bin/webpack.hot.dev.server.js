@@ -13,7 +13,7 @@ new WebpackDevServer(webpack(config), {
   colors: true,
   inlined: true,
   headers: { 'Access-Control-Allow-Origin': '*' }
-}).listen(2992, 'localhost', function (err) {
+}).listen(2992, '127.0.0.1', function (err) {
   if (err) {
     return wdsErrorLogger(err);
   }
