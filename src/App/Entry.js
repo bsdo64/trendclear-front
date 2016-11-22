@@ -1,8 +1,9 @@
+import { AppContainer } from 'react-hot-loader';
+
 import React from 'react';
 import { render } from 'react-dom';
 import { fromJS } from 'immutable';
-import { Provider } from 'react-redux';
-import Router from './Routes';
+import App from './App';
 import configStore from '../Stores/ConfigStore';
 import createSagaMiddleware from 'redux-saga'
 import StartSocketSubs from './socketSubscribe';
@@ -29,7 +30,20 @@ sagaMiddleware.run(rootSaga);
 
 // Render App
 render(
-  <Provider store={store}>
-    {Router(store)}
-  </Provider>
+  <AppContainer
+  >
+    <App store={store} />
+  </AppContainer>
   , document.getElementById('app'));
+
+if (module.hot) {
+  module.hot.accept("./App", () => {
+    const App = require("./App").default;
+    render(
+      <AppContainer>
+        <App store={store} />
+      </AppContainer>,
+      document.getElementById('app')
+    );
+  });
+}

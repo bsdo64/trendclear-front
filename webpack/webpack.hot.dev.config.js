@@ -12,6 +12,7 @@ module.exports = {
       'babel-polyfill',
       'webpack-dev-server/client?http://localhost:2992',
       'webpack/hot/only-dev-server',
+      'react-hot-loader/patch',
       path.resolve(root, './src/App/Entry')
     ]
   },
@@ -32,7 +33,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
+      loaders: ['babel'],
       include: path.resolve(root, 'src')
     }, {
       test: /\.css$/,

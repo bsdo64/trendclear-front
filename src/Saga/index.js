@@ -8,6 +8,7 @@ import deleteItem from './deleteItem';
 import report from './report';
 import collection from './collection';
 import followingList from './followingList';
+import venaStore from './venaStore';
 
 export default function* rootSaga() {
   yield [
@@ -20,6 +21,7 @@ export default function* rootSaga() {
     deleteItem(),
     report(),
     collection(),
-    followingList()
+    followingList(),
+    venaStore(),
   ]
 }

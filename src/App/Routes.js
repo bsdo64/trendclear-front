@@ -165,7 +165,7 @@ export default (store) => {
   });
 
   return (
-    <Router history={enhancedHistory}>
+    <Router key={Math.random()} history={enhancedHistory}>
       <Route path="/" component={App}>
         <IndexRoute
           components={{
