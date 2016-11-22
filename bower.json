@@ -15,10 +15,10 @@
     "tests"
   ],
   "dependencies": {
-    "normalize-scss": "^3.0.3",
-    "jquery": "^2.2.3",
     "font-awesome": "^4.6.1",
+    "jquery": "^2.2.3",
     "medium-editor": "^5.16.1",
-    "medium-editor-insert-plugin": "2.4.0"
+    "medium-editor-insert-plugin": "2.4.0",
+    "normalize-scss": "^3.0.3"
   }
 }
