@@ -24,6 +24,15 @@ export const HANDLE_DELETE_POST_IMAGES = 'HANDLE_DELETE_POST_IMAGES';
 export const HANDLE_SET_REPRESENT_IMAGE = 'HANDLE_SET_REPRESENT_IMAGE';
 export const TOGGLE_ACTIVE_VENALINK_MODAL = 'TOGGLE_ACTIVE_VENALINK_MODAL';
 
+export function toggleActiveVenalinkModal({ data, contentType, venalinkActivateRequestPostId }) {
+  return {
+    type: TOGGLE_ACTIVE_VENALINK_MODAL,
+    data,
+    contentType,
+    venalinkActivateRequestPostId
+  }
+}
+
 export function requestLikePost(payload) {
   return {
     type: REQUEST_LIKE_POST,

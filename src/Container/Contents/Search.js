@@ -5,7 +5,7 @@ import Search from '../../Components/Contents/Search';
 import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
-import { requestLikePost, requestGetMorePostList } from '../../Actions/Post';
+import { toggleActiveVenalinkModal, requestLikePost, requestGetMorePostList } from '../../Actions/Post';
 import { requestFollowForum, requestUnFollowForum, requestGetMoreForumList } from '../../Actions/Forum';
 import { toggleLoginModal } from '../../Actions/Login';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
@@ -78,6 +78,7 @@ module.exports = connect(
     FireRequestFollowForum: requestFollowForum,
     FireRequestUnFollowForum: requestUnFollowForum,
     FireRequestLikePost: requestLikePost,
+    FireToggleActiveVenalinkModal: toggleActiveVenalinkModal,
   }
 )(SearchContainer);
 

@@ -4,16 +4,16 @@
 import React, { PropTypes } from 'react';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import moment from 'moment';
-import PostActions from '../../Actions/PostActions';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const LinkMenu = React.createClass({
   propTypes: {
-    userId: PropTypes.number.isRequired,
+    userId: PropTypes.number,
     author: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object,
+    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
   },
 
   mixins: [PureRenderMixin],
@@ -65,7 +65,7 @@ const LinkMenu = React.createClass({
   },
   toggleVenalink() {
 
-    PostActions.toggleActivateVenalinkModal({
+    this.props.FireToggleActiveVenalinkModal({
       contentType: 'ActivateVenalink',
       venalinkActivateRequestPostId: this.props.post.get('id')
     })

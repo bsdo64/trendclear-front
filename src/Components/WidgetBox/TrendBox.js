@@ -6,7 +6,6 @@ import Draggable from 'react-draggable'; // The default
 import CountUp from 'countup.js';
 import moment from 'moment';
 
-import UserActions from '../../Actions/UserActions';
 import VenaStoreActions from '../../Actions/VenaStoreActions';
 import AvatarImage from '../AvatarImage';
 import Inventory from '../Inventory';
@@ -113,7 +112,6 @@ const TrendBox = React.createClass({
 
     if (expPercent >= 100) {
       expPercent = expPercent - 100;
-      UserActions.levelUp();
     }
 
     if (currentTotalExp != prev_currentTotalExp) {

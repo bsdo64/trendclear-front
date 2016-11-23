@@ -1,4 +1,5 @@
 import { Map, List, fromJS } from 'immutable';
+import moment from 'moment';
 
 export const App = {
 
@@ -77,6 +78,11 @@ export const UI = {
     query: null
   }),
   Setting: Map({}),
+  ShareLink: Map({
+    openVenalink: false,
+    venalinkRP: '',
+    startDate: moment()
+  }),
   Shopping: Map({
     items: List([]),
     storeModalOpen: false,

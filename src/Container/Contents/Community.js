@@ -10,7 +10,7 @@ import { toggleReportModal } from '../../Actions/Report';
 import { requestFollowForum, requestUnFollowForum } from '../../Actions/Forum';
 import { requestAddForumInCollection, requestRemoveForumInCollection } from '../../Actions/Collection';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
-import { requestLikePost } from '../../Actions/Post';
+import { requestLikePost, toggleActiveVenalinkModal } from '../../Actions/Post';
 import {
   requestSubmitSubComment, requestSubmitComment,
   requestLikeComment, requestLikeSubComment,
@@ -89,5 +89,6 @@ module.exports = connect(
     FireRequestUpdateSubComment: requestUpdateSubComment,
     FireOpenCommentUpdateView: openCommentUpdateView,
     FireCloseCommentUpdateView: closeCommentUpdateView,
+    FireToggleActiveVenalinkModal: toggleActiveVenalinkModal,
   }
 )(CommunityContainer);

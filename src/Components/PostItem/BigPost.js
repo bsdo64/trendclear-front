@@ -23,6 +23,7 @@ const BigPost = React.createClass({
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
     FireRequestLikePost: PropTypes.func.isRequired,
+    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
   },
 
   mixins: [PureRenderMixin],
@@ -238,6 +239,7 @@ const BigPost = React.createClass({
                 post={post}
                 author={author}
                 user={user}
+                FireToggleActiveVenalinkModal={this.props.FireToggleActiveVenalinkModal}
               />
             </div>
             {

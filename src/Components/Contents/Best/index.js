@@ -23,6 +23,7 @@ const BestBox = React.createClass({
     FireToggleReportModal: PropTypes.func.isRequired,
     FireToggleDeleteModal: PropTypes.func.isRequired,
     FireRequestLikePost: PropTypes.func.isRequired,
+    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
 
   },
 
@@ -88,8 +89,6 @@ const BestBox = React.createClass({
   render() {
     const {
       location, listName, ListStore, Posts, Users, Collections, AuthStore, PaginationStore,
-      FireSetScrollPosition, FireToggleLoginModal, FireToggleReportModal, FireToggleDeleteModal,
-      FireRequestLikePost
     } = this.props;
     const Collection = PaginationStore.get(listName);
     const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
@@ -109,11 +108,7 @@ const BestBox = React.createClass({
           AuthorItems={Users}
           User={AuthStore}
           scrollHeight={ListStore.get('scrollHeight')}
-          FireSetScrollPosition={FireSetScrollPosition}
-          FireToggleLoginModal={FireToggleLoginModal}
-          FireToggleReportModal={FireToggleReportModal}
-          FireToggleDeleteModal={FireToggleDeleteModal}
-          FireRequestLikePost={FireRequestLikePost}
+          {...this.props}
         />
 
         <Waypoint

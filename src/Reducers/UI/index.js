@@ -13,6 +13,7 @@ import ResetPassword from './ResetPassword';
 import RemoveModal from './RemoveModal';
 import Search from './Search';
 import Setting from './Setting';
+import ShareLink from './ShareLink';
 import Shopping from './Shopping';
 import SigninForm from './SigninForm';
 import Submit from './Submit';
@@ -34,6 +35,7 @@ export default combineReducers({
   RemoveModal,
   Search,
   Setting,
+  ShareLink,
   Shopping,
   SigninForm,
   Submit,

@@ -32,6 +32,7 @@ const SearchBox = React.createClass({
     FireRequestFollowForum: PropTypes.func.isRequired,
     FireRequestUnFollowForum: PropTypes.func.isRequired,
     FireRequestLikePost: PropTypes.func.isRequired,
+    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
 
   },
 
@@ -165,8 +166,6 @@ const SearchBox = React.createClass({
   render() {
     const {
       SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore,
-      FireSetScrollPosition, FireToggleLoginModal, FireToggleReportModal, FireToggleDeleteModal,
-      FireRequestLikePost,
     } = this.props;
     const Collection = PaginationStore.get('searchPostList');
     const searchPosts = SearchStore.get('search');
@@ -310,11 +309,7 @@ const SearchBox = React.createClass({
           AuthorItems={Users}
           User={AuthStore}
           scrollHeight={ListStore.get('scrollHeight')}
-          FireSetScrollPosition={FireSetScrollPosition}
-          FireToggleLoginModal={FireToggleLoginModal}
-          FireToggleReportModal={FireToggleReportModal}
-          FireToggleDeleteModal={FireToggleDeleteModal}
-          FireRequestLikePost={FireRequestLikePost}
+          {...this.props}
         />
 
         <Waypoint
