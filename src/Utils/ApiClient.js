@@ -10,6 +10,12 @@ class AjaxApiClient {
     this.r = request;
   }
 
+  catchError(e) {
+    if (process.env.NODE_ENV !== 'production') {
+      apiErrorLog(e);
+    }
+  }
+
   _done(resolve, reject) {
     return (xhrErr, xhrRes) => {
       if (process.env.NODE_ENV !== 'production') {
@@ -40,7 +46,8 @@ class AjaxApiClient {
         .query(params)
         .set('Accept', 'application/json')
         .end(this._done(resolve, reject));
-    });
+    })
+    .catch(this.catchError)
   }
 
   post(url, params) {
@@ -51,7 +58,8 @@ class AjaxApiClient {
         .set('Accept', 'application/json')
         .withCredentials()
         .end(this._done(resolve, reject));
-    });
+    })
+    .catch(this.catchError)
   }
 
   put(url, params) {
@@ -62,7 +70,9 @@ class AjaxApiClient {
         .set('Accept', 'application/json')
         .withCredentials()
         .end(this._done(resolve, reject));
-    });
+    })
+      .catch(this.catchError)
+
   }
 
   delete(url, params) {
@@ -73,7 +83,8 @@ class AjaxApiClient {
         .set('Accept', 'application/json')
         .withCredentials()
         .end(this._done(resolve, reject));
-    });
+    })
+      .catch(this.catchError)
   }
 
   postImg(url, file) {
@@ -84,7 +95,8 @@ class AjaxApiClient {
         .set('Accept', 'application/json')
         .withCredentials()
         .end(this._done(resolve, reject));
-    });
+    })
+      .catch(this.catchError)
   }
 }
 

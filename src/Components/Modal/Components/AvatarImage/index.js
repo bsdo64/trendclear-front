@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import UserActions from '../../../../Actions/UserActions';
 import AvatarImage from '../../../../Components/AvatarImage';
 
 require('./index.scss');
@@ -7,6 +6,7 @@ const AvatarImageModal = React.createClass({
   displayName: 'AvatarImageModal',
   propTypes: {
     UserStore: PropTypes.object.isRequired,
+    FireRequestUserAvatarImageUpload: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -33,8 +33,9 @@ const AvatarImageModal = React.createClass({
     reader.readAsDataURL(file);
   },
   uploadAvatarImage() {
-
-    UserActions.uploadAvatarImage(this.state.file);
+    if (this.state.file) {
+      this.props.FireRequestUserAvatarImageUpload(this.state.file);
+    }
   },
   render() {
     const { UserStore } = this.props;

@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import InputNumber from 'rc-input-number';
 import DatePicker from 'react-datepicker';
-import PostActions from '../../../../Actions/PostActions';
 import VenaStoreActions from '../../../../Actions/VenaStoreActions';
 
 require('./index.scss');
@@ -43,10 +42,6 @@ const ActivateVenalink = React.createClass({
     if (activateItem) {
       const item = activateItem.get('item');
       const { ShareLinkStore } = this.props;
-
-      PostActions.toggleActivateVenalinkModal({
-        contentType: 'ActivateVenalink'
-      });
 
       if (this.state.venalinkRP > 1000) {
         VenaStoreActions.requestActivateVenalink({

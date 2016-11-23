@@ -2,6 +2,9 @@ import { Map } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
 import {
+  SUCCESS_USER_AVATAR_IMAGE_UPLOAD
+} from '../../Actions/User';
+import {
   SUCCESS_SAVE_FOLLOWING_FILTER,
 } from '../../Actions/Gnb';
 import {
@@ -91,6 +94,13 @@ const Users = (state = initList, action) => {
     case SUCCESS_SUBMIT_SUB_COMMENT: {
       const normalized = action.normalized;
       return state.mergeDeep(normalized.entities.author);
+    }
+
+    case SUCCESS_USER_AVATAR_IMAGE_UPLOAD: {
+      const { file, user } = action;
+      const fileObj = file.files[0];
+
+      return state.mergeDeep({ [user.user.id]: { profile: { avatar_img: fileObj.name } } });
     }
 
     default: return state;

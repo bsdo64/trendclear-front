@@ -74,6 +74,7 @@ const TrendBox = React.createClass({
     user: PropTypes.object.isRequired,
     ShoppingStore: PropTypes.object.isRequired,
     FireToggleVenacleStoreModal: PropTypes.func.isRequired,
+    FireToggleAvatarModal: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -151,13 +152,11 @@ const TrendBox = React.createClass({
     }
   },
   openAvatarModal() {
-
-    UserActions.toggleAvatarModal({
+    this.props.FireToggleAvatarModal({
       contentType: 'AvatarImage'
     });
   },
   openRPModal() {
-
     this.setState({ RPModal: !this.state.RPModal });
   },
   sendPayment() {

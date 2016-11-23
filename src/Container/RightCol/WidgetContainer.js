@@ -4,6 +4,7 @@ import { getLoginUser } from '../Util/func';
 import WidgetBox from '../../Components/WidgetBox';
 import { UI, Domains } from '../../Reducers/InitialStates';
 import { toggleVenacleStoreModal, } from '../../Actions/VenacleStore';
+import { toggleAvatarModal, } from '../../Actions/User';
 
 const WidgetContainer = React.createClass({
   render() {
@@ -41,6 +42,7 @@ module.exports = connect(
   mapStateToProps,
   {
     FireToggleVenacleStoreModal: toggleVenacleStoreModal,
+    FireToggleAvatarModal: toggleAvatarModal,
 
   }
 )(WidgetContainer);

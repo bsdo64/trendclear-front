@@ -1,5 +1,6 @@
 import alt from '../Utils/alt';
 import Api from '../Utils/ApiClient';
+import PostActions from './PostActions';
 
 class VenaStoreActions {
   constructor() {
@@ -41,6 +42,11 @@ class VenaStoreActions {
         .post('/venalink/activate', params)
         .then((res) => {
           dispatch(res);
+
+          PostActions.toggleActivateVenalinkModal({
+            contentType: 'ActivateVenalink'
+          });
+
         })
         .catch((err) => {
           return err;

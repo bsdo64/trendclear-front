@@ -19,19 +19,6 @@ const ModalBox = React.createClass({
     ModalStore: PropTypes.object.isRequired,
   },
 
-  componentWillUnmount() {
-    $(document).off('click', '.ui.dimmer.modals', this.stopPropagation, false);
-  },
-
-  componentDidMount() {
-    // Listener bound to `document`, event delegation
-    $(document).on('click', '.ui.dimmer.modals', this.stopPropagation, false);
-  },
-
-  stopPropagation(e) {
-    e.stopPropagation();
-  },
-
   proxyContainer(type) {
     switch (type) {
       case 'Login':
