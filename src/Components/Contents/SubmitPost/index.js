@@ -10,12 +10,11 @@ import cx from 'classnames';
 import { medium, mediumInsertConfig } from './config';
 import AvatarImage from '../../AvatarImage';
 import SelectSearchForum from './SelectSearchForum';
-import PostActions from '../../../Actions/PostActions';
 
 const EditorBox = React.createClass({
   displayName: 'EditorBox',
   propTypes: {
-    SubmitStore: PropTypes.object.isRequired,
+    SubmitPostStore: PropTypes.object.isRequired,
     UserStore: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     FireRemoveServerInit: PropTypes.func.isRequired,
@@ -27,6 +26,9 @@ const EditorBox = React.createClass({
     FireHandleAddPostImages: PropTypes.func.isRequired,
     FireHandleDeletePostImages: PropTypes.func.isRequired,
     FireHandleSetRepresentImage: PropTypes.func.isRequired,
+    FireRequestDeleteUnUsingImage: PropTypes.func.isRequired,
+    FireRequestUpdatePost: PropTypes.func.isRequired,
+    FireRequestGetPostMeta: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -51,8 +53,8 @@ const EditorBox = React.createClass({
     $(dom).mediumInsert(mediumInsertConfig(this));
 
     // init content
-    if (this.props.SubmitStore.get('server') === 'update') {
-      const initContent = this.props.SubmitStore.get('content');
+    if (this.props.SubmitPostStore.get('server') === 'update') {
+      const initContent = this.props.SubmitPostStore.get('content');
       if (initContent) {
         this.editor.setContent(initContent);
       }
@@ -63,24 +65,32 @@ const EditorBox = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     // init from server
-    if (nextProps.SubmitStore.get('server') === 'update') {
-      const initContent = nextProps.SubmitStore.get('content');
+    if (nextProps.SubmitPostStore.get('server') === 'update') {
+      const initContent = nextProps.SubmitPostStore.get('content');
       if (initContent) {
         this.editor.setContent(initContent);
       }
 
       nextProps.FireRemoveServerInit()
     }
+
+    // check update post success
+    if (nextProps.SubmitPostStore.get('successUpdatePost') === true) {
+      browserHistory.replace(
+        '/community?forumId=' + nextProps.SubmitPostStore.get('successForumId') +
+        '&postId=' + nextProps.SubmitPostStore.get('successPostId')
+      );
+    }
   },
 
   componentWillUnmount() {
     this.editor.destroy();
 
-    const { SubmitStore } = this.props;
-    const postImages = SubmitStore.get('postImages');
+    const { SubmitPostStore, FireRequestDeleteUnUsingImage } = this.props;
+    const postImages = SubmitPostStore.get('postImages');
     if (postImages && postImages.size) {
 
-      PostActions.removeUnusingImage(postImages.toJS());
+      FireRequestDeleteUnUsingImage(postImages.toJS());
 
     } else {
       return true;
@@ -104,7 +114,7 @@ const EditorBox = React.createClass({
   },
 
   submitPost() {
-    const { SubmitStore, UserStore, location, FireRequestSubmitPost } = this.props;
+    const { SubmitPostStore, UserStore, location, FireRequestSubmitPost } = this.props;
 
     const skills = UserStore.get('skills');
     const writePost = skills
@@ -134,21 +144,21 @@ const EditorBox = React.createClass({
     const result = checkSkillAvailable(writePost);
 
     if (result) {
-      const title = SubmitStore.get('title');
-      const content = SubmitStore.get('content');
+      const title = SubmitPostStore.get('title');
+      const content = SubmitPostStore.get('content');
       if (title && content) {
         let newPost = {
           title: title,
           content: content,
-          prefixId: SubmitStore.get('selectPrefixId'),
+          prefixId: SubmitPostStore.get('selectPrefixId'),
           query: location.query,
           isAnnounce: this.state.isAnnounce,
-          width: SubmitStore.get('width'),
-          height: SubmitStore.get('height'),
-          postImages: SubmitStore.get('postImages') || null,
-          representingImage: (SubmitStore.get('representingImage') === undefined || SubmitStore.get('representingImage') === null)
+          width: SubmitPostStore.get('width'),
+          height: SubmitPostStore.get('height'),
+          postImages: SubmitPostStore.get('postImages') || null,
+          representingImage: (SubmitPostStore.get('representingImage') === undefined || SubmitPostStore.get('representingImage') === null)
             ? null
-            : SubmitStore.get('postImages').get(SubmitStore.get('representingImage'))
+            : SubmitPostStore.get('postImages').get(SubmitPostStore.get('representingImage'))
         };
 
         FireRequestSubmitPost(newPost);
@@ -159,23 +169,24 @@ const EditorBox = React.createClass({
   },
 
   modPost() {
-    const { SubmitStore, location } = this.props;
+    const { SubmitPostStore, location, FireRequestUpdatePost } = this.props;
 
-    const title = SubmitStore.get('title');
-    const content = SubmitStore.get('content');
+    const title = SubmitPostStore.get('title');
+    const content = SubmitPostStore.get('content');
 
     if (title && content) {
       let newPost = {
-        postId: SubmitStore.get('postId'),
+        postId: SubmitPostStore.get('postId'),
         title: title,
         content: content,
-        prefixId: SubmitStore.get('selectPrefixId'),
+        prefixId: SubmitPostStore.get('selectPrefixId'),
         query: location.query,
         isAnnounce: this.state.isAnnounce,
-        width: SubmitStore.get('width'),
-        height: SubmitStore.get('height')
+        width: SubmitPostStore.get('width'),
+        height: SubmitPostStore.get('height')
       };
-      PostActions.modPost(newPost);
+
+      FireRequestUpdatePost(newPost);
     }
   },
 
@@ -187,7 +198,7 @@ const EditorBox = React.createClass({
   getUrlPost() {
 
     const url = this.refs.url_input.value.trim();
-    PostActions.getMeta(url);
+    this.props.FireRequestGetPostMeta({ url });
   },
 
   selectEditor() {
@@ -240,7 +251,7 @@ const EditorBox = React.createClass({
     e.preventDefault();
     e.stopPropagation();
 
-    const urlMetaData = this.props.SubmitStore.get('urlMetaData');
+    const urlMetaData = this.props.SubmitPostStore.get('urlMetaData');
     const box = this.createUrlMetaContent(urlMetaData, false);
 
     this.props.FireHandlePostContent({ content: ReactDOM.renderToStaticMarkup(box) });
@@ -248,8 +259,8 @@ const EditorBox = React.createClass({
 
   checkTitleAndContent() {
 
-    const { SubmitStore } = this.props;
-    return !SubmitStore.get('title') || !$(SubmitStore.get('content')).text().trim();
+    const { SubmitPostStore } = this.props;
+    return !SubmitPostStore.get('title') || !$(SubmitPostStore.get('content')).text().trim();
   },
 
   handleRecaptcha(a, b, c, d) {
@@ -270,7 +281,7 @@ const EditorBox = React.createClass({
   },
 
   createThumbnailImages(image, index)  {
-    const isRepresent = this.props.SubmitStore.get('representingImage') === index;
+    const isRepresent = this.props.SubmitPostStore.get('representingImage') === index;
     const style = cx('image_item select_represent', {
       select_represent: isRepresent
     });
@@ -295,14 +306,14 @@ const EditorBox = React.createClass({
 
   render() {
 
-    const { SubmitStore, UserStore } = this.props;
-    const type = SubmitStore.get('type');
-    const urlMetaData = SubmitStore.get('urlMetaData');
-    const announces = SubmitStore.getIn(['forum', 'announces']);
+    const { SubmitPostStore, UserStore } = this.props;
+    const type = SubmitPostStore.get('type');
+    const urlMetaData = SubmitPostStore.get('urlMetaData');
+    const announces = SubmitPostStore.getIn(['forum', 'announces']);
     const announcesLength = (announces && announces.size)
       ? announces.size
       : 0;
-    const managers = SubmitStore.getIn(['forum', 'managers']);
+    const managers = SubmitPostStore.getIn(['forum', 'managers']);
 
     const isManager = this.checkForumManager(UserStore.get('user'), managers);
 
@@ -347,7 +358,7 @@ const EditorBox = React.createClass({
           </div>
 
           {
-            SubmitStore.get('postImages') && SubmitStore.get('postImages').size > 0 &&
+            SubmitPostStore.get('postImages') && SubmitPostStore.get('postImages').size > 0 &&
             <div className="submit_images">
               <div className="header">
                 <h4>대표 이미지</h4>
@@ -355,7 +366,7 @@ const EditorBox = React.createClass({
               </div>
               <ul className="image_list">
                 {
-                  SubmitStore.get('postImages').map(this.createThumbnailImages)
+                  SubmitPostStore.get('postImages').map(this.createThumbnailImages)
                 }
               </ul>
             </div>
@@ -411,7 +422,7 @@ const SubmitContents = React.createClass({
   propTypes: {
     AuthStore: PropTypes.object.isRequired,
     UserStore: PropTypes.object.isRequired,
-    SubmitStore: PropTypes.object.isRequired,
+    SubmitPostStore: PropTypes.object.isRequired,
 
     FireRemoveServerInit: PropTypes.func.isRequired,
     FireHandlePostContent: PropTypes.func.isRequired,
@@ -422,13 +433,16 @@ const SubmitContents = React.createClass({
     FireHandleAddPostImages: PropTypes.func.isRequired,
     FireHandleDeletePostImages: PropTypes.func.isRequired,
     FireHandleSetRepresentImage: PropTypes.func.isRequired,
+    FireRequestDeleteUnUsingImage: PropTypes.func.isRequired,
+    FireRequestUpdatePost: PropTypes.func.isRequired,
+    FireRequestGetPostMeta: PropTypes.func.isRequired,
   },
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.SubmitStore.get('submitSuccess') && nextProps.SubmitStore.get('submitSuccess')) {
+    if (!this.props.SubmitPostStore.get('submitSuccess') && nextProps.SubmitPostStore.get('submitSuccess')) {
       browserHistory.replace(
-        '/community?forumId=' + nextProps.SubmitStore.get('forumId') +
-        '&postId=' + nextProps.SubmitStore.get('postId')
+        '/community?forumId=' + nextProps.SubmitPostStore.get('forumId') +
+        '&postId=' + nextProps.SubmitPostStore.get('postId')
       )
     }
   },
@@ -445,14 +459,14 @@ const SubmitContents = React.createClass({
   },
 
   render() {
-    const { AuthStore, UserStore, SubmitStore } = this.props;
+    const { AuthStore, UserStore, SubmitPostStore } = this.props;
 
     const isLogin = AuthStore.get('isLogin');
 
-    const forumInfo = SubmitStore.get('forum');
+    const forumInfo = SubmitPostStore.get('forum');
 
     if (isLogin) {
-      const prefixesData = SubmitStore.get('prefixes');
+      const prefixesData = SubmitPostStore.get('prefixes');
       const user = UserStore.get('user');
       const profile = UserStore.get('profile');
       const icon = UserStore.get('icon');
@@ -507,7 +521,7 @@ const SubmitContents = React.createClass({
                   prefixes &&
                   <Select
                     name="select_prefix"
-                    value={SubmitStore.get('selectPrefixId')}
+                    value={SubmitPostStore.get('selectPrefixId')}
                     placeholder="말머리 선택"
                     noResultsText="말머리가 없습니다"
                     options={options}
@@ -519,7 +533,7 @@ const SubmitContents = React.createClass({
                          id="post_submit_title"
                          type="text"
                          placeholder="제목을 입력하세요"
-                         value={SubmitStore.get('title')}
+                         value={SubmitPostStore.get('title')}
                          onChange={this.handleTitle}/>
                 </div>
               </div>

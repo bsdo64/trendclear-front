@@ -98,6 +98,17 @@ ForumSettingsComponent.propTypes = {
   Forums: PropTypes.object.isRequired,
   AuthStore: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  FireHandleResetButton: PropTypes.func.isRequired,
+  FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
+  FireRequestUpdateForumMeta: PropTypes.func.isRequired,
+  FireRequestAddForumPrefix: PropTypes.func.isRequired,
+  FireRequestDeleteForumPrefix: PropTypes.func.isRequired,
+  FireRequestUpdateForumPrefix: PropTypes.func.isRequired,
+  FireRequestAddForumManager: PropTypes.func.isRequired,
+  FireRequestDeleteForumManager: PropTypes.func.isRequired,
+  FireRequestDeleteForumAnnounce: PropTypes.func.isRequired,
+  FireRequestAddForumBanUser: PropTypes.func.isRequired,
+  FireRequestDeleteForumBanUser: PropTypes.func.isRequired,
 };
 
 export default ForumSettingsComponent;

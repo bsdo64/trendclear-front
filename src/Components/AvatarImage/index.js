@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import ImageType from '../Lib/ImageType';
-import UserActions from '../../Actions/UserActions';
-
-const removeImage = () => UserActions.removeAvatarImage();
+import AvatarImageDeleteButton from '../../Container/Frags/AvatarImageDeleteButton';
 
 const AvatarImage = (props) => {
   const { avatarImg, sex, imageClass = '', removable, noWrap } = props;
@@ -19,11 +17,7 @@ const AvatarImage = (props) => {
           <div>
             {
               removable &&
-              <div className="delete_avatar_btn"
-                   onClick={removeImage}
-              >
-                <i className="fa fa-remove"/>
-              </div>
+              <AvatarImageDeleteButton />
             }
             <img className={imageClass} src={'/image/uploaded/files/' + avatarImg}/>
           </div>
@@ -37,11 +31,7 @@ const AvatarImage = (props) => {
           <div>
             {
               removable &&
-              <div className="delete_avatar_btn"
-                   onClick={removeImage}
-              >
-                <i className="fa fa-remove"/>
-              </div>
+              <AvatarImageDeleteButton />
             }
             <img className={imageClass} src={'/image/uploaded/files/small/' + avatarImg}/>
           </div>

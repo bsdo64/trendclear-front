@@ -8,6 +8,9 @@ import {
   toggleLoginModal,
   requestLogout
 } from '../../Actions/Login';
+import {
+  requestUserReadNotification
+} from '../../Actions/User';
 
 class MyMenuContainer extends React.Component {
   componentDidMount() {
@@ -52,6 +55,7 @@ module.exports = connect(
   mapStateToProps,
   {
     FireToggleLoginModal: toggleLoginModal,
-    FireRequestLogout: requestLogout
+    FireRequestLogout: requestLogout,
+    FireRequestUserReadNotification: requestUserReadNotification,
   }
 )(MyMenuContainer);

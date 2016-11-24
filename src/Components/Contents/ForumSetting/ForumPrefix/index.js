@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
-import ForumActions from '../../../../Actions/ForumActions';
-import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
 require('./index.scss');
 const PrefixBox = React.createClass({
   propTypes: {
     forum: PropTypes.object.isRequired,
     prefixes: PropTypes.object.isRequired,
+    FireRequestAddForumPrefix: PropTypes.func.isRequired,
+    FireRequestDeleteForumPrefix: PropTypes.func.isRequired,
+    FireRequestUpdateForumPrefix: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -43,10 +44,10 @@ const PrefixBox = React.createClass({
 
     const charCode = e.charCode;
     const text = e.target.value;
-    const { forum } = this.props;
+    const { forum, FireRequestUpdateForumPrefix } = this.props;
 
     if (charCode == 13) {
-      ForumSettingActions.updateForumPrefix({
+      FireRequestUpdateForumPrefix({
         id: this.state.updateItemId,
         forumId: forum.get('id'),
         prefixName: text
@@ -62,7 +63,7 @@ const PrefixBox = React.createClass({
 
   prefixDelete(id) {
 
-    ForumSettingActions.deleteForumPrefix({
+    this.props.FireRequestDeleteForumPrefix({
       id: id
     });
   },
@@ -103,10 +104,10 @@ const PrefixBox = React.createClass({
   },
   sendPrefix(e) {
     const charCode = e.charCode;
-    const { forum } = this.props;
+    const { forum, FireRequestAddForumPrefix } = this.props;
 
     if (charCode == 13) {
-      ForumSettingActions.addForumPrefix({
+      FireRequestAddForumPrefix({
         forumId: forum.get('id'),
         prefixName: this.state.prefixText
       });
@@ -153,21 +154,27 @@ const PrefixBox = React.createClass({
 const ForumPrefix = React.createClass({
   propTypes: {
     ForumSettingStore: PropTypes.object.isRequired,
+    FireHandleResetButton: PropTypes.func.isRequired,
+    FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
+    FireRequestUpdateForumMeta: PropTypes.func.isRequired,
+    FireRequestAddForumPrefix: PropTypes.func.isRequired,
+    FireRequestDeleteForumPrefix: PropTypes.func.isRequired,
+    FireRequestUpdateForumPrefix: PropTypes.func.isRequired,
   },
 
   componentWillUnmount() {
-    ForumSettingActions.resetButton();
+    this.props.FireHandleResetButton();
   },
 
   updateForumPrefix(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    const { ForumSettingStore } = this.props;
+    const { ForumSettingStore, FireRequestUpdateForumMeta } = this.props;
     const forumInfo = ForumSettingStore.get('forumInfo');
     const forum = ForumSettingStore.get('forum');
 
-    ForumActions.patchForum({
+    FireRequestUpdateForumMeta({
       id: forum.get('id'),
       sub_header: forumInfo ? forumInfo.get('forum_sub_header') : forum.get('sub_header'),
       description: forumInfo ? forumInfo.get('forum_description') : forum.get('description'),
@@ -176,7 +183,7 @@ const ForumPrefix = React.createClass({
   },
 
   changeForm(e) {
-    ForumSettingActions.changeForumData({ [e.target.name]: e.target.value.trim() })
+    this.props.FireHandleChangeFormForumMeta({ [e.target.name]: e.target.value.trim() })
   },
 
   render() {
@@ -215,6 +222,7 @@ const ForumPrefix = React.createClass({
               <PrefixBox
                 prefixes={forum.get('prefixes')}
                 forum={forum}
+                {...this.props}
               />
             </div>
           </div>

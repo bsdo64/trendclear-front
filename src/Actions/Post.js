@@ -14,6 +14,18 @@ export const REQUEST_LIKE_POST = 'REQUEST_LIKE_POST';
 export const SUCCESS_LIKE_POST = 'SUCCESS_LIKE_POST';
 export const FAILURE_LIKE_POST = 'FAILURE_LIKE_POST';
 
+export const REQUEST_GET_POST_META = 'REQUEST_GET_POST_META';
+export const SUCCESS_GET_POST_META = 'SUCCESS_GET_POST_META';
+export const FAILURE_GET_POST_META = 'FAILURE_GET_POST_META';
+
+export const REQUEST_UPDATE_POST = 'REQUEST_UPDATE_POST';
+export const SUCCESS_UPDATE_POST = 'SUCCESS_UPDATE_POST';
+export const FAILURE_UPDATE_POST = 'FAILURE_UPDATE_POST';
+
+export const REQUEST_DELETE_UN_USING_IMAGE = 'REQUEST_DELETE_UN_USING_IMAGE';
+export const SUCCESS_DELETE_UN_USING_IMAGE = 'SUCCESS_DELETE_UN_USING_IMAGE';
+export const FAILURE_DELETE_UN_USING_IMAGE = 'FAILURE_DELETE_UN_USING_IMAGE';
+
 export const REMOVE_SERVER_INIT = 'REMOVE_SERVER_INIT';
 export const HANDLE_POST_TITLE = 'HANDLE_POST_TITLE';
 export const HANDLE_POST_CONTENT = 'HANDLE_POST_CONTENT';
@@ -23,6 +35,27 @@ export const HANDLE_ADD_POST_IMAGES = 'HANDLE_ADD_POST_IMAGES';
 export const HANDLE_DELETE_POST_IMAGES = 'HANDLE_DELETE_POST_IMAGES';
 export const HANDLE_SET_REPRESENT_IMAGE = 'HANDLE_SET_REPRESENT_IMAGE';
 export const TOGGLE_ACTIVE_VENALINK_MODAL = 'TOGGLE_ACTIVE_VENALINK_MODAL';
+
+export function requestDeleteUnUsingImage(payload) {
+  return {
+    type: REQUEST_DELETE_UN_USING_IMAGE,
+    payload
+  }
+}
+
+export function requestUpdatePost(payload) {
+  return {
+    type: REQUEST_UPDATE_POST,
+    payload
+  }
+}
+
+export function requestGetPostMeta(payload) {
+  return {
+    type: REQUEST_GET_POST_META,
+    payload
+  }
+}
 
 export function toggleActiveVenalinkModal({ data, contentType, venalinkActivateRequestPostId }) {
   return {

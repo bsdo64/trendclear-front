@@ -21,7 +21,7 @@ export const UI = {
   Activity: Map({}),
   Auth: Map({ isLogin: false, userId: null }),
   Community: Map({}),
-  ForumSetting: Map({
+  ForumSetting: fromJS({
     forumInfo: {
       success: null
     }
@@ -77,7 +77,7 @@ export const UI = {
   Search: Map({
     query: null
   }),
-  Setting: Map({}),
+  UserSetting: Map({}),
   ShareLink: Map({
     openVenalink: false,
     venalinkRP: '',
@@ -116,7 +116,7 @@ export const UI = {
     day: null,
     birth: null
   }),
-  Submit: Map({
+  SubmitPost: Map({
     deletedUrl: List(),
     representingImage: null
   }),

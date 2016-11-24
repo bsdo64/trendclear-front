@@ -1,25 +1,26 @@
 import React, { PropTypes } from 'react';
-import ForumActions from '../../../../Actions/ForumActions';
-import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
 const ForumInfo = React.createClass({
   propTypes: {
     ForumSettingStore: PropTypes.object.isRequired,
+    FireHandleResetButton: PropTypes.func.isRequired,
+    FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
+    FireRequestUpdateForumMeta: PropTypes.func.isRequired,
   },
 
   componentWillUnmount() {
-    ForumSettingActions.resetButton();
+    this.props.FireHandleResetButton();
   },
 
   updateForumInfo(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    const { ForumSettingStore } = this.props;
+    const { ForumSettingStore, FireRequestUpdateForumMeta } = this.props;
     const forumInfo = ForumSettingStore.get('forumInfo');
     const forum = ForumSettingStore.get('forum');
 
-    ForumActions.patchForum({
+    FireRequestUpdateForumMeta({
       id: forum.get('id'),
       sub_header: forumInfo ? forumInfo.get('forum_sub_header') : forum.get('sub_header'),
       description: forumInfo ? forumInfo.get('forum_description') : forum.get('description'),
@@ -28,7 +29,7 @@ const ForumInfo = React.createClass({
   },
 
   changeForm(e) {
-    ForumSettingActions.changeForumData({ [e.target.name]: e.target.value.trim() })
+    this.props.FireHandleChangeFormForumMeta({ [e.target.name]: e.target.value.trim() })
   },
 
   render() {

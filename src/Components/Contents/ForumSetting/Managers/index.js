@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 import cx from 'classnames';
 
 const Managers = React.createClass({
@@ -9,9 +8,10 @@ const Managers = React.createClass({
     Users: PropTypes.object.isRequired,
     Forums: PropTypes.object.isRequired,
     AuthStore: PropTypes.object.isRequired,
+    FireRequestAddForumManager: PropTypes.func.isRequired,
+    FireRequestDeleteForumManager: PropTypes.func.isRequired,
   },
   componentDidMount() {
-    const self = this;
     const forumId = this.props.location.query.forumId;
 
     $('.ui.search')
@@ -34,23 +34,24 @@ const Managers = React.createClass({
           maxResults: 'Results must be an array to use maxResults setting',
           method: 'The method you called is not defined.'
         },
-        onSelect: function (user) {
+        onSelect: (user) => {
 
-          self.selectUser(user);
+          this.selectUser(user);
         }
       });
   },
 
   selectUser(user) {
-
-    const forumId = this.props.location.query.forumId;
-    ForumSettingActions.addManager({ userId: user.id, forumId: forumId });
+    const { location, FireRequestAddForumManager } = this.props;
+    const forumId = location.query.forumId;
+    FireRequestAddForumManager({ userId: user.id, forumId: forumId });
   },
 
   removeUser(manager) {
-    const forumId = this.props.location.query.forumId;
+    const { location, FireRequestDeleteForumManager } = this.props;
+    const forumId = location.query.forumId;
 
-    ForumSettingActions.removeManager({
+    FireRequestDeleteForumManager({
       forumId: forumId,
       userId: manager.get('id')
     });

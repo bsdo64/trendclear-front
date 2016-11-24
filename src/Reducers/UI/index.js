@@ -12,11 +12,11 @@ import Report from './Report';
 import ResetPassword from './ResetPassword';
 import RemoveModal from './RemoveModal';
 import Search from './Search';
-import Setting from './Setting';
+import UserSetting from './UserSetting';
 import ShareLink from './ShareLink';
 import Shopping from './Shopping';
 import SigninForm from './SigninForm';
-import Submit from './Submit';
+import SubmitPost from './SubmitPost';
 import SubmitForum from './SubmitForum';
 
 // UI reducer
@@ -34,10 +34,10 @@ export default combineReducers({
   ResetPassword,
   RemoveModal,
   Search,
-  Setting,
+  UserSetting,
   ShareLink,
   Shopping,
   SigninForm,
-  Submit,
+  SubmitPost,
   SubmitForum,
 });

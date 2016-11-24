@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ForumSettingActions from '../../../../Actions/ForumSettingActions';
 
 const BanList = React.createClass({
   displayName: 'BanList',
@@ -7,9 +6,10 @@ const BanList = React.createClass({
     location: PropTypes.object.isRequired,
     Users: PropTypes.object.isRequired,
     Forums: PropTypes.object.isRequired,
+    FireRequestAddForumBanUser: PropTypes.func.isRequired,
+    FireRequestDeleteForumBanUser: PropTypes.func.isRequired,
   },
   componentDidMount() {
-    const self = this;
     const forumId = this.props.location.query.forumId;
 
     $('.ui.search')
@@ -32,23 +32,24 @@ const BanList = React.createClass({
           maxResults: 'Results must be an array to use maxResults setting',
           method: 'The method you called is not defined.'
         },
-        onSelect: function (user) {
+        onSelect: (user) => {
 
-          self.selectUser(user);
+          this.selectUser(user);
         }
       });
   },
 
   selectUser(user) {
-
-    const forumId = this.props.location.query.forumId;
-    ForumSettingActions.addBanUser({ userId: user.id, forumId: forumId });
+    const { location, FireRequestAddForumBanUser } = this.props;
+    const forumId = location.query.forumId;
+    FireRequestAddForumBanUser({ userId: user.id, forumId: forumId });
   },
 
   removeUser(user) {
-    const forumId = this.props.location.query.forumId;
+    const { location, FireRequestDeleteForumBanUser } = this.props;
+    const forumId = location.query.forumId;
 
-    ForumSettingActions.removeBanUser({
+    FireRequestDeleteForumBanUser({
       forumId: forumId,
       userId: user.get('id')
     });

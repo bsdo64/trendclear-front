@@ -10,11 +10,115 @@ import {
   SUCCESS_USER_AVATAR_IMAGE_UPLOAD,
   FAILURE_USER_AVATAR_IMAGE_UPLOAD,
 
+  REQUEST_USER_AVATAR_IMAGE_REMOVE,
+  SUCCESS_USER_AVATAR_IMAGE_REMOVE,
+  FAILURE_USER_AVATAR_IMAGE_REMOVE,
+
+  REQUEST_USER_UPDATE_PASSWORD,
+  SUCCESS_USER_UPDATE_PASSWORD,
+  FAILURE_USER_UPDATE_PASSWORD,
+
+  REQUEST_USER_UPDATE_PROFILE,
+  SUCCESS_USER_UPDATE_PROFILE,
+  FAILURE_USER_UPDATE_PROFILE,
+
+  REQUEST_USER_READ_NOTIFICATION,
+  SUCCESS_USER_READ_NOTIFICATION,
+  FAILURE_USER_READ_NOTIFICATION,
+
   CLOSE_AVATAR_MODAL
 } from '../../Actions/User';
 
 const WORKING = true;
 const API = Api.setEntryPoint('/ajax');
+
+function* SagaReadNoti() {
+  while (WORKING) {
+    // REQUEST_USER_READ_NOTIFICATION
+    const { payload } = yield take(REQUEST_USER_READ_NOTIFICATION);
+
+    try {
+      const result = yield call([API, API.put], '/user/noti/read', payload);
+      if (result) {
+        payload.userId = result;
+        yield put({ type: SUCCESS_USER_READ_NOTIFICATION, result: payload });
+      } else {
+        yield put({ type: FAILURE_USER_READ_NOTIFICATION })
+      }
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_USER_READ_NOTIFICATION, error })
+    }
+  }
+}
+
+function* SagaUserUpdateProfile() {
+  while (WORKING) {
+    // REQUEST_USER_UPDATE_PROFILE
+    const { payload } = yield take(REQUEST_USER_UPDATE_PROFILE);
+
+    try {
+      const result = yield call([API, API.post], '/user/setting/profile', payload);
+
+      if (result.length === 1) {
+        yield put({ type: SUCCESS_USER_UPDATE_PROFILE, result });
+      }
+      if (result.code === 1) {
+        yield put({ type: FAILURE_USER_UPDATE_PROFILE, result });
+      }
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_USER_UPDATE_PROFILE, error })
+    }
+  }
+}
+
+function* SagaUserUpdatePassword() {
+  while (WORKING) {
+    // REQUEST_USER_UPDATE_PASSWORD
+    const { payload } = yield take(REQUEST_USER_UPDATE_PASSWORD);
+
+    try {
+      const result = yield call([API, API.post], '/user/setting/password', payload);
+
+      if (result === 'ok') {
+        yield put({ type: SUCCESS_USER_UPDATE_PASSWORD, result });
+      }
+
+      if (result.code === 1) {
+        yield put({ type: FAILURE_USER_UPDATE_PASSWORD, result });
+      }
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_USER_UPDATE_PASSWORD, error })
+    }
+  }
+}
+
+
+function* SagaUserAvatarImageRemove() {
+  while (WORKING) {
+    // REQUEST_USER_AVATAR_IMAGE_REMOVE
+    yield take(REQUEST_USER_AVATAR_IMAGE_REMOVE);
+
+    try {
+      const result = yield call([API, API.delete], '/user/avatarImg');
+
+      if (result) {
+        yield put({ type: SUCCESS_USER_AVATAR_IMAGE_REMOVE, result });
+      } else {
+        yield put({ type: FAILURE_USER_AVATAR_IMAGE_REMOVE })
+      }
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_USER_AVATAR_IMAGE_REMOVE, error })
+    }
+  }
+}
 
 function* SagaUserAvatarImageUpload() {
   while (WORKING) {
@@ -22,8 +126,8 @@ function* SagaUserAvatarImageUpload() {
     const { payload } = yield take(REQUEST_USER_AVATAR_IMAGE_UPLOAD);
 
     try {
-      const file = yield call([Api.setEntryPoint('/image'), Api.postImg], '/upload', payload);
-      const user = yield call([Api.setEntryPoint('/ajax'), Api.post], '/user/avatarImg', { file: file.files[0] });
+      const file = yield call([API.setEntryPoint('/image'), API.postImg], '/upload', payload);
+      const user = yield call([API.setEntryPoint('/ajax'), API.post], '/user/avatarImg', { file: file.files[0] });
 
       if (file && file.files[0] && user.user.id) {
         yield put({ type: SUCCESS_USER_AVATAR_IMAGE_UPLOAD, file, user });
@@ -45,7 +149,7 @@ function* SagaResetPassword() {
     const { payload } = yield take(REQUEST_RESET_PASSWORD);
 
     try {
-      const result = yield call([Api, API.post], '/user/resetPassword', payload);
+      const result = yield call([API, API.post], '/user/resetPassword', payload);
 
       if (result === 'ok') {
         yield put({ type: SUCCESS_RESET_PASSWORD, result })
@@ -62,7 +166,11 @@ function* SagaResetPassword() {
 
 export default function* user() {
   yield [
+    SagaReadNoti(),
     SagaResetPassword(),
+    SagaUserUpdateProfile(),
+    SagaUserUpdatePassword(),
+    SagaUserAvatarImageRemove(),
     SagaUserAvatarImageUpload(),
   ]
 }

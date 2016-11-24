@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import LoginButton from './LoginButton';
-import UserActions from '../../Actions/UserActions';
 import cx from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
@@ -14,13 +13,14 @@ const NotiItem = React.createClass({
   propTypes: {
     noti: PropTypes.object.isRequired,
     close: PropTypes.func.isRequired,
+    FireRequestUserReadNotification: PropTypes.func.isRequired,
   },
 
   readNoti(notiId) {
-    const { noti } = this.props;
+    const { noti, FireRequestUserReadNotification } = this.props;
 
     if (!noti.get('read')) {
-      UserActions.readNoti({
+      FireRequestUserReadNotification({
         id: notiId
       });
     }
@@ -92,7 +92,7 @@ class NotiButtons extends Component {
   }
 
   render() {
-    const { UserStore } = this.props;
+    const { UserStore, FireRequestUserReadNotification } = this.props;
     const Noti = UserStore.getIn(['notifications', 'INoti']);
     const notiEntities = Noti ? Noti.getIn(['entities', 'notis']) : null;
 
@@ -121,8 +121,12 @@ class NotiButtons extends Component {
               <div className="ui feed ">
                 {
                   Noti &&
-                  Noti.get('result').map(notiId => <NotiItem close={this.handleCloseDropdown} key={notiId}
-                                                             noti={notiEntities.get(notiId.toString())}/>)
+                  Noti.get('result').map(notiId =>
+                    <NotiItem close={this.handleCloseDropdown} key={notiId}
+                              noti={notiEntities.get(notiId.toString())}
+                              FireRequestUserReadNotification={FireRequestUserReadNotification}
+                    />
+                  )
                 }
               </div>
 
@@ -136,6 +140,7 @@ class NotiButtons extends Component {
 
 NotiButtons.propTypes = {
   UserStore: PropTypes.object.isRequired,
+  FireRequestUserReadNotification: PropTypes.func.isRequired,
 };
 
 
@@ -210,6 +215,7 @@ const MyArea = React.createClass({
     UserStore: PropTypes.object.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireRequestLogout: PropTypes.func.isRequired,
+    FireRequestUserReadNotification: PropTypes.func.isRequired,
   },
 
   componentWillReceiveProps(nextProps) {

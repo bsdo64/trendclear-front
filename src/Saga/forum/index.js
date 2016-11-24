@@ -20,10 +20,226 @@ import {
   REQUEST_VALIDATE_TITLE_FORUM_CREATE,
   SUCCESS_VALIDATE_TITLE_FORUM_CREATE,
   FAILURE_VALIDATE_TITLE_FORUM_CREATE,
+
+  REQUEST_CREATE_FORUM,
+  SUCCESS_CREATE_FORUM,
+  FAILURE_CREATE_FORUM,
+
 } from '../../Actions/Forum';
+import {
+
+  REQUEST_UPDATE_FORUM_META,
+  SUCCESS_UPDATE_FORUM_META,
+  FAILURE_UPDATE_FORUM_META,
+
+  REQUEST_ADD_FORUM_PREFIX,
+  SUCCESS_ADD_FORUM_PREFIX,
+  FAILURE_ADD_FORUM_PREFIX,
+
+  REQUEST_UPDATE_FORUM_PREFIX,
+  SUCCESS_UPDATE_FORUM_PREFIX,
+  FAILURE_UPDATE_FORUM_PREFIX,
+
+  REQUEST_DELETE_FORUM_PREFIX,
+  SUCCESS_DELETE_FORUM_PREFIX,
+  FAILURE_DELETE_FORUM_PREFIX,
+
+  REQUEST_ADD_FORUM_MANAGER,
+  SUCCESS_ADD_FORUM_MANAGER,
+  FAILURE_ADD_FORUM_MANAGER,
+
+  REQUEST_DELETE_FORUM_MANAGER,
+  SUCCESS_DELETE_FORUM_MANAGER,
+  FAILURE_DELETE_FORUM_MANAGER,
+
+  REQUEST_DELETE_FORUM_ANNOUNCE,
+  SUCCESS_DELETE_FORUM_ANNOUNCE,
+  FAILURE_DELETE_FORUM_ANNOUNCE,
+
+  REQUEST_ADD_FORUM_BAN_USER,
+  SUCCESS_ADD_FORUM_BAN_USER,
+  FAILURE_ADD_FORUM_BAN_USER,
+
+  REQUEST_DELETE_FORUM_BAN_USER,
+  SUCCESS_DELETE_FORUM_BAN_USER,
+  FAILURE_DELETE_FORUM_BAN_USER,
+} from '../../Actions/ForumSetting';
 
 const WORKING = true;
 const API = Api.setEntryPoint('/ajax');
+
+function* SagaUpdateForumMeta() {
+    while (WORKING) {
+    // REQUEST_UPDATE_FORUM_META
+    const { payload } = yield take(REQUEST_UPDATE_FORUM_META);
+
+    try {
+      const result = yield call([API, API.put], '/forum', payload);
+
+      if (result) {
+        yield put({ type: SUCCESS_UPDATE_FORUM_META, result })
+      } else {
+        yield put({ type: FAILURE_UPDATE_FORUM_META })
+      }
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_UPDATE_FORUM_META, error })
+    }
+  }
+}
+function* SagaAddForumPrefix() {
+    while (WORKING) {
+    // REQUEST_ADD_FORUM_PREFIX
+    const { payload } = yield take(REQUEST_ADD_FORUM_PREFIX);
+
+    try {
+      const result = yield call([API, API.post], '/forum/prefix', payload);
+
+      yield put({ type: SUCCESS_ADD_FORUM_PREFIX, result })
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_ADD_FORUM_PREFIX, error })
+    }
+  }
+}
+function* SagaDeleteForumPrefix() {
+    while (WORKING) {
+    // REQUEST_DELETE_FORUM_PREFIX
+    const { payload } = yield take(REQUEST_DELETE_FORUM_PREFIX);
+
+    try {
+      yield call([API, API.delete], '/forum/prefix', payload);
+
+      yield put({ type: SUCCESS_DELETE_FORUM_PREFIX, result: payload })
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_DELETE_FORUM_PREFIX, error })
+    }
+  }
+}
+function* SagaUpdateForumPrefix() {
+    while (WORKING) {
+    // REQUEST_UPDATE_FORUM_PREFIX
+    const { payload } = yield take(REQUEST_UPDATE_FORUM_PREFIX);
+
+    try {
+      const result = yield call([API, API.put], '/forum/prefix', payload);
+
+      yield put({ type: SUCCESS_UPDATE_FORUM_PREFIX, result });
+
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_UPDATE_FORUM_PREFIX, error })
+    }
+  }
+}
+function* SagaAddForumManager() {
+    while (WORKING) {
+    // REQUEST_ADD_FORUM_MANAGER
+    const { payload } = yield take(REQUEST_ADD_FORUM_MANAGER);
+
+    try {
+      const result = yield call([API, API.post], '/forum/manager', payload);
+
+      yield put({ type: SUCCESS_ADD_FORUM_MANAGER, result });
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_ADD_FORUM_MANAGER, error })
+    }
+  }
+}
+function* SagaDeleteForumManager() {
+    while (WORKING) {
+    // REQUEST_DELETE_FORUM_MANAGER
+    const { payload } = yield take(REQUEST_DELETE_FORUM_MANAGER);
+
+    try {
+      yield call([API, API.delete], '/forum/manager', payload);
+
+      yield put({ type: SUCCESS_DELETE_FORUM_MANAGER, result: payload });
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_DELETE_FORUM_MANAGER, error })
+    }
+  }
+}
+function* SagaDeleteForumAnnounce() {
+    while (WORKING) {
+    // REQUEST_DELETE_FORUM_ANNOUNCE
+    const { payload } = yield take(REQUEST_DELETE_FORUM_ANNOUNCE);
+
+    try {
+      yield call([API, API.delete], '/forum/announce', payload);
+
+      yield put({ type: SUCCESS_DELETE_FORUM_ANNOUNCE, result: payload });
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_DELETE_FORUM_ANNOUNCE, error })
+    }
+  }
+}
+function* SagaAddForumBanUser() {
+    while (WORKING) {
+    // REQUEST_ADD_FORUM_BAN_USER
+    const { payload } = yield take(REQUEST_ADD_FORUM_BAN_USER);
+
+    try {
+      const result = yield call([API, API.post], '/forum/banUser', payload);
+
+      yield put({ type: SUCCESS_ADD_FORUM_BAN_USER, result });
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_ADD_FORUM_BAN_USER, error })
+    }
+  }
+}
+
+function* SagaDeleteForumBanUser() {
+  while (WORKING) {
+    // REQUEST_DELETE_FORUM_BAN_USER
+    const { payload } = yield take(REQUEST_DELETE_FORUM_BAN_USER);
+
+    try {
+      yield call([API, API.delete], '/forum/banUser', payload);
+
+      yield put({ type: SUCCESS_DELETE_FORUM_BAN_USER, result: payload });
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_DELETE_FORUM_BAN_USER, error })
+    }
+  }
+}
+
+function* SagaCreateForum() {
+  while (WORKING) {
+    // REQUEST_CREATE_FORUM
+    const { payload } = yield take(REQUEST_CREATE_FORUM);
+
+    try {
+      const result = yield call([API, API.post], '/forum', payload);
+
+      if (result && result.id) {
+        yield put({ type: SUCCESS_CREATE_FORUM, result })
+      } else {
+        yield put({ type: FAILURE_CREATE_FORUM, result })
+      }
+
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_CREATE_FORUM, error })
+    }
+  }
+}
 
 function* SagaVaildateTitleCreateForum() {
   while (WORKING) {
@@ -31,7 +247,7 @@ function* SagaVaildateTitleCreateForum() {
     const { payload } = yield take(REQUEST_VALIDATE_TITLE_FORUM_CREATE);
 
     try {
-      const result = yield call([Api, API.get], '/validate/forum/create', payload);
+      const result = yield call([API, API.get], '/validate/forum/create', payload);
 
       if (result.success) {
         yield put({ type: SUCCESS_VALIDATE_TITLE_FORUM_CREATE, result })
@@ -53,7 +269,7 @@ function* SagaUnFollow() {
     const { payload } = yield take(REQUEST_UN_FOLLOW_FORUM);
 
     try {
-      const result = yield call([Api, API.post], '/user/forum/unfollow', payload);
+      const result = yield call([API, API.post], '/user/forum/unfollow', payload);
 
       result.userId = payload.userId;
 
@@ -72,7 +288,7 @@ function* SagaFollow() {
     const { payload } = yield take(REQUEST_FOLLOW_FORUM);
 
     try {
-      const result = yield call([Api, API.post], '/user/forum/follow', payload);
+      const result = yield call([API, API.post], '/user/forum/follow', payload);
 
       result.userId = payload.userId;
 
@@ -91,7 +307,7 @@ function* SagaMoreList() {
     const { payload } = yield take(REQUEST_GET_MORE_FORUM_LIST);
 
     try {
-      const result = yield call([Api, API.get], payload.pathName, payload.params);
+      const result = yield call([API, API.get], payload.pathName, payload.params);
 
       result.data = normalize(result.data, arrayOf(forum));
       result.listName = payload.listName;
@@ -107,9 +323,19 @@ function* SagaMoreList() {
 
 export default function* forumSaga() {
   yield [
+    SagaCreateForum(),
     SagaVaildateTitleCreateForum(),
     SagaMoreList(),
     SagaFollow(),
-    SagaUnFollow()
+    SagaUnFollow(),
+    SagaUpdateForumMeta(),
+    SagaAddForumPrefix(),
+    SagaDeleteForumPrefix(),
+    SagaUpdateForumPrefix(),
+    SagaAddForumManager(),
+    SagaDeleteForumManager(),
+    SagaDeleteForumAnnounce(),
+    SagaAddForumBanUser(),
+    SagaDeleteForumBanUser(),
   ]
 }

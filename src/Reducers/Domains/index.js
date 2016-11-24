@@ -2,7 +2,10 @@ import { Map } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
 import {
-  SUCCESS_USER_AVATAR_IMAGE_UPLOAD
+  SUCCESS_USER_AVATAR_IMAGE_UPLOAD,
+  SUCCESS_USER_AVATAR_IMAGE_REMOVE,
+  SUCCESS_USER_UPDATE_PROFILE,
+  SUCCESS_USER_READ_NOTIFICATION
 } from '../../Actions/User';
 import {
   SUCCESS_SAVE_FOLLOWING_FILTER,
@@ -37,6 +40,12 @@ import {
 import {
   SUCCESS_DELETE_ITEM
 } from '../../Actions/DeleteItem';
+import {
+  SUCCESS_ADD_FORUM_MANAGER,
+  SUCCESS_ADD_FORUM_BAN_USER,
+  SUCCESS_DELETE_FORUM_MANAGER,
+  SUCCESS_DELETE_FORUM_BAN_USER
+} from '../../Actions/ForumSetting';
 
 const initList = Map({});
 
@@ -101,6 +110,38 @@ const Users = (state = initList, action) => {
       const fileObj = file.files[0];
 
       return state.mergeDeep({ [user.user.id]: { profile: { avatar_img: fileObj.name } } });
+    }
+
+    case SUCCESS_USER_AVATAR_IMAGE_REMOVE: {
+      const { result } = action;
+      return state.mergeDeep({ [result.id]: { profile: { avatar_img: null } } });
+    }
+
+    case SUCCESS_ADD_FORUM_MANAGER: {
+      const { result } = action;
+      return state.mergeDeep({ [result.manager.user_id]: result.user });
+    }
+
+    case SUCCESS_ADD_FORUM_BAN_USER: {
+      const { result } = action;
+      return state.mergeDeep({ [result.bannedUser.user_id]: result.user });
+    }
+
+    case SUCCESS_USER_UPDATE_PROFILE: {
+      const newProfile = action.result[0];
+      const userId = newProfile.user_id;
+      return state.mergeDeep({ [userId]: { profile: newProfile } });
+    }
+
+    case SUCCESS_USER_READ_NOTIFICATION: {
+      const { result } = action;
+      const { userId, id } = result;
+      return state
+        .updateIn([userId.toString(), 'notifications', 'INoti', 'entities', 'notis', id.toString()], v => {
+          return v
+            .set('read', true)
+            .set('read_at', new Date)
+        });
     }
 
     default: return state;
@@ -259,6 +300,38 @@ const Forums = (state = initList, action) => {
       const forumId = action.result.forum_id;
       return state.update(forumId.toString(), forum => {
         return forum.update('follow_count', v => v - 1);
+      });
+    }
+
+    case SUCCESS_ADD_FORUM_MANAGER: {
+      const { result } = action;
+      return state.updateIn([result.manager.forum_id, 'managers'], managerList => {
+        return managerList.push(result.manager.user_id);
+      });
+    }
+
+    case SUCCESS_ADD_FORUM_BAN_USER: {
+      const { result } = action;
+      return state.updateIn([result.bannedUser.forum_id, 'bans'], list => {
+        return list.push(result.bannedUser.user_id);
+      });
+    }
+
+    case SUCCESS_DELETE_FORUM_MANAGER: {
+      const { result } = action;
+      const { forumId, userId } = result;
+
+      return state.updateIn([forumId.toString(), 'managers'], list => {
+        return list.filterNot(i => i === userId)
+      });
+    }
+
+    case SUCCESS_DELETE_FORUM_BAN_USER: {
+      const { result } = action;
+      const { forumId, userId } = result;
+
+      return state.updateIn([forumId.toString(), 'bans'], list => {
+        return list.filterNot(i => i === userId)
       });
     }
 

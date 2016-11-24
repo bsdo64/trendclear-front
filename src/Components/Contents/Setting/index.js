@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react';
-import UserActions from '../../../Actions/UserActions';
-import SettingActions from '../../../Actions/SettingActions';
 import moment from 'moment';
 
 const SettingProfile = React.createClass({
@@ -9,7 +7,9 @@ const SettingProfile = React.createClass({
     UserStore: PropTypes.object.isRequired,
     defaultYear: PropTypes.number.isRequired,
     defaultMonth: PropTypes.number.isRequired,
-    SettingStore: PropTypes.object.isRequired,
+    UserSettingStore: PropTypes.object.isRequired,
+    FireCloseUserSettingMessage: PropTypes.func.isRequired,
+    FireRequestUserUpdateProfile: PropTypes.func.isRequired,
   },
 
   getDefaultProps() {
@@ -89,21 +89,21 @@ const SettingProfile = React.createClass({
       birth: moment(birth).format()
     };
 
-    UserActions.updateProfile(profile);
+    this.props.FireRequestUserUpdateProfile(profile);
   },
 
-  closeMessageBox(type) {
+  closeMessageBox(successType) {
 
-    $(this.refs[type + 'Message'])
+    $(this.refs[successType + 'Message'])
       .closest('.message')
       .transition('fade');
 
-    SettingActions.closeMessage({ type: type });
+    this.props.FireCloseUserSettingMessage({ successType });
   },
 
-  setErrorMessage(SettingStore) {
-    const errMessage = SettingStore.get('error');
-    const successMessage = SettingStore.get('success');
+  setErrorMessage(UserSettingStore) {
+    const errMessage = UserSettingStore.get('error');
+    const successMessage = UserSettingStore.get('success');
 
     if (errMessage) {
       return (
@@ -131,7 +131,7 @@ const SettingProfile = React.createClass({
   },
 
   render() {
-    const { SettingStore } = this.props;
+    const { UserSettingStore } = this.props;
     return (
       <div id="setting">
         <h3 className="ui dividing header">
@@ -240,7 +240,7 @@ const SettingProfile = React.createClass({
           </form>
 
           {
-            this.setErrorMessage(SettingStore)
+            this.setErrorMessage(UserSettingStore)
           }
         </div>
       </div>
@@ -251,7 +251,9 @@ const SettingProfile = React.createClass({
 const SettingPassword = React.createClass({
   displayName: 'SettingPassword',
   propTypes: {
-    SettingStore: PropTypes.object.isRequired,
+    UserSettingStore: PropTypes.object.isRequired,
+    FireCloseUserSettingMessage: PropTypes.func.isRequired,
+    FireRequestUserUpdatePassword: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -294,7 +296,7 @@ const SettingPassword = React.createClass({
         onSuccess: (e, value) => {
           e.preventDefault();
 
-          UserActions.updatePassword({
+          this.props.FireRequestUserUpdatePassword({
             oldPassword: value['old-password'],
             newPassword: value['new-password']
           });
@@ -307,18 +309,18 @@ const SettingPassword = React.createClass({
     ;
   },
 
-  closeMessageBox(type) {
+  closeMessageBox(successType) {
 
-    $(this.refs[type + 'Message'])
+    $(this.refs[successType + 'Message'])
       .closest('.message')
       .transition('fade');
 
-    SettingActions.closeMessage({ type: type });
+    this.props.FireCloseUserSettingMessage({ successType });
   },
 
-  setErrorMessage(SettingStore) {
-    const errMessage = SettingStore.get('error');
-    const successMessage = SettingStore.get('success');
+  setErrorMessage(UserSettingStore) {
+    const errMessage = UserSettingStore.get('error');
+    const successMessage = UserSettingStore.get('success');
 
     if (errMessage) {
       return (
@@ -345,7 +347,7 @@ const SettingPassword = React.createClass({
 
   },
   render() {
-    const { SettingStore } = this.props;
+    const { UserSettingStore } = this.props;
     return (
       <div id="setting">
 
@@ -372,7 +374,7 @@ const SettingPassword = React.createClass({
             <div className="ui error message "></div>
           </div>
           {
-            this.setErrorMessage(SettingStore)
+            this.setErrorMessage(UserSettingStore)
           }
         </div>
       </div>
@@ -384,12 +386,15 @@ require('./index.scss');
 const SettingBox = React.createClass({
   displayName: 'SettingBox',
   propTypes: {
-    SettingStore: PropTypes.object.isRequired,
+    UserSettingStore: PropTypes.object.isRequired,
+    FireCloseUserSettingMessage: PropTypes.func.isRequired,
+    FireRequestUserUpdatePassword: PropTypes.func.isRequired,
+    FireRequestUserUpdateProfile: PropTypes.func.isRequired,
   },
 
   render() {
-    const { SettingStore } = this.props;
-    switch (SettingStore.get('page')) {
+    const { UserSettingStore } = this.props;
+    switch (UserSettingStore.get('page')) {
       case 'password' :
         return <SettingPassword {...this.props} />;
 

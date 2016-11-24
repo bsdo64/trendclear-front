@@ -20,10 +20,80 @@ import {
   REQUEST_LIKE_POST,
   SUCCESS_LIKE_POST,
   FAILURE_LIKE_POST,
+
+  REQUEST_GET_POST_META,
+  SUCCESS_GET_POST_META,
+  FAILURE_GET_POST_META,
+
+  REQUEST_UPDATE_POST,
+  SUCCESS_UPDATE_POST,
+  FAILURE_UPDATE_POST,
+
+  REQUEST_DELETE_UN_USING_IMAGE,
+  SUCCESS_DELETE_UN_USING_IMAGE,
+  FAILURE_DELETE_UN_USING_IMAGE,
 } from '../../Actions/Post';
 
 const WORKING = true;
 const API = Api.setEntryPoint('/ajax');
+const FrontApi = new Api.constructor().setEntryPoint('/api');
+const ImageApi = new Api.constructor().setEntryPoint('/image');
+
+function* SagaGetMeta() {
+    while (WORKING) {
+    // REQUEST_GET_POST_META
+    const { payload } = yield take(REQUEST_GET_POST_META);
+
+    try {
+      const result = yield call([FrontApi, FrontApi.get], '/urlMeta', payload);
+
+      yield put({ type: SUCCESS_GET_POST_META, result })
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_GET_POST_META, error })
+    }
+  }
+}
+
+function* SagaUpdatePost() {
+    while (WORKING) {
+    // REQUEST_UPDATE_POST
+    const { payload } = yield take(REQUEST_UPDATE_POST);
+
+    try {
+      const result = yield call([API, API.put], '/community/submit', payload);
+
+      yield put({ type: SUCCESS_UPDATE_POST, result })
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_UPDATE_POST, error })
+    }
+  }
+}
+
+function* SagaRemoveUnusingImage() {
+    while (WORKING) {
+    // REQUEST_DELETE_UN_USING_IMAGE
+    const { payload } = yield take(REQUEST_DELETE_UN_USING_IMAGE);
+
+    try {
+      const requestArray = [];
+      for (let index in payload) {
+        requestArray.push(call([ImageApi, ImageApi.delete], '/uploaded/files', { file: payload[index].deleteUrl }));
+      }
+      const result = yield requestArray;
+
+      yield put({ type: SUCCESS_DELETE_UN_USING_IMAGE, result })
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_DELETE_UN_USING_IMAGE, error })
+    }
+  }
+}
+
 
 function* SagaLikePost() {
   while (WORKING) {
@@ -105,6 +175,9 @@ function* SagaMoreList() {
 
 export default function* postSaga() {
   yield [
+    SagaGetMeta(),
+    SagaUpdatePost(),
+    SagaRemoveUnusingImage(),
     SagaMoreList(),
     SagaLikePost(),
     SagaInitList(),

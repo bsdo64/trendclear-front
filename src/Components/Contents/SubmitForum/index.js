@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import marked from '../../Lib/Marked';
-import ForumActions from '../../../Actions/ForumActions';
 
 const SubmitForumBox = React.createClass({
   propTypes: {
     SubmitForumStore: PropTypes.object.isRequired,
     UserStore: PropTypes.object.isRequired,
+    FireRequestCreateForum: PropTypes.func.isRequired,
     FireRequestValidateTitleForumCreate: PropTypes.func.isRequired,
   },
 
@@ -16,6 +17,14 @@ const SubmitForumBox = React.createClass({
     $(this.form)
       .form('refresh');
   },
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.SubmitForumStore.get('createForumSuccess') &&
+        nextProps.SubmitForumStore.get('createForumSuccess')) {
+      browserHistory.push(`/community?forumId=${nextProps.SubmitForumStore.get('createForumSuccess')}`)
+    }
+  },
+
   componentDidMount() {
 
     $(this.form)
@@ -62,7 +71,7 @@ const SubmitForumBox = React.createClass({
           e.preventDefault();
           e.stopPropagation();
 
-          const { SubmitForumStore } = this.props;
+          const { SubmitForumStore, FireRequestCreateForum } = this.props;
           const error = SubmitForumStore.getIn(['form', 'error']);
 
           if (!error) {
@@ -73,7 +82,7 @@ const SubmitForumBox = React.createClass({
               rule: fields.forum_rule
             };
 
-            ForumActions.createForum(formValue);
+            FireRequestCreateForum(formValue);
           }
         },
         onFailure: (e, fields) => {
@@ -110,9 +119,10 @@ const SubmitForumBox = React.createClass({
 
     const canCreate = trendbox.get('level') >= 5 && trendbox.get('T') >= 100;
     const duplicateTitleError = SubmitForumStore.getIn(['form', 'error']);
+    const createFail = SubmitForumStore.get('createForumSuccess') === false;
 
     let validateError;
-    if (duplicateTitleError || !canCreate) {
+    if (duplicateTitleError || !canCreate || createFail) {
       validateError = (
         <div className="ui error message" style={{ display: 'block' }}>
           <ul className="list">
@@ -123,6 +133,10 @@ const SubmitForumBox = React.createClass({
             {
               !canCreate &&
               <li>생성 가능 레벨과 포인트를 확인해주세요</li>
+            }
+            {
+              createFail &&
+              <li>게시판 생성이 실패하였습니다</li>
             }
           </ul>
         </div>

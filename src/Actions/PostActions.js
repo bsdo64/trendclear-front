@@ -35,20 +35,6 @@ class PostActions {
     };
   }
 
-  modPost(post) {
-    return (dispatch) => {
-      Api
-        .setEntryPoint('/ajax')
-        .put('/community/submit', post)
-        .then((res) => {
-          dispatch(res);
-        })
-        .catch((err) => {
-          return err;
-        });
-    };
-  }
-
   removeServerInit() {
     return true;
   }
@@ -127,21 +113,6 @@ class PostActions {
     }
   }
 
-  getMeta(url) {
-    return (dispatch) => {
-      Api
-        .setEntryPoint('/api')
-        .get('/urlMeta', { url: url })
-        .then((res) => {
-
-          dispatch(res);
-        })
-        .catch((err) => {
-          return err;
-        });
-    };
-  }
-
   addImages(data) {
     if (data && data.result && data.result.files[0]) {
       const file = data.result.files[0];
@@ -153,6 +124,35 @@ class PostActions {
     if (data && data.deleteUrl) {
       return data;
     }
+  }
+
+  getMeta(url) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/api')
+        .get('/urlMeta', url)
+        .then((res) => {
+
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
+  }
+
+  modPost(post) {
+    return (dispatch) => {
+      Api
+        .setEntryPoint('/ajax')
+        .put('/community/submit', post)
+        .then((res) => {
+          dispatch(res);
+        })
+        .catch((err) => {
+          return err;
+        });
+    };
   }
 
   removeUnusingImage(list) {

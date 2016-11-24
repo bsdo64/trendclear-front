@@ -3,6 +3,19 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import ForumSettingsComponent from '../../Components/Contents/ForumSetting';
 import { UI, Domains } from '../../Reducers/InitialStates';
+import {
+  handleResetButton,
+  handleChangeFormForumMeta,
+  requestUpdateForumMeta,
+  requestAddForumPrefix,
+  requestDeleteForumPrefix,
+  requestUpdateForumPrefix,
+  requestAddForumManager,
+  requestDeleteForumManager,
+  requestDeleteForumAnnounce,
+  requestAddForumBanUser,
+  requestDeleteForumBanUser,
+} from '../../Actions/ForumSetting';
 
 const ForumSettingsContainer = React.createClass({
   render() {
@@ -51,11 +64,19 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireHandleResetButton: handleResetButton,
+    FireHandleChangeFormForumMeta: handleChangeFormForumMeta,
+    FireRequestUpdateForumMeta: requestUpdateForumMeta,
+    FireRequestAddForumPrefix: requestAddForumPrefix,
+    FireRequestDeleteForumPrefix: requestDeleteForumPrefix,
+    FireRequestUpdateForumPrefix: requestUpdateForumPrefix,
+    FireRequestAddForumManager: requestAddForumManager,
+    FireRequestDeleteForumManager: requestDeleteForumManager,
+    FireRequestDeleteForumAnnounce: requestDeleteForumAnnounce,
+    FireRequestAddForumBanUser: requestAddForumBanUser,
+    FireRequestDeleteForumBanUser: requestDeleteForumBanUser,
+  }
 )(ForumSettingsContainer);

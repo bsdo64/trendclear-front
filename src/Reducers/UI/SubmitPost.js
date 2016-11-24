@@ -5,14 +5,18 @@ import {
   HANDLE_POST_TITLE,
   HANDLE_POST_CONTENT,
   HANDLE_RESET_POST_CONTENT,
-  SUCCESS_SUBMIT_POST,
   HANDLE_SELECT_PREFIX,
   HANDLE_ADD_POST_IMAGES,
   HANDLE_DELETE_POST_IMAGES,
   HANDLE_SET_REPRESENT_IMAGE,
+
+  SUCCESS_SUBMIT_POST,
+  SUCCESS_UPDATE_POST,
+  SUCCESS_GET_POST_META,
+  SUCCESS_DELETE_UN_USING_IMAGE,
 } from '../../Actions/Post';
 
-const Submit = (state = UI.Submit, action) => {
+const SubmitPost = (state = UI.SubmitPost, action) => {
   switch (action.type) {
     case REMOVE_SERVER_INIT: {
       return state.merge({ server: null })
@@ -101,9 +105,28 @@ const Submit = (state = UI.Submit, action) => {
       return state.set('representingImage', action.index);
     }
 
+    case SUCCESS_UPDATE_POST: {
+      const { result } = action;
+      const forum = result.forum;
+
+      return state.merge({
+        successUpdatePost: true,
+        successForumId: forum.id,
+        successPostId: result.id
+      });
+    }
+
+    case SUCCESS_GET_POST_META: {
+      return state.merge({ urlMetaData: action.result });
+    }
+
+    case SUCCESS_DELETE_UN_USING_IMAGE: {
+      return state;
+    }
+
     default:
       return state;
   }
 };
 
-export default Submit;
+export default SubmitPost;

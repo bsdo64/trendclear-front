@@ -8,11 +8,14 @@ import {
   handlePostContent,
   handlePostTitle,
   handleResetPostContent,
-  requestSubmitPost,
   handleSelectPrefix,
   handleAddPostImages,
   handleDeletePostImages,
   handleSetRepresentImage,
+  requestSubmitPost,
+  requestDeleteUnUsingImage,
+  requestUpdatePost,
+  requestGetPostMeta,
 } from '../../Actions/Post';
 
 const SubmitPostContainer = React.createClass({
@@ -24,7 +27,7 @@ const SubmitPostContainer = React.createClass({
 SubmitPostContainer.defaultProps = {
   AuthStore: UI.Auth,
   UserStore: UI.User,
-  SubmitStore: UI.Submit,
+  SubmitPostStore: UI.SubmitPost,
 };
 
 const mapStateToProps = (state) => {
@@ -37,7 +40,7 @@ const mapStateToProps = (state) => {
   };
 
   return {
-    SubmitStore: getUIState('Submit'),
+    SubmitPostStore: getUIState('SubmitPost'),
     AuthStore: getUIState('Auth'),
     LoginStore: getUIState('Login'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
@@ -57,5 +60,8 @@ module.exports = connect(
     FireHandleAddPostImages: handleAddPostImages,
     FireHandleDeletePostImages: handleDeletePostImages,
     FireHandleSetRepresentImage: handleSetRepresentImage,
+    FireRequestDeleteUnUsingImage: requestDeleteUnUsingImage,
+    FireRequestUpdatePost: requestUpdatePost,
+    FireRequestGetPostMeta: requestGetPostMeta,
   }
 )(SubmitPostContainer);
