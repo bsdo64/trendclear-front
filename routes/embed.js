@@ -53,21 +53,13 @@ Embeds.get('/oembed', (req, res, next) => {
   } else {
     res.json({});
   }
-
-  /*request
-   .get('http://iframe.ly/api/oembed')
-   .set('Accept', 'application/json')
-   .query(req.query)
-   .end((err, iframeResult) => {
-   //res.json(iframeResult.body);
-   res.json({html: '<div>haha</div>'})
-   })*/
 });
 
 Embeds.get('/urlMeta', (req, res, next) => {
   let url = req.query.url;
 
   delete req.headers.host;
+  req.headers.accept = '*/*';
 
   metafetch.fetch(url, {
     flags: {
@@ -79,6 +71,9 @@ Embeds.get('/urlMeta', (req, res, next) => {
       timeout: 30000
     },
   }, function (err, meta) {
+    if (err) {
+      console.error(err);
+    }
 
     res.json(meta);
   });
