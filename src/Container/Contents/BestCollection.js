@@ -8,6 +8,7 @@ import { toggleLoginModal } from '../../Actions/Login';
 import { toggleReportModal } from '../../Actions/Report';
 import { toggleActiveVenalinkModal, requestLikePost, requestGetMorePostList } from '../../Actions/Post';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
+import { requestParticipateVenalink, requestActivateVenalink } from '../../Actions/VenacleStore';
 
 const BestContainer = React.createClass({
   render() {
@@ -61,5 +62,7 @@ module.exports = connect(
     FireRequestGetMorePostList: requestGetMorePostList,
     FireRequestLikePost: requestLikePost,
     FireToggleActiveVenalinkModal: toggleActiveVenalinkModal,
+    FireRequestActivateVenalink: requestActivateVenalink,
+    FireRequestParticipateVenalink: requestParticipateVenalink,
   }
 )(BestContainer);

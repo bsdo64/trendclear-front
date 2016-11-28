@@ -17,6 +17,8 @@ import {
   REQUEST_PARTICIPATE_VENALINK,
   SUCCESS_PARTICIPATE_VENALINK,
   FAILURE_PARTICIPATE_VENALINK,
+
+  CLOSE_CONFIRM_PURCHASE_ITEM_MODAL,
 } from '../../Actions/VenacleStore';
 import {
   CLOSE_ACTIVE_VENALINK_MODAL
@@ -72,6 +74,7 @@ function* SagaPurchaseItem() {
 
 
       yield put({ type: SUCCESS_PURCHASE_ITEM, result });
+      yield put({ type: CLOSE_CONFIRM_PURCHASE_ITEM_MODAL, result });
     }
 
     catch (error) {

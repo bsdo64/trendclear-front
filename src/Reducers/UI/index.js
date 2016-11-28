@@ -4,6 +4,7 @@ import Auth from './Auth';
 import Community from './Community';
 import ForumSetting from './ForumSetting';
 import Gnb from './Gnb';
+import Inventory from './Inventory';
 import List from './List';
 import Login from './Login';
 import Modal from './Modal';
@@ -26,6 +27,7 @@ export default combineReducers({
   Community,
   ForumSetting,
   Gnb,
+  Inventory,
   List,
   Login,
   Modal,

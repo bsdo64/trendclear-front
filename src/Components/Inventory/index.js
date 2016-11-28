@@ -1,14 +1,16 @@
 import React, { PropTypes } from 'react';
-import VenaStoreActions from '../../Actions/VenaStoreActions';
+import ReactTooltip from 'react-tooltip';
 
 const rebuildTooltip = function rebuildTooltip(itemCode) {
-  VenaStoreActions.tooltipInit(itemCode);
+  this.props.FireShowItemInfo(itemCode);
+  ReactTooltip.rebuild();
 };
 
 const Inventory = React.createClass({
   propTypes: {
     ShoppingStore: PropTypes.object.isRequired,
     inventory: PropTypes.object.isRequired,
+    FireShowItemInfo: PropTypes.func.isRequired,
   },
 
   createTableColum(listItem, c) {
@@ -74,13 +76,8 @@ const Inventory = React.createClass({
   },
   render() {
 
-    const { ShoppingStore, inventory } = this.props;
+    const { inventory } = this.props;
     const table = this.createTable(inventory, 4, 8);
-
-    const filterTooltipItem = ShoppingStore
-      .get('items')
-      .filter(item => item.get('code') === ShoppingStore.get('tooltipItemCode'))
-      .get(0);
 
     return (
       <div className="user_inventory"

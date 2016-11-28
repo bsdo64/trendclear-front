@@ -24,6 +24,8 @@ const BigPost = React.createClass({
     FireToggleDeleteModal: PropTypes.func.isRequired,
     FireRequestLikePost: PropTypes.func.isRequired,
     FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+    FireRequestActivateVenalink: PropTypes.func.isRequired,
+    FireRequestParticipateVenalink: PropTypes.func.isRequired,
   },
 
   mixins: [PureRenderMixin],
@@ -62,7 +64,10 @@ const BigPost = React.createClass({
   },
 
   render() {
-    const { post, author, user, view, postStyle, shorten } = this.props;
+    const {
+      post, author, user, view, postStyle, shorten,
+      FireToggleReportModal, FireToggleDeleteModal, FireOpenCommentUpdateView
+    } = this.props;
 
     const userId = user && user.get('id');
     const sex = author.getIn(['profile', 'sex']),
@@ -239,7 +244,7 @@ const BigPost = React.createClass({
                 post={post}
                 author={author}
                 user={user}
-                FireToggleActiveVenalinkModal={this.props.FireToggleActiveVenalinkModal}
+                {...this.props}
               />
             </div>
             {
@@ -250,8 +255,9 @@ const BigPost = React.createClass({
                   forumId={post.get('forum_id')}
                   targetId={post.get('id')}
                   isUser={userId && (userId === author.get('id'))}
-                  FireToggleReportModal={this.props.FireToggleReportModal}
-                  FireToggleDeleteModal={this.props.FireToggleDeleteModal}
+                  FireToggleReportModal={FireToggleReportModal}
+                  FireToggleDeleteModal={FireToggleDeleteModal}
+                  FireOpenCommentUpdateView={FireOpenCommentUpdateView}
                 />
               </div>
             }

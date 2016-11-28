@@ -11,8 +11,7 @@ require('./index.scss');
 class WidgetBox extends Component {
   render() {
     const {
-      LoginStore, UserStore, ShoppingStore, Forums, location,
-      FireToggleVenacleStoreModal, FireToggleAvatarModal, FireRequestShoppingItemInit,
+      LoginStore, UserStore, Forums, location,
     } = this.props;
     const isLogin = LoginStore.get('isLogin');
     const user = {
@@ -59,10 +58,7 @@ class WidgetBox extends Component {
           isLogin && user &&
           <TrendBox
             user={user}
-            ShoppingStore={ShoppingStore}
-            FireToggleVenacleStoreModal={FireToggleVenacleStoreModal}
-            FireToggleAvatarModal={FireToggleAvatarModal}
-            FireRequestShoppingItemInit={FireRequestShoppingItemInit}
+            {...this.props}
           />
         }
 
@@ -162,12 +158,15 @@ class WidgetBox extends Component {
 WidgetBox.propTypes = {
   LoginStore: PropTypes.object.isRequired,
   UserStore: PropTypes.object.isRequired,
+  InventoryStore: PropTypes.object.isRequired,
   ShoppingStore: PropTypes.object.isRequired,
   Forums: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   FireToggleVenacleStoreModal: PropTypes.func.isRequired,
   FireToggleAvatarModal: PropTypes.func.isRequired,
+  FireShowItemInfo: PropTypes.func.isRequired,
   FireRequestShoppingItemInit: PropTypes.func.isRequired,
+  FireToggleShowInventory: PropTypes.func.isRequired,
 };
 
 export default WidgetBox;

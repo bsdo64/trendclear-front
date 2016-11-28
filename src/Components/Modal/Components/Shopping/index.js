@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
-import VenaStoreActions from '../../../../Actions/VenaStoreActions';
 import ReactTooltip from 'react-tooltip';
 import AvatarImage from '../../../AvatarImage';
 import Inventory from '../../../Inventory';
 
 const rebuildTooltip = function rebuildTooltip(itemCode) {
-  VenaStoreActions.tooltipInit(itemCode);
+  this.props.FireShowItemInfo(itemCode);
   ReactTooltip.rebuild();
 };
 
@@ -19,6 +18,7 @@ const Shopping = React.createClass({
     FireToggleConfirmPurchaseItemModal: PropTypes.func.isRequired,
     FireRequestShoppingItemInit: PropTypes.func.isRequired,
     FireRequestPurchaseItem: PropTypes.func.isRequired,
+    FireShowItemInfo: PropTypes.func.isRequired,
   },
 
   togglePurchaseWindow(item) {
@@ -38,7 +38,7 @@ const Shopping = React.createClass({
   },
 
   render() {
-    const { UserStore, ShoppingStore } = this.props;
+    const { UserStore, ShoppingStore, FireShowItemInfo } = this.props;
 
     const sex = UserStore.getIn(['profile', 'sex']),
       avatar_img = UserStore.getIn(['profile', 'avatar_img']),
@@ -205,30 +205,28 @@ const Shopping = React.createClass({
           <Inventory
             inventory={inventory}
             ShoppingStore={ShoppingStore}
+            FireShowItemInfo={FireShowItemInfo}
           />
         </div>
 
         {
-          ShoppingStore.get('openPurchaseWindow') &&
-          <div>
-            {
-              ShoppingStore.get('purchaseItem') &&
-              <div>
-                {
-                  ShoppingStore.get('purchaseItem').get('title')
-                }
-                을(를) 구입하시겠습니까?
-                <div style={{ paddingTop: 10, textAlign: 'right' }}>
-                  <div className="ui button primary"
-                       onClick={this.confirmPurchaseItem.bind(this, ShoppingStore.get('purchaseItem'))}>
-                    확인
-                  </div>
-                  <div className="ui button" onClick={this.togglePurchaseWindow.bind(this, null)}>
-                    취소
-                  </div>
+          ShoppingStore.get('openPurchaseWindow') && ShoppingStore.get('purchaseItem') &&
+          <div className="confirm-panel">
+            <div className="confirm-box">
+              {
+                ShoppingStore.get('purchaseItem').get('title')
+              }
+              을(를) 구입하시겠습니까?
+              <div style={{ paddingTop: 10, textAlign: 'right' }}>
+                <div className="ui button primary"
+                     onClick={this.confirmPurchaseItem.bind(this, ShoppingStore.get('purchaseItem'))}>
+                  확인
+                </div>
+                <div className="ui button" onClick={this.togglePurchaseWindow.bind(this, null)}>
+                  취소
                 </div>
               </div>
-            }
+            </div>
           </div>
         }
       </div>

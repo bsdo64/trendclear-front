@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import ActivateVenalink from '../../Components/Modal/Components/ActivateVenalink';
+import {
+  requestActivateVenalink,
+} from '../../Actions/VenacleStore';
 
 const ActivateVenalinkContainer = React.createClass({
   render() {
@@ -24,11 +27,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireRequestActivateVenalink: requestActivateVenalink
+  }
 )(ActivateVenalinkContainer);

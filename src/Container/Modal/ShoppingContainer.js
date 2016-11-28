@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Shopping from '../../Components/Modal/Components/Shopping';
 import {
+  showItemInfo,
   toggleVenacleStoreModal,
   toggleConfirmPurchaseItemModal,
   requestShoppingItemInit,
@@ -42,5 +43,6 @@ module.exports = connect(
     FireToggleConfirmPurchaseItemModal: toggleConfirmPurchaseItemModal,
     FireRequestShoppingItemInit: requestShoppingItemInit,
     FireRequestPurchaseItem: requestPurchaseItem,
+    FireShowItemInfo: showItemInfo,
   }
 )(ShoppingContainer);

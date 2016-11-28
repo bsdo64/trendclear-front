@@ -27,6 +27,8 @@ const CommunityContents = React.createClass({
     FireOpenCommentUpdateView: PropTypes.func.isRequired,
     FireCloseCommentUpdateView: PropTypes.func.isRequired,
     FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+    FireRequestActivateVenalink: PropTypes.func.isRequired,
+    FireRequestParticipateVenalink: PropTypes.func.isRequired,
   },
 
   checkBanned() {

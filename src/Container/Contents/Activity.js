@@ -9,6 +9,7 @@ import { toggleLoginModal } from '../../Actions/Login';
 import { toggleActiveVenalinkModal, requestLikePost, requestGetMorePostList } from '../../Actions/Post';
 import { toggleReportModal } from '../../Actions/Report';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
+import { requestParticipateVenalink, requestActivateVenalink } from '../../Actions/VenacleStore';
 
 const ActivityContainer = React.createClass({
   render() {
@@ -59,5 +60,7 @@ module.exports = connect(
     FireToggleReportModal: toggleReportModal,
     FireRequestLikePost: requestLikePost,
     FireToggleActiveVenalinkModal: toggleActiveVenalinkModal,
+    FireRequestActivateVenalink: requestActivateVenalink,
+    FireRequestParticipateVenalink: requestParticipateVenalink,
   }
 )(ActivityContainer);

@@ -5,7 +5,7 @@ import cx from 'classnames';
 import moment from 'moment';
 
 const PointListBox = React.createClass({
-  displayName: 'PointListBox',
+  displayName: 'ChargePointBox',
   propTypes: {
     UserStore: PropTypes.object.isRequired,
   },

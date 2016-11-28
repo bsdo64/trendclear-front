@@ -29,6 +29,9 @@ export const UI = {
   Gnb: Map({
     openGnb: false
   }),
+  Inventory: Map({
+    openInventory: false,
+  }),
   List: Map({
     scrollHeight: 0,
     CategoryList: List([])

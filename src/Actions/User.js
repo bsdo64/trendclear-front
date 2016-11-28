@@ -25,6 +25,13 @@ export const FAILURE_USER_READ_NOTIFICATION = 'FAILURE_USER_READ_NOTIFICATION';
 export const TOGGLE_AVATAR_MODAL = 'TOGGLE_AVATAR_MODAL';
 export const CLOSE_AVATAR_MODAL = 'CLOSE_AVATAR_MODAL';
 export const CLOSE_USER_SETTING_MESSAGE = 'CLOSE_USER_SETTING_MESSAGE';
+export const TOGGLE_SHOW_INVENTORY = 'TOGGLE_SHOW_INVENTORY';
+
+export function toggleShowInventory() {
+  return {
+    type: TOGGLE_SHOW_INVENTORY
+  }
+}
 
 export function requestUserReadNotification(payload) {
   return {

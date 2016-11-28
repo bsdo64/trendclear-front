@@ -24,6 +24,8 @@ const BestBox = React.createClass({
     FireToggleDeleteModal: PropTypes.func.isRequired,
     FireRequestLikePost: PropTypes.func.isRequired,
     FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+    FireRequestActivateVenalink: PropTypes.func.isRequired,
+    FireRequestParticipateVenalink: PropTypes.func.isRequired,
 
   },
 

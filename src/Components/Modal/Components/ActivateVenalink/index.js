@@ -1,8 +1,8 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import moment from 'moment';
 import InputNumber from 'rc-input-number';
 import DatePicker from 'react-datepicker';
-import VenaStoreActions from '../../../../Actions/VenaStoreActions';
 
 require('./index.scss');
 const ActivateVenalink = React.createClass({
@@ -10,6 +10,7 @@ const ActivateVenalink = React.createClass({
   propTypes: {
     UserStore: React.PropTypes.object.isRequired,
     ShareLinkStore: React.PropTypes.object.isRequired,
+    FireRequestActivateVenalink: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -44,7 +45,7 @@ const ActivateVenalink = React.createClass({
       const { ShareLinkStore } = this.props;
 
       if (this.state.venalinkRP > 1000) {
-        VenaStoreActions.requestActivateVenalink({
+        this.props.FireRequestActivateVenalink({
           total_amount_r: this.state.venalinkRP,
           terminate_at: this.state.startDate,
           post_id: ShareLinkStore.get('venalinkActivateRequestPostId'),
@@ -65,6 +66,10 @@ const ActivateVenalink = React.createClass({
     } else {
       return null;
     }
+  },
+
+  openPayment() {
+    browserHistory.push('/user/chargePoint');
   },
 
   render() {
@@ -90,7 +95,12 @@ const ActivateVenalink = React.createClass({
                   <div className="field">
                     <label>
                       예산 RP
-                      <div className="ui button tiny" style={{ width: 40, height: 21, padding: 5, marginLeft: 10 }}>충전
+                      <div
+                        className="ui button tiny"
+                        style={{ width: 40, height: 21, padding: 5, marginLeft: 10 }}
+                        onClick={this.openPayment}
+                      >
+                        충전
                       </div>
                     </label>
                     <div className="ui right labeled input">

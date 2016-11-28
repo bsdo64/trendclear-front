@@ -23,6 +23,7 @@ const ActivityContainer = require('../Container/Contents/Activity');
 const PolicyContainer = require('../Container/Contents/Policy');
 const CompanyContainer = require('../Container/Contents/Company');
 const FindMemberContainer = require('../Container/Contents/FindMember');
+const ChargePointContainer = require('../Container/Contents/ChargePoint');
 const PointListContainer = require('../Container/Contents/PointList');
 const VenalinkActiveList = require('../Container/Contents/VenalinkActiveList');
 const VenalinkShareList = require('../Container/Contents/VenalinkShareList');
@@ -520,6 +521,18 @@ export default (store) => {
       </Route>
 
       <Route path="/user" component={App}>
+        <Route path="chargePoint"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: UserPointMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: ChargePointContainer
+               }}
+        />
+
         <Route path="points"
                components={{
                  HeaderMyMenu: HeaderMyMenu,

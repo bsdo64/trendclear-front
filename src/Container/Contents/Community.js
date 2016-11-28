@@ -17,7 +17,9 @@ import {
   requestUpdateComment, requestUpdateSubComment,
   openCommentUpdateView, closeCommentUpdateView,
 } from '../../Actions/Comment';
-
+import {
+  requestActivateVenalink, requestParticipateVenalink
+} from '../../Actions/VenacleStore';
 
 const CommunityContainer = React.createClass({
   render() {
@@ -90,5 +92,7 @@ module.exports = connect(
     FireOpenCommentUpdateView: openCommentUpdateView,
     FireCloseCommentUpdateView: closeCommentUpdateView,
     FireToggleActiveVenalinkModal: toggleActiveVenalinkModal,
+    FireRequestActivateVenalink: requestActivateVenalink,
+    FireRequestParticipateVenalink: requestParticipateVenalink,
   }
 )(CommunityContainer);

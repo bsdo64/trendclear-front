@@ -20,6 +20,9 @@ const UserPointMenu = React.createClass({
               </h5>
 
               <div className="sub_category item">
+                <Link to="/user/chargePoint">{'포인트 충전'}</Link>
+              </div>
+              <div className="sub_category item">
                 <Link to="/user/points">{'포인트 내역'}</Link>
               </div>
             </li>

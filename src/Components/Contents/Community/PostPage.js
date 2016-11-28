@@ -27,6 +27,8 @@ const PostPage = React.createClass({
     FireRequestUpdateSubComment: PropTypes.func.isRequired,
     FireCloseCommentUpdateView: PropTypes.func.isRequired,
     FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+    FireRequestActivateVenalink: PropTypes.func.isRequired,
+    FireRequestParticipateVenalink: PropTypes.func.isRequired,
   },
 
   componentDidMount() {

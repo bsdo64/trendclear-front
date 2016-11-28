@@ -4,16 +4,17 @@
 import React, { PropTypes } from 'react';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import moment from 'moment';
-import VenaStoreActions from '../../Actions/VenaStoreActions';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-const LinkMenu = React.createClass({
+const ShareLinkMenu = React.createClass({
   propTypes: {
     userId: PropTypes.number,
     author: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
     user: PropTypes.object,
     FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+    FireRequestActivateVenalink: PropTypes.func.isRequired,
+    FireRequestParticipateVenalink: PropTypes.func.isRequired,
   },
 
   mixins: [PureRenderMixin],
@@ -48,7 +49,7 @@ const LinkMenu = React.createClass({
       });
 
       if (this.state.venalinkRP > 1000) {
-        VenaStoreActions.requestActivateVenalink({
+        this.props.FireRequestActivateVenalink({
           total_amount_r: this.state.venalinkRP,
           terminate_at: this.state.startDate,
           post_id: post.get('id'),
@@ -80,7 +81,7 @@ const LinkMenu = React.createClass({
       });
 
       if (venalinkId) {
-        VenaStoreActions.requestParticipateVenalink({
+        this.props.FireRequestParticipateVenalink({
           venalink_id: venalinkId,
           used_venalink_item_id: item.get('id'),
           request_at: new Date()
@@ -323,4 +324,4 @@ const LinkMenu = React.createClass({
   }
 });
 
-export default LinkMenu;
+export default ShareLinkMenu;

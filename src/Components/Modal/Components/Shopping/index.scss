@@ -211,3 +211,20 @@
     }
   }
 }
+
+.confirm-panel {
+  position: absolute;
+  background: #fff;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+
+  .confirm-box {
+    position: absolute;
+    top: 36%;
+    left: 36%;
+    width: 300px;
+  }
+}

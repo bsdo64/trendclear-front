@@ -21,12 +21,7 @@ function createItem(props, id) {
           user={user}
           view={false}
           shorten={true}
-          FireSetScrollPosition={props.FireSetScrollPosition}
-          FireToggleLoginModal={props.FireToggleLoginModal}
-          FireToggleReportModal={props.FireToggleReportModal}
-          FireToggleDeleteModal={props.FireToggleDeleteModal}
-          FireRequestLikePost={props.FireRequestLikePost}
-          FireToggleActiveVenalinkModal={props.FireToggleActiveVenalinkModal}
+          {...props}
         />
       ]
     }
@@ -48,6 +43,8 @@ const InfiniteList = React.createClass({
     FireToggleDeleteModal: PropTypes.func.isRequired,
     FireRequestLikePost: PropTypes.func.isRequired,
     FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+    FireRequestActivateVenalink: PropTypes.func.isRequired,
+    FireRequestParticipateVenalink: PropTypes.func.isRequired,
 
   },
 
