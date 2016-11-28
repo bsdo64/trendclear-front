@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, List, } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
 import {
@@ -46,6 +46,11 @@ import {
   SUCCESS_DELETE_FORUM_MANAGER,
   SUCCESS_DELETE_FORUM_BAN_USER
 } from '../../Actions/ForumSetting';
+import {
+  SUCCESS_PURCHASE_ITEM,
+  SUCCESS_ACTIVATE_VENALINK,
+  SUCCESS_PARTICIPATE_VENALINK,
+} from '../../Actions/VenacleStore';
 
 const initList = Map({});
 
@@ -144,6 +149,36 @@ const Users = (state = initList, action) => {
         });
     }
 
+    case SUCCESS_PURCHASE_ITEM: {
+      const { result } = action;
+      const { inventories, trendbox } = result;
+      const userId = trendbox.user_id;
+
+      return state
+        .updateIn([userId.toString(), 'inventories', 0], i => i.mergeDeep(inventories))
+        .updateIn([userId.toString(), 'trendbox'], t => t.merge(trendbox));
+    }
+
+    case SUCCESS_ACTIVATE_VENALINK: {
+      const { result } = action;
+      const { inventories, trendbox } = result;
+      const userId = trendbox.user_id;
+
+      return state
+        .updateIn([userId.toString(), 'inventories', 0], i => i.mergeDeep(inventories))
+        .updateIn([userId.toString(), 'trendbox'], t => t.merge(trendbox));
+    }
+
+    case SUCCESS_PARTICIPATE_VENALINK: {
+      const { result } = action;
+      const userId = result.inventories.user_id;
+      return state
+        .updateIn([userId.toString(), 'inventories', 0], inventory => inventory.mergeDeep(result.inventories))
+        .update(userId.toString(), 'participateVenalinks', list =>
+          list ? list.push(Map(result.participateVenalink)) : List(Map(result.participateVenalink))
+        );
+    }
+
     default: return state;
   }
 };
@@ -182,6 +217,11 @@ const Posts = (state = initList, action) => {
     case SUCCESS_SUBMIT_COMMENT: {
       const normalized = action.normalized;
       return state.mergeDeep(normalized.entities.posts);
+    }
+
+    case SUCCESS_ACTIVATE_VENALINK: {
+      const { result } = action;
+      return state.updateIn([result.venalink.post_id.toString(), 'venalinks'], v => v.push(Map(result.venalink)));
     }
 
     default: return state;

@@ -12,7 +12,7 @@ class WidgetBox extends Component {
   render() {
     const {
       LoginStore, UserStore, ShoppingStore, Forums, location,
-      FireToggleVenacleStoreModal, FireToggleAvatarModal
+      FireToggleVenacleStoreModal, FireToggleAvatarModal, FireRequestShoppingItemInit,
     } = this.props;
     const isLogin = LoginStore.get('isLogin');
     const user = {
@@ -62,6 +62,7 @@ class WidgetBox extends Component {
             ShoppingStore={ShoppingStore}
             FireToggleVenacleStoreModal={FireToggleVenacleStoreModal}
             FireToggleAvatarModal={FireToggleAvatarModal}
+            FireRequestShoppingItemInit={FireRequestShoppingItemInit}
           />
         }
 
@@ -166,6 +167,7 @@ WidgetBox.propTypes = {
   location: PropTypes.object.isRequired,
   FireToggleVenacleStoreModal: PropTypes.func.isRequired,
   FireToggleAvatarModal: PropTypes.func.isRequired,
+  FireRequestShoppingItemInit: PropTypes.func.isRequired,
 };
 
 export default WidgetBox;

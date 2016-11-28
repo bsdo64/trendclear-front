@@ -16,17 +16,25 @@ const Shopping = React.createClass({
     UserStore: PropTypes.object.isRequired,
     ShoppingStore: PropTypes.object.isRequired,
     FireToggleVenacleStoreModal: PropTypes.func.isRequired,
+    FireToggleConfirmPurchaseItemModal: PropTypes.func.isRequired,
+    FireRequestShoppingItemInit: PropTypes.func.isRequired,
+    FireRequestPurchaseItem: PropTypes.func.isRequired,
   },
 
   togglePurchaseWindow(item) {
-    VenaStoreActions.togglePurchaseWindow(item);
+    this.props.FireToggleConfirmPurchaseItemModal(item);
   },
 
   toggleVenacleStore() {
     this.props.FireToggleVenacleStoreModal({
       contentType: 'Shopping'
     });
-    VenaStoreActions.initItems();
+    this.props.FireRequestShoppingItemInit();
+  },
+
+  confirmPurchaseItem(item) {
+
+    this.props.FireRequestPurchaseItem(item.toJS());
   },
 
   render() {
@@ -200,6 +208,29 @@ const Shopping = React.createClass({
           />
         </div>
 
+        {
+          ShoppingStore.get('openPurchaseWindow') &&
+          <div>
+            {
+              ShoppingStore.get('purchaseItem') &&
+              <div>
+                {
+                  ShoppingStore.get('purchaseItem').get('title')
+                }
+                을(를) 구입하시겠습니까?
+                <div style={{ paddingTop: 10, textAlign: 'right' }}>
+                  <div className="ui button primary"
+                       onClick={this.confirmPurchaseItem.bind(this, ShoppingStore.get('purchaseItem'))}>
+                    확인
+                  </div>
+                  <div className="ui button" onClick={this.togglePurchaseWindow.bind(this, null)}>
+                    취소
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
       </div>
     );
   }

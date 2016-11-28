@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import WidgetBox from '../../Components/WidgetBox';
 import { UI, Domains } from '../../Reducers/InitialStates';
-import { toggleVenacleStoreModal, } from '../../Actions/VenacleStore';
+import {
+  toggleVenacleStoreModal,
+  requestShoppingItemInit,
+  requestPurchaseItem,
+  toggleConfirmPurchaseItemModal,
+} from '../../Actions/VenacleStore';
 import { toggleAvatarModal, } from '../../Actions/User';
 
 const WidgetContainer = React.createClass({
@@ -43,6 +48,8 @@ module.exports = connect(
   {
     FireToggleVenacleStoreModal: toggleVenacleStoreModal,
     FireToggleAvatarModal: toggleAvatarModal,
-
+    FireRequestShoppingItemInit: requestShoppingItemInit,
+    FireRequestPurchaseItem: requestPurchaseItem,
+    FireToggleConfirmPurchaseItemModal: toggleConfirmPurchaseItemModal,
   }
 )(WidgetContainer);

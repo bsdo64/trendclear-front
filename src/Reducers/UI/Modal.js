@@ -5,7 +5,10 @@ import { TOGGLE_DELETE_MODAL, CLOSE_DELETE_MODAL } from '../../Actions/DeleteIte
 import { TOGGLE_VENACLE_STORE_MODAL, CLOSE_VENACLE_STORE_MODAL } from '../../Actions/VenacleStore';
 import { TOGGLE_AVATAR_MODAL, CLOSE_AVATAR_MODAL } from '../../Actions/User';
 import { CLOSE_MODAL } from '../../Actions/Modal';
-import { TOGGLE_ACTIVE_VENALINK_MODAL } from '../../Actions/Post';
+import {
+  TOGGLE_ACTIVE_VENALINK_MODAL,
+  CLOSE_ACTIVE_VENALINK_MODAL,
+} from '../../Actions/Post';
 
 const Modal = (state = UI.Modal, action) => {
   switch (action.type) {
@@ -29,6 +32,7 @@ const Modal = (state = UI.Modal, action) => {
     case CLOSE_LOGIN_MODAL:
     case CLOSE_VENACLE_STORE_MODAL:
     case CLOSE_AVATAR_MODAL:
+    case CLOSE_ACTIVE_VENALINK_MODAL:
     case CLOSE_MODAL: {
       return state.merge({
         openModal: false,

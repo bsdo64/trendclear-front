@@ -2,7 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Shopping from '../../Components/Modal/Components/Shopping';
-import { toggleVenacleStoreModal, } from '../../Actions/VenacleStore';
+import {
+  toggleVenacleStoreModal,
+  toggleConfirmPurchaseItemModal,
+  requestShoppingItemInit,
+  requestPurchaseItem,
+} from '../../Actions/VenacleStore';
 
 const ShoppingContainer = React.createClass({
   render() {
@@ -33,6 +38,9 @@ const mapStateToProps = (state) => {
 module.exports = connect(
   mapStateToProps,
   {
-    FireToggleVenacleStoreModal: toggleVenacleStoreModal
+    FireToggleVenacleStoreModal: toggleVenacleStoreModal,
+    FireToggleConfirmPurchaseItemModal: toggleConfirmPurchaseItemModal,
+    FireRequestShoppingItemInit: requestShoppingItemInit,
+    FireRequestPurchaseItem: requestPurchaseItem,
   }
 )(ShoppingContainer);

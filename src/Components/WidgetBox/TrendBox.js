@@ -5,8 +5,6 @@ import { Link } from 'react-router';
 import Draggable from 'react-draggable'; // The default
 import CountUp from 'countup.js';
 import moment from 'moment';
-
-import VenaStoreActions from '../../Actions/VenaStoreActions';
 import AvatarImage from '../AvatarImage';
 import Inventory from '../Inventory';
 
@@ -74,6 +72,7 @@ const TrendBox = React.createClass({
     ShoppingStore: PropTypes.object.isRequired,
     FireToggleVenacleStoreModal: PropTypes.func.isRequired,
     FireToggleAvatarModal: PropTypes.func.isRequired,
+    FireRequestShoppingItemInit: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -202,7 +201,7 @@ const TrendBox = React.createClass({
     this.props.FireToggleVenacleStoreModal({
       contentType: 'Shopping'
     });
-    VenaStoreActions.initItems();
+    this.props.FireRequestShoppingItemInit();
   },
 
   createSkill(value, key) {
@@ -257,15 +256,6 @@ const TrendBox = React.createClass({
   showItemTooltip() {
   },
 
-  togglePurchaseWindow(item) {
-
-    VenaStoreActions.togglePurchaseWindow(item);
-  },
-
-  confirmPurchaseItem(item) {
-
-    VenaStoreActions.requestPurchaseItem(item.toJS());
-  },
 
   render() {
     const { user, ShoppingStore } = this.props;
@@ -411,33 +401,6 @@ const TrendBox = React.createClass({
                     </div>
                   </div>
 
-                  <Modal
-                    isOpen={ShoppingStore.get('openPurchaseWindow')}
-                    onRequestClose={this.togglePurchaseWindow.bind(this, null)}
-                    style={{
-                      overlay: { backgroundColor: 'rgba(29, 29, 29, 0.8)', zIndex: 104 },
-                      content: { top: '35%', left: '35%', right: '35%', width: 450, bottom: null, zIndex: 104 }
-                    }}
-                  >
-                    <div>
-                      {
-                        ShoppingStore.get('purchaseItem') &&
-                        <div>
-                          {ShoppingStore.get('purchaseItem').get('title')}
-                          을(를) 구입하시겠습니까?
-                          <div style={{ paddingTop: 10, textAlign: 'right' }}>
-                            <div className="ui button primary"
-                                 onClick={this.confirmPurchaseItem.bind(this, ShoppingStore.get('purchaseItem'))}>
-                              확인
-                            </div>
-                            <div className="ui button" onClick={this.togglePurchaseWindow.bind(this, null)}>
-                              취소
-                            </div>
-                          </div>
-                        </div>
-                      }
-                    </div>
-                  </Modal>
                   <ReactTooltip
                     id="item"
                     effect="solid"
@@ -497,7 +460,7 @@ const TrendBox = React.createClass({
         </div>
         <Draggable
 
-          defaultPosition={{ x: 150, y: 0 }}
+          defaultPosition={{ x: 0, y: 0 }}
           position={null}
           grid={[10, 10]}
           zIndex={101}
