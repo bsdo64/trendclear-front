@@ -1,11 +1,14 @@
-import { Map, List, } from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
 import {
   SUCCESS_USER_AVATAR_IMAGE_UPLOAD,
   SUCCESS_USER_AVATAR_IMAGE_REMOVE,
   SUCCESS_USER_UPDATE_PROFILE,
-  SUCCESS_USER_READ_NOTIFICATION
+  SUCCESS_USER_READ_NOTIFICATION,
+  RECEIVE_SOCKET_NOTI,
+  RECEIVE_SOCKET_POINT,
+  SUCCESS_USER_PAYBACK_RP,
 } from '../../Actions/User';
 import {
   SUCCESS_SAVE_FOLLOWING_FILTER,
@@ -169,14 +172,33 @@ const Users = (state = initList, action) => {
         .updateIn([userId.toString(), 'trendbox'], t => t.merge(trendbox));
     }
 
+    case RECEIVE_SOCKET_NOTI: {
+      const { notis, userId } = action;
+
+      return state
+        .mergeDeepIn([userId.toString(), 'notifications'], { INoti: notis });
+    }
+
+    case RECEIVE_SOCKET_POINT: {
+      const { data, userId } = action;
+
+      return state
+        .updateIn([userId.toString(), 'trendbox', 'T'], point => data.TP ? point + data.TP : point)
+        .updateIn([userId.toString(), 'trendbox', 'R'], point => data.RP ? point + data.RP : point);
+    }
+
     case SUCCESS_PARTICIPATE_VENALINK: {
       const { result } = action;
       const userId = result.inventories.user_id;
       return state
-        .updateIn([userId.toString(), 'inventories', 0], inventory => inventory.mergeDeep(result.inventories))
-        .update(userId.toString(), 'participateVenalinks', list =>
-          list ? list.push(Map(result.participateVenalink)) : List(Map(result.participateVenalink))
-        );
+        .updateIn([userId.toString(), 'inventories', 0], inventory => inventory.mergeDeep(result.inventories));
+    }
+
+    case SUCCESS_USER_PAYBACK_RP: {
+      const { result } = action;
+      const { list, userId } = result;
+
+      return state.mergeDeep([userId.toString(), 'participatedVenalinks'], fromJS(list));
     }
 
     default: return state;
@@ -222,6 +244,12 @@ const Posts = (state = initList, action) => {
     case SUCCESS_ACTIVATE_VENALINK: {
       const { result } = action;
       return state.updateIn([result.venalink.post_id.toString(), 'venalinks'], v => v.push(Map(result.venalink)));
+    }
+
+    case SUCCESS_PARTICIPATE_VENALINK: {
+      const { result, postId } = action;
+      return state
+        .mergeDeep({ [postId.toString()]: { venalinks: [result.participateVenalink.venalink] } });
     }
 
     default: return state;

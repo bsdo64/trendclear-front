@@ -47,6 +47,27 @@ const PointListBox = React.createClass({
       case 'activateVenalink':
         itemType = '베나링크 활성화';
         break;
+      case 'write_post':
+        itemType = '새로운 글 생성';
+        break;
+      case 'write_forum':
+        itemType = '게시판 생성';
+        break;
+      case 'write_comment':
+        itemType = '댓글 작성';
+        break;
+      case 'write_sub_comment':
+        itemType = '대댓글 작성';
+        break;
+      case 'sharelink_new_visitor':
+        itemType = '쉐어링크 순방문';
+        break;
+      case 'refundVenalink':
+        itemType = '미사용 RP 환급';
+        break;
+      case 'paybackVenalink':
+        itemType = '페이백 RP';
+        break;
       case undefined:
         itemType = '';
         break;

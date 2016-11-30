@@ -251,6 +251,7 @@ const BigPost = React.createClass({
               userId &&
               <div className="report_box">
                 <Menu
+                  post={post}
                   targetType="post"
                   forumId={post.get('forum_id')}
                   targetId={post.get('id')}

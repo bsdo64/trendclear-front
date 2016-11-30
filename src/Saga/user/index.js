@@ -26,11 +26,36 @@ import {
   SUCCESS_USER_READ_NOTIFICATION,
   FAILURE_USER_READ_NOTIFICATION,
 
-  CLOSE_AVATAR_MODAL
+  REQUEST_USER_PAYBACK_RP,
+  SUCCESS_USER_PAYBACK_RP,
+  FAILURE_USER_PAYBACK_RP,
+
+  CLOSE_AVATAR_MODAL,
 } from '../../Actions/User';
 
 const WORKING = true;
 const API = Api.setEntryPoint('/ajax');
+
+function* SagaPaybackRP() {
+  while (WORKING) {
+    // REQUEST_USER_PAYBACK_RP
+    const { payload } = yield take(REQUEST_USER_PAYBACK_RP);
+
+    try {
+      const result = yield call([API, API.post], '/user/payback/rp', payload);
+      if (result && result.list) {
+
+        yield put({ type: SUCCESS_USER_PAYBACK_RP, result });
+      } else {
+        yield put({ type: FAILURE_USER_PAYBACK_RP })
+      }
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_USER_PAYBACK_RP, error })
+    }
+  }
+}
 
 function* SagaReadNoti() {
   while (WORKING) {
@@ -166,6 +191,7 @@ function* SagaResetPassword() {
 
 export default function* user() {
   yield [
+    SagaPaybackRP(),
     SagaReadNoti(),
     SagaResetPassword(),
     SagaUserUpdateProfile(),

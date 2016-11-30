@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 import { browserHistory } from 'react-router';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import memoize from 'fast-memoize';
@@ -62,8 +63,24 @@ function createToggleModal(props) {
   }
 }
 
+function isActivateVenalinkPost(post) {
+
+  if (post) {
+    if (post.get('venalinks') && post.get('venalinks').size > 0) {
+      return post.get('venalinks').find(i => i.get('is_activate') === true)
+    } else {
+      return false;
+    }
+  }
+}
+
 const Menu = (props) => {
-  const { isUser, targetType } = props;
+
+  const { isUser, targetType, post } = props;
+  const isActivateVenalink = isActivateVenalinkPost(post);
+  const removeAvailable = cx('item', {
+    disabled: isActivateVenalink
+  });
 
   return (
     <Dropdown>
@@ -85,7 +102,7 @@ const Menu = (props) => {
             }
             {
               isUser &&
-              <div className="item " data-action={`delete_${targetType}`} onClick={createToggleModal(props)}>삭제하기</div>
+              <div className={removeAvailable} data-action={`delete_${targetType}`} onClick={createToggleModal(props)}>삭제하기</div>
             }
           </div>
         </div>
@@ -96,6 +113,7 @@ const Menu = (props) => {
 
 Menu.propTypes = {
   isUser: PropTypes.bool.isRequired,
+  post: PropTypes.object.isRequired,
   targetType: PropTypes.string.isRequired,
   FireToggleReportModal: PropTypes.func.isRequired,
   FireToggleDeleteModal: PropTypes.func.isRequired,

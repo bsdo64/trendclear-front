@@ -13,15 +13,13 @@ import {
 } from '../../Actions/User';
 
 class MyMenuContainer extends React.Component {
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
+    const { LoginStore } = nextProps;
 
-    const { LoginStore } = this.props;
-
-    if (LoginStore.get('isLogin')) {
+    if (this.props.LoginStore.get('isLogin') === false && LoginStore.get('isLogin') === true) {
       Noti.emit('join_room');
       Point.emit('join_room');
     }
-
   }
   render() {
     return (<MyArea {...this.props} />)

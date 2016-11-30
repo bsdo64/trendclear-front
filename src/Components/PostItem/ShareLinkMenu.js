@@ -72,7 +72,7 @@ const ShareLinkMenu = React.createClass({
     })
   },
 
-  requestParticipateVenalink(venalinkId, participateItem) {
+  requestParticipateVenalink(venalinkId, participateItem, postId) {
     if (participateItem) {
       const item = participateItem.get('item');
 
@@ -82,6 +82,7 @@ const ShareLinkMenu = React.createClass({
 
       if (venalinkId) {
         this.props.FireRequestParticipateVenalink({
+          postId,
           venalink_id: venalinkId,
           used_venalink_item_id: item.get('id'),
           request_at: new Date()
@@ -245,7 +246,7 @@ const ShareLinkMenu = React.createClass({
             베나링크에 참여하고 RP를 보상 받으세요!
           </div>
           <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}
-               onClick={this.requestParticipateVenalink.bind(this, venalink.get('id'), participateItem)}>
+               onClick={this.requestParticipateVenalink.bind(this, venalink.get('id'), participateItem, post.get('id'))}>
             베나링크 참여하기
           </div>
         </div>

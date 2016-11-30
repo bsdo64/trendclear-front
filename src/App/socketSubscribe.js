@@ -1,11 +1,19 @@
 import { Noti, Point } from '../Utils/Socket';
+import {
+  receiveSocketNoti,
+  receiveSocketPoint,
+} from '../Actions/User';
+import { normalize, arrayOf } from 'normalizr';
+import { noti } from '../Model/normalizr/schema';
 
 export default (store) => {
-  Noti.on('comment_write noti', function (data) {
-    store.dispatch(/*UserActions.socketNoti(data);*/);
+  Noti.on('comment_write noti', function (result) {
+    result.notis = normalize(result.notis, arrayOf(noti));
+
+    store.dispatch(receiveSocketNoti(result));
   });
 
-  Point.on('receive point', function (data) {
-    store.dispatch(/*UserActions.socketPoint(data);*/);
+  Point.on('receive point', function (result) {
+    store.dispatch(receiveSocketPoint(result));
   });
 }

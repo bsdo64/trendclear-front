@@ -22,10 +22,39 @@ export const REQUEST_USER_READ_NOTIFICATION = 'REQUEST_USER_READ_NOTIFICATION';
 export const SUCCESS_USER_READ_NOTIFICATION = 'SUCCESS_USER_READ_NOTIFICATION';
 export const FAILURE_USER_READ_NOTIFICATION = 'FAILURE_USER_READ_NOTIFICATION';
 
+export const REQUEST_USER_PAYBACK_RP = 'REQUEST_USER_PAYBACK_RP';
+export const SUCCESS_USER_PAYBACK_RP = 'SUCCESS_USER_PAYBACK_RP';
+export const FAILURE_USER_PAYBACK_RP = 'FAILURE_USER_PAYBACK_RP';
+
 export const TOGGLE_AVATAR_MODAL = 'TOGGLE_AVATAR_MODAL';
 export const CLOSE_AVATAR_MODAL = 'CLOSE_AVATAR_MODAL';
 export const CLOSE_USER_SETTING_MESSAGE = 'CLOSE_USER_SETTING_MESSAGE';
 export const TOGGLE_SHOW_INVENTORY = 'TOGGLE_SHOW_INVENTORY';
+
+export const RECEIVE_SOCKET_NOTI = 'RECEIVE_SOCKET_NOTI';
+export const RECEIVE_SOCKET_POINT = 'RECEIVE_SOCKET_POINT';
+
+export function requestUserPaybackRP(payload) {
+  return {
+    type: REQUEST_USER_PAYBACK_RP,
+    payload
+  }
+}
+
+export function receiveSocketNoti({ notis, userId }) {
+  return {
+    type: RECEIVE_SOCKET_NOTI,
+    notis,
+    userId
+  }
+}
+export function receiveSocketPoint({ data, userId }) {
+  return {
+    type: RECEIVE_SOCKET_POINT,
+    data,
+    userId
+  }
+}
 
 export function toggleShowInventory() {
   return {

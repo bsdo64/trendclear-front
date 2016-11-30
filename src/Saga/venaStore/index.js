@@ -36,7 +36,7 @@ function* SagaParticipateVenalink() {
       const result = yield call([API, API.post], '/venalink/participate', payload);
 
 
-      yield put({ type: SUCCESS_PARTICIPATE_VENALINK, result });
+      yield put({ type: SUCCESS_PARTICIPATE_VENALINK, result, postId: payload.postId });
     }
 
     catch (error) {
