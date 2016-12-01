@@ -27,6 +27,7 @@
     position: relative;
     padding: 20px 25px;
     font-size: 13px;
+    z-index: 1;
 
     .sub_category_header {
       right: 25px;
@@ -63,11 +64,10 @@
             height: 20px;
             border-left: 5px solid #004858;
             background: rgb(26, 109, 130);
-            z-index: 0;
+            z-index: -1;
           }
 
           & > a {
-            text-align: right;
             color: #fff;
             width: 100%;
             position: absolute;

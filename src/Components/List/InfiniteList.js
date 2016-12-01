@@ -21,7 +21,15 @@ function createItem(props, id) {
           user={user}
           view={false}
           shorten={true}
-          {...props}
+          FireSetScrollPosition={props.FireSetScrollPosition}
+          FireToggleLoginModal={props.FireToggleLoginModal}
+          FireToggleReportModal={props.FireToggleReportModal}
+          FireToggleDeleteModal={props.FireToggleDeleteModal}
+          FireRequestLikePost={props.FireRequestLikePost}
+          FireToggleActiveVenalinkModal={props.FireToggleActiveVenalinkModal}
+          FireRequestActivateVenalink={props.FireRequestActivateVenalink}
+          FireRequestParticipateVenalink={props.FireRequestParticipateVenalink}
+          FireOpenCommentUpdateView={props.FireOpenCommentUpdateView}
         />
       ]
     }

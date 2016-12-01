@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import cx from 'classnames';
 
 const Subs = (props) => {
-  const { subs, Forums } = props;
+  const { subs, Forums, activeId } = props;
   return (
     <ul className="forum_list">
       {
@@ -13,6 +13,7 @@ const Subs = (props) => {
           if (forum) {
             return (
               <li key={forum.get('id')} className="forum_list_item">
+                <i className="fa fa-file-o"/>
                 <a>{forum.get('title')}</a>
                 <i className="fa fa-minus un_subscribe"/>
               </li>
@@ -29,6 +30,7 @@ const Subs = (props) => {
 Subs.propTypes = {
   subs: PropTypes.object,
   Forums: PropTypes.object.isRequired,
+  activeId: PropTypes.string.isRequired,
 };
 
 const CollectionItem = React.createClass({
@@ -72,30 +74,31 @@ const CollectionItem = React.createClass({
       hide: (mouseOverItem !== id)
     });
     const collectionNowId = location ? location.pathname.split('/')[2] : null;
+    const isCollectionOpenStyle = cx('fa', {
+      'fa-folder-open-o': collectionNowId === id,
+      'fa-folder-o': collectionNowId !== id
+    });
 
     return (
-      <div key={id} className='sub_category item'
-           onMouseOver={this.openCollection.bind(this, id)}
-           onMouseOut={this.closeCollection.bind(this, id)}
-      >
+      <div key={id} className='sub_category item collection_item'>
         {
           (collectionNowId === id) &&
           <div className="active-menu"></div>
         }
 
-        <Link to={{ pathname: `/collection/${id}` }}>
+        <div className="collection">
+          <Link to={{ pathname: `/collection/${id}` }}>
 
-          <span className="title">{title}</span>
+            <i className={isCollectionOpenStyle} style={{ paddingRight: 3 }} />
+            <span className="title">{title}</span>
 
-        </Link>
+          </Link>
+        </div>
 
         <div className={itemStyle}>
-          <h4 className="forum_list_header">이 컬렉션의 구독 </h4>
-
           <Subs subs={subs}
                 Forums={Forums}
-                onMouseOver={this.openCollection}
-                onMouseOut={this.closeCollection}
+                activeId={id}
           />
 
         </div>
@@ -122,7 +125,7 @@ const Collection = React.createClass({
         isPrivate: false
       },
       hideCreateCollectionBox: true,
-      mouseOverItemId: null
+      mouseOverItemId: location.pathname.split('/')[2]
     };
   },
   closeItemHandler() {

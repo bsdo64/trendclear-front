@@ -26,6 +26,7 @@ const BigPost = React.createClass({
     FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
     FireRequestActivateVenalink: PropTypes.func.isRequired,
     FireRequestParticipateVenalink: PropTypes.func.isRequired,
+    FireOpenCommentUpdateView: PropTypes.func,
   },
 
   mixins: [PureRenderMixin],
