@@ -87,35 +87,6 @@
       transition: border-color 0.3s;
 
       #post_editor {
-
-        a.medium-insert-buttons-show {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          -o-transform: rotate(0deg);
-          transform: rotate(0deg);
-
-          -webkit-transition: transform 100ms;
-          -moz-transition: transform 100ms;
-          -ms-transition: transform 100ms;
-          -o-transition: transform 100ms;
-          transition: transform 100ms;
-        }
-
-        a.medium-insert-buttons-show.medium-insert-buttons-rotate {
-          -webkit-transform: rotate(45deg);
-          -moz-transform: rotate(45deg);
-          -ms-transform: rotate(45deg);
-          -o-transform: rotate(45deg);
-          transform: rotate(45deg);
-
-          -webkit-transition: transform 250ms;
-          -moz-transition: transform 250ms;
-          -ms-transition: transform 250ms;
-          -o-transition: transform 250ms;
-          transition: transform 250ms;
-        }
-
         .medium-insert-embeds {
           figure {
             margin: 0;

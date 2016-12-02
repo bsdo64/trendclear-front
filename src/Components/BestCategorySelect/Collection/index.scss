@@ -9,7 +9,15 @@
   }
 }
 
+.collection_item {
+  height: auto;
+  padding-left: 10px;
+}
+
 #user_best_collection {
+  & > h5 {
+    margin-bottom: 5px;
+  }
 
   > .collection_item {
     display: block;
@@ -51,6 +59,7 @@
           height: 19px;
           left: 5px;
           position: absolute;
+          margin-left: 10px;
         }
 
         &:after {
@@ -60,6 +69,7 @@
           height: 0.5em;
           left: 5px;
           position: absolute;
+          margin-left: 10px;
         }
 
         i.fa-file-o {
@@ -105,7 +115,7 @@
     position: absolute;
     top: 0;
     left: 226px;
-    min-width: 120px;
+    min-width: 200px;
     background: #fff;
     border: 1px solid #dedede;
     min-height: 150px;

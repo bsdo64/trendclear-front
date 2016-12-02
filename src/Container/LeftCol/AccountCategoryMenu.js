@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const AccountCategoryMenu = (props) => (
+const AccountCategoryMenu = () => (
   <div id="account_menu">
     <div id="sub_category">
       <div className="sub_category_button">

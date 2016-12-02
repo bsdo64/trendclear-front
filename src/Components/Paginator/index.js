@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import memoize from 'fast-memoize';
 import segmentize from 'segmentize';
 import Paginator from 'react-pagify';
 
@@ -96,4 +95,4 @@ PaginatorApp.propTypes = {
   handleSetPage: PropTypes.func.isRequired
 };
 
-export default memoize(PaginatorApp);
+export default PaginatorApp;

@@ -1,8 +1,9 @@
 import { UI } from '../InitialStates';
 
 const Activity = (state = UI.Activity, action) => {
-
-  return state;
+  switch (action.type) {
+    default: return state;
+  }
 };
 
 export default Activity;

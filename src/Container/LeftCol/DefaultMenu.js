@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 const MenuContainer = React.createClass({
+  propTypes: {
+    location: PropTypes.object.isRequired,
+  },
+
   getEndpoint(location) {
     return location.pathname.split('/')[1];
   },

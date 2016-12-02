@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import marked from '../../Lib/Marked';
+import debug from 'debug';
+const submitFailLog = debug('vn:api:submitForum');
 
 const SubmitForumBox = React.createClass({
   propTypes: {
@@ -86,7 +88,7 @@ const SubmitForumBox = React.createClass({
           }
         },
         onFailure: (e, fields) => {
-          console.log(e, fields)
+          submitFailLog(e, fields)
         }
       });
   },
@@ -152,20 +154,20 @@ const SubmitForumBox = React.createClass({
             <div className="ui divider"></div>
             <div className="ui list">
               <span className="item">
-                <i className="right triangle icon"></i>
+                <i className="right triangle icon"/>
                 <div className="content">
                   <div className="header">사람들과 의견을 나누고 싶은 게시판을 생성하세요</div>
                   <div className="description">어떤 주제든 상관없습니다</div>
                 </div>
               </span>
               <span className="item">
-                <i className="help icon"></i>
+                <i className="help icon"/>
                 <div className="content">
                   <div className="description">게시판 이름은 중복이 허용되지 않습니다</div>
                 </div>
               </span>
               <span className="item">
-                <i className="help icon"></i>
+                <i className="help icon"/>
                 <div className="content">
                   <div className="description">게시판 규칙은
                     <a href="https://namu.wiki/w/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4" target="_blank"> Markdown </a>
@@ -174,7 +176,7 @@ const SubmitForumBox = React.createClass({
                 </div>
               </span>
               <span className="item">
-                <i className="help icon"></i>
+                <i className="help icon"/>
                 <div className="content">
                   <div className="description">
                     게시판을 생성하기 위해 <b>레벨 5 이상, 100 포인트</b>가 필요합니다.

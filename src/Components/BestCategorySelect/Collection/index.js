@@ -1,9 +1,18 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import cx from 'classnames';
+import SubscribeForumList from '../../SubscribeForumList';
 
 const Subs = (props) => {
-  const { subs, Forums, activeId } = props;
+  const { subs, Forums, activeId, FireRequestRemoveForumInCollection } = props;
+
+  const unSubs = (forumId) => () => {
+      FireRequestRemoveForumInCollection({
+        forumId: forumId,
+        collectionId: activeId
+      });
+    };
+
   return (
     <ul className="forum_list">
       {
@@ -14,8 +23,8 @@ const Subs = (props) => {
             return (
               <li key={forum.get('id')} className="forum_list_item">
                 <i className="fa fa-file-o"/>
-                <a>{forum.get('title')}</a>
-                <i className="fa fa-minus un_subscribe"/>
+                <Link to={`/community?forumId=${subId}`} >{forum.get('title')}</Link>
+                <i className="fa fa-minus un_subscribe" onClick={unSubs(subId)}/>
               </li>
             )
           } else {
@@ -31,6 +40,7 @@ Subs.propTypes = {
   subs: PropTypes.object,
   Forums: PropTypes.object.isRequired,
   activeId: PropTypes.string.isRequired,
+  FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
 };
 
 const CollectionItem = React.createClass({
@@ -42,9 +52,12 @@ const CollectionItem = React.createClass({
     Forums: PropTypes.object.isRequired,
     mouseOverItem: PropTypes.string,
     location: PropTypes.object,
+    collection: PropTypes.object.isRequired,
+    ListStore: PropTypes.object,
 
     closeItemHandler: PropTypes.func.isRequired,
     mouseOverItemHandler: PropTypes.func.isRequired,
+    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -67,16 +80,17 @@ const CollectionItem = React.createClass({
 
     const {
       id, title, subs, Forums,
-      mouseOverItem,
-      location
+      location,
+      ListStore, collection, FireRequestRemoveForumInCollection
     } = this.props;
-    const itemStyle = cx('collection_list', {
-      hide: (mouseOverItem !== id)
-    });
     const collectionNowId = location ? location.pathname.split('/')[2] : null;
+    const collectionOpen = collectionNowId === id;
+    const itemStyle = cx('collection_list', {
+      hide: !collectionOpen
+    });
     const isCollectionOpenStyle = cx('fa', {
-      'fa-folder-open-o': collectionNowId === id,
-      'fa-folder-o': collectionNowId !== id
+      'fa-folder-open-o': collectionOpen,
+      'fa-folder-o': !collectionOpen
     });
 
     return (
@@ -93,12 +107,24 @@ const CollectionItem = React.createClass({
             <span className="title">{title}</span>
 
           </Link>
+
+          {
+            collectionOpen &&
+            <SubscribeForumList
+              searchForumList={ListStore.get('searchCollectionForumList')}
+              subscribeForumList={collection.get('forums')}
+              collection={collection}
+              forums={Forums}
+              {...this.props}
+            />
+          }
         </div>
 
         <div className={itemStyle}>
           <Subs subs={subs}
                 Forums={Forums}
                 activeId={id}
+                FireRequestRemoveForumInCollection={FireRequestRemoveForumInCollection}
           />
 
         </div>
@@ -114,7 +140,8 @@ const Collection = React.createClass({
     Forums: PropTypes.object.isRequired,
     location: PropTypes.object,
     Collections: PropTypes.object.isRequired,
-    FireRequestCreateCollection: PropTypes.func.isRequired
+    FireRequestCreateCollection: PropTypes.func.isRequired,
+    FireRequestRemoveForumInCollection: PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -193,6 +220,8 @@ const Collection = React.createClass({
           mouseOverItemHandler={self.mouseOverItemHandler}
           closeItemHandler={self.closeItemHandler}
           mouseOverItem={self.state.mouseOverItemId}
+          collection={map}
+          {...this.props}
         />
       )
     })
@@ -207,7 +236,7 @@ const Collection = React.createClass({
 
     return (
       <li id="user_best_collection">
-        <h5 className="">
+        <h5 >
           <a><i className="fa fa-folder-open"/>{' 내 컬랙션'}</a>
         </h5>
 
@@ -217,7 +246,7 @@ const Collection = React.createClass({
         }
 
         <div className="sub_category item create_collection">
-          <a className="create_collection_btn" onClick={this.toggleCreateCollection}>{'컬랙션 추가 +'}</a>
+          <a className="ui button primary tiny create_collection_btn" onClick={this.toggleCreateCollection}>{'새로운 컬랙션 +'}</a>
           <div className={createCollectionBoxStyle}>
             <form className="ui mini form " onSubmit={this.submitNewCollection}>
               <div className="field collection_title_field">

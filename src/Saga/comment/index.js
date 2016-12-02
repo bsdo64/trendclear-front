@@ -1,4 +1,4 @@
-import { normalize, arrayOf } from 'normalizr';
+import { normalize } from 'normalizr';
 import { post, comment, subComment } from '../../Model/normalizr/schema';
 
 import { take, put, call } from 'redux-saga/effects';

@@ -90,53 +90,33 @@ const SubscribeForumList = React.createClass({
 
   render() {
 
-    const { collection, forums, searchForumList } = this.props;
+    const { searchForumList } = this.props;
     const createCollectionBoxStyle = cx('create_box', {
       hide: this.state.hideCreateCollectionBox
     });
 
     return (
-      <li id="collection_forum_list">
-        <h5 className="">
-          <a>
-            <i className="fa fa-list"/>{' 구독 게시판'}
-          </a>
-        </h5>
+      <div id="collection_forum_list">
 
-        {
-          collection &&
-          collection.get('forums').map(forumId => {
-            const forum = forums.get(forumId.toString());
-            return (
-              <div key={forumId} className="sub_category item create_collection_subscribe">
-                <Link to={`/community?forumId=${forumId}`}
-                      className="create_collection_btn">{forum.get('title')}</Link>
-              </div>
-            )
-          })
-        }
+        <a className="create_collection_btn" onClick={this.toggleCreateCollection}>{'구독 +'}</a>
+        <div className={createCollectionBoxStyle}>
+          <form className="ui mini form " onSubmit={this.searchForum}>
+            <div className="field collection_title_field">
+              <label>게시판 이름</label>
+              <input type="text" name="forum_name"
+                     placeholder="게시판 이름" onChange={this.handleChangeName}/>
+            </div>
 
-        <div className="sub_category item create_collection_subscribe">
-          <a className="create_collection_btn" onClick={this.toggleCreateCollection}>{'새로운 구독 + '}</a>
-          <div className={createCollectionBoxStyle}>
-            <form className="ui mini form " onSubmit={this.searchForum}>
-              <div className="field collection_title_field">
-                <label>게시판 이름</label>
-                <input type="text" name="forum_name"
-                       placeholder="게시판 이름" onChange={this.handleChangeName}/>
-              </div>
-
-              <h5>추천 리스트</h5>
-              <div className="ui list search_subscribe_list">
-                {
-                  searchForumList && (searchForumList.size > 0) &&
-                  searchForumList.map(this.createListItem)
-                }
-              </div>
-            </form>
-          </div>
+            <h5>추천 리스트</h5>
+            <div className="ui list search_subscribe_list">
+              {
+                searchForumList && (searchForumList.size > 0) &&
+                searchForumList.map(this.createListItem)
+              }
+            </div>
+          </form>
         </div>
-      </li>
+      </div>
     )
   }
 });

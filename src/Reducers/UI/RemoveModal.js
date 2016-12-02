@@ -4,7 +4,6 @@ import {
 
   REQUEST_DELETE_ITEM,
   SUCCESS_DELETE_ITEM,
-  FAILURE_DELETE_ITEM
 } from '../../Actions/DeleteItem';
 
 const RemoveModal = (state = UI.RemoveModal, action) => {

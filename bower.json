@@ -6,7 +6,7 @@
     "ByeongSu Do <bsdo@naver.com>"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/bsdo64/trendclear-front",
   "ignore": [
     "**/.*",
     "node_modules",

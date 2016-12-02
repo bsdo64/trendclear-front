@@ -10,14 +10,16 @@ class MakeUrl {
       comment_p: location.query.comment_p || 1,
       forumPrefix: location.query.forumPrefix,
       forumSearch: location.query.forumSearch,
-      order: location.query.order
+      comment_order: location.query.comment_order,
+      order: location.query.order,
     }
   }
 
   // Community Post
   setQuery(typeName, typeValue) {
     this.query[typeName] = typeValue;
-    return this.pathname + qs.stringify(this.query, { skipNulls: true });
+
+    return this;
   }
 
   removeQuery(...args) {
@@ -25,6 +27,10 @@ class MakeUrl {
       this.query[args[index]] = null;
     }
 
+    return this;
+  }
+
+  end() {
     return this.pathname + qs.stringify(this.query, { skipNulls: true });
   }
 }

@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { getLoginUser } from '../Util/func';
 import { connect } from 'react-redux';
 import Select from 'react-select';
+import debug from 'debug';
+const paymentLog = debug('vn:api:payment');
 
 const ChargePointBox = React.createClass({
   displayName: 'ChargePointBox',
@@ -45,22 +47,22 @@ const ChargePointBox = React.createClass({
         msg += '결제 금액 : ' + rsp.paid_amount;
         msg += '카드 승인번호 : ' + rsp.apply_num;
 
-        console.log(msg);
+        paymentLog(msg);
       } else {
         let msg = '결제에 실패하였습니다.';
         msg += '에러내용 : ' + rsp.error_msg;
 
-        console.log(msg);
+        paymentLog(msg);
       }
     });
   },
 
-  changeMethod({ value, label }) {
+  changeMethod({ value }) {
     this.setState({
       pay_method: value
     })
   },
-  changeAmount({ value, label }) {
+  changeAmount({ value }) {
     this.setState({
       amount: value
     })

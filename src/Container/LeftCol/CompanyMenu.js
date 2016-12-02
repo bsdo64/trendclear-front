@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import { Link } from 'react-router';
 
 const MenuContainer = React.createClass({
+  propTypes: {
+    location: PropTypes.object.isRequired,
+  },
+
   getEndpoint(location) {
     return location.pathname.split('/')[1];
   },
@@ -82,11 +86,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+
+  }
 )(MenuContainer);

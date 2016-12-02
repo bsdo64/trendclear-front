@@ -18,6 +18,7 @@ const BestCategorySelect = React.createClass({
     FireUpdateFollowingFilter: PropTypes.func.isRequired,
     FireRequestSaveFollowingFilter: PropTypes.func.isRequired,
     FireRequestCreateCollection: PropTypes.func.isRequired,
+    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -46,7 +47,7 @@ const BestCategorySelect = React.createClass({
   render() {
     const {
       ListStore, Categories, UserStore, GnbStore, Forums, Collections,
-      FireRequestCreateCollection,
+      FireRequestCreateCollection, FireRequestRemoveForumInCollection
     } = this.props;
     const user = UserStore.get('user');
     const categoriesMap = UserStore.get('follow_forums')
@@ -129,6 +130,7 @@ const BestCategorySelect = React.createClass({
               Collections={Collections}
               Forums={Forums}
               FireRequestCreateCollection={FireRequestCreateCollection}
+              FireRequestRemoveForumInCollection={FireRequestRemoveForumInCollection}
             />
           }
         </ul>

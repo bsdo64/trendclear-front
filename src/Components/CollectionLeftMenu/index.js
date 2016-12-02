@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import CollectionComponent from '../BestCategorySelect/Collection';
-import SubscribeForumList from '../SubscribeForumList';
 
 require('./index.scss');
 const CollectionLeftMenu = React.createClass({
@@ -19,7 +18,7 @@ const CollectionLeftMenu = React.createClass({
   },
 
   render() {
-    const { UserStore, ListStore, location, Forums, Collections } = this.props;
+    const { UserStore, location, Collections } = this.props;
     const user = UserStore.get('user');
     const order = location.query.order || 'new';
     const collectionId = location.pathname.split('/')[2];
@@ -78,17 +77,6 @@ const CollectionLeftMenu = React.createClass({
               {
                 user &&
                 <CollectionComponent
-                  {...this.props}
-                />
-              }
-
-              {
-                user &&
-                <SubscribeForumList
-                  searchForumList={ListStore.get('searchCollectionForumList')}
-                  subscribeForumList={collection.get('forums')}
-                  collection={collection}
-                  forums={Forums}
                   {...this.props}
                 />
               }

@@ -10,6 +10,7 @@ import {
 } from '../../Actions/Gnb';
 import {
   requestCreateCollection,
+  requestRemoveForumInCollection
 } from '../../Actions/Collection';
 
 const BestCategoryMenu = React.createClass({
@@ -57,5 +58,6 @@ module.exports = connect(
     FireUpdateFollowingFilter: updateFollowingFilter,
     FireRequestSaveFollowingFilter: requestSaveFollowingFilter,
     FireRequestCreateCollection: requestCreateCollection,
+    FireRequestRemoveForumInCollection: requestRemoveForumInCollection,
   }
 )(BestCategoryMenu);

@@ -1,7 +1,6 @@
 const path = require('path');
 const gulp = require('gulp');
 const pump = require('pump');
-const watch = require('gulp-watch');
 const cache = require('gulp-cached');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
@@ -62,7 +61,7 @@ gulp.task('compress-js', function (cb) {
 
 gulp.task('minify-css', function() {
   return gulp.src('dist/vendor.css')
-    .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(cleanCSS({ compatibility: 'ie8' }))
     .pipe(gulp.dest('dist'));
 });
 

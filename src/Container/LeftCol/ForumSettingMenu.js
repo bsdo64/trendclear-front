@@ -26,11 +26,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+
+  }
 )(ForumSettingLeftMenu);

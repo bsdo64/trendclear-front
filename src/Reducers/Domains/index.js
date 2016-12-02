@@ -1,4 +1,4 @@
-import { Map, List, fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
 import {
@@ -196,9 +196,11 @@ const Users = (state = initList, action) => {
 
     case SUCCESS_USER_PAYBACK_RP: {
       const { result } = action;
-      const { list, userId } = result;
+      const { trendbox, list, userId } = result;
 
-      return state.mergeDeep([userId.toString(), 'participatedVenalinks'], fromJS(list));
+      return state
+        .mergeDeepIn([userId.toString(), 'participatedVenalinks'], fromJS(list))
+        .mergeIn([userId.toString(), 'trendbox'], trendbox)
     }
 
     default: return state;
@@ -408,13 +410,15 @@ const Forums = (state = initList, action) => {
 };
 
 const Categories = (state = initList, action) => {
-
-  return state;
+  switch (action.type) {
+    default: return state;
+  }
 };
 
 const Prefixes = (state = initList, action) => {
-
-  return state;
+  switch (action.type) {
+    default: return state;
+  }
 };
 
 const SubComments = (state = initList, action) => {

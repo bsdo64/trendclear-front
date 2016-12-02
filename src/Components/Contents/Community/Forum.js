@@ -102,19 +102,19 @@ const Forum = React.createClass({
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.setQuery('forumSearch', this.state.text));
+    browserHistory.push(makeUrl.setQuery('forumSearch', this.state.text).end());
   },
   handleSubmitPrefix(prefixId, e) {
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
     makeUrl.removeQuery('forumSearch')
-    browserHistory.push(makeUrl.setQuery('forumPrefix', prefixId));
+    browserHistory.push(makeUrl.setQuery('forumPrefix', prefixId).end());
   },
   handleSetPage(pagination) {
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.setQuery('p', pagination.page));
+    browserHistory.push(makeUrl.setQuery('p', pagination.page).end());
   },
   resetPrefix(e) {
     e.preventDefault();
@@ -151,8 +151,7 @@ const Forum = React.createClass({
     const { Posts, Users, location } = this.props;
     const postIdNow = location.query.postId;
 
-    makeUrl.setQuery('postId', postId);
-    const defaultPageUrl = makeUrl.removeQuery('comment_p');
+    const defaultPageUrl = makeUrl.setQuery('postId', postId).removeQuery('comment_p').end();
 
     let item = Posts.get(postId.toString());
     if (item) {

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const SearchHeader = React.createClass({
   displayName: 'SearchHeader',
+  propTypes: {
+    posts: PropTypes.object.isRequired,
+  },
+
   render() {
-    "use strict";
     const { posts } = this.props;
     if (posts) {
       const postData = posts.get('posts');

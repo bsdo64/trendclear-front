@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps';
 
 const SimpleMap = React.createClass({
@@ -37,7 +37,7 @@ const SimpleMap = React.createClass({
           }
           googleMapElement={
             <GoogleMap
-              ref={(map) => (this._googleMapComponent = map) && console.log(map.getZoom())}
+              ref={(map) => (this._googleMapComponent = map)}
               defaultZoom={15}
               defaultCenter={{ lat: 37.533459, lng: 126.8567798 }}
               onClick={this.handleMapClick}
@@ -152,13 +152,13 @@ const About = React.createClass({
           <div className="ui text container">
             <div className="ui list">
               <div className="item">
-                <i className="home icon"></i>
+                <i className="home icon"/>
                 <div className="content">
                   베나클
                 </div>
               </div>
               <div className="item">
-                <i className="marker icon"></i>
+                <i className="marker icon"/>
                 <div className="content">
                   서울특별시
                   강서구 강서로 8길 174
@@ -166,7 +166,7 @@ const About = React.createClass({
                 </div>
               </div>
               <div className="item">
-                <i className="mail icon"></i>
+                <i className="mail icon"/>
                 <div className="content">
                   <a href="mailto:webmaster@venacle.com">webmaster@venacle.com</a>
                 </div>
@@ -202,7 +202,7 @@ const Contact = React.createClass({
         <div className="ui center aligned container company-info">
           <div className="ui list">
             <div className="item">
-              <i className="heart icon"></i>
+              <i className="heart icon"/>
               <div className="content title">
                 상호명
               </div>
@@ -211,7 +211,7 @@ const Contact = React.createClass({
               </div>
             </div>
             <div className="item">
-              <i className="marker icon"></i>
+              <i className="marker icon"/>
               <div className="content title">
                 사업장 소재지
               </div>
@@ -220,7 +220,7 @@ const Contact = React.createClass({
               </div>
             </div>
             <div className="item">
-              <i className="sticky note icon"></i>
+              <i className="sticky note icon"/>
               <div className="content title">
                 사업자등록번호
               </div>
@@ -229,7 +229,7 @@ const Contact = React.createClass({
               </div>
             </div>
             <div className="item">
-              <i className="user icon"></i>
+              <i className="user icon"/>
               <div className="content title">
                 대표
               </div>
@@ -238,7 +238,7 @@ const Contact = React.createClass({
               </div>
             </div>
             <div className="item">
-              <i className="user icon"></i>
+              <i className="user icon"/>
               <div className="content title">
                 개인정보담당자
               </div>
@@ -247,7 +247,7 @@ const Contact = React.createClass({
               </div>
             </div>
             <div className="item">
-              <i className="mail icon"></i>
+              <i className="mail icon"/>
               <div className="content title">
                 문의 사항
               </div>
@@ -256,7 +256,7 @@ const Contact = React.createClass({
               </div>
             </div>
             <div className="item">
-              <i className="phone icon"></i>
+              <i className="phone icon"/>
               <div className="content title">
                 Tel
               </div>
@@ -281,15 +281,17 @@ const Advertisement = React.createClass({
       <div>advertisement</div>
     )
   }
-})
+});
 
 const Company = React.createClass({
+  propTypes: {
+    location: PropTypes.object.isRequired,
+  },
+
   getEndpoint(location) {
     return location.pathname.split('/')[1];
   },
-  getTitle(endPoint) {
 
-  },
   render() {
     switch (this.getEndpoint(this.props.location)) {
       case 'about':
@@ -299,9 +301,9 @@ const Company = React.createClass({
       case 'help':
         return <Contact />;
       case 'advertisement':
-        return <Advertisement />
+        return <Advertisement />;
       default:
-        return <About />
+        return <About />;
     }
   }
 });

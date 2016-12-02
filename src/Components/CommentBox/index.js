@@ -609,7 +609,7 @@ const CommentItem = React.createClass({
 const CommentList = React.createClass({
   displayName: 'CommentList',
   propTypes: {
-    commentList: PropTypes.object.isRequired,
+    commentIdList: PropTypes.object.isRequired,
     comments: PropTypes.object.isRequired,
     authors: PropTypes.object.isRequired,
     subComments: PropTypes.object.isRequired,
@@ -631,10 +631,10 @@ const CommentList = React.createClass({
 
   render() {
     const {
-      commentList, comments, authors
+      commentIdList, comments, authors
     } = this.props;
 
-    let commentsNode = commentList.map((commentId) => {
+    let commentsNode = commentIdList.map((commentId) => {
       const comment = comments.get(commentId.toString());
 
       if (comment) {
@@ -690,7 +690,19 @@ const CommentBox = React.createClass({
     FireCloseCommentUpdateView: PropTypes.func.isRequired,
   },
 
-  //mixins: [PureRenderMixin],
+  getInitialState() {
+    return {
+      commentOrder: this.props.location.query.comment_order
+    };
+  },
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.location.query.comment_order !== this.props.location.query.comment_order) {
+      this.setState({
+        commentOrder: nextProps.location.query.comment_order
+      })
+    }
+  },
 
   componentDidMount() {
     this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig);
@@ -700,11 +712,6 @@ const CommentBox = React.createClass({
     this.editor.destroy();
 
     this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig);
-  },
-
-  handleSetPage(pagination) {
-    const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.setQuery('comment_p', pagination.page));
   },
 
   submitComment() {
@@ -747,18 +754,69 @@ const CommentBox = React.createClass({
     }
   },
 
+  handleSetPage(pagination) {
+    const { commentOrder } = this.state;
+
+    const makeUrl = new MakeUrl(this.props.location);
+    browserHistory.push(
+      makeUrl
+        .setQuery('comment_p', pagination.page)
+        .setQuery('comment_order', commentOrder)
+        .end()
+    );
+  },
+
+  changeCommentOrder() {
+    const { commentOrder } = this.state;
+    let newOrder;
+    switch (commentOrder) {
+      case 'new': {
+        newOrder = 'hot';
+        break;
+      }
+
+      case 'hot': {
+        newOrder = 'new';
+        break;
+      }
+
+      default: {
+        newOrder = 'hot';
+        break;
+      }
+    }
+
+    const makeUrl = new MakeUrl(this.props.location);
+    browserHistory.push(makeUrl.setQuery('comment_p', 1).setQuery('comment_order', newOrder).end());
+  },
+
+  commentOrderButtom() {
+    const { commentOrder } = this.state;
+    switch (commentOrder) {
+      case 'new': {
+        return <li onClick={this.changeCommentOrder}>최신순</li>
+      }
+
+      case 'hot': {
+        return <li onClick={this.changeCommentOrder}>인기순</li>
+      }
+
+      default: return <li onClick={this.changeCommentOrder}>최신순</li>
+    }
+  },
+
   render() {
     const {
       location, post, CommunityStore
     } = this.props;
-    const commentList = post.get('comments');
+    const commentIdList = post.get('comments');
     const updating = {
       updating: CommunityStore.get('updating'),
       type: CommunityStore.get('updateType'),
       id: CommunityStore.get('updateId')
     };
 
-    if (commentList) {
+    if (commentIdList) {
 
       const commentPage = location.query.comment_p ? location.query.comment_p : 1;
       const commentLength = post.get('comment_count');
@@ -767,11 +825,9 @@ const CommentBox = React.createClass({
         <div id="comment_box" className="ui comments">
 
           <div className="comment_header">
-            <div className="comment_count">댓글 {commentLength}개</div>
+            <div className="comment_count">{commentLength}개 댓글</div>
             <ul className="comment_sort_box">
-              <li>최신순</li>
-              {/* <li>좋아요순</li>*/}
-              {/*<li>댓글순</li>*/}
+              { this.commentOrderButtom() }
             </ul>
           </div>
           <form className="ui reply form ">
@@ -792,7 +848,7 @@ const CommentBox = React.createClass({
 
           <CommentList
             updating={updating}
-            commentList={commentList}
+            commentIdList={commentIdList}
             {...this.props}
           />
 

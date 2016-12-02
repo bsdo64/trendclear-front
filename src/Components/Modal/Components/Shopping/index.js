@@ -8,6 +8,70 @@ const rebuildTooltip = function rebuildTooltip(itemCode) {
   ReactTooltip.rebuild();
 };
 
+const ConfirmBox = React.createClass({
+  propTypes: {
+    ShoppingStore: PropTypes.object.isRequired,
+    UserStore: PropTypes.object.isRequired,
+    FireRequestPurchaseItem: PropTypes.func.isRequired,
+    FireToggleConfirmPurchaseItemModal: PropTypes.func.isRequired,
+  },
+
+  confirmPurchaseItem(item) {
+    this.props.FireRequestPurchaseItem(item.toJS());
+  },
+
+  togglePurchaseWindow(item) {
+    this.props.FireToggleConfirmPurchaseItemModal(item);
+  },
+
+  render() {
+    const { ShoppingStore, UserStore } = this.props;
+    const trendbox = UserStore.get('trendbox');
+    const purchaseItem = ShoppingStore.get('purchaseItem');
+    const priceType = purchaseItem.getIn(['attribute', 'price_type']) || '';
+    const canPurchase =
+      purchaseItem.getIn(['attribute', `price_${priceType.toLowerCase()}`]) <= trendbox.get(priceType);
+
+    return (
+      <div className="confirm-panel">
+        <div className="confirm-box">
+          {
+            canPurchase &&
+            <div>
+              {
+                purchaseItem.get('title')
+              }
+              을(를) 구입하시겠습니까?
+              <div style={{ paddingTop: 10, textAlign: 'right' }}>
+                <div className="ui button primary"
+                     onClick={this.confirmPurchaseItem.bind(this, purchaseItem)}>
+                  확인
+                </div>
+                <div className="ui button" onClick={this.togglePurchaseWindow.bind(this, null)}>
+                  취소
+                </div>
+              </div>
+            </div>
+          }
+
+          {
+            !canPurchase &&
+            <div >
+              포인트가 부족합니다
+
+              <div style={{ paddingTop: 10, textAlign: 'right' }}>
+                <div className="ui button primary" onClick={this.togglePurchaseWindow.bind(this, null)}>
+                  확인
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    )
+  }
+});
+
 require('./index.scss');
 const Shopping = React.createClass({
   displayName: 'Shopping',
@@ -32,13 +96,11 @@ const Shopping = React.createClass({
     this.props.FireRequestShoppingItemInit();
   },
 
-  confirmPurchaseItem(item) {
-
-    this.props.FireRequestPurchaseItem(item.toJS());
-  },
-
   render() {
-    const { UserStore, ShoppingStore, FireShowItemInfo } = this.props;
+    const {
+      UserStore, ShoppingStore, FireShowItemInfo,
+      FireToggleConfirmPurchaseItemModal, FireRequestPurchaseItem
+    } = this.props;
 
     const sex = UserStore.getIn(['profile', 'sex']),
       avatar_img = UserStore.getIn(['profile', 'avatar_img']),
@@ -101,7 +163,7 @@ const Shopping = React.createClass({
               <div className="item">
                 <div className="ui transparent icon input">
                   <input type="text" placeholder="Search mail..."/>
-                  <i className="search icon"></i>
+                  <i className="search icon"/>
                 </div>
               </div>
             </div>
@@ -121,7 +183,7 @@ const Shopping = React.createClass({
                 <div className="item">
                   <div className="ui transparent icon input">
                     <input type="text" placeholder="Search..."/>
-                    <i className="search link icon"></i>
+                    <i className="search link icon"/>
                   </div>
                 </div>
               </div>
@@ -156,7 +218,7 @@ const Shopping = React.createClass({
                         </div>
                         <div className="ui bottom attached button primary"
                              onClick={this.togglePurchaseWindow.bind(this, item)}>
-                          <i className="add icon"></i>
+                          <i className="add icon"/>
                           구입하기
                         </div>
                       </div>
@@ -211,23 +273,12 @@ const Shopping = React.createClass({
 
         {
           ShoppingStore.get('openPurchaseWindow') && ShoppingStore.get('purchaseItem') &&
-          <div className="confirm-panel">
-            <div className="confirm-box">
-              {
-                ShoppingStore.get('purchaseItem').get('title')
-              }
-              을(를) 구입하시겠습니까?
-              <div style={{ paddingTop: 10, textAlign: 'right' }}>
-                <div className="ui button primary"
-                     onClick={this.confirmPurchaseItem.bind(this, ShoppingStore.get('purchaseItem'))}>
-                  확인
-                </div>
-                <div className="ui button" onClick={this.togglePurchaseWindow.bind(this, null)}>
-                  취소
-                </div>
-              </div>
-            </div>
-          </div>
+          <ConfirmBox
+            ShoppingStore={ShoppingStore}
+            UserStore={UserStore}
+            FireRequestPurchaseItem={FireRequestPurchaseItem}
+            FireToggleConfirmPurchaseItemModal={FireToggleConfirmPurchaseItemModal}
+          />
         }
       </div>
     );
