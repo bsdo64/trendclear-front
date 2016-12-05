@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router';
 import Draggable from 'react-draggable'; // The default
+import accounting from 'accounting';
 import CountUp from 'countup.js';
 import moment from 'moment';
 import AvatarImage from '../AvatarImage';
@@ -291,11 +292,11 @@ const TrendBox = React.createClass({
                   <h4 className="ui description title">트랜드 포인트</h4>
                   <div className="point_line">
                     <span className="ui description">TP</span>
-                    <span id="tp_point" className="ui right floated point tp_point">{user.trendbox.get('T')}</span>
+                    <span id="tp_point" className="ui right floated point tp_point">{accounting.formatNumber(user.trendbox.get('T'))}</span>
                   </div>
                   <div className="point_line">
                     <span className="ui description">RP</span>
-                    <span id="rp_point" className="ui right floated point rp_point">{user.trendbox.get('R')}</span>
+                    <span id="rp_point" className="ui right floated point rp_point">{accounting.formatNumber(user.trendbox.get('R'))}</span>
                   </div>
                 </div>
                 <div className="colum">

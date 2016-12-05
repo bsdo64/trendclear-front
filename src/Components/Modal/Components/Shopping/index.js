@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import accounting from 'accounting';
 import ReactTooltip from 'react-tooltip';
 import AvatarImage from '../../../AvatarImage';
 import Inventory from '../../../Inventory';
@@ -252,12 +253,12 @@ const Shopping = React.createClass({
                   <div className="point_line">
                     <span className="ui description">TP</span>
                     <span id="tp_point"
-                          className="ui right floated point tp_point">{UserStore.getIn(['trendbox', 'T'])}</span>
+                          className="ui right floated point tp_point">{accounting.formatNumber(UserStore.getIn(['trendbox', 'T']))}</span>
                   </div>
                   <div className="point_line">
                     <span className="ui description">RP</span>
                     <span id="rp_point"
-                          className="ui right floated point rp_point">{UserStore.getIn(['trendbox', 'R'])}</span>
+                          className="ui right floated point rp_point">{accounting.formatNumber(UserStore.getIn(['trendbox', 'R']))}</span>
                   </div>
                 </div>
                 <span className="ui right floated point rp_point" onClick={this.sendPayment}>RP 충전</span>

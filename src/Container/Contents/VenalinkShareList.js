@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
+import accounting from 'accounting';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import moment from 'moment';
@@ -33,7 +34,7 @@ const VenalinkShareList = React.createClass({
         break;
     }
 
-    const isActiveStyle = cx({
+    const isActiveStyle = cx('center aligned one wide', {
       positive: !isTerminate,
       negative: isTerminate
     });
@@ -47,15 +48,13 @@ const VenalinkShareList = React.createClass({
       <tr className={isDisabledRow} key={participatedList.get('id')}>
         <td>포스트</td>
         <td className={isActiveStyle}>{status}</td>
-        <td className="right aligned">{moment(venalink.get('active_at')).format('YY/MM/DD hh:mm:ss')}</td>
-        <td className="right aligned">{moment(venalink.get('terminate_at')).format('YY/MM/DD hh:mm:ss')}</td>
+        <td className="center aligned">{moment(venalink.get('terminate_at')).format('YY/MM/DD hh:mm:ss')}</td>
         <td className="positive right aligned">{venalink.get('participants').size}</td>
-        <td className="right aligned">{venalink.get('pay_per_click_r')}</td>
-        <td className="positive right aligned">{participatedList.get('count_visitor')}</td>
+        <td className="positive right aligned">{accounting.formatNumber(participatedList.get('count_visitor'))}</td>
         <td className="right aligned">
           {
             (!isTerminate || participatedList.get('paid_r') <= 0 || hasPaybackRP) &&
-            participatedList.get('paid_r')
+            <b>{accounting.formatNumber(participatedList.get('paid_r'))}</b>
           }
 
           {
@@ -64,13 +63,13 @@ const VenalinkShareList = React.createClass({
                  onClick={this.paybackRP(participatedList.get('id'))}
             >
               {
-                participatedList.get('paid_r') + 'RP 받기'
+                accounting.formatNumber(participatedList.get('paid_r')) + 'RP 받기'
               }
             </div>
           }
 
         </td>
-        <td className="right aligned">{venalink.get('total_remain_r')}</td>
+        <td className="right aligned">{accounting.formatNumber(venalink.get('total_remain_r'))}</td>
       </tr>
     )
   },
@@ -131,15 +130,13 @@ const VenalinkShareList = React.createClass({
         </div>
         <div style={{ padding: 10 }}>
           <h4>베나링크 참여 리스트</h4>
-          <table className="ui celled table">
+          <table className="ui celled table" style={{ fontSize: 12 }}>
             <thead>
             <tr>
               <th className="center aligned" style={{ width: 60 }}>타입</th>
-              <th className="center aligned" style={{ width: 60 }}>상태</th>
-              <th className="center aligned" style={{ width: 82 }}>요청 시간</th>
-              <th className="center aligned" style={{ width: 82 }}>종료 시간</th>
+              <th className="center aligned">상태</th>
+              <th className="center aligned three wide">종료 시간</th>
               <th className="center aligned" style={{ width: 70 }}>참여<br />유저(명)</th>
-              <th className="center aligned" style={{ width: 70 }}>방문당<br/>지급 RP</th>
               <th className="center aligned">나의 베나링크<br/>순 방문(명)</th>
               <th className="center aligned">총 지급 받은 RP</th>
               <th className="center aligned">남은 RP</th>
@@ -156,14 +153,14 @@ const VenalinkShareList = React.createClass({
               <th colSpan="10">
                 <div className="ui right floated pagination menu">
                   <a className="icon item">
-                    <i className="left chevron icon"></i>
+                    <i className="left chevron icon"/>
                   </a>
                   <a className="item active">1</a>
                   <a className="item">2</a>
                   <a className="item">3</a>
                   <a className="item">4</a>
                   <a className="icon item">
-                    <i className="right chevron icon"></i>
+                    <i className="right chevron icon"/>
                   </a>
                 </div>
               </th>

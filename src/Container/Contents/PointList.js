@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import accounting from 'accounting';
+import { Link } from 'react-router';
 import { getLoginUser } from '../Util/func';
 import { connect } from 'react-redux';
 import cx from 'classnames';
@@ -25,7 +27,7 @@ const PointListBox = React.createClass({
     let type, itemType, totalPoint, amountPoint, positive;
     switch (account.get('type')) {
       case 'initial':
-        type = '초기화';
+        type = '초기';
         positive = 1;
         break;
       case 'withdraw':
@@ -97,12 +99,12 @@ const PointListBox = React.createClass({
 
     return (
       <tr key={account.get('id')}>
+        <td className="center aligned">{moment(account.get('created_at')).format('YYYY/MM/DD hh:mm')}</td>
         <td className={positiveCenterStyle}>{type}</td>
         <td>{itemType}</td>
-        <td className="right aligned">{moment(account.get('created_at')).format('YYYY/MM/DD hh:mm')}</td>
         <td className="right aligned ">{account.getIn(['trade', 'target_count'])}</td>
         <td className={positiveRightStyle}>{positive ? '+' : '-'} {amountPoint}</td>
-        <td className="right aligned">{totalPoint}</td>
+        <td className="right aligned" style={{ color: '#058294' }}><b>{accounting.formatNumber(totalPoint)}</b></td>
       </tr>
     )
   },
@@ -122,7 +124,7 @@ const PointListBox = React.createClass({
 
               </div>
               <div className="description" style={{ paddingBottom: 10, fontSize: 42, textAlign: 'right' }}>
-                {trendbox.get('T')} P
+                {trendbox && accounting.formatNumber(trendbox.get('T'))} P
               </div>
             </div>
             <div className="ui bottom attached button" onClick={this.togglePointType.bind(this, 'TP')}>
@@ -133,10 +135,10 @@ const PointListBox = React.createClass({
             <div className="content">
               <div className="header">나의 RP</div>
               <div className="description" style={{ paddingBottom: 10, fontSize: 42, textAlign: 'right' }}>
-                {trendbox.get('R')} P
+                {trendbox && accounting.formatNumber(trendbox.get('R'))} P
               </div>
               <div className="description" style={{ textAlign: 'right' }}>
-                충전하기
+                <Link to="/user/chargePoint">충전하기</Link>
               </div>
             </div>
             <div className="ui bottom attached button" onClick={this.togglePointType.bind(this, 'RP')}>
@@ -146,15 +148,15 @@ const PointListBox = React.createClass({
         </div>
         <div style={{ padding: 10 }}>
           <h4>TP 내역</h4>
-          <table className="ui celled table">
+          <table className="ui celled table" style={{ fontSize: 12 }}>
             <thead>
             <tr>
-              <th className="two wide">획득 / 사용</th>
-              <th className="two wide">타입</th>
-              <th className="three wide">시간</th>
-              <th className="two wide">수량</th>
-              <th>금액</th>
-              <th>총계</th>
+              <th className="three wide" style={{ textAlign: 'center' }}>시간</th>
+              <th className="one wide" style={{ textAlign: 'center' }}>사용</th>
+              <th className="tree wide" style={{ textAlign: 'center' }}>타입</th>
+              <th className="one wide" style={{ textAlign: 'center' }}>수량</th>
+              <th style={{ textAlign: 'center' }}>금액</th>
+              <th style={{ textAlign: 'center' }}>총계</th>
             </tr>
             </thead>
             <tbody>

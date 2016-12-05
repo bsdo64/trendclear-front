@@ -34,6 +34,7 @@ const UserPointMenu = require('../Container/LeftCol/UserPointMenu');
 const PolicyMenu = require('../Container/LeftCol/PolicyMenu');
 const CompanyMenu = require('../Container/LeftCol/CompanyMenu');
 const SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
+const SubmitForumMenu = require('../Container/LeftCol/SubmitForumMenu');
 const ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
 const SigninMenu = require('../Container/LeftCol/SigninMenu');
 const SearchMenu = require('../Container/LeftCol/SearchMenu');
@@ -240,7 +241,7 @@ export default (store) => {
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
                  LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: ForumMenu,
+                 LeftColMenu: SubmitForumMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: SubmitContainer

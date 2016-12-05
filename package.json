@@ -12,6 +12,7 @@
     "lint": "gulp cached-lint-watch"
   },
   "dependencies": {
+    "accounting": "^0.4.1",
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "classnames": "^2.2.5",
