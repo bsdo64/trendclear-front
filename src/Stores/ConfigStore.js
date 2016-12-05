@@ -280,18 +280,29 @@ const initRouteState = (/* store */) => dispatch => action => {
 };
 
 export default (initialImmutableState, sagaMiddleware) => {
+  let middleWareWrapper;
+  if (process.env.NODE_ENV !== 'production') {
+    middleWareWrapper = composeWithDevTools(
+      applyMiddleware(
+        initRouteState,
+        thunk,
+        sagaMiddleware
+      )
+    );
+  } else {
+    middleWareWrapper = applyMiddleware(
+      initRouteState,
+      thunk,
+      sagaMiddleware
+    );
+  }
+
   return createStore(
     combineReducers({
       Stores,
       routing: RouterReducer
     }),
     initialImmutableState,
-    composeWithDevTools(
-      applyMiddleware(
-        initRouteState,
-        thunk,
-        sagaMiddleware
-      )
-    )
+    middleWareWrapper
   );
 }
