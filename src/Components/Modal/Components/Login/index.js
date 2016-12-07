@@ -9,12 +9,13 @@ const Login = React.createClass({
   displayName: 'LoginModalBox',
   propTypes: {
     LoginStore: PropTypes.object.isRequired,
+    ModalStore: PropTypes.object.isRequired,
     FireRequestLogin: PropTypes.func.isRequired,
   },
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.LoginStore.get('loginSuccess') && nextProps.LoginStore.get('loginSuccess')) {
-      window.location.href = nextProps.LoginStore.get('location') || '/'
+      window.location.href = nextProps.ModalStore.get('location') || '/'
     }
   },
 

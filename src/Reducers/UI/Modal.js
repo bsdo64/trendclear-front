@@ -23,7 +23,7 @@ const Modal = (state = UI.Modal, action) => {
       return state.merge({
         contentType: action.contentType,
         openModal: !modalState,
-        location: modalState ? action.location : null
+        location: action.location ? action.location : null
       })
     }
 

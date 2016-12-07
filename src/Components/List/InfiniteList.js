@@ -4,7 +4,7 @@ import './BestList.scss';
 
 function createItem(props, id) {
 
-  const { PostItems, AuthorItems, User } = props;
+  const { PostItems, AuthorItems, User, location } = props;
 
   const post = PostItems.get(id.toString());
   if (post) {
@@ -21,6 +21,7 @@ function createItem(props, id) {
           user={user}
           view={false}
           shorten={true}
+          location={location}
           FireSetScrollPosition={props.FireSetScrollPosition}
           FireToggleLoginModal={props.FireToggleLoginModal}
           FireToggleReportModal={props.FireToggleReportModal}
@@ -41,6 +42,7 @@ const InfiniteList = React.createClass({
 
   propTypes: {
     PostIdList: PropTypes.object,
+    location: PropTypes.object.isRequired,
     PostItems: PropTypes.object.isRequired,
     AuthorItems: PropTypes.object.isRequired,
     User: PropTypes.object.isRequired,

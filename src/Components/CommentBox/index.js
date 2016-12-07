@@ -338,12 +338,12 @@ const CommentItem = React.createClass({
 
   sendLike() {
 
-    const { comment, LoginStore, FireToggleLoginModal, FireRequestLikeComment } = this.props;
+    const { comment, location, LoginStore, FireToggleLoginModal, FireRequestLikeComment } = this.props;
     const isLogin = LoginStore.get('isLogin');
     if (!isLogin) {
       FireToggleLoginModal({
         contentType: 'Login',
-        location: '/'
+        location: location.pathname + location.search
       });
     } else {
       FireRequestLikeComment({ commentId: comment.get('id') });
@@ -696,7 +696,7 @@ const CommentBox = React.createClass({
     };
   },
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.location.query.comment_order !== this.props.location.query.comment_order) {
       this.setState({
         commentOrder: nextProps.location.query.comment_order

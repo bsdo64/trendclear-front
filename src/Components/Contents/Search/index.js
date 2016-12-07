@@ -85,9 +85,11 @@ const SearchBox = React.createClass({
     }
   },
   openLoginModal() {
-    const { location,
+    const {
+      location,
       FireToggleLoginModal
     } = this.props;
+
     FireToggleLoginModal({
       contentType: 'Login',
       location: location.pathname + location.search

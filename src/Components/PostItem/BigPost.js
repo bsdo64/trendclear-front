@@ -17,6 +17,7 @@ const BigPost = React.createClass({
     user: PropTypes.object,
     view: PropTypes.bool.isRequired,
     postStyle: PropTypes.string,
+    location: PropTypes.object.isRequired,
     shorten: PropTypes.bool.isRequired,
     FireSetScrollPosition: PropTypes.func.isRequired,
     FireToggleLoginModal: PropTypes.func.isRequired,
@@ -47,11 +48,11 @@ const BigPost = React.createClass({
 
   sendLike() {
 
-    const { post, user, FireRequestLikePost } = this.props;
+    const { post, location, user, FireRequestLikePost } = this.props;
     if (!user) {
       this.props.FireToggleLoginModal({
         contentType: 'Login',
-        location: '/'
+        location: location.pathname + location.search
       });
     } else {
       FireRequestLikePost({ postId: post.get('id') });

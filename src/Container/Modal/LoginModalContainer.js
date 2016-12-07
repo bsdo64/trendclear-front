@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
 
   return {
     LoginStore: getUIState('Login'),
+    ModalStore: getUIState('Modal'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
   }
 };
