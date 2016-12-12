@@ -1,39 +1,47 @@
 #forum_contents {
-  padding: 10px;
   font-size: 12px;
+  margin: 20px 0 0 70px;
+  width: 620px;
+  background: #fff;
+  box-shadow: 1px 1px 1px 0px #848484;
 
-  th {
-    padding: 3px 5px;
-    color: #fff;
-    background: #058294;
-    font-weight: normal;
-  }
+  table {
+    border-right: none;
+    border-left: none;
 
-  tr.announce {
-    background: #e1f9fd;
-  }
-
-  td {
-    i.announce-icon {
-      padding-right: 10px;
-      color: #e9164a;
-    }
-    a.article_title {
-      max-width: 350px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: inline-block;
-      vertical-align: bottom;
+    th {
+      padding: 3px 5px;
+      color: #fff;
+      background: #058294;
+      font-weight: normal;
     }
 
-    span {
-      padding-left: 5px;
-      display: inline-block;
-      position: absolute;
-      color: #aaa;
-      font-weight: bold;
-      font-size: 10px;
+    tr.announce {
+      background: #e1f9fd;
+    }
+
+    td {
+      i.announce-icon {
+        padding-right: 10px;
+        color: #e9164a;
+      }
+      a.article_title {
+        max-width: 350px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        vertical-align: bottom;
+      }
+
+      span {
+        padding-left: 5px;
+        display: inline-block;
+        position: absolute;
+        color: #aaa;
+        font-weight: bold;
+        font-size: 10px;
+      }
     }
   }
 
@@ -49,6 +57,8 @@
   }
 
   .ui.horizontal.celled.list {
+    padding-left: 10px;
+
     .item {
       font-size: 12px;
 

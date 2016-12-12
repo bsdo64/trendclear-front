@@ -4,7 +4,6 @@ import BigPost from '../../PostItem/BigPost';
 import Forum from './Forum';
 import CommentBox from '../../CommentBox';
 
-require('./Post.scss');
 const PostPage = React.createClass({
   displayName: 'PostPage',
   propTypes: {

@@ -1,11 +1,18 @@
+$tc_blue_header: #00AABA;
+$tc_blue_header_end: #0E4458;
+$tc_blue_main: #058294;
+$tc_background: #e6e6e6;
+$white: #fff;
+
+body {
+  background: $tc_background
+}
+
 #wrap {
   width: 1230px;
   margin: 0 auto;
 }
-$tc_blue_header: #00AABA;
-$tc_blue_header_end: #0E4458;
-$tc_blue_main: #058294;
-$white: #fff;
+
 #header {
   height: 50px;
   .head_contents {
@@ -15,6 +22,8 @@ $white: #fff;
     position: fixed;
     height: 50px;
     z-index: 100;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+
     .top_area {
       height: 50px;
       width: 100%;
@@ -65,8 +74,6 @@ $white: #fff;
       position: relative;
       float: left;
       width: 730px;
-      border-left: 1px solid $tc_blue_main;
-      border-right: 1px solid $tc_blue_main;
       min-height: 768px;
     }
     >#right_col {

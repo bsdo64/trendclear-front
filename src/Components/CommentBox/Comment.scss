@@ -1,7 +1,10 @@
 #comment_box {
-  margin: 10px auto;
-  padding: 20px 0;
+  margin: 0 0 0 70px;
+  padding: 10px;
   font-size: 0.9em;
+  width: 620px;
+  background: #fff;
+  box-shadow: 1px 1px 1px 0 #848484;
 
   .comment_header {
     height: 20px;
@@ -68,7 +71,7 @@
 
   &.comments > form.ui.reply.form {
     .field {
-      width: 585px;
+      width: 535px;
     }
   }
 
@@ -76,7 +79,7 @@
     margin-top: 1em;
 
     .field {
-      width: 540px;
+      width: 490px;
       display: inline-block;
 
       &.update {

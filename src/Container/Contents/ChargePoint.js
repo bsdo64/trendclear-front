@@ -89,10 +89,7 @@ const ChargePointBox = React.createClass({
             { value: 10000, label: '10,000 원' },
             { value: 30000, label: '30,000 원' },
             { value: 50000, label: '50,000 원' },
-            { value: 100000, label: '100,000 원' },
-            { value: 300000, label: '300,000 원' },
-            { value: 500000, label: '500,000 원' },
-            { value: 1000000, label: '1,000,000 원' },
+            { value: 100000, label: '100,000 원' }
           ]}
           value={this.state.amount}
           name="select-amount"

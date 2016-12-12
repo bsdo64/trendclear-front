@@ -27,7 +27,10 @@ export const UI = {
     }
   }),
   Gnb: Map({
-    openGnb: false
+    openGnb: false,
+    gnbMenu: Map({
+      openSideNow: 1
+    })
   }),
   Inventory: Map({
     openInventory: false,

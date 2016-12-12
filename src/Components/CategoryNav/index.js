@@ -114,6 +114,11 @@ const ClubList = React.createClass({
     FireOpenForumMeta: PropTypes.func.isRequired,
   },
 
+  componentDidMount() {
+    this.props.FireOpenSideCategory(1);
+  },
+
+
   openSideCategories(clubId) {
     this.props.FireOpenSideCategory(clubId);
   },
@@ -156,7 +161,7 @@ const ClubList = React.createClass({
              onClick={this.openSideCategories.bind(null, item.get('id'))}>
             {
               (openSideNow == item.get('id')) &&
-              <i className="fa fa-arrow-right"></i>
+              <i className="fa fa-arrow-right"/>
             }
             <span>{' ' + item.get('title')}</span>
           </a>
@@ -198,7 +203,7 @@ const ClubList = React.createClass({
              onClick={this.openSideCategories.bind(null, item.get('id'))}>
             {
               (openSideNow == item.get('id')) &&
-              <i className="fa fa-arrow-right"></i>
+              <i className="fa fa-arrow-right"/>
             }
             <span>{' ' + item.get('title')}</span>
           </a>
@@ -284,8 +289,8 @@ const CategoryNav = React.createClass({
     return (
       <div>
         <div className="category_button" onClick={this.handleToggleGnb}>
-          <i className="fa fa-bars"></i>
-          <i className="fa fa-caret-right" aria-hidden="true"></i>
+          <i className="fa fa-bars"/>
+          <i className="fa fa-caret-right" aria-hidden="true"/>
           <div className="category_text">카테고리</div>
         </div>
 

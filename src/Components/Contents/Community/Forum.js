@@ -261,13 +261,9 @@ const Forum = React.createClass({
         return (
           <div id="forum_contents">
 
-            <div id="forum_info" style={{
-              margin: '0 0 0 2px',
-              padding: 0,
-            }}>
+            <div id="forum_info">
               <div className="ui cards">
                 <div className="card" style={{
-                  borderTop: '1px solid rgb(5, 130, 148)',
                   boxShadow: 'none',
                   width: '100%'
                 }}>
