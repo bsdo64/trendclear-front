@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
-import CollectionLeftMenu from '../../Components/CollectionLeftMenu';
+import CollectionLeftMenu from '../../Components/LeftMenus/CollectionLeftMenu';
 import {
   requestCreateCollection,
   requestAddForumInCollection,

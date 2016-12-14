@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
-import BestCategorySelect from '../../Components/BestCategorySelect';
+import BestCategorySelect from '../../Components/LeftMenus/BestCategorySelect';
 import { UI, Domains } from '../../Reducers/InitialStates';
 
 import {

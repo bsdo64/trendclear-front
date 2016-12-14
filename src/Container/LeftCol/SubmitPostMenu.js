@@ -1,10 +1,10 @@
 import React from 'react';
-import SubmitForumMenu from '../../Components/LeftMenus/SubmitForumMenu';
+import SubmitPostMenu from '../../Components/LeftMenus/SubmitPostMenu';
 
 const SubmitCategoryMenu = React.createClass({
   displayName: 'SubmitCategoryMenu',
   render() {
-    return (<SubmitForumMenu />)
+    return (<SubmitPostMenu />)
   }
 });
 

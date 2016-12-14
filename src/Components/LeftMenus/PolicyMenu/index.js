@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-require('./index.scss');
 const PolicyMenu = React.createClass({
   displayName: 'PolicyMenu',
   propTypes: {

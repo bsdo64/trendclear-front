@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const SubmitCategoryMenu = React.createClass({
-  displayName: 'SubmitCategoryMenu',
+const SubmitForumMenu = React.createClass({
   render() {
-    "use strict";
     return (
       <div>
         <div id="sub_category">
@@ -27,8 +25,8 @@ const SubmitCategoryMenu = React.createClass({
           </ul>
         </menu>
       </div>
-    )
+    );
   }
 });
 
-module.exports = SubmitCategoryMenu;
+export default SubmitForumMenu;
