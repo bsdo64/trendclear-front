@@ -52,6 +52,7 @@ const routes = [
   '/user/venalinks',
   '/user/venalinks/active',
   '/user/venalinks/share',
+  '/point/noti'
 ];
 
 const redirectRoutes = [
