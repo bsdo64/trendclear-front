@@ -4,7 +4,6 @@ import CollectionComponent from '../BestCategorySelect/Collection';
 
 // import AdForumLeft from '../Ad/AdForumLeft';
 
-require('./index.scss');
 const ForumLeftMenu = React.createClass({
   displayName: 'ForumLeftMenu',
   propTypes: {

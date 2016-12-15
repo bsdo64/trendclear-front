@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import cx from 'classnames';
-import SubscribeForumList from '../../SubscribeForumList';
+import SubscribeForumList from '../SubscribeForumList';
 
 const Subs = (props) => {
   const { subs, Forums, activeId, FireRequestRemoveForumInCollection } = props;
@@ -236,7 +236,7 @@ const Collection = React.createClass({
 
     return (
       <li id="user_best_collection">
-        <h5 >
+        <h5 className="title">
           <a><i className="fa fa-folder-open"/>{' 내 컬랙션'}</a>
         </h5>
 

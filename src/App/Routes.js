@@ -33,8 +33,8 @@ const AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
 const UserPointMenu = require('../Container/LeftCol/UserPointMenu');
 const PolicyMenu = require('../Container/LeftCol/PolicyMenu');
 const CompanyMenu = require('../Container/LeftCol/CompanyMenu');
-const SubmitCategoryMenu = require('../Container/LeftCol/SubmitCategoryMenu');
 const SubmitForumMenu = require('../Container/LeftCol/SubmitForumMenu');
+const SubmitPostMenu = require('../Container/LeftCol/SubmitPostMenu');
 const ForumSettingMenu = require('../Container/LeftCol/ForumSettingMenu');
 const SigninMenu = require('../Container/LeftCol/SigninMenu');
 const SearchMenu = require('../Container/LeftCol/SearchMenu');
@@ -241,7 +241,7 @@ export default (store) => {
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
                  LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: SubmitForumMenu,
+                 LeftColMenu: SubmitPostMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: SubmitContainer
@@ -253,7 +253,7 @@ export default (store) => {
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
                  LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: SubmitCategoryMenu,
+                 LeftColMenu: SubmitForumMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: SubmitForumContainer

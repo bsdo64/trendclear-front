@@ -1,5 +1,5 @@
 import React from 'react';
-import PolicyMenu from '../../Components/PolicyMenu';
+import PolicyMenu from '../../Components/LeftMenus/PolicyMenu';
 
 const MenuContainer = React.createClass({
   render() {

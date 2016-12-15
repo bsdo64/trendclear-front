@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import CollectionComponent from '../BestCategorySelect/Collection';
 
-require('./index.scss');
 const CollectionLeftMenu = React.createClass({
   displayName: 'CollectionLeftMenu',
   propTypes: {

@@ -1,27 +1,24 @@
-#collection_left_menu {
-  menu.sub_category_list {
-    ul {
-      li > .sub_category.item.collection_item {
-        height: auto;
-        padding-left: 10px;
-      }
-    }
-  }
-}
-
-.collection_item {
-  height: auto;
-  padding-left: 10px;
-}
-
 #user_best_collection {
-  & > h5 {
+
+  & > h5.title {
     margin-bottom: 5px;
   }
 
-  > .collection_item {
+  > .sub_category.item.collection_item {
     display: block;
     position: relative;
+    height: auto;
+    padding-left: 10px;
+
+    & > a {
+      padding-left: 10px;
+      text-align: left;
+      color: #fff;
+      width: 100%;
+      position: absolute;
+      display: block;
+      z-index: 5;
+    }
   }
 
   .collection {
