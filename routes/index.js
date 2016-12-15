@@ -42,7 +42,6 @@ const routes = [
   '/policies/terms',
   '/about',
   '/careers',
-  '/help',
   '/advertisement',
   '/member/find',
   '/link/post',
@@ -52,7 +51,9 @@ const routes = [
   '/user/venalinks',
   '/user/venalinks/active',
   '/user/venalinks/share',
-  '/point/noti'
+  '/point/noti',
+  '/help',
+  '/help/guide'
 ];
 
 const redirectRoutes = [

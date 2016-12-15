@@ -21,6 +21,7 @@ const SearchContainer = require('../Container/Contents/Search');
 const SettingContainer = require('../Container/Contents/Setting');
 const ActivityContainer = require('../Container/Contents/Activity');
 const PolicyContainer = require('../Container/Contents/Policy');
+const HelpContainer = require('../Container/Contents/Help');
 const CompanyContainer = require('../Container/Contents/Company');
 const FindMemberContainer = require('../Container/Contents/FindMember');
 const ChargePointContainer = require('../Container/Contents/ChargePoint');
@@ -32,6 +33,7 @@ const BestCategoryMenu = require('../Container/LeftCol/BestCategoryMenu');
 const AccountCategoryMenu = require('../Container/LeftCol/AccountCategoryMenu');
 const UserPointMenu = require('../Container/LeftCol/UserPointMenu');
 const PolicyMenu = require('../Container/LeftCol/PolicyMenu');
+const HelpMenu = require('../Container/LeftCol/HelpMenu');
 const CompanyMenu = require('../Container/LeftCol/CompanyMenu');
 const SubmitForumMenu = require('../Container/LeftCol/SubmitForumMenu');
 const SubmitPostMenu = require('../Container/LeftCol/SubmitPostMenu');
@@ -696,11 +698,21 @@ export default (store) => {
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
             LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: CompanyMenu,
-            WidgetContainer: WidgetContainer,
+            LeftColMenu: HelpMenu,
             ModalContainer: ModalContainer,
-            ContentsContainer: CompanyContainer
+            ContentsContainer: HelpContainer
           }}
+        />
+
+        <Route path="guide"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: HelpMenu,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: HelpContainer
+               }}
         />
 
       </Route>

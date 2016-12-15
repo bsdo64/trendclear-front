@@ -128,7 +128,7 @@ class WidgetBox extends Component {
           <Main2
             key="Main2"
             url="/images/venacle-guide.jpg"
-            link="/community?forumId=79"
+            link="/help/guide"
           />
         }
 
