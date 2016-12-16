@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
-import DeleteModalBox from '../../Components/Modal/Components/DeleteItem';
+import DeleteModalBox from '../../Components/Modals/Components/DeleteItem';
 import { requestDeleteItem } from '../../Actions/DeleteItem';
 
 const DeleteModalContainer = React.createClass({

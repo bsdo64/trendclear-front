@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
-import LoginModalBox from '../../Components/Modal/Components/Login/index';
+import LoginModalBox from '../../Components/Modals/Components/Login/index';
 import {
   requestLogin
 } from '../../Actions/Login';

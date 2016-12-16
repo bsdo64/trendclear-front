@@ -8,8 +8,6 @@ const SelectSearchForum = React.createClass({
   },
 
   componentDidMount() {
-    const self = this;
-
     $('.ui.search_forums')
       .search({
         searchFullText: false,
@@ -26,9 +24,9 @@ const SelectSearchForum = React.createClass({
           maxResults: 'Results must be an array to use maxResults setting',
           method: 'The method you called is not defined.'
         },
-        onSelect: function (forum) {
+        onSelect: (forum) => {
 
-          self.selectForum(forum);
+          this.selectForum(forum);
         }
       });
   },
@@ -57,7 +55,7 @@ const SelectSearchForum = React.createClass({
           </div>
 
           {/* meta */}
-          <div className="ui content">
+          <div className="ui segment search_forum_box">
             <div className="search_box">
               <h3 className="ui header">
                 게시판 선택

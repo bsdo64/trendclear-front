@@ -13,6 +13,10 @@
     }
   }
 
+  .search_forum_box {
+    margin: 0 0 0 10px;
+  }
+
   .post_item {
     padding: 10px;
 
@@ -20,7 +24,6 @@
       border-bottom: none;
     }
     margin: 0;
-    padding: 10px;
     border-bottom: 1px solid #B5C0D0;
 
     input.post_submit_title {

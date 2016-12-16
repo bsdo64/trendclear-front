@@ -8,6 +8,7 @@ import {
   SUCCESS_USER_READ_NOTIFICATION,
   RECEIVE_SOCKET_NOTI,
   RECEIVE_SOCKET_POINT,
+  RECEIVE_SOCKET_TERMINATE_VENALINK,
   SUCCESS_USER_PAYBACK_RP,
 } from '../../Actions/User';
 import {
@@ -203,6 +204,15 @@ const Users = (state = initList, action) => {
         .mergeIn([userId.toString(), 'trendbox'], trendbox)
     }
 
+    case RECEIVE_SOCKET_TERMINATE_VENALINK: {
+      const { refundedVenalink } = action;
+
+      return state
+        .updateIn([refundedVenalink.user_id.toString(), 'trendbox', 'R'], point =>
+          refundedVenalink.total_refunded_r ? point + refundedVenalink.total_refunded_r : point
+        );
+    }
+
     default: return state;
   }
 };
@@ -252,6 +262,17 @@ const Posts = (state = initList, action) => {
       const { result, postId } = action;
       return state
         .mergeDeep({ [postId.toString()]: { venalinks: [result.participateVenalink.venalink] } });
+    }
+
+    case RECEIVE_SOCKET_TERMINATE_VENALINK: {
+      const { refundedVenalink } = action;
+      return state
+        .updateIn([refundedVenalink.post_id.toString(), 'venalinks'], list => {
+          if (list) {
+            const entry = list.findEntry(i => i.get('id') === refundedVenalink.id);
+            return list.set(entry[0], Map(refundedVenalink))
+          }
+        })
     }
 
     default: return state;

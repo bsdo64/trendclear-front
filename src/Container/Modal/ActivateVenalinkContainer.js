@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
-import ActivateVenalink from '../../Components/Modal/Components/ActivateVenalink';
+import ActivateVenalink from '../../Components/Modals/Components/ActivateVenalink';
 import {
   requestActivateVenalink,
+  toggleVenacleStoreModal
 } from '../../Actions/VenacleStore';
 
 const ActivateVenalinkContainer = React.createClass({
@@ -30,6 +31,7 @@ const mapStateToProps = (state) => {
 module.exports = connect(
   mapStateToProps,
   {
-    FireRequestActivateVenalink: requestActivateVenalink
+    FireRequestActivateVenalink: requestActivateVenalink,
+    FireToggleVenacleStoreModal: toggleVenacleStoreModal,
   }
 )(ActivateVenalinkContainer);

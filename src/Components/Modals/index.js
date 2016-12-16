@@ -3,6 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import Modal from 'react-modal';
+import { spring, Motion } from 'react-motion';
 import { UI } from '../../Reducers/InitialStates';
 import LoginContainer from '../../Container/Modal/LoginModalContainer';
 import ReportContainer from '../../Container/Modal/ReportModalContainer';
@@ -48,17 +49,16 @@ const ModalBox = React.createClass({
   closeModal() {
     this.props.FireCloseModal();
   },
-  render() {
-    const { ModalStore } = this.props;
-    const openModal = ModalStore.get('openModal');
-    const contentType = ModalStore.get('contentType');
+  createModals(modal, key) {
+    const openModal = modal.openModal;
+    const contentType = modal.contentType;
     const children = this.proxyContainer(contentType);
 
     return (
       <Modal
-        ref={'modal'}
-        overlayClassName={'ui dimmer modals page transition visible active ' + (openModal ? '' : 'fade out')}
-        className={`ui small modal scrolling transition visible active Content-${contentType}`}
+        key={key}
+        overlayClassName={'ui dimmer modals page visible active'}
+        className={`ui small modal scrolling visible active Content-${contentType}`}
         isOpen={openModal}
         closeTimeoutMS={500}
         onAfterOpen={this.afterOpenModal}
@@ -68,6 +68,21 @@ const ModalBox = React.createClass({
 
       </Modal>
     );
+  },
+  render() {
+    const { ModalStore } = this.props;
+    const modals = ModalStore.get('modals');
+    const modalsArray = modals.toJS();
+
+    if (modals.size === 0) {
+      return <div></div>
+    }
+
+    return <div>
+      {
+        modalsArray.map(this.createModals)
+      }
+    </div>
   }
 });
 

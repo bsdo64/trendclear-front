@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
-import Shopping from '../../Components/Modal/Components/Shopping';
+import Shopping from '../../Components/Modals/Components/Shopping';
 import {
   showItemInfo,
   toggleVenacleStoreModal,

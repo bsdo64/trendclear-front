@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
-import ReportModalBox from '../../Components/Modal/Components/Report/index';
+import ReportModalBox from '../../Components/Modals/Components/Report/index';
 
 import { requestReport } from '../../Actions/Report';
 

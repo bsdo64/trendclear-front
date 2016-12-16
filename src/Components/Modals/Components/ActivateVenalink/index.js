@@ -11,6 +11,7 @@ const ActivateVenalink = React.createClass({
     UserStore: React.PropTypes.object.isRequired,
     ShareLinkStore: React.PropTypes.object.isRequired,
     FireRequestActivateVenalink: React.PropTypes.func.isRequired,
+    FireToggleVenacleStoreModal: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -70,6 +71,12 @@ const ActivateVenalink = React.createClass({
 
   openPayment() {
     browserHistory.push('/user/chargePoint');
+  },
+
+  toggleStoreModal() {
+    this.props.FireToggleVenacleStoreModal({
+      contentType: 'Shopping'
+    });
   },
 
   render() {
@@ -145,11 +152,13 @@ const ActivateVenalink = React.createClass({
           {
             !activateItem &&
             <div className="middle aligned content">
-              <div className="header">
+              <div className="header" >
                 현재 인벤토리에 사용가능한 베나링크 활성화 아이템이 없습니다
               </div>
               <div className="extra">
-                <div className="ui label">베나링크 활성화 구입하기 (50 TP)</div>
+                <div className="ui label">
+                  <a onClick={this.toggleStoreModal}>베나링크 활성화 구입하기 (50 TP)</a>
+                </div>
               </div>
             </div>
           }

@@ -68,9 +68,8 @@
 .user_inventory {
   width: 200px;
   position: absolute;
-  top: 420px;
   padding: 10px;
-  right: 0px;
+  right: 10px;
 
   .inventory_box {
     ul.inventory_tap {
@@ -210,6 +209,24 @@
       }
     }
   }
+}
+
+.react-draggable-enter {
+  opacity: 0.01;
+}
+
+.react-draggable-enter.react-draggable-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
+.react-draggable-leave {
+  opacity: 1;
+}
+
+.react-draggable-leave.react-draggable-leave-active {
+  opacity: 0.01;
+  transition: opacity 200ms ease-in;
 }
 
 .confirm-panel {

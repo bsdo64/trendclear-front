@@ -33,6 +33,14 @@ export const TOGGLE_SHOW_INVENTORY = 'TOGGLE_SHOW_INVENTORY';
 
 export const RECEIVE_SOCKET_NOTI = 'RECEIVE_SOCKET_NOTI';
 export const RECEIVE_SOCKET_POINT = 'RECEIVE_SOCKET_POINT';
+export const RECEIVE_SOCKET_TERMINATE_VENALINK= 'RECEIVE_SOCKET_TERMINATE_VENALINK';
+
+export function receiveSocketTerminateVenalink({ refundedVenalink }) {
+  return {
+    type: RECEIVE_SOCKET_TERMINATE_VENALINK,
+    refundedVenalink
+  }
+}
 
 export function requestUserPaybackRP(payload) {
   return {

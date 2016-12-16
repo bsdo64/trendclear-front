@@ -48,9 +48,7 @@ export const UI = {
     logoutFail: false
   }),
   Modal: Map({
-    contentType: null,
-    openModal: false,
-    location: null
+    modals: List()
   }),
   Pagination: Map({}),
   Report: Map({

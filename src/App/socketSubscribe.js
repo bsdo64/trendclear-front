@@ -1,7 +1,8 @@
-import { Noti, Point } from '../Utils/Socket';
+import { Noti, Point, Venalink } from '../Utils/Socket';
 import {
   receiveSocketNoti,
   receiveSocketPoint,
+  receiveSocketTerminateVenalink,
 } from '../Actions/User';
 import { normalize, arrayOf } from 'normalizr';
 import { noti } from '../Model/normalizr/schema';
@@ -16,4 +17,8 @@ export default (store) => {
   Point.on('receive point', function (result) {
     store.dispatch(receiveSocketPoint(result));
   });
+
+  Venalink.on('terminate venalink', function (result) {
+    store.dispatch(receiveSocketTerminateVenalink(result));
+  })
 }

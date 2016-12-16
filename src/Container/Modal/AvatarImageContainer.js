@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
-import AvatarImageModal from '../../Components/Modal/Components/AvatarImage';
+import AvatarImageModal from '../../Components/Modals/Components/AvatarImage';
 import { requestUserAvatarImageUpload } from '../../Actions/User';
 
 const AvatarImageContainer = React.createClass({

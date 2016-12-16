@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
+
 import { Link } from 'react-router';
 import cx from 'classnames';
 import SubscribeForumList from '../SubscribeForumList';
@@ -247,30 +249,40 @@ const Collection = React.createClass({
 
         <div className="sub_category item create_collection">
           <a className="ui button primary tiny create_collection_btn" onClick={this.toggleCreateCollection}>{'새로운 컬랙션 +'}</a>
-          <div className={createCollectionBoxStyle}>
-            <form className="ui mini form " onSubmit={this.submitNewCollection}>
-              <div className="field collection_title_field">
-                <label>이름</label>
-                <input type="text" name="title"
-                       placeholder="컬렉션 이름" onChange={this.handleChangeTitle}/>
-              </div>
-              <div className="field collection_description_field">
-                <label>설명</label>
-                <input type="text" name="description"
-                       placeholder="컬렉션 설명" onChange={this.handleChangeDescription}/>
-              </div>
-              <div className="field collection_checkbox_field">
-                <label>
-                  <input name="isPrivate" type="checkbox"
-                         defaultChecked={false} value={this.state.createCollection.isPrivate}
-                         onChange={this.handleChangePrivate}
-                  /> 비공개
-                </label>
-              </div>
-              <button className="ui primary button tiny" type="submit">만들기</button>
-            </form>
 
-          </div>
+            <ReactCSSTransitionGroup
+              transitionName="create-box"
+              transitionEnter={200}
+              transitionLeave={200}
+            >
+              {
+                !this.state.hideCreateCollectionBox &&
+                <div key="12313" className='create-box'>
+                  <form className="ui mini form " onSubmit={this.submitNewCollection}>
+                    <div className="field collection_title_field">
+                      <label>이름</label>
+                      <input type="text" name="title"
+                             placeholder="컬렉션 이름" onChange={this.handleChangeTitle}/>
+                    </div>
+                    <div className="field collection_description_field">
+                      <label>설명</label>
+                      <input type="text" name="description"
+                             placeholder="컬렉션 설명" onChange={this.handleChangeDescription}/>
+                    </div>
+                    <div className="field collection_checkbox_field">
+                      <label>
+                        <input name="isPrivate" type="checkbox"
+                               defaultChecked={false} value={this.state.createCollection.isPrivate}
+                               onChange={this.handleChangePrivate}
+                        /> 비공개
+                      </label>
+                    </div>
+                    <button className="ui primary button tiny" type="submit">만들기</button>
+                  </form>
+
+                </div>
+              }
+            </ReactCSSTransitionGroup>
         </div>
       </li>
     )

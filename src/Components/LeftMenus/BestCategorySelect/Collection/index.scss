@@ -93,10 +93,7 @@
   .create_collection {
     position: relative;
   }
-  .create_box.hide {
-    display: none;
-  }
-  .create_box {
+  .create-box {
     &:before {
       content: " ";
       width: 10px;
@@ -124,5 +121,23 @@
         font-size: 11px;
       }
     }
+  }
+
+  .create-box-enter {
+    opacity: 0.01;
+  }
+
+  .create-box-enter.create-box-enter-active {
+    opacity: 1;
+    transition: opacity 200ms ease-in;
+  }
+
+  .create-box-leave {
+    opacity: 1;
+  }
+
+  .create-box-leave.create-box-leave-active {
+    opacity: 0.01;
+    transition: opacity 200ms ease-in;
   }
 }

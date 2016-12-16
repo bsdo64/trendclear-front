@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import { UI } from '../InitialStates';
 import { TOGGLE_LOGIN_MODAL, CLOSE_LOGIN_MODAL } from '../../Actions/Login';
 import { TOGGLE_REPORT_MODAL, CLOSE_REPORT_MODAL } from '../../Actions/Report';
@@ -19,12 +20,38 @@ const Modal = (state = UI.Modal, action) => {
     case TOGGLE_AVATAR_MODAL:
     case TOGGLE_ACTIVE_VENALINK_MODAL:
     case TOGGLE_LOGIN_MODAL: {
-      const modalState = state.get('openModal');
-      return state.merge({
-        contentType: action.contentType,
-        openModal: !modalState,
-        location: action.location ? action.location : null
-      })
+      const modals = state.get('modals');
+      const lastModal = modals.last();
+
+      if (lastModal) {
+
+        if ( lastModal.get('contentType') !== action.contentType ) {
+          const newModals = modals.push(Map({
+            contentType: action.contentType,
+            openModal: true,
+            location: action.location ? action.location : null
+          }));
+
+          return state.set('modals', newModals);
+        }
+
+        if ( lastModal.get('contentType') === action.contentType && lastModal.get('openModal')) {
+          const newModals = modals.pop();
+
+          return state.set('modals', newModals);
+        }
+
+      } else if (!lastModal) {
+        const newModals = modals.push(Map({
+          contentType: action.contentType,
+          openModal: true,
+          location: action.location ? action.location : null
+        }));
+
+        return state.set('modals', newModals);
+      }
+
+      return state;
     }
 
     case CLOSE_REPORT_MODAL:
@@ -34,10 +61,10 @@ const Modal = (state = UI.Modal, action) => {
     case CLOSE_AVATAR_MODAL:
     case CLOSE_ACTIVE_VENALINK_MODAL:
     case CLOSE_MODAL: {
-      return state.merge({
-        openModal: false,
-        contentType: 'Close'
-      })
+      const modals = state.get('modals');
+      const newModals = modals.pop();
+
+      return state.set('modals', newModals);
     }
 
     default:
