@@ -19,7 +19,7 @@
   }
 
   .main_menu {
-    width: 250px;
+    width: 230px;
     height: 750px;
     position: absolute;
     top: 40px;
@@ -38,7 +38,7 @@
     height: 750px;
     position: absolute;
     top: 40px;
-    left: 250px;
+    left: 240px;
 
     .item-list {
       height: 600px;
@@ -52,7 +52,7 @@
   }
 
   .user_info {
-    width: 200px;
+    width: 210px;
     height: 380px;
     position: absolute;
     top: 40px;
@@ -60,16 +60,28 @@
 
     .card {
       margin: 10px;
-      width: 180px;
+      width: 190px;
     }
   }
 }
 
 .user_inventory {
-  width: 200px;
   position: absolute;
-  padding: 10px;
-  right: 10px;
+  background: #fff;
+  border: 1px solid #eee;
+
+  &.drag {
+    padding: 10px;
+    right: 10px;
+    width: 200px;
+  }
+
+  &.store {
+    padding: 10px;
+    right: 10px;
+    top: 330px;
+    width: 190px;
+  }
 
   .inventory_box {
     ul.inventory_tap {
@@ -227,21 +239,4 @@
 .react-draggable-leave.react-draggable-leave-active {
   opacity: 0.01;
   transition: opacity 200ms ease-in;
-}
-
-.confirm-panel {
-  position: absolute;
-  background: #fff;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-
-  .confirm-box {
-    position: absolute;
-    top: 36%;
-    left: 36%;
-    width: 300px;
-  }
 }

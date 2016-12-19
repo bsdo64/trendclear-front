@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
-import Transition from 'react-addons-css-transition-group';
 
 const rebuildTooltip = function rebuildTooltip(itemCode) {
   this.props.FireShowItemInfo(itemCode);
@@ -11,6 +11,7 @@ const Inventory = React.createClass({
   propTypes: {
     ShoppingStore: PropTypes.object.isRequired,
     inventory: PropTypes.object.isRequired,
+    positionStyle: PropTypes.string.isRequired,
     FireShowItemInfo: PropTypes.func.isRequired,
   },
 
@@ -77,38 +78,30 @@ const Inventory = React.createClass({
   },
   render() {
 
-    const { inventory } = this.props;
+    const { inventory, positionStyle } = this.props;
     const table = this.createTable(inventory, 4, 8);
 
-    return (
-      <Transition
-        transitionName="react-draggable"
-        transitionEnter={200}
-        transitionLeave={200}
-        >
-        <div key="user_inventory" className="user_inventory"
-             style={{
-               background: '#fff',
-               border: '1px solid #eee',
-               width: 202
-             }}
-        >
-          <h4>인벤토리</h4>
-          <div className="inventory_box">
-            <ul className="inventory_tap">
-              <li className="active">커뮤니티</li>
-              <li>뱃지</li>
-              <li>이모티콘</li>
-            </ul>
-            <div className="inventory_scroll">
-              {
-                table
-              }
-            </div>
+    const style = cx('user_inventory', {
+      [positionStyle]: true
+    });
 
+    return (
+      <div key="user_inventory" className={style}>
+        <h4>인벤토리</h4>
+        <div className="inventory_box">
+          <ul className="inventory_tap">
+            <li className="active">커뮤니티</li>
+            <li>뱃지</li>
+            <li>이모티콘</li>
+          </ul>
+          <div className="inventory_scroll">
+            {
+              table
+            }
           </div>
+
         </div>
-      </Transition>
+      </div>
     );
   }
 });

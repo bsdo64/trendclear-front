@@ -431,6 +431,7 @@ const TrendBox = React.createClass({
             onStop={this.handleStop}>
             <div style={{ position: 'absolute' }}>
               <Inventory
+                positionStyle="drag"
                 inventory={inventory}
                 ShoppingStore={ShoppingStore}
                 FireShowItemInfo={FireShowItemInfo}

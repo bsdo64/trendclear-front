@@ -55,10 +55,11 @@ export function requestParticipateVenalink(payload) {
   }
 }
 
-export function toggleConfirmPurchaseItemModal(item) {
+export function toggleConfirmPurchaseItemModal({ item, contentType }) {
   return {
     type: TOGGLE_CONFIRM_PURCHASE_ITEM_MODAL,
-    item
+    item,
+    contentType
   }
 }
 

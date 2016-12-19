@@ -11,6 +11,7 @@ import AvatarImageContainer from '../../Container/Modal/AvatarImageContainer';
 import DeleteItemContainer from '../../Container/Modal/DeleteModalContainer';
 import ShoppingContainer from '../../Container/Modal/ShoppingContainer';
 import ActivateVenalinkContainer from '../../Container/Modal/ActivateVenalinkContainer';
+import ConfirmPurchaseItemContainer from '../../Container/Modal/ConfirmPurchaseItemContainer';
 
 require('./index.scss');
 const ModalBox = React.createClass({
@@ -34,7 +35,8 @@ const ModalBox = React.createClass({
         return <ShoppingContainer />;
       case 'ActivateVenalink':
         return <ActivateVenalinkContainer />;
-
+      case 'ConfirmPurchaseItem':
+        return <ConfirmPurchaseItemContainer />;
       case 'Close':
         return <div></div>;
 

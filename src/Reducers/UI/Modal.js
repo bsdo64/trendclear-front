@@ -3,7 +3,10 @@ import { UI } from '../InitialStates';
 import { TOGGLE_LOGIN_MODAL, CLOSE_LOGIN_MODAL } from '../../Actions/Login';
 import { TOGGLE_REPORT_MODAL, CLOSE_REPORT_MODAL } from '../../Actions/Report';
 import { TOGGLE_DELETE_MODAL, CLOSE_DELETE_MODAL } from '../../Actions/DeleteItem';
-import { TOGGLE_VENACLE_STORE_MODAL, CLOSE_VENACLE_STORE_MODAL } from '../../Actions/VenacleStore';
+import {
+  TOGGLE_CONFIRM_PURCHASE_ITEM_MODAL, CLOSE_CONFIRM_PURCHASE_ITEM_MODAL,
+  TOGGLE_VENACLE_STORE_MODAL, CLOSE_VENACLE_STORE_MODAL
+} from '../../Actions/VenacleStore';
 import { TOGGLE_AVATAR_MODAL, CLOSE_AVATAR_MODAL } from '../../Actions/User';
 import { CLOSE_MODAL } from '../../Actions/Modal';
 import {
@@ -19,6 +22,7 @@ const Modal = (state = UI.Modal, action) => {
     case TOGGLE_VENACLE_STORE_MODAL:
     case TOGGLE_AVATAR_MODAL:
     case TOGGLE_ACTIVE_VENALINK_MODAL:
+    case TOGGLE_CONFIRM_PURCHASE_ITEM_MODAL:
     case TOGGLE_LOGIN_MODAL: {
       const modals = state.get('modals');
       const lastModal = modals.last();
@@ -60,6 +64,7 @@ const Modal = (state = UI.Modal, action) => {
     case CLOSE_VENACLE_STORE_MODAL:
     case CLOSE_AVATAR_MODAL:
     case CLOSE_ACTIVE_VENALINK_MODAL:
+    case CLOSE_CONFIRM_PURCHASE_ITEM_MODAL:
     case CLOSE_MODAL: {
       const modals = state.get('modals');
       const newModals = modals.pop();

@@ -7,7 +7,6 @@ import {
   toggleVenacleStoreModal,
   toggleConfirmPurchaseItemModal,
   requestShoppingItemInit,
-  requestPurchaseItem,
 } from '../../Actions/VenacleStore';
 
 const ShoppingContainer = React.createClass({
@@ -42,7 +41,6 @@ module.exports = connect(
     FireToggleVenacleStoreModal: toggleVenacleStoreModal,
     FireToggleConfirmPurchaseItemModal: toggleConfirmPurchaseItemModal,
     FireRequestShoppingItemInit: requestShoppingItemInit,
-    FireRequestPurchaseItem: requestPurchaseItem,
     FireShowItemInfo: showItemInfo,
   }
 )(ShoppingContainer);
