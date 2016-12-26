@@ -26,6 +26,7 @@ const CompanyContainer = require('../Container/Contents/Company');
 const FindMemberContainer = require('../Container/Contents/FindMember');
 const ChargePointContainer = require('../Container/Contents/ChargePoint');
 const PointListContainer = require('../Container/Contents/PointList');
+const ChargeLogListContainer = require('../Container/Contents/ChargeLogList');
 const VenalinkActiveList = require('../Container/Contents/VenalinkActiveList');
 const VenalinkShareList = require('../Container/Contents/VenalinkShareList');
 
@@ -545,6 +546,18 @@ export default (store) => {
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: PointListContainer
+               }}
+        />
+
+        <Route path="points/chargeLog"
+               components={{
+                 HeaderMyMenu: HeaderMyMenu,
+                 HeaderSearch: HeaderSearch,
+                 LeftColGnb: LeftColGlobalCategoryNav,
+                 LeftColMenu: UserPointMenu,
+                 WidgetContainer: WidgetContainer,
+                 ModalContainer: ModalContainer,
+                 ContentsContainer: ChargeLogListContainer
                }}
         />
 

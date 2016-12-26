@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux-immutable';
 import Activity from './Activity';
 import Auth from './Auth';
+import ChargePoint from './ChargePoint';
 import Community from './Community';
 import ForumSetting from './ForumSetting';
 import Gnb from './Gnb';
@@ -24,6 +25,7 @@ import SubmitForum from './SubmitForum';
 export default combineReducers({
   Activity,
   Auth,
+  ChargePoint,
   Community,
   ForumSetting,
   Gnb,

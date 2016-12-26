@@ -2,6 +2,7 @@ import React, {
   PropTypes,
 } from 'react';
 import Select from 'react-select';
+import moment from 'moment';
 import debug from 'debug';
 const paymentLog = debug('vn:api:payment');
 
@@ -10,12 +11,16 @@ const ChargePointBox = React.createClass({
   displayName: 'ChargePointBox',
   propTypes: {
     UserStore: PropTypes.object.isRequired,
+    ChargePointStore: PropTypes.object,
+    FireRequestCheckPointCharge: PropTypes.func.isRequired,
+    FireFailureCheckPointCharge: PropTypes.func.isRequired,
+    FireWaitingCheckCharge: PropTypes.func.isRequired,
   },
 
   getInitialState() {
     return {
       pay_method: 'trans',
-      amount: 10000
+      amount: 11000
     };
   },
 
@@ -35,23 +40,24 @@ const ChargePointBox = React.createClass({
        'uplus':LG유플러스
        */
       pay_method: this.state.pay_method, // 'card' : 신용카드 | 'trans' : 실시간계좌이체 | 'vbank' : 가상계좌 | 'phone' : 휴대폰소액결제
-      merchant_uid: 'merchant_' + new Date().getTime(),
+      merchant_uid: 'venacle_rp_' + new Date().getTime(),
       name: 'RP 충전',
+      vat: this.state.amount * 10 / 11 * 0.1,
       amount: this.state.amount,
       buyer_email: UserStore.get('email'),
-      buyer_name: UserStore.get('nick')
-    }, function (rsp) {
+      buyer_name: UserStore.get('nick'),
+      digital: true,
+      vbank_due: moment().add(7, 'days').format('YYYYMMDDhhmm'),
+      m_redirect_url: ''
+    }, (rsp) => {
+      this.props.FireWaitingCheckCharge();
+
       if (rsp.success) {
-        let msg = '결제가 완료되었습니다.';
-        msg += '고유ID : ' + rsp.imp_uid;
-        msg += '상점 거래ID : ' + rsp.merchant_uid;
-        msg += '결제 금액 : ' + rsp.paid_amount;
-        msg += '카드 승인번호 : ' + rsp.apply_num;
+        this.props.FireRequestCheckPointCharge(rsp);
 
         paymentLog(rsp);
       } else {
-        let msg = '결제에 실패하였습니다.';
-        msg += '에러내용 : ' + rsp.error_msg;
+        this.props.FireFailureCheckPointCharge(rsp);
 
         paymentLog(rsp);
       }
@@ -69,8 +75,18 @@ const ChargePointBox = React.createClass({
     })
   },
   render() {
+    const { ChargePointStore } = this.props;
+    let isRequestCheckCharge, successChargePoint, failureChargePoint, result;
+
+    if (ChargePointStore) {
+      isRequestCheckCharge = ChargePointStore.get('isRequestCheckCharge');
+      successChargePoint = ChargePointStore.get('successChargePoint');
+      failureChargePoint = ChargePointStore.get('failureChargePoint');
+      result = ChargePointStore.get('result');
+    }
+
     return (
-      <div className="rp_charge">
+      <div className="rp_charge" style={{ paddingBottom: 100 }}>
         <div className="ui segment">
           <h3>포인트 안내</h3>
           <p>베나클에서는 TP와 RP를 이용해서 좀 더 재미있고 창의적인 활동을 할 수 있도록 도와줍니다</p>
@@ -89,7 +105,7 @@ const ChargePointBox = React.createClass({
           <p>
             RP는 좀더 효과적으로 자신의 글을 웹상에 널리 알리기 위한 포인트 입니다.<br />
             RP를 사용하여 베나링크를 만들 수 있으며 이 베나링크는 자신의 글을 홍보하는데 사용되어지는 예산입니다.<br />
-            RP는 실제 현금과 같은 가치가 있으며, 베나링크를 통해서 들어온 이용자당 5 포인트씩 소비되어 집니다.
+            1 RP는 1원과 같은 가치가 있으며, 활성화한 베나링크를 통해서 들어온 순방문자당 5 포인트씩 소모되어 집니다.
           </p>
           <p>
             본인의 글을 직접 RP를 사용하여 홍보하기 위해서는 최소 1000P 이상의 RP 가 있어야 하며,<br />
@@ -100,7 +116,44 @@ const ChargePointBox = React.createClass({
             그 베나링크를 타고 들어온 순방문자당 일정 포인트씩 적립이 됩니다.<br />
             베나링크 활성화가 끝나게 되면 적립된 RP를 지급 받으실 수 있습니다.
           </p>
+
+          <h3>환불 정책</h3>
+          <p>
+            베나클의 서비스를 구매할 때 구입한 보조 제품 및 서비스에 즉시 액세스하여 사용할 수 있습니다.<br />
+            따라서 아래에 명시된 경우를 제외하고는 구매를 한 후에 취소 할 수있는 권한을 상실하며 결제한 이후 환불이나 크레딧을 제공하지 않습니다.<br />
+            베나클은 언제든지 아래 명시된대로 환불 정책을 수정할 권리를 보유합니다. <br />
+            이용과정에 기술적 문제가 발생한 경우 고객 지원부 webmaster@venacle.com 에 문의하십시오. 고객 지원부는 문제를 해결하기 위해 귀하와 협력합니다. 고객 지원 센터에서 문제를 해결할 수없는 경우, 구매에 대한 환불을 처리합니다.<br />
+            환불의 조건으로, 충전후 귀하의 구입한 제품과 서비스를 사용하지 않았음을 확인하기 위해 귀하에게 비사용 서비스 환불 확인 서약을 서명하도록 요구할 수 있습니다.<br />
+            환불은 원래 구매에 사용 된 결제 수단으로 환불됩니다. 환불 금액이 해당 계정에 반영되기까지 영업일 기준 5 일이 소요될 수 있습니다.<br />
+            이 베나클의 환불 정책은 구매를 의도하지 않은 경우에 도움을주기위한 것입니다. 그것은 당신이 우리 시스템을 활용할 수있는 방법은 아닙니다. <br />
+            우리는 재량에 따라 환불 정책을 남용하고 있음을 발견하면 환불을 거부 할 권리가 있습니다<br />
+          </p>
         </div>
+
+        {
+          isRequestCheckCharge &&
+          <div className="ui segment">
+            충전중 확인중...
+          </div>
+        }
+
+        {
+          successChargePoint &&
+          <div className="ui segment">
+
+            <div className="ui center aligned container">
+              <h3>결제가 완료 되었습니다</h3>
+            </div>
+            {result.toString()}
+          </div>
+        }
+
+        {
+          failureChargePoint &&
+          <div className="ui segment">
+            결제 실패
+          </div>
+        }
 
         <div className="ui segment">
           <h3>RP 충전하기</h3>
@@ -118,13 +171,13 @@ const ChargePointBox = React.createClass({
               onChange={this.changeMethod}
               clearable={false}
             />
-            <h3>2. 충전 금액</h3>
+            <h3>2. 충전 포인트</h3>
             <Select
               options={[
-                { value: 10000, label: '10,000 원' },
-                { value: 30000, label: '30,000 원' },
-                { value: 50000, label: '50,000 원' },
-                { value: 100000, label: '100,000 원' }
+                { value: 11000, label: '10,000 RP' },
+                { value: 33000, label: '30,000 RP' },
+                { value: 55000, label: '50,000 RP' },
+                { value: 110000, label: '100,000 RP' }
               ]}
               value={this.state.amount}
               name="select-amount"
@@ -133,9 +186,9 @@ const ChargePointBox = React.createClass({
             />
             <h3>충전 내역</h3>
             <div style={{ textAlign: 'right' }}>
-              내역 (예산 : {this.state.amount}원 + VAT:{parseInt(this.state.amount * 0.1, 10)}원)
+              내역 (예산 : {this.state.amount * 10 / 11}원 + VAT:{parseInt(this.state.amount, 10)}원)
               <br />
-              총 충전 금액 : {parseInt(this.state.amount * 1.1, 10)}원
+              총 충전 금액 : {parseInt(this.state.amount, 10)}원
             </div>
             <div style={{ paddingTop: 10 }}>
               <div className="ui button primary right fluid" onClick={this.sendPayment}>충전하기</div>

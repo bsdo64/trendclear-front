@@ -252,8 +252,10 @@ const Collection = React.createClass({
 
             <ReactCSSTransitionGroup
               transitionName="create-box"
-              transitionEnter={200}
-              transitionLeave={200}
+              transitionEnter={true}
+              transitionEnterTimeout={200}
+              transitionLeave={true}
+              transitionLeaveTimeout={200}
             >
               {
                 !this.state.hideCreateCollectionBox &&

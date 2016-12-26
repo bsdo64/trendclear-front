@@ -20,6 +20,10 @@ export const Domains = {
 export const UI = {
   Activity: Map({}),
   Auth: Map({ isLogin: false, userId: null }),
+  ChargePoint: Map({
+    isRequestCheckCharge: false,
+    successChargePoint: false,
+  }),
   Community: Map({}),
   ForumSetting: fromJS({
     forumInfo: {

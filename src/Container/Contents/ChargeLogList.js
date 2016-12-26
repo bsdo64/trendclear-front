@@ -1,16 +1,16 @@
 import React from 'react';
 import { getLoginUser } from '../Util/func';
 import { connect } from 'react-redux';
-import ChargePointBox from '../../Components/Contents/ChargePointBox';
+import ChargeLogListBox from '../../Components/Contents/ChargeLogListBox';
 import {
   waitingCheckCharge,
   requestCheckPointCharge,
   failureCheckPointCharge
 } from '../../Actions/Point';
 
-const ChargePoint = React.createClass({
+const ChargeLogList = React.createClass({
   render() {
-    return <ChargePointBox {...this.props} />
+    return <ChargeLogListBox {...this.props} />
   }
 });
 
@@ -44,4 +44,4 @@ module.exports = connect(
     FireRequestCheckPointCharge: requestCheckPointCharge,
     FireFailureCheckPointCharge: failureCheckPointCharge,
   }
-)(ChargePoint);
+)(ChargeLogList);
