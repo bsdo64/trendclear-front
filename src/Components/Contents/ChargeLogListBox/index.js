@@ -19,7 +19,7 @@ const ChargeLogListBox = React.createClass({
     let time;
     switch (unixTime) {
       case 0: {
-        time = '입금 대기중 ..';
+        time = '';
         break;
       }
 
@@ -62,6 +62,34 @@ const ChargeLogListBox = React.createClass({
     }
 
     return paymentStatus;
+  },
+
+  paymentMethod(payment) {
+    const method = payment.get('pay_method');
+
+    let paymentMethod;
+    switch (method) {
+      case 'trans': {
+        paymentMethod = '계좌이체';
+        break;
+      }
+
+      case 'card': {
+        paymentMethod = '신용카드';
+        break;
+      }
+
+      case 'vbank': {
+        paymentMethod = <a>가상계좌</a>;
+        break;
+      }
+
+      default: {
+        paymentMethod = ''
+      }
+    }
+
+    return paymentMethod;
   },
 
   render() {
@@ -114,7 +142,9 @@ const ChargeLogListBox = React.createClass({
                     }
                   </td>
                   <td>
-                    {payment.get('pay_method')}
+                    {
+                      this.paymentMethod(payment)
+                    }
                   </td>
                 </tr>
               )

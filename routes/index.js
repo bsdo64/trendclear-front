@@ -155,8 +155,6 @@ router.get('/link/post/:linkId', function (req, res, next) {
 
 /* GET home page. */
 router.get(routes, function (req, res, next) {
-  console.log(req.headers);
-  console.log(req.url);
 
   let defaultData = {
     production: !!process.env.NODE_ENV,
@@ -188,8 +186,6 @@ router.get(routes, function (req, res, next) {
 
 /* 404 page. */
 router.get('*', function (req, res, next) {
-  console.log(req.headers);
-  console.log(req.url);
 
   res.redirect('/');
 });

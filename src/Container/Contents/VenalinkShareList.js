@@ -138,7 +138,7 @@ const VenalinkShareList = React.createClass({
               <th className="center aligned three wide">종료 시간</th>
               <th className="center aligned" style={{ width: 70 }}>참여<br />유저(명)</th>
               <th className="center aligned">나의 베나링크<br/>순 방문(명)</th>
-              <th className="center aligned">총 지급 받은 RP</th>
+              <th className="center aligned">지급(예정) RP</th>
               <th className="center aligned">남은 RP</th>
             </tr>
             </thead>

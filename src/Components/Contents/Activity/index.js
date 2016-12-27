@@ -51,6 +51,7 @@ const ActivityBox = React.createClass({
       </h2>
     )
   },
+
   createActivityMeta(meta) {
 
     return (

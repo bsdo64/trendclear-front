@@ -70,6 +70,12 @@ const PointListBox = React.createClass({
       case 'paybackVenalink':
         itemType = '페이백 RP';
         break;
+      case 'charge_rp':
+        itemType = 'RP 충전';
+        break;
+      case 'cancelled_rp':
+        itemType = 'RP 충전 취소';
+        break;
       case undefined:
         itemType = '';
         break;
