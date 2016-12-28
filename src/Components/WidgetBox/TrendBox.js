@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import Draggable from 'react-draggable'; // The default
 import accounting from 'accounting';
 import CountUp from 'countup.js';
-import moment from 'moment';
+import moment from '../Lib/Moment';
 import AvatarImage from '../AvatarImage';
 import Inventory from '../Inventory';
 

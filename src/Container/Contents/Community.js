@@ -32,6 +32,7 @@ CommunityContainer.defaultProps = {
   CommunityStore: UI.Community,
   ListStore: UI.List,
   AuthStore: UI.Auth,
+  ForumStore: UI.Forum,
   PaginationStore: UI.Pagination,
 
   Collections: Domains.Collections,
@@ -58,6 +59,7 @@ const mapStateToProps = (state) => {
     LoginModalStore: getUIState('LoginModal'),
     ListStore: getUIState('List'),
     AuthStore: getUIState('Auth'),
+    ForumStore: getUIState('Forum'),
     PaginationStore: getUIState('Pagination'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
 

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import moment from 'moment';
+import moment from '../../Lib/Moment';
 
 const SettingProfile = React.createClass({
   displayName: 'SettingProfile',

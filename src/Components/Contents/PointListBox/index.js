@@ -4,7 +4,7 @@ import React, {
 import accounting from 'accounting';
 import { Link } from 'react-router';
 import cx from 'classnames';
-import moment from 'moment';
+import moment from '../../Lib/Moment';
 
 const PointListBox = React.createClass({
   displayName: 'ChargePointBox',
@@ -105,7 +105,7 @@ const PointListBox = React.createClass({
 
     return (
       <tr key={account.get('id')}>
-        <td className="center aligned">{moment(account.get('created_at')).format('YYYY/MM/DD hh:mm')}</td>
+        <td className="center aligned">{moment(account.get('created_at')).format('YYYY/MM/DD HH:mm')}</td>
         <td className={positiveCenterStyle}>{type}</td>
         <td>{itemType}</td>
         <td className="right aligned ">{account.getIn(['trade', 'target_count'])}</td>

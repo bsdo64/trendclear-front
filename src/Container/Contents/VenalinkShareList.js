@@ -48,7 +48,7 @@ const VenalinkShareList = React.createClass({
       <tr className={isDisabledRow} key={participatedList.get('id')}>
         <td>포스트</td>
         <td className={isActiveStyle}>{status}</td>
-        <td className="center aligned">{moment(venalink.get('terminate_at')).format('YY/MM/DD hh:mm:ss')}</td>
+        <td className="center aligned">{moment(venalink.get('terminate_at')).format('YY/MM/DD HH:mm:ss')}</td>
         <td className="positive right aligned">{venalink.get('participants').size}</td>
         <td className="positive right aligned">{accounting.formatNumber(participatedList.get('count_visitor'))}</td>
         <td className="right aligned">

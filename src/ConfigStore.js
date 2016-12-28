@@ -1,17 +1,27 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { combineReducers } from 'redux-immutable';
-import RouterReducer from '../Reducers/RouteReducer';
+import RouterReducer from './Reducers/RouteReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import Stores from '../Reducers';
-import Api from '../Utils/ApiClient';
+import Stores from './Reducers';
+import Api from './Utils/ApiClient';
 import assign from 'deep-assign';
 import { normalize, arrayOf } from 'normalizr';
-import { author, category, post, noti, forum } from '../Model/normalizr/schema';
+import { author, category, post, noti, forum } from './Model/normalizr/schema';
 
 let bootStrapLogger;
 if (process.env.NODE_ENV !== 'production') {
   bootStrapLogger = require('debug')('vn:api:Bootstrap');
+}
+
+function clean(obj) {
+  const propNames = Object.getOwnPropertyNames(obj);
+  for (let i = 0; i < propNames.length; i++) {
+    const propName = propNames[i];
+    if (obj[propName] === null || obj[propName] === undefined) {
+      delete obj[propName];
+    }
+  }
 }
 
 const initRouteState = (/* store */) => dispatch => action => {
@@ -42,6 +52,9 @@ const initRouteState = (/* store */) => dispatch => action => {
             Users: normalized.entities.author,
             Collections: normalized.entities.collections,
             Forums: normalized.entities.forums,
+            Inventories: normalized.entities.inventories,
+            Venatems: normalized.entities.venatems,
+            Items: normalized.entities.items,
           });
         }
 
@@ -242,6 +255,9 @@ const initRouteState = (/* store */) => dispatch => action => {
           },
           Domains: {
             Users: resBody.Users,
+            Inventories: resBody.Inventories,
+            Items: resBody.Items,
+            Venatems: resBody.Venatems,
             Forums: resBody.Forums,
             Collections: resBody.Collections,
             Posts: resBody.Posts,
@@ -252,16 +268,6 @@ const initRouteState = (/* store */) => dispatch => action => {
             Prefixes: resBody.Prefixes
           }
         };
-
-        function clean(obj) {
-          const propNames = Object.getOwnPropertyNames(obj);
-          for (let i = 0; i < propNames.length; i++) {
-            const propName = propNames[i];
-            if (obj[propName] === null || obj[propName] === undefined) {
-              delete obj[propName];
-            }
-          }
-        }
 
         clean(state.UI);
         clean(state.Domains);

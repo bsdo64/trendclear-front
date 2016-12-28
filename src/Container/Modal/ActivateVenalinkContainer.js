@@ -23,6 +23,9 @@ const mapStateToProps = (state) => {
   };
 
   return {
+    Inventories: getDomainState('Inventories'),
+    Items: getDomainState('Items'),
+    Venatems: getDomainState('Venatems'),
     ShareLinkStore: getUIState('ShareLink'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
   }

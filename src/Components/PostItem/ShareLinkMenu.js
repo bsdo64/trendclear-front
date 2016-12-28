@@ -3,7 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import moment from 'moment';
+import moment from '../Lib/Moment';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const ShareLinkMenu = React.createClass({
@@ -142,7 +142,8 @@ const ShareLinkMenu = React.createClass({
 
   findInventoryItem(user, options) {
     if (user && user.get('inventories')) {
-      const inventory = user.get('inventories');
+      const userInventoryIds = user.get('inventories');
+      const Inventories =
       return inventory
         .find(i => i.get('type') === options.type)
         .get('items')
@@ -225,7 +226,7 @@ const ShareLinkMenu = React.createClass({
             총 RP: {venalink.get('total_amount_r')}<br />
             지급 RP: {venalink.get('total_amount_r') - venalink.get('total_remain_r')}<br />
             남은 RP: {venalink.get('total_remain_r')}<br />
-            기간 : {moment(venalink.get('terminate_at')).format('YY-MM-DD hh:mm:ss')}
+            기간 : {moment(venalink.get('terminate_at')).format('YY-MM-DD HH:mm:ss')}
           </div>
           <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}>
             베나링크 활성화 됨
@@ -241,7 +242,7 @@ const ShareLinkMenu = React.createClass({
                  src="/images/venacle-item1-venalink.png"/>
             현재 베나링크 참여자 : {venalink.get('participants').size}명<br />
             남은 RP: {venalink.get('total_remain_r')}<br />
-            기간 : {moment(venalink.get('terminate_at')).format('YY-MM-DD hh:mm:ss')}<br />
+            기간 : {moment(venalink.get('terminate_at')).format('YY-MM-DD HH:mm:ss')}<br />
             <br />
             베나링크에 참여하고 RP를 보상 받으세요!
           </div>
@@ -268,7 +269,7 @@ const ShareLinkMenu = React.createClass({
                  src="/images/venacle-item1-venalink.png"/>
             현재 베나링크 참여자 : {venalink.get('participants').size}명<br />
             남은 RP: {venalink.get('total_remain_r')}<br />
-            기간 : {moment(venalink.get('terminate_at')).format('YY-MM-DD hh:mm:ss')}<br />
+            기간 : {moment(venalink.get('terminate_at')).format('YY-MM-DD HH:mm:ss')}<br />
             <br />
             순방문자 1명당 5 RP씩 보상해 받습니다.<br />
             활성화 기간이 끝나면 보상받은 RP를 지급받게 됩니다.

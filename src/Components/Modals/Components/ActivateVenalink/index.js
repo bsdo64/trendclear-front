@@ -1,6 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import moment from 'moment';
+import moment from '../../../Lib/Moment';
 import InputNumber from 'rc-input-number';
 import DatePicker from 'react-datepicker';
 
@@ -10,6 +10,9 @@ const ActivateVenalink = React.createClass({
   propTypes: {
     UserStore: React.PropTypes.object.isRequired,
     ShareLinkStore: React.PropTypes.object.isRequired,
+    Inventories: React.PropTypes.object.isRequired,
+    Venatems: React.PropTypes.object.isRequired,
+    Items: React.PropTypes.object.isRequired,
     FireRequestActivateVenalink: React.PropTypes.func.isRequired,
     FireToggleVenacleStoreModal: React.PropTypes.func.isRequired,
   },
@@ -59,8 +62,9 @@ const ActivateVenalink = React.createClass({
 
   findInventoryItem(user, options) {
     if (user && user.get('inventories')) {
-      const inventory = user.get('inventories');
-      return inventory
+      const { Inventories, Items, Venatems } = this.props;
+      const inventoryIds = user.get('inventories');
+      return inventoryIds
         .find(i => i.get('type') === options.type)
         .get('items')
         .find(i => ((i.get('item').get('title') === options.title) && (i.get('item_count') > 0)));

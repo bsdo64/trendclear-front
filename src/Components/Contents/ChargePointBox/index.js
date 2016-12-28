@@ -2,7 +2,7 @@ import React, {
   PropTypes,
 } from 'react';
 import Select from 'react-select';
-import moment from 'moment';
+import moment from '../../Lib/Moment';
 import debug from 'debug';
 const paymentLog = debug('vn:api:payment');
 

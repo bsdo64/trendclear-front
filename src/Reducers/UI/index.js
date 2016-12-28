@@ -4,6 +4,7 @@ import Auth from './Auth';
 import ChargePoint from './ChargePoint';
 import Community from './Community';
 import ForumSetting from './ForumSetting';
+import Forum from './Forum';
 import Gnb from './Gnb';
 import Inventory from './Inventory';
 import List from './List';
@@ -28,6 +29,7 @@ export default combineReducers({
   ChargePoint,
   Community,
   ForumSetting,
+  Forum,
   Gnb,
   Inventory,
   List,

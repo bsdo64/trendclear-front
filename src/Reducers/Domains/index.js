@@ -499,9 +499,33 @@ const Notis = (state = initList, action) => {
   }
 };
 
+const Inventories = (state = initList, action) => {
+  switch (action.type) {
+
+    default: return state;
+  }
+};
+
+const Items = (state = initList, action) => {
+  switch (action.type) {
+
+    default: return state;
+  }
+};
+
+const Venatems = (state = initList, action) => {
+  switch (action.type) {
+
+    default: return state;
+  }
+};
+
 // Domain reducer
 export default combineReducers({
   Users,
+  Inventories,
+  Items,
+  Venatems,
   Posts,
   Comments,
   Collections,

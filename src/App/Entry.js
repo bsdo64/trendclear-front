@@ -4,7 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { fromJS } from 'immutable';
 import App from './App';
-import configStore from '../Stores/ConfigStore';
+import configStore from '../ConfigStore';
 import createSagaMiddleware from 'redux-saga'
 import StartSocketSubs from './socketSubscribe';
 import rootSaga from '../Saga'

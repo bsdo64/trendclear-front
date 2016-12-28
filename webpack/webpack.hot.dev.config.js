@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const root = path.resolve(__dirname, '../');
-
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
       },
       __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
     })
-  ],
+],
   module: {
     loaders: [{
       test: /\.js$/,

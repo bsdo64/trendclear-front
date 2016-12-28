@@ -9,16 +9,28 @@ const prefix = new Schema('prefixes');
 
 const post = new Schema('posts');
 const author = new Schema('author');
+const inventory = new Schema('inventories');
+const venatem = new Schema('venatems');
+const item = new Schema('items');
 const comment = new Schema('comments');
 const subComment = new Schema('subComments');
 
 const noti = new Schema('notis');
 
+inventory.define({
+  items: arrayOf(venatem)
+});
+
+venatem.define({
+  item: item
+});
+
 author.define({
   collections: arrayOf(collection),
   follow_forums: arrayOf(forum),
   forumCreated: arrayOf(forum),
-  forumManaged: arrayOf(forum)
+  forumManaged: arrayOf(forum),
+  inventories: arrayOf(inventory)
 });
 
 club.define({
@@ -68,6 +80,9 @@ module.exports = {
 
   post: post,
   author: author,
+  inventory: inventory,
+  venatem: venatem,
+  item: item,
   comment: comment,
   subComment: subComment,
 

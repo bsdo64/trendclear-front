@@ -3,7 +3,6 @@
  */
 import React, { PropTypes } from 'react';
 import Modal from 'react-modal';
-import { spring, Motion } from 'react-motion';
 import { UI } from '../../Reducers/InitialStates';
 import LoginContainer from '../../Container/Modal/LoginModalContainer';
 import ReportContainer from '../../Container/Modal/ReportModalContainer';

@@ -4,7 +4,7 @@ import LoginButton from './LoginButton';
 import cx from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import moment from 'moment';
+import moment from '../Lib/Moment';
 moment.locale('ko');
 
 require('./index.scss');

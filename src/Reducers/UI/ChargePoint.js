@@ -1,4 +1,3 @@
-import { Map } from 'immutable';
 import { UI } from '../InitialStates';
 import {
   REQUEST_CHECK_POINT_CHARGE,

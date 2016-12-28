@@ -4,7 +4,7 @@ import React, {
 import accounting from 'accounting';
 import { Link } from 'react-router';
 import cx from 'classnames';
-import moment from 'moment';
+import moment from '../../Lib/Moment';
 
 const ChargeLogListBox = React.createClass({
   displayName: 'ChargePointBox',
@@ -24,7 +24,7 @@ const ChargeLogListBox = React.createClass({
       }
 
       default: {
-        time = momentTime.format('YYYY/MM/DD hh:mm')
+        time = momentTime.format('YYYY/MM/DD HH:mm')
       }
     }
 
@@ -102,6 +102,7 @@ const ChargeLogListBox = React.createClass({
 
     return (
       <div style={{ padding: 10, fontSize: 12 }}>
+        <h4>RP 충전 내역</h4>
         <table className="ui celled padded table">
           <thead>
           <tr>
@@ -110,8 +111,8 @@ const ChargeLogListBox = React.createClass({
             <th>주문 내역</th>
             <th>결제 가격</th>
             <th>결제 시간</th>
-            <th>상태</th>
             <th>결제 수단</th>
+            <th>상태</th>
           </tr>
           </thead>
           <tbody>
@@ -123,13 +124,17 @@ const ChargeLogListBox = React.createClass({
                     {payment.get('merchant_uid')}
                   </td>
                   <td className="single line">
-                    {payment.get('amount') * 10 / 11} RP
+                    {
+                      accounting.formatNumber(payment.get('amount') * 10 / 11)
+                    } RP
                   </td>
                   <td>
                     {payment.get('name')}
                   </td>
                   <td className="right aligned">
-                    {payment.get('amount')} 원
+                    {
+                      accounting.formatNumber(payment.get('amount'))
+                    } 원
                   </td>
                   <td className="right aligned">
                     {
@@ -138,12 +143,12 @@ const ChargeLogListBox = React.createClass({
                   </td>
                   <td>
                     {
-                      this.paymentStatus(payment)
+                      this.paymentMethod(payment)
                     }
                   </td>
-                  <td>
+                  <td className="right aligned">
                     {
-                      this.paymentMethod(payment)
+                      this.paymentStatus(payment)
                     }
                   </td>
                 </tr>
