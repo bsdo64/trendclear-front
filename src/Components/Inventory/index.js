@@ -11,22 +11,29 @@ const Inventory = React.createClass({
   propTypes: {
     ShoppingStore: PropTypes.object.isRequired,
     inventory: PropTypes.object.isRequired,
+    Venatems: PropTypes.object.isRequired,
+    Items: PropTypes.object.isRequired,
     positionStyle: PropTypes.string.isRequired,
     FireShowItemInfo: PropTypes.func.isRequired,
   },
 
-  createTableColum(listItem, c) {
+  createTableColum(venatemId, c) {
+    const { Venatems, Items } = this.props;
+    const venatem = Venatems.get(venatemId);
     let item;
-    if (listItem && (listItem.get('item_count') > 0)) {
+
+    if (venatem && (venatem.get('item_count') > 0)) {
+      const getItem = Items.get(venatem.get('item_id'));
+      
       item = (
         <div
           data-tip
           data-for={'item'}
           className="content"
-          onMouseOver={rebuildTooltip.bind(this, listItem.get('item').get('code'))}
+          onMouseOver={rebuildTooltip.bind(this, getItem.get('code'))}
         >
-          <span className="item-count">{listItem.get('item_count')}</span>
-          <img className="item-image" src={listItem.get('item').get('image')}/>
+          <span className="item-count">{venatem.get('item_count')}</span>
+          <img className="item-image" src={getItem.get('image')}/>
         </div>
       )
     } else {
@@ -49,9 +56,9 @@ const Inventory = React.createClass({
       let c = 0;
 
       while (++c <= col) {
-        const listItem = inventory.get('items').get(itemIndex);
+        const listItemId = inventory.get('items').get(itemIndex);
 
-        tableCols.push(this.createTableColum(listItem, c));
+        tableCols.push(this.createTableColum(listItemId, c));
 
         itemIndex = itemIndex + 1;
       }

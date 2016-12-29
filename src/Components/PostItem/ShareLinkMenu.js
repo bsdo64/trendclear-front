@@ -12,6 +12,8 @@ const ShareLinkMenu = React.createClass({
     author: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
     user: PropTypes.object,
+    Venatems: PropTypes.object.isRequired,
+    Items: PropTypes.object.isRequired,
     FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
     FireRequestActivateVenalink: PropTypes.func.isRequired,
     FireRequestParticipateVenalink: PropTypes.func.isRequired,
@@ -141,13 +143,18 @@ const ShareLinkMenu = React.createClass({
   },
 
   findInventoryItem(user, options) {
+    const { Items, Venatems } = this.props;
+
     if (user && user.get('inventories')) {
-      const userInventoryIds = user.get('inventories');
-      const Inventories =
-      return inventory
-        .find(i => i.get('type') === options.type)
-        .get('items')
-        .find(i => ((i.get('item').get('title') === options.title) && (i.get('item_count') > 0)));
+      const findItem = Items.find(i => i.get('title') === options.title);
+      const findVenatem = Venatems.find(v => v.get('item_id') === findItem.get('id'));
+      
+      if (findItem && (findVenatem.get('item_count') > 0)) {
+        return findItem
+      } else {
+        return null;
+      }
+    
     } else {
       return null;
     }

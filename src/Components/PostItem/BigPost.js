@@ -16,6 +16,8 @@ const BigPost = React.createClass({
     author: PropTypes.object.isRequired,
     user: PropTypes.object,
     view: PropTypes.bool.isRequired,
+    Venatems: PropTypes.object.isRequired,
+    Items: PropTypes.object.isRequired,
     postStyle: PropTypes.string,
     location: PropTypes.object.isRequired,
     shorten: PropTypes.bool.isRequired,

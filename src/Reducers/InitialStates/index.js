@@ -8,6 +8,8 @@ export const App = {
 export const Domains = {
   Users: Map({}),
   Posts: Map({}),
+  Venatems: Map({}),
+  Items: Map({}),
   Comments: Map({}),
   Collections: Map({}),
   Forums: Map({}),

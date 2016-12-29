@@ -24,7 +24,10 @@ WidgetContainer.defaultProps = {
   LoginStore: UI.Login,
   InventoryStore: UI.Inventory,
   UserStore: UI.User,
-  Forums: Domains.Forums
+  Forums: Domains.Forums,
+  Venatems: Domains.Venatems,
+  Items: Domains.Items,
+  Inventories: Domains.Inventories,
 };
 
 const mapStateToProps = (state) => {
@@ -42,7 +45,10 @@ const mapStateToProps = (state) => {
     LoginStore: getUIState('Login'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
 
-    Forums: getDomainState('Forums')
+    Forums: getDomainState('Forums'),
+    Venatems: getDomainState('Venatems'),
+    Items: getDomainState('Items'),
+    Inventories: getDomainState('Inventories'),
   }
 };
 

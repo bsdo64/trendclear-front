@@ -71,6 +71,9 @@ const TrendBox = React.createClass({
     user: PropTypes.object.isRequired,
     InventoryStore: PropTypes.object.isRequired,
     ShoppingStore: PropTypes.object.isRequired,
+    Venatems: PropTypes.object.isRequired,
+    Items: PropTypes.object.isRequired,
+    Inventories: PropTypes.object.isRequired,
     FireToggleVenacleStoreModal: PropTypes.func.isRequired,
     FireToggleAvatarModal: PropTypes.func.isRequired,
     FireShowItemInfo: PropTypes.func.isRequired,
@@ -219,7 +222,9 @@ const TrendBox = React.createClass({
   },
 
   render() {
-    const { user, ShoppingStore, InventoryStore, FireShowItemInfo } = this.props;
+    const { 
+      user, ShoppingStore, InventoryStore, FireShowItemInfo, Inventories, Venatems, Items 
+    } = this.props;
 
     const sex = user.profile.get('sex'),
       avatar_img = user.profile.get('avatar_img'),
@@ -228,7 +233,7 @@ const TrendBox = React.createClass({
       grade_img = user.grade.getIn(['gradeDef', 'img']);
     let iconImg, gradeImg;
 
-    const inventory = user.inventories.find(i => i.get('type') === 'community');
+    const findCommunityInventory = Inventories.find(i => i.get('type') === 'community');
 
     if (icon_img) {
       iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
@@ -432,7 +437,9 @@ const TrendBox = React.createClass({
             <div style={{ position: 'absolute' }}>
               <Inventory
                 positionStyle="drag"
-                inventory={inventory}
+                inventory={findCommunityInventory}
+                Venatems={Venatems}
+                Items={Items}
                 ShoppingStore={ShoppingStore}
                 FireShowItemInfo={FireShowItemInfo}
               />

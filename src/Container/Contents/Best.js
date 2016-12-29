@@ -31,6 +31,8 @@ BestContainer.defaultProps = {
   Forums: Domains.Forums,
   Users: Domains.Users,
   Posts: Domains.Posts,
+  Venatems: Domains.Venatems,
+  Items: Domains.Items,
 };
 
 const mapStateToProps = (state) => {
@@ -49,6 +51,8 @@ const mapStateToProps = (state) => {
     GnbStore: getUIState('Gnb'),
 
     Forums: getDomainState('Forums'),
+    Items: getDomainState('Items'),
+    Venatems: getDomainState('Venatems'),
     Users: getDomainState('Users'),
     Posts: getDomainState('Posts'),
   }

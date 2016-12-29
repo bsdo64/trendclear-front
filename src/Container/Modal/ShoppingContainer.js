@@ -29,6 +29,9 @@ const mapStateToProps = (state) => {
     ReportStore: getUIState('Report'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
 
+    Venatems: getDomainState('Venatems'),
+    Items: getDomainState('Items'),
+    Inventories: getDomainState('Inventories'),
     Posts: getDomainState('Posts'),
     Comments: getDomainState('Comments'),
     SubComments: getDomainState('SubComments'),

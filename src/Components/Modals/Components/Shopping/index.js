@@ -16,6 +16,9 @@ const Shopping = React.createClass({
   propTypes: {
     UserStore: PropTypes.object.isRequired,
     ShoppingStore: PropTypes.object.isRequired,
+    Venatems: PropTypes.object.isRequired,
+    Items: PropTypes.object.isRequired,
+    Inventories: PropTypes.object.isRequired,
     FireToggleVenacleStoreModal: PropTypes.func.isRequired,
     FireToggleConfirmPurchaseItemModal: PropTypes.func.isRequired,
     FireRequestShoppingItemInit: PropTypes.func.isRequired,
@@ -38,7 +41,7 @@ const Shopping = React.createClass({
 
   render() {
     const {
-      UserStore, ShoppingStore, FireShowItemInfo,
+      UserStore, ShoppingStore, FireShowItemInfo, Inventories, Venatems, Items
     } = this.props;
 
     const sex = UserStore.getIn(['profile', 'sex']),
@@ -47,7 +50,7 @@ const Shopping = React.createClass({
       icon_img = iconDef ? iconDef.get('icon_img') : null;
     let iconImg;
 
-    const inventory = UserStore.get('inventories').find(i => i.get('type') === 'community');
+    const findCommunityInventory = Inventories.find(i => i.get('type') === 'community');
 
     if (icon_img) {
       iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
@@ -204,7 +207,9 @@ const Shopping = React.createClass({
             </div>
           </div>
           <Inventory
-            inventory={inventory}
+            inventory={findCommunityInventory}
+            Venatems={Venatems}
+            Items={Items}
             ShoppingStore={ShoppingStore}
             FireShowItemInfo={FireShowItemInfo}
             positionStyle="store"

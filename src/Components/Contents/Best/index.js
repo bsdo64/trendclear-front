@@ -13,6 +13,8 @@ const BestBox = React.createClass({
     ListStore: PropTypes.object.isRequired,
     Posts: PropTypes.object.isRequired,
     Users: PropTypes.object.isRequired,
+    Venatems: PropTypes.object.isRequired,
+    Items: PropTypes.object.isRequired,
     AuthStore: PropTypes.object.isRequired,
     listName: PropTypes.string.isRequired,
     location: PropTypes.object.isRequired,
