@@ -64,6 +64,7 @@ const ModalBox = React.createClass({
         closeTimeoutMS={500}
         onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
+        contentLabel="Modal"
       >
         {children}
 

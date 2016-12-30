@@ -55,7 +55,7 @@ menu.sub_category_list {
         margin-bottom: 2px;
         position: relative;
         cursor: pointer;
-        height: 19px;
+        min-height: 19px;
 
         .active-menu {
           position: absolute;

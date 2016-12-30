@@ -5,29 +5,35 @@ import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
-import { toggleReportModal } from '../../Actions/Report';
 import { toggleActiveVenalinkModal, requestLikePost, requestGetMorePostList } from '../../Actions/Post';
+import { toggleReportModal } from '../../Actions/Report';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
-import { requestParticipateVenalink, requestActivateVenalink } from '../../Actions/VenacleStore';
+import { requestActivateVenalink, requestParticipateVenalink } from '../../Actions/VenacleStore';
 
 const BestContainer = React.createClass({
   render() {
     return (
-      <Best listName="collectionBestPostList"
-            {...this.props} />
+      <div>
+        <Best listName="collectionBestPostList"
+              {...this.props}
+        />
+      </div>
     )
   }
 });
 
 BestContainer.defaultProps = {
+  GnbStore: UI.Gnb,
   ListStore: UI.List,
   AuthStore: UI.Auth,
   PaginationStore: UI.Pagination,
-  GnbStore: UI.Gnb,
-  Collections: Domains.Collections,
+
   Forums: Domains.Forums,
   Users: Domains.Users,
-  Posts: Domains.Posts
+  Posts: Domains.Posts,
+  Venatems: Domains.Venatems,
+  Items: Domains.Items,
+  Collections: Domains.Collections,
 };
 
 const mapStateToProps = (state) => {
@@ -40,12 +46,14 @@ const mapStateToProps = (state) => {
   };
 
   return {
-    LoginModalStore: getUIState('LoginModal'),
     ListStore: getUIState('List'),
     AuthStore: getUIState('Auth'),
     PaginationStore: getUIState('Pagination'),
+    GnbStore: getUIState('Gnb'),
 
     Forums: getDomainState('Forums'),
+    Items: getDomainState('Items'),
+    Venatems: getDomainState('Venatems'),
     Users: getDomainState('Users'),
     Posts: getDomainState('Posts'),
     Collections: getDomainState('Collections'),

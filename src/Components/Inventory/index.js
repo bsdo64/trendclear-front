@@ -17,13 +17,13 @@ const Inventory = React.createClass({
     FireShowItemInfo: PropTypes.func.isRequired,
   },
 
-  createTableColum(venatemId, c) {
+  createTableColum(venatemId = '', c) {
     const { Venatems, Items } = this.props;
-    const venatem = Venatems.get(venatemId);
+    const venatem = Venatems.get(venatemId.toString());
     let item;
 
     if (venatem && (venatem.get('item_count') > 0)) {
-      const getItem = Items.get(venatem.get('item_id'));
+      const getItem = Items.get(venatem.get('item_id').toString());
       
       item = (
         <div

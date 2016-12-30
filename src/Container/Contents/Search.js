@@ -11,6 +11,7 @@ import { toggleLoginModal } from '../../Actions/Login';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
 import { toggleReportModal } from '../../Actions/Report';
 import { requestAddForumInCollection, requestRemoveForumInCollection } from '../../Actions/Collection';
+import { requestActivateVenalink, requestParticipateVenalink } from '../../Actions/VenacleStore';
 
 const SearchContainer = React.createClass({
   render() {
@@ -35,6 +36,8 @@ SearchContainer.defaultProps = {
   Forums: Domains.Forums,
   Users: Domains.Users,
   Posts: Domains.Posts,
+  Venatems: Domains.Venatems,
+  Items: Domains.Items,
 };
 
 const mapStateToProps = (state) => {
@@ -60,7 +63,9 @@ const mapStateToProps = (state) => {
     Collections: getDomainState('Collections'),
     Forums: getDomainState('Forums'),
     Users: getDomainState('Users'),
-    Posts: getDomainState('Posts')
+    Posts: getDomainState('Posts'),
+    Items: getDomainState('Items'),
+    Venatems: getDomainState('Venatems'),
   }
 };
 
@@ -79,6 +84,8 @@ module.exports = connect(
     FireRequestUnFollowForum: requestUnFollowForum,
     FireRequestLikePost: requestLikePost,
     FireToggleActiveVenalinkModal: toggleActiveVenalinkModal,
+    FireRequestActivateVenalink: requestActivateVenalink,
+    FireRequestParticipateVenalink: requestParticipateVenalink,
   }
 )(SearchContainer);
 

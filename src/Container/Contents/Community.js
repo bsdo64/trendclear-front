@@ -42,6 +42,8 @@ CommunityContainer.defaultProps = {
   Comments: Domains.Comments,
   SubComments: Domains.SubComments,
   Prefixes: Domains.Prefixes,
+  Venatems: Domains.Venatems,
+  Items: Domains.Items,
 };
 
 const mapStateToProps = (state) => {
@@ -70,6 +72,8 @@ const mapStateToProps = (state) => {
     Comments: getDomainState('Comments'),
     SubComments: getDomainState('SubComments'),
     Prefixes: getDomainState('Prefixes'),
+    Items: getDomainState('Items'),
+    Venatems: getDomainState('Venatems'),
   }
 };
 

@@ -1,4 +1,4 @@
-import { Map, fromJS } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
 import {
@@ -155,22 +155,19 @@ const Users = (state = initList, action) => {
 
     case SUCCESS_PURCHASE_ITEM: {
       const { result } = action;
-      const { inventories, trendbox } = result;
+      const { trendbox } = result;
       const userId = trendbox.user_id;
 
       return state
-        .updateIn([userId.toString(), 'inventories', 0], i => i.mergeDeep(inventories))
         .updateIn([userId.toString(), 'trendbox'], t => t.merge(trendbox));
     }
 
     case SUCCESS_ACTIVATE_VENALINK: {
       const { result } = action;
-      const { inventories, trendbox } = result;
+      const { trendbox } = result;
       const userId = trendbox.user_id;
 
-      return state
-        .updateIn([userId.toString(), 'inventories', 0], i => i.mergeDeep(inventories))
-        .updateIn([userId.toString(), 'trendbox'], t => t.merge(trendbox));
+      return state.updateIn([userId.toString(), 'trendbox'], t => t.merge(trendbox));
     }
 
     case RECEIVE_SOCKET_NOTI: {
@@ -186,13 +183,6 @@ const Users = (state = initList, action) => {
       return state
         .updateIn([userId.toString(), 'trendbox', 'T'], point => data.TP ? point + data.TP : point)
         .updateIn([userId.toString(), 'trendbox', 'R'], point => data.RP ? point + data.RP : point);
-    }
-
-    case SUCCESS_PARTICIPATE_VENALINK: {
-      const { result } = action;
-      const userId = result.inventories.user_id;
-      return state
-        .updateIn([userId.toString(), 'inventories', 0], inventory => inventory.mergeDeep(result.inventories));
     }
 
     case SUCCESS_USER_PAYBACK_RP: {
@@ -255,7 +245,7 @@ const Posts = (state = initList, action) => {
 
     case SUCCESS_ACTIVATE_VENALINK: {
       const { result } = action;
-      return state.updateIn([result.venalink.post_id.toString(), 'venalinks'], v => v.push(Map(result.venalink)));
+      return state.updateIn([result.venalink.post_id.toString(), 'venalinks'], (v = List([])) => v.push(Map(result.venalink)));
     }
 
     case SUCCESS_PARTICIPATE_VENALINK: {
@@ -502,6 +492,16 @@ const Notis = (state = initList, action) => {
 const Inventories = (state = initList, action) => {
   switch (action.type) {
 
+    case SUCCESS_PURCHASE_ITEM:
+    case SUCCESS_ACTIVATE_VENALINK:
+    case SUCCESS_PARTICIPATE_VENALINK: {
+      const { result } = action;
+      const { inventories } = result;
+      const i = inventories.entities.inventories;
+
+      return state.mergeDeep(i);
+    }
+
     default: return state;
   }
 };
@@ -509,12 +509,30 @@ const Inventories = (state = initList, action) => {
 const Items = (state = initList, action) => {
   switch (action.type) {
 
+    case SUCCESS_PURCHASE_ITEM:
+    case SUCCESS_ACTIVATE_VENALINK:
+    case SUCCESS_PARTICIPATE_VENALINK: {
+      const { result } = action;
+      const { inventories } = result;
+
+      return state.mergeDeep(inventories.entities.items);
+    }
+
     default: return state;
   }
 };
 
 const Venatems = (state = initList, action) => {
   switch (action.type) {
+
+    case SUCCESS_PURCHASE_ITEM:
+    case SUCCESS_ACTIVATE_VENALINK:
+    case SUCCESS_PARTICIPATE_VENALINK: {
+      const { result } = action;
+      const { inventories } = result;
+
+      return state.mergeDeep(inventories.entities.venatems);
+    }
 
     default: return state;
   }

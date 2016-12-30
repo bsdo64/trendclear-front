@@ -25,8 +25,11 @@ ActivityContainer.defaultProps = {
 
   Forums: Domains.Forums,
   Users: Domains.Users,
-  Posts: Domains.Posts
+  Posts: Domains.Posts,
+  Venatems: Domains.Venatems,
+  Items: Domains.Items,
 };
+
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -44,9 +47,12 @@ const mapStateToProps = (state) => {
     AuthStore: getUIState('Auth'),
     PaginationStore: getUIState('Pagination'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+
     Forums: getDomainState('Forums'),
     Users: getDomainState('Users'),
-    Posts: getDomainState('Posts')
+    Posts: getDomainState('Posts'),
+    Items: getDomainState('Items'),
+    Venatems: getDomainState('Venatems'),
   }
 };
 

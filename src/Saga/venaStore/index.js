@@ -1,5 +1,7 @@
 import { take, put, call } from 'redux-saga/effects';
 import Api from '../../Utils/ApiClient';
+import { inventory } from '../../Model/normalizr/schema';
+import { normalize } from 'normalizr';
 
 import {
   REQUEST_SHOPPING_ITEM_INIT,
@@ -34,7 +36,7 @@ function* SagaParticipateVenalink() {
 
     try {
       const result = yield call([API, API.post], '/venalink/participate', payload);
-
+      result.inventories = normalize(result.inventories, inventory);
 
       yield put({ type: SUCCESS_PARTICIPATE_VENALINK, result, postId: payload.postId });
     }
@@ -52,7 +54,7 @@ function* SagaActivateVenalink() {
 
     try {
       const result = yield call([API, API.post], '/venalink/activate', payload);
-
+      result.inventories = normalize(result.inventories, inventory);
 
       yield put({ type: SUCCESS_ACTIVATE_VENALINK, result });
       yield put({ type: CLOSE_ACTIVE_VENALINK_MODAL });
@@ -71,7 +73,7 @@ function* SagaPurchaseItem() {
 
     try {
       const result = yield call([API, API.post], '/venastore/purchase/item', payload);
-
+      result.inventories = normalize(result.inventories, inventory);
 
       yield put({ type: SUCCESS_PURCHASE_ITEM, result });
       yield put({ type: CLOSE_CONFIRM_PURCHASE_ITEM_MODAL, result });

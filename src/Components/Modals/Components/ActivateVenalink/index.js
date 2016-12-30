@@ -45,7 +45,6 @@ const ActivateVenalink = React.createClass({
 
   requestActivateVenalink(activateItem) {
     if (activateItem) {
-      const item = activateItem.get('item');
       const { ShareLinkStore } = this.props;
 
       if (this.state.venalinkRP > 1000) {
@@ -53,7 +52,7 @@ const ActivateVenalink = React.createClass({
           total_amount_r: this.state.venalinkRP,
           terminate_at: this.state.startDate,
           post_id: ShareLinkStore.get('venalinkActivateRequestPostId'),
-          activate_item_id: item.get('id'),
+          activate_item_id: activateItem.get('id'),
           active_at: new Date()
         });
       }
@@ -61,13 +60,18 @@ const ActivateVenalink = React.createClass({
   },
 
   findInventoryItem(user, options) {
+    const { Items, Venatems } = this.props;
+
     if (user && user.get('inventories')) {
-      const { Inventories, Items, Venatems } = this.props;
-      const inventoryIds = user.get('inventories');
-      return inventoryIds
-        .find(i => i.get('type') === options.type)
-        .get('items')
-        .find(i => ((i.get('item').get('title') === options.title) && (i.get('item_count') > 0)));
+      const findItem = Items.find(i => i.get('title') === options.title);
+      const findVenatem = Venatems.find(v => v.get('item_id') === findItem.get('id'));
+
+      if (findItem && (findVenatem.get('item_count') > 0)) {
+        return findItem
+      } else {
+        return null;
+      }
+
     } else {
       return null;
     }
