@@ -120,7 +120,7 @@ const Forum = React.createClass({
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.removeQuery('forumPrefix', 'forumSearch'));
+    browserHistory.push(makeUrl.removeQuery('forumPrefix', 'forumSearch').end());
   },
 
   openLoginModal() {

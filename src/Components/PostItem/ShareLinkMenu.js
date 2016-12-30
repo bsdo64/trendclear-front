@@ -76,7 +76,6 @@ const ShareLinkMenu = React.createClass({
 
   requestParticipateVenalink(venalinkId, participateItem, postId) {
     if (participateItem) {
-      const item = participateItem.get('item');
 
       this.setState({
         openVenalink: false
@@ -86,7 +85,7 @@ const ShareLinkMenu = React.createClass({
         this.props.FireRequestParticipateVenalink({
           postId,
           venalink_id: venalinkId,
-          used_venalink_item_id: item.get('id'),
+          used_venalink_item_id: participateItem.get('id'),
           request_at: new Date()
         })
       }
