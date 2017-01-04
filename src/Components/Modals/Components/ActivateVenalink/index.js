@@ -64,17 +64,20 @@ const ActivateVenalink = React.createClass({
 
     if (user && user.get('inventories')) {
       const findItem = Items.find(i => i.get('title') === options.title);
-      const findVenatem = Venatems.find(v => v.get('item_id') === findItem.get('id'));
 
-      if (findItem && (findVenatem.get('item_count') > 0)) {
-        return findItem
-      } else {
-        return null;
+      if (findItem) {
+        const findVenatem = Venatems.find(v => v.get('item_id') === findItem.get('id'));
+
+        if (findVenatem) {
+
+          if (findVenatem.get('item_count') > 0) {
+            return findItem
+          }
+        }
       }
-
-    } else {
-      return null;
     }
+
+    return null;
   },
 
   openPayment() {
