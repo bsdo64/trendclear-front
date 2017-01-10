@@ -141,23 +141,26 @@ const ShareLinkMenu = React.createClass({
     }
   },
 
-  findInventoryItem(user, options) {
-    const { Items, Venatems } = this.props;
+    findInventoryItem(user, options) {
+      const { Items, Venatems } = this.props;
 
-    if (user && user.get('inventories')) {
-      const findItem = Items.find(i => i.get('title') === options.title);
-      const findVenatem = Venatems.find(v => v.get('item_id') === findItem.get('id'));
-      
-      if (findItem && (findVenatem.get('item_count') > 0)) {
-        return findItem
-      } else {
-        return null;
+      if (user && user.get('inventories')) {
+        const findItem = Items.find(i => i.get('title') === options.title);
+
+        if (findItem) {
+          const findVenatem = Venatems.find(v => v.get('item_id') === findItem.get('id'));
+
+          if (findVenatem) {
+
+            if (findVenatem.get('item_count') > 0) {
+              return findItem
+            }
+          }
+        }
       }
-    
-    } else {
+
       return null;
-    }
-  },
+    },
 
   createShareLinkIcon(isUsersPost, venalink, myParticipate) {
 
