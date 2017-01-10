@@ -4,12 +4,12 @@ import {
   requestUserAvatarImageRemove
 } from '../../Actions/User';
 
-const DeleteButton = (props) => {
-  const removeImage = () => props.FireRequestUserAvatarImageRemove();
+const removeImage = (props) => () => props.FireRequestUserAvatarImageRemove();
 
+const DeleteButton = (props) => {
   return (
     <div className="delete_avatar_btn"
-         onClick={removeImage}
+         onClick={removeImage(props)}
     >
       <i className="fa fa-remove"/>
     </div>

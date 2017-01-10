@@ -25,11 +25,6 @@ class WidgetBox extends Component {
       forumManaged: UserStore.get('forumManaged'),
       inventories: UserStore.get('inventories'),
     };
-    // const logout = LoginStore.get('logout');
-
-    // if (logout) {
-    //   location.href = '/';
-    // }
 
     const submitLink = location.query.forumId
       ? `/community/submit?forumId=${location.query.forumId}`
@@ -171,7 +166,7 @@ WidgetBox.propTypes = {
   Forums: PropTypes.object.isRequired,
   Venatems: PropTypes.object.isRequired,
   Items: PropTypes.object.isRequired,
-  Inventories: PropTypes.object.isRequired,
+  Inventories: PropTypes.object,
   FireToggleVenacleStoreModal: PropTypes.func.isRequired,
   FireToggleAvatarModal: PropTypes.func.isRequired,
   FireShowItemInfo: PropTypes.func.isRequired,

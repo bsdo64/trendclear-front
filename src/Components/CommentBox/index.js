@@ -112,7 +112,7 @@ const SubCommentItem = React.createClass({
           if (this.editor) {
             this.editor.destroy();
           }
-          this.editor = new MediumEditor(this.refs.sub_comment_content_update, commentMediumConfig);
+          this.editor = new MediumEditor(this.refs.sub_comment_content_update, commentMediumConfig);  // eslint-disable-line no-undef
         }
       }
     }
@@ -320,7 +320,7 @@ const CommentItem = React.createClass({
           if (this.editor) {
             this.editor.destroy();
           }
-          this.editor = new MediumEditor(this.refs.comment_content_update, commentMediumConfig);
+          this.editor = new MediumEditor(this.refs.comment_content_update, commentMediumConfig); // eslint-disable-line no-undef
         }
       }
     }
@@ -354,7 +354,7 @@ const CommentItem = React.createClass({
     this.setState({ subCommentOpen: !this.state.subCommentOpen }, () => {
 
       const commentId = this.props.comment.get('id');
-      this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], commentMediumConfig);
+      this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], commentMediumConfig); // eslint-disable-line no-undef
     });
   },
 
@@ -705,13 +705,13 @@ const CommentBox = React.createClass({
   },
 
   componentDidMount() {
-    this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig);
+    this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig); // eslint-disable-line no-undef
   },
 
   componentDidUpdate() {
     this.editor.destroy();
 
-    this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig);
+    this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig); // eslint-disable-line no-undef
   },
 
   submitComment() {

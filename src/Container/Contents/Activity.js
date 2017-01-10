@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
 import Activity from '../../Components/Contents/Activity';
 import { UI, Domains } from '../../Reducers/InitialStates';
+import { getUser } from '../../Selectors/User';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
@@ -32,6 +32,8 @@ ActivityContainer.defaultProps = {
 
 
 const mapStateToProps = (state) => {
+  const stateStore = state.get('Stores');
+
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args))
   };
@@ -46,7 +48,7 @@ const mapStateToProps = (state) => {
     ListStore: getUIState('List'),
     AuthStore: getUIState('Auth'),
     PaginationStore: getUIState('Pagination'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(stateStore),
 
     Forums: getDomainState('Forums'),
     Users: getDomainState('Users'),

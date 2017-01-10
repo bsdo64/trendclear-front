@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
-
 import { Link } from 'react-router';
 import cx from 'classnames';
 import SubscribeForumList from '../SubscribeForumList';
@@ -57,8 +56,6 @@ const CollectionItem = React.createClass({
     collection: PropTypes.object.isRequired,
     ListStore: PropTypes.object,
 
-    closeItemHandler: PropTypes.func.isRequired,
-    mouseOverItemHandler: PropTypes.func.isRequired,
     FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
   },
 
@@ -66,16 +63,6 @@ const CollectionItem = React.createClass({
     return {
       hide: true
     };
-  },
-
-  openCollection(itemId) {
-
-    this.props.mouseOverItemHandler(itemId)
-  },
-
-  closeCollection() {
-
-    this.props.closeItemHandler();
   },
 
   render() {
@@ -154,16 +141,7 @@ const Collection = React.createClass({
         isPrivate: false
       },
       hideCreateCollectionBox: true,
-      mouseOverItemId: location.pathname.split('/')[2]
     };
-  },
-  closeItemHandler() {
-
-    this.setState({ mouseOverItemId: null });
-  },
-  mouseOverItemHandler(itemId) {
-
-    this.setState({ mouseOverItemId: itemId });
   },
   toggleCreateCollection() {
 
@@ -220,8 +198,6 @@ const Collection = React.createClass({
           Forums={Forums}
           location={location}
           mouseOverItemHandler={self.mouseOverItemHandler}
-          closeItemHandler={self.closeItemHandler}
-          mouseOverItem={self.state.mouseOverItemId}
           collection={map}
           {...this.props}
         />
@@ -232,9 +208,6 @@ const Collection = React.createClass({
   render() {
 
     const { Collections } = this.props;
-    const createCollectionBoxStyle = cx('create_box', {
-      hide: this.state.hideCreateCollectionBox
-    });
 
     return (
       <li id="user_best_collection">

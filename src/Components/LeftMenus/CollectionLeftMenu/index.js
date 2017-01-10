@@ -87,14 +87,6 @@ const CollectionLeftMenu = React.createClass({
     } else {
       return (<div></div>)
     }
-
-    // if (categories) {
-    //   return List.isList(categories) ?
-    //     <div>{categories.map(this.createCategoryItem)}</div> :
-    //     <div>{this.createCategoryItem(categories)}</div>;
-    // } else {
-    //   return <div></div>;
-    // }
   }
 });
 
