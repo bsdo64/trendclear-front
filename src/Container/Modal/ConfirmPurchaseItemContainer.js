@@ -1,6 +1,4 @@
-import React, {
-  PropTypes,
-} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import ConfirmBox from '../../Components/Modals/Components/ConfirmBox';
