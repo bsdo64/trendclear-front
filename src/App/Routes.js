@@ -49,23 +49,21 @@ const App = (props) => {
   return (
     <div>
       <div id="wrap">
-        <div id="header">
-          <div className="head_contents">
-            <div className="top_area">
-              <div className="top_contents">
-                <div id="top_logo" onClick={() => {
-                  document.body.scrollTop = 0;
-                }}>
-                  <Link className="ui header inverted huge" to="/">
-                    <img src="/images/Venacle.png"/>
-                  </Link>
-                </div>
-                <div id="top_search">
-                  { props.HeaderSearch }
-                </div>
-                <div id="top_my_area">
-                  { props.HeaderMyMenu }
-                </div>
+        <div id="global-header">
+          <div className="top_area">
+            <div className="top_contents">
+              <div id="top_logo" onClick={() => {
+                document.body.scrollTop = 0;
+              }}>
+                <Link className="ui header inverted huge" to="/">
+                  <img src="/images/Venacle.png"/>
+                </Link>
+              </div>
+              <div id="top_search">
+                { props.HeaderSearch }
+              </div>
+              <div id="top_my_area">
+                { props.HeaderMyMenu }
               </div>
             </div>
           </div>
@@ -110,21 +108,19 @@ const HelpApp = (props) => {
   return (
     <div>
       <div id="wrap">
-        <div id="header">
-          <div className="head_contents">
-            <div className="top_area">
-              <div className="top_contents">
-                <div id="top_logo">
-                  <Link className="ui header inverted huge" to="/">
-                    <img src="/images/Venacle.png"/>
-                  </Link>
-                </div>
-                <div id="top_search">
-                  { props.HeaderSearch }
-                </div>
-                <div id="top_my_area">
-                  { props.HeaderMyMenu }
-                </div>
+        <div id="global-header">
+          <div className="top_area">
+            <div className="top_contents">
+              <div id="top_logo">
+                <Link className="ui header inverted huge" to="/">
+                  <img src="/images/Venacle.png"/>
+                </Link>
+              </div>
+              <div id="top_search">
+                { props.HeaderSearch }
+              </div>
+              <div id="top_my_area">
+                { props.HeaderMyMenu }
               </div>
             </div>
           </div>

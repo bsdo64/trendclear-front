@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 
-require('./index.scss');
 const SearchBar = React.createClass({
   propTypes: {
     SearchStore: PropTypes.object.isRequired,
