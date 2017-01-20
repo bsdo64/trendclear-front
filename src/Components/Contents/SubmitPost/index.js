@@ -46,7 +46,7 @@ const EditorBox = React.createClass({
     // set leave delete
 
     const dom = this.refs.post_editor;
-    this.editor = new MediumEditor(dom, medium);
+    this.editor = new MediumEditor(dom, medium);  // eslint-disable-line no-undef
     this.editor.subscribe('editableInput', () => {
       this.handleContent()
     });
