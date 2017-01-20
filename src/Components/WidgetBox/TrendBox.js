@@ -222,8 +222,8 @@ const TrendBox = React.createClass({
   },
 
   render() {
-    const { 
-      user, ShoppingStore, InventoryStore, FireShowItemInfo, Inventories, Venatems, Items 
+    const {
+      user, ShoppingStore, InventoryStore, FireShowItemInfo, Inventories, Venatems, Items
     } = this.props;
 
     const sex = user.profile.get('sex'),

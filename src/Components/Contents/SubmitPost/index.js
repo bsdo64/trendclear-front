@@ -11,6 +11,9 @@ import { medium, mediumInsertConfig } from './config';
 import AvatarImage from '../../AvatarImage';
 import SelectSearchForum from './SelectSearchForum';
 
+import debug from 'debug';
+const errorLog = debug('vn:front:error');
+
 const EditorBox = React.createClass({
   displayName: 'EditorBox',
   propTypes: {
@@ -164,7 +167,7 @@ const EditorBox = React.createClass({
         FireRequestSubmitPost(newPost);
       }
     } else {
-      console.log('not available');
+      errorLog('not available');
     }
   },
 
@@ -267,7 +270,7 @@ const EditorBox = React.createClass({
 
     const args = Array.prototype.slice.call(arguments, 1);
 
-    console.log(args, a, b, c, d)
+    errorLog(args, a, b, c, d)
   },
 
   checkForumManager(user, managers) {

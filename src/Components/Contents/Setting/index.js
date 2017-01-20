@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import moment from '../../Lib/Moment';
+import debug from 'debug';
+const logger = debug('vn:front:error');
 
 const SettingProfile = React.createClass({
   displayName: 'SettingProfile',
@@ -302,8 +304,8 @@ const SettingPassword = React.createClass({
           });
 
         },
-        onFailure: () => {
-          console.log('Fail');
+        onFailure: (e) => {
+          logger('Form validate fail', e);
         }
       })
     ;
