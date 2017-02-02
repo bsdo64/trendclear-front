@@ -96,9 +96,21 @@
     }
   }
 
-  .follow_button.active {
-    .fa.fa-star {
-      color: #058294;
+  .header {
+
+    .ui.button {
+      box-shadow: none;
+    }
+
+    .follow_button {
+
+
+
+      &.active {
+        .fa.fa-star {
+          color: #058294;
+        }
+      }
     }
   }
 

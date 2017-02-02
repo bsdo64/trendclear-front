@@ -243,7 +243,7 @@ const Forum = React.createClass({
         .find(v => v === forumId)
         : false;
 
-      const cFollowActive = cx('ui button primary basic tiny right floated follow_button', {
+      const cFollowActive = cx('ui button basic tiny right floated follow_button', {
         active: isUserForumFollow
       });
 
@@ -282,7 +282,7 @@ const Forum = React.createClass({
                       {
                         (isManager) &&
                         <Link to={`/community/settings?forumId=${forumId}`}
-                              className="ui button primary basic tiny right floated">
+                              className="ui button basic tiny right floated">
                           <i className="fa fa-gear"/>
                           {' 설정'}
                         </Link>
@@ -291,7 +291,7 @@ const Forum = React.createClass({
                       {
                         userId && isLogin &&
                         <Dropdown className="subscribe_dropdown" ref="subscribe_dropdown">
-                          <DropdownTrigger className="ui button primary basic tiny right floated">
+                          <DropdownTrigger className="ui button basic tiny right floated">
                             <i className="fa fa-share"/>
                             {' 구독'}
                           </DropdownTrigger>
@@ -326,7 +326,7 @@ const Forum = React.createClass({
 
                       {
                         !userId && !isLogin &&
-                        <a onClick={this.openLoginModal} className="ui button primary basic tiny right floated">
+                        <a onClick={this.openLoginModal} className="ui button basic tiny right floated">
                           <i className="fa fa-share"/>
                           {' 구독'}
                         </a>

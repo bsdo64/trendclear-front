@@ -354,7 +354,7 @@ const EditorBox = React.createClass({
             에디터
           </a>
           <a className={urlActive} onClick={this.selectUrl}>
-            <i className="fa fa-link icon"></i>
+            <i className="chain icon"></i>
             URL
           </a>
         </div>

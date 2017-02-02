@@ -168,13 +168,13 @@ const ShareLinkMenu = React.createClass({
       if (!venalink) {
         return (
           <div className="share_link_icon">
-            <i className="fa fa-link icon"/>
+            <i className="fa fa-link"/>
           </div>
         )
       } else {
         return (
           <div className="share_link_icon">
-            <i className="fa fa-link icon" style={{ color: '#b56f7e' }}/>
+            <i className="fa fa-link" style={{ color: '#b56f7e' }}/>
           </div>
         )
       }
@@ -182,19 +182,19 @@ const ShareLinkMenu = React.createClass({
       if (venalink && !myParticipate) {
         return (
           <div className="share_link_icon">
-            <i className="fa fa-unlink icon"/>
+            <i className="fa fa-unlink"/>
           </div>
         )
       } else if (venalink && myParticipate) {
         return (
           <div className="share_link_icon">
-            <i className="fa fa-unlink icon" style={{ color: '#b56f7e' }}/>
+            <i className="fa fa-unlink" style={{ color: '#b56f7e' }}/>
           </div>
         )
       } else {
         return (
           <div className="share_link_icon">
-            <i className="fa fa-link icon"/>
+            <i className="fa fa-link"/>
           </div>
         )
       }

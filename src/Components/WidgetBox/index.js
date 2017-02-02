@@ -85,7 +85,7 @@ class WidgetBox extends Component {
 
                         return (
                           <div key={forum.get('id')} className="item">
-                            <i className="fa fa-inbox icon"/>
+                            <i className="ui inbox icon"/>
                             <div className="content">
                               <div className="header">
                                 <Link to={`/community?forumId=${forum.get('id')}`} className={styleActive}>
