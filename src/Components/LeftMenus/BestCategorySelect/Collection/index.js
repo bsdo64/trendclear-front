@@ -133,6 +133,16 @@ const Collection = React.createClass({
     FireRequestRemoveForumInCollection: PropTypes.func.isRequired
   },
 
+  componentDidMount() {
+    $('.callback.example .checkbox')
+      .checkbox();
+  },
+
+  componentWillUnmount() {
+    $('.callback.example .checkbox')
+      .checkbox();
+  },
+
   getInitialState() {
     return {
       createCollection: {
@@ -168,7 +178,6 @@ const Collection = React.createClass({
     this.setState(newState);
   },
   handleChangePrivate(e) {
-    e.preventDefault();
     e.stopPropagation();
 
     const newState = this.state;
@@ -245,12 +254,15 @@ const Collection = React.createClass({
                              placeholder="컬렉션 설명" onChange={this.handleChangeDescription}/>
                     </div>
                     <div className="field collection_checkbox_field">
-                      <label>
-                        <input name="isPrivate" type="checkbox"
+                      <div className="ui checkbox">
+                        <input id="isPrivate" name="isPrivate" type="hidden"
                                defaultChecked={false} value={this.state.createCollection.isPrivate}
-                               onChange={this.handleChangePrivate}
-                        /> 비공개
-                      </label>
+                        />
+                        <input type="checkbox"
+                               defaultChecked={false}
+                               onChange={this.handleChangePrivate}/>
+                        <label htmlFor="isPrivate">비공개</label>
+                      </div>
                     </div>
                     <button className="ui primary button tiny" type="submit">만들기</button>
                   </form>

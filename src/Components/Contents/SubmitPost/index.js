@@ -109,6 +109,10 @@ const EditorBox = React.createClass({
     let allContents = this.editor.serialize();
     let el = allContents['post_editor'].value;
 
+    if (el === "") {
+      el = '<p class="medium-insert-active"><br></p>';
+    }
+
     this.props.FireHandlePostContent({
       content: el,
       width: this.refs.post_editor.offsetWidth,
@@ -357,7 +361,12 @@ const EditorBox = React.createClass({
 
         <div className={displayEditor}>
           <div id="post_editor_background">
-            <div ref="post_editor" className="post_editor" id="post_editor" placeholder="텍스트를 입력하세요"></div>
+            <div
+              ref="post_editor"
+              className="post_editor"
+              id="post_editor"
+              placeholder="텍스트를 입력하세요"
+            ></div>
           </div>
 
           {

@@ -29,7 +29,6 @@ const SearchBar = React.createClass({
     if (SearchStore) {
       query = SearchStore.get('query') || '';
     }
-
     return query;
   },
 
