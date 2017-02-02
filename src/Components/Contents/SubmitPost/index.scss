@@ -31,6 +31,14 @@
       padding: 5px 10px;
     }
     .post_header {
+
+      .Select-control {
+        border: 1px solid rgba(34, 36, 38, 0.15);
+        color: rgba(0, 0, 0, 0.87);
+        border-radius: 0.07142857rem;
+        border-right: 1px solid #eee;
+      }
+
       .Select {
         width: 150px;
         display: inline-block;
