@@ -15,6 +15,39 @@
 
   .search_forum_box {
     margin: 0 0 0 10px;
+
+    .search_box {
+      min-width: 500px;
+
+      & > .header {
+
+      }
+
+      & > .search_forums {
+        padding-bottom: 10px;
+
+        .input {
+          width: 100%;
+        }
+      }
+
+      & > .forum_lists {
+        &>.created_forums_box, .following_forums_box, .ranking_forums_box {
+          float:left;
+
+          .header {
+            font-size: 12px;
+          }
+          .list {
+            font-size: 12px;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            min-width: 100px;
+          }
+        }
+      }
+    }
   }
 
   .post_item {
@@ -98,6 +131,9 @@
       transition: border-color 0.3s;
 
       #post_editor {
+        min-height: 191px;
+        // min 200px - medium-editor-insert-plugin's active P tag margin 7 px - border 2px
+
         .medium-insert-embeds {
           figure {
             margin: 0;

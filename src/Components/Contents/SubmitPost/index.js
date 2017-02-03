@@ -10,7 +10,6 @@ import cx from 'classnames';
 import { medium, mediumInsertConfig } from './config';
 import AvatarImage from '../../AvatarImage';
 import SelectSearchForum from './SelectSearchForum';
-
 import debug from 'debug';
 const errorLog = debug('vn:front:error');
 
@@ -435,6 +434,9 @@ const SubmitContents = React.createClass({
     AuthStore: PropTypes.object.isRequired,
     UserStore: PropTypes.object.isRequired,
     SubmitPostStore: PropTypes.object.isRequired,
+    ForumFollowed: PropTypes.object.isRequired,
+    ForumCreated: PropTypes.object.isRequired,
+    RankForums: PropTypes.object.isRequired,
 
     FireRemoveServerInit: PropTypes.func.isRequired,
     FireHandlePostContent: PropTypes.func.isRequired,
@@ -471,7 +473,9 @@ const SubmitContents = React.createClass({
   },
 
   render() {
-    const { AuthStore, UserStore, SubmitPostStore } = this.props;
+    const {
+      AuthStore, UserStore, SubmitPostStore, ForumCreated, ForumFollowed, RankForums
+    } = this.props;
 
     const isLogin = AuthStore.get('isLogin');
 
@@ -511,6 +515,9 @@ const SubmitContents = React.createClass({
         return (
           <SelectSearchForum
             profile={profile}
+            ForumFollowed={ForumFollowed}
+            ForumCreated={ForumCreated}
+            RankForums={RankForums}
           />
         )
       }

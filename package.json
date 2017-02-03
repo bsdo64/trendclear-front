@@ -34,6 +34,7 @@
     "immutable": "^3.8.1",
     "jquery": "latest",
     "js-video-url-parser": "0.2.3",
+    "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "metafetch": "git+ssh://git@github.com/bsdo64/metafetch.git",
     "moment": "^2.17.1",

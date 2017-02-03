@@ -1,10 +1,14 @@
 import React, { PropTypes } from 'react';
-import { browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import AvatarImage from '../../AvatarImage';
+import marked from '../../Lib/Marked';
 
 const SelectSearchForum = React.createClass({
   propTypes: {
     profile: PropTypes.object.isRequired,
+    ForumFollowed: PropTypes.object.isRequired,
+    ForumCreated: PropTypes.object.isRequired,
+    RankForums: PropTypes.object.isRequired,
   },
 
   componentDidMount() {
@@ -39,7 +43,7 @@ const SelectSearchForum = React.createClass({
   },
 
   render() {
-    const { profile } = this.props;
+    const { ForumCreated, ForumFollowed, RankForums, profile } = this.props;
     const sex = profile.get('sex');
     const avatarImg = profile.get('avatar_img');
 
@@ -68,6 +72,113 @@ const SelectSearchForum = React.createClass({
                   <i className="search icon"></i>
                 </div>
                 <div className="results"></div>
+              </div>
+
+              <div className="forum_lists">
+                <div className="created_forums_box">
+                  <div className="header">내 게시판</div>
+                  <ul className="list">
+                    {
+                      ForumCreated.sortBy(v => v.get('title')).map(v => {
+                        return (
+                          <li key={v.get('id')} className="item">
+                            <Link to={`/community/submit?forumId=${v.get('id')}`}>
+                              <span>{v.get('title')}</span>
+                            </Link>
+                          </li>
+                        )
+                      })
+                    }
+                  </ul>
+                </div>
+
+                <div className="following_forums_box">
+                  <div className="header">팔로잉 게시판</div>
+                  <ul className="list">
+                    {
+                      ForumFollowed.sortBy(v => v.get('title')).map(v => {
+                        return (
+                          <li key={v.get('id')} className="item">
+                            <Link to={`/community/submit?forumId=${v.get('id')}`}>
+                              <span>{v.get('title')}</span>
+                            </Link>
+                          </li>
+                        )
+                      })
+                    }
+                  </ul>
+                </div>
+
+                <div className="ranking_forums_box">
+                  <div className="header">추천 게시판</div>
+                  <ul className="list">
+                    {
+                      RankForums.map((v, i) => {
+                        if (i === 0) {
+                          return (
+                            <li key={v.get('id')} className="item">
+                              <div id="forum_info" style={{
+                                margin: '5px 0',
+                                padding: 0,
+                                border: '1px solid #ddd',
+                                minWidth: 300
+                              }}>
+                                <div className="ui cards">
+                                  <div className="card" style={{
+                                    borderTop: '1px solid rgb(5, 130, 148)',
+                                    boxShadow: 'none',
+                                    width: '100%'
+                                  }}>
+                                    <div className="content">
+                                      <div className="header">
+                                        <Link to={`/community?forumId=${v.get('id')}`}>
+                                          {v.get('title')}
+                                        </Link>
+                                      </div>
+                                      <div className="meta">
+                                        {v.get('sub_header')}
+                                      </div>
+                                      <div className="description">
+                                        {v.get('description')}
+                                      </div>
+                                      <div className="meta forum_meta">
+                                        <div className="forum_counts">
+                                          <span className="follow_counts">팔로우 {v.get('follow_count')} 명</span>
+                                          <span className="subs_counts">컬렉션 구독 {v.get('subs_count')}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="content">
+                                      {
+                                        v.get('rule') &&
+                                        <div >
+                                          <div className="ui header tiny">
+                                            클럽 규칙
+                                          </div>
+                                          <div className="description"
+                                               dangerouslySetInnerHTML={{ __html: marked(v.get('rule')) }}
+                                          ></div>
+                                        </div>
+                                      }
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          )
+                        } else {
+                          return (
+                            <li key={v.get('id')} className="item">
+                              <Link to={`/community/submit?forumId=${v.get('id')}`}>
+                                <span>{v.get('title')}</span>
+                              </Link>
+                            </li>
+                          )
+                        }
+                      })
+                    }
+                  </ul>
+                </div>
               </div>
             </div>
 

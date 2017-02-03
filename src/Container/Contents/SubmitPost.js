@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
 import SubmitPost from '../../Components/Contents/SubmitPost';
 import { UI } from '../../Reducers/InitialStates';
+import { getUser, forumCreated, forumFollowed } from '../../Selectors/User';
+import { rankForums } from '../../Selectors/Forum';
 import {
   removeServerInit,
   handlePostContent,
@@ -31,6 +32,8 @@ SubmitPostContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  const stateStore = state.get('Stores');
+
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args))
   };
@@ -43,7 +46,10 @@ const mapStateToProps = (state) => {
     SubmitPostStore: getUIState('SubmitPost'),
     AuthStore: getUIState('Auth'),
     LoginStore: getUIState('Login'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(stateStore),
+    ForumFollowed: forumFollowed(stateStore),
+    ForumCreated: forumCreated(stateStore),
+    RankForums: rankForums(stateStore),
     Posts: getDomainState('Posts')
   }
 };

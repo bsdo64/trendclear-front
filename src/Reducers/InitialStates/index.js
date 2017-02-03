@@ -147,5 +147,6 @@ export const UI = {
       },
       error: null
     },
-  })
+  }),
+  User: Map({})
 };
