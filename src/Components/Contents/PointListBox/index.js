@@ -5,6 +5,7 @@ import accounting from 'accounting';
 import { Link } from 'react-router';
 import cx from 'classnames';
 import moment from '../../Lib/Moment';
+import TablePagination from './TablePagination';
 
 const PointListBox = React.createClass({
   displayName: 'ChargePointBox',
@@ -15,12 +16,15 @@ const PointListBox = React.createClass({
   getInitialState() {
     return {
       pointType: 'TP',
-
+      page: 1
     };
   },
 
   togglePointType(point) {
-    this.setState({ pointType: point });
+    this.setState({
+      pointType: point,
+      page: 1
+    });
   },
 
   createAccount(account) {
@@ -115,10 +119,27 @@ const PointListBox = React.createClass({
     )
   },
 
+  handleClickPage() {
+    console.log(1);
+  },
+
   render() {
     const { UserStore } = this.props;
-    const accounts = UserStore.get('account');
+    const accounts = UserStore.getIn(['account', 'results']);
+    const totalAccounts = UserStore.getIn(['account', 'total']) || 0;
     const trendbox = UserStore.get('trendbox');
+    const length = accounts && accounts.size || 0;
+
+    const isTP = this.state.pointType === 'TP';
+    const isRP = this.state.pointType === 'RP';
+    const activeButtonStyleTP = cx('ui bottom attached button', {
+      active: isTP,
+      primary: isTP
+    });
+    const activeButtonStyleRP = cx('ui bottom attached button', {
+      active: isRP,
+      primary: isRP
+    });
 
     return (
       <div>
@@ -133,7 +154,7 @@ const PointListBox = React.createClass({
                 {trendbox && accounting.formatNumber(trendbox.get('T'))} P
               </div>
             </div>
-            <div className="ui bottom attached button" onClick={this.togglePointType.bind(this, 'TP')}>
+            <div className={activeButtonStyleTP} onClick={this.togglePointType.bind(this, 'TP')}>
               내역 보기
             </div>
           </div>
@@ -147,13 +168,13 @@ const PointListBox = React.createClass({
                 <Link to="/user/chargePoint">충전하기</Link>
               </div>
             </div>
-            <div className="ui bottom attached button" onClick={this.togglePointType.bind(this, 'RP')}>
+            <div className={activeButtonStyleRP} onClick={this.togglePointType.bind(this, 'RP')}>
               내역 보기
             </div>
           </div>
         </div>
         <div style={{ padding: 10, paddingBottom: 20 }}>
-          <h4>{this.state.pointType} 내역</h4>
+          <h4>{this.state.pointType} 내역 {`(${length} / ${totalAccounts})`}</h4>
           <table className="ui celled table" style={{ fontSize: 12 }}>
             <thead>
             <tr>
@@ -176,18 +197,12 @@ const PointListBox = React.createClass({
             <tfoot>
             <tr>
               <th colSpan="6">
-                <div className="ui right floated pagination menu">
-                  <a className="icon item">
-                    <i className="left chevron icon"/>
-                  </a>
-                  <a className="item active">1</a>
-                  <a className="item">2</a>
-                  <a className="item">3</a>
-                  <a className="item">4</a>
-                  <a className="icon item">
-                    <i className="right chevron icon"/>
-                  </a>
-                </div>
+                <TablePagination
+                  totalPage={totalAccounts}
+                  currentPage={this.state.page}
+                  pageLimit={length}
+                  onClickPage={this.handleClickPage}
+                />
               </th>
             </tr>
             </tfoot>
