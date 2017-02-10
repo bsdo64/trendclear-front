@@ -3,9 +3,7 @@ import { getLoginUser } from '../Util/func';
 import { connect } from 'react-redux';
 import ChargeLogListBox from '../../Components/Contents/ChargeLogListBox';
 import {
-  waitingCheckCharge,
-  requestCheckPointCharge,
-  failureCheckPointCharge
+  requestGetMoreChargeLogList
 } from '../../Actions/Point';
 
 const ChargeLogList = React.createClass({
@@ -40,8 +38,6 @@ const mapStateToProps = (state) => {
 module.exports = connect(
   mapStateToProps,
   {
-    FireWaitingCheckCharge: waitingCheckCharge,
-    FireRequestCheckPointCharge: requestCheckPointCharge,
-    FireFailureCheckPointCharge: failureCheckPointCharge,
+    FireRequestGetMoreChargeLogList: requestGetMoreChargeLogList,
   }
 )(ChargeLogList);

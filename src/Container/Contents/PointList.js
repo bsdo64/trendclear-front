@@ -2,6 +2,10 @@ import React from 'react';
 import { getLoginUser } from '../Util/func';
 import { connect } from 'react-redux';
 import PointListBox from '../../Components/Contents/PointListBox';
+import { UI, Domains } from '../../Reducers/InitialStates';
+import {
+  requestMoreAccountList,
+} from '../../Actions/Point';
 
 const PointList = React.createClass({
   render() {
@@ -31,11 +35,9 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (/* dispatch */) => {
-  return {}
-};
-
 module.exports = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    FireRequestMoreAccountList: requestMoreAccountList
+  }
 )(PointList);

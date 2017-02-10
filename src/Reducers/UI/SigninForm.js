@@ -12,12 +12,12 @@ import {
   FAILURE_CHECK_EMAILDUP,
   SUCCESS_CHECK_NICKDUP,
   FAILURE_CHECK_NICKDUP,
-  SUCCESS_CHECK_VERIFYCODE,
-  FAILURE_CHECK_VERIFYCODE,
+  SUCCESS_CHECK_VERIFY_CODE,
+  FAILURE_CHECK_VERIFY_CODE,
   SUCCESS_SIGNIN,
   FAILURE_SIGNIN,
-  SUCCESS_EMAILVERIFY,
-  FAILURE_EMAILVERIFY,
+  SUCCESS_EMAIL_VERIFY_CODE,
+  FAILURE_EMAIL_VERIFY_CODE,
 } from '../../Actions/Signin';
 
 const SigninForm = (state = UI.SigninForm, action) => {
@@ -47,16 +47,22 @@ const SigninForm = (state = UI.SigninForm, action) => {
       return state.update('nickDup', () => !!action.dup);
     }
 
-    case SUCCESS_CHECK_VERIFYCODE: {
-      return state.update('emailRequested', () => action.result === 'ok');
-    }
-
-    case SUCCESS_EMAILVERIFY: {
+    case SUCCESS_CHECK_VERIFY_CODE: {
       const result = (action.result === 'ok')
         ? { emailVerifySuccess: true, emailVerifyFail: false }
         : { emailVerifySuccess: false, emailVerifyFail: true };
 
       return state.merge(result);
+    }
+
+    case FAILURE_CHECK_VERIFY_CODE: {
+      return state
+        .update('emailVerifySuccess', () => false)
+        .update('emailVerifyFail', () => true)
+    }
+
+    case SUCCESS_EMAIL_VERIFY_CODE: {
+      return state.update('emailRequested', () => action.result === 'ok');
     }
 
     case SUCCESS_SIGNIN: {
@@ -65,9 +71,8 @@ const SigninForm = (state = UI.SigninForm, action) => {
 
     case FAILURE_CHECK_NICKDUP:
     case FAILURE_CHECK_EMAILDUP:
-    case FAILURE_CHECK_VERIFYCODE:
     case FAILURE_SIGNIN:
-    case FAILURE_EMAILVERIFY: {
+    case FAILURE_EMAIL_VERIFY_CODE: {
       errorLog(action.error);
       break;
     }

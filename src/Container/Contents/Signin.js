@@ -13,7 +13,7 @@ import {
 
   requestCheckEmailDup,
   requestCheckNickDup,
-  requestEmailVerify,
+  requestEmailVerifyCode,
   requestCheckVerifyCode,
   requestSignin
 } from '../../Actions/Signin'
@@ -55,7 +55,7 @@ module.exports = connect(
 
     FireRequestCheckEmailDup: requestCheckEmailDup,
     FireRequestCheckNickDup: requestCheckNickDup,
-    FireRequestEmailVerify: requestEmailVerify,
+    FireRequestEmailVerifyCode: requestEmailVerifyCode,
     FireRequestCheckVerifyCode: requestCheckVerifyCode,
     FireRequestSignin: requestSignin,
   }

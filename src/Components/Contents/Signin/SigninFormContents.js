@@ -15,7 +15,7 @@ const SigninFormContents = React.createClass({
 
     FireRequestCheckEmailDup: PropTypes.func.isRequired,
     FireRequestCheckNickDup: PropTypes.func.isRequired,
-    FireRequestEmailVerify: PropTypes.func.isRequired,
+    FireRequestEmailVerifyCode: PropTypes.func.isRequired,
     FireEmailVerifyFormOpen: PropTypes.func.isRequired,
     FireRequestCheckVerifyCode: PropTypes.func.isRequired,
     FireRequestSignin: PropTypes.func.isRequired,
@@ -129,8 +129,28 @@ const SigninFormContents = React.createClass({
         }
       },
       onSuccess: (err, result) => {
-        result.birth = new Date(result.year, result.month - 1, result.day);
-        this.props.FireRequestSignin(result);
+
+        const { emailDup, nickDup, emailVerifyFail, emailVerifySuccess, emailRequested } = this.props;
+
+        if (emailVerifyFail) {
+          return;
+        }
+
+        if ((emailDup === false) && (nickDup === false) &&
+          (emailVerifySuccess === false) && (emailVerifyFail === false) &&
+          (!emailRequested)) {
+          this.props.FireEmailVerifyFormOpen();
+          this._sendEmailVerify();
+        }
+
+        if (emailVerifySuccess && emailRequested) {
+          result.birth = new Date(result.year, result.month - 1, result.day);
+          this.props.FireRequestSignin(result);
+        }
+      },
+      onFailure: (err, fields) => {
+        console.log(err);
+        console.log(fields);
       }
     });
   },
@@ -319,26 +339,12 @@ const SigninFormContents = React.createClass({
   _sendEmailVerify() {
     const email = this.refs.signinEmail.value;
     if (email) {
-      this.props.FireRequestEmailVerify({ email });
+      this.props.FireRequestEmailVerifyCode({ email });
     }
   },
   handleSubmit() {
-    const { emailDup, nickDup, emailVerifyFail, emailVerifySuccess, emailRequested } = this.props;
 
-    if (emailVerifyFail) {
-      return;
-    }
-
-    if ((emailDup === false) && (nickDup === false) &&
-      (emailVerifySuccess === false) && (emailVerifyFail === false) &&
-      (!emailRequested)) {
-      this.props.FireEmailVerifyFormOpen();
-      this._sendEmailVerify();
-    }
-
-    if (!emailDup && !nickDup && !emailVerifyFail && emailVerifySuccess && emailRequested) {
-      $(this.refs.signinform).form('validate form');
-    }
+    $(this.refs.signinform).form('validate form');
   },
 
   handleCheckEmailCodeVerify() {

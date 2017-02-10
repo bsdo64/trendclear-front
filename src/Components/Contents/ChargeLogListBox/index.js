@@ -3,11 +3,19 @@ import React, {
 } from 'react';
 import accounting from 'accounting';
 import moment from '../../Lib/Moment';
+import TablePaginator from '../../Paginator/TablePagination';
 
 const ChargeLogListBox = React.createClass({
   displayName: 'ChargePointBox',
   propTypes: {
     UserStore: PropTypes.object.isRequired,
+    FireRequestGetMoreChargeLogList: PropTypes.func
+  },
+
+  getInitialState() {
+    return {
+      page: 1
+    };
   },
 
   paymentTime(payment) {
@@ -90,9 +98,24 @@ const ChargeLogListBox = React.createClass({
     return paymentMethod;
   },
 
+  handlePage(p) {
+    return () => {
+      this.props.FireRequestGetMoreChargeLogList({
+        p: p
+      });
+
+      this.setState({
+        page: p
+      });
+    }
+  },
+
   render() {
     const { UserStore } = this.props;
-    const payments = UserStore.get('payments');
+    const payments = UserStore.getIn(['payments', 'results']);
+    const paymentTotal = UserStore.getIn(['payments', 'total']);
+    const pageLimit = 20;
+    const totalPage = Math.ceil(paymentTotal / pageLimit);
 
     if (!payments) {
       return <div />
@@ -157,18 +180,12 @@ const ChargeLogListBox = React.createClass({
           <tfoot>
           <tr>
             <th colSpan="7">
-            <div className="ui right floated pagination menu">
-              <a className="icon item">
-                <i className="left chevron icon"></i>
-              </a>
-              <a className="item">1</a>
-              <a className="item">2</a>
-              <a className="item">3</a>
-              <a className="item">4</a>
-              <a className="icon item">
-                <i className="right chevron icon"></i>
-              </a>
-            </div>
+              <TablePaginator
+                totalPage={totalPage}
+                currentPage={this.state.page}
+                pageLimit={pageLimit}
+                onClickPage={this.handlePage}
+              />
             </th>
           </tr>
           </tfoot>

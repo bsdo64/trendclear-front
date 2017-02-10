@@ -5,12 +5,13 @@ import accounting from 'accounting';
 import { Link } from 'react-router';
 import cx from 'classnames';
 import moment from '../../Lib/Moment';
-import TablePagination from './TablePagination';
+import TablePagination from '../../Paginator/TablePagination';
 
 const PointListBox = React.createClass({
   displayName: 'ChargePointBox',
   propTypes: {
     UserStore: PropTypes.object.isRequired,
+    FireRequestMoreAccountList: PropTypes.func
   },
 
   getInitialState() {
@@ -21,6 +22,11 @@ const PointListBox = React.createClass({
   },
 
   togglePointType(point) {
+    this.props.FireRequestMoreAccountList({
+      pointType: point,
+      p: 1
+    });
+
     this.setState({
       pointType: point,
       page: 1
@@ -119,8 +125,17 @@ const PointListBox = React.createClass({
     )
   },
 
-  handleClickPage() {
-    console.log(1);
+  handleClickPage(p) {
+    return (e) => {
+      this.props.FireRequestMoreAccountList({
+        pointType: this.state.pointType,
+        p: p
+      });
+
+      this.setState({
+        page: p
+      })
+    }
   },
 
   render() {
@@ -129,6 +144,7 @@ const PointListBox = React.createClass({
     const totalAccounts = UserStore.getIn(['account', 'total']) || 0;
     const trendbox = UserStore.get('trendbox');
     const length = accounts && accounts.size || 0;
+    const totalPage = Math.ceil(totalAccounts / length);
 
     const isTP = this.state.pointType === 'TP';
     const isRP = this.state.pointType === 'RP';
@@ -174,7 +190,7 @@ const PointListBox = React.createClass({
           </div>
         </div>
         <div style={{ padding: 10, paddingBottom: 20 }}>
-          <h4>{this.state.pointType} 내역 {`(${length} / ${totalAccounts})`}</h4>
+          <h4>{this.state.pointType} 내역 {`(${totalAccounts})`}</h4>
           <table className="ui celled table" style={{ fontSize: 12 }}>
             <thead>
             <tr>
@@ -198,7 +214,7 @@ const PointListBox = React.createClass({
             <tr>
               <th colSpan="6">
                 <TablePagination
-                  totalPage={totalAccounts}
+                  totalPage={totalPage}
                   currentPage={this.state.page}
                   pageLimit={length}
                   onClickPage={this.handleClickPage}

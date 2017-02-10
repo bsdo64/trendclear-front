@@ -20,7 +20,7 @@ const SigninContents = React.createClass({
 
     FireRequestCheckEmailDup: PropTypes.func.isRequired,
     FireRequestCheckNickDup: PropTypes.func.isRequired,
-    FireRequestEmailVerify: PropTypes.func.isRequired,
+    FireRequestEmailVerifyCode: PropTypes.func.isRequired,
     FireRequestCheckVerifyCode: PropTypes.func.isRequired,
     FireRequestSignin: PropTypes.func.isRequired,
   },
@@ -71,7 +71,7 @@ const SigninContents = React.createClass({
             FireRequestCheckEmailDup={this.props.FireRequestCheckEmailDup}
             FireRequestCheckNickDup={this.props.FireRequestCheckNickDup}
             FireEmailVerifyFormOpen={this.props.FireEmailVerifyFormOpen}
-            FireRequestEmailVerify={this.props.FireRequestEmailVerify}
+            FireRequestEmailVerifyCode={this.props.FireRequestEmailVerifyCode}
             FireRequestCheckVerifyCode={this.props.FireRequestCheckVerifyCode}
             FireRequestSignin={this.props.FireRequestSignin}
           />

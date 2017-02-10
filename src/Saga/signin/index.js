@@ -10,13 +10,13 @@ import {
   SUCCESS_CHECK_NICKDUP,
   FAILURE_CHECK_NICKDUP,
 
-  REQUEST_CHECK_VERIFYCODE,
-  SUCCESS_CHECK_VERIFYCODE,
-  FAILURE_CHECK_VERIFYCODE,
+  REQUEST_CHECK_VERIFY_CODE,
+  SUCCESS_CHECK_VERIFY_CODE,
+  FAILURE_CHECK_VERIFY_CODE,
 
-  REQUEST_EMAILVERIFY,
-  SUCCESS_EMAILVERIFY,
-  FAILURE_EMAILVERIFY,
+  REQUEST_EMAIL_VERIFY_CODE,
+  SUCCESS_EMAIL_VERIFY_CODE,
+  FAILURE_EMAIL_VERIFY_CODE,
 
   REQUEST_SIGNIN,
   SUCCESS_SIGNIN,
@@ -44,16 +44,16 @@ function* SagaSignin() {
 
 function* SagaEmailVerify() {
   while (WORKING) {
-    // REQUEST_EMAILVERIFY
-    const { payload } = yield take(REQUEST_EMAILVERIFY);
+    // REQUEST_EMAIL_VERIFY_CODE
+    const { payload } = yield take(REQUEST_EMAIL_VERIFY_CODE);
 
     try {
       const { result }= yield call([Api, API.post], '/signin/requestEmailVerify', payload);
-      yield put({ type: SUCCESS_EMAILVERIFY, result })
+      yield put({ type: SUCCESS_EMAIL_VERIFY_CODE, result })
     }
 
     catch (error) {
-      yield put({ type: FAILURE_EMAILVERIFY, error })
+      yield put({ type: FAILURE_EMAIL_VERIFY_CODE, error })
     }
   }
 }
@@ -61,15 +61,22 @@ function* SagaEmailVerify() {
 function* SagaCheckVerifyCode() {
   while (WORKING) {
     // REQUEST_CHECK_VERIFYCODE
-    const { payload } = yield take(REQUEST_CHECK_VERIFYCODE);
+    const { payload } = yield take(REQUEST_CHECK_VERIFY_CODE);
 
     try {
       const { result }= yield call([Api, API.post], '/signin/checkEmailCodeVerify', payload);
-      yield put({ type: SUCCESS_CHECK_VERIFYCODE, result })
+
+      if (result) {
+        yield put({ type: SUCCESS_CHECK_VERIFY_CODE, result });
+      } else {
+        yield put({ type: FAILURE_CHECK_VERIFY_CODE })
+      }
+
+      yield put({ type: SUCCESS_CHECK_VERIFY_CODE, result })
     }
 
     catch (error) {
-      yield put({ type: FAILURE_CHECK_VERIFYCODE, error })
+      yield put({ type: FAILURE_CHECK_VERIFY_CODE, error })
     }
   }
 }

@@ -10,6 +10,7 @@ import report from './report';
 import collection from './collection';
 import followingList from './followingList';
 import venaStore from './venaStore';
+import venalink from './venalink';
 
 export default function* rootSaga() {
   yield [
@@ -25,5 +26,6 @@ export default function* rootSaga() {
     collection(),
     followingList(),
     venaStore(),
+    venalink()
   ]
 }

@@ -12,6 +12,10 @@ import {
   SUCCESS_USER_PAYBACK_RP,
 } from '../../Actions/User';
 import {
+  SUCCESS_MORE_ACCOUNT_LIST,
+  SUCCESS_GET_MORE_CHARGE_LOG_LIST
+} from '../../Actions/Point';
+import {
   SUCCESS_SAVE_FOLLOWING_FILTER,
 } from '../../Actions/Gnb';
 import {
@@ -201,6 +205,22 @@ const Users = (state = initList, action) => {
         .updateIn([refundedVenalink.user_id.toString(), 'trendbox', 'R'], point =>
           refundedVenalink.total_refunded_r ? point + refundedVenalink.total_refunded_r : point
         );
+    }
+
+    case SUCCESS_MORE_ACCOUNT_LIST: {
+      const { payload } = action;
+      const { data, targetId } = payload;
+
+      return state
+        .mergeDeepIn([targetId.toString(), 'account'], data);
+    }
+
+    case SUCCESS_GET_MORE_CHARGE_LOG_LIST: {
+      const { payload } = action;
+      const { data, targetId } = payload;
+
+      return state
+        .mergeDeepIn([targetId.toString(), 'payments'], data);
     }
 
     default: return state;
