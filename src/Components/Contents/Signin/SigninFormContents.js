@@ -148,9 +148,8 @@ const SigninFormContents = React.createClass({
           this.props.FireRequestSignin(result);
         }
       },
-      onFailure: (err, fields) => {
-        console.log(err);
-        console.log(fields);
+      onFailure: () => {
+
       }
     });
   },

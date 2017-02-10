@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { Map, List } from 'immutable';
+import { List } from 'immutable';
 
 const getCurrentUserId = state => state.getIn(['UI', 'Auth', 'userId']);
 

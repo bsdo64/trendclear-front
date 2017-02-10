@@ -126,7 +126,7 @@ const PointListBox = React.createClass({
   },
 
   handleClickPage(p) {
-    return (e) => {
+    return () => {
       this.props.FireRequestMoreAccountList({
         pointType: this.state.pointType,
         p: p

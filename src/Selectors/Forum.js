@@ -1,6 +1,4 @@
 import { createSelector } from 'reselect';
-import { shuffle } from 'lodash';
-import { Map, List } from 'immutable';
 
 const getForums = state => state.getIn(['Domains', 'Forums']);
 

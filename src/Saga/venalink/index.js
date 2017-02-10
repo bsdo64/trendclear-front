@@ -1,6 +1,5 @@
 import { take, put, call } from 'redux-saga/effects';
 import Api from '../../Utils/ApiClient';
-import { normalize } from 'normalizr';
 
 import {
   REQUEST_GET_MORE_ACTIVE_VENALINK_LIST,
