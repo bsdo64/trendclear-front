@@ -14,10 +14,9 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -27,17 +26,24 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
-      loaders: ['babel'],
+      use: ['babel-loader'],
       include: path.resolve(root, 'src')
     }, {
+      test: /\.css$/,
+      use: [
+        'style-loader',
+        'css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=1',
+        'postcss-loader'
+      ]
+    }, {
       test: /\.scss$/,
-      loaders: ["style", "css", "sass"],
+      use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
       include: path.resolve(root, 'src')
     }, {
       test: /\.json$/,
-      loaders: ["json"],
+      use: ["json-loader"],
     }]
   }
 };

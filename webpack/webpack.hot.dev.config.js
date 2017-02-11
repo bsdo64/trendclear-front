@@ -5,7 +5,6 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'cheap-source-map',
-  debug: true,
   entry: {
     Entry: [
       'babel-polyfill',
@@ -21,6 +20,9 @@ module.exports = {
     publicPath: "http://localhost:2992/_assets/"
   },
   plugins: [
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -30,25 +32,28 @@ module.exports = {
     })
 ],
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
-      loaders: ['babel'],
+      use: ['babel-loader'],
       include: path.resolve(root, 'src')
     }, {
       test: /\.css$/,
-      loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=1!postcss'
+      use: [
+        'style-loader',
+        'css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=1',
+        'postcss-loader'
+      ]
     }, {
       test: /\.scss$/,
-      loaders: ["style", "css", "postcss", "sass"],
+      use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
       include: path.resolve(root, 'src')
     }, {
       test: /\.json$/,
-      loaders: ["json"],
+      use: ["json-loader"],
     }]
   },
   node: {
     child_process: 'empty',
     fs: 'empty'
-  },
-  postcss: function () { return [ autoprefixer ] }
+  }
 };
