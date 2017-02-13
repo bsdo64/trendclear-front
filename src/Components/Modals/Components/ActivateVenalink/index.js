@@ -148,10 +148,20 @@ const ActivateVenalink = React.createClass({
                     </div>
                   </div>
                   <div className="field">
-                    <div>
-                      RP : {UserStore.get('trendbox').get('R')}
-                      => {UserStore.get('trendbox').get('R') - this.state.venalinkRP}
-                    </div>
+                    {
+                      UserStore.get('trendbox').get('R') > 0 &&
+                      <div>
+                        RP : {UserStore.get('trendbox').get('R')}
+                        => {UserStore.get('trendbox').get('R') - this.state.venalinkRP}
+                      </div>
+                    }
+
+                    {
+                      UserStore.get('trendbox').get('R') <= 0 &&
+                      <div style={{ fontSize: 12, color: '#red' }}>
+                        RP가 없습니다. <br />충전하거나 베나링크 참여를 통해 RP를 얻으세요
+                      </div>
+                    }
                   </div>
                   <div className="ui button primary" onClick={this.requestActivateVenalink.bind(this, activateItem)}>
                     활성화
