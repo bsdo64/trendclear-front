@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "hot-dev-server": "node ./bin/webpack.hot.dev.server.js",
-    "redis": "redis-server ./redis.conf",
-    "front-server-nodemon": "nodemon --harmony ./bin/www --watch app.js --watch src --watch routes --watch middleware --watch bin",
-    "start-dev": "npm run hot-dev-server | npm run front-server",
+    "_dev:hot-webpack": "node ./bin/webpack.hot.dev.server.js",
+    "_redis": "redis-server ./redis.conf",
+    "_dev:front-server": "nodemon --harmony ./bin/www --watch app.js --watch src --watch routes --watch middleware --watch bin",
     "webpack-dev": "webpack --config webpack/webpack.hot.dev.config.js",
     "webpack-prod": "webpack --config webpack/webpack.production.config.js",
-    "lint": "gulp cached-lint-watch"
+    "_lint": "gulp cached-lint-watch",
+    "start-dev": "npm-run-all -l -s _redis -p _dev:hot-webpack _dev:front-server _lint"
   },
   "dependencies": {
     "accounting": "^0.4.1",
@@ -108,6 +108,7 @@
     "json-loader": "^0.5.4",
     "node-sass": "^4.5.0",
     "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.1",
     "postcss-cssnext": "^2.9.0",
     "postcss-import": "^9.1.0",
     "postcss-loader": "^1.3.0",
