@@ -122,7 +122,7 @@ class WidgetBox extends Component {
         {
           <Main2
             key="Main2"
-            url="/images/venacle-guide.jpg"
+            url={require("../../images/venacle-guide.jpg")}
             link="/help/guide"
           />
         }

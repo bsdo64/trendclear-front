@@ -1,6 +1,15 @@
-bundle.*
+dist/bundle*
 .idea/
 bower_components/
 node_modules/
 dump.rdb
 *.log
+
+dist/images/**/*
+!dist/images/icon_1.png
+!dist/images/skill_0.jpg
+!dist/images/skill_1.jpg
+!dist/images/skill_2.jpg
+!dist/images/venacle-item1-venalink.png
+!dist/images/venacle-item3-create-community.png
+

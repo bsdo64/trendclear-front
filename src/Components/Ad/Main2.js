@@ -12,12 +12,7 @@ const Main2 = React.createClass({
     return (
       <div style={{ marginTop: 10 }}>
         <Link to={link}>
-          <img
-            src={url}
-            style={{
-              width: '100%',
-              border: '1px solid #ddd'
-            }}/>
+          <img src={url}/>
         </Link>
       </div>
     );
