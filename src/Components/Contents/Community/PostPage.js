@@ -96,6 +96,8 @@ const PostPage = React.createClass({
               />
             }
 
+            {/*<PostPaginator {...this.props} />*/}
+
             <Forum
               {...this.props}
             />
