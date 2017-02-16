@@ -41,7 +41,7 @@ const NotiItem = React.createClass({
         return (
           <div className={notiItemClass} onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
             <div className="label">
-              <img src="/images/40x40.png"/>
+              <img src={require("../../images/40x40.png")}/>
             </div>
             <div className="content">
               <div className="summary" onClick={close}>
@@ -59,7 +59,7 @@ const NotiItem = React.createClass({
         return (
           <div className={notiItemClass} onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
             <div className="label">
-              <img src="/images/40x40.png"/>
+              <img src={require("../../images/40x40.png")}/>
             </div>
             <div className="content">
               <div className="summary">
@@ -178,9 +178,9 @@ const UserButtons = React.createClass({
       avatarImg = <img className="ui avatar image" src={'/image/uploaded/files/' + avatar_img}/>;
     } else {
       if (sex) {
-        avatarImg = <img className="ui avatar image" src="/images/default-male.png"/>;
+        avatarImg = <img className="ui avatar image" src={require("../../images/default-male.png")}/>;
       } else {
-        avatarImg = <img className="ui avatar image" src="/images/default-female.png"/>;
+        avatarImg = <img className="ui avatar image" src={require("../../images/default-female.png")}/>;
       }
     }
 

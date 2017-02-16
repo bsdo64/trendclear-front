@@ -40,9 +40,9 @@ const AvatarImage = (props) => {
     }
   } else {
     if (sex) {
-      return <img className={imageClass} src="/images/default-male.png"/>;
+      return <img className={imageClass} src={require("../../images/default-male.png")}/>;
     } else {
-      return <img className={imageClass} src="/images/default-female.png"/>;
+      return <img className={imageClass} src={require("../../images/default-female.png")}/>;
     }
   }
 };

@@ -49,8 +49,37 @@ module.exports = {
       }),
       include: path.resolve(root, 'src')
     }, {
-      test: /\.json$/,
-      use: ["json-loader"],
-    }]
+      test: /\.woff2?$/,
+      // Inline small woff files and output them below font/.
+      // Set mimetype just in case.
+      use: {
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[hash].[ext]',
+          limit: 50000,
+          mimetype: 'application/font-woff',
+        }
+      }
+    }, {
+      test: /\.(ttf|svg|eot)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[hash].[ext]',
+        },
+      }
+    }, {
+      test: /\.(png|jpg|wav|mp3)$/,
+      include: [
+        path.resolve(root, 'src/images')
+      ],
+      use: {
+        loader: 'url-loader',
+        options: {
+          name: 'images/[hash:base64:12].[ext]',
+          limit: 4096,
+        }
+      }
+    }],
   }
 };
