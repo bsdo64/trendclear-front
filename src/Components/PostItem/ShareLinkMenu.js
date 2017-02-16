@@ -6,6 +6,8 @@ import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdow
 import moment from '../Lib/Moment';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import './LinkMenu.scss'
+
 const ShareLinkMenu = React.createClass({
   propTypes: {
     userId: PropTypes.number,

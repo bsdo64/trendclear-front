@@ -242,6 +242,11 @@ const Collection = React.createClass({
               {
                 !this.state.hideCreateCollectionBox &&
                 <div key="12313" className='create-box'>
+                  <div className="header">
+                    <h4 className="title">컬렉션을 만들어 모든 게시판을 구독하세요</h4>
+                    <div className="description">원하는 컬렉션을 만들어 관심 있는 게시판을 구독 하실 수 있습니다</div>
+                  </div>
+
                   <form className="ui mini form " onSubmit={this.submitNewCollection}>
                     <div className="field collection_title_field">
                       <label>이름</label>
