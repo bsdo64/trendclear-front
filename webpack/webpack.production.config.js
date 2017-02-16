@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const root = path.resolve(__dirname, '../');
 
@@ -23,7 +24,8 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       },
       __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
-    })
+    }),
+    new ExtractTextWebpackPlugin('styles.css')
   ],
   module: {
     rules: [{
@@ -32,14 +34,19 @@ module.exports = {
       include: path.resolve(root, 'src')
     }, {
       test: /\.css$/,
-      use: [
-        'style-loader',
-        'css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=1',
-        'postcss-loader'
-      ]
+      use: ExtractTextWebpackPlugin.extract({
+        fallback: "style-loader",
+        use: [
+          'css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=1',
+          'postcss-loader'
+        ]
+      })
     }, {
       test: /\.scss$/,
-      use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
+      use: ExtractTextWebpackPlugin.extract({
+        fallback: "style-loader",
+        use: ["css-loader", "postcss-loader", "sass-loader"],
+      }),
       include: path.resolve(root, 'src')
     }, {
       test: /\.json$/,

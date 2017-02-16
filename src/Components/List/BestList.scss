@@ -13,10 +13,6 @@
       padding: 10px;
       width: 700px;
 
-      .ui.image.tiny {
-        width: 50px;
-      }
-
       .ui.content {
         margin-left: 10px;
         padding-left: 0;
@@ -55,6 +51,16 @@
             }
           }
         }
+
+        .meta_header {
+          display: flex;
+          padding: 0 10px;
+
+          .ui.image.tiny {
+            width: 50px;
+          }
+        }
+
         h3.best_post_title {
           font-size: 14px;
           margin: 0;
