@@ -1,0 +1,84 @@
+
+:root {
+  -boxPadding: 12px;
+}
+
+.postContainer {
+  margin: 0;
+  padding: 10px;
+}
+
+.postBox {
+  margin-left: 10px;
+  padding-left: 0;
+  background: #fff;
+  box-shadow: 1px 1px 1px 0 #848484;
+}
+
+.postHeader {
+  padding: 10px;
+}
+
+.postMetaHeader {
+  display: flex;
+  padding: 0 10px;
+
+  & .avatarImage {
+    width: 40px;
+    height: 40px;
+
+    & > div, 
+    & > div > img, 
+    & > img {
+      width: inherit;
+    }
+  }
+
+  & .titleBox {
+    padding: 0;
+    padding-left: 10px;
+
+    & > h3.title {
+      font-size: 1.25em;
+      margin: 0;
+      padding: 0;
+
+      & > a {
+        color: #27485E;
+      }
+    }
+
+    & > .writeMeta {
+      & .authorNick {
+        display: inline-block;
+
+        & > a {
+          font-size: 13px;
+          font-weight: bold;          
+        }
+      }
+
+      & .authorIcon {
+        display: inline-block;
+
+        & > img {
+          vertical-align: middle;
+          margin: 0 0px 3px 4px;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+}
+
+.postContent {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  word-wrap: break-word;
+  font-size: 14px;
+
+  & p {
+    padding: 0 10px;
+  }
+}

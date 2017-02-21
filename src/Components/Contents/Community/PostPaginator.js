@@ -10,7 +10,7 @@ const PostPaginator = React.createClass({
 
   render() {
 
-    const { Users, Posts, ListStore } = this.props;
+    const { Posts, ListStore } = this.props;
 
     const postId = ListStore.get('CurrentPostId');
     if (postId) {

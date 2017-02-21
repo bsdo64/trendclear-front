@@ -1,5 +1,6 @@
 module.exports = {
   plugins: [
-    require('autoprefixer')({ /* ...options */ })
+    require("postcss-smart-import")(),
+    require("postcss-cssnext")(),
   ]
 };

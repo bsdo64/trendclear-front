@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const root = path.resolve(__dirname, '../');
-const autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'cheap-source-map',
@@ -24,6 +23,7 @@ module.exports = {
       debug: true
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('development')
