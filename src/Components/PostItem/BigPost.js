@@ -7,6 +7,7 @@ import AvatarImage from '../AvatarImage';
 import Menu from './ReportMenu';
 import ShareLinkMenu from './ShareLinkMenu';
 
+import styles from './BigPost.css';
 require('./Post.scss');
 
 const BigPost = React.createClass({
@@ -84,12 +85,12 @@ const BigPost = React.createClass({
     const postUrl = `/community?forumId=${forumId}&postId=${postId}`;
     const liked = post.get('liked');
 
-    const cPost = cx('ui item best_list_item', {
+    const cPost = cx([styles.postContainer], 'best_list_item', {
       post_item: (postStyle === 'post_item')
     });
 
     const isLong = (post.get('height') > 0) && (post.get('height') > 1000);
-    const contentStyle = cx('ui description best_post_content', {
+    const contentStyle = cx([styles.postContent], {
       shorten_post: isLong
     });
 
@@ -100,35 +101,34 @@ const BigPost = React.createClass({
       >
 
         {/* meta */}
-        <div className="ui content">
+        <div className={cx("ui content ", styles.postBox)}>
           {/* forum */}
-          <div className="meta best_post_meta">
-            <div className="ui horizontal divided list">
-              <div className="item">
-                <Link to={forumUrl}>{post.getIn(['forum', 'title'])}</Link>
-              </div>
-            </div>
+          <div className={cx("meta", styles.postHeader)}>
+            <Link to={forumUrl}>{post.getIn(['forum', 'title'])}</Link>
+            의 인기글
           </div>
 
-          <div className="meta_header">
+          <div className={cx("meta_header", styles.postMetaHeader)}>
 
             {/* avatar */}
-            <div className="ui image tiny">
+            <div className={cx(styles.avatarImage)}>
               <AvatarImage
                 sex={sex}
                 avatarImg={avatar_img}
               />
             </div>
 
-            <div>
+            <div className={cx(styles.titleBox)}>
               {/* title */}
-              <h3 className="best_post_title"><Link to={postUrl}>{post.get('title')}</Link></h3>
+              <h3 className={cx(styles.title)}>
+                <Link to={postUrl}>{post.get('title')}</Link>
+              </h3>
 
               {/* nick, date, view */}
-              <div className="meta best_post_meta">
+              <div className={cx(styles.writeMeta)}>
                 <div className="ui horizontal divided list">
                   <div className="item">
-                    <div className="author_nick">
+                    <div className={cx(styles.authorNick)}>
                       <a data-tip
                          data-for={'nick_' + author.get('nick') + '_' + post.get('id')}
                          data-offset="{'bottom': 8, 'right': 42}"
@@ -188,7 +188,7 @@ const BigPost = React.createClass({
                         </div>
                       </ReactTooltip>
                     </div>
-                    <div className="author_icon">
+                    <div className={cx(styles.authorIcon)}>
                       {this.createIconImg(icon_img)}
                     </div>
                   </div>

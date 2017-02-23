@@ -13,3 +13,5 @@ dist/images/**/*
 !dist/images/venacle-item1-venalink.png
 !dist/images/venacle-item3-create-community.png
 
+npm-debug*
+.vscode/
