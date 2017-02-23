@@ -1,3 +1,5 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
 $vn_blue_header: #00AABA;
 $vn_blue_header_end: #0E4458;
 $vn_blue_main: #058294;
@@ -5,6 +7,7 @@ $vn_background: #e6e6e6;
 $white: #fff;
 
 body {
+  font-family: 'Noto Sans', 'Noto Sans CJK KR', sans-serif;
   background: $vn_background
 }
 

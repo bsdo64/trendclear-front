@@ -1,5 +1,5 @@
 /*!
- * # Semantic UI 2.2.7 - Modal
+ * # Semantic UI 2.2.9 - Modal
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -75,7 +75,7 @@
 
 .ui.modal > .header {
   display: block;
-  font-family: 'Noto Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Noto Sans KR', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   background: #FFFFFF;
   margin: 0em;
   padding: 1.25rem 1.5rem;
@@ -85,7 +85,7 @@
 }
 .ui.modal > .header:not(.ui) {
   font-size: 1.41666667rem;
-  line-height: 1.2857em;
+  line-height: 1.28571429em;
   font-weight: bold;
 }
 

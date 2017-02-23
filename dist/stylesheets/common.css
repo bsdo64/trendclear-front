@@ -1,4 +1,6 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 body {
+  font-family: 'Noto Sans', 'Noto Sans CJK KR', sans-serif;
   background: #e6e6e6; }
 
 #wrap {

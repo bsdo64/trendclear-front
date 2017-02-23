@@ -1,5 +1,5 @@
 /*!
- * # Semantic UI 2.2.7 - Dropdown
+ * # Semantic UI 2.2.9 - Dropdown
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -349,7 +349,7 @@
   -webkit-transform: rotateZ(0deg);
           transform: rotateZ(0deg);
   min-width: 14em;
-  min-height: 2.9642em;
+  min-height: 2.96428571em;
   background: #FFFFFF;
   display: inline-block;
   padding: 0.91666667em 2.26666667em 0.91666667em 1.16666667em;
@@ -377,7 +377,7 @@ select.ui.dropdown {
   position: absolute;
   width: auto;
   height: auto;
-  line-height: 1.2142em;
+  line-height: 1.21428571em;
   top: 0.91666667em;
   right: 1.16666667em;
   z-index: 3;
@@ -560,14 +560,14 @@ select.ui.dropdown {
 
 /* Search Selection */
 .ui.search.selection.dropdown > input.search {
-  line-height: 1.2142em;
-  padding: 0.80956667em 2.26666667em 0.80956667em 1.16666667em;
+  line-height: 1.21428571em;
+  padding: 0.80952381em 2.26666667em 0.80952381em 1.16666667em;
 }
 
 /* Used to size multi select input to character width */
 .ui.search.selection.dropdown > span.sizer {
-  line-height: 1.2142em;
-  padding: 0.80956667em 2.26666667em 0.80956667em 1.16666667em;
+  line-height: 1.21428571em;
+  padding: 0.80952381em 2.26666667em 0.80952381em 1.16666667em;
   display: none;
   white-space: pre;
 }
@@ -627,7 +627,7 @@ select.ui.dropdown {
 
 /* Multiple Selection */
 .ui.multiple.dropdown {
-  padding: 0.26985556em 2.26666667em 0.26985556em 0.41666667em;
+  padding: 0.26984127em 2.26666667em 0.26984127em 0.41666667em;
 }
 .ui.multiple.dropdown .menu {
   cursor: auto;
@@ -665,7 +665,7 @@ select.ui.dropdown {
   position: static;
   padding: 0;
   max-width: 100%;
-  margin: 0.53971111em 0em 0.53971111em 0.75em;
+  margin: 0.53968254em 0em 0.53968254em 0.75em;
   line-height: 1.41666667em;
 }
 .ui.multiple.dropdown > .label ~ input.search {
@@ -687,7 +687,7 @@ select.ui.dropdown {
   top: 0;
   left: 0;
   padding: inherit;
-  margin: 0.53971111em 0em 0.53971111em 0.75em;
+  margin: 0.53968254em 0em 0.53968254em 0.75em;
   line-height: 1.41666667em;
 }
 .ui.multiple.search.dropdown > .label ~ .text {
@@ -699,7 +699,7 @@ select.ui.dropdown {
   position: static;
   padding: 0;
   max-width: 100%;
-  margin: 0.53971111em 0em 0.53971111em 0.75em;
+  margin: 0.53968254em 0em 0.53968254em 0.75em;
   width: 2.2em;
   line-height: 1.41666667em;
 }
@@ -1065,7 +1065,6 @@ select.ui.dropdown {
 .ui.scrolling.dropdown .menu .item.item.item,
 .ui.dropdown .scrolling.menu > .item.item.item {
   border-top: none;
-  padding-right: calc( 1.16666667rem  +  17px ) !important;
 }
 .ui.scrolling.dropdown .menu .item:first-child,
 .ui.dropdown .scrolling.menu .item:first-child {
@@ -1349,6 +1348,32 @@ select.ui.dropdown {
   bottom: auto;
   box-shadow: 1px 1px 0px 1px rgba(34, 36, 38, 0.15);
   margin: -0.29166667em 0em 0em;
+}
+
+/* Right Pointing Upward */
+.ui.upward.right.pointing.dropdown:not(.top):not(.bottom) > .menu {
+  top: auto;
+  bottom: 0;
+  margin: 0em 1em 0em 0em;
+}
+.ui.upward.right.pointing.dropdown:not(.top):not(.bottom) > .menu:after {
+  top: auto;
+  bottom: 0;
+  margin: 0em 0em 1em 0em;
+  box-shadow: -1px -1px 0px 1px rgba(34, 36, 38, 0.15);
+}
+
+/* Left Pointing Upward */
+.ui.upward.left.pointing.dropdown:not(.top):not(.bottom) > .menu {
+  top: auto;
+  bottom: 0;
+  margin: 0em 0em 0em 1em;
+}
+.ui.upward.left.pointing.dropdown:not(.top):not(.bottom) > .menu:after {
+  top: auto;
+  bottom: 0;
+  margin: 0em 0em 1em 0em;
+  box-shadow: -1px -1px 0px 1px rgba(34, 36, 38, 0.15);
 }
 
 
