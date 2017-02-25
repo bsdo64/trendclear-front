@@ -27,7 +27,7 @@ menu.sub_category_list {
   margin: 0;
   position: relative;
   padding: 20px 25px;
-  font-size: 13px;
+  font-size: 1em;
   z-index: 1;
 
   .sub_category_header {
@@ -44,6 +44,7 @@ menu.sub_category_list {
       & > h5 {
         text-align: left;
         margin-bottom: 2px;
+        font-size: 13px;
 
         a {
           color: #fff;
