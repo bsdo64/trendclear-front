@@ -88,7 +88,10 @@ body {
   min-height: 100%; }
   #container > #left_col {
     width: 250px;
-    float: left; }
+    float: left;
+    position: fixed;
+    top: 50px;
+    bottom: 0; }
   #container > #section {
     float: none;
     margin-left: 250px; }

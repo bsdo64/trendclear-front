@@ -45,6 +45,8 @@ const SearchMenu = require('../Container/LeftCol/SearchMenu');
 const ModalContainer = require('../Container/Modal/ModalContainer');
 const WidgetContainer = require('../Container/RightCol/WidgetContainer');
 
+const LeftCol = require('../views/share/LeftCol');
+
 const App = (props) => {
   return (
     <div>
@@ -71,14 +73,16 @@ const App = (props) => {
           </div>
         </div>
         <div id="container">
-          <div id="left_col">
-            <div id="category_menu">
+          { props.LeftCol }
+          {/*<div id="left_col">
+
+            /!*<div id="category_menu">
               { props.LeftColGnb }
             </div>
             <div id="category">
               { props.LeftColMenu }
-            </div>
-          </div>
+            </div>*!/
+          </div>*/}
           <div id="section">
             <div id="contents">
               { props.ContentsContainer }
@@ -99,8 +103,8 @@ const App = (props) => {
 App.propTypes = {
   HeaderSearch: React.PropTypes.element.isRequired,
   HeaderMyMenu: React.PropTypes.element.isRequired,
-  LeftColGnb: React.PropTypes.element.isRequired,
-  LeftColMenu: React.PropTypes.element.isRequired,
+  // LeftColGnb: React.PropTypes.element.isRequired,
+  // LeftColMenu: React.PropTypes.element.isRequired,
   ContentsContainer: React.PropTypes.element.isRequired,
   WidgetContainer: React.PropTypes.element.isRequired,
   ModalContainer: React.PropTypes.element.isRequired,
@@ -129,12 +133,12 @@ const HelpApp = (props) => {
         </div>
         <div id="container">
           <div id="left_col">
-            <div id="category_menu">
-              { props.LeftColGnb }
-            </div>
-            <div id="category">
-              { props.LeftColMenu }
-            </div>
+            {/*<div id="category_menu">*/}
+              {/*{ props.LeftColGnb }*/}
+            {/*</div>*/}
+            {/*<div id="category">*/}
+              {/*{ props.LeftColMenu }*/}
+            {/*</div>*/}
           </div>
           <div id="section">
             <div id="contents">
@@ -174,8 +178,9 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: BestCategoryMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            LeftCol: LeftCol,
+            //LeftColMenu: BestCategoryMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ContentsContainer
@@ -187,8 +192,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: BestCategoryMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: BestCategoryMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ContentsContainer
@@ -200,8 +205,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: SigninMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: SigninMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: SigninContainer
@@ -217,8 +222,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: CollectionMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: CollectionMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: CollectionContentsContainer
@@ -230,8 +235,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: CommunityContainer
@@ -241,8 +246,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: SubmitPostMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: SubmitPostMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: SubmitContainer
@@ -253,8 +258,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: SubmitForumMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: SubmitForumMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: SubmitForumContainer
@@ -266,8 +271,8 @@ export default (store) => {
             components={{
               HeaderMyMenu: HeaderMyMenu,
               HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: ForumSettingMenu,
+              //LeftColGnb: LeftColGlobalCategoryNav,
+              //LeftColMenu: ForumSettingMenu,
               WidgetContainer: WidgetContainer,
               ModalContainer: ModalContainer,
               ContentsContainer: ForumSettingMain
@@ -276,8 +281,8 @@ export default (store) => {
           <Route path="forumprefix" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -286,8 +291,8 @@ export default (store) => {
           <Route path="foruminfo" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -296,8 +301,8 @@ export default (store) => {
           <Route path="forumurl" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -306,8 +311,8 @@ export default (store) => {
           <Route path="announce" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -316,8 +321,8 @@ export default (store) => {
           <Route path="writepost" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -326,8 +331,8 @@ export default (store) => {
           <Route path="writecomment" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -336,8 +341,8 @@ export default (store) => {
           <Route path="share" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -346,8 +351,8 @@ export default (store) => {
           <Route path="promotion" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -356,8 +361,8 @@ export default (store) => {
           <Route path="managers" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -366,8 +371,8 @@ export default (store) => {
           <Route path="banlist" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -376,8 +381,8 @@ export default (store) => {
           <Route path="spams" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -386,8 +391,8 @@ export default (store) => {
           <Route path="spamreports" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -396,8 +401,8 @@ export default (store) => {
           <Route path="stat/forum" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -406,8 +411,8 @@ export default (store) => {
           <Route path="stat/views" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -416,8 +421,8 @@ export default (store) => {
           <Route path="stat/visitors" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -426,8 +431,8 @@ export default (store) => {
           <Route path="stat/likerank" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -436,8 +441,8 @@ export default (store) => {
           <Route path="stat/commentrank" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -446,8 +451,8 @@ export default (store) => {
           <Route path="stat/viewrank" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: ForumSettingMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ForumSettingMain
@@ -462,8 +467,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: SearchMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: SearchMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: SearchContainer
@@ -476,8 +481,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: AccountCategoryMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: AccountCategoryMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ActivityContainer
@@ -488,8 +493,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: AccountCategoryMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: ActivityContainer
@@ -500,8 +505,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: AccountCategoryMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: ActivityContainer
@@ -512,8 +517,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: AccountCategoryMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: ActivityContainer
@@ -527,8 +532,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: UserPointMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: UserPointMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: ChargePointContainer
@@ -539,8 +544,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: UserPointMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: UserPointMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: PointListContainer
@@ -551,8 +556,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: UserPointMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: UserPointMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: ChargeLogListContainer
@@ -564,8 +569,8 @@ export default (store) => {
             components={{
               HeaderMyMenu: HeaderMyMenu,
               HeaderSearch: HeaderSearch,
-              LeftColGnb: LeftColGlobalCategoryNav,
-              LeftColMenu: UserPointMenu,
+              //LeftColGnb: LeftColGlobalCategoryNav,
+              //LeftColMenu: UserPointMenu,
               WidgetContainer: WidgetContainer,
               ModalContainer: ModalContainer,
               ContentsContainer: VenalinkActiveList
@@ -574,8 +579,8 @@ export default (store) => {
           <Route path="active" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: UserPointMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: UserPointMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: VenalinkActiveList
@@ -584,8 +589,8 @@ export default (store) => {
           <Route path="share" components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: UserPointMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: UserPointMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: VenalinkShareList
@@ -598,8 +603,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: AccountCategoryMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: AccountCategoryMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: SettingContainer
@@ -610,8 +615,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: AccountCategoryMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: SettingContainer
@@ -622,8 +627,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: AccountCategoryMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
                  ContentsContainer: SettingContainer
@@ -638,8 +643,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: PolicyMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: PolicyMenu,
                  ModalContainer: ModalContainer,
                  ContentsContainer: PolicyContainer
                }}
@@ -649,8 +654,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: PolicyMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: PolicyMenu,
                  ModalContainer: ModalContainer,
                  ContentsContainer: PolicyContainer
                }}
@@ -663,8 +668,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: CompanyMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: CompanyMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: CompanyContainer
@@ -678,8 +683,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: CompanyMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: CompanyMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: CompanyContainer
@@ -693,8 +698,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: CompanyMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: CompanyMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: CompanyContainer
@@ -708,8 +713,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: HelpMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: HelpMenu,
             ModalContainer: ModalContainer,
             ContentsContainer: HelpContainer
           }}
@@ -719,8 +724,8 @@ export default (store) => {
                components={{
                  HeaderMyMenu: HeaderMyMenu,
                  HeaderSearch: HeaderSearch,
-                 LeftColGnb: LeftColGlobalCategoryNav,
-                 LeftColMenu: HelpMenu,
+                 //LeftColGnb: LeftColGlobalCategoryNav,
+                 //LeftColMenu: HelpMenu,
                  ModalContainer: ModalContainer,
                  ContentsContainer: HelpContainer
                }}
@@ -733,8 +738,8 @@ export default (store) => {
           components={{
             HeaderMyMenu: HeaderMyMenu,
             HeaderSearch: HeaderSearch,
-            LeftColGnb: LeftColGlobalCategoryNav,
-            LeftColMenu: DefaultMenu,
+            //LeftColGnb: LeftColGlobalCategoryNav,
+            //LeftColMenu: DefaultMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: FindMemberContainer

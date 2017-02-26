@@ -129,6 +129,9 @@ body {
   >#left_col {
     width: 250px;
     float: left;
+    position: fixed;
+    top: 50px;
+    bottom: 0;
   }
   >#section {
     float: none;
