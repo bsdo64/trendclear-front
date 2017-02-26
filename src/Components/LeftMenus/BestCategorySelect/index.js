@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { List } from 'immutable';
 import Collection from './Collection';
 
+import styles from './index.css';
 require('./index.scss');
 const BestCategorySelect = React.createClass({
   displayName: 'BestCategorySelect',
@@ -80,6 +81,7 @@ const BestCategorySelect = React.createClass({
       : [];
 
     return <div id="best_category">
+      <div className={styles.globalMenu}></div>
       <div id="sub_category">
         <div className="sub_category_button">
           <div className="sub_category_text">{'베스트'}</div>

@@ -42,44 +42,46 @@ body {
   background: #e6e6e6; }
 
 #wrap {
-  width: 1230px;
   margin: 0 auto; }
 
 #global-header {
   height: 50px; }
   #global-header .top_area {
-    height: 50px;
-    width: 100%;
-    left: 0;
-    top: 0;
     position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
     background: #00AABA linear-gradient(to right, #00AABA 0, #0E4458 100%);
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
     z-index: 100; }
     #global-header .top_area .top_contents {
-      position: relative;
-      width: 1230px;
-      height: 50px;
-      margin: 0 auto; }
-      #global-header .top_area .top_contents #top_logo {
-        float: left;
-        padding-top: 7px;
-        width: 250px;
-        text-align: center; }
-        #global-header .top_area .top_contents #top_logo img {
-          width: 130px;
-          margin: 0;
-          padding: 0; }
-      #global-header .top_area .top_contents #top_search {
-        padding-top: 7px;
-        padding-left: 10px;
-        line-height: 50px;
-        float: left;
-        width: 580px; }
-      #global-header .top_area .top_contents #top_my_area {
-        position: absolute;
-        right: 0;
-        top: 7px; }
+      min-width: 0;
+      position: relative; }
+      #global-header .top_area .top_contents > div {
+        margin: 0 auto;
+        height: 50px;
+        padding-top: 8px; }
+        #global-header .top_area .top_contents > div #top_logo {
+          float: left;
+          position: relative;
+          width: 250px;
+          text-align: center; }
+          #global-header .top_area .top_contents > div #top_logo img {
+            width: 130px;
+            margin: 0;
+            padding: 0; }
+        #global-header .top_area .top_contents > div #top_search {
+          overflow: hidden;
+          padding-left: 20px; }
+          #global-header .top_area .top_contents > div #top_search form {
+            max-width: 600px;
+            overflow: hidden;
+            padding: 0;
+            position: relative; }
+        #global-header .top_area .top_contents > div #top_my_area {
+          float: right;
+          margin-left: 150px;
+          margin-top: 3px; }
 
 #container {
   float: none;

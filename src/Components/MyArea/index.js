@@ -230,31 +230,29 @@ const MyArea = React.createClass({
 
     return (
       <div className="my_area">
-        <div className="ui horizontal list">
+        {
+          !isLogin &&
+          <LoginButton
+            location={location}
+            FireToggleLoginModal={this.props.FireToggleLoginModal}
+          />
+        }
 
-          {
-            !isLogin &&
-            <LoginButton
-              location={location}
-              FireToggleLoginModal={this.props.FireToggleLoginModal}
-            />
-          }
+        {
+          isLogin &&
+          <div className="ui horizontal list">
 
-          { /* userButtons */ }
-          {
-            isLogin &&
             <NotiButtons
               {...this.props}
             />
-          }
-          {
-            isLogin &&
+
             <UserButtons
               {...this.props}
             />
-          }
 
-        </div>
+          </div>
+        }
+
       </div>
     );
   }

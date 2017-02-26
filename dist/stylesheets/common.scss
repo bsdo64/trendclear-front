@@ -63,7 +63,6 @@ body {
 }
 
 #wrap {
-  width: 1230px;
   margin: 0 auto;
 }
 
@@ -71,43 +70,53 @@ body {
   height: 50px;
 
   .top_area {
-    height: 50px;
-    width: 100%;
-    left: 0;
-    top: 0;
     position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
     background: $vn_blue_header linear-gradient(to right, $vn_blue_header 0, $vn_blue_header_end 100%);
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
     z-index: 100;
 
     .top_contents {
+      min-width: 0;
       position: relative;
-      width: 1230px;
-      height: 50px;
-      margin: 0 auto;
-      #top_logo {
-        float: left;
-        padding-top: 7px;
-        width: 250px;
-        text-align: center;
 
-        img {
-          width: 130px;
-          margin: 0;
-          padding: 0;
+      & > div {
+        margin: 0 auto;
+        height: 50px;
+        padding-top: 8px;
+
+        #top_logo {
+          float: left;
+          position: relative;
+          width: 250px;
+          text-align: center;
+
+          img {
+            width: 130px;
+            margin: 0;
+            padding: 0;
+          }
         }
-      }
-      #top_search {
-        padding-top: 7px;
-        padding-left: 10px;
-        line-height: 50px;
-        float: left;
-        width: 580px;
-      }
-      #top_my_area {
-        position: absolute;
-        right: 0;
-        top: 7px;
+
+        #top_search {
+          overflow: hidden;
+          padding-left: 20px;
+
+          form {
+            max-width: 600px;
+            overflow: hidden;
+            padding: 0;
+            position: relative;
+          }
+        }
+
+        #top_my_area {
+          float: right;
+          margin-left: 150px;
+          margin-top: 3px;
+        }
       }
     }
   }

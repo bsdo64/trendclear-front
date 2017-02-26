@@ -8,7 +8,7 @@ import Menu from './ReportMenu';
 import ShareLinkMenu from './ShareLinkMenu';
 
 import styles from './BigPost.css';
-require('./Post.scss');
+import './Post.scss';
 
 const BigPost = React.createClass({
   displayName: 'BigPost',
