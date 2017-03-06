@@ -50,6 +50,11 @@ const ModalBox = React.createClass({
   closeModal() {
     this.props.FireCloseModal();
   },
+
+  afterOpenModal() {
+
+  },
+
   createModals(modal, key) {
     const openModal = modal.openModal;
     const contentType = modal.contentType;
@@ -61,7 +66,6 @@ const ModalBox = React.createClass({
         overlayClassName={'ui dimmer modals page visible active'}
         className={`ui small modal scrolling visible active Content-${contentType}`}
         isOpen={openModal}
-        closeTimeoutMS={500}
         onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
         contentLabel="Modal"

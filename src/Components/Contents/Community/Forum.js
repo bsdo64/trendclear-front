@@ -108,7 +108,7 @@ const Forum = React.createClass({
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
-    makeUrl.removeQuery('forumSearch')
+    makeUrl.removeQuery('forumSearch');
     browserHistory.push(makeUrl.setQuery('forumPrefix', prefixId).end());
   },
   handleSetPage(pagination) {

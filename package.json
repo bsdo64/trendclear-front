@@ -5,7 +5,7 @@
   "scripts": {
     "_dev:hot-webpack": "node ./bin/webpack.hot.dev.server.js",
     "_redis": "redis-server ./redis.conf",
-    "_dev:front-server": "nodemon --harmony ./bin/www --watch app.js --watch src --watch routes --watch middleware --watch bin",
+    "_dev:front-server": "nodemon -x `node --max-old-space-size=4096 --harmony ./bin/www` --watch app.js --watch src --watch routes --watch middleware --watch bin",
     "webpack-dev": "webpack --config webpack/webpack.hot.dev.config.js",
     "webpack-prod": "webpack --config webpack/webpack.production.config.js",
     "_lint": "gulp cached-lint-watch",

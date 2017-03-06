@@ -1,9 +1,26 @@
-.ReactModal__Overlay {
-  &.ui.dimmer {
-    z-index: 101;
-  }
+.modal-transition-appear {
+  opacity: 0.01;
+}
 
-  .ReactModal__Overlay--after-open {
+.modal-transition-appear.modal-transition-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
 
-  }
+.modal-transition-enter {
+  opacity: 0.01;
+}
+
+.modal-transition-enter.modal-transition-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.modal-transition-leave {
+  opacity: 1;
+}
+
+.modal-transition-leave.modal-transition-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

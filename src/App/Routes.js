@@ -46,6 +46,7 @@ const ModalContainer = require('../Container/Modal/ModalContainer');
 const WidgetContainer = require('../Container/RightCol/WidgetContainer');
 
 const LeftCol = require('../views/share/LeftCol');
+const RightSide = require('../Container/RightSide/RightSide');
 
 const App = (props) => {
   return (
@@ -87,6 +88,9 @@ const App = (props) => {
             <div id="contents">
               { props.ContentsContainer }
             </div>
+
+            { props.RightSide }
+
             <div id="right_col">
               { props.WidgetContainer }
             </div>
@@ -181,6 +185,7 @@ export default (store) => {
             //LeftColGnb: LeftColGlobalCategoryNav,
             LeftCol: LeftCol,
             //LeftColMenu: BestCategoryMenu,
+            RightSide: RightSide,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
             ContentsContainer: ContentsContainer
