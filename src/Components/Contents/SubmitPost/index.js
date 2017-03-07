@@ -60,6 +60,9 @@ const EditorBox = React.createClass({
       if (initContent) {
         this.editor.setContent(initContent);
       }
+
+      // bug. if update add overlay
+      $('.medium-insert-embeds').append('<div class="medium-insert-embeds-overlay"></div>');
     }
 
     this.props.FireRemoveServerInit();

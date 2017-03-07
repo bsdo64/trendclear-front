@@ -1,188 +1,178 @@
-/**
- * Created by dobyeongsu on 2016. 5. 24..
- */
-import React, { PropTypes } from 'react';
-import { AtomicBlockUtils, Editor, EditorState, Entity, RichUtils, /* convertToRaw */ } from 'draft-js';
+import React from 'react';
+import { Editor, EditorState, Modifier, RichUtils } from 'draft-js';
 
-class MediaEditorExample extends React.Component {
+class ColorfulEditorExample extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      editorState: EditorState.createEmpty(),
-    };
+    this.state = { editorState: EditorState.createEmpty() };
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => this.setState({ editorState });
-    // this.logState = () => {
-    //   const content = this.state.editorState.getCurrentContent();
-    //   console.log(convertToRaw(content));
-    // };
-
-    this.handleKeyCommand = this._handleKeyCommand.bind(this);
-    this.addMedia = this._addMedia.bind(this);
-    this.addAudio = this._addAudio.bind(this);
-    this.addImage = this._addImage.bind(this);
-    this.addVideo = this._addVideo.bind(this);
+    this.toggleColor = (toggledColor) => this._toggleColor(toggledColor);
   }
 
-  _handleKeyCommand(command) {
+  _toggleColor(toggledColor) {
     const { editorState } = this.state;
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      this.onChange(newState);
-      return true;
-    }
-    return false;
-  }
+    const selection = editorState.getSelection();
 
-  _addMedia(type) {
-    const src = window.prompt('Enter a URL');
-    if (!src) {
-      return;
-    }
+    // Let's just allow one color at a time. Turn off all active colors.
+    const nextContentState = Object.keys(colorStyleMap)
+      .reduce((contentState, color) => {
+        return Modifier.removeInlineStyle(contentState, selection, color)
+      }, editorState.getCurrentContent());
 
-    const entityKey = Entity.create(type, 'IMMUTABLE', { src });
-
-    return AtomicBlockUtils.insertAtomicBlock(
-      this.state.editorState,
-      entityKey,
-      ' '
+    let nextEditorState = EditorState.push(
+      editorState,
+      nextContentState,
+      'change-inline-style'
     );
-  }
 
-  _addAudio() {
-    this.onChange(this._addMedia('audio'));
-  }
+    const currentStyle = editorState.getCurrentInlineStyle();
 
-  _addImage() {
-    this.onChange(this._addMedia('image'));
-  }
+    // Unset style override for current color.
+    if (selection.isCollapsed()) {
+      nextEditorState = currentStyle.reduce((state, color) => {
+        return RichUtils.toggleInlineStyle(state, color);
+      }, nextEditorState);
+    }
 
-  _addVideo() {
-    this.onChange(this._addMedia('video'));
+    // If the color is being toggled on, apply it.
+    if (!currentStyle.has(toggledColor)) {
+      nextEditorState = RichUtils.toggleInlineStyle(
+        nextEditorState,
+        toggledColor
+      );
+    }
+
+    this.onChange(nextEditorState);
   }
 
   render() {
+    const { editorState } = this.state;
     return (
       <div style={styles.root}>
-        <div style={{ marginBottom: 10 }}>
-          Use the buttons to add audio, image, or video.
-        </div>
-        <div style={{ marginBottom: 10 }}>
-          Here are some local examples that can be entered as a URL:
-          <ul>
-            <li>media.mp3</li>
-            <li>media.png</li>
-            <li>media.mp4</li>
-          </ul>
-        </div>
-        <div style={styles.buttons}>
-          <button onMouseDown={this.addAudio} style={{ marginRight: 10 }}>
-            Add Audio
-          </button>
-          <button onMouseDown={this.addImage} style={{ marginRight: 10 }}>
-            Add Image
-          </button>
-          <button onMouseDown={this.addVideo} style={{ marginRight: 10 }}>
-            Add Video
-          </button>
-        </div>
+        <ColorControls
+          editorState={editorState}
+          onToggle={this.toggleColor}
+        />
         <div style={styles.editor} onClick={this.focus}>
           <Editor
-            blockRendererFn={mediaBlockRenderer}
-            editorState={this.state.editorState}
-            handleKeyCommand={this.handleKeyCommand}
+            customStyleMap={colorStyleMap}
+            editorState={editorState}
             onChange={this.onChange}
-            placeholder="Enter some text..."
+            placeholder="Write something colorful....."
             ref="editor"
           />
         </div>
-        <input
-          // onClick={this.logState}
-          style={styles.button}
-          type="button"
-          value="Log State"
-        />
       </div>
     );
   }
 }
 
-function mediaBlockRenderer(block) {
-  if (block.getType() === 'atomic') {
-    return {
-      component: Media,
-      editable: false,
+class StyleButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onToggle = (e) => {
+      e.preventDefault();
+      this.props.onToggle(this.props.style);
     };
   }
 
-  return null;
+  render() {
+    let style;
+    if (this.props.active) {
+      style = { ...styles.styleButton, ...colorStyleMap[this.props.style] };
+    } else {
+      style = styles.styleButton;
+    }
+
+    return (
+      <span style={style} onMouseDown={this.onToggle}>
+              {this.props.label}
+            </span>
+    );
+  }
 }
 
-const Audio = (props) => {
-  return <audio controls src={props.src} style={styles.media}/>;
+const COLORS = [
+  { label: 'Red', style: 'red' },
+  { label: 'Orange', style: 'orange' },
+  { label: 'Yellow', style: 'yellow' },
+  { label: 'Green', style: 'green' },
+  { label: 'Blue', style: 'blue' },
+  { label: 'Indigo', style: 'indigo' },
+  { label: 'Violet', style: 'violet' },
+];
+
+const ColorControls = (props) => {
+  const currentStyle = props.editorState.getCurrentInlineStyle();
+  return (
+    <div style={styles.controls}>
+      {COLORS.map(type =>
+        <StyleButton
+          active={currentStyle.has(type.style)}
+          label={type.label}
+          onToggle={props.onToggle}
+          style={type.style}
+        />
+      )}
+    </div>
+  );
 };
 
-Audio.propTypes = {
-  src: PropTypes.string
-};
-
-const Image = (props) => {
-  return <img src={props.src} style={styles.media}/>;
-};
-
-Image.propTypes = {
-  src: PropTypes.string
-};
-
-const Video = (props) => {
-  return <video controls src={props.src} style={styles.media}/>;
-};
-
-Video.propTypes = {
-  src: PropTypes.string
-};
-
-const Media = (props) => {
-  const entity = Entity.get(props.block.getEntityAt(0));
-  const { src } = entity.getData();
-  const type = entity.getType();
-
-  let media;
-  if (type === 'audio') {
-    media = <Audio src={src}/>;
-  } else if (type === 'image') {
-    media = <Image src={src}/>;
-  } else if (type === 'video') {
-    media = <Video src={src}/>;
-  }
-
-  return media;
+// This object provides the styling information for our custom color
+// styles.
+const colorStyleMap = {
+  red: {
+    color: 'rgba(255, 0, 0, 1.0)',
+  },
+  orange: {
+    color: 'rgba(255, 127, 0, 1.0)',
+  },
+  yellow: {
+    color: 'rgba(180, 180, 0, 1.0)',
+  },
+  green: {
+    color: 'rgba(0, 180, 0, 1.0)',
+  },
+  blue: {
+    color: 'rgba(0, 0, 255, 1.0)',
+  },
+  indigo: {
+    color: 'rgba(75, 0, 130, 1.0)',
+  },
+  violet: {
+    color: 'rgba(127, 0, 255, 1.0)',
+  },
 };
 
 const styles = {
   root: {
     fontFamily: '\'Georgia\', serif',
+    fontSize: 14,
     padding: 20,
     width: 600,
   },
-  buttons: {
-    marginBottom: 10,
-  },
   editor: {
-    border: '1px solid #ccc',
+    borderTop: '1px solid #ddd',
     cursor: 'text',
-    minHeight: 80,
-    padding: 10,
+    fontSize: 16,
+    marginTop: 20,
+    minHeight: 400,
+    paddingTop: 20,
   },
-  button: {
-    marginTop: 10,
-    textAlign: 'center',
+  controls: {
+    fontFamily: '\'Helvetica\', sans-serif',
+    fontSize: 14,
+    marginBottom: 10,
+    userSelect: 'none',
   },
-  media: {
-    width: '100%',
+  styleButton: {
+    color: '#999',
+    cursor: 'pointer',
+    marginRight: 16,
+    padding: '2px 0',
   },
 };
 
-export default MediaEditorExample;
+export default ColorfulEditorExample;

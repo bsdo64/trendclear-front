@@ -37,7 +37,7 @@ module.exports = {
       use: ExtractTextWebpackPlugin.extract({
         fallback: "style-loader",
         use: [
-          'css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=1',
+          'css-loader?modules&localIdentName=[hash:base64:8]&importLoaders=1',
           'postcss-loader'
         ]
       })

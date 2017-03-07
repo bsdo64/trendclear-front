@@ -1,22 +1,38 @@
 const webpack = require('webpack');
 const path = require('path');
 const root = path.resolve(__dirname, '../');
+const dist = path.resolve(root, './dist');
+const bundleServer = {
+  host: 'http://localhost',
+  port: 2992,
+  pathName: '_assets/'
+};
 
 module.exports = {
   devtool: 'cheap-source-map',
   entry: {
     Entry: [
       'babel-polyfill',
-      'webpack-dev-server/client?http://localhost:2992',
-      'webpack/hot/only-dev-server',
       'react-hot-loader/patch',
+      `webpack-dev-server/client?${bundleServer.host}:${bundleServer.port}`,
+      'webpack/hot/only-dev-server',
       path.resolve(root, './src/App/Entry')
     ]
   },
+  devServer: {
+    port:2992,
+    compress:true,
+    contentBase: dist,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    publicPath: `${bundleServer.host}:${bundleServer.port}/${bundleServer.pathName}`,
+    stats: true,
+    hot: true,
+    historyApiFallback: true,
+  },
   output: {
-    path: path.resolve(root, './dist'),
+    publicPath: `${bundleServer.host}:${bundleServer.port}/${bundleServer.pathName}`,
     filename: 'bundle-[name].js',
-    publicPath: "http://localhost:2992/_assets/"
+    path: dist,
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
