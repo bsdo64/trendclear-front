@@ -18,7 +18,10 @@ const LeftCol = React.createClass({
               <i className="fa fa-globe" />
             </li>
             <li>
-              <i className="fa fa-commenting" />
+              <i className="fa fa-pencil" />
+            </li>
+            <li>
+              <i className="fa fa-user" />
             </li>
           </ul>
           <ul className={styles.bottomIconList}>
@@ -42,6 +45,21 @@ const LeftCol = React.createClass({
               </div>
             </div>
           </Scrollbars>
+          <div className={styles.userMenu}>
+            <div className={styles.userMeta}>
+              <div className={styles.userAvatar}>
+                <img src="//placehold.it/40x40" />
+              </div>
+              <div className={styles.userInfo}>
+                <div>Nice</div>
+                <div>Nice</div>
+                <div>Nice</div>
+              </div>
+            </div>
+            <div className={styles.userStats}>
+              Hello 
+            </div>
+          </div>
         </div>
 
       </div>

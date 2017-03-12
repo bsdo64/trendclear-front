@@ -87,3 +87,34 @@
 
   }
 }
+
+.userMenu {
+  position: relative;
+  bottom: 65px;
+  background: #abc;
+  height: 65px;
+}
+
+.userMeta {
+  padding: 5px;
+  height: 50px;
+}
+
+.userAvatar {
+  display: inline-block;
+  padding-right: 5px;
+}
+
+.userInfo {
+  display: inline-block;
+  width: inherit;
+  & > div {
+    font-size: 30%;
+    font-size-adjust: 0.58;
+  }
+}
+
+.userStats {
+  padding: 0 5px;
+  display: inline-block;
+}
