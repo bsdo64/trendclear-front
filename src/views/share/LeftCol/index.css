@@ -7,8 +7,15 @@
 .gnbSubMenu {
   float: left;
   width: 210px;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   background: #0c5064;
+
+  & > .box {
+    flex: 1 1 auto;
+    height: calc(100% - 65px);
+  }
 }
 
 .subMenuBox {
@@ -135,6 +142,7 @@
     outline: none;
     color: #fff;
     border-bottom: 1px solid #abc;
+    width: 120px;
   }
 }
 
@@ -150,9 +158,9 @@
 /* User Section */
 .userMenu {
   position: relative;
-  bottom: 65px;
   background: #abc;
   height: 65px;
+  flex: 0 0 auto;
 }
 
 .userMeta {

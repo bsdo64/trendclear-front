@@ -2438,9 +2438,9 @@ eslint-config-google@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/eslint-config-google/-/eslint-config-google-0.7.1.tgz#5598f8498e9e078420f34b80495b8d959f651fb2"
 
-eslint-config-standard@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-7.0.0.tgz#4f161bc65695e4bc61331c55b9eeaca458cd99c6"
+eslint-config-standard@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-7.0.1.tgz#6cec96084de9ac862c33ccb953d13a7c59872342"
 
 eslint-plugin-promise@^3.5.0:
   version "3.5.0"
