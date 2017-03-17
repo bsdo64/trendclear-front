@@ -69,25 +69,85 @@
   }
 }
 
+/* Submenu Item Section */
+
 .subMenuItem {
   padding: 10px;
   transition-property: background, color;
   transition-duration: 100ms;
   transition-timing-function: linear;
+  font-size: 1.2em;
 
   &:hover {
-    color: #000;
-    background: #fff;
+    color: #fff;
+    background: #0a3f4e;
+
+    & > i:global(.fa-star) {
+      color: yellow;
+    }
+
+    & > i:global(.fa-folder-open) {
+      color: #e6e6e6;
+    }
   }
 
-  & > h3 {
+  & > i {
+    padding-right: 5px;
+  }
+
+  & > i:global(.fa-search), & > i:global(.fa-cog) {
+    float:right;
+    right: 10px;
+  }
+
+  & > span.title {
     margin: 0;
     padding: 0;
     font-weight: normal;
+    display: inline-block;
+    vertical-align: middle;
+  }
 
+}
+
+/* Collection Section */
+.collectionList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.collectionListItem {
+
+}
+
+.collectionSearchBox {
+  padding-left: 25px;
+  padding-bottom: 5px;
+
+  & > i:global(.fa-inbox) {
+    padding-right: 5px;
+  }
+
+  & > input.searchInput {
+    background: #0c5064;
+    border: none;
+    outline: none;
+    color: #fff;
+    border-bottom: 1px solid #abc;
   }
 }
 
+.collectionItemBox {
+  padding-left: 25px;
+
+  & > i:global(.fa-inbox) {
+    padding-right: 5px;
+  }
+}
+
+
+/* User Section */
 .userMenu {
   position: relative;
   bottom: 65px;

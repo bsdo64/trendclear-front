@@ -40,7 +40,7 @@ class RankList extends Component {
                   <li key={index}>
                     <div className={cx([style.listItem])} >
 
-                      <a href="search.zum?method=uni&amp;option=accu&amp;qm=g_exp&amp;query=%ed%86%a0%eb%a0%88%ec%8a%a4+%ec%9d%98%ec%8b%9d+%ed%9a%8c%eb%b3%b5&amp;rd=1" title="토레스 의식 회복">
+                      <a>
                         <span className={style.numText}><em>{v.rank}</em></span>
                         <span className={style.issueKeyword}>{v.keyword}</span>
                         <span className={style.type}>{v.type.toUpperCase()}</span>

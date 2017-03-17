@@ -4,6 +4,20 @@ import Header from '../../ContentBreadCrumb/ContentBreadCrumb';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 
+const ListHeader = () => {
+  return (
+    <div style={{padding: 10}}>
+      <div style={{background: '#fff', padding: 10}}>
+        <h3 style={{fontSize: '1.2em'}}>
+          <i className="fa fa-star" style={{color: 'yellow', paddingRight: 5}}/>
+          피드
+        </h3>
+        <p>팔로잉 인기글</p>
+      </div>
+    </div>
+  )
+};
+
 const BestBox = React.createClass({
   displayName: 'BestBox',
   propTypes: {
@@ -98,6 +112,10 @@ const BestBox = React.createClass({
     const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
     return (
       <div id="best_contents" ref="best_contents">
+
+        <ListHeader
+
+        />
 
         <Header
           type={listName}

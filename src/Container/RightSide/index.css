@@ -1,18 +1,26 @@
 .rightSide {
   float: left;
-  padding-top: 43px;
-  padding-left: 10px;
 }
 
 .widgetBox {
   -webkit-box-shadow: 1px 1px 1px 0 #848484;
   -moz-box-shadow: 1px 1px 1px 0 #848484;
   box-shadow: 1px 1px 1px 0 #848484;
+
+  &.widgetBox {
+    margin-top: 10px;
+  }
+}
+
+.followingList {
+  background: #fff;
+  padding: 10px;
+  width: 240px;
 }
 
 .rankList {
   background: #fff;
-  width: 200px;
+  width: 240px;
   padding: 10px;
 
   & > .issueHeader {
@@ -43,7 +51,7 @@
         & .issueKeyword {
           vertical-align: top;
           color: #000;
-          width: 120px;
+          width: 160px;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
@@ -60,11 +68,8 @@
 }
 
 .famousList {
-
-  width: 200px;
+  width: 240px;
   height: 150px;
   background: #fff;
-  margin-top: 10px;
   padding: 10px;
-
 }

@@ -72,7 +72,7 @@ body {
             padding: 0; }
         #global-header .top_area .top_contents > div #top_search {
           overflow: hidden;
-          padding-left: 20px; }
+          padding-left: 10px; }
           #global-header .top_area .top_contents > div #top_search form {
             max-width: 600px;
             overflow: hidden;
