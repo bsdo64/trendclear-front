@@ -1,4 +1,5 @@
 dist/bundle*
+dist/vendor*
 .idea/
 bower_components/
 node_modules/
