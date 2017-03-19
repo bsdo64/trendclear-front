@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { fromJS } from 'immutable';
 import { Scrollbars } from 'react-custom-scrollbars';
 import cx from 'classnames';

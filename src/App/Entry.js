@@ -30,8 +30,7 @@ sagaMiddleware.run(rootSaga);
 
 // Render App
 render(
-  <AppContainer
-  >
+  <AppContainer>
     <App store={store} />
   </AppContainer>
   , document.getElementById('app'));

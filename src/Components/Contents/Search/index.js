@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Waypoint from 'react-waypoint';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import cx from 'classnames';
 import SearchHeader from './header';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
+import qs from 'qs';
 
 require('./index.scss');
 const SearchBox = React.createClass({
@@ -57,7 +58,7 @@ const SearchBox = React.createClass({
           pathName: '/search',
           params: {
             page: nextPage,
-            order: location.query.order || 'new',
+            order: qs.parse(location.search.slice(1)).order || 'new',
             query: SearchStore.get('query')
           }
         });
@@ -137,7 +138,7 @@ const SearchBox = React.createClass({
           pathName: '/search/forum/list',
           params: {
             page: currentPage - 1,
-            order: location.query.order || 'new',
+            order: qs.parse(location.search.slice(1)).order || 'new',
             query: SearchStore.get('query')
           }
         });
@@ -157,7 +158,7 @@ const SearchBox = React.createClass({
           pathName: '/search/forum/list',
           params: {
             page: nextPage,
-            order: location.query.order || 'new',
+            order: qs.parse(location.search.slice(1)).order || 'new',
             query: SearchStore.get('query')
           }
         });

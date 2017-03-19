@@ -33,6 +33,19 @@ class AjaxApiClient {
     };
   }
 
+  _normalizeParams(queryString) {
+    if (typeof queryString === 'object') {
+      return queryString;
+    }
+
+    if (typeof queryString === 'string') {
+      const normalized = queryString.split('?');
+      return normalized[1];
+    }
+
+    return queryString;
+  }
+
   setEntryPoint(endPoint) {
     this.EndPoint = endPoint;
 
@@ -40,10 +53,13 @@ class AjaxApiClient {
   }
 
   get(url, params) {
+
+    const normalizedQuery = this._normalizeParams(params);
+
     return new Promise((resolve, reject) => {
       return this.r
         .get(this.EndPoint + url)
-        .query(params)
+        .query(normalizedQuery)
         .set('Accept', 'application/json')
         .end(this._done(resolve, reject));
     })

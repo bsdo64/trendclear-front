@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
 import FlatButton from './FlatButton';
 import TrendBox from './TrendBox';
 import Main2 from '../Ad/Main2';
+import qs from 'qs';
 
 require('./index.scss');
 
@@ -26,8 +27,10 @@ class WidgetBox extends Component {
       inventories: UserStore.get('inventories'),
     };
 
-    const submitLink = location.query.forumId
-      ? `/community/submit?forumId=${location.query.forumId}`
+    const query = qs.parse(location.search.slice(1));
+
+    const submitLink = query.forumId
+      ? `/community/submit?forumId=${query.forumId}`
       : '/community/submit';
 
     return (
@@ -80,7 +83,7 @@ class WidgetBox extends Component {
                       .sortBy(item => item.get('title'))
                       .map(forum => {
                         const styleActive = cx('', {
-                          active: location.query.forumId === forum.get('id').toString()
+                          active: qs.parse(location.search.slice(1)).forumId === forum.get('id').toString()
                         });
 
                         return (

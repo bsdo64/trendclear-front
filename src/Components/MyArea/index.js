@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import cx from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -146,6 +146,7 @@ NotiButtons.propTypes = {
 
 const UserButtons = React.createClass({
   propTypes: {
+    history: PropTypes.object.isRequired,
     UserStore: PropTypes.object.isRequired,
     FireRequestLogout: PropTypes.func.isRequired,
   },
@@ -153,13 +154,13 @@ const UserButtons = React.createClass({
   gotoActivity() {
 
     this.refs.profile_dropdown.hide();
-    browserHistory.push('/activity');
+    this.props.history.push('/activity');
   },
 
   gotoSettings() {
 
     this.refs.profile_dropdown.hide();
-    browserHistory.push('/setting');
+    this.props.history.push('/setting');
   },
 
   handleLogout() {

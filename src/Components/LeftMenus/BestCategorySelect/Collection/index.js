@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import SubscribeForumList from '../SubscribeForumList';
 

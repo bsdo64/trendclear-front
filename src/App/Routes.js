@@ -1,5 +1,5 @@
 import React from 'react';
-import { IndexRedirect, Link, IndexRoute, Router, Route, browserHistory } from 'react-router';
+import { IndexRedirect, Link, IndexRoute, Router, Route, browserHistory } from 'react-router-dom';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 const LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');

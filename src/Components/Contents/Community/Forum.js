@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import cx from 'classnames';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory, Link } from 'react-router-dom';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import AvatarImage from '../../AvatarImage';
 import marked from '../../Lib/Marked';
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
+import qs from 'qs';
 
 // import AdForum1 from '../../Ad/AddForum1';
 
@@ -149,7 +150,7 @@ const Forum = React.createClass({
   createPostItem(makeUrl, isAnnounce, postId) {
 
     const { Posts, Users, location } = this.props;
-    const postIdNow = location.query.postId;
+    const postIdNow = qs.parse(location.search.slice(1)).postId;
 
     const defaultPageUrl = makeUrl.setQuery('postId', postId).removeQuery('comment_p').end();
 

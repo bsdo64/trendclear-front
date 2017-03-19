@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import ReactDOM from 'react-dom/server';
 import Select from 'react-select';
 import cx from 'classnames';
+import qs from 'qs';
 // import Recaptcha from 'react-recaptcha';
 import { medium, mediumInsertConfig } from './config';
 import AvatarImage from '../../AvatarImage';
@@ -160,7 +161,7 @@ const EditorBox = React.createClass({
           title: title,
           content: content,
           prefixId: SubmitPostStore.get('selectPrefixId'),
-          query: location.query,
+          query: qs.parse(location.search.slice(1)),
           isAnnounce: this.state.isAnnounce,
           width: SubmitPostStore.get('width'),
           height: SubmitPostStore.get('height'),
@@ -189,7 +190,7 @@ const EditorBox = React.createClass({
         title: title,
         content: content,
         prefixId: SubmitPostStore.get('selectPrefixId'),
-        query: location.query,
+        query: qs.parse(location.search.slice(1)),
         isAnnounce: this.state.isAnnounce,
         width: SubmitPostStore.get('width'),
         height: SubmitPostStore.get('height')

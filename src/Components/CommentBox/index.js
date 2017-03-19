@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
+import qs from 'qs';
 import MakeUrl from '../Lib/MakeUrl';
 import Paginator from '../Paginator';
 
@@ -31,6 +32,10 @@ const commentMediumConfig = {
   targetBlank: true,
   autoLink: true
 };
+
+function locationSearchToQueryObj(locationSearch) {
+  return qs.parse(locationSearch.slice(1));
+}
 
 function removeWhiteSpace(text) {
   return text
@@ -420,7 +425,7 @@ const CommentItem = React.createClass({
           const comment = {
             id: updating.id,
             content: removeWhiteSpace(el),
-            postId: location.query.postId
+            postId: locationSearchToQueryObj(location.search).postId
           };
 
           FireRequestUpdateComment(comment);
@@ -692,14 +697,14 @@ const CommentBox = React.createClass({
 
   getInitialState() {
     return {
-      commentOrder: this.props.location.query.comment_order
+      commentOrder: locationSearchToQueryObj(this.props.location.search).comment_order
     };
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location.query.comment_order !== this.props.location.query.comment_order) {
+    if (locationSearchToQueryObj(nextProps.location.search).comment_order !== locationSearchToQueryObj(this.props.location.search).comment_order) {
       this.setState({
-        commentOrder: nextProps.location.query.comment_order
+        commentOrder: locationSearchToQueryObj(nextProps.location.search).comment_order
       })
     }
   },
@@ -735,7 +740,7 @@ const CommentBox = React.createClass({
         if ($(el).text().trim()) {
           const comment = {
             content: removeWhiteSpace(el),
-            postId: location.query.postId
+            postId: locationSearchToQueryObj(location.search).postId
           };
 
           FireRequestSubmitComment(comment);
@@ -818,7 +823,7 @@ const CommentBox = React.createClass({
 
     if (commentIdList) {
 
-      const commentPage = location.query.comment_p ? location.query.comment_p : 1;
+      const commentPage = locationSearchToQueryObj(location.search).comment_p ? locationSearchToQueryObj(location.search).comment_p : 1;
       const commentLength = post.get('comment_count');
 
       return (

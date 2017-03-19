@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
+import qs from 'qs';
 
 const Managers = React.createClass({
   displayName: 'Managers',
@@ -12,7 +13,7 @@ const Managers = React.createClass({
     FireRequestDeleteForumManager: PropTypes.func.isRequired,
   },
   componentDidMount() {
-    const forumId = this.props.location.query.forumId;
+    const forumId = qs.parse(this.props.location.search.slice(1)).forumId;
 
     $('.ui.search')
       .search({
@@ -43,13 +44,13 @@ const Managers = React.createClass({
 
   selectUser(user) {
     const { location, FireRequestAddForumManager } = this.props;
-    const forumId = location.query.forumId;
+    const forumId = qs.parse(location.search.slice(1)).forumId;
     FireRequestAddForumManager({ userId: user.id, forumId: forumId });
   },
 
   removeUser(manager) {
     const { location, FireRequestDeleteForumManager } = this.props;
-    const forumId = location.query.forumId;
+    const forumId = qs.parse(location.search.slice(1)).forumId;
 
     FireRequestDeleteForumManager({
       forumId: forumId,
@@ -61,7 +62,7 @@ const Managers = React.createClass({
   createManagerItem(id) {
     const { Users, Forums, location, AuthStore } = this.props;
     const manager = Users.get(id.toString());
-    const forumId = location.query.forumId;
+    const forumId = qs.parse(location.search.slice(1)).forumId;
     const forum = Forums.get(forumId.toString());
     const creatorId = forum.get('creator_id');
     const myId = AuthStore.get('userId');
@@ -88,7 +89,7 @@ const Managers = React.createClass({
 
   render() {
     const { Forums, location } = this.props;
-    const forumId = location.query.forumId;
+    const forumId = qs.parse(location.search.slice(1)).forumId;
     const forum = Forums.get(forumId.toString());
     const managerIds = forum.get('managers');
 

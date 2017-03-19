@@ -2,7 +2,7 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import AvatarImage from '../../AvatarImage';
 import InfiniteList from '../../List/InfiniteList';

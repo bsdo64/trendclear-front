@@ -31,7 +31,7 @@ const initRouteState = (/* store */) => dispatch => action => {
 
     return Api
       .setEntryPoint('/ajax')
-      .get('/store' + location.pathname, location.query)
+      .get('/store' + location.pathname, location.search)
       .then(function CallStoreApi(resBody, errBody) {
 
         if (errBody) {

@@ -2,7 +2,7 @@ import React, {
   PropTypes,
 } from 'react';
 import accounting from 'accounting';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import moment from '../../Lib/Moment';
 import TablePagination from '../../Paginator/TablePagination';

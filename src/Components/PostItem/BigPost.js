@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
 import AvatarImage from '../AvatarImage';

@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 
 const SearchBar = React.createClass({
   propTypes: {
+    history: PropTypes.object.isRequired,
     SearchStore: PropTypes.object.isRequired,
     FireInputSearchQuery: PropTypes.func.isRequired,
   },
@@ -18,7 +18,10 @@ const SearchBar = React.createClass({
     if (SearchStore) {
       const query = SearchStore.get('query');
 
-      browserHistory.push({ pathname: '/search', query: { query: query } });
+      this.props.history.push({ 
+        pathname: '/search', 
+        search: `?query=${query}` 
+      });
     }
   },
 

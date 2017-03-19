@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReactTooltip from 'react-tooltip';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Draggable from 'react-draggable'; // The default
 import accounting from 'accounting';
 import CountUp from 'countup.js';

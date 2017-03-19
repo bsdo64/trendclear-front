@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import qs from 'qs';
 
 const BanList = React.createClass({
   displayName: 'BanList',
@@ -10,7 +11,7 @@ const BanList = React.createClass({
     FireRequestDeleteForumBanUser: PropTypes.func.isRequired,
   },
   componentDidMount() {
-    const forumId = this.props.location.query.forumId;
+    const forumId = qs.parse(this.props.location.search.slice(1)).forumId;
 
     $('.ui.search')
       .search({
@@ -41,13 +42,13 @@ const BanList = React.createClass({
 
   selectUser(user) {
     const { location, FireRequestAddForumBanUser } = this.props;
-    const forumId = location.query.forumId;
+    const forumId = qs.parse(location.search.slice(1)).forumId;
     FireRequestAddForumBanUser({ userId: user.id, forumId: forumId });
   },
 
   removeUser(user) {
     const { location, FireRequestDeleteForumBanUser } = this.props;
-    const forumId = location.query.forumId;
+    const forumId = qs.parse(location.search.slice(1)).forumId;
 
     FireRequestDeleteForumBanUser({
       forumId: forumId,
@@ -73,7 +74,7 @@ const BanList = React.createClass({
 
   render() {
     const { Forums, location } = this.props;
-    const forumId = location.query.forumId;
+    const forumId = qs.parse(location.search.slice(1)).forumId;
     const forum = Forums.get(forumId.toString());
     const banUserIds = forum.get('bans');
 

@@ -9,7 +9,7 @@ const bundleServer = {
 };
 
 module.exports = {
-  devtool: 'inline-eval-cheap-source-map',
+  devtool: 'cheap-source-map',
   entry: {
     Entry: [
       'babel-polyfill',

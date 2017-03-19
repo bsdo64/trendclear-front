@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 
 import Router from './Routes';
 
@@ -14,6 +14,9 @@ import Gnb from '../Container/Gnb';
 import HeaderMyMenu from '../Container/Header/MyMenu';
 import HeaderSearch from '../Container/Header/Search';
 import ModalContainer from '../Container/Modal/ModalContainer';
+import ContentsContainer from '../Container/Contents/Best';
+import RightSide from '../Container/RightSide/RightSide';
+import WidgetContainer from '../Container/RightCol/WidgetContainer';
 
 const Header = (props) => {
   return (
@@ -61,18 +64,66 @@ const Contents = (props) => {
 
       <div id="section">
         <div id="contents">
-          {props.ContentsContainer}
+          <Route component={ContentsContainer}/>
         </div>
 
-        {props.RightSide}
+        <Route component={RightSide}/>
 
         <div id="right_col">
-          {props.WidgetContainer}
+          <Route component={WidgetContainer}/>
         </div>
       </div>
     </div>
   )
 }
+
+class DataInitializer extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      initialized: false
+    };
+  }
+
+  componentDidMount() {
+    this.props.initialize(this.props.location);
+    this.setState({ initialized: true })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // will be true
+    if (this.state.initialized) {
+      const locationChanged = nextProps.location !== this.props.location;
+
+      if (locationChanged) {
+        this.props.initialize(nextProps.location);
+      }
+    }
+  }
+
+  render() {
+    return null;
+  }
+}
+
+const mapStateToProps = () => {
+  return {};
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initialize: (location) => {
+      dispatch({ type: '@@router/LOCATION_CHANGE', payload: location })
+    }
+  }
+}
+
+const Listener = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DataInitializer);
+
 
 const Body = (props) => {
   return (
@@ -82,8 +133,11 @@ const Body = (props) => {
         <Contents {...props} />
       </div>
       <div id="modal">
-        <Route exact path="/" component={ModalContainer}/>
+        <Route component={ModalContainer}/>
       </div>
+
+      <Route component={Listener}/>
+
     </div>
   )
 };

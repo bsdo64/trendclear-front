@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import CollectionComponent from '../BestCategorySelect/Collection';
+import qs from 'qs';
 
 // import AdForumLeft from '../Ad/AdForumLeft';
 
@@ -20,7 +21,7 @@ const ForumLeftMenu = React.createClass({
       forum
     } = this.props;
 
-    const order = location.query.order || 'new';
+    const order = qs.parse(location.search.slice(1)).order || 'new';
     const user = UserStore.get('user');
 
     if (forum) {

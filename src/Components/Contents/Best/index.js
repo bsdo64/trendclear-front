@@ -3,13 +3,14 @@ import Waypoint from 'react-waypoint';
 import Header from '../../ContentBreadCrumb/ContentBreadCrumb';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
+import qs from 'qs';
 
 const ListHeader = () => {
   return (
-    <div style={{padding: 10}}>
-      <div style={{background: '#fff', padding: 10}}>
-        <h3 style={{fontSize: '1.2em'}}>
-          <i className="fa fa-star" style={{color: 'yellow', paddingRight: 5}}/>
+    <div style={{ padding: 10 }}>
+      <div style={{ background: '#fff', padding: 10 }}>
+        <h3 style={{ fontSize: '1.2em' }}>
+          <i className="fa fa-star" style={{ color: 'yellow', paddingRight: 5 }} />
           피드
         </h3>
         <p>팔로잉 인기글</p>
@@ -75,12 +76,14 @@ const BestBox = React.createClass({
                 pathName = '/best';
             }
 
+            const query = qs.parse(location.search.slice(1));
+
             FireRequestGetMorePostList({
               listName: listName,
               pathName: pathName,
               params: {
                 page: nextPage,
-                order: location.query.order || 'hot',
+                order: query.order || 'hot',
                 categoryValue: (normalize.length > 0) ? normalize : null,
                 listType: location.pathname === '/all' ? 'all' : null
               }
@@ -139,7 +142,7 @@ const BestBox = React.createClass({
           scrollableAncestor={window || null}
         />
 
-        <InfiniteLoader collection={Collection}/>
+        <InfiniteLoader collection={Collection} />
 
       </div>
     )

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import CollectionComponent from '../BestCategorySelect/Collection';
+import qs from 'qs';
 
 const CollectionLeftMenu = React.createClass({
   displayName: 'CollectionLeftMenu',
@@ -19,7 +20,7 @@ const CollectionLeftMenu = React.createClass({
   render() {
     const { UserStore, location, Collections } = this.props;
     const user = UserStore.get('user');
-    const order = location.query.order || 'new';
+    const order = qs.parse(location.search.slice(1)).order || 'new';
     const collectionId = location.pathname.split('/')[2];
     const collection = Collections.get(collectionId.toString());
 

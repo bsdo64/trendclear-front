@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import qs from 'qs';
+
 import ForumInfo from './ForumInfo';
 import ForumUrl from './ForumUrl';
 import ForumPrefix from './ForumPrefix';
@@ -34,7 +36,7 @@ const checkManager = function checkManager(forum, userId) {
 const ForumSettingsComponent = (props) => {
   const { ForumSettingStore, Forums, AuthStore, location } = props;
   const content = ForumSettingStore.get('content');
-  const forumId = location.query.forumId;
+  const forumId = qs.parse(location.search.slice(1)).forumId;
   const isManager = checkManager(Forums.get(forumId.toString()), AuthStore.get('userId'));
 
   if (isManager) {
