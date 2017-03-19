@@ -80,6 +80,10 @@
     padding: 0 10px;
   }
 
+  & p {
+    margin-bottom: 0.5em;
+  }
+
   & figure {
     margin: 0;
   }
