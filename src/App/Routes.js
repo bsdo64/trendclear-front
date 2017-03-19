@@ -1,6 +1,5 @@
 import React from 'react';
 import { IndexRedirect, Link, IndexRoute, Router, Route, browserHistory } from 'react-router-dom';
-import { syncHistoryWithStore } from 'react-router-redux';
 
 const LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
 const ForumMenu = require('../Container/LeftCol/ForumMenu.js');
@@ -169,14 +168,8 @@ HelpApp.propTypes = {
 
 export default (store) => {
 
-  const enhancedHistory = syncHistoryWithStore(browserHistory, store, {
-    selectLocationState (state) {
-      return state.get('routing').toJS();
-    }
-  });
-
   return (
-    <Router key={Math.random()} history={enhancedHistory}>
+    <Router key={Math.random()} history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute
           components={{
