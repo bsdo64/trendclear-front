@@ -29,20 +29,19 @@ StartSocketSubs(store);
 sagaMiddleware.run(rootSaga);
 
 // Render App
-render(
+const renderApp = (Component) => {
+  return render(
   <AppContainer>
-    <App store={store} />
+    <Component store={store} />
   </AppContainer>
   , document.getElementById('app'));
+}
+
+renderApp(App);
 
 if (module.hot) {
   module.hot.accept("./App", () => {
     const App = require("./App").default;
-    render(
-      <AppContainer>
-        <App store={store} />
-      </AppContainer>,
-      document.getElementById('app')
-    );
+    renderApp(App);
   });
 }

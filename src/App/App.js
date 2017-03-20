@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import Router from './Routes';
 
@@ -8,6 +8,8 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+
+import DataInitializer from './container/DataInitializer';
 
 /* Routes */
 import Gnb from '../Container/Gnb';
@@ -48,7 +50,7 @@ const Contents = (props) => {
   return (
     <div id="container">
       
-      <Route exact path="/" component={Gnb}/>
+      <Route component={Gnb}/>
 
       {
         /*<div id="left_col">
@@ -77,66 +79,20 @@ const Contents = (props) => {
   )
 }
 
-class DataInitializer extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      initialized: false
-    };
-  }
-
-  componentDidMount() {
-    this.props.initialize(this.props.location);
-    this.setState({ initialized: true })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // will be true
-    if (this.state.initialized) {
-      const locationChanged = nextProps.location !== this.props.location;
-
-      if (locationChanged) {
-        this.props.initialize(nextProps.location);
-      }
-    }
-  }
-
-  render() {
-    return null;
-  }
-}
-
-const mapStateToProps = () => {
-  return {};
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    initialize: (location) => {
-      dispatch({ type: '@@router/LOCATION_CHANGE', payload: location })
-    }
-  }
-}
-
-const Listener = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DataInitializer);
-
-
 const Body = (props) => {
   return (
     <div>
+      
       <div id="wrap">
-        <Header {...props} />
-        <Contents {...props} />
+        <Route component={Header}/>
+        <Route component={Contents}/>
       </div>
+
       <div id="modal">
         <Route component={ModalContainer}/>
       </div>
 
-      <Route component={Listener}/>
+      <Route component={DataInitializer}/>
 
     </div>
   )
