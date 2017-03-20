@@ -27,6 +27,11 @@ module.exports = {
     }),
     new ExtractTextWebpackPlugin('styles.css')
   ],
+  resolve: {
+    alias: {
+      '~': path.resolve(root, 'src')
+    }
+  },
   module: {
     rules: [{
       test: /\.js$/,

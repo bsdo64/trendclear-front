@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SearchBar from '../../Components/Header/search';
-import { UI } from '../../Reducers/InitialStates';
+import SearchBar from '~/Components/Header/search';
+import { UI } from '~/Reducers/InitialStates';
 import {
   inputSearchQuery
-} from '../../Actions/Search';
-import { getUser } from '../../Selectors/User';
+} from '~/Actions/Search';
+import { getUser } from '~/Selectors/User';
 
 const Search = React.createClass({
   render() {

@@ -35,7 +35,7 @@ const renderApp = (Component) => {
     <Component store={store} />
   </AppContainer>
   , document.getElementById('app'));
-}
+};
 
 renderApp(App);
 

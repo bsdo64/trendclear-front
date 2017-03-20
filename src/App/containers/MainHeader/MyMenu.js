@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
-import MyArea from '../../Components/MyArea';
-import { Noti, Point } from '../../Utils/Socket';
-import { UI } from '../../Reducers/InitialStates';
+import { getLoginUser } from '~/Container/Util/func';
+import MyArea from '~/Components/MyArea';
+import { Noti, Point } from '~/Utils/Socket';
+import { UI } from '~/Reducers/InitialStates';
 import {
   toggleLoginModal,
   requestLogout
-} from '../../Actions/Login';
+} from '~/Actions/Login';
 import {
   requestUserReadNotification
-} from '../../Actions/User';
+} from '~/Actions/User';
 
 class MyMenuContainer extends React.Component {
   componentWillReceiveProps(nextProps) {

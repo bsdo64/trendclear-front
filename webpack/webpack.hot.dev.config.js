@@ -47,6 +47,11 @@ module.exports = {
       __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
     })
   ],
+  resolve: {
+    alias: {
+      '~': path.resolve(root, 'src')
+    }
+  },
   module: {
     rules: [{
       test: /\.js$/,

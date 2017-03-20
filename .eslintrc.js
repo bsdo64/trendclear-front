@@ -6,7 +6,7 @@ module.exports = {
     "jquery": true,
   },
   "plugins": [
-    "react"
+    "react",
   ],
   "parserOptions": {
     "ecmaVersion": 6,
@@ -16,7 +16,4 @@ module.exports = {
       "experimentalObjectRestSpread": true
     }
   },
-  "rules": {
-    'object-curly-spacing': ["error", "always"]
-  }
 };

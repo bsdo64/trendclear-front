@@ -6,9 +6,6 @@ const ForumMenu = require('../Container/LeftCol/ForumMenu.js');
 const CollectionMenu = require('../Container/LeftCol/CollectionMenu');
 const DefaultMenu = require('../Container/LeftCol/DefaultMenu');
 
-const HeaderMyMenu = require('../Container/Header/MyMenu');
-const HeaderSearch = require('../Container/Header/Search');
-
 const ContentsContainer = require('../Container/Contents/Best');
 const CollectionContentsContainer = require('../Container/Contents/BestCollection');
 const SigninContainer = require('../Container/Contents/Signin');
@@ -63,10 +60,8 @@ const App = (props) => {
                   </Link>
                 </div>
                 <div id="top_my_area">
-                  { props.HeaderMyMenu }
                 </div>
                 <div id="top_search">
-                  { props.HeaderSearch }
                 </div>
               </div>
             </div>
@@ -104,8 +99,6 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  HeaderSearch: React.PropTypes.element.isRequired,
-  HeaderMyMenu: React.PropTypes.element.isRequired,
   // LeftColGnb: React.PropTypes.element.isRequired,
   // LeftColMenu: React.PropTypes.element.isRequired,
   ContentsContainer: React.PropTypes.element.isRequired,
@@ -126,10 +119,8 @@ const HelpApp = (props) => {
                 </Link>
               </div>
               <div id="top_search">
-                { props.HeaderSearch }
               </div>
               <div id="top_my_area">
-                { props.HeaderMyMenu }
               </div>
             </div>
           </div>
@@ -158,8 +149,6 @@ const HelpApp = (props) => {
 };
 
 HelpApp.propTypes = {
-  HeaderSearch: React.PropTypes.element.isRequired,
-  HeaderMyMenu: React.PropTypes.element.isRequired,
   LeftColGnb: React.PropTypes.element.isRequired,
   LeftColMenu: React.PropTypes.element.isRequired,
   ContentsContainer: React.PropTypes.element.isRequired,
@@ -173,8 +162,6 @@ export default (store) => {
       <Route path="/" component={App}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             LeftCol: LeftCol,
             //LeftColMenu: BestCategoryMenu,
@@ -188,8 +175,6 @@ export default (store) => {
       <Route path="/all" component={App}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: BestCategoryMenu,
             WidgetContainer: WidgetContainer,
@@ -201,8 +186,6 @@ export default (store) => {
       <Route path="/signin" component={App}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: SigninMenu,
             WidgetContainer: WidgetContainer,
@@ -218,8 +201,6 @@ export default (store) => {
       <Route path="/collection/:collectionId" component={App}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: CollectionMenu,
             WidgetContainer: WidgetContainer,
@@ -231,8 +212,6 @@ export default (store) => {
       <Route path="/community" component={App}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumMenu,
             WidgetContainer: WidgetContainer,
@@ -242,8 +221,6 @@ export default (store) => {
 
         <Route path="submit"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: SubmitPostMenu,
                  WidgetContainer: WidgetContainer,
@@ -254,8 +231,6 @@ export default (store) => {
 
         <Route path="submit/forum"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: SubmitForumMenu,
                  WidgetContainer: WidgetContainer,
@@ -267,8 +242,6 @@ export default (store) => {
         <Route path="settings">
           <IndexRoute
             components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
               //LeftColGnb: LeftColGlobalCategoryNav,
               //LeftColMenu: ForumSettingMenu,
               WidgetContainer: WidgetContainer,
@@ -277,8 +250,6 @@ export default (store) => {
             }}/>
 
           <Route path="forumprefix" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -287,8 +258,6 @@ export default (store) => {
           }}/>
 
           <Route path="foruminfo" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -297,8 +266,6 @@ export default (store) => {
           }}/>
 
           <Route path="forumurl" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -307,8 +274,6 @@ export default (store) => {
           }}/>
 
           <Route path="announce" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -317,8 +282,6 @@ export default (store) => {
           }}/>
 
           <Route path="writepost" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -327,8 +290,6 @@ export default (store) => {
           }}/>
 
           <Route path="writecomment" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -337,8 +298,6 @@ export default (store) => {
           }}/>
 
           <Route path="share" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -347,8 +306,6 @@ export default (store) => {
           }}/>
 
           <Route path="promotion" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -357,8 +314,6 @@ export default (store) => {
           }}/>
 
           <Route path="managers" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -367,8 +322,6 @@ export default (store) => {
           }}/>
 
           <Route path="banlist" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -377,8 +330,6 @@ export default (store) => {
           }}/>
 
           <Route path="spams" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -387,8 +338,6 @@ export default (store) => {
           }}/>
 
           <Route path="spamreports" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -397,8 +346,6 @@ export default (store) => {
           }}/>
 
           <Route path="stat/forum" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -407,8 +354,6 @@ export default (store) => {
           }}/>
 
           <Route path="stat/views" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -417,8 +362,6 @@ export default (store) => {
           }}/>
 
           <Route path="stat/visitors" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -427,8 +370,6 @@ export default (store) => {
           }}/>
 
           <Route path="stat/likerank" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -437,8 +378,6 @@ export default (store) => {
           }}/>
 
           <Route path="stat/commentrank" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -447,8 +386,6 @@ export default (store) => {
           }}/>
 
           <Route path="stat/viewrank" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
@@ -463,8 +400,6 @@ export default (store) => {
       <Route path="/search" component={App}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: SearchMenu,
             WidgetContainer: WidgetContainer,
@@ -477,8 +412,6 @@ export default (store) => {
       <Route path="/activity" component={App}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: AccountCategoryMenu,
             WidgetContainer: WidgetContainer,
@@ -489,8 +422,6 @@ export default (store) => {
 
         <Route path="likes"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
@@ -501,8 +432,6 @@ export default (store) => {
 
         <Route path="posts"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
@@ -513,8 +442,6 @@ export default (store) => {
 
         <Route path="comments"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
@@ -528,8 +455,6 @@ export default (store) => {
       <Route path="/user" component={App}>
         <Route path="chargePoint"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: UserPointMenu,
                  WidgetContainer: WidgetContainer,
@@ -540,8 +465,6 @@ export default (store) => {
 
         <Route path="points"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: UserPointMenu,
                  WidgetContainer: WidgetContainer,
@@ -552,8 +475,6 @@ export default (store) => {
 
         <Route path="points/chargeLog"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: UserPointMenu,
                  WidgetContainer: WidgetContainer,
@@ -565,8 +486,6 @@ export default (store) => {
         <Route path="venalinks">
           <IndexRoute
             components={{
-              HeaderMyMenu: HeaderMyMenu,
-              HeaderSearch: HeaderSearch,
               //LeftColGnb: LeftColGlobalCategoryNav,
               //LeftColMenu: UserPointMenu,
               WidgetContainer: WidgetContainer,
@@ -575,8 +494,6 @@ export default (store) => {
             }}/>
 
           <Route path="active" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: UserPointMenu,
             WidgetContainer: WidgetContainer,
@@ -585,8 +502,6 @@ export default (store) => {
           }}/>
 
           <Route path="share" components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: UserPointMenu,
             WidgetContainer: WidgetContainer,
@@ -599,8 +514,6 @@ export default (store) => {
       <Route path="/setting" component={App}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: AccountCategoryMenu,
             WidgetContainer: WidgetContainer,
@@ -611,8 +524,6 @@ export default (store) => {
 
         <Route path="password"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
@@ -623,8 +534,6 @@ export default (store) => {
 
         <Route path="profile"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
@@ -639,8 +548,6 @@ export default (store) => {
 
         <Route path="privacy"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: PolicyMenu,
                  ModalContainer: ModalContainer,
@@ -650,8 +557,6 @@ export default (store) => {
 
         <Route path="terms"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: PolicyMenu,
                  ModalContainer: ModalContainer,
@@ -664,8 +569,6 @@ export default (store) => {
       <Route path="/advertisement" component={HelpApp}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: CompanyMenu,
             WidgetContainer: WidgetContainer,
@@ -679,8 +582,6 @@ export default (store) => {
       <Route path="/about" component={HelpApp}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: CompanyMenu,
             WidgetContainer: WidgetContainer,
@@ -694,8 +595,6 @@ export default (store) => {
       <Route path="/careers" component={HelpApp}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: CompanyMenu,
             WidgetContainer: WidgetContainer,
@@ -709,8 +608,6 @@ export default (store) => {
       <Route path="/help" component={HelpApp}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: HelpMenu,
             ModalContainer: ModalContainer,
@@ -720,8 +617,6 @@ export default (store) => {
 
         <Route path="guide"
                components={{
-                 HeaderMyMenu: HeaderMyMenu,
-                 HeaderSearch: HeaderSearch,
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: HelpMenu,
                  ModalContainer: ModalContainer,
@@ -734,8 +629,6 @@ export default (store) => {
       <Route path="/member/find" component={HelpApp}>
         <IndexRoute
           components={{
-            HeaderMyMenu: HeaderMyMenu,
-            HeaderSearch: HeaderSearch,
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: DefaultMenu,
             WidgetContainer: WidgetContainer,

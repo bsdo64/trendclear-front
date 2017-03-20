@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 require('./SigninButton.scss');
 const SigninButton = React.createClass({
-  render() {
+  render () {
     return (
       <div id="signin_button" className="widget">
         <Link to="/signin">
