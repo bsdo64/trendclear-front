@@ -3,7 +3,7 @@ import {
   receiveSocketNoti,
   receiveSocketPoint,
   receiveSocketTerminateVenalink,
-} from '../Actions/User';
+} from './Actions/User';
 import { normalize, arrayOf } from 'normalizr';
 import { noti } from '../Model/normalizr/schema';
 

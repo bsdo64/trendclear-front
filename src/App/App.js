@@ -7,7 +7,7 @@ import {
 
 import MainHeader from './containers/MainHeader';
 import MainContents from './containers/MainContents';
-import ModalContainer from '../Container/Modal/ModalContainer';
+import ModalContainer from './containers/Modal/ModalContainer';
 import DataInitializer from './containers/DataInitializer';
 
 /**

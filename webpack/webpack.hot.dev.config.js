@@ -91,7 +91,7 @@ module.exports = {
     }, {
       test: /\.(png|jpg|wav|mp3)$/,
       include: [
-        path.resolve(root, 'src/images')
+        path.resolve(root, 'src/App/images')
       ],
       use: {
         loader: 'url-loader',

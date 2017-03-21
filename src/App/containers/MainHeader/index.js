@@ -14,7 +14,7 @@ const Header = () => {
               document.body.scrollTop = 0;
             }}>
               <Link className="ui header inverted huge" to="/">
-                <img src={require('../../../images/Venacle.png')}/>
+                <img src={require('../../images/Venacle.png')}/>
               </Link>
             </div>
             <div id="top_my_area">
