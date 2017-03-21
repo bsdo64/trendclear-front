@@ -40,115 +40,115 @@ export const CLOSE_ACTIVE_VENALINK_MODAL = 'CLOSE_ACTIVE_VENALINK_MODAL';
 export function requestDeleteUnUsingImage(payload) {
   return {
     type: REQUEST_DELETE_UN_USING_IMAGE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestUpdatePost(payload) {
   return {
     type: REQUEST_UPDATE_POST,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestGetPostMeta(payload) {
   return {
     type: REQUEST_GET_POST_META,
-    payload
-  }
+    payload,
+  };
 }
 
-export function toggleActiveVenalinkModal({ data, contentType, venalinkActivateRequestPostId }) {
+export function toggleActiveVenalinkModal({data, contentType, venalinkActivateRequestPostId}) {
   return {
     type: TOGGLE_ACTIVE_VENALINK_MODAL,
     data,
     contentType,
-    venalinkActivateRequestPostId
-  }
+    venalinkActivateRequestPostId,
+  };
 }
 
 export function requestLikePost(payload) {
   return {
     type: REQUEST_LIKE_POST,
-    payload
-  }
+    payload,
+  };
 }
 
 export function handleSetRepresentImage(index) {
   return {
     type: HANDLE_SET_REPRESENT_IMAGE,
-    index
-  }
+    index,
+  };
 }
 
 export function handleDeletePostImages(deleteUrl) {
   return {
     type: HANDLE_DELETE_POST_IMAGES,
-    deleteUrl
-  }
+    deleteUrl,
+  };
 }
 
 export function handleAddPostImages(data) {
   return {
     type: HANDLE_ADD_POST_IMAGES,
-    data
-  }
+    data,
+  };
 }
 
 export function handleSelectPrefix(prefixId) {
   return {
     type: HANDLE_SELECT_PREFIX,
-    prefixId
-  }
+    prefixId,
+  };
 }
 
 export function handleResetPostContent() {
   return {
-    type: HANDLE_RESET_POST_CONTENT
-  }
+    type: HANDLE_RESET_POST_CONTENT,
+  };
 }
 
 export function handlePostContent(postContent) {
   return {
     type: HANDLE_POST_CONTENT,
-    postContent
-  }
+    postContent,
+  };
 }
 
 export function handlePostTitle(title) {
   return {
     type: HANDLE_POST_TITLE,
-    title
-  }
+    title,
+  };
 }
 
 export function removeServerInit() {
   return {
-    type: REMOVE_SERVER_INIT
-  }
+    type: REMOVE_SERVER_INIT,
+  };
 }
 
 export function requestSubmitPost(payload) {
   return {
     type: REQUEST_SUBMIT_POST,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestGetInitPostList(payload) {
   return {
-    type: REQUEST_GET_INIT_POST_LIST ,
-    payload
-  }
+    type: REQUEST_GET_INIT_POST_LIST,
+    payload,
+  };
 }
 
 export function requestGetMorePostList(payload) {
   return {
-    type: REQUEST_GET_MORE_POST_LIST ,
-    payload
-  }
+    type: REQUEST_GET_MORE_POST_LIST,
+    payload,
+  };
 }
 
 export default {
-  requestGetMorePostList
-}
+  requestGetMorePostList,
+};

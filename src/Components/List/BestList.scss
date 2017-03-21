@@ -91,7 +91,7 @@ $postWidth: 620px;
             color: #666;
             text-align: justify;
 
-            &::before{
+            &::before {
               content: "\201C"; /*Unicode for Left Double Quote*/
 
               /*Font*/
@@ -103,10 +103,10 @@ $postWidth: 620px;
               /*Positioning*/
               position: absolute;
               left: 10px;
-              top:5px;
+              top: 5px;
             }
 
-            &::after{
+            &::after {
               /*Reset to make sure*/
               content: "";
             }

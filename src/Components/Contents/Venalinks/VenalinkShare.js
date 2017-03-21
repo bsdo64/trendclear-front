@@ -14,8 +14,8 @@ const VenalinkShare = React.createClass({
 
   paybackRP(itemId) {
     return () => this.props.FireRequestUserPaybackRP({
-      userVenalinkId: itemId
-    })
+      userVenalinkId: itemId,
+    });
   },
 
   createVenalinkItem(participatedList) {
@@ -36,42 +36,49 @@ const VenalinkShare = React.createClass({
 
     const isActiveStyle = cx('center aligned one wide', {
       positive: !isTerminate,
-      negative: isTerminate
+      negative: isTerminate,
     });
 
     const canPayback = isTerminate && participatedList.get('paid_r') > 0;
     const isDisabledRow = cx({
-      disabled: !(canPayback || !isTerminate) || hasPaybackRP
+      disabled: !(canPayback || !isTerminate) || hasPaybackRP,
     });
 
     return (
       <tr className={isDisabledRow} key={participatedList.get('id')}>
         <td>포스트</td>
         <td className={isActiveStyle}>{status}</td>
-        <td className="center aligned">{moment(venalink.get('terminate_at')).format('YY/MM/DD HH:mm:ss')}</td>
-        <td className="positive right aligned">{venalink.get('participants').size}</td>
-        <td className="positive right aligned">{accounting.formatNumber(participatedList.get('count_visitor'))}</td>
+        <td className="center aligned">{moment(venalink.get('terminate_at'))
+          .format('YY/MM/DD HH:mm:ss')}</td>
+        <td className="positive right aligned">{venalink.get(
+          'participants').size}</td>
+        <td className="positive right aligned">{accounting.formatNumber(
+          participatedList.get('count_visitor'))}</td>
         <td className="right aligned">
           {
-            (!isTerminate || participatedList.get('paid_r') <= 0 || hasPaybackRP) &&
+            (!isTerminate || participatedList.get('paid_r') <= 0 ||
+            hasPaybackRP) &&
             <b>{accounting.formatNumber(participatedList.get('paid_r'))}</b>
           }
 
           {
-            isTerminate && participatedList.get('paid_r') > 0 && !hasPaybackRP &&
+            isTerminate && participatedList.get('paid_r') > 0 &&
+            !hasPaybackRP &&
             <div className="ui button primary tiny"
                  onClick={this.paybackRP(participatedList.get('id'))}
             >
               {
-                accounting.formatNumber(participatedList.get('paid_r')) + 'RP 받기'
+                accounting.formatNumber(participatedList.get('paid_r')) +
+                'RP 받기'
               }
             </div>
           }
 
         </td>
-        <td className="right aligned">{accounting.formatNumber(venalink.get('total_remain_r'))}</td>
+        <td className="right aligned">{accounting.formatNumber(
+          venalink.get('total_remain_r'))}</td>
       </tr>
-    )
+    );
   },
 
   handleClickPage() {
@@ -79,13 +86,13 @@ const VenalinkShare = React.createClass({
   },
 
   render() {
-    const { UserStore } = this.props;
+    const {UserStore} = this.props;
     const participatedVenalinks = UserStore.get('participatedVenalinks');
 
     return (
       <div>
-        <div className="ui cards centered" style={{ padding: 10 }}>
-          <div className="card" style={{ width: '100%' }}>
+        <div className="ui cards centered" style={{padding: 10}}>
+          <div className="card" style={{width: '100%'}}>
             <div className="content">
               <div className="header">
                 베나링크 참여 현황
@@ -132,15 +139,16 @@ const VenalinkShare = React.createClass({
             </div>
           </div>
         </div>
-        <div style={{ padding: 10 }}>
+        <div style={{padding: 10}}>
           <h4>베나링크 참여 리스트</h4>
-          <table className="ui celled table" style={{ fontSize: 12 }}>
+          <table className="ui celled table" style={{fontSize: 12}}>
             <thead>
             <tr>
-              <th className="center aligned" style={{ width: 60 }}>타입</th>
+              <th className="center aligned" style={{width: 60}}>타입</th>
               <th className="center aligned">상태</th>
               <th className="center aligned three wide">종료 시간</th>
-              <th className="center aligned" style={{ width: 70 }}>참여<br />유저(명)</th>
+              <th className="center aligned" style={{width: 70}}>참여<br />유저(명)
+              </th>
               <th className="center aligned">나의 베나링크<br/>순 방문(명)</th>
               <th className="center aligned">지급(예정) RP</th>
               <th className="center aligned">남은 RP</th>
@@ -167,8 +175,8 @@ const VenalinkShare = React.createClass({
           </table>
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 export default VenalinkShare;

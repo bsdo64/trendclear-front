@@ -24,58 +24,62 @@ const BestCategorySelect = React.createClass({
 
   getInitialState() {
     return {
-      openFilter: false
+      openFilter: false,
     };
   },
 
   updateFilterValue(club, selectArray) {
-    this.props.FireUpdateFollowingFilter({ [club]: selectArray });
+    this.props.FireUpdateFollowingFilter({[club]: selectArray});
   },
 
   toggleFilter() {
-    this.setState({ openFilter: !this.state.openFilter });
+    this.setState({openFilter: !this.state.openFilter});
   },
 
   saveFilter() {
-    const { GnbStore } = this.props;
-    const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
+    const {GnbStore} = this.props;
+    const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get(
+      'categoryValue').toJS() : [];
     const normalize = categoryValue.map((object) => {
       return parseInt(object.value);
     });
-    this.props.FireRequestSaveFollowingFilter({ categoryValue: normalize });
+    this.props.FireRequestSaveFollowingFilter({categoryValue: normalize});
   },
 
   render() {
     const {
       ListStore, Categories, UserStore, GnbStore, Forums, Collections,
-      FireRequestCreateCollection, FireRequestRemoveForumInCollection
+      FireRequestCreateCollection, FireRequestRemoveForumInCollection,
     } = this.props;
     const user = UserStore.get('user');
     const categoriesMap = UserStore.get('follow_forums')
       ? UserStore
-      .get('follow_forums')
-      .map(forumId => {
-        return { value: forumId, label: Forums.getIn([forumId.toString(), 'title']) }
-      })
-      .sortBy(item => item.label)
-      .toJS()
+        .get('follow_forums')
+        .map(forumId => {
+          return {
+            value: forumId,
+            label: Forums.getIn([forumId.toString(), 'title']),
+          };
+        })
+        .sortBy(item => item.label)
+        .toJS()
       : ListStore
-      .get('CategoryList')
-      .map(categoryId => {
-        return Categories.getIn([categoryId.toString(), 'forums']);
-      })
-      .reduce((list, i) => {
-        return list.concat(i);
-      }, List([]))
-      .map(forumId => {
-        return Forums.get(forumId.toString());
-      })
-      .map(forum => {
-        return { value: forum.get('id'), label: forum.get('title') }
-      })
-      .sortBy(item => item.label)
-      .toList()
-      .toJS();
+        .get('CategoryList')
+        .map(categoryId => {
+          return Categories.getIn([categoryId.toString(), 'forums']);
+        })
+        .reduce((list, i) => {
+          return list.concat(i);
+        }, List([]))
+        .map(forumId => {
+          return Forums.get(forumId.toString());
+        })
+        .map(forum => {
+          return {value: forum.get('id'), label: forum.get('title')};
+        })
+        .sortBy(item => item.label)
+        .toList()
+        .toJS();
     const categoryValue = GnbStore.get('categoryValue')
       ? GnbStore.get('categoryValue').toJS()
       : [];
@@ -105,17 +109,20 @@ const BestCategorySelect = React.createClass({
                     backspaceToRemoveMessage="{label} 삭제하기 (Back space)"
                     value={categoryValue}
                     options={categoriesMap}
-                    onChange={this.updateFilterValue.bind(this, 'categoryValue')}
+                    onChange={this.updateFilterValue.bind(this,
+                      'categoryValue')}
                   />
                 </div>
                 ,
-                <div key={'button'} className="ui container fluid" style={{ display: 'inline-block' }}>
-                  <button className="ui button inverted basic tiny right floated"
-                          style={{ fontSize: '10px' }}
-                          onClick={this.saveFilter}>
+                <div key={'button'} className="ui container fluid"
+                     style={{display: 'inline-block'}}>
+                  <button
+                    className="ui button inverted basic tiny right floated"
+                    style={{fontSize: '10px'}}
+                    onClick={this.saveFilter}>
                     저장
                   </button>
-                </div>
+                </div>,
               ]
             }
           </li>
@@ -137,8 +144,8 @@ const BestCategorySelect = React.createClass({
           }
         </ul>
       </menu>
-    </div>
-  }
+    </div>;
+  },
 });
 
 export default BestCategorySelect ;

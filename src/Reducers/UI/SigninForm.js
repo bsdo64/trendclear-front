@@ -24,7 +24,7 @@ const SigninForm = (state = UI.SigninForm, action) => {
   switch (action.type) {
 
     case TOGGLE_AGREE_TERM: {
-      return state.update('agreeTerm', v => !v)
+      return state.update('agreeTerm', v => !v);
     }
 
     case TOGGLE_AGREE_PRIVACY: {
@@ -49,8 +49,8 @@ const SigninForm = (state = UI.SigninForm, action) => {
 
     case SUCCESS_CHECK_VERIFY_CODE: {
       const result = (action.result === 'ok')
-        ? { emailVerifySuccess: true, emailVerifyFail: false }
-        : { emailVerifySuccess: false, emailVerifyFail: true };
+        ? {emailVerifySuccess: true, emailVerifyFail: false}
+        : {emailVerifySuccess: false, emailVerifyFail: true};
 
       return state.merge(result);
     }
@@ -58,7 +58,7 @@ const SigninForm = (state = UI.SigninForm, action) => {
     case FAILURE_CHECK_VERIFY_CODE: {
       return state
         .update('emailVerifySuccess', () => false)
-        .update('emailVerifyFail', () => true)
+        .update('emailVerifyFail', () => true);
     }
 
     case SUCCESS_EMAIL_VERIFY_CODE: {
@@ -77,7 +77,8 @@ const SigninForm = (state = UI.SigninForm, action) => {
       break;
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 

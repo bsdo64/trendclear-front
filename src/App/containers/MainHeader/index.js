@@ -4,7 +4,7 @@ import { Route, Link } from 'react-router-dom';
 import HeaderMyMenu from './MyMenu';
 import HeaderSearch from './Search';
 
-const Header = (props) => {
+const Header = () => {
   return (
     <div id="global-header">
       <div className="top_area">
@@ -14,7 +14,7 @@ const Header = (props) => {
               document.body.scrollTop = 0;
             }}>
               <Link className="ui header inverted huge" to="/">
-                <img src={require('../../../images/Venacle.png')} />
+                <img src={require('../../../images/Venacle.png')}/>
               </Link>
             </div>
             <div id="top_my_area">
@@ -27,7 +27,7 @@ const Header = (props) => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Header;

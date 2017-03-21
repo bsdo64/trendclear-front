@@ -18,12 +18,13 @@ const Managers = React.createClass({
     $('.ui.search')
       .search({
         apiSettings: {
-          url: '/ajax/search/users?type=manager&nick={query}&forumId=' + forumId
+          url: '/ajax/search/users?type=manager&nick={query}&forumId=' +
+          forumId,
         },
         cache: false,
         minCharacters: 2,
         fields: {
-          title: 'nick'
+          title: 'nick',
         },
         error: {
           source: '검색 할 수 없습니다 API를 참고하세요',
@@ -33,34 +34,34 @@ const Managers = React.createClass({
           noTemplate: 'A valid template name was not specified.',
           serverError: '서버에러 입니다.',
           maxResults: 'Results must be an array to use maxResults setting',
-          method: 'The method you called is not defined.'
+          method: 'The method you called is not defined.',
         },
         onSelect: (user) => {
 
           this.selectUser(user);
-        }
+        },
       });
   },
 
   selectUser(user) {
-    const { location, FireRequestAddForumManager } = this.props;
+    const {location, FireRequestAddForumManager} = this.props;
     const forumId = qs.parse(location.search.slice(1)).forumId;
-    FireRequestAddForumManager({ userId: user.id, forumId: forumId });
+    FireRequestAddForumManager({userId: user.id, forumId: forumId});
   },
 
   removeUser(manager) {
-    const { location, FireRequestDeleteForumManager } = this.props;
+    const {location, FireRequestDeleteForumManager} = this.props;
     const forumId = qs.parse(location.search.slice(1)).forumId;
 
     FireRequestDeleteForumManager({
       forumId: forumId,
-      userId: manager.get('id')
+      userId: manager.get('id'),
     });
 
   },
 
   createManagerItem(id) {
-    const { Users, Forums, location, AuthStore } = this.props;
+    const {Users, Forums, location, AuthStore} = this.props;
     const manager = Users.get(id.toString());
     const forumId = qs.parse(location.search.slice(1)).forumId;
     const forum = Forums.get(forumId.toString());
@@ -69,32 +70,33 @@ const Managers = React.createClass({
     const isCreator = creatorId === id;
     const isMe = myId === id;
     const tagStyle = cx('ui label large', {
-      teal: isCreator
+      teal: isCreator,
     });
 
     if (manager) {
       return (
-        <div className="item padded" key={id} style={{ paddingBottom: 5 }}>
+        <div className="item padded" key={id} style={{paddingBottom: 5}}>
           <a className={tagStyle}>
             <span className="title">{manager.get('nick')}</span>
             {
               (!isCreator && !isMe) &&
-              <i className="fa fa-remove" onClick={this.removeUser.bind(this, manager)}/>
+              <i className="fa fa-remove"
+                 onClick={this.removeUser.bind(this, manager)}/>
             }
           </a>
         </div>
-      )
+      );
     }
   },
 
   render() {
-    const { Forums, location } = this.props;
+    const {Forums, location} = this.props;
     const forumId = qs.parse(location.search.slice(1)).forumId;
     const forum = Forums.get(forumId.toString());
     const managerIds = forum.get('managers');
 
     return (
-      <div className="ui container" style={{ margin: 10, width: 700 }}>
+      <div className="ui container" style={{margin: 10, width: 700}}>
         <div className="ui segments ">
           <div className="ui segment">
             <h3 className="ui header">메니저 설정</h3>
@@ -118,7 +120,8 @@ const Managers = React.createClass({
                   <h4>메니저 추가</h4>
                   <div className="ui search">
                     <div className="ui left icon input">
-                      <input className="prompt" type="text" placeholder="유저 검색"/>
+                      <input className="prompt" type="text"
+                             placeholder="유저 검색"/>
                       <i className="user icon"/>
                     </div>
                   </div>
@@ -137,8 +140,8 @@ const Managers = React.createClass({
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 export default Managers;

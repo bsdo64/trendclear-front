@@ -7,23 +7,21 @@ const MenuContainer = React.createClass({
     SearchStore: PropTypes.object.isRequired,
   },
   render() {
-    return <SearchMenu {...this.props} />
-  }
+    return <SearchMenu {...this.props} />;
+  },
 });
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   return {
-    SearchStore: getUIState('Search')
-  }
+    SearchStore: getUIState('Search'),
+  };
 };
 
 module.exports = connect(
   mapStateToProps,
-  {
-
-  }
+  {}
 )(MenuContainer);

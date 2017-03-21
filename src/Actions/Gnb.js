@@ -13,36 +13,36 @@ export const FAILURE_SAVE_FOLLOWING_FILTER = 'FAILURE_SAVE_FOLLOWING_FILTER';
 // Action Creator
 export function toggleGnbPanel() {
   return {
-    type: TOGGLE_GNB_PANEL
-  }
+    type: TOGGLE_GNB_PANEL,
+  };
 }
 
 export function openSideCategory(clubId) {
   return {
     type: OPEN_SIDE_CATEGORY,
-    clubId
-  }
+    clubId,
+  };
 }
 
 export function openForumMeta(forumId) {
   return {
     type: OPEN_FORUM_META,
-    forumId
-  }
+    forumId,
+  };
 }
 
 export function updateFollowingFilter(clubs) {
   return {
     type: UPDATE_FOLLOWING_FILTER,
-    data: clubs
-  }
+    data: clubs,
+  };
 }
 
 export function requestSaveFollowingFilter(payload) {
   return {
     type: REQUEST_SAVE_FOLLOWING_FILTER,
-    payload
-  }
+    payload,
+  };
 }
 
 export default {
@@ -50,4 +50,4 @@ export default {
   openSideCategory,
   openForumMeta,
   updateFollowingFilter,
-}
+};

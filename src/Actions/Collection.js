@@ -25,41 +25,41 @@ export const FAILURE_SEARCH_FORUM_TO_COLLECTION_SUBS = 'FAILURE_SEARCH_FORUM_TO_
 export function requestCreateCollection(payload) {
   return {
     type: REQUEST_CREATE_COLLECTION,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestUpdateCollection(payload) {
   return {
     type: REQUEST_UPDATE_COLLECTION,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestDeleteCollection(payload) {
   return {
     type: REQUEST_DELETE_COLLECTION,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestAddForumInCollection(payload) {
   return {
     type: REQUEST_ADD_FORUM_IN_COLLECTION,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestRemoveForumInCollection(payload) {
   return {
     type: REQUEST_REMOVE_FORUM_IN_COLLECTION,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestSearchForumToCollectionSubs(payload) {
   return {
     type: REQUEST_SEARCH_FORUM_TO_COLLECTION_SUBS,
-    payload
-  }
+    payload,
+  };
 }

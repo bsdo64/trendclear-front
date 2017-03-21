@@ -1,17 +1,17 @@
 import { UI } from '../InitialStates';
 import {
   OPEN_COMMENT_UPDATE_VIEW,
-  CLOSE_COMMENT_UPDATE_VIEW
+  CLOSE_COMMENT_UPDATE_VIEW,
 } from '../../Actions/Comment';
 
 const Community = (state = UI.Community, action) => {
   switch (action.type) {
     case OPEN_COMMENT_UPDATE_VIEW: {
-      const { target } = action;
+      const {target} = action;
       return state.merge({
         updateId: target.targetId,
         updateType: target.type,
-        updating: true
+        updating: true,
       });
     }
 
@@ -19,11 +19,12 @@ const Community = (state = UI.Community, action) => {
       return state.merge({
         updateId: null,
         updateType: null,
-        updating: false
+        updating: false,
       });
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 

@@ -14,34 +14,34 @@ export const WAITING_CHECK_CHARGE = 'WAITING_CHECK_CHARGE';
 
 export function waitingCheckCharge() {
   return {
-    type: WAITING_CHECK_CHARGE
-  }
+    type: WAITING_CHECK_CHARGE,
+  };
 }
 
 export function requestCheckPointCharge(payload) {
   return {
     type: REQUEST_CHECK_POINT_CHARGE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function failureCheckPointCharge(payload) {
   return {
     type: FAILURE_CHECK_POINT_CHARGE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestMoreAccountList(payload) {
   return {
     type: REQUEST_MORE_ACCOUNT_LIST,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestGetMoreChargeLogList(payload) {
   return {
     type: REQUEST_GET_MORE_CHARGE_LOG_LIST,
-    payload
-  }
+    payload,
+  };
 }

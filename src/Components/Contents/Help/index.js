@@ -22,8 +22,8 @@ const PolicyBox = React.createClass({
           <p>안녕하세요 베나클 입니다</p>
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 export default PolicyBox;

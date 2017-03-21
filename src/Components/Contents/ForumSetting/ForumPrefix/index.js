@@ -15,28 +15,28 @@ const PrefixBox = React.createClass({
       openAdder: false,
       prefixText: null,
       updateItemId: null,
-      updateItemText: null
+      updateItemText: null,
     };
   },
 
   openPrefixUpdate(id) {
 
     this.setState({
-      updateItemId: id
+      updateItemId: id,
     });
   },
 
   closePrefixUpdate() {
 
     this.setState({
-      updateItemId: null
+      updateItemId: null,
     });
   },
 
   updateOnChange(e) {
 
     this.setState({
-      updateItemText: e.target.value
+      updateItemText: e.target.value,
     });
   },
 
@@ -44,19 +44,19 @@ const PrefixBox = React.createClass({
 
     const charCode = e.charCode;
     const text = e.target.value;
-    const { forum, FireRequestUpdateForumPrefix } = this.props;
+    const {forum, FireRequestUpdateForumPrefix} = this.props;
 
     if (charCode == 13) {
       FireRequestUpdateForumPrefix({
         id: this.state.updateItemId,
         forumId: forum.get('id'),
-        prefixName: text
+        prefixName: text,
       });
       this.setState({
         openAdder: false,
         prefixText: null,
         updateItemId: null,
-        updateItemText: null
+        updateItemText: null,
       });
     }
   },
@@ -64,7 +64,7 @@ const PrefixBox = React.createClass({
   prefixDelete(id) {
 
     this.props.FireRequestDeleteForumPrefix({
-      id: id
+      id: id,
     });
   },
 
@@ -84,61 +84,66 @@ const PrefixBox = React.createClass({
             </button>
           </div>
         </li>
-      )
+      );
     } else {
       return (
         <li key={p.get('id')} className="item">
           <a className="ui label large">
             <span className="prefix-adder-item">{p.get('name')}</span>
-            <i className="fa fa-pencil" onClick={this.openPrefixUpdate.bind(this, p.get('id'))}/>
-            <i className="fa fa-remove" onClick={this.prefixDelete.bind(this, p.get('id'))}/>
+            <i className="fa fa-pencil"
+               onClick={this.openPrefixUpdate.bind(this, p.get('id'))}/>
+            <i className="fa fa-remove"
+               onClick={this.prefixDelete.bind(this, p.get('id'))}/>
           </a>
         </li>
-      )
+      );
     }
   },
   triggerOpenAddPrefix() {
 
-    this.setState({ openAdder: !this.state.openAdder })
+    this.setState({openAdder: !this.state.openAdder});
 
   },
   sendPrefix(e) {
     const charCode = e.charCode;
-    const { forum, FireRequestAddForumPrefix } = this.props;
+    const {forum, FireRequestAddForumPrefix} = this.props;
 
     if (charCode == 13) {
       FireRequestAddForumPrefix({
         forumId: forum.get('id'),
-        prefixName: this.state.prefixText
+        prefixName: this.state.prefixText,
       });
       this.setState({
         openAdder: false,
-        prefixText: null
+        prefixText: null,
       });
     }
   },
   prefixText() {
 
     this.setState({
-      prefixText: this.refs.input_prefix.value.trim()
-    })
+      prefixText: this.refs.input_prefix.value.trim(),
+    });
   },
   render() {
-    const { prefixes } = this.props;
+    const {prefixes} = this.props;
     const self = this;
 
     const adder = this.state.openAdder
       ? (
-      <div className="ui action input prefix-adder-input">
-        <input ref="input_prefix" type="text" onKeyPress={this.sendPrefix} onChange={this.prefixText}/>
-        <button className="ui icon button" onClick={this.triggerOpenAddPrefix}>
-          <i className="icon remove circle outline"></i>
-        </button>
-      </div>
-    )
+        <div className="ui action input prefix-adder-input">
+          <input ref="input_prefix" type="text" onKeyPress={this.sendPrefix}
+                 onChange={this.prefixText}/>
+          <button className="ui icon button"
+                  onClick={this.triggerOpenAddPrefix}>
+            <i className="icon remove circle outline"></i>
+          </button>
+        </div>
+      )
       : prefixes.size < 5
-      ? <div className="ui button primary tiny prefix-adder-button" onClick={this.triggerOpenAddPrefix}>추가 +</div>
-      : null;
+        ? <div className="ui button primary tiny prefix-adder-button"
+               onClick={this.triggerOpenAddPrefix}>추가 +</div>
+        : null;
 
     return (
       <ul className="prefix-list">
@@ -148,7 +153,7 @@ const PrefixBox = React.createClass({
         </li>
       </ul>
     );
-  }
+  },
 });
 
 const ForumPrefix = React.createClass({
@@ -170,41 +175,52 @@ const ForumPrefix = React.createClass({
     e.preventDefault();
     e.stopPropagation();
 
-    const { ForumSettingStore, FireRequestUpdateForumMeta } = this.props;
+    const {ForumSettingStore, FireRequestUpdateForumMeta} = this.props;
     const forumInfo = ForumSettingStore.get('forumInfo');
     const forum = ForumSettingStore.get('forum');
 
     FireRequestUpdateForumMeta({
       id: forum.get('id'),
-      sub_header: forumInfo ? forumInfo.get('forum_sub_header') : forum.get('sub_header'),
-      description: forumInfo ? forumInfo.get('forum_description') : forum.get('description'),
-      rule: forumInfo ? forumInfo.get('forum_rule') : forum.get('rule')
-    })
+      sub_header: forumInfo ? forumInfo.get('forum_sub_header') : forum.get(
+        'sub_header'),
+      description: forumInfo ? forumInfo.get('forum_description') : forum.get(
+        'description'),
+      rule: forumInfo ? forumInfo.get('forum_rule') : forum.get('rule'),
+    });
   },
 
   changeForm(e) {
-    this.props.FireHandleChangeFormForumMeta({ [e.target.name]: e.target.value.trim() })
+    this.props.FireHandleChangeFormForumMeta(
+      {[e.target.name]: e.target.value.trim()});
   },
 
   render() {
-    const { ForumSettingStore } = this.props;
+    const {ForumSettingStore} = this.props;
     const forum = ForumSettingStore.get('forum');
 
     if (forum) {
       const patch = ForumSettingStore.getIn(['forumInfo', 'success']);
-      const patchSuccess = patch === 'updated' ? true : patch === 'failed' ? false : null;
+      const patchSuccess = patch === 'updated'
+        ? true
+        : patch === 'failed'
+          ? false
+          : null;
       let button;
 
       if (patchSuccess === true) {
-        button = <div className="ui submit button positive">변경 완료</div>
+        button = <div className="ui submit button positive">변경 완료</div>;
       } else if (patchSuccess === false) {
-        button = <button type="submit" className="ui submit button negative">변경 실패</button>
+        button = <button type="submit" className="ui submit button negative">변경
+          실패</button>;
       } else if (patchSuccess === null) {
-        button = <button type="submit" className="ui submit button primary">변경</button>
+        button =
+          <button type="submit" className="ui submit button primary">
+            변경</button>;
       }
 
       return (
-        <div className="ui container forum-prefix" style={{ margin: 10, width: 700 }}>
+        <div className="ui container forum-prefix"
+             style={{margin: 10, width: 700}}>
           <div className="ui segments ">
             <div className="ui segment">
               <h3 className="ui header">말머리 설정</h3>
@@ -227,11 +243,11 @@ const ForumPrefix = React.createClass({
             </div>
           </div>
         </div>
-      )
+      );
     }
 
-    return <div></div>
-  }
+    return <div></div>;
+  },
 });
 
 export default ForumPrefix;

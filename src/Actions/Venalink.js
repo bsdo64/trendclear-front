@@ -9,13 +9,13 @@ export const FAILURE_GET_MORE_SHARE_VENALINK_LIST = 'FAILURE_GET_MORE_SHARE_VENA
 export function requestGetMoreActiveVenalinkList(payload) {
   return {
     type: REQUEST_GET_MORE_ACTIVE_VENALINK_LIST,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestGetMoreShareVenalinkList(payload) {
   return {
     type: REQUEST_GET_MORE_SHARE_VENALINK_LIST,
-    payload
-  }
+    payload,
+  };
 }

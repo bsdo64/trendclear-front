@@ -4,21 +4,21 @@ import { Editor, EditorState, Modifier, RichUtils } from 'draft-js';
 class ColorfulEditorExample extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { editorState: EditorState.createEmpty() };
+    this.state = {editorState: EditorState.createEmpty()};
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({ editorState });
+    this.onChange = (editorState) => this.setState({editorState});
     this.toggleColor = (toggledColor) => this._toggleColor(toggledColor);
   }
 
   _toggleColor(toggledColor) {
-    const { editorState } = this.state;
+    const {editorState} = this.state;
     const selection = editorState.getSelection();
 
     // Let's just allow one color at a time. Turn off all active colors.
     const nextContentState = Object.keys(colorStyleMap)
       .reduce((contentState, color) => {
-        return Modifier.removeInlineStyle(contentState, selection, color)
+        return Modifier.removeInlineStyle(contentState, selection, color);
       }, editorState.getCurrentContent());
 
     let nextEditorState = EditorState.push(
@@ -48,7 +48,7 @@ class ColorfulEditorExample extends React.Component {
   }
 
   render() {
-    const { editorState } = this.state;
+    const {editorState} = this.state;
     return (
       <div style={styles.root}>
         <ColorControls
@@ -81,27 +81,34 @@ class StyleButton extends React.Component {
   render() {
     let style;
     if (this.props.active) {
-      style = { ...styles.styleButton, ...colorStyleMap[this.props.style] };
+      style = {...styles.styleButton, ...colorStyleMap[this.props.style]};
     } else {
       style = styles.styleButton;
     }
 
     return (
       <span style={style} onMouseDown={this.onToggle}>
-              {this.props.label}
-            </span>
+        {this.props.label}
+      </span>
     );
   }
 }
 
+StyleButton.propTypes = {
+  style: React.PropTypes.object.isRequired,
+  active: React.PropTypes.bool.isRequired,
+  label: React.PropTypes.string.isRequired,
+  onToggle: React.PropTypes.func.isRequired,
+};
+
 const COLORS = [
-  { label: 'Red', style: 'red' },
-  { label: 'Orange', style: 'orange' },
-  { label: 'Yellow', style: 'yellow' },
-  { label: 'Green', style: 'green' },
-  { label: 'Blue', style: 'blue' },
-  { label: 'Indigo', style: 'indigo' },
-  { label: 'Violet', style: 'violet' },
+  {label: 'Red', style: 'red'},
+  {label: 'Orange', style: 'orange'},
+  {label: 'Yellow', style: 'yellow'},
+  {label: 'Green', style: 'green'},
+  {label: 'Blue', style: 'blue'},
+  {label: 'Indigo', style: 'indigo'},
+  {label: 'Violet', style: 'violet'},
 ];
 
 const ColorControls = (props) => {
@@ -118,6 +125,11 @@ const ColorControls = (props) => {
       )}
     </div>
   );
+};
+
+ColorControls.propTypes = {
+  editorState: React.PropTypes.object.isRequired,
+  onToggle: React.PropTypes.func.isRequired,
 };
 
 // This object provides the styling information for our custom color

@@ -12,11 +12,11 @@ const AvatarImageModal = React.createClass({
   getInitialState() {
     return {
       file: null,
-      imagePreviewUrl: null
+      imagePreviewUrl: null,
     };
   },
 
-  handleFile: function (e) {
+  handleFile: function(e) {
     e.preventDefault();
 
     const reader = new FileReader();
@@ -26,7 +26,7 @@ const AvatarImageModal = React.createClass({
 
       this.setState({
         file: file,
-        imagePreviewUrl: reader.result
+        imagePreviewUrl: reader.result,
       });
     };
 
@@ -38,7 +38,7 @@ const AvatarImageModal = React.createClass({
     }
   },
   render() {
-    const { UserStore } = this.props;
+    const {UserStore} = this.props;
     const user = UserStore.get('user');
     const profile = UserStore.get('profile');
 
@@ -54,7 +54,7 @@ const AvatarImageModal = React.createClass({
         sex={sex}
         avatarImg={avatar_img}
         removable={true}
-      />
+      />;
     }
 
     return (
@@ -75,14 +75,16 @@ const AvatarImageModal = React.createClass({
               </div>
               <div className="extra">
                 <input type="file" onChange={this.handleFile}/>
-                <div className="ui label button" onClick={this.uploadAvatarImage}>이미지 업로드</div>
+                <div className="ui label button"
+                     onClick={this.uploadAvatarImage}>이미지 업로드
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default AvatarImageModal;

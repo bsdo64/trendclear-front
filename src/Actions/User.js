@@ -33,95 +33,95 @@ export const TOGGLE_SHOW_INVENTORY = 'TOGGLE_SHOW_INVENTORY';
 
 export const RECEIVE_SOCKET_NOTI = 'RECEIVE_SOCKET_NOTI';
 export const RECEIVE_SOCKET_POINT = 'RECEIVE_SOCKET_POINT';
-export const RECEIVE_SOCKET_TERMINATE_VENALINK= 'RECEIVE_SOCKET_TERMINATE_VENALINK';
+export const RECEIVE_SOCKET_TERMINATE_VENALINK = 'RECEIVE_SOCKET_TERMINATE_VENALINK';
 
-export function receiveSocketTerminateVenalink({ refundedVenalink }) {
+export function receiveSocketTerminateVenalink({refundedVenalink}) {
   return {
     type: RECEIVE_SOCKET_TERMINATE_VENALINK,
-    refundedVenalink
-  }
+    refundedVenalink,
+  };
 }
 
 export function requestUserPaybackRP(payload) {
   return {
     type: REQUEST_USER_PAYBACK_RP,
-    payload
-  }
+    payload,
+  };
 }
 
-export function receiveSocketNoti({ notis, userId }) {
+export function receiveSocketNoti({notis, userId}) {
   return {
     type: RECEIVE_SOCKET_NOTI,
     notis,
-    userId
-  }
+    userId,
+  };
 }
-export function receiveSocketPoint({ data, userId }) {
+export function receiveSocketPoint({data, userId}) {
   return {
     type: RECEIVE_SOCKET_POINT,
     data,
-    userId
-  }
+    userId,
+  };
 }
 
 export function toggleShowInventory() {
   return {
-    type: TOGGLE_SHOW_INVENTORY
-  }
+    type: TOGGLE_SHOW_INVENTORY,
+  };
 }
 
 export function requestUserReadNotification(payload) {
   return {
     type: REQUEST_USER_READ_NOTIFICATION,
-    payload
-  }
+    payload,
+  };
 }
 
 export function closeUserSettingMessage(successType) {
   return {
     type: CLOSE_USER_SETTING_MESSAGE,
-    successType
-  }
+    successType,
+  };
 }
 
 export function requestUserUpdatePassword(payload) {
   return {
     type: REQUEST_USER_UPDATE_PASSWORD,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestUserUpdateProfile(payload) {
   return {
     type: REQUEST_USER_UPDATE_PROFILE,
-    payload
-  }
+    payload,
+  };
 }
 
-export function toggleAvatarModal({ data, contentType }) {
+export function toggleAvatarModal({data, contentType}) {
   return {
     type: TOGGLE_AVATAR_MODAL,
     data,
-    contentType
-  }
+    contentType,
+  };
 }
 
 export function requestResetPassword(payload) {
   return {
     type: REQUEST_RESET_PASSWORD,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestUserAvatarImageUpload(payload) {
   return {
     type: REQUEST_USER_AVATAR_IMAGE_UPLOAD,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestUserAvatarImageRemove() {
   return {
-    type: REQUEST_USER_AVATAR_IMAGE_REMOVE
-  }
+    type: REQUEST_USER_AVATAR_IMAGE_REMOVE,
+  };
 }

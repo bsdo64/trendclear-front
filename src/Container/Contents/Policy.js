@@ -3,8 +3,8 @@ import Policy from '../../Components/Contents/Policy';
 
 const ActivityContainer = React.createClass({
   render() {
-    return (<Policy {...this.props} />)
-  }
+    return (<Policy {...this.props} />);
+  },
 });
 
 module.exports = ActivityContainer;

@@ -32,8 +32,8 @@
       }
 
       & > .forum_lists {
-        &>.created_forums_box, .following_forums_box, .ranking_forums_box {
-          float:left;
+        & > .created_forums_box, .following_forums_box, .ranking_forums_box {
+          float: left;
 
           .header {
             font-size: 12px;

@@ -1,6 +1,6 @@
 import { UI } from '../InitialStates';
 import {
-  TOGGLE_SHOW_INVENTORY
+  TOGGLE_SHOW_INVENTORY,
 } from '../../Actions/User';
 
 const Inventory = (state = UI.Inventory, action) => {

@@ -7,17 +7,17 @@ import { requestReport } from '../../Actions/Report';
 
 const ReportModalContainer = React.createClass({
   render() {
-    return (<ReportModalBox {...this.props} />)
-  }
+    return (<ReportModalBox {...this.props} />);
+  },
 });
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -28,12 +28,12 @@ const mapStateToProps = (state) => {
     Posts: getDomainState('Posts'),
     Comments: getDomainState('Comments'),
     SubComments: getDomainState('SubComments'),
-  }
+  };
 };
 
 module.exports = connect(
   mapStateToProps,
   {
-    FireRequestReport: requestReport
+    FireRequestReport: requestReport,
   }
 )(ReportModalContainer);

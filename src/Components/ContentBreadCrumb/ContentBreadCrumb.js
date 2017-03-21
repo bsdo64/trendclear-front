@@ -27,7 +27,7 @@ const BestHeader = React.createClass({
     });
   },
   render() {
-    const { type, location, breadcrumbs, collections } = this.props;
+    const {type, location, breadcrumbs, collections} = this.props;
     let breadcrumb;
 
     switch (type) {
@@ -51,8 +51,11 @@ const BestHeader = React.createClass({
           if (collection) {
 
             breadcrumb = this.createBreadCrumbs([
-              { title: '나의 컬렉션' },
-              { title: collection.get('title'), url: `/collection/${collectionId}` },
+              {title: '나의 컬렉션'},
+              {
+                title: collection.get('title'),
+                url: `/collection/${collectionId}`,
+              },
             ]);
 
             return (
@@ -75,7 +78,7 @@ const BestHeader = React.createClass({
           </div>
         );
     }
-  }
+  },
 });
 
 export default BestHeader;

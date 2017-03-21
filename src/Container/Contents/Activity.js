@@ -6,15 +6,22 @@ import { getUser } from '../../Selectors/User';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
-import { toggleActiveVenalinkModal, requestLikePost, requestGetMorePostList } from '../../Actions/Post';
+import {
+  toggleActiveVenalinkModal,
+  requestLikePost,
+  requestGetMorePostList,
+} from '../../Actions/Post';
 import { toggleReportModal } from '../../Actions/Report';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
-import { requestParticipateVenalink, requestActivateVenalink } from '../../Actions/VenacleStore';
+import {
+  requestParticipateVenalink,
+  requestActivateVenalink,
+} from '../../Actions/VenacleStore';
 
 const ActivityContainer = React.createClass({
   render() {
-    return (<Activity {...this.props} />)
-  }
+    return (<Activity {...this.props} />);
+  },
 });
 
 ActivityContainer.defaultProps = {
@@ -30,16 +37,15 @@ ActivityContainer.defaultProps = {
   Items: Domains.Items,
 };
 
-
 const mapStateToProps = (state) => {
   const stateStore = state.get('Stores');
 
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -55,7 +61,7 @@ const mapStateToProps = (state) => {
     Posts: getDomainState('Posts'),
     Items: getDomainState('Items'),
     Venatems: getDomainState('Venatems'),
-  }
+  };
 };
 
 module.exports = connect(

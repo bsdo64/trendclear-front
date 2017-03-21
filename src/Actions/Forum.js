@@ -21,40 +21,40 @@ export const FAILURE_CREATE_FORUM = 'FAILURE_CREATE_FORUM';
 export function requestCreateForum(payload) {
   return {
     type: REQUEST_CREATE_FORUM,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestValidateTitleForumCreate(payload) {
   return {
-    type: REQUEST_VALIDATE_TITLE_FORUM_CREATE ,
-    payload
-  }
+    type: REQUEST_VALIDATE_TITLE_FORUM_CREATE,
+    payload,
+  };
 }
 
 export function requestGetMoreForumList(payload) {
   return {
-    type: REQUEST_GET_MORE_FORUM_LIST ,
-    payload
-  }
+    type: REQUEST_GET_MORE_FORUM_LIST,
+    payload,
+  };
 }
 
 export function requestFollowForum(payload) {
   return {
-    type: REQUEST_FOLLOW_FORUM ,
-    payload
-  }
+    type: REQUEST_FOLLOW_FORUM,
+    payload,
+  };
 }
 
 export function requestUnFollowForum(payload) {
   return {
-    type: REQUEST_UN_FOLLOW_FORUM ,
-    payload
-  }
+    type: REQUEST_UN_FOLLOW_FORUM,
+    payload,
+  };
 }
 
 export default {
   requestGetMoreForumList,
   requestFollowForum,
   requestUnFollowForum,
-}
+};

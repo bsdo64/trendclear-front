@@ -29,7 +29,8 @@ const UserSetting = (state = UI.UserSetting, action) => {
       return state.set('error', '비밀번호설정을 실패 하였습니다.');
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 

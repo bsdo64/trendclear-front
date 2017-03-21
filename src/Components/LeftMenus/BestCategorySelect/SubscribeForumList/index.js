@@ -18,13 +18,14 @@ const SubscribeForumList = React.createClass({
   getInitialState() {
     return {
       hideCreateCollectionBox: true,
-      searchForumTitle: null
+      searchForumTitle: null,
     };
   },
 
   toggleCreateCollection() {
 
-    this.setState({ hideCreateCollectionBox: !this.state.hideCreateCollectionBox })
+    this.setState(
+      {hideCreateCollectionBox: !this.state.hideCreateCollectionBox});
   },
   searchForum(e) {
     e.preventDefault();
@@ -32,25 +33,26 @@ const SubscribeForumList = React.createClass({
 
     if (this.state.searchForumTitle) {
       this.props.FireRequestSearchForumToCollectionSubs({
-        title: this.state.searchForumTitle
+        title: this.state.searchForumTitle,
       });
     }
   },
   handleChangeName(e) {
 
-    this.setState({ searchForumTitle: e.target.value.trim() })
+    this.setState({searchForumTitle: e.target.value.trim()});
   },
   toggleForumCandidate(forumId) {
 
     let newForumCandidate = this.props.subscribeForumList;
     if (newForumCandidate.includes(forumId)) {
 
-      const findIndex = newForumCandidate.findIndex(element => element === forumId);
+      const findIndex = newForumCandidate.findIndex(
+        element => element === forumId);
       newForumCandidate.splice(findIndex, 1);
 
       this.props.FireRequestRemoveForumInCollection({
         forumId: forumId,
-        collectionId: this.props.collection.get('id')
+        collectionId: this.props.collection.get('id'),
       });
 
     } else {
@@ -58,29 +60,33 @@ const SubscribeForumList = React.createClass({
       newForumCandidate.push(forumId);
       this.props.FireRequestAddForumInCollection({
         forumId: forumId,
-        collectionId: this.props.collection.get('id')
+        collectionId: this.props.collection.get('id'),
       });
     }
   },
   createListItem(forumId) {
-    const { forums } = this.props;
+    const {forums} = this.props;
     const forum = forums.get(forumId.toString());
     return (
       <div key={forumId} className="item">
         <div className="left floated content add_subscribe_button">
           {
             this.props.subscribeForumList.includes(forumId) &&
-            <div className="ui icon button blue" onClick={this.toggleForumCandidate.bind(this, forumId)}>
+            <div className="ui icon button blue"
+                 onClick={this.toggleForumCandidate.bind(this, forumId)}>
               <i className="checkmark icon"/>선택됨
             </div>
           }
 
           {
             !this.props.subscribeForumList.includes(forumId) &&
-            <div className="ui button" onClick={this.toggleForumCandidate.bind(this, forumId)}>선택</div>
+            <div className="ui button"
+                 onClick={this.toggleForumCandidate.bind(this, forumId)}>
+              선택</div>
           }
         </div>
-        <Link to={`/community?forumId=${forumId}`} className="header">{forum.get('title')}</Link>
+        <Link to={`/community?forumId=${forumId}`}
+              className="header">{forum.get('title')}</Link>
         <div className="description">
           {forum.get('description')}
         </div>
@@ -90,15 +96,16 @@ const SubscribeForumList = React.createClass({
 
   render() {
 
-    const { searchForumList } = this.props;
+    const {searchForumList} = this.props;
     const createCollectionBoxStyle = cx('create_box', {
-      hide: this.state.hideCreateCollectionBox
+      hide: this.state.hideCreateCollectionBox,
     });
 
     return (
       <div id="collection_forum_list">
 
-        <a className="create_collection_btn" onClick={this.toggleCreateCollection}>{'구독 +'}</a>
+        <a className="create_collection_btn"
+           onClick={this.toggleCreateCollection}>{'구독 +'}</a>
         <div className={createCollectionBoxStyle}>
           <form className="ui mini form " onSubmit={this.searchForum}>
             <div className="field collection_title_field">
@@ -117,8 +124,8 @@ const SubscribeForumList = React.createClass({
           </form>
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 export default SubscribeForumList;

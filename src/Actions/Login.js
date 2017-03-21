@@ -9,35 +9,35 @@ export const REQUEST_LOGOUT = 'REQUEST_LOGOUT';
 export const SUCCESS_LOGOUT = 'SUCCESS_LOGOUT';
 export const FAILURE_LOGOUT = 'FAILURE_LOGOUT';
 
-export function toggleLoginModal({ contentType, location }) {
+export function toggleLoginModal({contentType, location}) {
   return {
     type: TOGGLE_LOGIN_MODAL,
     contentType,
-    location
-  }
+    location,
+  };
 }
 
 export function closeLoginModal() {
   return {
-    type: CLOSE_LOGIN_MODAL
-  }
+    type: CLOSE_LOGIN_MODAL,
+  };
 }
 
 export function requestLogin(payload) {
   return {
     type: REQUEST_LOGIN,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestLogout() {
   return {
-    type: REQUEST_LOGOUT
-  }
+    type: REQUEST_LOGOUT,
+  };
 }
 
 export default {
   toggleLoginModal,
   closeLoginModal,
-  requestLogin
-}
+  requestLogin,
+};

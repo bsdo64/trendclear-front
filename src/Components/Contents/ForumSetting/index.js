@@ -26,7 +26,7 @@ const checkManager = function checkManager(forum, userId) {
     if (managers) {
       return managers.find(id => id === userId);
     } else {
-      return false
+      return false;
     }
   }
 
@@ -34,10 +34,11 @@ const checkManager = function checkManager(forum, userId) {
 };
 
 const ForumSettingsComponent = (props) => {
-  const { ForumSettingStore, Forums, AuthStore, location } = props;
+  const {ForumSettingStore, Forums, AuthStore, location} = props;
   const content = ForumSettingStore.get('content');
   const forumId = qs.parse(location.search.slice(1)).forumId;
-  const isManager = checkManager(Forums.get(forumId.toString()), AuthStore.get('userId'));
+  const isManager = checkManager(Forums.get(forumId.toString()),
+    AuthStore.get('userId'));
 
   if (isManager) {
     switch (content) {
@@ -84,14 +85,14 @@ const ForumSettingsComponent = (props) => {
 
             </div>
           </div>
-        )
+        );
     }
   } else {
     return (
       <div>
         권한이 없습니다
       </div>
-    )
+    );
   }
 };
 

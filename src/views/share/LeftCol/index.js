@@ -1,6 +1,6 @@
-import React from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
-import styles from './index.css'
+import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
+import styles from './index.css';
 
 const data = [
   {title: '나는 열네자 입니다'},
@@ -27,7 +27,7 @@ const data = [
   {title: '나는 열네자 입니다'},
   {title: '나는 열네자 입니다'},
   {title: '나는 열네자 입니다'},
-]
+];
 
 const LeftCol = React.createClass({
   render() {
@@ -95,7 +95,7 @@ const LeftCol = React.createClass({
                               {v.title}
                             </div>
                           </li>
-                        )
+                        );
                       })}
                     </ul>
 
@@ -124,8 +124,8 @@ const LeftCol = React.createClass({
         </div>
 
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-module.exports = LeftCol
+module.exports = LeftCol;

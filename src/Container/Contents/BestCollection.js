@@ -5,10 +5,17 @@ import { UI, Domains } from '../../Reducers/InitialStates';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
-import { toggleActiveVenalinkModal, requestLikePost, requestGetMorePostList } from '../../Actions/Post';
+import {
+  toggleActiveVenalinkModal,
+  requestLikePost,
+  requestGetMorePostList,
+} from '../../Actions/Post';
 import { toggleReportModal } from '../../Actions/Report';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
-import { requestActivateVenalink, requestParticipateVenalink } from '../../Actions/VenacleStore';
+import {
+  requestActivateVenalink,
+  requestParticipateVenalink,
+} from '../../Actions/VenacleStore';
 
 const BestContainer = React.createClass({
   render() {
@@ -18,8 +25,8 @@ const BestContainer = React.createClass({
               {...this.props}
         />
       </div>
-    )
-  }
+    );
+  },
 });
 
 BestContainer.defaultProps = {
@@ -38,11 +45,11 @@ BestContainer.defaultProps = {
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -57,7 +64,7 @@ const mapStateToProps = (state) => {
     Users: getDomainState('Users'),
     Posts: getDomainState('Posts'),
     Collections: getDomainState('Collections'),
-  }
+  };
 };
 
 module.exports = connect(

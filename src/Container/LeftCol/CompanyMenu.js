@@ -9,17 +9,17 @@ const MenuContainer = React.createClass({
   },
 
   render() {
-    return <Company {...this.props} />
-  }
+    return <Company {...this.props} />;
+  },
 });
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -30,13 +30,11 @@ const mapStateToProps = (state) => {
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
 
     Forums: getDomainState('Forums'),
-    Collections: getDomainState('Collections')
-  }
+    Collections: getDomainState('Collections'),
+  };
 };
 
 module.exports = connect(
   mapStateToProps,
-  {
-
-  }
+  {}
 )(MenuContainer);

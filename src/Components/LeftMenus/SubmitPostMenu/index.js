@@ -25,7 +25,7 @@ const SubmitPostMenu = React.createClass({
         </menu>
       </div>
     );
-  }
+  },
 });
 
 export default SubmitPostMenu;

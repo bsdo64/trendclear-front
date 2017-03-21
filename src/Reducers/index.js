@@ -6,13 +6,13 @@ import Domains from './Domains';
 import UI from './UI';
 const Stores = combineReducers({
   UI,
-  Domains
+  Domains,
 });
 
 function selectReducer(state, action) {
 
   switch (action.type) {
-    case "@@router/LOCATION_CHANGE" : {
+    case '@@router/LOCATION_CHANGE' : {
       return state.merge(action.serverInitData);
     }
     default :
@@ -21,7 +21,9 @@ function selectReducer(state, action) {
 }
 
 // Root Reducer
-export default function (state, action) {
+function Root(state, action) {
   const intermediateState = Stores(state, action);
   return selectReducer(intermediateState, action);
 }
+
+export default Root;

@@ -13,7 +13,7 @@ const SubmitForumBox = React.createClass({
   },
 
   getInitialState() {
-    return { value: '' };
+    return {value: ''};
   },
   componentDidUpdate() {
     $(this.form)
@@ -22,8 +22,9 @@ const SubmitForumBox = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.SubmitForumStore.get('createForumSuccess') &&
-        nextProps.SubmitForumStore.get('createForumSuccess')) {
-      browserHistory.push(`/community?forumId=${nextProps.SubmitForumStore.get('createForumSuccess')}`)
+      nextProps.SubmitForumStore.get('createForumSuccess')) {
+      browserHistory.push(`/community?forumId=${nextProps.SubmitForumStore.get(
+        'createForumSuccess')}`);
     }
   },
 
@@ -37,13 +38,13 @@ const SubmitForumBox = React.createClass({
             rules: [
               {
                 type: 'empty',
-                prompt: '게시판 이름을 입력하세요'
+                prompt: '게시판 이름을 입력하세요',
               },
               {
                 type: 'regExp[/^[가-힣A-Za-z0-9_]{2,14}$/]',
-                prompt: '한글, 영문 2-14 내로 입력해주세요'
-              }
-            ]
+                prompt: '한글, 영문 2-14 내로 입력해주세요',
+              },
+            ],
           },
           forum_sub_header: {
             identifier: 'forum_sub_header',
@@ -53,19 +54,19 @@ const SubmitForumBox = React.createClass({
             rules: [
               {
                 type: 'empty',
-                prompt: '게시판 설명을 입력하세요'
-              }
-            ]
+                prompt: '게시판 설명을 입력하세요',
+              },
+            ],
           },
           forum_rule: {
             identifier: 'forum_rule',
             rules: [
               {
                 type: 'empty',
-                prompt: '게시판 규칙을 입력하세요'
-              }
-            ]
-          }
+                prompt: '게시판 규칙을 입력하세요',
+              },
+            ],
+          },
         },
         inline: true,
         on: 'blur',
@@ -73,7 +74,7 @@ const SubmitForumBox = React.createClass({
           e.preventDefault();
           e.stopPropagation();
 
-          const { SubmitForumStore, FireRequestCreateForum } = this.props;
+          const {SubmitForumStore, FireRequestCreateForum} = this.props;
           const error = SubmitForumStore.getIn(['form', 'error']);
 
           if (!error) {
@@ -81,23 +82,23 @@ const SubmitForumBox = React.createClass({
               title: fields.forum_title,
               sub_header: fields.forum_sub_header,
               description: fields.forum_description,
-              rule: fields.forum_rule
+              rule: fields.forum_rule,
             };
 
             FireRequestCreateForum(formValue);
           }
         },
         onFailure: (e, fields) => {
-          submitFailLog(e, fields)
-        }
+          submitFailLog(e, fields);
+        },
       });
   },
 
-  handleChange: function () {
-    this.setState({ value: this.refs.rule_textarea.value });
+  handleChange: function() {
+    this.setState({value: this.refs.rule_textarea.value});
   },
-  rawMarkup: function () {
-    return { __html: marked(this.state.value, { breaks: true }) };
+  rawMarkup: function() {
+    return {__html: marked(this.state.value, {breaks: true})};
   },
 
   validate(e) {
@@ -106,17 +107,17 @@ const SubmitForumBox = React.createClass({
     if (e.target.value.length > 1 && isRegex) {
 
       this.props.FireRequestValidateTitleForumCreate({
-        title: value
+        title: value,
       });
     }
   },
 
   render() {
-    const { SubmitForumStore, UserStore } = this.props;
+    const {SubmitForumStore, UserStore} = this.props;
 
     const trendbox = UserStore.get('trendbox');
     if (!trendbox) {
-      return <div>로그인을 해주세요</div>
+      return <div>로그인을 해주세요</div>;
     }
 
     const canCreate = trendbox.get('level') >= 5 && trendbox.get('T') >= 100;
@@ -126,7 +127,7 @@ const SubmitForumBox = React.createClass({
     let validateError;
     if (duplicateTitleError || !canCreate || createFail) {
       validateError = (
-        <div className="ui error message" style={{ display: 'block' }}>
+        <div className="ui error message" style={{display: 'block'}}>
           <ul className="list">
             {
               duplicateTitleError &&
@@ -146,10 +147,10 @@ const SubmitForumBox = React.createClass({
     }
 
     return (
-      <div className="ui container" style={{ margin: 10, width: 700 }}>
-        <div className={"ui segments "}>
+      <div className="ui container" style={{margin: 10, width: 700}}>
+        <div className={'ui segments '}>
 
-          <div className={"ui segment"}>
+          <div className={'ui segment'}>
             <h3 className="ui header">게시판 생성</h3>
             <div className="ui divider"></div>
             <div className="ui list">
@@ -170,7 +171,9 @@ const SubmitForumBox = React.createClass({
                 <i className="help icon"/>
                 <div className="content">
                   <div className="description">게시판 규칙은
-                    <a href="https://namu.wiki/w/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4" target="_blank"> Markdown </a>
+                    <a
+                      href="https://namu.wiki/w/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4"
+                      target="_blank"> Markdown </a>
                     을 지원합니다
                   </div>
                 </div>
@@ -186,10 +189,11 @@ const SubmitForumBox = React.createClass({
             </div>
 
             {/* 게시판 입력 폼 */}
-            <form ref={ref => this.form = ref} id="create_forum" className="ui form">
+            <form ref={ref => this.form = ref} id="create_forum"
+                  className="ui form">
               <div className="field">
                 <label>이름 *</label>
-                <input name="forum_title" type="text" onChange={this.validate} />
+                <input name="forum_title" type="text" onChange={this.validate}/>
               </div>
               <div className="field">
                 <label>부제 :</label>
@@ -209,7 +213,7 @@ const SubmitForumBox = React.createClass({
               <h5>클럽 규칙</h5>
               <div
                 className="markdown_output"
-                style={{ paddingBottom: 10 }}
+                style={{paddingBottom: 10}}
                 dangerouslySetInnerHTML={this.rawMarkup()}
               />
 
@@ -217,15 +221,15 @@ const SubmitForumBox = React.createClass({
 
               {
                 canCreate &&
-                <div className={"ui submit button primary"}>확인</div>
+                <div className={'ui submit button primary'}>확인</div>
               }
             </form>
           </div>
 
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 export default SubmitForumBox;

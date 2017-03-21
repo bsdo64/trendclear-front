@@ -1,17 +1,16 @@
 import { AppContainer } from 'react-hot-loader';
-
 import React from 'react';
 import { render } from 'react-dom';
 import { fromJS } from 'immutable';
 import App from './App';
 import configStore from '../ConfigStore';
-import createSagaMiddleware from 'redux-saga'
+import createSagaMiddleware from 'redux-saga';
 import StartSocketSubs from './socketSubscribe';
-import rootSaga from '../Saga'
+import rootSaga from '../Saga';
 
 if (process.env.NODE_ENV !== 'production') {
   window.Perf = require('react-addons-perf');
-  localStorage.debug = 'vn:*'
+  localStorage.debug = 'vn:*';
 }
 
 require('core-js');
@@ -20,7 +19,10 @@ require('core-js');
 const sagaMiddleware = createSagaMiddleware();
 
 // Create Store
-const store = configStore(fromJS({ Stores: { UI: {}, Domains: {} } }), sagaMiddleware);
+const store = configStore(
+  fromJS({Stores: {UI: {}, Domains: {}}}),
+  sagaMiddleware
+);
 
 // Socket Start
 StartSocketSubs(store);
@@ -28,20 +30,24 @@ StartSocketSubs(store);
 // Saga Start
 sagaMiddleware.run(rootSaga);
 
-// Render App
+/**
+ * Render App with webpack
+ * @param Component
+ * @returns {*}
+ */
 const renderApp = (Component) => {
   return render(
-  <AppContainer>
-    <Component store={store} />
-  </AppContainer>
-  , document.getElementById('app'));
+    <AppContainer>
+      <Component store={store}/>
+    </AppContainer>
+    , document.getElementById('app'));
 };
 
 renderApp(App);
 
 if (module.hot) {
-  module.hot.accept("./App", () => {
-    const App = require("./App").default;
+  module.hot.accept('./App', () => {
+    const App = require('./App').default;
     renderApp(App);
   });
 }

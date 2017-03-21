@@ -15,8 +15,8 @@ import { toggleAvatarModal, toggleShowInventory } from '../../Actions/User';
 const WidgetContainer = React.createClass({
   render() {
 
-    return (<WidgetBox {...this.props} />)
-  }
+    return (<WidgetBox {...this.props} />);
+  },
 });
 
 WidgetContainer.defaultProps = {
@@ -32,11 +32,11 @@ WidgetContainer.defaultProps = {
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -49,7 +49,7 @@ const mapStateToProps = (state) => {
     Venatems: getDomainState('Venatems'),
     Items: getDomainState('Items'),
     Inventories: getDomainState('Inventories'),
-  }
+  };
 };
 
 module.exports = connect(

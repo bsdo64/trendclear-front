@@ -7,16 +7,16 @@ import qs from 'qs';
 
 const ListHeader = () => {
   return (
-    <div style={{ padding: 10 }}>
-      <div style={{ background: '#fff', padding: 10 }}>
-        <h3 style={{ fontSize: '1.2em' }}>
-          <i className="fa fa-star" style={{ color: 'yellow', paddingRight: 5 }} />
+    <div style={{padding: 10}}>
+      <div style={{background: '#fff', padding: 10}}>
+        <h3 style={{fontSize: '1.2em'}}>
+          <i className="fa fa-star" style={{color: 'yellow', paddingRight: 5}}/>
           피드
         </h3>
         <p>팔로잉 인기글</p>
       </div>
     </div>
-  )
+  );
 };
 
 const BestBox = React.createClass({
@@ -46,16 +46,17 @@ const BestBox = React.createClass({
 
   },
 
-  getMoreBest({ previousPosition, currentPosition, event }) {
+  getMoreBest({previousPosition, currentPosition, event}) {
     if (previousPosition === 'below' && currentPosition === 'inside' && event) {
       const body = event.target.body;
       if ((body) && body.clientHeight > 768) {
-        const { PaginationStore, GnbStore, listName, location, FireRequestGetMorePostList } = this.props;
+        const {PaginationStore, GnbStore, listName, location, FireRequestGetMorePostList} = this.props;
         const Pagination = PaginationStore.get(listName);
         if (Pagination) {
           const nextPage = Pagination.get('next_page');
 
-          const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get('categoryValue').toJS() : [];
+          const categoryValue = GnbStore.get('categoryValue') ? GnbStore.get(
+            'categoryValue').toJS() : [];
           const normalize = categoryValue.map((object) => {
             return parseInt(object.value);
           });
@@ -85,8 +86,8 @@ const BestBox = React.createClass({
                 page: nextPage,
                 order: query.order || 'hot',
                 categoryValue: (normalize.length > 0) ? normalize : null,
-                listType: location.pathname === '/all' ? 'all' : null
-              }
+                listType: location.pathname === '/all' ? 'all' : null,
+              },
             });
           }
         }
@@ -95,14 +96,14 @@ const BestBox = React.createClass({
   },
 
   createBreadCrumbArray(array, pathname) {
-    array.push({ title: '베스트', url: '/' });
+    array.push({title: '베스트', url: '/'});
 
     switch (pathname) {
       case '/':
-        array.push({ title: '팔로잉' });
+        array.push({title: '팔로잉'});
         return array;
       case '/all':
-        array.push({ title: '전체글' });
+        array.push({title: '전체글'});
         return array;
     }
   },
@@ -142,11 +143,11 @@ const BestBox = React.createClass({
           scrollableAncestor={window || null}
         />
 
-        <InfiniteLoader collection={Collection} />
+        <InfiniteLoader collection={Collection}/>
 
       </div>
-    )
-  }
+    );
+  },
 });
 
 export default BestBox;

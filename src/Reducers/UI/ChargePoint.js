@@ -3,7 +3,7 @@ import {
   REQUEST_CHECK_POINT_CHARGE,
   SUCCESS_CHECK_POINT_CHARGE,
   FAILURE_CHECK_POINT_CHARGE,
-  WAITING_CHECK_CHARGE
+  WAITING_CHECK_CHARGE,
 } from '../../Actions/Point';
 
 const ChargePoint = (state = UI.ChargePoint, action) => {
@@ -17,8 +17,8 @@ const ChargePoint = (state = UI.ChargePoint, action) => {
         isRequestCheckCharge: false,
         successChargePoint: true,
         failureChargePoint: false,
-        result: action.result && action.result.response
-      })
+        result: action.result && action.result.response,
+      });
     }
 
     case FAILURE_CHECK_POINT_CHARGE: {
@@ -26,8 +26,8 @@ const ChargePoint = (state = UI.ChargePoint, action) => {
         isRequestCheckCharge: false,
         successChargePoint: false,
         failureChargePoint: true,
-        result: action.result && action.result.response
-      })
+        result: action.result && action.result.response,
+      });
     }
 
     case WAITING_CHECK_CHARGE: {
@@ -35,10 +35,11 @@ const ChargePoint = (state = UI.ChargePoint, action) => {
         isRequestCheckCharge: true,
         successChargePoint: false,
         failureChargePoint: false,
-      })
+      });
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 

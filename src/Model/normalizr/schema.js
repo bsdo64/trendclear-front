@@ -1,4 +1,4 @@
-const { Schema, arrayOf } = require('normalizr');
+const {Schema, arrayOf} = require('normalizr');
 
 const club = new Schema('clubs');
 const categoryGroup = new Schema('categoryGroups');
@@ -18,11 +18,11 @@ const subComment = new Schema('subComments');
 const noti = new Schema('notis');
 
 inventory.define({
-  items: arrayOf(venatem)
+  items: arrayOf(venatem),
 });
 
 venatem.define({
-  item: item
+  item: item,
 });
 
 author.define({
@@ -30,44 +30,44 @@ author.define({
   follow_forums: arrayOf(forum),
   forumCreated: arrayOf(forum),
   forumManaged: arrayOf(forum),
-  inventories: arrayOf(inventory)
+  inventories: arrayOf(inventory),
 });
 
 club.define({
-  category_groups: arrayOf(categoryGroup)
+  category_groups: arrayOf(categoryGroup),
 });
 
 categoryGroup.define({
-  categories: arrayOf(category)
+  categories: arrayOf(category),
 });
 
 category.define({
-  forums: arrayOf(forum)
+  forums: arrayOf(forum),
 });
 
 collection.define({
-  forums: arrayOf(forum)
+  forums: arrayOf(forum),
 });
 
 forum.define({
   prefixes: arrayOf(prefix),
   announces: arrayOf(post),
   managers: arrayOf(author),
-  bans: arrayOf(author)
+  bans: arrayOf(author),
 });
 
 comment.define({
   author: author,
-  subComments: arrayOf(subComment)
+  subComments: arrayOf(subComment),
 });
 
 subComment.define({
-  author: author
+  author: author,
 });
 
 post.define({
   comments: arrayOf(comment),
-  author: author
+  author: author,
 });
 
 module.exports = {
@@ -86,5 +86,5 @@ module.exports = {
   comment: comment,
   subComment: subComment,
 
-  noti: noti
+  noti: noti,
 };

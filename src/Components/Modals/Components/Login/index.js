@@ -14,8 +14,9 @@ const Login = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.LoginStore.get('loginSuccess') && nextProps.LoginStore.get('loginSuccess')) {
-      window.location.href = nextProps.ModalStore.get('location') || '/'
+    if (!this.props.LoginStore.get('loginSuccess') &&
+      nextProps.LoginStore.get('loginSuccess')) {
+      window.location.href = nextProps.ModalStore.get('location') || '/';
     }
   },
 
@@ -31,38 +32,38 @@ const Login = React.createClass({
             rules: [
               {
                 type: 'empty',
-                prompt: '이메일을 입력해주세요'
+                prompt: '이메일을 입력해주세요',
               },
               {
                 type: 'email',
-                prompt: 'Email 형식을 입력해 주세요.'
-              }
-            ]
+                prompt: 'Email 형식을 입력해 주세요.',
+              },
+            ],
           },
           password: {
             identifier: 'password',
             rules: [
               {
                 type: 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
-                prompt: '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
-              }
-            ]
-          }
+                prompt: '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요',
+              },
+            ],
+          },
         },
         onSuccess: (event, fields) => {
           this.props.FireRequestLogin({
             email: fields.loginEmail,
-            password: fields.password
+            password: fields.password,
           });
         },
         onFailure: (formErrors, fields) => {
           errorLog(formErrors, fields);
-        }
+        },
       });
   },
 
   handleRequestLoginByEnter(e) {
-    if (e.key === "Enter" && e.keyCode === 13) {
+    if (e.key === 'Enter' && e.keyCode === 13) {
       this.handleRequestLogin();
     }
   },
@@ -87,44 +88,44 @@ const Login = React.createClass({
             rules: [
               {
                 type: 'empty',
-                prompt: '이메일을 입력해주세요'
+                prompt: '이메일을 입력해주세요',
               },
               {
                 type: 'email',
-                prompt: 'Email 형식을 입력해 주세요.'
-              }
-            ]
+                prompt: 'Email 형식을 입력해 주세요.',
+              },
+            ],
           },
           password: {
             identifier: 'password',
             rules: [
               {
                 type: 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
-                prompt: '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요'
-              }
-            ]
-          }
+                prompt: '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요',
+              },
+            ],
+          },
         },
         onSuccess: (event, fields) => {
           this.props.FireRequestLogin({
             email: fields.loginEmail,
-            password: fields.password
+            password: fields.password,
           });
         },
         onFailure: (formErrors, fields) => {
           errorLog(formErrors, fields);
-        }
+        },
       });
   },
 
   render() {
-    const { LoginStore } = this.props;
+    const {LoginStore} = this.props;
     const loginFail = LoginStore.get('loginFail');
     let loginError;
 
     if (loginFail) {
       loginError = (
-        <div className="ui error message" style={{ display: 'block' }}>
+        <div className="ui error message" style={{display: 'block'}}>
           <ul className="list">
             <li>이메일과 비밀번호를 다시 확인해주세요</li>
           </ul>
@@ -156,7 +157,8 @@ const Login = React.createClass({
               </div>
               <div className="field">
                 <label>비밀번호</label>
-                <input type="password" name="password" onKeyDown={this.handleRequestLoginByEnter}/>
+                <input type="password" name="password"
+                       onKeyDown={this.handleRequestLoginByEnter}/>
               </div>
               <div className="inline field">
                 <div className="ui checkbox">
@@ -164,14 +166,18 @@ const Login = React.createClass({
                   <label htmlFor="agreement-checkbox">아이디를 저장합니다</label>
                 </div>
               </div>
-              <div className={loginButton} onClick={this.handleRequestLogin}>로그인</div>
+              <div className={loginButton} onClick={this.handleRequestLogin}>
+                로그인
+              </div>
 
               { loginError }
 
               <div className="login_append">
-                <Link to="/member/find" className="link_find">아이디 / 비밀번호찾기</Link>
+                <Link to="/member/find" className="link_find">아이디 /
+                  비밀번호찾기</Link>
                 <span className="txt_bar">|</span>
-                <Link to="/signin" onClick={this.handleRequestSignin}>회원 가입하기</Link>
+                <Link to="/signin" onClick={this.handleRequestSignin}>회원
+                  가입하기</Link>
               </div>
 
             </form>
@@ -188,7 +194,7 @@ const Login = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default Login;

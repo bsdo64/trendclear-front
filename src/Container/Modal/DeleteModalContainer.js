@@ -6,8 +6,8 @@ import { requestDeleteItem } from '../../Actions/DeleteItem';
 
 const DeleteModalContainer = React.createClass({
   render() {
-    return (<DeleteModalBox {...this.props} />)
-  }
+    return (<DeleteModalBox {...this.props} />);
+  },
 });
 
 DeleteModalContainer.propTypes = {
@@ -20,11 +20,11 @@ DeleteModalContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -35,12 +35,12 @@ const mapStateToProps = (state) => {
     Posts: getDomainState('Posts'),
     Comments: getDomainState('Comments'),
     SubComments: getDomainState('SubComments'),
-  }
+  };
 };
 
 module.exports = connect(
   mapStateToProps,
   {
-    FireRequestDeleteItem: requestDeleteItem
+    FireRequestDeleteItem: requestDeleteItem,
   }
 )(DeleteModalContainer);

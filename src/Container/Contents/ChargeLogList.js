@@ -3,22 +3,22 @@ import { getLoginUser } from '../Util/func';
 import { connect } from 'react-redux';
 import ChargeLogListBox from '../../Components/Contents/ChargeLogListBox';
 import {
-  requestGetMoreChargeLogList
+  requestGetMoreChargeLogList,
 } from '../../Actions/Point';
 
 const ChargeLogList = React.createClass({
   render() {
-    return <ChargeLogListBox {...this.props} />
-  }
+    return <ChargeLogListBox {...this.props} />;
+  },
 });
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
 
     Users: getDomainState('Users'),
-  }
+  };
 };
 
 module.exports = connect(

@@ -1,12 +1,12 @@
 import React, {
-  PropTypes
+  PropTypes,
 } from 'react';
-import segmentize from 'segmentize'
+import segmentize from 'segmentize';
 
 const Ellipsis = React.createClass({
   render() {
-    return <a className="item" ><i className="fa fa-ellipsis-h"></i></a>
-  }
+    return <a className="item"><i className="fa fa-ellipsis-h"></i></a>;
+  },
 });
 
 const Button = React.createClass({
@@ -16,9 +16,10 @@ const Button = React.createClass({
   },
   render() {
     return (
-      <a className="item" onClick={this.props.onClickPage(this.props.page)}>{this.props.page}</a>
+      <a className="item"
+         onClick={this.props.onClickPage(this.props.page)}>{this.props.page}</a>
     );
-  }
+  },
 });
 
 const ActiveButton = React.createClass({
@@ -28,9 +29,10 @@ const ActiveButton = React.createClass({
   },
   render() {
     return (
-      <a className="item active" onClick={this.props.onClickPage(this.props.page)}>{this.props.page}</a>
+      <a className="item active"
+         onClick={this.props.onClickPage(this.props.page)}>{this.props.page}</a>
     );
-  }
+  },
 });
 
 const TablePagination = React.createClass({
@@ -38,32 +40,34 @@ const TablePagination = React.createClass({
     totalPage: PropTypes.number,
     currentPage: PropTypes.number,
     pageLimit: PropTypes.number,
-    onClickPage: PropTypes.func
+    onClickPage: PropTypes.func,
   },
   render() {
 
-    const { totalPage, currentPage } = this.props;
+    const {totalPage, currentPage} = this.props;
     const sidePageCount = 2;
     const seg = segmentize({
       page: currentPage,
       pages: totalPage,
       beginPages: 1,
       endPages: 1,
-      sidePages: sidePageCount
+      sidePages: sidePageCount,
     });
 
     return (
       <div className="ui right floated pagination menu">
         {
           1 < currentPage &&
-          <a className="icon item" onClick={this.props.onClickPage(currentPage - 1)}>
+          <a className="icon item"
+             onClick={this.props.onClickPage(currentPage - 1)}>
             <i className="left chevron icon"/>
           </a>
         }
 
         {
           seg.beginPages.map((p, i) => {
-            return <Button key={i} page={p} onClickPage={this.props.onClickPage}/>
+            return <Button key={i} page={p}
+                           onClickPage={this.props.onClickPage}/>;
           })
         }
 
@@ -74,19 +78,22 @@ const TablePagination = React.createClass({
 
         {
           seg.previousPages.map((p, i) => {
-            return <Button key={i} page={p} onClickPage={this.props.onClickPage}/>
+            return <Button key={i} page={p}
+                           onClickPage={this.props.onClickPage}/>;
           })
         }
 
         {
           seg.centerPage.map((p, i) => {
-            return <ActiveButton key={i} page={p} onClickPage={this.props.onClickPage}/>
+            return <ActiveButton key={i} page={p}
+                                 onClickPage={this.props.onClickPage}/>;
           })
         }
 
         {
           seg.nextPages.map((p, i) => {
-            return <Button key={i} page={p} onClickPage={this.props.onClickPage}/>
+            return <Button key={i} page={p}
+                           onClickPage={this.props.onClickPage}/>;
           })
         }
 
@@ -97,19 +104,21 @@ const TablePagination = React.createClass({
 
         {
           seg.endPages.map((p, i) => {
-            return <Button key={i} page={p} onClickPage={this.props.onClickPage}/>
+            return <Button key={i} page={p}
+                           onClickPage={this.props.onClickPage}/>;
           })
         }
 
         {
           totalPage !== currentPage &&
-          <a className="icon item" onClick={this.props.onClickPage(currentPage + 1)}>
+          <a className="icon item"
+             onClick={this.props.onClickPage(currentPage + 1)}>
             <i className="right chevron icon"/>
           </a>
         }
       </div>
     );
-  }
+  },
 });
 
 export default TablePagination;

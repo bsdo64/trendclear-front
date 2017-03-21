@@ -10,7 +10,7 @@ const PostPaginator = React.createClass({
 
   render() {
 
-    const { Posts, ListStore } = this.props;
+    const {Posts, ListStore} = this.props;
 
     const postId = ListStore.get('CurrentPostId');
     if (postId) {
@@ -20,16 +20,15 @@ const PostPaginator = React.createClass({
 
         return <div style={{}}>
           Hello1
-        </div>
-
+        </div>;
 
       } else {
-        return <div></div>
+        return <div></div>;
       }
     } else {
-      return <div></div>
+      return <div></div>;
     }
-  }
+  },
 });
 
 export default PostPaginator;

@@ -2,10 +2,13 @@ import { Map } from 'immutable';
 import { UI } from '../InitialStates';
 import { TOGGLE_LOGIN_MODAL, CLOSE_LOGIN_MODAL } from '../../Actions/Login';
 import { TOGGLE_REPORT_MODAL, CLOSE_REPORT_MODAL } from '../../Actions/Report';
-import { TOGGLE_DELETE_MODAL, CLOSE_DELETE_MODAL } from '../../Actions/DeleteItem';
+import {
+  TOGGLE_DELETE_MODAL,
+  CLOSE_DELETE_MODAL,
+} from '../../Actions/DeleteItem';
 import {
   TOGGLE_CONFIRM_PURCHASE_ITEM_MODAL, CLOSE_CONFIRM_PURCHASE_ITEM_MODAL,
-  TOGGLE_VENACLE_STORE_MODAL, CLOSE_VENACLE_STORE_MODAL
+  TOGGLE_VENACLE_STORE_MODAL, CLOSE_VENACLE_STORE_MODAL,
 } from '../../Actions/VenacleStore';
 import { TOGGLE_AVATAR_MODAL, CLOSE_AVATAR_MODAL } from '../../Actions/User';
 import { CLOSE_MODAL } from '../../Actions/Modal';
@@ -29,17 +32,18 @@ const Modal = (state = UI.Modal, action) => {
 
       if (lastModal) {
 
-        if ( lastModal.get('contentType') !== action.contentType ) {
+        if (lastModal.get('contentType') !== action.contentType) {
           const newModals = modals.push(Map({
             contentType: action.contentType,
             openModal: true,
-            location: action.location ? action.location : null
+            location: action.location ? action.location : null,
           }));
 
           return state.set('modals', newModals);
         }
 
-        if ( lastModal.get('contentType') === action.contentType && lastModal.get('openModal')) {
+        if (lastModal.get('contentType') === action.contentType &&
+          lastModal.get('openModal')) {
           const newModals = modals.pop();
 
           return state.set('modals', newModals);
@@ -49,7 +53,7 @@ const Modal = (state = UI.Modal, action) => {
         const newModals = modals.push(Map({
           contentType: action.contentType,
           openModal: true,
-          location: action.location ? action.location : null
+          location: action.location ? action.location : null,
         }));
 
         return state.set('modals', newModals);
@@ -73,7 +77,7 @@ const Modal = (state = UI.Modal, action) => {
     }
 
     default:
-      return state
+      return state;
   }
 };
 

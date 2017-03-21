@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import SearchBar from '~/Components/Header/search';
 import { UI } from '~/Reducers/InitialStates';
 import {
-  inputSearchQuery
+  inputSearchQuery,
 } from '~/Actions/Search';
 import { getUser } from '~/Selectors/User';
 
 const Search = React.createClass({
   render() {
-    return (<SearchBar {...this.props} />)
-  }
+    return (<SearchBar {...this.props} />);
+  },
 });
 
 Search.defaultProps = {
@@ -20,19 +20,19 @@ Search.defaultProps = {
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   return {
     LoginStore: getUIState('Login'),
     SearchStore: getUIState('Search'),
-    UserStore: getUser
-  }
+    UserStore: getUser,
+  };
 };
 
 module.exports = connect(
   mapStateToProps,
   {
-    FireInputSearchQuery: inputSearchQuery
+    FireInputSearchQuery: inputSearchQuery,
   }
 )(Search);

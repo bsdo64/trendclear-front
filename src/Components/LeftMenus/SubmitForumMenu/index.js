@@ -26,7 +26,7 @@ const SubmitForumMenu = React.createClass({
         </menu>
       </div>
     );
-  }
+  },
 });
 
 export default SubmitForumMenu;

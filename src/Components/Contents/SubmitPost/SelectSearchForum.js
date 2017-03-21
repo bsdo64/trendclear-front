@@ -16,7 +16,7 @@ const SelectSearchForum = React.createClass({
       .search({
         searchFullText: false,
         apiSettings: {
-          url: '/ajax/search/forum?q={query}'
+          url: '/ajax/search/forum?q={query}',
         },
         error: {
           source: '검색 할 수 없습니다 API를 참고하세요',
@@ -26,30 +26,30 @@ const SelectSearchForum = React.createClass({
           noTemplate: 'A valid template name was not specified.',
           serverError: '서버에러 입니다.',
           maxResults: 'Results must be an array to use maxResults setting',
-          method: 'The method you called is not defined.'
+          method: 'The method you called is not defined.',
         },
         onSelect: (forum) => {
 
           this.selectForum(forum);
-        }
+        },
       });
   },
 
   selectForum(forum) {
 
     if (forum && forum.id) {
-      browserHistory.push('/community/submit?forumId=' + forum.id)
+      browserHistory.push('/community/submit?forumId=' + forum.id);
     }
   },
 
   render() {
-    const { ForumCreated, ForumFollowed, RankForums, profile } = this.props;
+    const {ForumCreated, ForumFollowed, RankForums, profile} = this.props;
     const sex = profile.get('sex');
     const avatarImg = profile.get('avatar_img');
 
     return (
       <div id="submit_box" className="ui items">
-        <div className={"ui item post_item"}>
+        <div className={'ui item post_item'}>
           {/* avatar */}
           <div className="ui image tiny">
             <AvatarImage
@@ -82,11 +82,12 @@ const SelectSearchForum = React.createClass({
                       ForumCreated.sortBy(v => v.get('title')).map(v => {
                         return (
                           <li key={v.get('id')} className="item">
-                            <Link to={`/community/submit?forumId=${v.get('id')}`}>
+                            <Link
+                              to={`/community/submit?forumId=${v.get('id')}`}>
                               <span>{v.get('title')}</span>
                             </Link>
                           </li>
-                        )
+                        );
                       })
                     }
                   </ul>
@@ -99,11 +100,12 @@ const SelectSearchForum = React.createClass({
                       ForumFollowed.sortBy(v => v.get('title')).map(v => {
                         return (
                           <li key={v.get('id')} className="item">
-                            <Link to={`/community/submit?forumId=${v.get('id')}`}>
+                            <Link
+                              to={`/community/submit?forumId=${v.get('id')}`}>
                               <span>{v.get('title')}</span>
                             </Link>
                           </li>
-                        )
+                        );
                       })
                     }
                   </ul>
@@ -121,17 +123,18 @@ const SelectSearchForum = React.createClass({
                                 margin: '5px 0',
                                 padding: 0,
                                 border: '1px solid #ddd',
-                                minWidth: 300
+                                minWidth: 300,
                               }}>
                                 <div className="ui cards">
                                   <div className="card" style={{
                                     borderTop: '1px solid rgb(5, 130, 148)',
                                     boxShadow: 'none',
-                                    width: '100%'
+                                    width: '100%',
                                   }}>
                                     <div className="content">
                                       <div className="header">
-                                        <Link to={`/community?forumId=${v.get('id')}`}>
+                                        <Link to={`/community?forumId=${v.get(
+                                          'id')}`}>
                                           {v.get('title')}
                                         </Link>
                                       </div>
@@ -143,8 +146,12 @@ const SelectSearchForum = React.createClass({
                                       </div>
                                       <div className="meta forum_meta">
                                         <div className="forum_counts">
-                                          <span className="follow_counts">팔로우 {v.get('follow_count')} 명</span>
-                                          <span className="subs_counts">컬렉션 구독 {v.get('subs_count')}</span>
+                                          <span
+                                            className="follow_counts">팔로우 {v.get(
+                                            'follow_count')} 명</span>
+                                          <span
+                                            className="subs_counts">컬렉션 구독 {v.get(
+                                            'subs_count')}</span>
                                         </div>
                                       </div>
                                     </div>
@@ -156,7 +163,9 @@ const SelectSearchForum = React.createClass({
                                             클럽 규칙
                                           </div>
                                           <div className="description"
-                                               dangerouslySetInnerHTML={{ __html: marked(v.get('rule')) }}
+                                               dangerouslySetInnerHTML={{
+                                                 __html: marked(v.get('rule')),
+                                               }}
                                           ></div>
                                         </div>
                                       }
@@ -165,15 +174,16 @@ const SelectSearchForum = React.createClass({
                                 </div>
                               </div>
                             </li>
-                          )
+                          );
                         } else {
                           return (
                             <li key={v.get('id')} className="item">
-                              <Link to={`/community/submit?forumId=${v.get('id')}`}>
+                              <Link
+                                to={`/community/submit?forumId=${v.get('id')}`}>
                                 <span>{v.get('title')}</span>
                               </Link>
                             </li>
-                          )
+                          );
                         }
                       })
                     }
@@ -186,7 +196,7 @@ const SelectSearchForum = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default SelectSearchForum;

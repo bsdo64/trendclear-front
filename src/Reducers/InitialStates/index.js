@@ -1,9 +1,7 @@
 import { Map, List, fromJS } from 'immutable';
 import moment from 'moment';
 
-export const App = {
-
-};
+export const App = {};
 
 export const Domains = {
   Users: Map({}),
@@ -21,7 +19,7 @@ export const Domains = {
 
 export const UI = {
   Activity: Map({}),
-  Auth: Map({ isLogin: false, userId: null }),
+  Auth: Map({isLogin: false, userId: null}),
   ChargePoint: Map({
     isRequestCheckCharge: false,
     successChargePoint: false,
@@ -30,21 +28,21 @@ export const UI = {
   Forum: Map({}),
   ForumSetting: fromJS({
     forumInfo: {
-      success: null
-    }
+      success: null,
+    },
   }),
   Gnb: Map({
     openGnb: false,
     gnbMenu: Map({
-      openSideNow: 1
-    })
+      openSideNow: 1,
+    }),
   }),
   Inventory: Map({
     openInventory: false,
   }),
   List: Map({
     scrollHeight: 0,
-    CategoryList: List([])
+    CategoryList: List([]),
   }),
   Login: Map({
     isLoading: false,
@@ -52,54 +50,54 @@ export const UI = {
     loginSuccess: false,
     loginFail: false,
     logoutSuccess: false,
-    logoutFail: false
+    logoutFail: false,
   }),
   Modal: Map({
-    modals: List()
+    modals: List(),
   }),
   Pagination: Map({}),
   Report: Map({
     reportItem: [
       {
         id: 1,
-        message: '불쾌하거나 흥미없는 내용입니다.'
+        message: '불쾌하거나 흥미없는 내용입니다.',
       },
       {
         id: 2,
-        message: '스팸성 글입니다.'
+        message: '스팸성 글입니다.',
       },
       {
         id: 3,
-        message: '인신공격, 불법, 허위 내용을 유포하고 있습니다.'
-      }
+        message: '인신공격, 불법, 허위 내용을 유포하고 있습니다.',
+      },
     ],
     selectItem: 1,
     openReportModal: false,
-    successReport: false
+    successReport: false,
   }),
   ResetPassword: Map({
     error: null,
     requestFindEmail: null,
     userExist: null,
     resetEmailSent: null,
-    isLoading: false
+    isLoading: false,
   }),
   RemoveModal: Map({}),
   Search: Map({
-    query: null
+    query: null,
   }),
   UserSetting: Map({}),
   ShareLink: Map({
     openVenalink: false,
     venalinkRP: '',
-    startDate: moment()
+    startDate: moment(),
   }),
   Shopping: Map({
     items: List([]),
     storeModalOpen: false,
     tooltipItemCode: null,
     purchaseItem: null,
-    openPurchaseWindow: false
+    openPurchaseWindow: false,
   }),
   SigninForm: Map({
 
@@ -125,11 +123,11 @@ export const UI = {
     year: null,
     month: null,
     day: null,
-    birth: null
+    birth: null,
   }),
   SubmitPost: Map({
     deletedUrl: List(),
-    representingImage: null
+    representingImage: null,
   }),
   SubmitForum: fromJS({
     form: {
@@ -143,10 +141,10 @@ export const UI = {
         title: false,
       },
       validate: {
-        title: null
+        title: null,
       },
-      error: null
+      error: null,
     },
   }),
-  User: Map({})
+  User: Map({}),
 };

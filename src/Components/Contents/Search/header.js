@@ -7,7 +7,7 @@ const SearchHeader = React.createClass({
   },
 
   render() {
-    const { posts } = this.props;
+    const {posts} = this.props;
     if (posts) {
       const postData = posts.get('posts');
       const total = postData.get('total') ? postData.get('total') : 0;
@@ -19,8 +19,8 @@ const SearchHeader = React.createClass({
       );
     }
 
-    return <div></div>
-  }
+    return <div></div>;
+  },
 });
 
 export default SearchHeader;

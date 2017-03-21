@@ -23,50 +23,50 @@ export const FAILURE_PARTICIPATE_VENALINK = 'FAILURE_PARTICIPATE_VENALINK';
 export function showItemInfo(itemCode) {
   return {
     type: SHOW_ITEM_INFO,
-    itemCode
-  }
+    itemCode,
+  };
 }
 
 export function requestShoppingItemInit(payload) {
   return {
     type: REQUEST_SHOPPING_ITEM_INIT,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestPurchaseItem(payload) {
   return {
     type: REQUEST_PURCHASE_ITEM,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestActivateVenalink(payload) {
   return {
     type: REQUEST_ACTIVATE_VENALINK,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestParticipateVenalink(payload) {
   return {
     type: REQUEST_PARTICIPATE_VENALINK,
-    payload
-  }
+    payload,
+  };
 }
 
-export function toggleConfirmPurchaseItemModal({ item, contentType }) {
+export function toggleConfirmPurchaseItemModal({item, contentType}) {
   return {
     type: TOGGLE_CONFIRM_PURCHASE_ITEM_MODAL,
     item,
-    contentType
-  }
+    contentType,
+  };
 }
 
-export function toggleVenacleStoreModal({ data, contentType }) {
+export function toggleVenacleStoreModal({data, contentType}) {
   return {
     type: TOGGLE_VENACLE_STORE_MODAL,
     data,
-    contentType
-  }
+    contentType,
+  };
 }

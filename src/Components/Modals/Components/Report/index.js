@@ -14,8 +14,8 @@ const ReportModalBox = React.createClass({
 
   getInitialState() {
     return {
-      selectItem: 1
-    }
+      selectItem: 1,
+    };
   },
 
   selectReportItem(e) {
@@ -24,35 +24,36 @@ const ReportModalBox = React.createClass({
     const reportMessage = e.target.dataset.message;
     this.setState({
       selectItem: parseInt(reportId, 10),
-      reportMessage: reportMessage
+      reportMessage: reportMessage,
     });
   },
   createReportItem(item) {
     const id = item.get('id');
     const message = item.get('message');
     const activeItemStyle = cx('report_item', {
-      active: this.state.selectItem === id
+      active: this.state.selectItem === id,
     });
     return (
       <div key={id} className="field">
-        <div className={activeItemStyle} onClick={this.selectReportItem} data-id={id}
+        <div className={activeItemStyle} onClick={this.selectReportItem}
+             data-id={id}
              data-message={message}>{message}</div>
       </div>
-    )
+    );
   },
   sendReport() {
 
-    const { ReportStore, FireRequestReport } = this.props;
+    const {ReportStore, FireRequestReport} = this.props;
 
     FireRequestReport({
       type: ReportStore.get('type'),
       typeId: ReportStore.get('typeId'),
       reportId: this.state.selectItem,
-      description: this.state.reportMessage
+      description: this.state.reportMessage,
     });
   },
   render() {
-    const { ReportStore } = this.props;
+    const {ReportStore} = this.props;
 
     let content, title;
     switch (ReportStore.get('type')) {
@@ -64,13 +65,18 @@ const ReportModalBox = React.createClass({
       case 'comment':
         content = this.props.Comments.get(ReportStore.get('typeId').toString());
         title = content ? <span>댓글: <div
-          dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span> : null;
+          dangerouslySetInnerHTML={{
+            __html: content.get('content'),
+          }}></div></span> : null;
         break;
 
       case 'subComment':
-        content = this.props.SubComments.get(ReportStore.get('typeId').toString());
+        content = this.props.SubComments.get(
+          ReportStore.get('typeId').toString());
         title = content ? (<span>대댓글: <div
-          dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
+          dangerouslySetInnerHTML={{
+            __html: content.get('content'),
+          }}></div></span>) : null;
         break;
 
       default:
@@ -102,7 +108,9 @@ const ReportModalBox = React.createClass({
               </div>
             </div>
             <div className="ui actions">
-              <div className="ui primary approve button" onClick={this.sendReport}>확인</div>
+              <div className="ui primary approve button"
+                   onClick={this.sendReport}>확인
+              </div>
             </div>
           </div>
         }
@@ -112,8 +120,10 @@ const ReportModalBox = React.createClass({
           <div className="md-content content">
             <div className="success">
               <svg className="checkmark" viewBox="0 0 52 52">
-                <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                <circle className="checkmark__circle" cx="26" cy="26" r="25"
+                        fill="none"/>
+                <path className="checkmark__check" fill="none"
+                      d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
               </svg>
               <h2 className="ui icon header">
                 <div className="content">
@@ -126,7 +136,7 @@ const ReportModalBox = React.createClass({
         }
       </div>
     );
-  }
+  },
 });
 
 export default ReportModalBox;

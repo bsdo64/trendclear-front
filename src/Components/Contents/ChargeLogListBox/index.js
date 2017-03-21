@@ -9,12 +9,12 @@ const ChargeLogListBox = React.createClass({
   displayName: 'ChargePointBox',
   propTypes: {
     UserStore: PropTypes.object.isRequired,
-    FireRequestGetMoreChargeLogList: PropTypes.func
+    FireRequestGetMoreChargeLogList: PropTypes.func,
   },
 
   getInitialState() {
     return {
-      page: 1
+      page: 1,
     };
   },
 
@@ -30,7 +30,7 @@ const ChargeLogListBox = React.createClass({
       }
 
       default: {
-        time = momentTime.format('YYYY/MM/DD HH:mm')
+        time = momentTime.format('YYYY/MM/DD HH:mm');
       }
     }
 
@@ -63,7 +63,7 @@ const ChargeLogListBox = React.createClass({
       }
 
       default: {
-        paymentStatus = ''
+        paymentStatus = '';
       }
     }
 
@@ -91,7 +91,7 @@ const ChargeLogListBox = React.createClass({
       }
 
       default: {
-        paymentMethod = ''
+        paymentMethod = '';
       }
     }
 
@@ -101,28 +101,28 @@ const ChargeLogListBox = React.createClass({
   handlePage(p) {
     return () => {
       this.props.FireRequestGetMoreChargeLogList({
-        p: p
+        p: p,
       });
 
       this.setState({
-        page: p
+        page: p,
       });
-    }
+    };
   },
 
   render() {
-    const { UserStore } = this.props;
+    const {UserStore} = this.props;
     const payments = UserStore.getIn(['payments', 'results']);
     const paymentTotal = UserStore.getIn(['payments', 'total']);
     const pageLimit = 20;
     const totalPage = Math.ceil(paymentTotal / pageLimit);
 
     if (!payments) {
-      return <div />
+      return <div />;
     }
 
     return (
-      <div style={{ padding: 10, fontSize: 12 }}>
+      <div style={{padding: 10, fontSize: 12}}>
         <h4>RP 충전 내역</h4>
         <table className="ui celled padded table">
           <thead>
@@ -173,7 +173,7 @@ const ChargeLogListBox = React.createClass({
                     }
                   </td>
                 </tr>
-              )
+              );
             })
           }
           </tbody>
@@ -191,8 +191,8 @@ const ChargeLogListBox = React.createClass({
           </tfoot>
         </table>
       </div>
-    )
-  }
+    );
+  },
 });
 
 export default ChargeLogListBox;

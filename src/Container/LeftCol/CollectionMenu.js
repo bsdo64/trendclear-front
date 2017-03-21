@@ -11,17 +11,17 @@ import {
 
 const CollectionMenu = React.createClass({
   render() {
-    return (<CollectionLeftMenu {...this.props} />)
-  }
+    return (<CollectionLeftMenu {...this.props} />);
+  },
 });
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -33,8 +33,8 @@ const mapStateToProps = (state) => {
 
     Forums: getDomainState('Forums'),
     Categories: getDomainState('Categories'),
-    Collections: getDomainState('Collections')
-  }
+    Collections: getDomainState('Collections'),
+  };
 };
 
 module.exports = connect(

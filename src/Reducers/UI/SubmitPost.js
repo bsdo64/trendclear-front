@@ -19,27 +19,27 @@ import {
 const SubmitPost = (state = UI.SubmitPost, action) => {
   switch (action.type) {
     case REMOVE_SERVER_INIT: {
-      return state.merge({ server: null })
+      return state.merge({server: null});
     }
 
     case HANDLE_POST_TITLE: {
-      return state.merge({ title: action.title })
+      return state.merge({title: action.title});
     }
 
     case HANDLE_POST_CONTENT: {
-      return state.merge({ ...action.postContent })
+      return state.merge({...action.postContent});
     }
 
     case HANDLE_RESET_POST_CONTENT: {
       return state.merge({
         selectPrefixId: null,
         title: '',
-        content: null
+        content: null,
       });
     }
 
     case HANDLE_SELECT_PREFIX: {
-      return state.merge({ selectPrefixId: action.prefixId })
+      return state.merge({selectPrefixId: action.prefixId});
     }
 
     case SUCCESS_SUBMIT_POST: {
@@ -68,7 +68,8 @@ const SubmitPost = (state = UI.SubmitPost, action) => {
         return list.push(action.data);
       });
 
-      if ((newState.get('representingImage') === null) || (newState.get('representingImage') === undefined)) {
+      if ((newState.get('representingImage') === null) ||
+        (newState.get('representingImage') === undefined)) {
         newState = newState.set('representingImage', 0);
       }
 
@@ -76,7 +77,7 @@ const SubmitPost = (state = UI.SubmitPost, action) => {
     }
 
     case HANDLE_DELETE_POST_IMAGES: {
-      const { deleteUrl } = action;
+      const {deleteUrl} = action;
       let deleteItemIndex = null;
 
       let newState = state.update('postImages', list => {
@@ -86,8 +87,8 @@ const SubmitPost = (state = UI.SubmitPost, action) => {
           if (deleteItem) {
             deleteItemIndex = index;
           }
-          return deleteItem
-        })
+          return deleteItem;
+        });
       });
 
       if (deleteItemIndex !== null) {
@@ -106,18 +107,18 @@ const SubmitPost = (state = UI.SubmitPost, action) => {
     }
 
     case SUCCESS_UPDATE_POST: {
-      const { result } = action;
+      const {result} = action;
       const forum = result.forum;
 
       return state.merge({
         successUpdatePost: true,
         successForumId: forum.id,
-        successPostId: result.id
+        successPostId: result.id,
       });
     }
 
     case SUCCESS_GET_POST_META: {
-      return state.merge({ urlMetaData: action.result });
+      return state.merge({urlMetaData: action.result});
     }
 
     case SUCCESS_DELETE_UN_USING_IMAGE: {

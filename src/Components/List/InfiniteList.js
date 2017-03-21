@@ -4,14 +4,15 @@ import './BestList.scss';
 
 function createItem(props, id) {
 
-  const { PostItems, AuthorItems, User, location, Venatems, Items } = props;
+  const {PostItems, AuthorItems, User, location, Venatems, Items} = props;
 
   const post = PostItems.get(id.toString());
   if (post) {
     const author = AuthorItems.get(post.get('author').toString());
 
     if (author) {
-      const user = User.get('userId') ? AuthorItems.get(User.get('userId').toString()) : null;
+      const user = User.get('userId') ? AuthorItems.get(
+        User.get('userId').toString()) : null;
 
       return [
         <BigPost
@@ -33,8 +34,8 @@ function createItem(props, id) {
           FireRequestActivateVenalink={props.FireRequestActivateVenalink}
           FireRequestParticipateVenalink={props.FireRequestParticipateVenalink}
           FireOpenCommentUpdateView={props.FireOpenCommentUpdateView}
-        />
-      ]
+        />,
+      ];
     }
   }
 }
@@ -65,11 +66,11 @@ const InfiniteList = React.createClass({
   componentDidMount() {
     $('.ui.embed').embed();
 
-    window.addEventListener('resize', this.setScroll)
+    window.addEventListener('resize', this.setScroll);
   },
 
   setScroll() {
-    const { scrollHeight } = this.props;
+    const {scrollHeight} = this.props;
     document.body.scrollTop = scrollHeight;
   },
 
@@ -78,7 +79,7 @@ const InfiniteList = React.createClass({
   },
 
   render() {
-    const { PostIdList = [], PostItems = {}, AuthorItems, User } = this.props;
+    const {PostIdList = [], PostItems = {}, AuthorItems, User} = this.props;
     const okey = !!(PostItems.size && AuthorItems.size && User.size);
 
     return (
@@ -91,12 +92,12 @@ const InfiniteList = React.createClass({
           PostIdList.map(createItem.bind(null, this.props))
         }
       </div>
-    )
-  }
+    );
+  },
 });
 
 InfiniteList.defaultProps = {
   scrollHeight: 0,
 };
 
-export default InfiniteList
+export default InfiniteList;

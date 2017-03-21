@@ -68,7 +68,7 @@ const initRouteState = (/* store */) => dispatch => action => {
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { collectionBestPostList: normalized.result },
-            PaginationStore: { collectionBestPostList: collectionBestPostListPagination }
+            PaginationStore: { collectionBestPostList: collectionBestPostListPagination },
           });
         }
 
@@ -82,7 +82,7 @@ const initRouteState = (/* store */) => dispatch => action => {
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { bestPostList: normalized.result },
-            PaginationStore: { bestPostList: bestPostListPagination }
+            PaginationStore: { bestPostList: bestPostListPagination },
           });
         }
 
@@ -114,7 +114,7 @@ const initRouteState = (/* store */) => dispatch => action => {
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { [context]: normalized.result },
-            PaginationStore: { [context]: collection }
+            PaginationStore: { [context]: collection },
           });
         }
 
@@ -128,7 +128,7 @@ const initRouteState = (/* store */) => dispatch => action => {
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
             ListStore: { searchPostList: normalized.result },
-            PaginationStore: { searchPostList: searchPostListPagination }
+            PaginationStore: { searchPostList: searchPostListPagination },
           });
 
           const searchForumList = resBody.SearchStore.forum.data.results;
@@ -140,7 +140,7 @@ const initRouteState = (/* store */) => dispatch => action => {
             Forums: normalizedForums.entities.forums,
             Users: normalizedForums.entities.author,
             ListStore: { searchForumList: normalizedForums.result },
-            PaginationStore: { searchForumList: searchForumListPagination }
+            PaginationStore: { searchForumList: searchForumListPagination },
           });
         }
 
@@ -156,7 +156,7 @@ const initRouteState = (/* store */) => dispatch => action => {
             Comments: normalized.entities.comments,
             SubComments: normalized.entities.subComments,
             ListStore: { forumPostList: normalized.result },
-            PaginationStore: { forumPostList: forumPostListPagination }
+            PaginationStore: { forumPostList: forumPostListPagination },
           });
         }
 
@@ -175,8 +175,8 @@ const initRouteState = (/* store */) => dispatch => action => {
               forum: normalized.result,
               announcesList: normalized.entities.announces,
               managersList: normalized.entities.managers,
-              banUserList: normalized.entities.banUserList
-            }
+              banUserList: normalized.entities.banUserList,
+            },
           });
         }
 
@@ -194,8 +194,8 @@ const initRouteState = (/* store */) => dispatch => action => {
             SubComments: normalized.entities.subComments,
 
             ListStore: {
-              CurrentPostId: normalized.result
-            }
+              CurrentPostId: normalized.result,
+            },
           });
         }
 
@@ -209,7 +209,7 @@ const initRouteState = (/* store */) => dispatch => action => {
           assign(resBody, {
             Categories: normalized.entities.categories,
             Forums: normalized.entities.forums,
-            ListStore: { CategoryList: normalized.result }
+            ListStore: { CategoryList: normalized.result },
           });
         }
 
@@ -222,7 +222,7 @@ const initRouteState = (/* store */) => dispatch => action => {
 
           assign(resBody, {
             Notis: normalized.entities.notis,
-            ListStore: { NotiList: normalized.result }
+            ListStore: { NotiList: normalized.result },
           });
         }
 
@@ -265,8 +265,8 @@ const initRouteState = (/* store */) => dispatch => action => {
             SubComments: resBody.SubComments,
             Categories: resBody.Categories,
             Notis: resBody.Notis,
-            Prefixes: resBody.Prefixes
-          }
+            Prefixes: resBody.Prefixes,
+          },
         };
 
         clean(state.UI);
@@ -306,9 +306,9 @@ export default (initialImmutableState, sagaMiddleware) => {
   return createStore(
     combineReducers({
       Stores,
-      routing: RouterReducer
+      routing: RouterReducer,
     }),
     initialImmutableState,
     middleWareWrapper
   );
-}
+};

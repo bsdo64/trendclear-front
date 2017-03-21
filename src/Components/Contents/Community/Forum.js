@@ -2,7 +2,10 @@ import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import cx from 'classnames';
 import { browserHistory, Link } from 'react-router-dom';
-import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+import Dropdown, {
+  DropdownTrigger,
+  DropdownContent,
+} from 'react-simple-dropdown';
 import AvatarImage from '../../AvatarImage';
 import marked from '../../Lib/Marked';
 import MakeUrl from '../../Lib/MakeUrl';
@@ -31,8 +34,8 @@ const PostList = React.createClass({
     $('.ui.embed').embed('refresh');
   },
 
-  render: function () {
-    const { item, author, postIdNow, defaultPageUrl, isAnnounce } = this.props;
+  render: function() {
+    const {item, author, postIdNow, defaultPageUrl, isAnnounce} = this.props;
     const id = item.get('id');
     const title = item.get('title');
     const prefix = item.get('prefix');
@@ -43,12 +46,13 @@ const PostList = React.createClass({
 
     const activeClass = cx({
       active: id == postIdNow,
-      announce: isAnnounce
+      announce: isAnnounce,
     });
 
     return (
       <tr className={activeClass}>
-        <td className="center aligned collapsing">{prefix && prefix.get('name')}</td>
+        <td className="center aligned collapsing">{prefix &&
+        prefix.get('name')}</td>
         <td className="center aligned collapsing">{like_count}</td>
         <td className="center aligned collapsing">{view_count}</td>
         <td className="left aligned">
@@ -67,7 +71,7 @@ const PostList = React.createClass({
         <td className="center aligned collapsing">{created_at}</td>
       </tr>
     );
-  }
+  },
 });
 
 const Forum = React.createClass({
@@ -93,11 +97,11 @@ const Forum = React.createClass({
 
   getInitialState() {
     return {
-      text: ''
-    }
+      text: '',
+    };
   },
   onChange(e) {
-    this.setState({ text: e.target.value });
+    this.setState({text: e.target.value});
   },
   handleForumSearch(e) {
     e.preventDefault();
@@ -121,14 +125,15 @@ const Forum = React.createClass({
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.removeQuery('forumPrefix', 'forumSearch').end());
+    browserHistory.push(
+      makeUrl.removeQuery('forumPrefix', 'forumSearch').end());
   },
 
   openLoginModal() {
-    const { location, FireToggleLoginModal } = this.props;
+    const {location, FireToggleLoginModal} = this.props;
     FireToggleLoginModal({
       contentType: 'Login',
-      location: location.pathname + location.search
+      location: location.pathname + location.search,
     });
   },
 
@@ -140,19 +145,22 @@ const Forum = React.createClass({
 
       return (
         <div className="item" key={prefixId}>
-          <div className="middle aligned content" onClick={this.handleSubmitPrefix.bind(this, prefixId)}>
-            {prefix.get('name') + " (" + postCount + ")"}
+          <div className="middle aligned content"
+               onClick={this.handleSubmitPrefix.bind(this, prefixId)}>
+            {prefix.get('name') + ' (' + postCount + ')'}
           </div>
         </div>
-      )
+      );
     }
   },
   createPostItem(makeUrl, isAnnounce, postId) {
 
-    const { Posts, Users, location } = this.props;
+    const {Posts, Users, location} = this.props;
     const postIdNow = qs.parse(location.search.slice(1)).postId;
 
-    const defaultPageUrl = makeUrl.setQuery('postId', postId).removeQuery('comment_p').end();
+    const defaultPageUrl = makeUrl.setQuery('postId', postId)
+      .removeQuery('comment_p')
+      .end();
 
     let item = Posts.get(postId.toString());
     if (item) {
@@ -174,15 +182,15 @@ const Forum = React.createClass({
     const {
       ListStore,
       FireRequestAddForumInCollection,
-      FireRequestRemoveForumInCollection
+      FireRequestRemoveForumInCollection,
     } = this.props;
     const forumId = ListStore.get('forum');
-    const params = { collectionId: e.target.value, forumId: forumId };
+    const params = {collectionId: e.target.value, forumId: forumId};
 
     if (e.target.checked) {
-      FireRequestAddForumInCollection(params)
+      FireRequestAddForumInCollection(params);
     } else {
-      FireRequestRemoveForumInCollection(params)
+      FireRequestRemoveForumInCollection(params);
     }
   },
   checkCollectionHasForums(collectionForumList, forumId) {
@@ -194,16 +202,16 @@ const Forum = React.createClass({
 
     const {
       AuthStore,
-      FireRequestFollowForum, FireRequestUnFollowForum
+      FireRequestFollowForum, FireRequestUnFollowForum,
     } = this.props;
     const userId = AuthStore.get('userId');
     if (!userId) {
       this.openLoginModal();
     } else {
       if (isForumFollow) {
-        FireRequestUnFollowForum({ id: forumId, userId });
+        FireRequestUnFollowForum({id: forumId, userId});
       } else {
-        FireRequestFollowForum({ forumId: forumId, userId });
+        FireRequestFollowForum({forumId: forumId, userId});
       }
     }
   },
@@ -218,7 +226,7 @@ const Forum = React.createClass({
 
   render() {
 
-    const { Users, Forums, Prefixes, AuthStore, ListStore, PaginationStore, Collections } = this.props;
+    const {Users, Forums, Prefixes, AuthStore, ListStore, PaginationStore, Collections} = this.props;
 
     const self = this;
     const userId = AuthStore.get('userId');
@@ -232,21 +240,22 @@ const Forum = React.createClass({
       const forum = Forums.get(forumId.toString());
 
       if (!forum) {
-        return (<div></div>)
+        return (<div></div>);
       }
 
       const announceIds = forum.get('announces') || [];
       const managersIds = forum.get('managers') || [];
       const isUserForumFollow = isLogin
         ? Users
-        .get(userId.toString())
-        .get('follow_forums')
-        .find(v => v === forumId)
+          .get(userId.toString())
+          .get('follow_forums')
+          .find(v => v === forumId)
         : false;
 
-      const cFollowActive = cx('ui button basic tiny right floated follow_button', {
-        active: isUserForumFollow
-      });
+      const cFollowActive = cx(
+        'ui button basic tiny right floated follow_button', {
+          active: isUserForumFollow,
+        });
 
       const page = pagination.get('current_page');
       const limit = pagination.get('limit');
@@ -266,7 +275,7 @@ const Forum = React.createClass({
               <div className="ui cards">
                 <div className="card" style={{
                   boxShadow: 'none',
-                  width: '100%'
+                  width: '100%',
                 }}>
                   <div className="content">
                     {
@@ -291,8 +300,10 @@ const Forum = React.createClass({
 
                       {
                         userId && isLogin &&
-                        <Dropdown className="subscribe_dropdown" ref="subscribe_dropdown">
-                          <DropdownTrigger className="ui button basic tiny right floated">
+                        <Dropdown className="subscribe_dropdown"
+                                  ref="subscribe_dropdown">
+                          <DropdownTrigger
+                            className="ui button basic tiny right floated">
                             <i className="fa fa-share"/>
                             {' 구독'}
                           </DropdownTrigger>
@@ -304,20 +315,26 @@ const Forum = React.createClass({
                                   .get(userId.toString())
                                   .get('collections')
                                   .map(collectionId => {
-                                    const collection = Collections.get(collectionId.toString());
+                                    const collection = Collections.get(
+                                      collectionId.toString());
                                     return (
-                                      <li key={collectionId} className="collection_item">
+                                      <li key={collectionId}
+                                          className="collection_item">
                                         <div className="ui checkbox">
-                                          <input id={`collection-id-${collectionId}`}
-                                                 type="checkbox"
-                                                 value={collection.get('id')}
-                                                 defaultChecked={self.checkCollectionHasForums(collection.get('forums'), forumId)}
-                                                 onChange={self.selectCollection}/>
+                                          <input
+                                            id={`collection-id-${collectionId}`}
+                                            type="checkbox"
+                                            value={collection.get('id')}
+                                            defaultChecked={self.checkCollectionHasForums(
+                                              collection.get('forums'),
+                                              forumId)}
+                                            onChange={self.selectCollection}/>
                                           <label
-                                            htmlFor={`collection-id-${collectionId}`}>{collection.get('title')}</label>
+                                            htmlFor={`collection-id-${collectionId}`}>{collection.get(
+                                            'title')}</label>
                                         </div>
                                       </li>
-                                    )
+                                    );
                                   })
                               }
                             </ul>
@@ -327,13 +344,16 @@ const Forum = React.createClass({
 
                       {
                         !userId && !isLogin &&
-                        <a onClick={this.openLoginModal} className="ui button basic tiny right floated">
+                        <a onClick={this.openLoginModal}
+                           className="ui button basic tiny right floated">
                           <i className="fa fa-share"/>
                           {' 구독'}
                         </a>
                       }
 
-                      <a className={cFollowActive} onClick={this.toggleFollow.bind(this, isUserForumFollow, forumId)}>
+                      <a className={cFollowActive}
+                         onClick={this.toggleFollow.bind(this,
+                           isUserForumFollow, forumId)}>
                         <i className="fa fa-star"/>
                         {' 팔로우'}
                       </a>
@@ -349,14 +369,18 @@ const Forum = React.createClass({
                         {
                           managersIds.map((userId, index) => {
                             const user = Users.get(userId.toString());
-                            const comma = index !== (managersIds.size - 1) ? ', ' : '';
+                            const comma = index !== (managersIds.size - 1)
+                              ? ', '
+                              : '';
                             return user ? `${user.get('nick')} ${comma}` : '';
                           })
                         }
                       </div>
                       <div className="forum_counts">
-                        <span className="follow_counts">팔로우 {forum.get('follow_count')} 명</span>
-                        <span className="subs_counts">컬렉션 구독 {forum.get('subs_count')} 회</span>
+                        <span className="follow_counts">팔로우 {forum.get(
+                          'follow_count')} 명</span>
+                        <span className="subs_counts">컬렉션 구독 {forum.get(
+                          'subs_count')} 회</span>
                       </div>
                     </div>
                   </div>
@@ -368,7 +392,9 @@ const Forum = React.createClass({
                           클럽 규칙
                         </div>
                         <div className="description"
-                             dangerouslySetInnerHTML={{ __html: marked(forum.get('rule')) }}
+                             dangerouslySetInnerHTML={{
+                               __html: marked(forum.get('rule')),
+                             }}
                         ></div>
                       </div>
                     }
@@ -380,12 +406,15 @@ const Forum = React.createClass({
             {/*<AdForum1 url="http://www.computerhope.com/banners/banner3.gif" />*/}
 
             <div className="ui horizontal celled list">
-              <div className="item" style={{ fontWeight: 'bold' }}>
-                <div className="middle aligned content bold" onClick={this.resetPrefix}>전체</div>
+              <div className="item" style={{fontWeight: 'bold'}}>
+                <div className="middle aligned content bold"
+                     onClick={this.resetPrefix}>전체
+                </div>
               </div>
               {
                 forum.get('prefixes') &&
-                forum.get('prefixes').map(this.createPrefixItem.bind(this, Prefixes))
+                forum.get('prefixes')
+                  .map(this.createPrefixItem.bind(this, Prefixes))
               }
             </div>
             <table className="ui table very compact">
@@ -419,7 +448,10 @@ const Forum = React.createClass({
                 userId && isLogin &&
                 <Link
                   className="ui button primary tiny"
-                  to={{ pathname: '/community/submit', query: { forumId: forumId } }}>
+                  to={{
+                    pathname: '/community/submit',
+                    query: {forumId: forumId},
+                  }}>
                   글쓰기
                 </Link>
               }
@@ -446,7 +478,7 @@ const Forum = React.createClass({
               />
               }
 
-              <div className="ui search mini" style={{ padding: '15px' }}>
+              <div className="ui search mini" style={{padding: '15px'}}>
                 <div className="ui icon input">
                   <form onSubmit={this.handleForumSearch}>
                     <input className="prompt"
@@ -467,11 +499,11 @@ const Forum = React.createClass({
         );
       }
 
-      return <div></div>
+      return <div></div>;
     }
 
-    return <div></div>
-  }
+    return <div></div>;
+  },
 });
 
 export default Forum;

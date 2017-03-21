@@ -1,13 +1,22 @@
 import React from 'react';
-import { IndexRedirect, Link, IndexRoute, Router, Route, browserHistory } from 'react-router-dom';
+import {
+  IndexRedirect,
+  Link,
+  IndexRoute,
+  Router,
+  Route,
+  browserHistory,
+} from 'react-router-dom';
 
-const LeftColGlobalCategoryNav = require('../Container/LeftCol/GlobalCategoryNav');
+const LeftColGlobalCategoryNav = require(
+  '../Container/LeftCol/GlobalCategoryNav');
 const ForumMenu = require('../Container/LeftCol/ForumMenu.js');
 const CollectionMenu = require('../Container/LeftCol/CollectionMenu');
 const DefaultMenu = require('../Container/LeftCol/DefaultMenu');
 
 const ContentsContainer = require('../Container/Contents/Best');
-const CollectionContentsContainer = require('../Container/Contents/BestCollection');
+const CollectionContentsContainer = require(
+  '../Container/Contents/BestCollection');
 const SigninContainer = require('../Container/Contents/Signin');
 const CommunityContainer = require('../Container/Contents/Community');
 const SubmitContainer = require('../Container/Contents/SubmitPost');
@@ -71,13 +80,13 @@ const App = (props) => {
           { props.LeftCol }
           {/*<div id="left_col">
 
-            /!*<div id="category_menu">
-              { props.LeftColGnb }
-            </div>
-            <div id="category">
-              { props.LeftColMenu }
-            </div>*!/
-          </div>*/}
+           /!*<div id="category_menu">
+           { props.LeftColGnb }
+           </div>
+           <div id="category">
+           { props.LeftColMenu }
+           </div>*!/
+           </div>*/}
           <div id="section">
             <div id="contents">
               { props.ContentsContainer }
@@ -95,7 +104,7 @@ const App = (props) => {
         { props.ModalContainer }
       </div>
     </div>
-  )
+  );
 };
 
 App.propTypes = {
@@ -128,10 +137,10 @@ const HelpApp = (props) => {
         <div id="container">
           <div id="left_col">
             {/*<div id="category_menu">*/}
-              {/*{ props.LeftColGnb }*/}
+            {/*{ props.LeftColGnb }*/}
             {/*</div>*/}
             {/*<div id="category">*/}
-              {/*{ props.LeftColMenu }*/}
+            {/*{ props.LeftColMenu }*/}
             {/*</div>*/}
           </div>
           <div id="section">
@@ -145,7 +154,7 @@ const HelpApp = (props) => {
         { props.ModalContainer }
       </div>
     </div>
-  )
+  );
 };
 
 HelpApp.propTypes = {
@@ -168,7 +177,7 @@ export default (store) => {
             RightSide: RightSide,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ContentsContainer
+            ContentsContainer: ContentsContainer,
           }}/>
       </Route>
 
@@ -179,7 +188,7 @@ export default (store) => {
             //LeftColMenu: BestCategoryMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ContentsContainer
+            ContentsContainer: ContentsContainer,
           }}/>
       </Route>
 
@@ -190,7 +199,7 @@ export default (store) => {
             //LeftColMenu: SigninMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: SigninContainer
+            ContentsContainer: SigninContainer,
           }}/>
       </Route>
 
@@ -205,7 +214,7 @@ export default (store) => {
             //LeftColMenu: CollectionMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: CollectionContentsContainer
+            ContentsContainer: CollectionContentsContainer,
           }}/>
       </Route>
 
@@ -216,7 +225,7 @@ export default (store) => {
             //LeftColMenu: ForumMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: CommunityContainer
+            ContentsContainer: CommunityContainer,
           }}/>
 
         <Route path="submit"
@@ -225,7 +234,7 @@ export default (store) => {
                  //LeftColMenu: SubmitPostMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: SubmitContainer
+                 ContentsContainer: SubmitContainer,
                }}
         />
 
@@ -235,7 +244,7 @@ export default (store) => {
                  //LeftColMenu: SubmitForumMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: SubmitForumContainer
+                 ContentsContainer: SubmitForumContainer,
                }}
         />
 
@@ -246,7 +255,7 @@ export default (store) => {
               //LeftColMenu: ForumSettingMenu,
               WidgetContainer: WidgetContainer,
               ModalContainer: ModalContainer,
-              ContentsContainer: ForumSettingMain
+              ContentsContainer: ForumSettingMain,
             }}/>
 
           <Route path="forumprefix" components={{
@@ -254,7 +263,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="foruminfo" components={{
@@ -262,7 +271,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="forumurl" components={{
@@ -270,7 +279,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="announce" components={{
@@ -278,7 +287,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="writepost" components={{
@@ -286,7 +295,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="writecomment" components={{
@@ -294,7 +303,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="share" components={{
@@ -302,7 +311,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="promotion" components={{
@@ -310,7 +319,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="managers" components={{
@@ -318,7 +327,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="banlist" components={{
@@ -326,7 +335,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="spams" components={{
@@ -334,7 +343,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="spamreports" components={{
@@ -342,7 +351,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="stat/forum" components={{
@@ -350,7 +359,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="stat/views" components={{
@@ -358,7 +367,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="stat/visitors" components={{
@@ -366,7 +375,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="stat/likerank" components={{
@@ -374,7 +383,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="stat/commentrank" components={{
@@ -382,7 +391,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
           <Route path="stat/viewrank" components={{
@@ -390,7 +399,7 @@ export default (store) => {
             //LeftColMenu: ForumSettingMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ForumSettingMain
+            ContentsContainer: ForumSettingMain,
           }}/>
 
         </Route>
@@ -404,7 +413,7 @@ export default (store) => {
             //LeftColMenu: SearchMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: SearchContainer
+            ContentsContainer: SearchContainer,
           }}
         />
       </Route>
@@ -416,7 +425,7 @@ export default (store) => {
             //LeftColMenu: AccountCategoryMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: ActivityContainer
+            ContentsContainer: ActivityContainer,
           }}
         />
 
@@ -426,7 +435,7 @@ export default (store) => {
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: ActivityContainer
+                 ContentsContainer: ActivityContainer,
                }}
         />
 
@@ -436,7 +445,7 @@ export default (store) => {
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: ActivityContainer
+                 ContentsContainer: ActivityContainer,
                }}
         />
 
@@ -446,7 +455,7 @@ export default (store) => {
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: ActivityContainer
+                 ContentsContainer: ActivityContainer,
                }}
         />
 
@@ -459,7 +468,7 @@ export default (store) => {
                  //LeftColMenu: UserPointMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: ChargePointContainer
+                 ContentsContainer: ChargePointContainer,
                }}
         />
 
@@ -469,7 +478,7 @@ export default (store) => {
                  //LeftColMenu: UserPointMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: PointListContainer
+                 ContentsContainer: PointListContainer,
                }}
         />
 
@@ -479,7 +488,7 @@ export default (store) => {
                  //LeftColMenu: UserPointMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: ChargeLogListContainer
+                 ContentsContainer: ChargeLogListContainer,
                }}
         />
 
@@ -490,7 +499,7 @@ export default (store) => {
               //LeftColMenu: UserPointMenu,
               WidgetContainer: WidgetContainer,
               ModalContainer: ModalContainer,
-              ContentsContainer: VenalinkActiveList
+              ContentsContainer: VenalinkActiveList,
             }}/>
 
           <Route path="active" components={{
@@ -498,7 +507,7 @@ export default (store) => {
             //LeftColMenu: UserPointMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: VenalinkActiveList
+            ContentsContainer: VenalinkActiveList,
           }}/>
 
           <Route path="share" components={{
@@ -506,7 +515,7 @@ export default (store) => {
             //LeftColMenu: UserPointMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: VenalinkShareList
+            ContentsContainer: VenalinkShareList,
           }}/>
         </Route>
       </Route>
@@ -518,7 +527,7 @@ export default (store) => {
             //LeftColMenu: AccountCategoryMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: SettingContainer
+            ContentsContainer: SettingContainer,
           }}
         />
 
@@ -528,7 +537,7 @@ export default (store) => {
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: SettingContainer
+                 ContentsContainer: SettingContainer,
                }}
         />
 
@@ -538,7 +547,7 @@ export default (store) => {
                  //LeftColMenu: AccountCategoryMenu,
                  WidgetContainer: WidgetContainer,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: SettingContainer
+                 ContentsContainer: SettingContainer,
                }}
         />
       </Route>
@@ -551,7 +560,7 @@ export default (store) => {
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: PolicyMenu,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: PolicyContainer
+                 ContentsContainer: PolicyContainer,
                }}
         />
 
@@ -560,7 +569,7 @@ export default (store) => {
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: PolicyMenu,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: PolicyContainer
+                 ContentsContainer: PolicyContainer,
                }}
         />
 
@@ -573,7 +582,7 @@ export default (store) => {
             //LeftColMenu: CompanyMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: CompanyContainer
+            ContentsContainer: CompanyContainer,
           }}
         />
 
@@ -586,7 +595,7 @@ export default (store) => {
             //LeftColMenu: CompanyMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: CompanyContainer
+            ContentsContainer: CompanyContainer,
           }}
         />
 
@@ -599,7 +608,7 @@ export default (store) => {
             //LeftColMenu: CompanyMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: CompanyContainer
+            ContentsContainer: CompanyContainer,
           }}
         />
 
@@ -611,7 +620,7 @@ export default (store) => {
             //LeftColGnb: LeftColGlobalCategoryNav,
             //LeftColMenu: HelpMenu,
             ModalContainer: ModalContainer,
-            ContentsContainer: HelpContainer
+            ContentsContainer: HelpContainer,
           }}
         />
 
@@ -620,7 +629,7 @@ export default (store) => {
                  //LeftColGnb: LeftColGlobalCategoryNav,
                  //LeftColMenu: HelpMenu,
                  ModalContainer: ModalContainer,
-                 ContentsContainer: HelpContainer
+                 ContentsContainer: HelpContainer,
                }}
         />
 
@@ -633,7 +642,7 @@ export default (store) => {
             //LeftColMenu: DefaultMenu,
             WidgetContainer: WidgetContainer,
             ModalContainer: ModalContainer,
-            ContentsContainer: FindMemberContainer
+            ContentsContainer: FindMemberContainer,
           }}
         />
 
@@ -643,5 +652,5 @@ export default (store) => {
         <IndexRedirect to="/"/>
       </Route>
     </Router>
-  )
-}
+  );
+};

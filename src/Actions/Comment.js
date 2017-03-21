@@ -27,55 +27,55 @@ export const CLOSE_COMMENT_UPDATE_VIEW = 'CLOSE_COMMENT_UPDATE_VIEW';
 
 export function closeCommentUpdateView() {
   return {
-    type: CLOSE_COMMENT_UPDATE_VIEW
-  }
+    type: CLOSE_COMMENT_UPDATE_VIEW,
+  };
 }
 
 export function openCommentUpdateView(target) {
   return {
     type: OPEN_COMMENT_UPDATE_VIEW,
-    target
-  }
+    target,
+  };
 }
 
 export function requestLikeComment(payload) {
   return {
     type: REQUEST_LIKE_COMMENT,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestLikeSubComment(payload) {
   return {
     type: REQUEST_LIKE_SUB_COMMENT,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestSubmitComment(payload) {
   return {
     type: REQUEST_SUBMIT_COMMENT,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestSubmitSubComment(payload) {
   return {
     type: REQUEST_SUBMIT_SUB_COMMENT,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestUpdateComment(payload) {
   return {
     type: REQUEST_UPDATE_COMMENT,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestUpdateSubComment(payload) {
   return {
     type: REQUEST_UPDATE_SUB_COMMENT,
-    payload
-  }
+    payload,
+  };
 }

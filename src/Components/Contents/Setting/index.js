@@ -19,12 +19,12 @@ const SettingProfile = React.createClass({
     return {
       defaultYear: d.getYear() + 1900,
       defaultMonth: 12,
-      defaultDate: 31
+      defaultDate: 31,
     };
   },
 
   getInitialState() {
-    const { UserStore } = this.props;
+    const {UserStore} = this.props;
     const sex = UserStore.getIn(['profile', 'sex']);
     const birthday = UserStore.getIn(['profile', 'birth']);
 
@@ -33,7 +33,7 @@ const SettingProfile = React.createClass({
       sex: sex,
       year: d.get('year'),
       month: d.get('month'),
-      date: d.get('date')
+      date: d.get('date'),
     };
   },
 
@@ -42,7 +42,7 @@ const SettingProfile = React.createClass({
     const list = [];
     for (let i = 0; i < 100; i++) {
       const value = this.props.defaultYear - i;
-      list.push(<option key={value} value={value}>{value}</option>)
+      list.push(<option key={value} value={value}>{value}</option>);
     }
 
     return list;
@@ -53,7 +53,7 @@ const SettingProfile = React.createClass({
     const list = [];
     const month = this.props.defaultMonth;
     for (let i = 0; i < month; i++) {
-      list.push(<option key={i} value={i}>{`${i + 1} 월`}</option>)
+      list.push(<option key={i} value={i}>{`${i + 1} 월`}</option>);
     }
 
     return list;
@@ -68,27 +68,27 @@ const SettingProfile = React.createClass({
   },
 
   changeYear(e) {
-    this.setState({ year: e.target.value })
+    this.setState({year: e.target.value});
   },
   changeMonth(e) {
-    this.setState({ month: e.target.value })
+    this.setState({month: e.target.value});
   },
   changeDate(e) {
-    this.setState({ date: e.target.value })
+    this.setState({date: e.target.value});
   },
   changeSex(sex) {
-    this.setState({ sex: sex })
+    this.setState({sex: sex});
   },
 
   updateProfile() {
     const birth = {
       year: this.state.year,
       month: this.state.month,
-      date: this.state.date
+      date: this.state.date,
     };
     const profile = {
       sex: this.state.sex,
-      birth: moment(birth).format()
+      birth: moment(birth).format(),
     };
 
     this.props.FireRequestUserUpdateProfile(profile);
@@ -100,7 +100,7 @@ const SettingProfile = React.createClass({
       .closest('.message')
       .transition('fade');
 
-    this.props.FireCloseUserSettingMessage({ successType });
+    this.props.FireCloseUserSettingMessage({successType});
   },
 
   setErrorMessage(UserSettingStore) {
@@ -110,30 +110,32 @@ const SettingProfile = React.createClass({
     if (errMessage) {
       return (
         <div ref="errorMessage" className="ui error message">
-          <i className="close icon" onClick={this.closeMessageBox.bind(this, 'error')}></i>
+          <i className="close icon"
+             onClick={this.closeMessageBox.bind(this, 'error')}></i>
           <ul className="list">
             <li>이전 비밀번호와 다릅니다.</li>
           </ul>
         </div>
-      )
+      );
     }
 
     if (successMessage) {
       return (
         <div ref="successMessage" className="ui icon small success message">
-          <i className="close icon" onClick={this.closeMessageBox.bind(this, 'success')}></i>
+          <i className="close icon"
+             onClick={this.closeMessageBox.bind(this, 'success')}></i>
           <i className="checkmark icon"></i>
           <div className="content">
             <p>비밀번호를 성공적으로 변경하였습니다</p>
           </div>
         </div>
-      )
+      );
     }
 
   },
 
   render() {
-    const { UserSettingStore } = this.props;
+    const {UserSettingStore} = this.props;
     return (
       <div id="setting">
         <h3 className="ui dividing header">
@@ -147,7 +149,8 @@ const SettingProfile = React.createClass({
               <div className="grouped fields">
                 <label htmlFor="fruit">성별</label>
                 <div className="field">
-                  <div className="ui radio checkbox" onClick={this.changeSex.bind(this, true)}>
+                  <div className="ui radio checkbox"
+                       onClick={this.changeSex.bind(this, true)}>
                     <input type="radio" name="sex"
                            defaultChecked={this.state.sex}
                            className="hidden" value="1"
@@ -156,7 +159,8 @@ const SettingProfile = React.createClass({
                   </div>
                 </div>
                 <div className="field">
-                  <div className="ui radio checkbox" onClick={this.changeSex.bind(this, false)}>
+                  <div className="ui radio checkbox"
+                       onClick={this.changeSex.bind(this, false)}>
                     <input type="radio" name="sex"
                            defaultChecked={!this.state.sex}
                            className="hidden" value="0"
@@ -238,7 +242,8 @@ const SettingProfile = React.createClass({
                 </div>
               </div>
             </div>
-            <div className="ui button primary" onClick={this.updateProfile}>저장</div>
+            <div className="ui button primary" onClick={this.updateProfile}>저장
+            </div>
           </form>
 
           {
@@ -246,8 +251,8 @@ const SettingProfile = React.createClass({
           }
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 const SettingPassword = React.createClass({
@@ -267,46 +272,46 @@ const SettingPassword = React.createClass({
             rules: [
               {
                 type: 'empty',
-                prompt: '빈칸을 모두 채워주세요'
-              }
-            ]
+                prompt: '빈칸을 모두 채워주세요',
+              },
+            ],
           },
           newPassword: {
             identifier: 'new-password',
             rules: [
               {
                 type: 'empty',
-                prompt: '빈칸을 채워주세요'
+                prompt: '빈칸을 채워주세요',
               },
 
               {
                 type: 'minLength[6]',
-                prompt: '적어도 {ruleValue}글자 이상 입력해주세요'
-              }
-            ]
+                prompt: '적어도 {ruleValue}글자 이상 입력해주세요',
+              },
+            ],
           },
           reNewPassword: {
             identifier: 're-new-password',
             rules: [
               {
                 type: 'match[new-password]',
-                prompt: '입력한 비밀번호와 서로 다릅니다.'
-              }
-            ]
-          }
+                prompt: '입력한 비밀번호와 서로 다릅니다.',
+              },
+            ],
+          },
         },
         onSuccess: (e, value) => {
           e.preventDefault();
 
           this.props.FireRequestUserUpdatePassword({
             oldPassword: value['old-password'],
-            newPassword: value['new-password']
+            newPassword: value['new-password'],
           });
 
         },
         onFailure: (e) => {
           logger('Form validate fail', e);
-        }
+        },
       })
     ;
   },
@@ -317,7 +322,7 @@ const SettingPassword = React.createClass({
       .closest('.message')
       .transition('fade');
 
-    this.props.FireCloseUserSettingMessage({ successType });
+    this.props.FireCloseUserSettingMessage({successType});
   },
 
   setErrorMessage(UserSettingStore) {
@@ -327,29 +332,31 @@ const SettingPassword = React.createClass({
     if (errMessage) {
       return (
         <div ref="errorMessage" className="ui error message">
-          <i className="close icon" onClick={this.closeMessageBox.bind(this, 'error')}></i>
+          <i className="close icon"
+             onClick={this.closeMessageBox.bind(this, 'error')}></i>
           <ul className="list">
             <li>이전 비밀번호와 다릅니다.</li>
           </ul>
         </div>
-      )
+      );
     }
 
     if (successMessage) {
       return (
         <div ref="successMessage" className="ui icon small success message">
-          <i className="close icon" onClick={this.closeMessageBox.bind(this, 'success')}></i>
+          <i className="close icon"
+             onClick={this.closeMessageBox.bind(this, 'success')}></i>
           <i className="checkmark icon"></i>
           <div className="content">
             <p>비밀번호를 성공적으로 변경하였습니다</p>
           </div>
         </div>
-      )
+      );
     }
 
   },
   render() {
-    const { UserSettingStore } = this.props;
+    const {UserSettingStore} = this.props;
     return (
       <div id="setting">
 
@@ -366,11 +373,13 @@ const SettingPassword = React.createClass({
             </div>
             <div className="field">
               <label>새 비밀번호</label>
-              <input type="password" name="new-password" placeholder="새로운 비밀번호"/>
+              <input type="password" name="new-password"
+                     placeholder="새로운 비밀번호"/>
             </div>
             <div className="field">
               <label>새 비밀번호 확인</label>
-              <input type="password" name="re-new-password" placeholder="새로운 비밀번호 확인"/>
+              <input type="password" name="re-new-password"
+                     placeholder="새로운 비밀번호 확인"/>
             </div>
             <div className="ui submit button primary">저장</div>
             <div className="ui error message "></div>
@@ -381,7 +390,7 @@ const SettingPassword = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 require('./index.scss');
@@ -395,7 +404,7 @@ const SettingBox = React.createClass({
   },
 
   render() {
-    const { UserSettingStore } = this.props;
+    const {UserSettingStore} = this.props;
     switch (UserSettingStore.get('page')) {
       case 'password' :
         return <SettingPassword {...this.props} />;
@@ -404,9 +413,9 @@ const SettingBox = React.createClass({
         return <SettingProfile {...this.props} />;
 
       default :
-        return (<div></div>)
+        return (<div></div>);
     }
-  }
+  },
 });
 
 export default SettingBox;

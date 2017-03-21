@@ -83,7 +83,8 @@ class WidgetBox extends Component {
                       .sortBy(item => item.get('title'))
                       .map(forum => {
                         const styleActive = cx('', {
-                          active: qs.parse(location.search.slice(1)).forumId === forum.get('id').toString()
+                          active: qs.parse(location.search.slice(1)).forumId ===
+                          forum.get('id').toString(),
                         });
 
                         return (
@@ -91,23 +92,26 @@ class WidgetBox extends Component {
                             <i className="ui inbox icon"/>
                             <div className="content">
                               <div className="header">
-                                <Link to={`/community?forumId=${forum.get('id')}`} className={styleActive}>
+                                <Link
+                                  to={`/community?forumId=${forum.get('id')}`}
+                                  className={styleActive}>
                                   {forum.get('title')}
                                   {
-                                    !user.forumCreated.includes(forum.get('id')) &&
+                                    !user.forumCreated.includes(
+                                      forum.get('id')) &&
                                     ' (매)'
                                   }
                                 </Link>
                               </div>
                             </div>
                           </div>
-                        )
+                        );
                       })
                   }
                 </div>
 
               </Scrollbars>
-            </div>
+            </div>,
           ]
         }
 
@@ -118,19 +122,20 @@ class WidgetBox extends Component {
               key="1"
               linkTo="/signin"
               text="지금 가입하세요 !"
-            />
+            />,
           ]
         }
 
         {
           <Main2
             key="Main2"
-            url={require("../../images/venacle-guide.jpg")}
+            url={require('../../images/venacle-guide.jpg')}
             link="/help/guide"
           />
         }
 
-        <div className="_45mq" role="contentinfo" style={{ marginTop: 20, fontSize: 12 }}>
+        <div className="_45mq" role="contentinfo"
+             style={{marginTop: 20, fontSize: 12}}>
           <div className="fsm fwn fcg">
             <Link to="/policies/privacy">개인정보보호</Link>
             <span role="presentation" aria-hidden="true"> · </span>
@@ -147,11 +152,11 @@ class WidgetBox extends Component {
           <div>
             <span> Venacle © 2016</span>
           </div>
-          <div style={{ color: '#b3b3b3' }}>
+          <div style={{color: '#b3b3b3'}}>
             <div>상호명 : 베나클</div>
             <div>대표자 : 도병수</div>
             <div>사업자 번호 : 359-19-00336</div>
-            <div style={{ fontSize: 11 }}>주소 : 서울시 강서구 화곡동 강서로8길 174 303호</div>
+            <div style={{fontSize: 11}}>주소 : 서울시 강서구 화곡동 강서로8길 174 303호</div>
             <div>전화 : 070-4130-0420</div>
           </div>
         </div>

@@ -21,7 +21,7 @@ const PolicyMenu = React.createClass({
     }
   },
   render() {
-    const { location } = this.props;
+    const {location} = this.props;
     const title = this.getTitle(this.getEndpoint(location));
 
     return (
@@ -43,17 +43,17 @@ const PolicyMenu = React.createClass({
               </h5>
 
               <div className="sub_category item">
-                <Link to={{ pathname: '/help/hello' }}>{'Hello'}</Link>
+                <Link to={{pathname: '/help/hello'}}>{'Hello'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{ pathname: '/help/guide' }}>{'가이드'}</Link>
+                <Link to={{pathname: '/help/guide'}}>{'가이드'}</Link>
               </div>
             </li>
           </ul>
         </menu>
       </div>
     );
-  }
+  },
 });
 
 export default PolicyMenu;

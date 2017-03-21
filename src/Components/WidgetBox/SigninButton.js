@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 require('./SigninButton.scss');
 const SigninButton = React.createClass({
@@ -11,7 +11,7 @@ const SigninButton = React.createClass({
         </Link>
       </div>
     );
-  }
+  },
 });
 
 export default SigninButton;

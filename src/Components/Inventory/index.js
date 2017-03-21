@@ -18,13 +18,13 @@ const Inventory = React.createClass({
   },
 
   createTableColum(venatemId = '', c) {
-    const { Venatems, Items } = this.props;
+    const {Venatems, Items} = this.props;
     const venatem = Venatems.get(venatemId.toString());
     let item;
 
     if (venatem && (venatem.get('item_count') > 0)) {
       const getItem = Items.get(venatem.get('item_id').toString());
-      
+
       item = (
         <div
           data-tip
@@ -35,16 +35,16 @@ const Inventory = React.createClass({
           <span className="item-count">{venatem.get('item_count')}</span>
           <img className="item-image" src={getItem.get('image')}/>
         </div>
-      )
+      );
     } else {
-      item = <div className="content"></div>
+      item = <div className="content"></div>;
     }
 
     return (
       <td key={c}>
         {item}
       </td>
-    )
+    );
   },
   createTableRow(inventory, col, row) {
     let tableRows = [];
@@ -85,11 +85,11 @@ const Inventory = React.createClass({
   },
   render() {
 
-    const { inventory, positionStyle } = this.props;
+    const {inventory, positionStyle} = this.props;
     const table = this.createTable(inventory, 4, 8);
 
     const style = cx('user_inventory', {
-      [positionStyle]: true
+      [positionStyle]: true,
     });
 
     return (
@@ -110,7 +110,7 @@ const Inventory = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default Inventory;

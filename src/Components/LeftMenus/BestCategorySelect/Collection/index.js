@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import SubscribeForumList from '../SubscribeForumList';
 
 const Subs = (props) => {
-  const { subs, Forums, activeId, FireRequestRemoveForumInCollection } = props;
+  const {subs, Forums, activeId, FireRequestRemoveForumInCollection} = props;
 
   const unSubs = (forumId) => () => {
-      FireRequestRemoveForumInCollection({
-        forumId: forumId,
-        collectionId: activeId
-      });
-    };
+    FireRequestRemoveForumInCollection({
+      forumId: forumId,
+      collectionId: activeId,
+    });
+  };
 
   return (
     <ul className="forum_list">
@@ -24,17 +24,19 @@ const Subs = (props) => {
             return (
               <li key={forum.get('id')} className="forum_list_item">
                 <i className="fa fa-file-o"/>
-                <Link to={`/community?forumId=${subId}`} >{forum.get('title')}</Link>
-                <i className="fa fa-minus un_subscribe" onClick={unSubs(subId)}/>
+                <Link to={`/community?forumId=${subId}`}>{forum.get(
+                  'title')}</Link>
+                <i className="fa fa-minus un_subscribe"
+                   onClick={unSubs(subId)}/>
               </li>
-            )
+            );
           } else {
-            return <li />
+            return <li />;
           }
         })
       }
     </ul>
-  )
+  );
 };
 
 Subs.propTypes = {
@@ -61,7 +63,7 @@ const CollectionItem = React.createClass({
 
   getInitialState() {
     return {
-      hide: true
+      hide: true,
     };
   },
 
@@ -70,16 +72,16 @@ const CollectionItem = React.createClass({
     const {
       id, title, subs, Forums,
       location,
-      ListStore, collection, FireRequestRemoveForumInCollection
+      ListStore, collection, FireRequestRemoveForumInCollection,
     } = this.props;
     const collectionNowId = location ? location.pathname.split('/')[2] : null;
     const collectionOpen = collectionNowId === id;
     const itemStyle = cx('collection_list', {
-      hide: !collectionOpen
+      hide: !collectionOpen,
     });
     const isCollectionOpenStyle = cx('fa', {
       'fa-folder-open-o': collectionOpen,
-      'fa-folder-o': !collectionOpen
+      'fa-folder-o': !collectionOpen,
     });
 
     return (
@@ -90,9 +92,9 @@ const CollectionItem = React.createClass({
         }
 
         <div className="collection">
-          <Link to={{ pathname: `/collection/${id}` }}>
+          <Link to={{pathname: `/collection/${id}`}}>
 
-            <i className={isCollectionOpenStyle} style={{ paddingRight: 3 }} />
+            <i className={isCollectionOpenStyle} style={{paddingRight: 3}}/>
             <span className="title">{title}</span>
 
           </Link>
@@ -118,8 +120,8 @@ const CollectionItem = React.createClass({
 
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 require('./index.scss');
@@ -130,7 +132,7 @@ const Collection = React.createClass({
     location: PropTypes.object,
     Collections: PropTypes.object.isRequired,
     FireRequestCreateCollection: PropTypes.func.isRequired,
-    FireRequestRemoveForumInCollection: PropTypes.func.isRequired
+    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -148,18 +150,19 @@ const Collection = React.createClass({
       createCollection: {
         title: '',
         description: '',
-        isPrivate: false
+        isPrivate: false,
       },
       hideCreateCollectionBox: true,
     };
   },
   toggleCreateCollection() {
 
-    this.setState({ hideCreateCollectionBox: !this.state.hideCreateCollectionBox })
+    this.setState(
+      {hideCreateCollectionBox: !this.state.hideCreateCollectionBox});
   },
   closeCreateCollection() {
 
-    this.setState({ hideCreateCollectionBox: true })
+    this.setState({hideCreateCollectionBox: true});
   },
   handleChangeTitle(e) {
     e.preventDefault();
@@ -188,14 +191,14 @@ const Collection = React.createClass({
     e.preventDefault();
     e.stopPropagation();
 
-    const { title, description } = this.state.createCollection;
+    const {title, description} = this.state.createCollection;
     if (title && description) {
       this.props.FireRequestCreateCollection(this.state.createCollection);
       this.closeCreateCollection();
     }
   },
   createCollectionItem(collections) {
-    const { Forums, location } = this.props;
+    const {Forums, location} = this.props;
     const self = this;
     return collections.entrySeq().map(([key, map]) => {
       return (
@@ -210,13 +213,13 @@ const Collection = React.createClass({
           collection={map}
           {...this.props}
         />
-      )
-    })
+      );
+    });
   },
 
   render() {
 
-    const { Collections } = this.props;
+    const {Collections} = this.props;
 
     return (
       <li id="user_best_collection">
@@ -230,55 +233,63 @@ const Collection = React.createClass({
         }
 
         <div className="sub_category item create_collection">
-          <a className="ui button primary tiny create_collection_btn" onClick={this.toggleCreateCollection}>{'새로운 컬랙션 +'}</a>
+          <a className="ui button primary tiny create_collection_btn"
+             onClick={this.toggleCreateCollection}>{'새로운 컬랙션 +'}</a>
 
-            <ReactCSSTransitionGroup
-              transitionName="create-box"
-              transitionEnter={true}
-              transitionEnterTimeout={200}
-              transitionLeave={true}
-              transitionLeaveTimeout={200}
-            >
-              {
-                !this.state.hideCreateCollectionBox &&
-                <div key="12313" className='create-box'>
-                  <div className="header">
-                    <h4 className="title">컬렉션을 만들어 모든 게시판을 구독하세요</h4>
-                    <div className="description">원하는 컬렉션을 만들어 관심 있는 게시판을 구독 하실 수 있습니다</div>
+          <ReactCSSTransitionGroup
+            transitionName="create-box"
+            transitionEnter={true}
+            transitionEnterTimeout={200}
+            transitionLeave={true}
+            transitionLeaveTimeout={200}
+          >
+            {
+              !this.state.hideCreateCollectionBox &&
+              <div key="12313" className='create-box'>
+                <div className="header">
+                  <h4 className="title">컬렉션을 만들어 모든 게시판을 구독하세요</h4>
+                  <div className="description">원하는 컬렉션을 만들어 관심 있는 게시판을 구독 하실 수
+                    있습니다
                   </div>
-
-                  <form className="ui mini form " onSubmit={this.submitNewCollection}>
-                    <div className="field collection_title_field">
-                      <label>이름</label>
-                      <input type="text" name="title"
-                             placeholder="컬렉션 이름" onChange={this.handleChangeTitle}/>
-                    </div>
-                    <div className="field collection_description_field">
-                      <label>설명</label>
-                      <input type="text" name="description"
-                             placeholder="컬렉션 설명" onChange={this.handleChangeDescription}/>
-                    </div>
-                    <div className="field collection_checkbox_field">
-                      <div className="ui checkbox">
-                        <input id="isPrivate" name="isPrivate" type="hidden"
-                               defaultChecked={false} value={this.state.createCollection.isPrivate}
-                        />
-                        <input type="checkbox"
-                               defaultChecked={false}
-                               onChange={this.handleChangePrivate}/>
-                        <label htmlFor="isPrivate">비공개</label>
-                      </div>
-                    </div>
-                    <button className="ui primary button tiny" type="submit">만들기</button>
-                  </form>
-
                 </div>
-              }
-            </ReactCSSTransitionGroup>
+
+                <form className="ui mini form "
+                      onSubmit={this.submitNewCollection}>
+                  <div className="field collection_title_field">
+                    <label>이름</label>
+                    <input type="text" name="title"
+                           placeholder="컬렉션 이름"
+                           onChange={this.handleChangeTitle}/>
+                  </div>
+                  <div className="field collection_description_field">
+                    <label>설명</label>
+                    <input type="text" name="description"
+                           placeholder="컬렉션 설명"
+                           onChange={this.handleChangeDescription}/>
+                  </div>
+                  <div className="field collection_checkbox_field">
+                    <div className="ui checkbox">
+                      <input id="isPrivate" name="isPrivate" type="hidden"
+                             defaultChecked={false}
+                             value={this.state.createCollection.isPrivate}
+                      />
+                      <input type="checkbox"
+                             defaultChecked={false}
+                             onChange={this.handleChangePrivate}/>
+                      <label htmlFor="isPrivate">비공개</label>
+                    </div>
+                  </div>
+                  <button className="ui primary button tiny" type="submit">만들기
+                  </button>
+                </form>
+
+              </div>
+            }
+          </ReactCSSTransitionGroup>
         </div>
       </li>
-    )
-  }
+    );
+  },
 });
 
 export default Collection;

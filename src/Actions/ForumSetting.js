@@ -42,79 +42,78 @@ export const REQUEST_DELETE_FORUM_BAN_USER = 'REQUEST_DELETE_FORUM_BAN_USER';
 export const SUCCESS_DELETE_FORUM_BAN_USER = 'SUCCESS_DELETE_FORUM_BAN_USER';
 export const FAILURE_DELETE_FORUM_BAN_USER = 'FAILURE_DELETE_FORUM_BAN_USER';
 
-
 export function handleResetButton() {
   return {
     type: HANDLE_RESET_BUTTON,
-  }
+  };
 }
 
 export function handleChangeFormForumMeta(data) {
   return {
     type: HANDLE_CHANGE_FORM_FORUM_META,
-    data
-  }
+    data,
+  };
 }
 
 export function requestUpdateForumMeta(payload) {
   return {
     type: REQUEST_UPDATE_FORUM_META,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestAddForumPrefix(payload) {
   return {
     type: REQUEST_ADD_FORUM_PREFIX,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestDeleteForumPrefix(payload) {
   return {
     type: REQUEST_DELETE_FORUM_PREFIX,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestUpdateForumPrefix(payload) {
   return {
     type: REQUEST_UPDATE_FORUM_PREFIX,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestAddForumManager(payload) {
   return {
     type: REQUEST_ADD_FORUM_MANAGER,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestDeleteForumManager(payload) {
   return {
     type: REQUEST_DELETE_FORUM_MANAGER,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestDeleteForumAnnounce(payload) {
   return {
     type: REQUEST_DELETE_FORUM_ANNOUNCE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestAddForumBanUser(payload) {
   return {
     type: REQUEST_ADD_FORUM_BAN_USER,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestDeleteForumBanUser(payload) {
   return {
     type: REQUEST_DELETE_FORUM_BAN_USER,
-    payload
-  }
+    payload,
+  };
 }

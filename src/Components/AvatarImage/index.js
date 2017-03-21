@@ -3,7 +3,7 @@ import ImageType from '../Lib/ImageType';
 import AvatarImageDeleteButton from '../../Container/Frags/AvatarImageDeleteButton';
 
 const AvatarImage = (props) => {
-  const { avatarImg, sex, imageClass = '', removable, noWrap } = props;
+  const {avatarImg, sex, imageClass = '', removable, noWrap} = props;
 
   if (avatarImg) {
     const imageType = new ImageType('/image/uploaded/files/' + avatarImg);
@@ -11,7 +11,8 @@ const AvatarImage = (props) => {
 
     if (type === 'gif') {
       if (noWrap) {
-        return <img className={imageClass} src={'/image/uploaded/files/' + avatarImg}/>
+        return <img className={imageClass}
+                    src={'/image/uploaded/files/' + avatarImg}/>;
       } else {
         return (
           <div>
@@ -19,13 +20,15 @@ const AvatarImage = (props) => {
               removable &&
               <AvatarImageDeleteButton />
             }
-            <img className={imageClass} src={'/image/uploaded/files/' + avatarImg}/>
+            <img className={imageClass}
+                 src={'/image/uploaded/files/' + avatarImg}/>
           </div>
-        )
+        );
       }
     } else {
       if (noWrap) {
-        return <img className={imageClass} src={'/image/uploaded/files/small/' + avatarImg}/>
+        return <img className={imageClass}
+                    src={'/image/uploaded/files/small/' + avatarImg}/>;
       } else {
         return (
           <div>
@@ -33,16 +36,19 @@ const AvatarImage = (props) => {
               removable &&
               <AvatarImageDeleteButton />
             }
-            <img className={imageClass} src={'/image/uploaded/files/small/' + avatarImg}/>
+            <img className={imageClass}
+                 src={'/image/uploaded/files/small/' + avatarImg}/>
           </div>
-        )
+        );
       }
     }
   } else {
     if (sex) {
-      return <img className={imageClass} src={require("../../images/default-male.png")}/>;
+      return <img className={imageClass}
+                  src={require('../../images/default-male.png')}/>;
     } else {
-      return <img className={imageClass} src={require("../../images/default-female.png")}/>;
+      return <img className={imageClass}
+                  src={require('../../images/default-female.png')}/>;
     }
   }
 };
@@ -50,7 +56,7 @@ const AvatarImage = (props) => {
 AvatarImage.propTypes = {
   avatarImg: PropTypes.string,
   sex: PropTypes.bool,
-  imageClass : PropTypes.string,
+  imageClass: PropTypes.string,
   removable: PropTypes.bool,
   noWrap: PropTypes.bool,
 };

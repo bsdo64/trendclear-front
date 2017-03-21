@@ -16,17 +16,17 @@ const DeleteModalBox = React.createClass({
 
   getInitialState() {
     return {
-      selectItem: 1
-    }
+      selectItem: 1,
+    };
   },
   sendReport() {
-    const { RemoveModalStore, LoginStore } = this.props;
+    const {RemoveModalStore, LoginStore} = this.props;
 
     const isLogin = LoginStore.get('isLogin');
     if (isLogin) {
       const reportObj = {
         type: RemoveModalStore.get('type'),
-        typeId: RemoveModalStore.get('typeId')
+        typeId: RemoveModalStore.get('typeId'),
       };
 
       this.props.FireRequestDeleteItem(reportObj);
@@ -34,7 +34,7 @@ const DeleteModalBox = React.createClass({
   },
   render() {
     const {
-      Posts, Comments, SubComments, RemoveModalStore
+      Posts, Comments, SubComments, RemoveModalStore,
     } = this.props;
 
     let content, title;
@@ -47,13 +47,17 @@ const DeleteModalBox = React.createClass({
       case 'comment':
         content = Comments.get(RemoveModalStore.get('typeId').toString());
         title = content ? <span>댓글: <div
-          dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span> : null;
+          dangerouslySetInnerHTML={{
+            __html: content.get('content'),
+          }}></div></span> : null;
         break;
 
       case 'subComment':
         content = SubComments.get(RemoveModalStore.get('typeId').toString());
         title = content ? (<span>대댓글: <div
-          dangerouslySetInnerHTML={{ __html: content.get('content') }}></div></span>) : null;
+          dangerouslySetInnerHTML={{
+            __html: content.get('content'),
+          }}></div></span>) : null;
         break;
 
       default:
@@ -62,7 +66,7 @@ const DeleteModalBox = React.createClass({
     }
 
     const buttonStyle = cx('ui primary approve button', {
-      loading: RemoveModalStore.get('isLoading')
+      loading: RemoveModalStore.get('isLoading'),
     });
 
     return (
@@ -83,7 +87,7 @@ const DeleteModalBox = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default DeleteModalBox;

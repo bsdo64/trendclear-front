@@ -49,7 +49,7 @@ const ActivityBox = React.createClass({
         />
         <div className="nick">{user.get('nick')}</div>
       </h2>
-    )
+    );
   },
 
   createActivityMeta(meta) {
@@ -74,12 +74,12 @@ const ActivityBox = React.createClass({
           </div>
         </div>
       </div>
-    )
+    );
   },
 
   getMorePosts(context) {
 
-    const { PaginationStore, FireRequestGetMorePostList } = this.props;
+    const {PaginationStore, FireRequestGetMorePostList} = this.props;
     const Pagination = PaginationStore.get(context);
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
@@ -112,8 +112,8 @@ const ActivityBox = React.createClass({
           listName,
           pathName,
           params: {
-            page: nextPage
-          }
+            page: nextPage,
+          },
         });
       }
     }
@@ -122,16 +122,17 @@ const ActivityBox = React.createClass({
   createStyle(context, linkContext) {
 
     return cx('item', {
-      active: context === linkContext
-    })
+      active: context === linkContext,
+    });
   },
 
   render() {
-    const { UserStore, ActivityStore, location } = this.props;
-    const { ListStore, Posts, Users, AuthStore, PaginationStore } = this.props;
+    const {UserStore, ActivityStore, location} = this.props;
+    const {ListStore, Posts, Users, AuthStore, PaginationStore} = this.props;
 
     let context, Collection, PostIdList;
-    if (location.pathname === '/activity' || location.pathname === '/activity/likes') {
+    if (location.pathname === '/activity' ||
+      location.pathname === '/activity/likes') {
       context = 'likePostList';
     } else if (location.pathname === ('/activity/posts')) {
       context = 'myWritePostList';
@@ -153,13 +154,16 @@ const ActivityBox = React.createClass({
             </div>
 
             <div className="ui menu activity-menu">
-              <Link to="/activity/likes" className={this.createStyle(context, 'likePostList')}>
+              <Link to="/activity/likes"
+                    className={this.createStyle(context, 'likePostList')}>
                 좋아요
               </Link>
-              <Link to="/activity/posts" className={this.createStyle(context, 'myWritePostList')}>
+              <Link to="/activity/posts"
+                    className={this.createStyle(context, 'myWritePostList')}>
                 글
               </Link>
-              <Link to="/activity/comments" className={this.createStyle(context, 'myWriteCommentPostList')}>
+              <Link to="/activity/comments" className={this.createStyle(context,
+                'myWriteCommentPostList')}>
                 댓글
               </Link>
             </div>
@@ -191,9 +195,9 @@ const ActivityBox = React.createClass({
     } else {
       return (
         <div className="ui active loader"></div>
-      )
+      );
     }
-  }
+  },
 });
 
 export default ActivityBox;

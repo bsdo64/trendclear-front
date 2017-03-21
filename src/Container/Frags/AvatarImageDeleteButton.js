@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {
-  requestUserAvatarImageRemove
+  requestUserAvatarImageRemove,
 } from '../../Actions/User';
 
 const removeImage = (props) => () => props.FireRequestUserAvatarImageRemove();
@@ -22,8 +22,8 @@ DeleteButton.propTypes = {
 
 const AvatarImageDeleteButtonContainer = React.createClass({
   render() {
-    return (<DeleteButton {...this.props} />)
-  }
+    return (<DeleteButton {...this.props} />);
+  },
 });
 
 module.exports = connect(

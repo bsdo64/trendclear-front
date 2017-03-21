@@ -13,7 +13,7 @@ import {
 } from '../../Actions/User';
 import {
   SUCCESS_MORE_ACCOUNT_LIST,
-  SUCCESS_GET_MORE_CHARGE_LOG_LIST
+  SUCCESS_GET_MORE_CHARGE_LOG_LIST,
 } from '../../Actions/Point';
 import {
   SUCCESS_SAVE_FOLLOWING_FILTER,
@@ -46,13 +46,13 @@ import {
   SUCCESS_SEARCH_FORUM_TO_COLLECTION_SUBS,
 } from '../../Actions/Collection';
 import {
-  SUCCESS_DELETE_ITEM
+  SUCCESS_DELETE_ITEM,
 } from '../../Actions/DeleteItem';
 import {
   SUCCESS_ADD_FORUM_MANAGER,
   SUCCESS_ADD_FORUM_BAN_USER,
   SUCCESS_DELETE_FORUM_MANAGER,
-  SUCCESS_DELETE_FORUM_BAN_USER
+  SUCCESS_DELETE_FORUM_BAN_USER,
 } from '../../Actions/ForumSetting';
 import {
   SUCCESS_PURCHASE_ITEM,
@@ -65,7 +65,7 @@ const initList = Map({});
 const Users = (state = initList, action) => {
   const findUserById = (userId) => {
     if (userId) {
-      return state.get(userId.toString())
+      return state.get(userId.toString());
     } else {
       return null;
     }
@@ -73,7 +73,7 @@ const Users = (state = initList, action) => {
 
   switch (action.type) {
     case SUCCESS_SAVE_FOLLOWING_FILTER: {
-      return state.mergeDeep(action.data.entities.author)
+      return state.mergeDeep(action.data.entities.author);
     }
 
     case SUCCESS_GET_INIT_POST_LIST:
@@ -100,7 +100,8 @@ const Users = (state = initList, action) => {
       const loginUser = findUserById(userId);
       if (loginUser) {
         const updateUser = loginUser
-          .update('follow_forums', list => list.filterNot(v => v === action.result.forum_id));
+          .update('follow_forums',
+            list => list.filterNot(v => v === action.result.forum_id));
 
         return state.update(userId.toString(), () => updateUser);
       }
@@ -119,47 +120,54 @@ const Users = (state = initList, action) => {
     }
 
     case SUCCESS_USER_AVATAR_IMAGE_UPLOAD: {
-      const { file, user } = action;
+      const {file, user} = action;
       const fileObj = file.files[0];
 
-      return state.mergeDeep({ [user.user.id]: { profile: { avatar_img: fileObj.name } } });
+      return state
+        .mergeDeep({[user.user.id]: {profile: {avatar_img: fileObj.name}}});
     }
 
     case SUCCESS_USER_AVATAR_IMAGE_REMOVE: {
-      const { result } = action;
-      return state.mergeDeep({ [result.id]: { profile: { avatar_img: null } } });
+      const {result} = action;
+      return state.mergeDeep({[result.id]: {profile: {avatar_img: null}}});
     }
 
     case SUCCESS_ADD_FORUM_MANAGER: {
-      const { result } = action;
-      return state.mergeDeep({ [result.manager.user_id]: result.user });
+      const {result} = action;
+      return state.mergeDeep({[result.manager.user_id]: result.user});
     }
 
     case SUCCESS_ADD_FORUM_BAN_USER: {
-      const { result } = action;
-      return state.mergeDeep({ [result.bannedUser.user_id]: result.user });
+      const {result} = action;
+      return state.mergeDeep({[result.bannedUser.user_id]: result.user});
     }
 
     case SUCCESS_USER_UPDATE_PROFILE: {
       const newProfile = action.result[0];
       const userId = newProfile.user_id;
-      return state.mergeDeep({ [userId]: { profile: newProfile } });
+      return state.mergeDeep({[userId]: {profile: newProfile}});
     }
 
     case SUCCESS_USER_READ_NOTIFICATION: {
-      const { result } = action;
-      const { userId, id } = result;
+      const {result} = action;
+      const {userId, id} = result;
       return state
-        .updateIn([userId.toString(), 'notifications', 'INoti', 'entities', 'notis', id.toString()], v => {
+        .updateIn([
+          userId.toString(),
+          'notifications',
+          'INoti',
+          'entities',
+          'notis',
+          id.toString()], v => {
           return v
             .set('read', true)
-            .set('read_at', new Date)
+            .set('read_at', new Date);
         });
     }
 
     case SUCCESS_PURCHASE_ITEM: {
-      const { result } = action;
-      const { trendbox } = result;
+      const {result} = action;
+      const {trendbox} = result;
       const userId = trendbox.user_id;
 
       return state
@@ -167,70 +175,77 @@ const Users = (state = initList, action) => {
     }
 
     case SUCCESS_ACTIVATE_VENALINK: {
-      const { result } = action;
-      const { trendbox } = result;
+      const {result} = action;
+      const {trendbox} = result;
       const userId = trendbox.user_id;
 
-      return state.updateIn([userId.toString(), 'trendbox'], t => t.merge(trendbox));
+      return state.updateIn([userId.toString(), 'trendbox'],
+        t => t.merge(trendbox));
     }
 
     case RECEIVE_SOCKET_NOTI: {
-      const { notis, userId } = action;
+      const {notis, userId} = action;
 
       return state
-        .mergeDeepIn([userId.toString(), 'notifications'], { INoti: notis });
+        .mergeDeepIn([userId.toString(), 'notifications'], {INoti: notis});
     }
 
     case RECEIVE_SOCKET_POINT: {
-      const { data, userId } = action;
+      const {data, userId} = action;
 
       return state
-        .updateIn([userId.toString(), 'trendbox', 'T'], point => data.TP ? point + data.TP : point)
-        .updateIn([userId.toString(), 'trendbox', 'R'], point => data.RP ? point + data.RP : point);
+        .updateIn([userId.toString(), 'trendbox', 'T'],
+          point => data.TP ? point + data.TP : point)
+        .updateIn([userId.toString(), 'trendbox', 'R'],
+          point => data.RP ? point + data.RP : point);
     }
 
     case SUCCESS_USER_PAYBACK_RP: {
-      const { result } = action;
-      const { trendbox, list, userId } = result;
+      const {result} = action;
+      const {trendbox, list, userId} = result;
 
       return state
         .mergeDeepIn([userId.toString(), 'participatedVenalinks'], fromJS(list))
-        .mergeIn([userId.toString(), 'trendbox'], trendbox)
+        .mergeIn([userId.toString(), 'trendbox'], trendbox);
     }
 
     case RECEIVE_SOCKET_TERMINATE_VENALINK: {
-      const { refundedVenalink } = action;
+      const {refundedVenalink} = action;
 
       return state
-        .updateIn([refundedVenalink.user_id.toString(), 'trendbox', 'R'], point =>
-          refundedVenalink.total_refunded_r ? point + refundedVenalink.total_refunded_r : point
+        .updateIn([refundedVenalink.user_id.toString(), 'trendbox', 'R'],
+          point =>
+            refundedVenalink.total_refunded_r
+              ? point + refundedVenalink.total_refunded_r
+              : point
         );
     }
 
     case SUCCESS_MORE_ACCOUNT_LIST: {
-      const { payload } = action;
-      const { data, targetId } = payload;
+      const {payload} = action;
+      const {data, targetId} = payload;
 
       return state
         .mergeDeepIn([targetId.toString(), 'account'], data);
     }
 
     case SUCCESS_GET_MORE_CHARGE_LOG_LIST: {
-      const { payload } = action;
-      const { data, targetId } = payload;
+      const {payload} = action;
+      const {data, targetId} = payload;
 
       return state
         .mergeDeepIn([targetId.toString(), 'payments'], data);
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
 const Posts = (state = initList, action) => {
   switch (action.type) {
     case SUCCESS_SAVE_FOLLOWING_FILTER: {
-      return state.mergeDeep(action.data.entities.posts)
+      return state.mergeDeep(action.data.entities.posts);
     }
 
     case SUCCESS_GET_INIT_POST_LIST:
@@ -264,28 +279,32 @@ const Posts = (state = initList, action) => {
     }
 
     case SUCCESS_ACTIVATE_VENALINK: {
-      const { result } = action;
-      return state.updateIn([result.venalink.post_id.toString(), 'venalinks'], (v = List([])) => v.push(Map(result.venalink)));
+      const {result} = action;
+      return state.updateIn([result.venalink.post_id.toString(), 'venalinks'],
+        (v = List([])) => v.push(Map(result.venalink)));
     }
 
     case SUCCESS_PARTICIPATE_VENALINK: {
-      const { result, postId } = action;
+      const {result, postId} = action;
       return state
-        .mergeDeep({ [postId.toString()]: { venalinks: [result.participateVenalink.venalink] } });
+        .mergeDeep(
+          {[postId.toString()]: {venalinks: [result.participateVenalink.venalink]}});
     }
 
     case RECEIVE_SOCKET_TERMINATE_VENALINK: {
-      const { refundedVenalink } = action;
+      const {refundedVenalink} = action;
       return state
         .updateIn([refundedVenalink.post_id.toString(), 'venalinks'], list => {
           if (list) {
-            const entry = list.findEntry(i => i.get('id') === refundedVenalink.id);
-            return list.set(entry[0], Map(refundedVenalink))
+            const entry = list.findEntry(
+              i => i.get('id') === refundedVenalink.id);
+            return list.set(entry[0], Map(refundedVenalink));
           }
-        })
+        });
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
@@ -317,7 +336,7 @@ const Comments = (state = initList, action) => {
     }
 
     case SUCCESS_SUBMIT_SUB_COMMENT: {
-      const { normalized, commentId } = action;
+      const {normalized, commentId} = action;
       const subCommentId = normalized.result;
 
       return state
@@ -334,18 +353,19 @@ const Comments = (state = initList, action) => {
       return state.mergeDeep(normalized.entities.comments);
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
 const Collections = (state = initList, action) => {
   switch (action.type) {
     case SUCCESS_CREATE_COLLECTION: {
-      return state.merge({ [action.collection.id]: action.collection })
+      return state.merge({[action.collection.id]: action.collection});
     }
 
     case SUCCESS_ADD_FORUM_IN_COLLECTION: {
-      const { collectionId, normalizedForum } = action;
+      const {collectionId, normalizedForum} = action;
       const forumId = normalizedForum.result;
       return state.updateIn([collectionId.toString(), 'forums'], forumIds => {
         return forumIds.push(forumId);
@@ -353,15 +373,17 @@ const Collections = (state = initList, action) => {
     }
 
     case SUCCESS_REMOVE_FORUM_IN_COLLECTION: {
-      const { collectionId, forumId, removeSuccess } = action;
+      const {collectionId, forumId, removeSuccess} = action;
       if (removeSuccess) {
-        return state.updateIn([collectionId.toString(), 'forums'], forumIds => forumIds.filter(id => id !== forumId))
+        return state.updateIn([collectionId.toString(), 'forums'],
+          forumIds => forumIds.filter(id => id !== forumId));
       } else {
         return state;
       }
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
@@ -369,7 +391,7 @@ const Forums = (state = initList, action) => {
   switch (action.type) {
 
     case SUCCESS_ADD_FORUM_IN_COLLECTION: {
-      const { normalizedForum } = action;
+      const {normalizedForum} = action;
       const forumId = normalizedForum.result;
 
       return state.update(forumId.toString(), forum => {
@@ -378,8 +400,9 @@ const Forums = (state = initList, action) => {
     }
 
     case SUCCESS_REMOVE_FORUM_IN_COLLECTION: {
-      const { forumId } = action;
-      return state.update(forumId.toString(), forum => forum.update('subs_count', v => v - 1));
+      const {forumId} = action;
+      return state.update(forumId.toString(),
+        forum => forum.update('subs_count', v => v - 1));
     }
 
     case SUCCESS_SEARCH_FORUM_TO_COLLECTION_SUBS: {
@@ -405,50 +428,54 @@ const Forums = (state = initList, action) => {
     }
 
     case SUCCESS_ADD_FORUM_MANAGER: {
-      const { result } = action;
-      return state.updateIn([result.manager.forum_id, 'managers'], managerList => {
-        return managerList.push(result.manager.user_id);
-      });
+      const {result} = action;
+      return state.updateIn([result.manager.forum_id, 'managers'],
+        managerList => {
+          return managerList.push(result.manager.user_id);
+        });
     }
 
     case SUCCESS_ADD_FORUM_BAN_USER: {
-      const { result } = action;
+      const {result} = action;
       return state.updateIn([result.bannedUser.forum_id, 'bans'], list => {
         return list.push(result.bannedUser.user_id);
       });
     }
 
     case SUCCESS_DELETE_FORUM_MANAGER: {
-      const { result } = action;
-      const { forumId, userId } = result;
+      const {result} = action;
+      const {forumId, userId} = result;
 
       return state.updateIn([forumId.toString(), 'managers'], list => {
-        return list.filterNot(i => i === userId)
+        return list.filterNot(i => i === userId);
       });
     }
 
     case SUCCESS_DELETE_FORUM_BAN_USER: {
-      const { result } = action;
-      const { forumId, userId } = result;
+      const {result} = action;
+      const {forumId, userId} = result;
 
       return state.updateIn([forumId.toString(), 'bans'], list => {
-        return list.filterNot(i => i === userId)
+        return list.filterNot(i => i === userId);
       });
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
 const Categories = (state = initList, action) => {
   switch (action.type) {
-    default: return state;
+    default:
+      return state;
   }
 };
 
 const Prefixes = (state = initList, action) => {
   switch (action.type) {
-    default: return state;
+    default:
+      return state;
   }
 };
 
@@ -489,7 +516,8 @@ const SubComments = (state = initList, action) => {
       return state.mergeDeep(normalized.entities.subComments);
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
@@ -505,7 +533,8 @@ const Notis = (state = initList, action) => {
       return state;
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
@@ -515,14 +544,15 @@ const Inventories = (state = initList, action) => {
     case SUCCESS_PURCHASE_ITEM:
     case SUCCESS_ACTIVATE_VENALINK:
     case SUCCESS_PARTICIPATE_VENALINK: {
-      const { result } = action;
-      const { inventories } = result;
+      const {result} = action;
+      const {inventories} = result;
       const i = inventories.entities.inventories;
 
       return state.mergeDeep(i);
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
@@ -532,13 +562,14 @@ const Items = (state = initList, action) => {
     case SUCCESS_PURCHASE_ITEM:
     case SUCCESS_ACTIVATE_VENALINK:
     case SUCCESS_PARTICIPATE_VENALINK: {
-      const { result } = action;
-      const { inventories } = result;
+      const {result} = action;
+      const {inventories} = result;
 
       return state.mergeDeep(inventories.entities.items);
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
@@ -548,13 +579,14 @@ const Venatems = (state = initList, action) => {
     case SUCCESS_PURCHASE_ITEM:
     case SUCCESS_ACTIVATE_VENALINK:
     case SUCCESS_PARTICIPATE_VENALINK: {
-      const { result } = action;
-      const { inventories } = result;
+      const {result} = action;
+      const {inventories} = result;
 
       return state.mergeDeep(inventories.entities.venatems);
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 

@@ -1,8 +1,8 @@
 import Immutable from 'immutable';
-export const LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
+export const LOCATION_CHANGE = '@@router/LOCATION_CHANGE';
 
 const initialState = Immutable.fromJS({
-  locationBeforeTransitions: null
+  locationBeforeTransitions: null,
 });
 
 export default (state = initialState, action) => {

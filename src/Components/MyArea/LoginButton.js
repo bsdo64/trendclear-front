@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 
 function handleOpenLoginModal(props) {
-  const { location, FireToggleLoginModal } = props;
+  const {location, FireToggleLoginModal} = props;
   FireToggleLoginModal({
     contentType: 'Login',
-    location: location.pathname + location.search
+    location: location.pathname + location.search,
   });
 }
 
@@ -22,7 +22,7 @@ const LoginButton = (props) => {
 LoginButton.displayName = 'LoginButton';
 LoginButton.propTypes = {
   location: PropTypes.object.isRequired,
-  FireToggleLoginModal: PropTypes.func.isRequired
+  FireToggleLoginModal: PropTypes.func.isRequired,
 };
 LoginButton.defaultProps = {};
 

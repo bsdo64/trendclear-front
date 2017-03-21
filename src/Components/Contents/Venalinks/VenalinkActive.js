@@ -8,7 +8,7 @@ import TablePagination from '../../Paginator/TablePagination';
 
 const VenalinkActive = React.createClass({
   propTypes: {
-    UserStore: PropTypes.object.isRequired
+    UserStore: PropTypes.object.isRequired,
   },
 
   createVenalinkItem(venalink) {
@@ -27,23 +27,30 @@ const VenalinkActive = React.createClass({
 
     const statusStyle = cx('center aligned', {
       positive: positive,
-      negative: !positive
-    }) ;
+      negative: !positive,
+    });
 
     return (
       <tr key={venalink.get('id')}>
         <td className="center aligned">포스트</td>
         <td className={statusStyle}>{status}</td>
-        <td className="center aligned">{moment(venalink.get('active_at')).format('YY/MM/DD HH:mm:ss')}</td>
-        <td className="center aligned">{moment(venalink.get('terminate_at')).format('YY/MM/DD HH:mm:ss')}</td>
-        <td className="positive right aligned">{venalink.get('participants').size}</td>
-        <td className="right aligned ">{account.formatNumber(venalink.get('total_amount_r'))}</td>
+        <td className="center aligned">{moment(venalink.get('active_at'))
+          .format('YY/MM/DD HH:mm:ss')}</td>
+        <td className="center aligned">{moment(venalink.get('terminate_at'))
+          .format('YY/MM/DD HH:mm:ss')}</td>
+        <td className="positive right aligned">{venalink.get(
+          'participants').size}</td>
+        <td className="right aligned ">{account.formatNumber(
+          venalink.get('total_amount_r'))}</td>
         <td className="right aligned">{venalink.get('pay_per_click_r')}</td>
-        <td className="positive right aligned">{venalink.get('total_pay_r') / venalink.get('pay_per_click_r')}</td>
-        <td className="right aligned">{account.formatNumber(venalink.get('total_pay_r'))}</td>
-        <td className="right aligned">{account.formatNumber(venalink.get('total_remain_r'))}</td>
+        <td className="positive right aligned">{venalink.get('total_pay_r') /
+        venalink.get('pay_per_click_r')}</td>
+        <td className="right aligned">{account.formatNumber(
+          venalink.get('total_pay_r'))}</td>
+        <td className="right aligned">{account.formatNumber(
+          venalink.get('total_remain_r'))}</td>
       </tr>
-    )
+    );
   },
 
   handleClickPage() {
@@ -51,13 +58,13 @@ const VenalinkActive = React.createClass({
   },
 
   render() {
-    const { UserStore } = this.props;
+    const {UserStore} = this.props;
     const venalinks = UserStore.get('venalinks');
 
     return (
       <div>
-        <div className="ui cards centered" style={{ padding: 10 }}>
-          <div className="card" style={{ width: '100%' }}>
+        <div className="ui cards centered" style={{padding: 10}}>
+          <div className="card" style={{width: '100%'}}>
             <div className="content">
               <div className="header">
                 베나링크 활성화 현황
@@ -105,18 +112,21 @@ const VenalinkActive = React.createClass({
           </div>
         </div>
 
-        <div style={{ padding: 10 }}>
+        <div style={{padding: 10}}>
           <h4>베나링크 활성화 리스트</h4>
-          <table className="ui celled table" style={{ fontSize: 12 }}>
+          <table className="ui celled table" style={{fontSize: 12}}>
             <thead>
             <tr>
-              <th className="center aligned" style={{ width: 60 }}>타입</th>
-              <th className="center aligned one wide" >상태</th>
-              <th className="center aligned" style={{ width: 82 }}>활성화<br />시간</th>
-              <th className="center aligned" style={{ width: 82 }}>종료 시간</th>
-              <th className="center aligned" style={{ width: 70 }}>참여<br />유저(명)</th>
+              <th className="center aligned" style={{width: 60}}>타입</th>
+              <th className="center aligned one wide">상태</th>
+              <th className="center aligned" style={{width: 82}}>활성화<br />시간
+              </th>
+              <th className="center aligned" style={{width: 82}}>종료 시간</th>
+              <th className="center aligned" style={{width: 70}}>참여<br />유저(명)
+              </th>
               <th className="center aligned">활성 RP</th>
-              <th className="center aligned" style={{ width: 70 }}>방문당<br/>지급 RP</th>
+              <th className="center aligned" style={{width: 70}}>방문당<br/>지급 RP
+              </th>
               <th className="center aligned">순 방문<br/>(명)</th>
               <th className="center aligned">총 지급 RP</th>
               <th className="center aligned">남은 RP</th>
@@ -143,8 +153,8 @@ const VenalinkActive = React.createClass({
           </table>
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 export default VenalinkActive;

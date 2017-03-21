@@ -13,18 +13,19 @@ import {
 const Pagination = (state = UI.Pagination, action) => {
   switch (action.type) {
     case SUCCESS_SAVE_FOLLOWING_FILTER: {
-      return state.merge({ bestPostList: action.collection })
+      return state.merge({bestPostList: action.collection});
     }
 
     case SUCCESS_GET_INIT_POST_LIST:
     case SUCCESS_GET_MORE_POST_LIST:
     case SUCCESS_GET_MORE_FORUM_LIST: {
-      const { listName, collection } = action;
+      const {listName, collection} = action;
 
-      return state.merge({ [listName]: collection });
+      return state.merge({[listName]: collection});
     }
 
-    default: return state;
+    default:
+      return state;
   }
 };
 

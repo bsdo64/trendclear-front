@@ -33,7 +33,7 @@ const CommunityContents = React.createClass({
 
   checkBanned() {
 
-    const { Forums, AuthStore, ListStore } = this.props;
+    const {Forums, AuthStore, ListStore} = this.props;
 
     const userId = AuthStore.get('userId');
 
@@ -65,7 +65,7 @@ const CommunityContents = React.createClass({
     if (isLogin && isBanned) {
 
       return (
-        <div style={{ textAlign: 'center', paddingTop: 60 }}>
+        <div style={{textAlign: 'center', paddingTop: 60}}>
           <h2 className="ui icon header">
             <i className="remove icon"></i>
             <div className="content">
@@ -74,7 +74,7 @@ const CommunityContents = React.createClass({
             </div>
           </h2>
         </div>
-      )
+      );
 
     } else {
       if (type === 'forum') {
@@ -82,23 +82,23 @@ const CommunityContents = React.createClass({
           <Forum
             {...this.props}
           />
-        )
+        );
       } else if (type === 'post') {
         return (
           <PostPage
             {...this.props}
           />
-        )
+        );
 
       } else {
         return (
           <div className="ui active inverted dimmer">
             <div className="ui large text loader">로딩중..</div>
           </div>
-        )
+        );
       }
     }
-  }
+  },
 });
 
 export default CommunityContents;

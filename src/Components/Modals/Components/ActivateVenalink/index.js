@@ -20,18 +20,18 @@ const ActivateVenalink = React.createClass({
   getInitialState() {
     return {
       venalinkRP: '',
-      startDate: moment().add(1, 'days')
+      startDate: moment().add(1, 'days'),
     };
   },
 
   checkMaxRP(v) {
-    const { UserStore } = this.props;
+    const {UserStore} = this.props;
     const maxRP = UserStore.get('trendbox').get('R');
 
     if (v <= maxRP) {
       this.setState({
         venalinkRP: v,
-        venalinkRPCheck: true
+        venalinkRPCheck: true,
       });
     }
   },
@@ -39,13 +39,13 @@ const ActivateVenalink = React.createClass({
   handleChangeDate(moment) {
 
     this.setState({
-      startDate: moment
+      startDate: moment,
     });
   },
 
   requestActivateVenalink(activateItem) {
     if (activateItem) {
-      const { ShareLinkStore } = this.props;
+      const {ShareLinkStore} = this.props;
 
       if (this.state.venalinkRP > 1000) {
         this.props.FireRequestActivateVenalink({
@@ -53,25 +53,26 @@ const ActivateVenalink = React.createClass({
           terminate_at: this.state.startDate,
           post_id: ShareLinkStore.get('venalinkActivateRequestPostId'),
           activate_item_id: activateItem.get('id'),
-          active_at: new Date()
+          active_at: new Date(),
         });
       }
     }
   },
 
   findInventoryItem(user, options) {
-    const { Items, Venatems } = this.props;
+    const {Items, Venatems} = this.props;
 
     if (user && user.get('inventories')) {
       const findItem = Items.find(i => i.get('title') === options.title);
 
       if (findItem) {
-        const findVenatem = Venatems.find(v => v.get('item_id') === findItem.get('id'));
+        const findVenatem = Venatems.find(
+          v => v.get('item_id') === findItem.get('id'));
 
         if (findVenatem) {
 
           if (findVenatem.get('item_count') > 0) {
-            return findItem
+            return findItem;
           }
         }
       }
@@ -86,14 +87,14 @@ const ActivateVenalink = React.createClass({
 
   toggleStoreModal() {
     this.props.FireToggleVenacleStoreModal({
-      contentType: 'Shopping'
+      contentType: 'Shopping',
     });
   },
 
   render() {
-    const { UserStore } = this.props;
+    const {UserStore} = this.props;
     const activateItem = this.findInventoryItem(
-      UserStore, { type: 'community', title: '베나링크 활성화' }
+      UserStore, {type: 'community', title: '베나링크 활성화'}
     );
 
     return (
@@ -115,7 +116,12 @@ const ActivateVenalink = React.createClass({
                       예산 RP
                       <div
                         className="ui button tiny"
-                        style={{ width: 40, height: 21, padding: 5, marginLeft: 10 }}
+                        style={{
+                          width: 40,
+                          height: 21,
+                          padding: 5,
+                          marginLeft: 10,
+                        }}
                         onClick={this.openPayment}
                       >
                         충전
@@ -142,8 +148,8 @@ const ActivateVenalink = React.createClass({
                         selected={this.state.startDate}
                         dateFormat="YYYY-MM-DD"
                         onChange={this.handleChangeDate}
-                        minDate={moment().add(1, "days")}
-                        maxDate={moment().add(1, "month")}
+                        minDate={moment().add(1, 'days')}
+                        maxDate={moment().add(1, 'month')}
                         placeholderText="기한을 입력하세요"/>
                     </div>
                   </div>
@@ -152,18 +158,21 @@ const ActivateVenalink = React.createClass({
                       UserStore.get('trendbox').get('R') > 0 &&
                       <div>
                         RP : {UserStore.get('trendbox').get('R')}
-                        => {UserStore.get('trendbox').get('R') - this.state.venalinkRP}
+                        => {UserStore.get('trendbox').get('R') -
+                      this.state.venalinkRP}
                       </div>
                     }
 
                     {
                       UserStore.get('trendbox').get('R') <= 0 &&
-                      <div style={{ fontSize: 12, color: '#red' }}>
+                      <div style={{fontSize: 12, color: '#red'}}>
                         RP가 없습니다. <br />충전하거나 베나링크 참여를 통해 RP를 얻으세요
                       </div>
                     }
                   </div>
-                  <div className="ui button primary" onClick={this.requestActivateVenalink.bind(this, activateItem)}>
+                  <div className="ui button primary"
+                       onClick={this.requestActivateVenalink.bind(this,
+                         activateItem)}>
                     활성화
                   </div>
                 </form>
@@ -173,7 +182,7 @@ const ActivateVenalink = React.createClass({
           {
             !activateItem &&
             <div className="middle aligned content">
-              <div className="header" >
+              <div className="header">
                 현재 인벤토리에 사용가능한 베나링크 활성화 아이템이 없습니다
               </div>
               <div className="extra">
@@ -186,7 +195,7 @@ const ActivateVenalink = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default ActivateVenalink;

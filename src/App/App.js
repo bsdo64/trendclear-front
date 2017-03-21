@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
-import { 
+import {
   BrowserRouter,
-  Route
+  Route,
 } from 'react-router-dom';
 
 import MainHeader from './containers/MainHeader';

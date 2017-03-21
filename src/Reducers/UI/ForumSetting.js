@@ -35,7 +35,7 @@ const ForumSetting = (state = UI.ForumSetting, action) => {
     }
     case SUCCESS_ADD_FORUM_PREFIX: {
       return state.updateIn(['forum', 'prefixes'], list => {
-        return list.push(Map(action.result))
+        return list.push(Map(action.result));
       });
     }
     case FAILURE_ADD_FORUM_PREFIX: {
@@ -44,7 +44,7 @@ const ForumSetting = (state = UI.ForumSetting, action) => {
     case SUCCESS_UPDATE_FORUM_PREFIX: {
       return state.updateIn(['forum', 'prefixes'], list => {
         const entry = list.findEntry(i => i.get('id') === action.result.id);
-        return list.update(entry[0], () => Map(action.result))
+        return list.update(entry[0], () => Map(action.result));
       });
     }
     case FAILURE_UPDATE_FORUM_PREFIX: {
@@ -60,7 +60,7 @@ const ForumSetting = (state = UI.ForumSetting, action) => {
     }
     case SUCCESS_DELETE_FORUM_ANNOUNCE: {
       return state.updateIn(['forum', 'announces'], list => {
-        return list.filterNot(i => i.get('id') === action.result.postId)
+        return list.filterNot(i => i.get('id') === action.result.postId);
       });
     }
     case FAILURE_DELETE_FORUM_ANNOUNCE: {
@@ -68,7 +68,7 @@ const ForumSetting = (state = UI.ForumSetting, action) => {
     }
     case SUCCESS_ADD_FORUM_BAN_USER: {
       return state.updateIn(['forum', 'bans'], list => {
-        return list.push(Map(action.result.user))
+        return list.push(Map(action.result.user));
       });
     }
     case FAILURE_ADD_FORUM_BAN_USER: {
@@ -76,13 +76,14 @@ const ForumSetting = (state = UI.ForumSetting, action) => {
     }
     case SUCCESS_DELETE_FORUM_BAN_USER: {
       return state.updateIn(['forum', 'managers'], list => {
-        return list.filterNot(i => i.get('id') === action.result.userId)
+        return list.filterNot(i => i.get('id') === action.result.userId);
       });
     }
     case FAILURE_DELETE_FORUM_BAN_USER: {
       return state;
     }
-    default: return state;
+    default:
+      return state;
   }
 };
 

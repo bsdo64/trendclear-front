@@ -26,7 +26,7 @@ const SigninContents = React.createClass({
   },
 
   componentWillMount() {
-    const { UserStore } = this.props;
+    const {UserStore} = this.props;
     if (UserStore.get('user')) {
       browserHistory.replace('/');
     }
@@ -37,7 +37,7 @@ const SigninContents = React.createClass({
   },
 
   render() {
-    const { SigninFormStore } = this.props;
+    const {SigninFormStore} = this.props;
 
     const agreeTerm = SigninFormStore.get('agreeTerm');
     const agreePrivacy = SigninFormStore.get('agreePrivacy');
@@ -59,7 +59,7 @@ const SigninContents = React.createClass({
       year: SigninFormStore.get('year'),
       month: SigninFormStore.get('month'),
       day: SigninFormStore.get('day'),
-      birth: SigninFormStore.get('birth')
+      birth: SigninFormStore.get('birth'),
     };
 
     return (
@@ -91,7 +91,7 @@ const SigninContents = React.createClass({
         }
       </div>
     );
-  }
+  },
 });
 
 export default SigninContents;

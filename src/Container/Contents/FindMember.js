@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { UI } from '../../Reducers/InitialStates';
 import {
-  requestResetPassword
+  requestResetPassword,
 } from '../../Actions/User';
 
 const FindMemberContainer = React.createClass({
@@ -24,23 +24,23 @@ const FindMemberContainer = React.createClass({
             rules: [
               {
                 type: 'empty',
-                prompt: '이메일을 입력해주세요'
+                prompt: '이메일을 입력해주세요',
               },
               {
                 type: 'email',
-                prompt: '이메일을 입력해주세요'
+                prompt: '이메일을 입력해주세요',
               },
-            ]
-          }
+            ],
+          },
         },
         onSuccess: (e, fields) => {
           e.preventDefault();
           e.stopPropagation();
 
           this.props.FireRequestResetPassword({
-            email: fields.email
+            email: fields.email,
           });
-        }
+        },
       });
   },
 
@@ -49,14 +49,14 @@ const FindMemberContainer = React.createClass({
   },
 
   componentWillMount() {
-    const { AuthStore } = this.props;
+    const {AuthStore} = this.props;
     if (AuthStore.get('isLogin')) {
       browserHistory.push('/setting/password');
     }
   },
 
   render() {
-    const { ResetPasswordStore } = this.props;
+    const {ResetPasswordStore} = this.props;
     const error = ResetPasswordStore.get('error');
     const emailSent = ResetPasswordStore.get('resetEmailSent');
     const isLoading = ResetPasswordStore.get('isLoading');
@@ -64,7 +64,7 @@ const FindMemberContainer = React.createClass({
     let validateError;
     if (error) {
       validateError = (
-        <div className="ui error message" style={{ display: 'block' }}>
+        <div className="ui error message" style={{display: 'block'}}>
           <ul className="list">
             <li>사용자가 존재하지 않습니다</li>
           </ul>
@@ -73,8 +73,8 @@ const FindMemberContainer = React.createClass({
     }
 
     return (
-      <div style={{ paddingTop: 50 }}>
-        <div className="ui segments" style={{ width: 300, margin: '0 auto' }}>
+      <div style={{paddingTop: 50}}>
+        <div className="ui segments" style={{width: 300, margin: '0 auto'}}>
           <div className="ui segment">
             <h2 className="ui center aligned icon header">
               <i className="circular history icon"></i>
@@ -84,7 +84,7 @@ const FindMemberContainer = React.createClass({
           </div>
 
           <div className="ui form segment ">
-            <div className="field" style={{ width: '100%', paddingBottom: 10 }}>
+            <div className="field" style={{width: '100%', paddingBottom: 10}}>
               <input type="text" name="email" placeholder="가입하신 Email"/>
             </div>
 
@@ -120,8 +120,8 @@ const FindMemberContainer = React.createClass({
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 FindMemberContainer.defaultProps = {
@@ -131,18 +131,18 @@ FindMemberContainer.defaultProps = {
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   return {
     ResetPasswordStore: getUIState('ResetPassword'),
-    AuthStore: getUIState('Auth')
-  }
+    AuthStore: getUIState('Auth'),
+  };
 };
 
 module.exports = connect(
   mapStateToProps,
   {
-    FireRequestResetPassword: requestResetPassword
+    FireRequestResetPassword: requestResetPassword,
   }
 )(FindMemberContainer);

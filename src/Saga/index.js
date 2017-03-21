@@ -1,18 +1,18 @@
-import user from './user'
-import signin from './signin'
-import login from './login'
-import post from './post'
-import point from './point'
-import comment from './comment'
-import forum from './forum'
-import deleteItem from './deleteItem'
-import report from './report'
-import collection from './collection'
-import followingList from './followingList'
-import venaStore from './venaStore'
-import venalink from './venalink'
+import user from './user';
+import signin from './signin';
+import login from './login';
+import post from './post';
+import point from './point';
+import comment from './comment';
+import forum from './forum';
+import deleteItem from './deleteItem';
+import report from './report';
+import collection from './collection';
+import followingList from './followingList';
+import venaStore from './venaStore';
+import venalink from './venalink';
 
-export default function* rootSaga () {
+function* rootSaga() {
   yield [
     user(),
     signin(),
@@ -26,6 +26,8 @@ export default function* rootSaga () {
     collection(),
     followingList(),
     venaStore(),
-    venalink()
-  ]
+    venalink(),
+  ];
 }
+
+export default rootSaga

@@ -6,13 +6,13 @@ class DataInitializer extends React.Component {
     super();
 
     this.state = {
-      initialized: false
+      initialized: false,
     };
   }
 
   componentDidMount() {
     this.props.initialize(this.props.location);
-    this.setState({ initialized: true })
+    this.setState({initialized: true});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -31,17 +31,22 @@ class DataInitializer extends React.Component {
   }
 }
 
+DataInitializer.propTypes = {
+  initialize: React.PropTypes.func.isRequired,
+  location: React.PropTypes.object.isRequired,
+};
+
 const mapStateToProps = () => {
   return {};
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     initialize: (location) => {
-      dispatch({ type: '@@router/LOCATION_CHANGE', payload: location })
-    }
-  }
-}
+      dispatch({type: '@@router/LOCATION_CHANGE', payload: location});
+    },
+  };
+};
 
 export default connect(
   mapStateToProps,

@@ -10,7 +10,7 @@ const Gnb = (state = UI.Gnb, action) => {
   switch (action.type) {
 
     case TOGGLE_GNB_PANEL: {
-      return state.set('openGnb', !state.get('openGnb'))
+      return state.set('openGnb', !state.get('openGnb'));
     }
 
     case OPEN_SIDE_CATEGORY: {

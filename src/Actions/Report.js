@@ -5,30 +5,30 @@ export const REQUEST_REPORT = 'REQUEST_REPORT';
 export const SUCCESS_REPORT = 'SUCCESS_REPORT';
 export const FAILURE_REPORT = 'FAILURE_REPORT';
 
-export function toggleReportModal({ contentType, location, data }) {
+export function toggleReportModal({contentType, location, data}) {
   return {
     type: TOGGLE_REPORT_MODAL,
     contentType,
     location,
-    data
-  }
+    data,
+  };
 }
 
 export function closeReportModal() {
   return {
-    type: CLOSE_REPORT_MODAL
-  }
+    type: CLOSE_REPORT_MODAL,
+  };
 }
 
 export function requestReport(payload) {
   return {
     type: REQUEST_REPORT,
-    payload
-  }
+    payload,
+  };
 }
 
 export default {
   toggleReportModal,
   closeReportModal,
-  requestReport
-}
+  requestReport,
+};

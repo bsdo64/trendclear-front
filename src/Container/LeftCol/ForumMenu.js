@@ -12,8 +12,8 @@ import {
 
 const MenuContainer = React.createClass({
   render() {
-    return (<ForumLeftMenu {...this.props} />)
-  }
+    return (<ForumLeftMenu {...this.props} />);
+  },
 });
 
 MenuContainer.defaultProps = {
@@ -26,11 +26,11 @@ MenuContainer.defaultProps = {
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -41,8 +41,8 @@ const mapStateToProps = (state) => {
     Collections: getDomainState('Collections'),
 
     // New Type
-    forum: getUIState(['Community', 'forum'])
-  }
+    forum: getUIState(['Community', 'forum']),
+  };
 };
 
 module.exports = connect(

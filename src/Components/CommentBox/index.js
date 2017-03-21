@@ -11,7 +11,7 @@ import Menu from '../PostItem/ReportMenu';
 import AvatarImage from '../AvatarImage';
 
 const logger = debug('vn:Components:PostPage:Comment');
-const errorLog = function (text) {
+const errorLog = function(text) {
   if (process.env.NODE_ENV !== 'production') {
     return logger(text);
   } else {
@@ -26,11 +26,11 @@ const commentMediumConfig = {
     /* This example includes the default options for placeholder,
      if nothing is passed this is what it used */
     text: '여기에 댓글을 입력하세요',
-    hideOnClick: true
+    hideOnClick: true,
   },
   imageDragging: false,
   targetBlank: true,
-  autoLink: true
+  autoLink: true,
 };
 
 function locationSearchToQueryObj(locationSearch) {
@@ -69,23 +69,24 @@ function closeUpdateComment() {
 }
 
 function sendSubCommentLike(props) {
-  const { location, isLogin, subCommentId, FireRequestLikeSubComment } = props;
+  const {location, isLogin, subCommentId, FireRequestLikeSubComment} = props;
   return function createSendSubCommentLike() {
     if (!isLogin) {
       props.FireToggleLoginModal({
         contentType: 'Login',
-        location: location.pathname + location.search
+        location: location.pathname + location.search,
       });
     } else {
-      FireRequestLikeSubComment({ subCommentId });
+      FireRequestLikeSubComment({subCommentId});
     }
-  }
+  };
 }
 
 function subCommentItem(props) {
   return function createSubCommentItem(subCommentId) {
-    return <SubCommentItem key={subCommentId} {...props} subCommentId={subCommentId}/>
-  }
+    return <SubCommentItem key={subCommentId} {...props}
+                           subCommentId={subCommentId}/>;
+  };
 }
 
 const SubCommentItem = React.createClass({
@@ -110,14 +111,18 @@ const SubCommentItem = React.createClass({
 
   componentDidUpdate(prevProps) {
     const oldUpdating = prevProps.updating;
-    const { updating } = this.props;
+    const {updating} = this.props;
     if ((oldUpdating.id !== updating.id)) {
-      if ((oldUpdating.type !== updating.type) && (updating.type === 'subComment')) {
+      if ((oldUpdating.type !== updating.type) &&
+        (updating.type === 'subComment')) {
         if (oldUpdating.updating !== updating) {
           if (this.editor) {
             this.editor.destroy();
           }
-          this.editor = new MediumEditor(this.refs.sub_comment_content_update, commentMediumConfig);  // eslint-disable-line no-undef
+          this.editor = new MediumEditor( // eslint-disable-line no-undef
+            this.refs.sub_comment_content_update,
+            commentMediumConfig
+          );
         }
       }
     }
@@ -125,7 +130,7 @@ const SubCommentItem = React.createClass({
 
   updateSubComment(commentId) {
 
-    const { LoginStore, UserStore, location, FireToggleLoginModal, FireRequestUpdateSubComment } = this.props;
+    const {LoginStore, UserStore, location, FireToggleLoginModal, FireRequestUpdateSubComment} = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
@@ -142,7 +147,7 @@ const SubCommentItem = React.createClass({
         if ($(el).text().trim()) {
           const comment = {
             id: commentId,
-            content: removeWhiteSpace(el)
+            content: removeWhiteSpace(el),
           };
 
           FireRequestUpdateSubComment(comment);
@@ -155,13 +160,13 @@ const SubCommentItem = React.createClass({
     } else {
       FireToggleLoginModal({
         contentType: 'Login',
-        location: location.pathname + location.search
+        location: location.pathname + location.search,
       });
     }
   },
 
   render() {
-    const { subComments, authors, subCommentId, userId, updating } = this.props;
+    const {subComments, authors, subCommentId, userId, updating} = this.props;
     const subComment = subComments.get(subCommentId.toString());
 
     if (subComment) {
@@ -171,26 +176,30 @@ const SubCommentItem = React.createClass({
         const commentDeleted = subComment.get('deleted');
         const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
           sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
-          sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
+          sub_icon_img = subCommentAuthor.getIn(
+            ['icon', 0, 'iconDef', 'icon_img']);
         let subIconImg;
 
         if (sub_icon_img) {
-          subIconImg = <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
+          subIconImg =
+            <img className="user_icon_img" src={'/images/' + sub_icon_img}/>;
         }
 
         let contents;
-        if (updating.type === 'subComment' && updating.updating && updating.id === subComment.get('id')) {
+        if (updating.type === 'subComment' && updating.updating &&
+          updating.id === subComment.get('id')) {
           contents = (
             <form className="ui reply form sub_comment_form">
               <div className="field update">
                 <div
-                  id={"sub_comment_content_update"}
-                  ref={"sub_comment_content_update"}
+                  id={'sub_comment_content_update'}
+                  ref={'sub_comment_content_update'}
                   className="comment_input sub_comment_input"
-                  dangerouslySetInnerHTML={{ __html: subComment.get('content') }}
+                  dangerouslySetInnerHTML={{__html: subComment.get('content')}}
                 ></div>
               </div>
-              <div className="ui primary submit icon button" onClick={this.updateSubComment.bind(this, subCommentId)}>
+              <div className="ui primary submit icon button"
+                   onClick={this.updateSubComment.bind(this, subCommentId)}>
                 <i className="icon edit"/>
               </div>
               <div
@@ -200,21 +209,21 @@ const SubCommentItem = React.createClass({
                 <i className="icon remove circle outline"/>
               </div>
             </form>
-          )
+          );
         } else if (commentDeleted) {
           contents = (
             <div>
               [삭제된 글입니다]
             </div>
-          )
+          );
 
         } else {
           contents = (
             <div
               className="comment_text"
-              dangerouslySetInnerHTML={{ __html: subComment.get('content') }}
+              dangerouslySetInnerHTML={{__html: subComment.get('content')}}
             ></div>
-          )
+          );
         }
 
         return (
@@ -248,9 +257,11 @@ const SubCommentItem = React.createClass({
                 {
                   !commentDeleted &&
                   <div className="like_box">
-                    <div className={'like_icon ' + (subComment.get('liked') ? 'active' : '')}
+                    <div className={'like_icon ' +
+                    (subComment.get('liked') ? 'active' : '')}
                          onClick={sendSubCommentLike(this.props)}>
-                      <i className={'heart ' + (subComment.get('liked') ? '' : 'outline') + ' icon'}/>
+                      <i className={'heart ' +
+                      (subComment.get('liked') ? '' : 'outline') + ' icon'}/>
                     </div>
                     <a className="like_count">{subComment.get('like_count')}</a>
                   </div>
@@ -272,15 +283,14 @@ const SubCommentItem = React.createClass({
 
             </div>
           </div>
-        )
+        );
       }
     }
 
-    return (<div key={userId}></div>)
+    return (<div key={userId}></div>);
 
-  }
+  },
 });
-
 
 const CommentItem = React.createClass({
   displayName: 'CommentItem',
@@ -312,20 +322,24 @@ const CommentItem = React.createClass({
     return {
       subCommentOpen: false,
       liked: false,
-      focus: false
+      focus: false,
     };
   },
 
   componentDidUpdate(prevProps) {
     const oldUpdating = prevProps.updating;
-    const { updating } = this.props;
+    const {updating} = this.props;
     if ((oldUpdating.id !== updating.id)) {
-      if ((oldUpdating.type !== updating.type) && (updating.type === 'comment')) {
+      if ((oldUpdating.type !== updating.type) &&
+        (updating.type === 'comment')) {
         if (oldUpdating.updating !== updating) {
           if (this.editor) {
             this.editor.destroy();
           }
-          this.editor = new MediumEditor(this.refs.comment_content_update, commentMediumConfig); // eslint-disable-line no-undef
+          this.editor = new MediumEditor( // eslint-disable-line no-undef
+            this.refs.comment_content_update,
+            commentMediumConfig
+          );
         }
       }
     }
@@ -333,45 +347,49 @@ const CommentItem = React.createClass({
 
   show() {
 
-    this.setState({ focus: true })
+    this.setState({focus: true});
   },
 
   close() {
 
-    this.setState({ focus: false })
+    this.setState({focus: false});
   },
 
   sendLike() {
 
-    const { comment, location, LoginStore, FireToggleLoginModal, FireRequestLikeComment } = this.props;
+    const {comment, location, LoginStore, FireToggleLoginModal, FireRequestLikeComment} = this.props;
     const isLogin = LoginStore.get('isLogin');
     if (!isLogin) {
       FireToggleLoginModal({
         contentType: 'Login',
-        location: location.pathname + location.search
+        location: location.pathname + location.search,
       });
     } else {
-      FireRequestLikeComment({ commentId: comment.get('id') });
+      FireRequestLikeComment({commentId: comment.get('id')});
     }
   },
 
   toggleSubComment() {
-    this.setState({ subCommentOpen: !this.state.subCommentOpen }, () => {
+    this.setState({subCommentOpen: !this.state.subCommentOpen}, () => {
 
       const commentId = this.props.comment.get('id');
-      this.editor = new MediumEditor(this.refs['sub_comment_content_' + commentId], commentMediumConfig); // eslint-disable-line no-undef
+      this.editor = new MediumEditor( // eslint-disable-line no-undef
+        this.refs['sub_comment_content_' + commentId], commentMediumConfig);
     });
   },
 
   submitSubComment(commentId) {
 
-    const { LoginStore, UserStore, location, FireToggleLoginModal, FireRequestSubmitSubComment } = this.props;
+    const {
+      LoginStore, UserStore, location, FireToggleLoginModal, FireRequestSubmitSubComment
+    } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
       const skills = UserStore.get('skills');
       const writePost = skills
-        .filter((skill) => skill.getIn(['skill', 'name']) === 'write_sub_comment')
+        .filter(
+          (skill) => skill.getIn(['skill', 'name']) === 'write_sub_comment')
         .get(0);
 
       const result = checkSkillAvailable(writePost);
@@ -382,7 +400,7 @@ const CommentItem = React.createClass({
         if ($(el).text().trim()) {
           const comment = {
             content: removeWhiteSpace(el),
-            commentId: commentId
+            commentId: commentId,
           };
 
           FireRequestSubmitSubComment(comment);
@@ -396,7 +414,7 @@ const CommentItem = React.createClass({
     } else {
       FireToggleLoginModal({
         contentType: 'Login',
-        location: location.pathname + location.search
+        location: location.pathname + location.search,
       });
     }
   },
@@ -404,7 +422,7 @@ const CommentItem = React.createClass({
   updateComment() {
     const {
       LoginStore, UserStore, updating, location,
-      FireToggleLoginModal, FireRequestUpdateComment
+      FireToggleLoginModal, FireRequestUpdateComment,
     } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
@@ -425,7 +443,7 @@ const CommentItem = React.createClass({
           const comment = {
             id: updating.id,
             content: removeWhiteSpace(el),
-            postId: locationSearchToQueryObj(location.search).postId
+            postId: locationSearchToQueryObj(location.search).postId,
           };
 
           FireRequestUpdateComment(comment);
@@ -439,23 +457,23 @@ const CommentItem = React.createClass({
     } else {
       FireToggleLoginModal({
         contentType: 'Login',
-        location: location.pathname + location.search
+        location: location.pathname + location.search,
       });
     }
   },
 
   render() {
 
-    const { LoginStore, UserStore, updating } = this.props;
+    const {LoginStore, UserStore, updating} = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     let userId;
     if (isLogin) {
-      userId = UserStore.getIn(['user', 'id'])
+      userId = UserStore.getIn(['user', 'id']);
     }
 
     const {
-      comment, commentAuthor, subCommentList
+      comment, commentAuthor, subCommentList,
     } = this.props;
     const subCommentOpen = this.state.subCommentOpen;
     const commentDeleted = comment.get('deleted');
@@ -479,7 +497,8 @@ const CommentItem = React.createClass({
     };
 
     let contents;
-    if (updating.type === 'comment' && updating.updating && updating.id === comment.get('id')) {
+    if (updating.type === 'comment' && updating.updating &&
+      updating.id === comment.get('id')) {
       contents = (
         <form className="ui reply form ">
           <div className="field">
@@ -487,7 +506,7 @@ const CommentItem = React.createClass({
               id="comment_input_update"
               ref="comment_content_update"
               className="comment_input"
-              dangerouslySetInnerHTML={{ __html: comment.get('content') }}
+              dangerouslySetInnerHTML={{__html: comment.get('content')}}
             >
             </div>
           </div>
@@ -504,20 +523,20 @@ const CommentItem = React.createClass({
             <i className="icon remove circle outline"/>
           </div>
         </form>
-      )
+      );
     } else if (commentDeleted) {
       contents = (
         <div>
           [삭제된 글입니다]
         </div>
-      )
+      );
     } else {
       contents = (
         <div
           className="comment_text"
-          dangerouslySetInnerHTML={{ __html: comment.get('content') }}
+          dangerouslySetInnerHTML={{__html: comment.get('content')}}
         ></div>
-      )
+      );
     }
 
     return (
@@ -544,8 +563,10 @@ const CommentItem = React.createClass({
             {
               !commentDeleted &&
               <div className="like_box" onClick={this.sendLike}>
-                <div className={'like_icon ' + (comment.get('liked') ? 'active' : '')}>
-                  <i className={'heart ' + (comment.get('liked') ? '' : 'outline') + ' icon'}/>
+                <div className={'like_icon ' +
+                (comment.get('liked') ? 'active' : '')}>
+                  <i className={'heart ' +
+                  (comment.get('liked') ? '' : 'outline') + ' icon'}/>
                 </div>
                 <a className="like_count">{comment.get('like_count')}</a>
               </div>
@@ -565,7 +586,8 @@ const CommentItem = React.createClass({
               <div className="comment_icon">
                 <i className="edit outline icon"/>
               </div>
-              <a className="comment_count">{comment.get('sub_comment_count')}</a>
+              <a className="comment_count">{comment.get(
+                'sub_comment_count')}</a>
             </div>
             <div className="report_box">
               {
@@ -593,22 +615,23 @@ const CommentItem = React.createClass({
             <form className="ui reply form sub_comment_form">
               <div className="field">
                 <div
-                  id={"sub_comment_input_" + comment.get('id')}
-                  ref={"sub_comment_content_" + comment.get('id')}
+                  id={'sub_comment_input_' + comment.get('id')}
+                  ref={'sub_comment_content_' + comment.get('id')}
                   className="comment_input sub_comment_input"
                 ><p><br /></p></div>
               </div>
               <div className="ui primary submit icon button"
-                   onClick={this.submitSubComment.bind(this, comment.get('id'))}>
+                   onClick={this.submitSubComment.bind(this,
+                     comment.get('id'))}>
                 <i className="icon edit"/>
               </div>
             </form>
           }
         </div>
       </div>
-    )
+    );
 
-  }
+  },
 });
 
 const CommentList = React.createClass({
@@ -636,7 +659,7 @@ const CommentList = React.createClass({
 
   render() {
     const {
-      commentIdList, comments, authors
+      commentIdList, comments, authors,
     } = this.props;
 
     let commentsNode = commentIdList.map((commentId) => {
@@ -656,18 +679,18 @@ const CommentList = React.createClass({
               subCommentList={subCommentList}
               {...this.props}
             />
-          )
+          );
         }
       }
 
-      return (<div key={commentId}></div>)
+      return (<div key={commentId}></div>);
     });
     return (
       <div className="comment_list">
         {commentsNode}
       </div>
-    )
-  }
+    );
+  },
 });
 
 require('./Comment.scss');
@@ -697,31 +720,40 @@ const CommentBox = React.createClass({
 
   getInitialState() {
     return {
-      commentOrder: locationSearchToQueryObj(this.props.location.search).comment_order
+      commentOrder: locationSearchToQueryObj(
+        this.props.location.search).comment_order,
     };
   },
 
   componentWillReceiveProps(nextProps) {
-    if (locationSearchToQueryObj(nextProps.location.search).comment_order !== locationSearchToQueryObj(this.props.location.search).comment_order) {
+    if (locationSearchToQueryObj(nextProps.location.search).comment_order !==
+      locationSearchToQueryObj(this.props.location.search).comment_order) {
       this.setState({
-        commentOrder: locationSearchToQueryObj(nextProps.location.search).comment_order
-      })
+        commentOrder: locationSearchToQueryObj(
+          nextProps.location.search).comment_order,
+      });
     }
   },
 
   componentDidMount() {
-    this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig); // eslint-disable-line no-undef
+    this.editor = new MediumEditor( // eslint-disable-line no-undef
+      this.refs.comment_content,
+      commentMediumConfig
+    );
   },
 
   componentDidUpdate() {
     this.editor.destroy();
 
-    this.editor = new MediumEditor(this.refs.comment_content, commentMediumConfig); // eslint-disable-line no-undef
+    this.editor = new MediumEditor( // eslint-disable-line no-undef
+      this.refs.comment_content,
+      commentMediumConfig
+    );
   },
 
   submitComment() {
 
-    const { LoginStore, UserStore, location, FireToggleLoginModal, FireRequestSubmitComment } = this.props;
+    const {LoginStore, UserStore, location, FireToggleLoginModal, FireRequestSubmitComment} = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
@@ -740,7 +772,7 @@ const CommentBox = React.createClass({
         if ($(el).text().trim()) {
           const comment = {
             content: removeWhiteSpace(el),
-            postId: locationSearchToQueryObj(location.search).postId
+            postId: locationSearchToQueryObj(location.search).postId,
           };
 
           FireRequestSubmitComment(comment);
@@ -754,13 +786,13 @@ const CommentBox = React.createClass({
     } else {
       FireToggleLoginModal({
         contentType: 'Login',
-        location: location.pathname + location.search
+        location: location.pathname + location.search,
       });
     }
   },
 
   handleSetPage(pagination) {
-    const { commentOrder } = this.state;
+    const {commentOrder} = this.state;
 
     const makeUrl = new MakeUrl(this.props.location);
     browserHistory.push(
@@ -772,7 +804,7 @@ const CommentBox = React.createClass({
   },
 
   changeCommentOrder() {
-    const { commentOrder } = this.state;
+    const {commentOrder} = this.state;
     let newOrder;
     switch (commentOrder) {
       case 'new': {
@@ -792,38 +824,43 @@ const CommentBox = React.createClass({
     }
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.setQuery('comment_p', 1).setQuery('comment_order', newOrder).end());
+    browserHistory.push(makeUrl.setQuery('comment_p', 1)
+      .setQuery('comment_order', newOrder)
+      .end());
   },
 
   commentOrderButtom() {
-    const { commentOrder } = this.state;
+    const {commentOrder} = this.state;
     switch (commentOrder) {
       case 'new': {
-        return <li onClick={this.changeCommentOrder}>최신순</li>
+        return <li onClick={this.changeCommentOrder}>최신순</li>;
       }
 
       case 'hot': {
-        return <li onClick={this.changeCommentOrder}>인기순</li>
+        return <li onClick={this.changeCommentOrder}>인기순</li>;
       }
 
-      default: return <li onClick={this.changeCommentOrder}>최신순</li>
+      default:
+        return <li onClick={this.changeCommentOrder}>최신순</li>;
     }
   },
 
   render() {
     const {
-      location, post, CommunityStore
+      location, post, CommunityStore,
     } = this.props;
     const commentIdList = post.get('comments');
     const updating = {
       updating: CommunityStore.get('updating'),
       type: CommunityStore.get('updateType'),
-      id: CommunityStore.get('updateId')
+      id: CommunityStore.get('updateId'),
     };
 
     if (commentIdList) {
 
-      const commentPage = locationSearchToQueryObj(location.search).comment_p ? locationSearchToQueryObj(location.search).comment_p : 1;
+      const commentPage = locationSearchToQueryObj(location.search).comment_p
+        ? locationSearchToQueryObj(location.search).comment_p
+        : 1;
       const commentLength = post.get('comment_count');
 
       return (
@@ -869,11 +906,11 @@ const CommentBox = React.createClass({
           </div>
 
         </div>
-      )
+      );
     }
 
-    return (<div></div>)
-  }
+    return (<div/>);
+  },
 });
 
 export default CommentBox;

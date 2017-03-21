@@ -76,24 +76,24 @@ const ModalBox = React.createClass({
     );
   },
   render() {
-    const { ModalStore } = this.props;
+    const {ModalStore} = this.props;
     const modals = ModalStore.get('modals');
     const modalsArray = modals.toJS();
 
     if (modals.size === 0) {
-      return <div></div>
+      return <div></div>;
     }
 
     return <div>
       {
         modalsArray.map(this.createModals)
       }
-    </div>
-  }
+    </div>;
+  },
 });
 
 ModalBox.defaultProps = {
-  ModalStore: UI.Modal
+  ModalStore: UI.Modal,
 };
 
 export default ModalBox;

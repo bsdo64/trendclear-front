@@ -20,8 +20,8 @@ import {
 const ForumSettingsContainer = React.createClass({
   render() {
 
-    return (<ForumSettingsComponent {...this.props} />)
-  }
+    return (<ForumSettingsComponent {...this.props} />);
+  },
 });
 
 ForumSettingsContainer.defaultProps = {
@@ -41,11 +41,11 @@ ForumSettingsContainer.defaultProps = {
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -61,7 +61,7 @@ const mapStateToProps = (state) => {
     Posts: getDomainState('Posts'),
     Prefixes: getDomainState('Prefixes'),
     Collections: getDomainState('Collections'),
-  }
+  };
 };
 
 module.exports = connect(

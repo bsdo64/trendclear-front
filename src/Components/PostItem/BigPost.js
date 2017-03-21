@@ -40,25 +40,25 @@ const BigPost = React.createClass({
   },
 
   componentWillUnmount() {
-    this.postItem.removeEventListener('click', this.setScroll)
+    this.postItem.removeEventListener('click', this.setScroll);
   },
 
   setScroll() {
 
     const currentScroll = document.body.scrollTop;
-    this.props.FireSetScrollPosition(currentScroll)
+    this.props.FireSetScrollPosition(currentScroll);
   },
 
   sendLike() {
 
-    const { post, location, user, FireRequestLikePost } = this.props;
+    const {post, location, user, FireRequestLikePost} = this.props;
     if (!user) {
       this.props.FireToggleLoginModal({
         contentType: 'Login',
-        location: location.pathname + location.search
+        location: location.pathname + location.search,
       });
     } else {
-      FireRequestLikePost({ postId: post.get('id') });
+      FireRequestLikePost({postId: post.get('id')});
     }
   },
 
@@ -71,7 +71,7 @@ const BigPost = React.createClass({
   render() {
     const {
       post, author, user, view, postStyle, shorten,
-      FireToggleReportModal, FireToggleDeleteModal, FireOpenCommentUpdateView
+      FireToggleReportModal, FireToggleDeleteModal, FireOpenCommentUpdateView,
     } = this.props;
 
     const userId = user && user.get('id');
@@ -86,12 +86,12 @@ const BigPost = React.createClass({
     const liked = post.get('liked');
 
     const cPost = cx([styles.postContainer], 'best_list_item', {
-      post_item: (postStyle === 'post_item')
+      post_item: (postStyle === 'post_item'),
     });
 
     const isLong = (post.get('height') > 0) && (post.get('height') > 1000);
     const contentStyle = cx([styles.postContent], {
-      shorten_post: isLong
+      shorten_post: isLong,
     });
 
     return (
@@ -101,14 +101,14 @@ const BigPost = React.createClass({
       >
 
         {/* meta */}
-        <div className={cx("ui content ", styles.postBox)}>
+        <div className={cx('ui content ', styles.postBox)}>
           {/* forum */}
-          <div className={cx("meta", styles.postHeader)}>
+          <div className={cx('meta', styles.postHeader)}>
             <Link to={forumUrl}>{post.getIn(['forum', 'title'])}</Link>
             의 인기글
           </div>
 
-          <div className={cx("meta_header", styles.postMetaHeader)}>
+          <div className={cx('meta_header', styles.postMetaHeader)}>
 
             {/* avatar */}
             <div className={cx(styles.avatarImage)}>
@@ -130,7 +130,8 @@ const BigPost = React.createClass({
                   <div className="item">
                     <div className={cx(styles.authorNick)}>
                       <a data-tip
-                         data-for={'nick_' + author.get('nick') + '_' + post.get('id')}
+                         data-for={'nick_' + author.get('nick') + '_' +
+                         post.get('id')}
                          data-offset="{'bottom': 8, 'right': 42}"
                       >
                         {author.get('nick')}
@@ -146,7 +147,8 @@ const BigPost = React.createClass({
                             <div className="ui items">
                               <div className="ui item">
 
-                                <a id="user_avatar_img" className="ui mini image">
+                                <a id="user_avatar_img"
+                                   className="ui mini image">
                                   <AvatarImage
                                     sex={sex}
                                     avatarImg={avatar_img}
@@ -155,7 +157,9 @@ const BigPost = React.createClass({
 
                                 <div className="content">
                                   <div className="user_info_header">
-                                    <span className="ui description">{author.get('nick')}</span>
+                                    <span
+                                      className="ui description">{author.get(
+                                      'nick')}</span>
                                     {this.createIconImg(icon_img)}
                                   </div>
                                   <div className="description">
@@ -163,14 +167,16 @@ const BigPost = React.createClass({
                                     <div className="item">
                                       <span className="item_col">레벨</span>
                                       <div className="item_num">
-                                        <span>{author.getIn(['trendbox', 'level'])}</span>
+                                        <span>{author.getIn(
+                                          ['trendbox', 'level'])}</span>
                                       </div>
                                     </div>
 
                                     <div className="item">
                                       <span className="item_col">명성</span>
                                       <div className="item_num">
-                                        <span>{author.getIn(['trendbox', 'reputation'])}</span>
+                                        <span>{author.getIn(
+                                          ['trendbox', 'reputation'])}</span>
                                       </div>
                                     </div>
 
@@ -213,7 +219,8 @@ const BigPost = React.createClass({
            */}
 
           {/* content */}
-          <div className={contentStyle} dangerouslySetInnerHTML={{ __html: post.get('content') }}></div>
+          <div className={contentStyle}
+               dangerouslySetInnerHTML={{__html: post.get('content')}}></div>
 
           {/* isLong */}
           {
@@ -235,7 +242,8 @@ const BigPost = React.createClass({
           {/* buttons */}
           <div className="ui extra best_post_buttons">
             <div className="like_box">
-              <div className={'like_icon ' + (liked ? 'active' : '')} onClick={this.sendLike}>
+              <div className={'like_icon ' + (liked ? 'active' : '')}
+                   onClick={this.sendLike}>
                 <i className={'heart ' + (liked ? '' : 'outline') + ' icon'}/>
               </div>
               <a className="like_count">{post.get('like_count')}</a>
@@ -275,8 +283,8 @@ const BigPost = React.createClass({
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 export default BigPost;

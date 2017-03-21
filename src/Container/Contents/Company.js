@@ -4,8 +4,8 @@ import Company from '../../Components/Contents/Company';
 
 const CompanyContainer = React.createClass({
   render() {
-    return (<Company {...this.props} />)
-  }
+    return (<Company {...this.props} />);
+  },
 });
 
 module.exports = connect()(CompanyContainer);

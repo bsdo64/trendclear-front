@@ -24,7 +24,7 @@ const SigninMenu = React.createClass({
         </menu>
       </div>
     );
-  }
+  },
 });
 
 export default SigninMenu;

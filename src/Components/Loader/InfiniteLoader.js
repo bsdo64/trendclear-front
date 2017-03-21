@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const InfiniteLoader = ({ collection }) => {
+const InfiniteLoader = ({collection}) => {
   if (collection && collection.get('next_page')) {
     return (
       <div className="ui items">
@@ -8,7 +8,7 @@ const InfiniteLoader = ({ collection }) => {
           <div className="ui text active loader inline centered"></div>
         </div>
       </div>
-    )
+    );
   } else {
     return (
       <div className="no-more-post">
@@ -16,12 +16,12 @@ const InfiniteLoader = ({ collection }) => {
           더이상 표시할 추천 게시물이 없습니다
         </div>
       </div>
-    )
+    );
   }
 };
 
 InfiniteLoader.propTypes = {
-  collection: PropTypes.object
+  collection: PropTypes.object,
 };
 
 module.exports = InfiniteLoader;

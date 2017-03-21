@@ -26,66 +26,66 @@ export const FAILURE_SIGNIN = 'FAILURE_SIGNIN';
 
 export function toggleAgreeTerm() {
   return {
-    type: TOGGLE_AGREE_TERM
-  }
+    type: TOGGLE_AGREE_TERM,
+  };
 }
 
 export function toggleAgreePrivacy() {
   return {
-    type: TOGGLE_AGREE_PRIVACY
-  }
+    type: TOGGLE_AGREE_PRIVACY,
+  };
 }
 
 export function confirmAgree() {
   return {
-    type: CONFIRM_AGREE
-  }
+    type: CONFIRM_AGREE,
+  };
 }
 
 export function resetSigninForm() {
   return {
-    type: RESET_SIGNIN_FORM
-  }
+    type: RESET_SIGNIN_FORM,
+  };
 }
 
 export function emailVerifyFormOpen() {
   return {
-    type: EMAIL_VERIFY_FORM_OPEN
-  }
+    type: EMAIL_VERIFY_FORM_OPEN,
+  };
 }
 
 // Ajax
 export function requestCheckEmailDup(payload) {
   return {
     type: REQUEST_CHECK_EMAILDUP,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestCheckNickDup(payload) {
   return {
     type: REQUEST_CHECK_NICKDUP,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestEmailVerifyCode(payload) {
   return {
     type: REQUEST_EMAIL_VERIFY_CODE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestCheckVerifyCode(payload) {
   return {
     type: REQUEST_CHECK_VERIFY_CODE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function requestSignin(payload) {
   return {
     type: REQUEST_SIGNIN,
-    payload
-  }
+    payload,
+  };
 }

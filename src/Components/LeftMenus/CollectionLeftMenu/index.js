@@ -18,7 +18,7 @@ const CollectionLeftMenu = React.createClass({
   },
 
   render() {
-    const { UserStore, location, Collections } = this.props;
+    const {UserStore, location, Collections} = this.props;
     const user = UserStore.get('user');
     const order = qs.parse(location.search.slice(1)).order || 'new';
     const collectionId = location.pathname.split('/')[2];
@@ -30,7 +30,8 @@ const CollectionLeftMenu = React.createClass({
           {/* Title */}
           <div id="sub_category">
             <div className="sub_category_button">
-              <div className="sub_category_text">{'컬랙션 / ' + collection.get('title')}</div>
+              <div className="sub_category_text">{'컬랙션 / ' +
+              collection.get('title')}</div>
             </div>
           </div>
 
@@ -48,21 +49,30 @@ const CollectionLeftMenu = React.createClass({
                     (order === 'new') &&
                     <div className="active-menu"></div>
                   }
-                  <Link to={{ pathname: `/collection/${collectionId}`, query: { order: 'new' } }}>{'최신 글'}</Link>
+                  <Link to={{
+                    pathname: `/collection/${collectionId}`,
+                    query: {order: 'new'},
+                  }}>{'최신 글'}</Link>
                 </div>
                 <div className="sub_category item">
                   {
                     (order === 'hot') &&
                     <div className="active-menu"></div>
                   }
-                  <Link to={{ pathname: `/collection/${collectionId}`, query: { order: 'hot' } }}>{'인기 글'}</Link>
+                  <Link to={{
+                    pathname: `/collection/${collectionId}`,
+                    query: {order: 'hot'},
+                  }}>{'인기 글'}</Link>
                 </div>
                 <div className="sub_category item">
                   {
                     (order === 'm_view') &&
                     <div className="active-menu"></div>
                   }
-                  <Link to={{ pathname: `/collection/${collectionId}`, query: { order: 'm_view' } }}>{'많이 본 글'}</Link>
+                  <Link to={{
+                    pathname: `/collection/${collectionId}`,
+                    query: {order: 'm_view'},
+                  }}>{'많이 본 글'}</Link>
                 </div>
                 <div className="sub_category item">
                   {
@@ -70,7 +80,10 @@ const CollectionLeftMenu = React.createClass({
                     <div className="active-menu"></div>
                   }
                   <Link
-                    to={{ pathname: `/collection/${collectionId}`, query: { order: 'm_comment' } }}>{'댓글 많은 글'}</Link>
+                    to={{
+                      pathname: `/collection/${collectionId}`,
+                      query: {order: 'm_comment'},
+                    }}>{'댓글 많은 글'}</Link>
                 </div>
               </li>
 
@@ -84,11 +97,11 @@ const CollectionLeftMenu = React.createClass({
             </ul>
           </menu>
         </div>
-      )
+      );
     } else {
-      return (<div></div>)
+      return (<div></div>);
     }
-  }
+  },
 });
 
 export default CollectionLeftMenu;

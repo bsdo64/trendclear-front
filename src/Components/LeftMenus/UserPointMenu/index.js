@@ -43,7 +43,7 @@ const UserPointMenu = React.createClass({
         </menu>
       </div>
     );
-  }
+  },
 });
 
 export default UserPointMenu;

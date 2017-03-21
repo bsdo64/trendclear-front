@@ -6,7 +6,7 @@ import ContentsContainer from '../../../Container/Contents/Best';
 import RightSide from '../../../Container/RightSide/RightSide';
 import WidgetContainer from '../../../Container/RightCol/WidgetContainer';
 
-const Contents = (props) => {
+const Contents = () => {
   return (
     <div id="container">
 
@@ -27,7 +27,7 @@ const Contents = (props) => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Contents;

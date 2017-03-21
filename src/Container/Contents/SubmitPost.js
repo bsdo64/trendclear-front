@@ -22,7 +22,7 @@ import {
 const SubmitPostContainer = React.createClass({
   render() {
     return (<SubmitPost {...this.props} />);
-  }
+  },
 });
 
 SubmitPostContainer.defaultProps = {
@@ -35,11 +35,11 @@ const mapStateToProps = (state) => {
   const stateStore = state.get('Stores');
 
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -50,8 +50,8 @@ const mapStateToProps = (state) => {
     ForumFollowed: forumFollowed(stateStore),
     ForumCreated: forumCreated(stateStore),
     RankForums: rankForums(stateStore),
-    Posts: getDomainState('Posts')
-  }
+    Posts: getDomainState('Posts'),
+  };
 };
 
 module.exports = connect(

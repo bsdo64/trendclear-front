@@ -6,23 +6,23 @@ import { closeModal } from '../../Actions/Modal';
 
 const DefaultModalContainer = React.createClass({
   render() {
-    return (<Modal {...this.props} />)
-  }
+    return (<Modal {...this.props} />);
+  },
 });
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   return {
-    ModalStore: getUIState('Modal')
-  }
+    ModalStore: getUIState('Modal'),
+  };
 };
 
 module.exports = connect(
   mapStateToProps,
   {
-    FireCloseModal: closeModal
+    FireCloseModal: closeModal,
   }
 )(DefaultModalContainer);

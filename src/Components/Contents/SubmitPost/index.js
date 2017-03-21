@@ -41,7 +41,7 @@ const EditorBox = React.createClass({
       isLoadingUrl: false,
       isLoadedUrl: false,
       successUrl: false,
-      loadedUrlMeta: null
+      loadedUrlMeta: null,
     };
   },
 
@@ -51,7 +51,7 @@ const EditorBox = React.createClass({
     const dom = this.refs.post_editor;
     this.editor = new MediumEditor(dom, medium);  // eslint-disable-line no-undef
     this.editor.subscribe('editableInput', () => {
-      this.handleContent()
+      this.handleContent();
     });
     $(dom).mediumInsert(mediumInsertConfig(this));
 
@@ -63,7 +63,8 @@ const EditorBox = React.createClass({
       }
 
       // bug. if update add overlay
-      $('.medium-insert-embeds').append('<div class="medium-insert-embeds-overlay"></div>');
+      $('.medium-insert-embeds')
+        .append('<div class="medium-insert-embeds-overlay"></div>');
     }
 
     this.props.FireRemoveServerInit();
@@ -77,13 +78,14 @@ const EditorBox = React.createClass({
         this.editor.setContent(initContent);
       }
 
-      nextProps.FireRemoveServerInit()
+      nextProps.FireRemoveServerInit();
     }
 
     // check update post success
     if (nextProps.SubmitPostStore.get('successUpdatePost') === true) {
       browserHistory.replace(
-        '/community?forumId=' + nextProps.SubmitPostStore.get('successForumId') +
+        '/community?forumId=' +
+        nextProps.SubmitPostStore.get('successForumId') +
         '&postId=' + nextProps.SubmitPostStore.get('successPostId')
       );
     }
@@ -92,7 +94,7 @@ const EditorBox = React.createClass({
   componentWillUnmount() {
     this.editor.destroy();
 
-    const { SubmitPostStore, FireRequestDeleteUnUsingImage } = this.props;
+    const {SubmitPostStore, FireRequestDeleteUnUsingImage} = this.props;
     const postImages = SubmitPostStore.get('postImages');
     if (postImages && postImages.size) {
 
@@ -105,26 +107,26 @@ const EditorBox = React.createClass({
 
   toggleAnnounce() {
 
-    this.setState({ isAnnounce: !this.state.isAnnounce });
+    this.setState({isAnnounce: !this.state.isAnnounce});
   },
 
   handleContent() {
     let allContents = this.editor.serialize();
     let el = allContents['post_editor'].value;
 
-    if (el === "") {
+    if (el === '') {
       el = '<p class="medium-insert-active"><br></p>';
     }
 
     this.props.FireHandlePostContent({
       content: el,
       width: this.refs.post_editor.offsetWidth,
-      height: this.refs.post_editor.offsetHeight
+      height: this.refs.post_editor.offsetHeight,
     });
   },
 
   submitPost() {
-    const { SubmitPostStore, UserStore, location, FireRequestSubmitPost } = this.props;
+    const {SubmitPostStore, UserStore, location, FireRequestSubmitPost} = this.props;
 
     const skills = UserStore.get('skills');
     const writePost = skills
@@ -166,9 +168,11 @@ const EditorBox = React.createClass({
           width: SubmitPostStore.get('width'),
           height: SubmitPostStore.get('height'),
           postImages: SubmitPostStore.get('postImages') || null,
-          representingImage: (SubmitPostStore.get('representingImage') === undefined || SubmitPostStore.get('representingImage') === null)
+          representingImage: (SubmitPostStore.get('representingImage') ===
+          undefined || SubmitPostStore.get('representingImage') === null)
             ? null
-            : SubmitPostStore.get('postImages').get(SubmitPostStore.get('representingImage'))
+            : SubmitPostStore.get('postImages')
+              .get(SubmitPostStore.get('representingImage')),
         };
 
         FireRequestSubmitPost(newPost);
@@ -179,7 +183,7 @@ const EditorBox = React.createClass({
   },
 
   modPost() {
-    const { SubmitPostStore, location, FireRequestUpdatePost } = this.props;
+    const {SubmitPostStore, location, FireRequestUpdatePost} = this.props;
 
     const title = SubmitPostStore.get('title');
     const content = SubmitPostStore.get('content');
@@ -193,7 +197,7 @@ const EditorBox = React.createClass({
         query: qs.parse(location.search.slice(1)),
         isAnnounce: this.state.isAnnounce,
         width: SubmitPostStore.get('width'),
-        height: SubmitPostStore.get('height')
+        height: SubmitPostStore.get('height'),
       };
 
       FireRequestUpdatePost(newPost);
@@ -208,17 +212,17 @@ const EditorBox = React.createClass({
   getUrlPost() {
 
     const url = this.refs.url_input.value.trim();
-    this.props.FireRequestGetPostMeta({ url });
+    this.props.FireRequestGetPostMeta({url});
   },
 
   selectEditor() {
 
-    this.setState({ type: 'editor' });
+    this.setState({type: 'editor'});
   },
 
   selectUrl() {
 
-    this.setState({ type: 'url' });
+    this.setState({type: 'url'});
   },
 
   createUrlMetaContent(urlMetaData, askButton) {
@@ -237,7 +241,8 @@ const EditorBox = React.createClass({
               <div className="content">
                 <div className="header">{urlMetaData.get('title')}</div>
                 <div className="meta">
-                  <p>{(urlMetaData.get('siteName') || urlMetaData.getIn(['uri', 'host']))}</p>
+                  <p>{(urlMetaData.get('siteName') ||
+                  urlMetaData.getIn(['uri', 'host']))}</p>
                 </div>
                 <div className="description">
                   <p>{urlMetaData.get('description')}</p>
@@ -245,7 +250,8 @@ const EditorBox = React.createClass({
                 {
                   askButton &&
                   <div className="extra">
-                    <div className="ui right floated button" onClick={this.setUrlMetaContent}>
+                    <div className="ui right floated button"
+                         onClick={this.setUrlMetaContent}>
                       링크 사용
                     </div>
                   </div>
@@ -254,7 +260,7 @@ const EditorBox = React.createClass({
             </div>
           </div>
         </a>
-      </div>)
+      </div>);
   },
 
   setUrlMetaContent(e) {
@@ -264,20 +270,22 @@ const EditorBox = React.createClass({
     const urlMetaData = this.props.SubmitPostStore.get('urlMetaData');
     const box = this.createUrlMetaContent(urlMetaData, false);
 
-    this.props.FireHandlePostContent({ content: ReactDOM.renderToStaticMarkup(box) });
+    this.props.FireHandlePostContent(
+      {content: ReactDOM.renderToStaticMarkup(box)});
   },
 
   checkTitleAndContent() {
 
-    const { SubmitPostStore } = this.props;
-    return !SubmitPostStore.get('title') || !$(SubmitPostStore.get('content')).text().trim();
+    const {SubmitPostStore} = this.props;
+    return !SubmitPostStore.get('title') ||
+      !$(SubmitPostStore.get('content')).text().trim();
   },
 
   handleRecaptcha(a, b, c, d) {
 
     const args = Array.prototype.slice.call(arguments, 1);
 
-    errorLog(args, a, b, c, d)
+    errorLog(args, a, b, c, d);
   },
 
   checkForumManager(user, managers) {
@@ -291,9 +299,10 @@ const EditorBox = React.createClass({
   },
 
   createThumbnailImages(image, index)  {
-    const isRepresent = this.props.SubmitPostStore.get('representingImage') === index;
+    const isRepresent = this.props.SubmitPostStore.get('representingImage') ===
+      index;
     const style = cx('image_item select_represent', {
-      select_represent: isRepresent
+      select_represent: isRepresent,
     });
     return (
       <li className={style}
@@ -306,7 +315,7 @@ const EditorBox = React.createClass({
         }
         <img src={image.thumbnailUrl}/>
       </li>
-    )
+    );
   },
 
   setRepresentImage(index) {
@@ -316,7 +325,7 @@ const EditorBox = React.createClass({
 
   render() {
 
-    const { SubmitPostStore, UserStore } = this.props;
+    const {SubmitPostStore, UserStore} = this.props;
     const type = SubmitPostStore.get('type');
     const urlMetaData = SubmitPostStore.get('urlMetaData');
     const announces = SubmitPostStore.getIn(['forum', 'announces']);
@@ -328,19 +337,19 @@ const EditorBox = React.createClass({
     const isManager = this.checkForumManager(UserStore.get('user'), managers);
 
     const displayEditor = cx('ui description submit_post_box', {
-      hide: this.state.type !== 'editor'
+      hide: this.state.type !== 'editor',
     });
     const displayUrl = cx('', {
-      hide: this.state.type !== 'url'
+      hide: this.state.type !== 'url',
     });
     const editorActive = cx('item', {
-      active: this.state.type === 'editor'
+      active: this.state.type === 'editor',
     });
     const urlActive = cx('item', {
-      active: this.state.type === 'url'
+      active: this.state.type === 'url',
     });
     const titleAndContentActiveButton = cx('ui primary button', {
-      disabled: this.checkTitleAndContent()
+      disabled: this.checkTitleAndContent(),
     });
 
     let urlMetaDataBox;
@@ -373,7 +382,8 @@ const EditorBox = React.createClass({
           </div>
 
           {
-            SubmitPostStore.get('postImages') && SubmitPostStore.get('postImages').size > 0 &&
+            SubmitPostStore.get('postImages') &&
+            SubmitPostStore.get('postImages').size > 0 &&
             <div className="submit_images">
               <div className="header">
                 <h4>대표 이미지</h4>
@@ -381,7 +391,8 @@ const EditorBox = React.createClass({
               </div>
               <ul className="image_list">
                 {
-                  SubmitPostStore.get('postImages').map(this.createThumbnailImages)
+                  SubmitPostStore.get('postImages')
+                    .map(this.createThumbnailImages)
                 }
               </ul>
             </div>
@@ -403,21 +414,25 @@ const EditorBox = React.createClass({
         {
           (announcesLength < 5) && (isManager) &&
           <div className="ui checkbox">
-            <input id="is_announce" type="checkbox" onChange={this.toggleAnnounce}/>
-            <label htmlFor="announce_check">공지 글 ({`${announcesLength} / 5`})</label>
+            <input id="is_announce" type="checkbox"
+                   onChange={this.toggleAnnounce}/>
+            <label htmlFor="announce_check">공지 글
+              ({`${announcesLength} / 5`})</label>
           </div>
         }
 
         <div className="submit_button_box">
           {
             (type === 'write') &&
-            <button className={titleAndContentActiveButton} onClick={this.submitPost}>
+            <button className={titleAndContentActiveButton}
+                    onClick={this.submitPost}>
               저장하기
             </button>
           }
           {
             (type === 'mod') &&
-            <button className={titleAndContentActiveButton} onClick={this.modPost}>
+            <button className={titleAndContentActiveButton}
+                    onClick={this.modPost}>
               수정하기
             </button>
           }
@@ -427,8 +442,8 @@ const EditorBox = React.createClass({
         </div>
 
       </div>
-    )
-  }
+    );
+  },
 });
 
 require('./index.scss');
@@ -457,11 +472,12 @@ const SubmitContents = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.SubmitPostStore.get('submitSuccess') && nextProps.SubmitPostStore.get('submitSuccess')) {
+    if (!this.props.SubmitPostStore.get('submitSuccess') &&
+      nextProps.SubmitPostStore.get('submitSuccess')) {
       browserHistory.replace(
         '/community?forumId=' + nextProps.SubmitPostStore.get('forumId') +
         '&postId=' + nextProps.SubmitPostStore.get('postId')
-      )
+      );
     }
   },
 
@@ -478,7 +494,7 @@ const SubmitContents = React.createClass({
 
   render() {
     const {
-      AuthStore, UserStore, SubmitPostStore, ForumCreated, ForumFollowed, RankForums
+      AuthStore, UserStore, SubmitPostStore, ForumCreated, ForumFollowed, RankForums,
     } = this.props;
 
     const isLogin = AuthStore.get('isLogin');
@@ -503,11 +519,13 @@ const SubmitContents = React.createClass({
       let prefixes = [];
       if (prefixesData) {
         prefixes = prefixesData.toJS();
-        options = prefixes.map(function (item) {
+        options = prefixes.map(function(item) {
           let result = {};
           for (let key in item) {
             if (item.hasOwnProperty(key)) {
-              const k = key === 'id' ? 'value' : (key === 'name' ? 'label' : key);
+              const k = key === 'id' ? 'value' : (key === 'name'
+                ? 'label'
+                : key);
               result[k] = item[key];
             }
           }
@@ -523,12 +541,12 @@ const SubmitContents = React.createClass({
             ForumCreated={ForumCreated}
             RankForums={RankForums}
           />
-        )
+        );
       }
 
       return (
         <div id="submit_box" className="ui items">
-          <div className={"ui item post_item"}>
+          <div className={'ui item post_item'}>
             {/* avatar */}
             <div className="ui image tiny">
               <AvatarImage
@@ -592,9 +610,9 @@ const SubmitContents = React.createClass({
           안녕하세요 베나클 입니다.
           로그인을 해주세요
         </div>
-      )
+      );
     }
-  }
+  },
 
 });
 

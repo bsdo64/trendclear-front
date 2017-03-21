@@ -4,14 +4,15 @@ import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps';
 const SimpleMap = React.createClass({
   getInitialState() {
     return {
-      markers: [{
-        position: {
-          lat: 37.533459,
-          lng: 126.8567798,
-        },
-        key: `Taiwan`,
-        defaultAnimation: 2,
-      }]
+      markers: [
+        {
+          position: {
+            lat: 37.533459,
+            lng: 126.8567798,
+          },
+          key: `Taiwan`,
+          defaultAnimation: 2,
+        }],
     };
   },
 
@@ -25,13 +26,13 @@ const SimpleMap = React.createClass({
 
   render() {
     return (
-      <section style={{ height: 400, width: 600 }}>
+      <section style={{height: 400, width: 600}}>
         <GoogleMapLoader
           containerElement={
             <div
               {...this.props}
               style={{
-                height: "100%",
+                height: '100%',
               }}
             />
           }
@@ -39,7 +40,7 @@ const SimpleMap = React.createClass({
             <GoogleMap
               ref={(map) => (this._googleMapComponent = map)}
               defaultZoom={15}
-              defaultCenter={{ lat: 37.533459, lng: 126.8567798 }}
+              defaultCenter={{lat: 37.533459, lng: 126.8567798}}
               onClick={this.handleMapClick}
             >
               {this.state.markers.map((marker, index) => {
@@ -55,7 +56,7 @@ const SimpleMap = React.createClass({
         />
       </section>
     );
-  }
+  },
 });
 
 require('./index.scss');
@@ -70,7 +71,7 @@ const About = React.createClass({
         <div className="ui vertical stripe segment">
           <div className="ui text container">
             <h3 className="ui header">베나클의 철학</h3>
-            <p style={{ textAlign: 'center' }}>
+            <p style={{textAlign: 'center'}}>
               <b>"세상의 모든 이슈를 모아 효과적으로 공유하고 소통할수 있도록 도와주는 것"</b>
             </p>
           </div>
@@ -98,12 +99,14 @@ const About = React.createClass({
                 <h3 className="ui header">개개인의 맞춤형 컨텐츠</h3>
                 <p>
                   더 이상 피곤한 사회 관계에 얽매이지 마세요!
-                  인터넷의 철학인 익명성을 최대한 활용하여 누구나 쉽게 공유하고 싶은 주제와 글을 올리고 전세계 모든 사람들과 실시간으로 소통하세요!
+                  인터넷의 철학인 익명성을 최대한 활용하여 누구나 쉽게 공유하고 싶은 주제와 글을 올리고 전세계 모든 사람들과
+                  실시간으로 소통하세요!
                 </p>
                 <h3 className="ui header">즐기는 커뮤니티</h3>
                 <p>
                   베나클에서 활동하면 할수록, 그리고 양질의 컨텐츠를 업로드하고 사람들의 공감을 많이 얻을 수록,
-                  유저는 보상을 받습니다. 각 계정마다 레벨 시스템과 경험치, 그리고 스킬들을 활용하여 커뮤니티를 무궁무진하게 활용 할 수 있습니다.
+                  유저는 보상을 받습니다. 각 계정마다 레벨 시스템과 경험치, 그리고 스킬들을 활용하여 커뮤니티를 무궁무진하게
+                  활용 할 수 있습니다.
                 </p>
               </div>
               <div className="six wide right floated column">
@@ -168,15 +171,16 @@ const About = React.createClass({
               <div className="item">
                 <i className="mail icon"/>
                 <div className="content">
-                  <a href="mailto:webmaster@venacle.com">webmaster@venacle.com</a>
+                  <a
+                    href="mailto:webmaster@venacle.com">webmaster@venacle.com</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  },
 });
 
 const Careers = React.createClass({
@@ -184,7 +188,7 @@ const Careers = React.createClass({
     return (
       <div />
     );
-  }
+  },
 });
 
 require('./Contact.scss');
@@ -234,7 +238,8 @@ const Contact = React.createClass({
                 대표
               </div>
               <div className="content description">
-                도병수 (이메일 : <a href="mailto:bsdo64@gmail.com">bsdo64@gmail.com</a>)
+                도병수 (이메일 : <a
+                href="mailto:bsdo64@gmail.com">bsdo64@gmail.com</a>)
               </div>
             </div>
             <div className="item">
@@ -272,15 +277,15 @@ const Contact = React.createClass({
         />
       </div>
     );
-  }
+  },
 });
 
 const Advertisement = React.createClass({
   render() {
     return (
       <div>advertisement</div>
-    )
-  }
+    );
+  },
 });
 
 const Company = React.createClass({
@@ -305,7 +310,7 @@ const Company = React.createClass({
       default:
         return <About />;
     }
-  }
+  },
 });
 
 export default Company;

@@ -14,19 +14,19 @@ const SearchBar = React.createClass({
   submitQuery(e) {
     e.preventDefault();
 
-    const { SearchStore } = this.props;
+    const {SearchStore} = this.props;
     if (SearchStore) {
       const query = SearchStore.get('query');
 
-      this.props.history.push({ 
-        pathname: '/search', 
-        search: `?query=${query}` 
+      this.props.history.push({
+        pathname: '/search',
+        search: `?query=${query}`,
       });
     }
   },
 
   getQueryValue() {
-    const { SearchStore } = this.props;
+    const {SearchStore} = this.props;
     let query = '';
 
     if (SearchStore) {
@@ -47,8 +47,8 @@ const SearchBar = React.createClass({
           <div className="results"></div>
         </div>
       </form>
-    )
-  }
+    );
+  },
 });
 
 export default SearchBar;

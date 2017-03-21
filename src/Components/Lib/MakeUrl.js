@@ -14,7 +14,7 @@ class MakeUrl {
       forumSearch: query.forumSearch,
       comment_order: query.comment_order,
       order: query.order,
-    }
+    };
   }
 
   // Community Post
@@ -33,7 +33,7 @@ class MakeUrl {
   }
 
   end() {
-    return this.pathname + qs.stringify(this.query, { skipNulls: true });
+    return this.pathname + qs.stringify(this.query, {skipNulls: true});
   }
 }
 

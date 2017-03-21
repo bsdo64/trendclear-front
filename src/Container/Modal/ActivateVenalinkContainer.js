@@ -4,22 +4,22 @@ import { getLoginUser } from '../Util/func';
 import ActivateVenalink from '../../Components/Modals/Components/ActivateVenalink';
 import {
   requestActivateVenalink,
-  toggleVenacleStoreModal
+  toggleVenacleStoreModal,
 } from '../../Actions/VenacleStore';
 
 const ActivateVenalinkContainer = React.createClass({
   render() {
-    return (<ActivateVenalink {...this.props} />)
-  }
+    return (<ActivateVenalink {...this.props} />);
+  },
 });
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args))
+    return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args))
+    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
     Venatems: getDomainState('Venatems'),
     ShareLinkStore: getUIState('ShareLink'),
     UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
-  }
+  };
 };
 
 module.exports = connect(

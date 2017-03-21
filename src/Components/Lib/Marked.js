@@ -2,7 +2,7 @@ import marked from 'marked';
 
 const renderer = new marked.Renderer();
 
-renderer.table = function (header, body) {
+renderer.table = function(header, body) {
   return '<table class="ui celled table">\n'
     + '<thead>\n'
     + header
@@ -14,10 +14,10 @@ renderer.table = function (header, body) {
 };
 
 marked.setOptions({
-  highlight: function (code) {
+  highlight: function(code) {
     return require('highlight.js').highlightAuto(code).value;
   },
-  renderer: renderer
+  renderer: renderer,
 });
 
 export default marked;

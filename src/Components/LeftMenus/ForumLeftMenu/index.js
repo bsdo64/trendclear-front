@@ -18,7 +18,7 @@ const ForumLeftMenu = React.createClass({
   render() {
     const {
       UserStore, location,
-      forum
+      forum,
     } = this.props;
 
     const order = qs.parse(location.search.slice(1)).order || 'new';
@@ -34,7 +34,8 @@ const ForumLeftMenu = React.createClass({
             <div id="sub_category">
               <div className="sub_category_button">
                 <div className="sub_category_text">
-                  <Link to={`/community?forumId=${forum.get('id')}`}>{forum.get('title')}</Link>
+                  <Link to={`/community?forumId=${forum.get('id')}`}>{forum.get(
+                    'title')}</Link>
                 </div>
               </div>
             </div>
@@ -54,7 +55,10 @@ const ForumLeftMenu = React.createClass({
                       <div className="active-menu"></div>
                     }
                     <Link
-                      to={{ pathname: '/community', query: { forumId: forum.get('id'), order: 'new' } }}>{'최신 글'}</Link>
+                      to={{
+                        pathname: '/community',
+                        query: {forumId: forum.get('id'), order: 'new'},
+                      }}>{'최신 글'}</Link>
                   </div>
                   <div className="sub_category item">
                     {
@@ -62,7 +66,10 @@ const ForumLeftMenu = React.createClass({
                       <div className="active-menu"></div>
                     }
                     <Link
-                      to={{ pathname: '/community', query: { forumId: forum.get('id'), order: 'hot' } }}>{'인기 글'}</Link>
+                      to={{
+                        pathname: '/community',
+                        query: {forumId: forum.get('id'), order: 'hot'},
+                      }}>{'인기 글'}</Link>
                   </div>
                   <div className="sub_category item">
                     {
@@ -71,7 +78,7 @@ const ForumLeftMenu = React.createClass({
                     }
                     <Link to={{
                       pathname: '/community',
-                      query: { forumId: forum.get('id'), order: 'm_view' }
+                      query: {forumId: forum.get('id'), order: 'm_view'},
                     }}>{'많이 본 글'}</Link>
                   </div>
                   <div className="sub_category item">
@@ -81,7 +88,7 @@ const ForumLeftMenu = React.createClass({
                     }
                     <Link to={{
                       pathname: '/community',
-                      query: { forumId: forum.get('id'), order: 'm_comment' }
+                      query: {forumId: forum.get('id'), order: 'm_comment'},
                     }}>{'댓글 많은 글'}</Link>
                   </div>
                 </li>
@@ -99,7 +106,7 @@ const ForumLeftMenu = React.createClass({
             {/* forum Ad */}
             {/*<AdForumLeft url="http://www.heybannerbanner.com/client_folders/QS/600s/150_sleep1_600.gif"/>*/}
           </div>
-        )
+        );
       }
     }
 
@@ -122,23 +129,23 @@ const ForumLeftMenu = React.createClass({
               </h5>
 
               <div className="sub_category item">
-                <Link to={{ pathname: '/community' }}>{'최신 글'}</Link>
+                <Link to={{pathname: '/community'}}>{'최신 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{ pathname: '/community' }}>{'인기 글'}</Link>
+                <Link to={{pathname: '/community'}}>{'인기 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{ pathname: '/community' }}>{'많이 본 글'}</Link>
+                <Link to={{pathname: '/community'}}>{'많이 본 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{ pathname: '/community' }}>{'댓글 많은 글'}</Link>
+                <Link to={{pathname: '/community'}}>{'댓글 많은 글'}</Link>
               </div>
             </li>
           </ul>
         </menu>
       </div>
     );
-  }
+  },
 });
 
 export default ForumLeftMenu;

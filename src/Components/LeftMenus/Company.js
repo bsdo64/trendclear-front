@@ -41,13 +41,13 @@ const Company = (props) => {
             </h5>
 
             <div className="sub_category item">
-              <Link to={{ pathname: '/about' }}>{'소개'}</Link>
+              <Link to={{pathname: '/about'}}>{'소개'}</Link>
             </div>
             {/*<div className="sub_category item">
              <Link to={{pathname: '/careers'}}>{'채용'}</Link>
              </div>*/}
             <div className="sub_category item">
-              <Link to={{ pathname: '/help' }}>{'고객센터'}</Link>
+              <Link to={{pathname: '/help'}}>{'고객센터'}</Link>
             </div>
             {/*<div className="sub_category item">
              <Link to={{pathname: '/advertisement'}}>{'광고안내'}</Link>

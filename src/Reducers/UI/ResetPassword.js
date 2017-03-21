@@ -1,7 +1,7 @@
 import { UI } from '../InitialStates';
 import {
   REQUEST_RESET_PASSWORD,
-  SUCCESS_RESET_PASSWORD
+  SUCCESS_RESET_PASSWORD,
 } from '../../Actions/User';
 
 const ResetPassword = (state = UI.ResetPassword, action) => {
@@ -12,7 +12,7 @@ const ResetPassword = (state = UI.ResetPassword, action) => {
         error: null,
         requestFindEmail: null,
         userExist: false,
-      })
+      });
     }
 
     case SUCCESS_RESET_PASSWORD: {
@@ -21,12 +21,12 @@ const ResetPassword = (state = UI.ResetPassword, action) => {
         requestFindEmail: true,
         userExist: false,
         resetEmailSent: true,
-        isLoading: false
-      })
+        isLoading: false,
+      });
     }
 
     default:
-      return state
+      return state;
   }
 };
 

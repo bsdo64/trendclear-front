@@ -40,7 +40,7 @@ const PostPage = React.createClass({
 
   render() {
 
-    const { Comments, SubComments, Users, Posts, ListStore, AuthStore } = this.props;
+    const {Comments, SubComments, Users, Posts, ListStore, AuthStore} = this.props;
 
     const postId = ListStore.get('CurrentPostId');
     if (postId) {
@@ -52,7 +52,7 @@ const PostPage = React.createClass({
           return (
             <div id="post_box" className="ui items">
 
-              <div style={{ padding: 15 }}>
+              <div style={{padding: 15}}>
                 <h2 className="ui center aligned icon">
                   <i className="bordered ban icon"/>
                   페이지를 찾을 수 없습니다.
@@ -63,11 +63,12 @@ const PostPage = React.createClass({
                 {...this.props}
               />
             </div>
-          )
+          );
         }
 
         const author = Users.get(post.get('author').toString());
-        const user = AuthStore.get('userId') ? Users.get(String(AuthStore.get('userId'))) : null;
+        const user = AuthStore.get('userId') ? Users.get(
+          String(AuthStore.get('userId'))) : null;
 
         return (
           <div id="post_box" className="ui items">
@@ -102,14 +103,14 @@ const PostPage = React.createClass({
               {...this.props}
             />
           </div>
-        )
+        );
       } else {
-        return <div></div>
+        return <div></div>;
       }
     } else {
-      return <div></div>
+      return <div></div>;
     }
-  }
+  },
 });
 
 export default PostPage;

@@ -22,7 +22,7 @@ const RankList = React.createClass({
     e.stopPropagation();
   },
   render() {
-    const { openForumMeta, forums } = this.props;
+    const {openForumMeta, forums} = this.props;
     return (
       <div className="forum_rank">
         <ul>
@@ -30,14 +30,17 @@ const RankList = React.createClass({
             forums.get('data').map((forum, index) => {
               const creatorProfile = forum.get('creator').get('profile');
               const cButton = cx({
-                active: forum.get('id') === openForumMeta
+                active: forum.get('id') === openForumMeta,
               });
 
               return (
-                <li key={forum.get('id')} onMouseEnter={this.openForumMeta.bind(null, forum.get('id'))}
+                <li key={forum.get('id')}
+                    onMouseEnter={this.openForumMeta.bind(null,
+                      forum.get('id'))}
                 >
                   <div className="forum_button">
-                    <Link to={`/community?forumId=${forum.get('id')}`} className={cButton}>
+                    <Link to={`/community?forumId=${forum.get('id')}`}
+                          className={cButton}>
                       {`${index + 1}. ${forum.get('title')}`}
                     </Link>
                   </div>
@@ -54,7 +57,7 @@ const RankList = React.createClass({
                             <div className="card" style={{
                               borderTop: '1px solid rgb(5, 130, 148)',
                               boxShadow: 'none',
-                              width: '100%'
+                              width: '100%',
                             }}>
                               <div className="content">
                                 <AvatarImage
@@ -63,7 +66,8 @@ const RankList = React.createClass({
                                   imageClass="right floated mini ui image"
                                 />
                                 <div className="header">
-                                  <Link to={`/community?forumId=${forum.get('id')}`}>
+                                  <Link to={`/community?forumId=${forum.get(
+                                    'id')}`}>
                                     {forum.get('title')}
                                   </Link>
                                 </div>
@@ -82,7 +86,9 @@ const RankList = React.createClass({
                                       클럽 규칙
                                     </div>
                                     <div className="description"
-                                         dangerouslySetInnerHTML={{ __html: marked(forum.get('rule')) }}
+                                         dangerouslySetInnerHTML={{
+                                           __html: marked(forum.get('rule')),
+                                         }}
                                     ></div>
                                   </div>
                                 }
@@ -94,13 +100,13 @@ const RankList = React.createClass({
                     </div>
                   }
                 </li>
-              )
+              );
             })
           }
         </ul>
       </div>
-    )
-  }
+    );
+  },
 });
 
 const ClubList = React.createClass({
@@ -118,7 +124,6 @@ const ClubList = React.createClass({
     this.props.FireOpenSideCategory(1);
   },
 
-
   openSideCategories(clubId) {
     this.props.FireOpenSideCategory(clubId);
   },
@@ -126,9 +131,10 @@ const ClubList = React.createClass({
   createCategory(item) {
     return (
       <li key={item.get('id')}>
-        <Link to={"/community?forumId=" + item.get('id')}>{item.get('title')}</Link>
+        <Link to={'/community?forumId=' + item.get('id')}>{item.get(
+          'title')}</Link>
       </li>
-    )
+    );
   },
 
   createCategoryGroup(item) {
@@ -136,18 +142,18 @@ const ClubList = React.createClass({
       <div className="four wide column group" key={item.get('id')}>
         <h3 >{item.get('title')}</h3>
         <ul className="category_lists">
-          <Scrollbars style={{ height: 80 }}>
+          <Scrollbars style={{height: 80}}>
             {
               item.get('forums').map(this.createCategory)
             }
           </Scrollbars>
         </ul>
       </div>
-    )
+    );
   },
 
   createClub (item) {
-    const { gnbMenu } = this.props;
+    const {gnbMenu} = this.props;
     const openSideNow = gnbMenu.get('openSideNow');
     const type = item.get('type');
     const list = item.get('list');
@@ -193,7 +199,7 @@ const ClubList = React.createClass({
             </div>
           }
         </li>
-      )
+      );
     } else {
       return (
         <li key={item.get('id')} className="gnbm">
@@ -219,37 +225,38 @@ const ClubList = React.createClass({
             </div>
           }
         </li>
-      )
+      );
     }
   },
 
   render() {
-    const { gnbMenu, newForums, hotForums } = this.props;
+    const {gnbMenu, newForums, hotForums} = this.props;
     const groups = gnbMenu.get('data');
-    const data = fromJS([{
-      id: 1,
-      title: '일반',
-      groups: groups
-    }, {
-      id: 2,
-      title: '인기 게시판',
-      type: 'rank',
-      list: 'hot_forums',
-      groups: hotForums
-    }, {
-      id: 3,
-      title: '새로운 게시판',
-      type: 'rank',
-      list: 'new_forums',
-      groups: newForums
-    }]);
+    const data = fromJS([
+      {
+        id: 1,
+        title: '일반',
+        groups: groups,
+      }, {
+        id: 2,
+        title: '인기 게시판',
+        type: 'rank',
+        list: 'hot_forums',
+        groups: hotForums,
+      }, {
+        id: 3,
+        title: '새로운 게시판',
+        type: 'rank',
+        list: 'new_forums',
+        groups: newForums,
+      }]);
 
     return (
       <ul>
         {data.map(this.createClub)}
       </ul>
-    )
-  }
+    );
+  },
 });
 
 const ClubListMain = React.createClass({
@@ -260,8 +267,8 @@ const ClubListMain = React.createClass({
       <div className="category_box_main">
         Hello main
       </div>
-    )
-  }
+    );
+  },
 });
 
 require('./index.scss');
@@ -279,7 +286,7 @@ const CategoryNav = React.createClass({
     this.props.FireToggleGnbPanel();
   },
   render() {
-    const { GnbStore } = this.props;
+    const {GnbStore} = this.props;
     const openGnb = GnbStore.get('openGnb');
     const gnbMenu = GnbStore.get('gnbMenu');
     const newForums = GnbStore.get('newForums');
@@ -312,8 +319,8 @@ const CategoryNav = React.createClass({
           </div>
         }
       </div>
-    )
-  }
+    );
+  },
 });
 
 module.exports = CategoryNav;

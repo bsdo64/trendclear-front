@@ -1,8 +1,8 @@
-import { normalize, arrayOf } from 'normalizr'
-import { forum } from '../../Model/normalizr/schema'
+import { normalize, arrayOf } from 'normalizr';
+import { forum } from '../../Model/normalizr/schema';
 
-import { take, put, call } from 'redux-saga/effects'
-import Api from '../../Utils/ApiClient'
+import { take, put, call } from 'redux-saga/effects';
+import Api from '../../Utils/ApiClient';
 
 import {
   REQUEST_GET_MORE_FORUM_LIST,
@@ -25,7 +25,7 @@ import {
   SUCCESS_CREATE_FORUM,
   FAILURE_CREATE_FORUM,
 
-} from '../../Actions/Forum'
+} from '../../Actions/Forum';
 import {
 
   REQUEST_UPDATE_FORUM_META,
@@ -63,265 +63,268 @@ import {
   REQUEST_DELETE_FORUM_BAN_USER,
   SUCCESS_DELETE_FORUM_BAN_USER,
   FAILURE_DELETE_FORUM_BAN_USER,
-} from '../../Actions/ForumSetting'
+} from '../../Actions/ForumSetting';
 
-const WORKING = true
-const API = Api.setEntryPoint('/ajax')
+const WORKING = true;
+const API = Api.setEntryPoint('/ajax');
 
-function* SagaUpdateForumMeta () {
+function* SagaUpdateForumMeta() {
   while (WORKING) {
     // REQUEST_UPDATE_FORUM_META
-    const {payload} = yield take(REQUEST_UPDATE_FORUM_META)
+    const {payload} = yield take(REQUEST_UPDATE_FORUM_META);
 
     try {
-      const result = yield call([API, API.put], '/forum', payload)
+      const result = yield call([API, API.put], '/forum', payload);
 
       if (result) {
-        yield put({type: SUCCESS_UPDATE_FORUM_META, result})
+        yield put({type: SUCCESS_UPDATE_FORUM_META, result});
       } else {
-        yield put({type: FAILURE_UPDATE_FORUM_META})
+        yield put({type: FAILURE_UPDATE_FORUM_META});
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_UPDATE_FORUM_META, error})
+      yield put({type: FAILURE_UPDATE_FORUM_META, error});
     }
   }
 }
-function* SagaAddForumPrefix () {
+function* SagaAddForumPrefix() {
   while (WORKING) {
     // REQUEST_ADD_FORUM_PREFIX
-    const {payload} = yield take(REQUEST_ADD_FORUM_PREFIX)
+    const {payload} = yield take(REQUEST_ADD_FORUM_PREFIX);
 
     try {
-      const result = yield call([API, API.post], '/forum/prefix', payload)
+      const result = yield call([API, API.post], '/forum/prefix', payload);
 
-      yield put({type: SUCCESS_ADD_FORUM_PREFIX, result})
+      yield put({type: SUCCESS_ADD_FORUM_PREFIX, result});
     }
 
     catch (error) {
-      yield put({type: FAILURE_ADD_FORUM_PREFIX, error})
+      yield put({type: FAILURE_ADD_FORUM_PREFIX, error});
     }
   }
 }
-function* SagaDeleteForumPrefix () {
+function* SagaDeleteForumPrefix() {
   while (WORKING) {
     // REQUEST_DELETE_FORUM_PREFIX
-    const {payload} = yield take(REQUEST_DELETE_FORUM_PREFIX)
+    const {payload} = yield take(REQUEST_DELETE_FORUM_PREFIX);
 
     try {
-      yield call([API, API.delete], '/forum/prefix', payload)
+      yield call([API, API.delete], '/forum/prefix', payload);
 
-      yield put({type: SUCCESS_DELETE_FORUM_PREFIX, result: payload})
+      yield put({type: SUCCESS_DELETE_FORUM_PREFIX, result: payload});
     }
 
     catch (error) {
-      yield put({type: FAILURE_DELETE_FORUM_PREFIX, error})
+      yield put({type: FAILURE_DELETE_FORUM_PREFIX, error});
     }
   }
 }
-function* SagaUpdateForumPrefix () {
+function* SagaUpdateForumPrefix() {
   while (WORKING) {
     // REQUEST_UPDATE_FORUM_PREFIX
-    const {payload} = yield take(REQUEST_UPDATE_FORUM_PREFIX)
+    const {payload} = yield take(REQUEST_UPDATE_FORUM_PREFIX);
 
     try {
-      const result = yield call([API, API.put], '/forum/prefix', payload)
+      const result = yield call([API, API.put], '/forum/prefix', payload);
 
-      yield put({type: SUCCESS_UPDATE_FORUM_PREFIX, result})
+      yield put({type: SUCCESS_UPDATE_FORUM_PREFIX, result});
 
     }
 
     catch (error) {
-      yield put({type: FAILURE_UPDATE_FORUM_PREFIX, error})
+      yield put({type: FAILURE_UPDATE_FORUM_PREFIX, error});
     }
   }
 }
-function* SagaAddForumManager () {
+function* SagaAddForumManager() {
   while (WORKING) {
     // REQUEST_ADD_FORUM_MANAGER
-    const {payload} = yield take(REQUEST_ADD_FORUM_MANAGER)
+    const {payload} = yield take(REQUEST_ADD_FORUM_MANAGER);
 
     try {
-      const result = yield call([API, API.post], '/forum/manager', payload)
+      const result = yield call([API, API.post], '/forum/manager', payload);
 
-      yield put({type: SUCCESS_ADD_FORUM_MANAGER, result})
+      yield put({type: SUCCESS_ADD_FORUM_MANAGER, result});
     }
 
     catch (error) {
-      yield put({type: FAILURE_ADD_FORUM_MANAGER, error})
+      yield put({type: FAILURE_ADD_FORUM_MANAGER, error});
     }
   }
 }
-function* SagaDeleteForumManager () {
+function* SagaDeleteForumManager() {
   while (WORKING) {
     // REQUEST_DELETE_FORUM_MANAGER
-    const {payload} = yield take(REQUEST_DELETE_FORUM_MANAGER)
+    const {payload} = yield take(REQUEST_DELETE_FORUM_MANAGER);
 
     try {
-      yield call([API, API.delete], '/forum/manager', payload)
+      yield call([API, API.delete], '/forum/manager', payload);
 
-      yield put({type: SUCCESS_DELETE_FORUM_MANAGER, result: payload})
+      yield put({type: SUCCESS_DELETE_FORUM_MANAGER, result: payload});
     }
 
     catch (error) {
-      yield put({type: FAILURE_DELETE_FORUM_MANAGER, error})
+      yield put({type: FAILURE_DELETE_FORUM_MANAGER, error});
     }
   }
 }
-function* SagaDeleteForumAnnounce () {
+function* SagaDeleteForumAnnounce() {
   while (WORKING) {
     // REQUEST_DELETE_FORUM_ANNOUNCE
-    const {payload} = yield take(REQUEST_DELETE_FORUM_ANNOUNCE)
+    const {payload} = yield take(REQUEST_DELETE_FORUM_ANNOUNCE);
 
     try {
-      yield call([API, API.delete], '/forum/announce', payload)
+      yield call([API, API.delete], '/forum/announce', payload);
 
-      yield put({type: SUCCESS_DELETE_FORUM_ANNOUNCE, result: payload})
+      yield put({type: SUCCESS_DELETE_FORUM_ANNOUNCE, result: payload});
     }
 
     catch (error) {
-      yield put({type: FAILURE_DELETE_FORUM_ANNOUNCE, error})
+      yield put({type: FAILURE_DELETE_FORUM_ANNOUNCE, error});
     }
   }
 }
-function* SagaAddForumBanUser () {
+function* SagaAddForumBanUser() {
   while (WORKING) {
     // REQUEST_ADD_FORUM_BAN_USER
-    const {payload} = yield take(REQUEST_ADD_FORUM_BAN_USER)
+    const {payload} = yield take(REQUEST_ADD_FORUM_BAN_USER);
 
     try {
-      const result = yield call([API, API.post], '/forum/banUser', payload)
+      const result = yield call([API, API.post], '/forum/banUser', payload);
 
-      yield put({type: SUCCESS_ADD_FORUM_BAN_USER, result})
+      yield put({type: SUCCESS_ADD_FORUM_BAN_USER, result});
     }
 
     catch (error) {
-      yield put({type: FAILURE_ADD_FORUM_BAN_USER, error})
+      yield put({type: FAILURE_ADD_FORUM_BAN_USER, error});
     }
   }
 }
 
-function* SagaDeleteForumBanUser () {
+function* SagaDeleteForumBanUser() {
   while (WORKING) {
     // REQUEST_DELETE_FORUM_BAN_USER
-    const {payload} = yield take(REQUEST_DELETE_FORUM_BAN_USER)
+    const {payload} = yield take(REQUEST_DELETE_FORUM_BAN_USER);
 
     try {
-      yield call([API, API.delete], '/forum/banUser', payload)
+      yield call([API, API.delete], '/forum/banUser', payload);
 
-      yield put({type: SUCCESS_DELETE_FORUM_BAN_USER, result: payload})
+      yield put({type: SUCCESS_DELETE_FORUM_BAN_USER, result: payload});
     }
 
     catch (error) {
-      yield put({type: FAILURE_DELETE_FORUM_BAN_USER, error})
+      yield put({type: FAILURE_DELETE_FORUM_BAN_USER, error});
     }
   }
 }
 
-function* SagaCreateForum () {
+function* SagaCreateForum() {
   while (WORKING) {
     // REQUEST_CREATE_FORUM
-    const {payload} = yield take(REQUEST_CREATE_FORUM)
+    const {payload} = yield take(REQUEST_CREATE_FORUM);
 
     try {
-      const result = yield call([API, API.post], '/forum', payload)
+      const result = yield call([API, API.post], '/forum', payload);
 
       if (result && result.id) {
-        yield put({type: SUCCESS_CREATE_FORUM, result})
+        yield put({type: SUCCESS_CREATE_FORUM, result});
       } else {
-        yield put({type: FAILURE_CREATE_FORUM, result})
+        yield put({type: FAILURE_CREATE_FORUM, result});
       }
 
     }
 
     catch (error) {
-      yield put({type: FAILURE_CREATE_FORUM, error})
+      yield put({type: FAILURE_CREATE_FORUM, error});
     }
   }
 }
 
-function* SagaVaildateTitleCreateForum () {
+function* SagaVaildateTitleCreateForum() {
   while (WORKING) {
     // REQUEST_VALIDATE_TITLE_FORUM_CREATE
-    const {payload} = yield take(REQUEST_VALIDATE_TITLE_FORUM_CREATE)
+    const {payload} = yield take(REQUEST_VALIDATE_TITLE_FORUM_CREATE);
 
     try {
-      const result = yield call([API, API.get], '/validate/forum/create', payload)
+      const result = yield call([API, API.get], '/validate/forum/create',
+        payload);
 
       if (result.success) {
-        yield put({type: SUCCESS_VALIDATE_TITLE_FORUM_CREATE, result})
+        yield put({type: SUCCESS_VALIDATE_TITLE_FORUM_CREATE, result});
       } else if (!result.success && result.type === 'Error') {
-        yield put({type: FAILURE_VALIDATE_TITLE_FORUM_CREATE, result})
+        yield put({type: FAILURE_VALIDATE_TITLE_FORUM_CREATE, result});
       }
 
     }
 
     catch (error) {
-      yield put({type: FAILURE_VALIDATE_TITLE_FORUM_CREATE, error})
+      yield put({type: FAILURE_VALIDATE_TITLE_FORUM_CREATE, error});
     }
   }
 }
 
-function* SagaUnFollow () {
+function* SagaUnFollow() {
   while (WORKING) {
     // REQUEST_UN_FOLLOW_FORUM
-    const {payload} = yield take(REQUEST_UN_FOLLOW_FORUM)
+    const {payload} = yield take(REQUEST_UN_FOLLOW_FORUM);
 
     try {
-      const result = yield call([API, API.post], '/user/forum/unfollow', payload)
+      const result = yield call([API, API.post], '/user/forum/unfollow',
+        payload);
 
-      result.userId = payload.userId
+      result.userId = payload.userId;
 
-      yield put({type: SUCCESS_UN_FOLLOW_FORUM, result})
+      yield put({type: SUCCESS_UN_FOLLOW_FORUM, result});
     }
 
     catch (error) {
-      yield put({type: FAILURE_UN_FOLLOW_FORUM, error})
+      yield put({type: FAILURE_UN_FOLLOW_FORUM, error});
     }
   }
 }
 
-function* SagaFollow () {
+function* SagaFollow() {
   while (WORKING) {
     // REQUEST_FOLLOW_FORUM
-    const {payload} = yield take(REQUEST_FOLLOW_FORUM)
+    const {payload} = yield take(REQUEST_FOLLOW_FORUM);
 
     try {
-      const result = yield call([API, API.post], '/user/forum/follow', payload)
+      const result = yield call([API, API.post], '/user/forum/follow', payload);
 
-      result.userId = payload.userId
+      result.userId = payload.userId;
 
-      yield put({type: SUCCESS_FOLLOW_FORUM, result})
+      yield put({type: SUCCESS_FOLLOW_FORUM, result});
     }
 
     catch (error) {
-      yield put({type: FAILURE_FOLLOW_FORUM, error})
+      yield put({type: FAILURE_FOLLOW_FORUM, error});
     }
   }
 }
 
-function* SagaMoreList () {
+function* SagaMoreList() {
   while (WORKING) {
     // REQUEST_GET_MORE_FORUM_LIST
-    const {payload} = yield take(REQUEST_GET_MORE_FORUM_LIST)
+    const {payload} = yield take(REQUEST_GET_MORE_FORUM_LIST);
 
     try {
-      const result = yield call([API, API.get], payload.pathName, payload.params)
+      const result = yield call([API, API.get], payload.pathName,
+        payload.params);
 
-      result.data = normalize(result.data, arrayOf(forum))
-      result.listName = payload.listName
+      result.data = normalize(result.data, arrayOf(forum));
+      result.listName = payload.listName;
 
-      yield put({type: SUCCESS_GET_MORE_FORUM_LIST, ...result})
+      yield put({type: SUCCESS_GET_MORE_FORUM_LIST, ...result});
     }
 
     catch (error) {
-      yield put({type: FAILURE_GET_MORE_FORUM_LIST, error})
+      yield put({type: FAILURE_GET_MORE_FORUM_LIST, error});
     }
   }
 }
 
-export default function* forumSaga () {
+function* forumSaga() {
   yield [
     SagaCreateForum(),
     SagaVaildateTitleCreateForum(),
@@ -337,5 +340,7 @@ export default function* forumSaga () {
     SagaDeleteForumAnnounce(),
     SagaAddForumBanUser(),
     SagaDeleteForumBanUser(),
-  ]
+  ];
 }
+
+export default forumSaga;
