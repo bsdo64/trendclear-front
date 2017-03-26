@@ -1,8 +1,13 @@
 import React from 'react';
+import cx from 'classnames';
 
-const Privacy = () => {
+const Privacy = (props) => {
+  const styles = {
+    wrapping: cx({ 'ui segment': !props.inSigninForm })
+  };
+
   return (
-    <div className="ui segment">
+    <div className={styles.wrapping}>
       <h4 className="ui header">개인정보취급방침</h4>
       <p>다음은 베나클의 개인정보취급방침입니다.<br/>
         <br />
@@ -104,6 +109,10 @@ const Privacy = () => {
       <p></p>
     </div>
   );
+};
+
+Privacy.propTypes = {
+  inSigninForm: React.PropTypes.bool
 };
 
 export default Privacy;

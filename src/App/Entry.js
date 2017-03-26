@@ -2,7 +2,7 @@ import { AppContainer } from 'react-hot-loader';
 import React from 'react';
 import { render } from 'react-dom';
 import { fromJS } from 'immutable';
-import App from './App';
+import App from './pages';
 import configStore from './ConfigStore';
 import createSagaMiddleware from 'redux-saga';
 import StartSocketSubs from './socketSubscribe';
@@ -46,8 +46,8 @@ const renderApp = (Component) => {
 renderApp(App);
 
 if (module.hot) {
-  module.hot.accept('./App', () => {
-    const App = require('./App').default;
+  module.hot.accept('./pages', () => {
+    const App = require('./pages').default;
     renderApp(App);
   });
 }

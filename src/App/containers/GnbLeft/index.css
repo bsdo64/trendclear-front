@@ -29,23 +29,25 @@
   list-style: none;
 
   & > li {
-    color: rgba(14, 68, 88, 0.8);
     padding-bottom: 10px;
     text-align: center;
 
-    & > i {
+    & > a {
       font-size: 26px;
+      color: rgba(14, 68, 88, 0.8);
     }
   }
 
   & > li:not(.active) {
-    &:hover {
+    & > a:hover {
       color: #0e4559;
     }
   }
 
   & > li.active {
-    color: #fff;
+    & > a {
+      color: #fff;
+    }
   }
 }
 

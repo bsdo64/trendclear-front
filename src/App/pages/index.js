@@ -3,12 +3,15 @@ import { Provider } from 'react-redux';
 import {
   BrowserRouter,
   Route,
+  Switch
 } from 'react-router-dom';
 
-import MainHeader from './containers/MainHeader';
-import MainContents from './containers/MainContents';
-import ModalContainer from './containers/Modal/ModalContainer';
-import DataInitializer from './containers/DataInitializer';
+import MainHeader from '../containers/MainHeader';
+import Home from './Home';
+import Signin from './Signin';
+import Explore from './Explore';
+import ModalContainer from '../containers/Modal/ModalContainer';
+import DataInitializer from '../containers/DataInitializer';
 
 /**
  * Inject redux store to react view, Initialize react-router
@@ -25,7 +28,11 @@ const App = (props) => {
 
           <div id="wrap">
             <Route component={MainHeader}/>
-            <Route component={MainContents}/>
+            <Switch>
+              <Route path="/explore" component={Explore}/>
+              <Route path="/signin" component={Signin}/>
+              <Route path="/" component={Home}/>
+            </Switch>
           </div>
 
           <div id="modal">

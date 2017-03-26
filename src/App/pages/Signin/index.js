@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
-import Signin from '../../components/Contents/Signin';
+import { getLoginUser } from '../../containers/Util/func';
+import Signin from './components/index.js';
 import { UI } from '../../Reducers/InitialStates';
 
 import {
@@ -15,8 +15,7 @@ import {
   requestCheckNickDup,
   requestEmailVerifyCode,
   requestCheckVerifyCode,
-  requestSignin
-  ,
+  requestSignin,
 } from '../../Actions/Signin';
 
 const SigninContainer = React.createClass({

@@ -1,8 +1,13 @@
 import React from 'react';
+import cx from 'classnames';
 
-const Terms = () => {
+const Terms = (props) => {
+  const styles = {
+    wrapping: cx({ 'ui segment': !props.inSigninForm })
+  };
+
   return (
-    <div className="ui segment">
+    <div className={styles.wrapping}>
       <h4 className="ui header">이용 약관</h4>
       <p><strong>제1조 (목적) </strong><br/>
         본 약관은 베나클(이하 "베나클"이라 합니다)가 제공하는 관련 제반 서비스(이하 "서비스"라 합니다)의 이용과 관련하여 베나클와
@@ -146,6 +151,10 @@ const Terms = () => {
         본 약관은 2016년 1월 1일부터 적용됩니다.</p>
     </div>
   );
+};
+
+Terms.propTypes = {
+  inSigninForm: React.PropTypes.bool
 };
 
 export default Terms;

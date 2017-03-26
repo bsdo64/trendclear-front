@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router-dom';
 
 const SigninFormContents = React.createClass({
   displayName: 'SigninFormContents',
@@ -12,6 +12,7 @@ const SigninFormContents = React.createClass({
     emailDup: PropTypes.any,
     nickDup: PropTypes.any,
     emailRequested: PropTypes.any,
+    history: PropTypes.object,
 
     FireRequestCheckEmailDup: PropTypes.func.isRequired,
     FireRequestCheckNickDup: PropTypes.func.isRequired,
@@ -27,7 +28,7 @@ const SigninFormContents = React.createClass({
     const {submitResult, emailVerifySuccess} = nextProps;
     if (oldSubmitResult === false && submitResult === true) {
       if (oldEmailVerifySuccess === true && emailVerifySuccess === true) {
-        browserHistory.push('/');
+        this.props.history.push('/');
       }
     }
   },
@@ -195,7 +196,7 @@ const SigninFormContents = React.createClass({
     };
 
     return (
-      <div id="signinform_section" className="ui container section_pad">
+      <div id="signinform_section" className="section_pad">
         <h3 className="ui dividing header">
           회원 가입
           <div className="sub header">회원가입을 하시면 다양항 서비스를 이용하실 수 있습니다.</div>
@@ -207,36 +208,66 @@ const SigninFormContents = React.createClass({
             <h4>로그인 정보</h4>
             <div className={formCx.default}>
               <label>이메일</label>
-              <input ref="signinEmail" type="text" name="signinEmail"
-                     placeholder="이메일을 입력하세요"
-                     onBlur={this.handleEmail}/>
+              <div className="input">
+                <i className="fa fa-envelope-o" />
+                <input
+                  ref="signinEmail"
+                  type="text"
+                  name="signinEmail"
+                  placeholder="이메일을 입력하세요"
+                  onBlur={this.handleEmail}
+                />
+              </div>
             </div>
+
             <div className={formCx.default}>
               <label>비밀번호</label>
-              <input type="password" name="password" placeholder="비밀번호를 입력하세요"/>
+              <div className="input">
+                <i className="fa fa-lock" />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="비밀번호를 입력하세요"
+                />
+              </div>
             </div>
             <div className={formCx.default}>
               <label>비밀번호 재입력</label>
-              <input type="password" name="password_re"
-                     placeholder="비밀번호를 다시한번 입력하세요"/>
+              <div className="input">
+                <i className="fa fa-lock" />
+                <input type="password"
+                       name="password_re"
+                       placeholder="비밀번호를 다시한번 입력하세요"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="ui divider"></div>
+          <div className="ui divider"/>
 
           <div className="ui basic segment">
             <div className={formCx.default}>
               <label>닉네임</label>
-              <input ref="signinNick" type="text" name="signinNick"
-                     placeholder="닉네임을 입력하세요" onBlur={this.handleNick}/>
+              <div className="input">
+                <i className="fa fa-user" />
+                <input ref="signinNick"
+                       type="text"
+                       name="signinNick"
+                       placeholder="닉네임을 입력하세요"
+                       onBlur={this.handleNick}
+                />
+              </div>
             </div>
             <div className={formCx.default}>
               <label>성별</label>
-              <select className="ui dropdown" name="sex">
-                <option value="">성별</option>
-                <option value="1">남자</option>
-                <option value="0">여자</option>
-              </select>
+              <div className="input">
+                <i className="fa fa-venus-mars" />
+                <select className="ui dropdown" name="sex">
+                  <option value="">성별</option>
+                  <option value="1">남자</option>
+                  <option value="0">여자</option>
+                </select>
+              </div>
             </div>
             <div className={formCx.default}>
               <label>생일</label>

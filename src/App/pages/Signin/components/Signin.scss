@@ -1,5 +1,13 @@
 .section_pad {
+  background: #fff;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
   padding: 15px;
+  -webkit-box-shadow: 1px 1px 1px 0 #c6c6c6;
+  -moz-box-shadow: 1px 1px 1px 0 #c6c6c6;
+  box-shadow: 1px 1px 1px 0 #c6c6c6;
+  width: 600px;
 }
 
 .contents {
@@ -64,6 +72,28 @@
   form {
     width: 60%;
     margin: auto;
+
+    .field {
+      & > .input {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #dedede;
+
+        & > i {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        & > .selection {
+          width: 100%;
+          border: none;
+        }
+
+        & > input {
+          border: none;
+        }
+      }
+    }
   }
   .btn_submit {
     cursor: pointer;

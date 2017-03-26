@@ -10,6 +10,7 @@ require('./Signin.scss');
 const SigninContents = React.createClass({
   displayName: 'SigninContents',
   propTypes: {
+    history: PropTypes.object.isRequired,
     UserStore: PropTypes.object.isRequired,
     SigninFormStore: PropTypes.object.isRequired,
     FireToggleAgreePrivacy: PropTypes.func.isRequired,
@@ -37,7 +38,7 @@ const SigninContents = React.createClass({
   },
 
   render() {
-    const {SigninFormStore} = this.props;
+    const {history, SigninFormStore} = this.props;
 
     const agreeTerm = SigninFormStore.get('agreeTerm');
     const agreePrivacy = SigninFormStore.get('agreePrivacy');
@@ -68,6 +69,7 @@ const SigninContents = React.createClass({
           confirmAgree &&
           <SigninFormContents
             {...signinContentsProps}
+            history={history}
             FireRequestCheckEmailDup={this.props.FireRequestCheckEmailDup}
             FireRequestCheckNickDup={this.props.FireRequestCheckNickDup}
             FireEmailVerifyFormOpen={this.props.FireEmailVerifyFormOpen}

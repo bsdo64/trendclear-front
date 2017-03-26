@@ -1,23 +1,20 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Gnb from '../GnbLeft';
-import ContentsContainer from '../Contents/Best';
-import RightSide from '../RightSide/RightSide';
-import WidgetContainer from '../RightCol/WidgetContainer';
+import GnbLeft from '../../containers/GnbLeft';
+
+import RightSide from '../../containers/RightSide/RightSide';
+import WidgetContainer from '../../containers/RightCol/WidgetContainer';
 
 const Contents = () => {
   return (
     <div id="container">
 
-      <Switch>
-        <Route path="/signin" render={() => null}/>
-        <Route component={Gnb}/>
-      </Switch>
+      <Route component={GnbLeft}/>
 
       <div id="section">
         <div id="contents">
-          <Route component={ContentsContainer}/>
+          <div className="explore_main">Hello</div>
         </div>
 
         <Route component={RightSide}/>
