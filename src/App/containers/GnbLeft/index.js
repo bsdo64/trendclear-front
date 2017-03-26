@@ -1,33 +1,33 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import styles from './index.css';
 
 const data = [
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
 ];
 
 class LeftBar extends React.Component {
@@ -66,7 +66,7 @@ class HomeMenuBox extends React.Component {
     return (
       <div className={styles.gnbSubMenu}>
         <div className={styles.box}>
-          <Scrollbars autoHide style={{width: 210, paddingRight: 10}}>
+          <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
               <div className={styles.subMenuItem}>
                 <i className="fa fa-star"/>
@@ -91,7 +91,7 @@ class HomeMenuBox extends React.Component {
                   autoHeight
                   autoHeightMin={100}
                   autoHeightMax={200}
-                  style={{width: 210}}>
+                  style={{ width: 210 }}>
 
                   <ul className={styles.collectionList}>
                     {data.map((v, i) => {
@@ -138,10 +138,12 @@ HomeMenuBox.defaultProps = {};
 
 class ExploreMenuBox extends React.Component {
   render() {
+    const { match } = this.props;
+
     return (
       <div className={styles.gnbSubMenu}>
         <div className={styles.box}>
-          <Scrollbars autoHide style={{width: 210, paddingRight: 10}}>
+          <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
               <div className={styles.subMenuItem}>
                 <i className="fa fa-star"/>
@@ -149,8 +151,10 @@ class ExploreMenuBox extends React.Component {
               </div>
 
               <div className={styles.subMenuItem}>
-                <i className="fa fa-file"/>
-                <span>포스트</span>
+                <Link to={`${match.url}/posts`}>
+                  <i className="fa fa-file"/>
+                  <span>포스트</span>
+                </Link>
               </div>
 
               <div className={styles.subMenuItem}>
@@ -198,7 +202,9 @@ class ExploreMenuBox extends React.Component {
   }
 }
 
-ExploreMenuBox.propTypes = {};
+ExploreMenuBox.propTypes = {
+  match: React.PropTypes.object.isRequired
+};
 ExploreMenuBox.defaultProps = {};
 
 const LeftCol = React.createClass({
@@ -210,9 +216,9 @@ const LeftCol = React.createClass({
         <LeftBar />
 
         <Switch>
-          <Route path="/signin" render={() => null} />
-          <Route path="/explore" component={ExploreMenuBox} />
-          <Route path="/" component={HomeMenuBox} />
+          <Route path="/signin" render={() => null}/>
+          <Route path="/explore" component={ExploreMenuBox}/>
+          <Route path="/" component={HomeMenuBox}/>
         </Switch>
       </div>
     );

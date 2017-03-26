@@ -2,7 +2,6 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React, { PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 import SigninAgree from './SigninAgree';
 import SigninFormContents from './SigninFormContents';
 
@@ -27,9 +26,9 @@ const SigninContents = React.createClass({
   },
 
   componentWillMount() {
-    const {UserStore} = this.props;
+    const {UserStore, history} = this.props;
     if (UserStore.get('user')) {
-      browserHistory.replace('/');
+      history.replace('/');
     }
   },
 
