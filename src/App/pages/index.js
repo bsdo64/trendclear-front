@@ -9,7 +9,6 @@ import {
 import MainHeader from '../containers/MainHeader';
 import Home from './Home';
 import Signin from './Signin';
-import Explore from './Explore';
 import ModalContainer from '../containers/Modal/ModalContainer';
 import DataInitializer from '../containers/DataInitializer';
 
@@ -29,9 +28,8 @@ const App = (props) => {
           <div id="wrap">
             <Route component={MainHeader}/>
             <Switch>
-              <Route path="/explore" component={Explore}/>
               <Route path="/signin" component={Signin}/>
-              <Route path="/" component={Home}/>
+              <Route component={Home}/>
             </Switch>
           </div>
 

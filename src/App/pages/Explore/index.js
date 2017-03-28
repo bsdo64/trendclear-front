@@ -1,29 +1,19 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import GnbLeft from '../../containers/GnbLeft';
+import Main from './components/Main.js';
+import Club from './components/Club.js';
+import Series from './components/Series.js';
+import Post from './components/Post.js';
 
-import RightSide from '../../containers/RightSide/RightSide';
-import WidgetContainer from '../../containers/RightCol/WidgetContainer';
-
-const Contents = () => {
+const Contents = ({ match }) => {
   return (
-    <div id="container">
-
-      <Route component={GnbLeft}/>
-
-      <div id="section">
-        <div id="contents">
-          <div className="explore_main">Hello</div>
-        </div>
-
-        <Route component={RightSide}/>
-
-        <div id="right_col">
-          <Route component={WidgetContainer}/>
-        </div>
-      </div>
-    </div>
+    <Switch>
+      <Route path={`${match.url}/series`} component={Series} />
+      <Route path={`${match.url}/clubs`} component={Club} />
+      <Route path={`${match.url}/posts`} component={Post} />
+      <Route path={`${match.url}/`} component={Main} />
+    </Switch>
   );
 };
 

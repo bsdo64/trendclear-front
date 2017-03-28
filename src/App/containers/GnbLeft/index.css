@@ -87,36 +87,39 @@
   transition-timing-function: linear;
   font-size: 1.2em;
 
-  &:hover {
+  &:hover, &.activeButton {
     color: #fff;
     background: #0a3f4e;
 
-    & > i:global(.fa-star) {
-      color: yellow;
+    & > a {
+      & > i:global(.fa-star) {
+        color: yellow;
+      }
+
+      & > i:global(.fa-folder-open) {
+        color: #e6e6e6;
+      }
     }
+  }
 
-    & > i:global(.fa-folder-open) {
-      color: #e6e6e6;
+  & > a {
+    color: inherit;
+
+    & > i {
+      padding-right: 5px;
+    }
+    & > i:global(.fa-search), & > i:global(.fa-cog) {
+      float: right;
+      right: 10px;
+    }
+    & > span.title {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+      display: inline-block;
+      vertical-align: middle;
     }
   }
-
-  & > i {
-    padding-right: 5px;
-  }
-
-  & > i:global(.fa-search), & > i:global(.fa-cog) {
-    float: right;
-    right: 10px;
-  }
-
-  & > span.title {
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
-    display: inline-block;
-    vertical-align: middle;
-  }
-
 }
 
 /* Collection Section */
