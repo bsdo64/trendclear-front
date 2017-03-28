@@ -4,35 +4,17 @@ import { Route, Switch, Link } from 'react-router-dom';
 import cx from 'classnames';
 import styles from './index.css';
 
-const data = [
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-  { title: '나는 열네자 입니다' },
-];
+import HomeMenuBoxConnect from './components/HomeMenuBox/index.js';
 
 const activeStyle = function(selector, match, url) {
-  let isMatch = url ===  match;
+  let isMatch;
+  if (typeof match === 'string') {
+    isMatch = url ===  match;
+  }
+
+  if (Array.isArray(match)) {
+    isMatch = match.filter(v => v === url).length > 0;
+  }
 
   return cx({[selector]: isMatch})
 };
@@ -51,20 +33,21 @@ class LeftBar extends React.Component {
   render() {
     const {location} = this.props;
     const pathname = getSeqPathName(location.pathname, 1);
+    const getStyle = (path) => activeStyle(styles.active, path, pathname);
 
     return (
       <div className={styles.gnbMenu}>
         <ul className={styles.appIconList}>
-          <li className={activeStyle(styles.active, '/', pathname)}>
+          <li className={getStyle(['/', '/collection'])}>
             <Link to="/"><i className="fa fa-home"/></Link>
           </li>
-          <li className={activeStyle(styles.active, '/explore', pathname)}>
+          <li className={getStyle('/explore')}>
             <Link to="/explore"><i className="fa fa-globe"/></Link>
           </li>
-          <li className={activeStyle(styles.active, '/writing', pathname)}>
-            <Link to="/writing"><i className="fa fa-pencil"/></Link>
+          <li className={getStyle('/submit')}>
+            <Link to="/submit"><i className="fa fa-pencil"/></Link>
           </li>
-          <li className={activeStyle(styles.active, '/user', pathname)}>
+          <li className={getStyle('/user')}>
             <Link to="/user"><i className="fa fa-user"/></Link>
           </li>
         </ul>
@@ -85,137 +68,53 @@ LeftBar.propTypes = {
 };
 LeftBar.defaultProps = {};
 
-class HomeMenuBox extends React.Component {
-  render() {
-    return (
-      <div className={styles.gnbSubMenu}>
-        <div className={styles.box}>
-          <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
-            <div className={styles.subMenuBox}>
-              <div className={styles.subMenuItem}>
-                <Link to="/">
-                  <i className="fa fa-star"/>
-                  <span>피드</span>
-                </Link>
-              </div>
-              <div className={styles.subMenuItem}>
-                <Link to="/">
-                  <i className="fa fa-folder-open"/>
-                  <span>컬렉션</span>
-                </Link>
-
-                <Link to="/">
-                  <i className="fa fa-cog"/>
-                </Link>
-
-                <Link to="/">
-                  <i className="fa fa-search"/>
-                </Link>
-              </div>
-
-              <div className={styles.collectionSearchBox}>
-                <i className="fa fa-inbox"/>
-                <input type="text" className={styles.searchInput}/>
-              </div>
-
-              <div className={styles.scrollable}>
-                <Scrollbars
-                  autoHide
-                  autoHeight
-                  autoHeightMin={100}
-                  autoHeightMax={200}
-                  style={{ width: 210 }}>
-
-                  <ul className={styles.collectionList}>
-                    {data.map((v, i) => {
-                      return (
-                        <li key={i} className={styles.collectionListItem}>
-                          <div className={styles.collectionItemBox}>
-                            <i className="fa fa-inbox"/>
-                            {v.title}
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-
-                </Scrollbars>
-              </div>
-            </div>
-
-          </Scrollbars>
-        </div>
-
-        <div className={styles.userMenu}>
-          <div className={styles.userMeta}>
-            <div className={styles.userAvatar}>
-              <img src="//placehold.it/40x40"/>
-            </div>
-            <div className={styles.userInfo}>
-              <div>Nice</div>
-              <div>Nice</div>
-              <div>Nice</div>
-            </div>
-          </div>
-          <div className={styles.userStats}>
-            Hello
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-HomeMenuBox.propTypes = {};
-HomeMenuBox.defaultProps = {};
-
 class ExploreMenuBox extends React.Component {
   render() {
     const {match, location} = this.props;
     const pathname = getSeqPathName(location.pathname, 2);
+    const getStyle = (path) => activeStyle(styles.activeButton, path, pathname);
 
-    console.log(pathname);
     return (
       <div className={styles.gnbSubMenu}>
         <div className={styles.box}>
           <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
-              <div className={cx([styles.subMenuItem, activeStyle(styles.activeButton, '/', pathname)])}>
+              <div className={cx([styles.subMenuItem, getStyle('/')])}>
                 <Link to={`${match.url}`}>
                   <i className="fa fa-star"/>
                   <span>메인</span>
                 </Link>
               </div>
 
-              <div className={cx([styles.subMenuItem, activeStyle(styles.activeButton, '/posts', pathname)])}>
+              <div className={cx([styles.subMenuItem, getStyle('/posts')])}>
                 <Link to={`${match.url}/posts`}>
                   <i className="fa fa-file"/>
                   <span>포스트</span>
                 </Link>
               </div>
 
-              <div className={cx([styles.subMenuItem, activeStyle(styles.activeButton, '/clubs', pathname)])}>
+              <div className={cx([styles.subMenuItem, getStyle('/clubs')])}>
                 <Link to={`${match.url}/clubs`}>
                   <i className="fa fa-files-o"/>
                   <span>클럽</span>
                 </Link>
               </div>
 
-              <div className={cx([styles.subMenuItem, activeStyle(styles.activeButton, '/series', pathname)])}>
+              <div className={cx([styles.subMenuItem, getStyle('/series')])}>
                 <Link to={`${match.url}/series`}>
                   <i className="fa fa-list"/>
                   <span>시리즈</span>
                 </Link>
               </div>
 
-              <div className={cx([styles.subMenuItem, activeStyle(styles.activeButton, '/tags', pathname)])}>
+              <div className={cx([styles.subMenuItem, getStyle('/tags')])}>
                 <Link to={`${match.url}/tags`}>
                   <i className="fa fa-hashtag"/>
                   <span>태그</span>
                 </Link>
               </div>
 
-              <div className={cx([styles.subMenuItem, activeStyle(styles.activeButton, '/users', pathname)])}>
+              <div className={cx([styles.subMenuItem, getStyle('/users')])}>
                 <Link to={`${match.url}/users`}>
                   <i className="fa fa-user"/>
                   <span>유저</span>
@@ -248,7 +147,8 @@ class ExploreMenuBox extends React.Component {
 }
 
 ExploreMenuBox.propTypes = {
-  match: React.PropTypes.object.isRequired
+  match: React.PropTypes.object.isRequired,
+  location: React.PropTypes.object.isRequired,
 };
 ExploreMenuBox.defaultProps = {};
 
@@ -262,7 +162,8 @@ const LeftCol = React.createClass({
 
         <Switch>
           <Route path="/explore" component={ExploreMenuBox} />
-          <Route exact path="/" component={HomeMenuBox} />
+          <Route path="/collection/:id" component={HomeMenuBoxConnect} />
+          <Route exact path="/" component={HomeMenuBoxConnect} />
         </Switch>
       </div>
     );

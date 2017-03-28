@@ -5,6 +5,7 @@ const getCurrentUserId = state => state.getIn(['UI', 'Auth', 'userId']);
 
 const getUsers = state => state.getIn(['Domains', 'Users']);
 const getForums = state => state.getIn(['Domains', 'Forums']);
+const getCollections = state => state.getIn(['Domains', 'Collections']);
 
 export const getUser = createSelector(
   [getCurrentUserId, getUsers],
@@ -40,5 +41,21 @@ export const forumCreated = createSelector(
     return ForumIds.map((forumId) => {
       return forums.get(forumId + '');
     });
+  }
+);
+
+export const getCollectionList = createSelector(
+  getUser,
+  getCollections,
+  (user, collections) => {
+    if (user) {
+      const userCollectionIdList = user.get('collections');
+
+      return userCollectionIdList.map(v => {
+        return collections.get(v + '');
+      });
+    } else {
+      return new List();
+    }
   }
 );
