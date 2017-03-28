@@ -1,0 +1,11 @@
+:root {
+    --mainColor: red;
+    --danger-theme: {
+        color: white;
+        background-color: red;
+    };
+}
+
+.hello {
+    color: red;
+}

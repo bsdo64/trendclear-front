@@ -17,4 +17,8 @@ const Contents = ({ match }) => {
   );
 };
 
+Contents.propTypes = {
+  match: React.PropTypes.object.isRequired,
+};
+
 export default Contents;

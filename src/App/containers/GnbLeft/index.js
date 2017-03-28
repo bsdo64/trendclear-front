@@ -5,30 +5,30 @@ import cx from 'classnames';
 import styles from './index.css';
 
 const data = [
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
-  {title: '나는 열네자 입니다'},
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
+  { title: '나는 열네자 입니다' },
 ];
 
 const activeStyle = function(selector, match, url) {
@@ -88,7 +88,7 @@ class HomeMenuBox extends React.Component {
     return (
       <div className={styles.gnbSubMenu}>
         <div className={styles.box}>
-          <Scrollbars autoHide style={{width: 210, paddingRight: 10}}>
+          <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
               <div className={styles.subMenuItem}>
                 <Link to="/">
@@ -122,7 +122,7 @@ class HomeMenuBox extends React.Component {
                   autoHeight
                   autoHeightMin={100}
                   autoHeightMax={200}
-                  style={{width: 210}}>
+                  style={{ width: 210 }}>
 
                   <ul className={styles.collectionList}>
                     {data.map((v, i) => {
@@ -175,7 +175,7 @@ class ExploreMenuBox extends React.Component {
     return (
       <div className={styles.gnbSubMenu}>
         <div className={styles.box}>
-          <Scrollbars autoHide style={{width: 210, paddingRight: 10}}>
+          <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
               <div className={cx([styles.subMenuItem, activeStyle(styles.activeButton, '/', pathname)])}>
                 <Link to={`${match.url}`}>
@@ -244,7 +244,9 @@ class ExploreMenuBox extends React.Component {
   }
 }
 
-ExploreMenuBox.propTypes = {};
+ExploreMenuBox.propTypes = {
+  match: React.PropTypes.object.isRequired
+};
 ExploreMenuBox.defaultProps = {};
 
 const LeftCol = React.createClass({
