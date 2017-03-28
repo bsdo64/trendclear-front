@@ -40,8 +40,10 @@ const activeStyle = function(selector, match, url) {
 const getSeqPathName = function (pathname, seq = 0) {
   const array = pathname.split('/');
 
-  if (array.length > 0) {
+  if (array[seq]) {
     return '/' + array[seq];
+  } else {
+    return '/';
   }
 };
 
@@ -172,6 +174,7 @@ class ExploreMenuBox extends React.Component {
     const {match, location} = this.props;
     const pathname = getSeqPathName(location.pathname, 2);
 
+    console.log(pathname);
     return (
       <div className={styles.gnbSubMenu}>
         <div className={styles.box}>
