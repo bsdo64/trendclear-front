@@ -292,14 +292,14 @@ export default (initialImmutableState, sagaMiddleware) => {
       applyMiddleware(
         initRouteState,
         thunk,
-        sagaMiddleware
-      )
+        sagaMiddleware,
+      ),
     );
   } else {
     middleWareWrapper = applyMiddleware(
       initRouteState,
       thunk,
-      sagaMiddleware
+      sagaMiddleware,
     );
   }
 
@@ -309,6 +309,6 @@ export default (initialImmutableState, sagaMiddleware) => {
       routing: RouterReducer,
     }),
     initialImmutableState,
-    middleWareWrapper
+    middleWareWrapper,
   );
 };

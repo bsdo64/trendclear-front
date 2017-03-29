@@ -1,10 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
-import {
-  BrowserRouter,
-  Route,
-  Switch
-} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import MainHeader from '../containers/MainHeader';
 import Home from './Home';

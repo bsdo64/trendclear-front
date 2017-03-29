@@ -1,19 +1,20 @@
 module.exports = {
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
-  "env": {
-    "browser": true,
-    "node": true,
-    "jquery": true,
+  'extends': ['eslint:recommended', 'plugin:react/recommended'],
+  'env': {
+    'browser': true,
+    'node': true,
+    'jquery': true,
   },
-  "plugins": [
-    "react",
+  'plugins': [
+    'react',
   ],
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true,
-      "experimentalObjectRestSpread": true
-    }
+  parser: 'babel-eslint',
+  'parserOptions': {
+    'ecmaVersion': 6,
+    'sourceType': 'module',
+    'ecmaFeatures': {
+      'jsx': true,
+      'experimentalObjectRestSpread': true,
+    },
   },
 };

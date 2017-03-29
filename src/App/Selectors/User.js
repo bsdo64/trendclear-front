@@ -11,7 +11,7 @@ export const getUser = createSelector(
   [getCurrentUserId, getUsers],
   (currentUserId, users) => {
     return users.get(currentUserId + '');
-  }
+  },
 );
 
 export const forumFollowed = createSelector(
@@ -26,7 +26,7 @@ export const forumFollowed = createSelector(
     return ForumIds.map((forumId) => {
       return forums.get(forumId + '');
     });
-  }
+  },
 );
 
 export const forumCreated = createSelector(
@@ -41,7 +41,7 @@ export const forumCreated = createSelector(
     return ForumIds.map((forumId) => {
       return forums.get(forumId + '');
     });
-  }
+  },
 );
 
 export const getCollectionList = createSelector(
@@ -57,5 +57,5 @@ export const getCollectionList = createSelector(
     } else {
       return new List();
     }
-  }
+  },
 );

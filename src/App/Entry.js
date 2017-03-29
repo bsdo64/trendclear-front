@@ -20,8 +20,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 // Create Store
 const store = configStore(
-  fromJS({Stores: {UI: {}, Domains: {}}}),
-  sagaMiddleware
+  fromJS({ Stores: { UI: {}, Domains: {} } }),
+  sagaMiddleware,
 );
 
 // Socket Start

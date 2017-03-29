@@ -62,8 +62,7 @@ class AjaxApiClient {
         .query(normalizedQuery)
         .set('Accept', 'application/json')
         .end(this._done(resolve, reject));
-    })
-      .catch(this.catchError);
+    }).catch(this.catchError);
   }
 
   post(url, params) {
@@ -74,8 +73,7 @@ class AjaxApiClient {
         .set('Accept', 'application/json')
         .withCredentials()
         .end(this._done(resolve, reject));
-    })
-      .catch(this.catchError);
+    }).catch(this.catchError);
   }
 
   put(url, params) {
@@ -86,8 +84,7 @@ class AjaxApiClient {
         .set('Accept', 'application/json')
         .withCredentials()
         .end(this._done(resolve, reject));
-    })
-      .catch(this.catchError);
+    }).catch(this.catchError);
 
   }
 
@@ -99,8 +96,7 @@ class AjaxApiClient {
         .set('Accept', 'application/json')
         .withCredentials()
         .end(this._done(resolve, reject));
-    })
-      .catch(this.catchError);
+    }).catch(this.catchError);
   }
 
   postImg(url, file) {
@@ -111,8 +107,7 @@ class AjaxApiClient {
         .set('Accept', 'application/json')
         .withCredentials()
         .end(this._done(resolve, reject));
-    })
-      .catch(this.catchError);
+    }).catch(this.catchError);
   }
 }
 

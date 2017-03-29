@@ -2,6 +2,29 @@ import React, { PropTypes } from 'react';
 import AvatarImage from '../../../../components/AvatarImage';
 
 require('./index.scss');
+
+const ImageBox = (props) => {
+  const { profile, srcUrl } = props;
+  const sex = profile.get('sex'),
+    avatar_img = profile.get('avatar_img');
+
+  if (srcUrl) {
+    return <img src={srcUrl}/>;
+  } else {
+    return <AvatarImage
+      imageClass="image_preview"
+      sex={sex}
+      avatarImg={avatar_img}
+      removable={true}
+    />;
+  }
+};
+
+ImageBox.propTypes = {
+  profile: PropTypes.object,
+  srcUrl: PropTypes.string,
+};
+
 const AvatarImageModal = React.createClass({
   displayName: 'AvatarImageModal',
   propTypes: {
@@ -38,24 +61,9 @@ const AvatarImageModal = React.createClass({
     }
   },
   render() {
-    const {UserStore} = this.props;
+    const { UserStore } = this.props;
     const user = UserStore.get('user');
     const profile = UserStore.get('profile');
-
-    const sex = profile.get('sex'),
-      avatar_img = profile.get('avatar_img');
-    let avatarImg;
-
-    if (this.state.imagePreviewUrl) {
-      avatarImg = <img src={this.state.imagePreviewUrl}/>;
-    } else {
-      avatarImg = <AvatarImage
-        imageClass="image_preview"
-        sex={sex}
-        avatarImg={avatar_img}
-        removable={true}
-      />;
-    }
 
     return (
       <div className="avatar_img">
@@ -65,7 +73,10 @@ const AvatarImageModal = React.createClass({
           </div>
           <div className="item">
             <div className="image">
-              { avatarImg }
+              <ImageBox
+                srcUrl={this.state.imagePreviewUrl}
+                profile={profile}
+              />
               {/*<input name="thumb-roundness" className="slider form-control ng-valid ng-scope ng-dirty" type="range" />*/}
             </div>
             <div className="content">

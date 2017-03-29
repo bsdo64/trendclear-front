@@ -21,18 +21,17 @@ const ConfirmBox = React.createClass({
   },
 
   render() {
-    const {ShoppingStore, UserStore} = this.props;
+    const { ShoppingStore, UserStore } = this.props;
     const trendbox = UserStore.get('trendbox');
     const purchaseItem = ShoppingStore.get('purchaseItem');
     if (!purchaseItem) {
       return (
-        <div></div>
+        <div/>
       );
     }
 
     const priceType = purchaseItem.getIn(['attribute', 'price_type']) || '';
-    const canPurchase =
-      purchaseItem.getIn(['attribute', `price_${priceType.toLowerCase()}`]) <=
+    const canPurchase = purchaseItem.getIn(['attribute', `price_${priceType.toLowerCase()}`]) <=
       trendbox.get(priceType);
 
     return (
@@ -45,10 +44,9 @@ const ConfirmBox = React.createClass({
                 purchaseItem.get('title')
               }
               을(를) 구입하시겠습니까?
-              <div style={{paddingTop: 10, textAlign: 'right'}}>
+              <div style={{ paddingTop: 10, textAlign: 'right' }}>
                 <div className="ui button primary"
-                     onClick={this.confirmPurchaseItem.bind(this,
-                       purchaseItem)}>
+                     onClick={this.confirmPurchaseItem.bind(this, purchaseItem)}>
                   확인
                 </div>
                 <div className="ui button"
@@ -64,7 +62,7 @@ const ConfirmBox = React.createClass({
             <div >
               포인트가 부족합니다
 
-              <div style={{paddingTop: 10, textAlign: 'right'}}>
+              <div style={{ paddingTop: 10, textAlign: 'right' }}>
                 <div className="ui button primary"
                      onClick={this.togglePurchaseWindow.bind(this, null)}>
                   확인

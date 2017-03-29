@@ -77,5 +77,5 @@ module.exports = connect(
     FireToggleActiveVenalinkModal: toggleActiveVenalinkModal,
     FireRequestActivateVenalink: requestActivateVenalink,
     FireRequestParticipateVenalink: requestParticipateVenalink,
-  }
+  },
 )(BestContainer);

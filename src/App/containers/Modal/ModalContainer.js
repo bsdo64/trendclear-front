@@ -4,11 +4,11 @@ import Modal from '../../components/Modals';
 
 import { closeModal } from '../../Actions/Modal';
 
-const DefaultModalContainer = React.createClass({
+class DefaultModalContainer extends React.Component {
   render() {
     return (<Modal {...this.props} />);
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
@@ -24,5 +24,5 @@ module.exports = connect(
   mapStateToProps,
   {
     FireCloseModal: closeModal,
-  }
+  },
 )(DefaultModalContainer);

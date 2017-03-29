@@ -6,7 +6,7 @@ import Best from '../../containers/Contents/Best';
 import Explore from '../Explore/index.js';
 import Writing from '../Submit/index.js';
 import User from '../User/index.js';
-import RightSide from '../../containers/RightSide/RightSide';
+import RightSide from '../../containers/RightSide/RightSide.js';
 import WidgetContainer from '../../containers/RightCol/WidgetContainer';
 
 const DefaultLayout = () => {

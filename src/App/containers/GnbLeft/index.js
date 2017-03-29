@@ -9,17 +9,17 @@ import HomeMenuBoxConnect from './components/HomeMenuBox/index.js';
 const activeStyle = function(selector, match, url) {
   let isMatch;
   if (typeof match === 'string') {
-    isMatch = url ===  match;
+    isMatch = url === match;
   }
 
   if (Array.isArray(match)) {
     isMatch = match.filter(v => v === url).length > 0;
   }
 
-  return cx({[selector]: isMatch})
+  return cx({ [selector]: isMatch });
 };
 
-const getSeqPathName = function (pathname, seq = 0) {
+const getSeqPathName = function(pathname, seq = 0) {
   const array = pathname.split('/');
 
   if (array[seq]) {
@@ -31,7 +31,7 @@ const getSeqPathName = function (pathname, seq = 0) {
 
 class LeftBar extends React.Component {
   render() {
-    const {location} = this.props;
+    const { location } = this.props;
     const pathname = getSeqPathName(location.pathname, 1);
     const getStyle = (path) => activeStyle(styles.active, path, pathname);
 
@@ -70,7 +70,7 @@ LeftBar.defaultProps = {};
 
 class ExploreMenuBox extends React.Component {
   render() {
-    const {match, location} = this.props;
+    const { match, location } = this.props;
     const pathname = getSeqPathName(location.pathname, 2);
     const getStyle = (path) => activeStyle(styles.activeButton, path, pathname);
 
@@ -161,9 +161,9 @@ const LeftCol = React.createClass({
         <LeftBar {...this.props} />
 
         <Switch>
-          <Route path="/explore" component={ExploreMenuBox} />
-          <Route path="/collection/:id" component={HomeMenuBoxConnect} />
-          <Route exact path="/" component={HomeMenuBoxConnect} />
+          <Route path="/explore" component={ExploreMenuBox}/>
+          <Route path="/collection/:id" component={HomeMenuBoxConnect}/>
+          <Route exact path="/" component={HomeMenuBoxConnect}/>
         </Switch>
       </div>
     );

@@ -1,7 +1,3 @@
-/**
- * Created by bsdo on 2017. 3. 28..
- */
-
 import React, {
   Component,
   PropTypes,

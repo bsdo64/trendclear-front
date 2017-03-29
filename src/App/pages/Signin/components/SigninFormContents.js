@@ -1,8 +1,12 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import { browserHistory } from 'react-router-dom';
 
 const SigninFormContents = React.createClass({
+  signinEmailInput: null,
+  emailVerifyInput: null,
+  signinForm: null,
+  signinFormInput: null,
+
   displayName: 'SigninFormContents',
   propTypes: {
     submitResult: PropTypes.bool.isRequired,
@@ -25,7 +29,7 @@ const SigninFormContents = React.createClass({
   componentWillReceiveProps(nextProps) {
     const oldSubmitResult = this.props.submitResult;
     const oldEmailVerifySuccess = this.props.emailVerifySuccess;
-    const {submitResult, emailVerifySuccess} = nextProps;
+    const { submitResult, emailVerifySuccess } = nextProps;
     if (oldSubmitResult === false && submitResult === true) {
       if (oldEmailVerifySuccess === true && emailVerifySuccess === true) {
         this.props.history.push('/');
@@ -35,7 +39,7 @@ const SigninFormContents = React.createClass({
 
   componentDidMount() {
     $('form select').dropdown();
-    $(this.refs.signinform).form({
+    $(this.signinForm).form({
       inline: true,
       keyboardShortcuts: false,
       on: 'blur',
@@ -131,7 +135,7 @@ const SigninFormContents = React.createClass({
       },
       onSuccess: (err, result) => {
 
-        const {emailDup, nickDup, emailVerifyFail, emailVerifySuccess, emailRequested} = this.props;
+        const { emailDup, nickDup, emailVerifyFail, emailVerifySuccess, emailRequested } = this.props;
 
         if (emailVerifyFail) {
           return;
@@ -165,12 +169,12 @@ const SigninFormContents = React.createClass({
   },
 
   render() {
-    const {emailDup, nickDup, emailVerifyFail, emailVerifyFormOpen} = this.props;
+    const { emailDup, nickDup, emailVerifyFail, emailVerifyFormOpen } = this.props;
 
     let dupError = '';
     if (emailDup || nickDup || emailVerifyFail) {
       dupError = (
-        <div className="ui error message" style={{display: 'block'}}>
+        <div className="ui error message" style={{ display: 'block' }}>
           <ul className="list">
             {
               emailDup &&
@@ -201,7 +205,9 @@ const SigninFormContents = React.createClass({
           회원 가입
           <div className="sub header">회원가입을 하시면 다양항 서비스를 이용하실 수 있습니다.</div>
         </h3>
-        <form ref="signinform" className="ui form" name="fregister"
+        <form ref={form => this.signinForm = form}
+              className="ui form"
+              name="fregister"
               id="fregister">
 
           <div className="ui basic segment">
@@ -209,9 +215,9 @@ const SigninFormContents = React.createClass({
             <div className={formCx.default}>
               <label>이메일</label>
               <div className="input">
-                <i className="fa fa-envelope-o" />
+                <i className="fa fa-envelope-o"/>
                 <input
-                  ref="signinEmail"
+                  ref={(input) => this.signinEmailInput = input}
                   type="text"
                   name="signinEmail"
                   placeholder="이메일을 입력하세요"
@@ -223,7 +229,7 @@ const SigninFormContents = React.createClass({
             <div className={formCx.default}>
               <label>비밀번호</label>
               <div className="input">
-                <i className="fa fa-lock" />
+                <i className="fa fa-lock"/>
                 <input
                   type="password"
                   name="password"
@@ -234,7 +240,7 @@ const SigninFormContents = React.createClass({
             <div className={formCx.default}>
               <label>비밀번호 재입력</label>
               <div className="input">
-                <i className="fa fa-lock" />
+                <i className="fa fa-lock"/>
                 <input type="password"
                        name="password_re"
                        placeholder="비밀번호를 다시한번 입력하세요"
@@ -249,8 +255,8 @@ const SigninFormContents = React.createClass({
             <div className={formCx.default}>
               <label>닉네임</label>
               <div className="input">
-                <i className="fa fa-user" />
-                <input ref="signinNick"
+                <i className="fa fa-user"/>
+                <input ref={input => this.signinFormInput = input}
                        type="text"
                        name="signinNick"
                        placeholder="닉네임을 입력하세요"
@@ -261,7 +267,7 @@ const SigninFormContents = React.createClass({
             <div className={formCx.default}>
               <label>성별</label>
               <div className="input">
-                <i className="fa fa-venus-mars" />
+                <i className="fa fa-venus-mars"/>
                 <select className="ui dropdown" name="sex">
                   <option value="">성별</option>
                   <option value="1">남자</option>
@@ -340,7 +346,8 @@ const SigninFormContents = React.createClass({
               emailVerifyFormOpen &&
               <div className="field">
                 <label>이메일 확인</label>
-                <input ref="emailVerify" type="text" name="nick"
+                <input ref={(input) => this.emailVerifyInput = input }
+                       type="text" name="nick"
                        placeholder="이메일을 확인해주세요"
                        onBlur={this.handleCheckEmailCodeVerify}/>
               </div>
@@ -360,33 +367,33 @@ const SigninFormContents = React.createClass({
   },
 
   handleEmail() {
-    const emailValue = this.refs.signinEmail.value;
+    const emailValue = this.signinEmailInput.value;
     if (emailValue.length > 3) {
-      this.props.FireRequestCheckEmailDup({email: emailValue});
+      this.props.FireRequestCheckEmailDup({ email: emailValue });
     }
   },
 
   handleNick() {
-    const nickValue = this.refs.signinNick.value;
+    const nickValue = this.signinFormInput.value;
     if (nickValue.length > 1) {
-      this.props.FireRequestCheckNickDup({nick: nickValue});
+      this.props.FireRequestCheckNickDup({ nick: nickValue });
     }
   },
 
   _sendEmailVerify() {
-    const email = this.refs.signinEmail.value;
+    const email = this.signinEmailInput.value;
     if (email) {
-      this.props.FireRequestEmailVerifyCode({email});
+      this.props.FireRequestEmailVerifyCode({ email });
     }
   },
   handleSubmit() {
 
-    $(this.refs.signinform).form('validate form');
+    $(this.signinForm).form('validate form');
   },
 
   handleCheckEmailCodeVerify() {
     this.props.FireRequestCheckVerifyCode(
-      {verifyCode: this.refs.emailVerify.value});
+      { verifyCode: this.emailVerifyInput.value });
   },
 });
 

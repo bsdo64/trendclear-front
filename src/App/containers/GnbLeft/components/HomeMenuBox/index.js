@@ -11,7 +11,7 @@ class HomeMenuBox extends React.Component {
     super();
 
     this.state = {
-      openSearch: false
+      openSearch: false,
     };
 
     this.toggleOpenSearch = this.toggleOpenSearch.bind(this);
@@ -23,7 +23,7 @@ class HomeMenuBox extends React.Component {
   }
 
   toggleOpenSearch() {
-    this.setState({openSearch: !this.state.openSearch});
+    this.setState({ openSearch: !this.state.openSearch });
   }
 
   render() {
@@ -51,9 +51,9 @@ class HomeMenuBox extends React.Component {
                 </Link>
 
                 <a href="#" onClick={this.toggleOpenSearch}>
-                  <i className={cx("fa", {
+                  <i className={cx('fa', {
                     'fa-search': !this.state.openSearch,
-                    'fa-close': this.state.openSearch
+                    'fa-close': this.state.openSearch,
                   })}
                   />
                 </a>
@@ -122,7 +122,7 @@ class HomeMenuBox extends React.Component {
 }
 
 HomeMenuBox.propTypes = {
-  collectionList: React.PropTypes.object.isRequired
+  collectionList: React.PropTypes.object.isRequired,
 };
 HomeMenuBox.defaultProps = {};
 
@@ -130,11 +130,11 @@ const mapStateToProps = (state, props) => {
   const stateStore = state.get('Stores');
 
   return {
-    collectionList: getCollectionList(stateStore, props)
+    collectionList: getCollectionList(stateStore, props),
   };
 };
 
 export default connect(
   mapStateToProps,
-  {}
+  {},
 )(HomeMenuBox);

@@ -30,4 +30,4 @@ function* rootSaga() {
   ];
 }
 
-export default rootSaga
+export default rootSaga;

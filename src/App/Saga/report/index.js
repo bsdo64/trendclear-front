@@ -13,16 +13,16 @@ const API = Api.setEntryPoint('/ajax');
 function* SagaReport() {
   while (WORKING) {
     // REQUEST_REPORT
-    const {payload} = yield take(REQUEST_REPORT);
+    const { payload } = yield take(REQUEST_REPORT);
 
     try {
       yield call([Api, API.post], '/user/report', payload);
 
-      yield put({type: SUCCESS_REPORT});
+      yield put({ type: SUCCESS_REPORT });
     }
 
     catch (error) {
-      yield put({type: FAILURE_REPORT, error});
+      yield put({ type: FAILURE_REPORT, error });
     }
   }
 }
