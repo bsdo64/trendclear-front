@@ -222,7 +222,7 @@ const MyArea = React.createClass({
   propTypes: {
     location: PropTypes.object.isRequired,
     LoginStore: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
+    UserStore: PropTypes.object,
     FireToggleLoginModal: PropTypes.func.isRequired,
     FireRequestLogout: PropTypes.func.isRequired,
     FireRequestUserReadNotification: PropTypes.func.isRequired,

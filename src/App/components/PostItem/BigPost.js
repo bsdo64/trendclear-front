@@ -81,8 +81,8 @@ const BigPost = React.createClass({
 
     const forumId = post.get('forum_id');
     const postId = post.get('id');
-    const forumUrl = `/community?forumId=${forumId}`;
-    const postUrl = `/community?forumId=${forumId}&postId=${postId}`;
+    const forumUrl = `/club/${forumId}`;
+    const postUrl = `/club/${forumId}?postId=${postId}`;
     const liked = post.get('liked');
 
     const cPost = cx([styles.postContainer], 'best_list_item', {

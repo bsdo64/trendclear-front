@@ -8,6 +8,7 @@
 
 @fontName          : 'Noto Sans KR';
 @fontSmoothing     : antialiased;
+@importGoogleFonts : false;
 
 /* This is the single variable that controls them all */
 @emSize   : 12px;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SearchBar from '../../components/Header/search';
+import SearchBar from '../Header/search';
 import { UI } from '../../Reducers/InitialStates';
 import {
   inputSearchQuery,

@@ -1,72 +1,9 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import cx from 'classnames';
-import styles from './index.css';
-
-import HomeMenuBoxConnect from './components/HomeMenuBox/index.js';
-
-const activeStyle = function(selector, match, url) {
-  let isMatch;
-  if (typeof match === 'string') {
-    isMatch = url === match;
-  }
-
-  if (Array.isArray(match)) {
-    isMatch = match.filter(v => v === url).length > 0;
-  }
-
-  return cx({ [selector]: isMatch });
-};
-
-const getSeqPathName = function(pathname, seq = 0) {
-  const array = pathname.split('/');
-
-  if (array[seq]) {
-    return '/' + array[seq];
-  } else {
-    return '/';
-  }
-};
-
-class LeftBar extends React.Component {
-  render() {
-    const { location } = this.props;
-    const pathname = getSeqPathName(location.pathname, 1);
-    const getStyle = (path) => activeStyle(styles.active, path, pathname);
-
-    return (
-      <div className={styles.gnbMenu}>
-        <ul className={styles.appIconList}>
-          <li className={getStyle(['/', '/collection'])}>
-            <Link to="/"><i className="fa fa-home"/></Link>
-          </li>
-          <li className={getStyle('/explore')}>
-            <Link to="/explore"><i className="fa fa-globe"/></Link>
-          </li>
-          <li className={getStyle('/submit')}>
-            <Link to="/submit"><i className="fa fa-pencil"/></Link>
-          </li>
-          <li className={getStyle('/user')}>
-            <Link to="/user"><i className="fa fa-user"/></Link>
-          </li>
-        </ul>
-        <ul className={styles.bottomIconList}>
-          <li>
-            <i className="fa fa-bars"/>
-          </li>
-        </ul>
-      </div>
-    );
-  }
-}
-
-LeftBar.propTypes = {
-  match: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired,
-};
-LeftBar.defaultProps = {};
+import { getSeqPathName, activeStyle } from '../../func';
+import styles from '../../index.css';
 
 class ExploreMenuBox extends React.Component {
   render() {
@@ -152,22 +89,4 @@ ExploreMenuBox.propTypes = {
 };
 ExploreMenuBox.defaultProps = {};
 
-const LeftCol = React.createClass({
-  render() {
-
-    return (
-      <div id="left_col">
-
-        <LeftBar {...this.props} />
-
-        <Switch>
-          <Route path="/explore" component={ExploreMenuBox}/>
-          <Route path="/collection/:id" component={HomeMenuBoxConnect}/>
-          <Route exact path="/" component={HomeMenuBoxConnect}/>
-        </Switch>
-      </div>
-    );
-  },
-});
-
-module.exports = LeftCol;
+export default ExploreMenuBox;

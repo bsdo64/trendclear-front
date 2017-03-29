@@ -1,17 +1,24 @@
-import React, {
-  Component,
-  PropTypes,
-} from 'react';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-class Writing extends Component {
-  render() {
-    return (
-      <div>Writing</div>
-    );
-  }
-}
+import Main from './components/Main.js';
+import Club from './components/Club.js';
+import Series from './components/Series.js';
+import Post from './components/Post.js';
 
-Writing.propTypes = {};
-Writing.defaultProps = {};
+const Contents = ({ match }) => {
+  return (
+    <Switch>
+      <Route path={`${match.url}/series`} component={Series}/>
+      <Route path={`${match.url}/club`} component={Club}/>
+      <Route path={`${match.url}/post`} component={Post}/>
+      <Route path={`${match.url}/`} component={Main}/>
+    </Switch>
+  );
+};
 
-export default Writing;
+Contents.propTypes = {
+  match: React.PropTypes.object.isRequired,
+};
+
+export default Contents;

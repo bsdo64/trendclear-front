@@ -35,7 +35,7 @@ const PostList = React.createClass({
   },
 
   render: function() {
-    const {item, author, postIdNow, defaultPageUrl, isAnnounce} = this.props;
+    const { item, author, postIdNow, defaultPageUrl, isAnnounce } = this.props;
     const id = item.get('id');
     const title = item.get('title');
     const prefix = item.get('prefix');
@@ -45,7 +45,7 @@ const PostList = React.createClass({
     const comment_count = item.get('comment_count');
 
     const activeClass = cx({
-      active: id == postIdNow,
+      active: id === postIdNow,
       announce: isAnnounce,
     });
 
@@ -79,6 +79,7 @@ const Forum = React.createClass({
   // mixins: [PureRenderMixin],
   propTypes: {
     location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     PaginationStore: PropTypes.object.isRequired,
     AuthStore: PropTypes.object.isRequired,
     ListStore: PropTypes.object.isRequired,
@@ -101,36 +102,36 @@ const Forum = React.createClass({
     };
   },
   onChange(e) {
-    this.setState({text: e.target.value});
+    this.setState({ text: e.target.value });
   },
   handleForumSearch(e) {
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.setQuery('forumSearch', this.state.text).end());
+    this.props.history.push(makeUrl.setQuery('forumSearch', this.state.text).end());
   },
   handleSubmitPrefix(prefixId, e) {
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
     makeUrl.removeQuery('forumSearch');
-    browserHistory.push(makeUrl.setQuery('forumPrefix', prefixId).end());
+    this.props.history.push(makeUrl.setQuery('forumPrefix', prefixId).end());
   },
   handleSetPage(pagination) {
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.setQuery('p', pagination.page).end());
+    this.props.history.push(makeUrl.setQuery('p', pagination.page).end());
   },
   resetPrefix(e) {
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(
+    this.props.history.push(
       makeUrl.removeQuery('forumPrefix', 'forumSearch').end());
   },
 
   openLoginModal() {
-    const {location, FireToggleLoginModal} = this.props;
+    const { location, FireToggleLoginModal } = this.props;
     FireToggleLoginModal({
       contentType: 'Login',
       location: location.pathname + location.search,
@@ -155,7 +156,7 @@ const Forum = React.createClass({
   },
   createPostItem(makeUrl, isAnnounce, postId) {
 
-    const {Posts, Users, location} = this.props;
+    const { Posts, Users, location } = this.props;
     const postIdNow = qs.parse(location.search.slice(1)).postId;
 
     const defaultPageUrl = makeUrl.setQuery('postId', postId)
@@ -185,7 +186,7 @@ const Forum = React.createClass({
       FireRequestRemoveForumInCollection,
     } = this.props;
     const forumId = ListStore.get('forum');
-    const params = {collectionId: e.target.value, forumId: forumId};
+    const params = { collectionId: e.target.value, forumId: forumId };
 
     if (e.target.checked) {
       FireRequestAddForumInCollection(params);
@@ -209,9 +210,9 @@ const Forum = React.createClass({
       this.openLoginModal();
     } else {
       if (isForumFollow) {
-        FireRequestUnFollowForum({id: forumId, userId});
+        FireRequestUnFollowForum({ id: forumId, userId });
       } else {
-        FireRequestFollowForum({forumId: forumId, userId});
+        FireRequestFollowForum({ forumId: forumId, userId });
       }
     }
   },
@@ -226,7 +227,7 @@ const Forum = React.createClass({
 
   render() {
 
-    const {Users, Forums, Prefixes, AuthStore, ListStore, PaginationStore, Collections} = this.props;
+    const { Users, Forums, Prefixes, AuthStore, ListStore, PaginationStore, Collections } = this.props;
 
     const self = this;
     const userId = AuthStore.get('userId');
@@ -240,7 +241,7 @@ const Forum = React.createClass({
       const forum = Forums.get(forumId.toString());
 
       if (!forum) {
-        return (<div></div>);
+        return (<div/>);
       }
 
       const announceIds = forum.get('announces') || [];
@@ -395,7 +396,7 @@ const Forum = React.createClass({
                              dangerouslySetInnerHTML={{
                                __html: marked(forum.get('rule')),
                              }}
-                        ></div>
+                        />
                       </div>
                     }
                   </div>
@@ -406,7 +407,7 @@ const Forum = React.createClass({
             {/*<AdForum1 url="http://www.computerhope.com/banners/banner3.gif" />*/}
 
             <div className="ui horizontal celled list">
-              <div className="item" style={{fontWeight: 'bold'}}>
+              <div className="item" style={{ fontWeight: 'bold' }}>
                 <div className="middle aligned content bold"
                      onClick={this.resetPrefix}>전체
                 </div>
@@ -450,7 +451,7 @@ const Forum = React.createClass({
                   className="ui button primary tiny"
                   to={{
                     pathname: '/community/submit',
-                    query: {forumId: forumId},
+                    query: { forumId: forumId },
                   }}>
                   글쓰기
                 </Link>
@@ -465,7 +466,7 @@ const Forum = React.createClass({
               }
             </div>
 
-            <div className="ui divider"></div>
+            <div className="ui divider"/>
 
             <div className="ui center aligned container">
 
@@ -478,7 +479,7 @@ const Forum = React.createClass({
               />
               }
 
-              <div className="ui search mini" style={{padding: '15px'}}>
+              <div className="ui search mini" style={{ padding: '15px' }}>
                 <div className="ui icon input">
                   <form onSubmit={this.handleForumSearch}>
                     <input className="prompt"
@@ -488,9 +489,9 @@ const Forum = React.createClass({
                            value={this.state.text}
                     />
                   </form>
-                  <i className="search icon"></i>
+                  <i className="search icon"/>
                 </div>
-                <div className="results"></div>
+                <div className="results"/>
               </div>
             </div>
 
@@ -499,10 +500,10 @@ const Forum = React.createClass({
         );
       }
 
-      return <div></div>;
+      return <div/>;
     }
 
-    return <div></div>;
+    return <div/>;
   },
 });
 
