@@ -8,7 +8,7 @@ import {
 
   REQUEST_LOGOUT,
   SUCCESS_LOGOUT,
-  FAILURE_LOGOUT
+  FAILURE_LOGOUT,
 
 } from '../../Actions/Login';
 
@@ -24,14 +24,14 @@ function* SagaLogout() {
       const result = yield call([Api, API.post], '/logout');
 
       if (result === 'ok') {
-        yield put({type: SUCCESS_LOGOUT});
+        yield put({ type: SUCCESS_LOGOUT });
       } else {
-        yield put({type: FAILURE_LOGOUT});
+        yield put({ type: FAILURE_LOGOUT });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_LOGOUT, error});
+      yield put({ type: FAILURE_LOGOUT, error });
     }
   }
 }
@@ -39,20 +39,20 @@ function* SagaLogout() {
 function* SagaLogin() {
   while (WORKING) {
     // REQUEST_LOGIN
-    const {payload} = yield take(REQUEST_LOGIN);
+    const { payload } = yield take(REQUEST_LOGIN);
 
     try {
       const result = yield call([Api, API.post], '/login', payload);
 
       if (result === 'ok') {
-        yield put({type: SUCCESS_LOGIN, result});
+        yield put({ type: SUCCESS_LOGIN, result });
       } else {
-        yield put({type: FAILURE_LOGIN, result});
+        yield put({ type: FAILURE_LOGIN, result });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_LOGIN, error});
+      yield put({ type: FAILURE_LOGIN, error });
     }
   }
 }

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import MyArea from '../../components/MyArea';
 import { Noti, Point } from '~/Utils/Socket';
 import { UI } from '../../Reducers/InitialStates';
@@ -36,6 +36,7 @@ MyMenuContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -46,7 +47,7 @@ const mapStateToProps = (state) => {
 
   return {
     LoginStore: getUIState('Login'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
     Notis: getDomainState('Notis'),
   };
 };

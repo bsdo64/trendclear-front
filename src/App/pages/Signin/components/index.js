@@ -26,7 +26,7 @@ const SigninContents = React.createClass({
   },
 
   componentWillMount() {
-    const {UserStore, history} = this.props;
+    const { UserStore, history } = this.props;
     if (UserStore.get('user')) {
       history.replace('/');
     }
@@ -37,7 +37,7 @@ const SigninContents = React.createClass({
   },
 
   render() {
-    const {history, SigninFormStore} = this.props;
+    const { history, SigninFormStore } = this.props;
 
     const agreeTerm = SigninFormStore.get('agreeTerm');
     const agreePrivacy = SigninFormStore.get('agreePrivacy');

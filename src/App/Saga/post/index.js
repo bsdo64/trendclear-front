@@ -42,16 +42,16 @@ const ImageApi = new Api.constructor().setEntryPoint('/image');
 function* SagaGetMeta() {
   while (WORKING) {
     // REQUEST_GET_POST_META
-    const {payload} = yield take(REQUEST_GET_POST_META);
+    const { payload } = yield take(REQUEST_GET_POST_META);
 
     try {
       const result = yield call([FrontApi, FrontApi.get], '/urlMeta', payload);
 
-      yield put({type: SUCCESS_GET_POST_META, result});
+      yield put({ type: SUCCESS_GET_POST_META, result });
     }
 
     catch (error) {
-      yield put({type: FAILURE_GET_POST_META, error});
+      yield put({ type: FAILURE_GET_POST_META, error });
     }
   }
 }
@@ -59,16 +59,16 @@ function* SagaGetMeta() {
 function* SagaUpdatePost() {
   while (WORKING) {
     // REQUEST_UPDATE_POST
-    const {payload} = yield take(REQUEST_UPDATE_POST);
+    const { payload } = yield take(REQUEST_UPDATE_POST);
 
     try {
       const result = yield call([API, API.put], '/community/submit', payload);
 
-      yield put({type: SUCCESS_UPDATE_POST, result});
+      yield put({ type: SUCCESS_UPDATE_POST, result });
     }
 
     catch (error) {
-      yield put({type: FAILURE_UPDATE_POST, error});
+      yield put({ type: FAILURE_UPDATE_POST, error });
     }
   }
 }
@@ -76,21 +76,21 @@ function* SagaUpdatePost() {
 function* SagaRemoveUnusingImage() {
   while (WORKING) {
     // REQUEST_DELETE_UN_USING_IMAGE
-    const {payload} = yield take(REQUEST_DELETE_UN_USING_IMAGE);
+    const { payload } = yield take(REQUEST_DELETE_UN_USING_IMAGE);
 
     try {
       const requestArray = [];
       for (let index in payload) {
         requestArray.push(call([ImageApi, ImageApi.delete], '/uploaded/files',
-          {file: payload[index].deleteUrl}));
+          { file: payload[index].deleteUrl }));
       }
       const result = yield requestArray;
 
-      yield put({type: SUCCESS_DELETE_UN_USING_IMAGE, result});
+      yield put({ type: SUCCESS_DELETE_UN_USING_IMAGE, result });
     }
 
     catch (error) {
-      yield put({type: FAILURE_DELETE_UN_USING_IMAGE, error});
+      yield put({ type: FAILURE_DELETE_UN_USING_IMAGE, error });
     }
   }
 }
@@ -98,20 +98,20 @@ function* SagaRemoveUnusingImage() {
 function* SagaLikePost() {
   while (WORKING) {
     // REQUEST_LIKE_POST
-    const {payload} = yield take(REQUEST_LIKE_POST);
+    const { payload } = yield take(REQUEST_LIKE_POST);
 
     try {
       const result = yield call([Api, API.post], '/like/post', payload);
 
       if (result === 'ok') {
-        yield put({type: SUCCESS_LIKE_POST, postId: payload.postId});
+        yield put({ type: SUCCESS_LIKE_POST, postId: payload.postId });
       } else {
-        yield put({type: FAILURE_LIKE_POST});
+        yield put({ type: FAILURE_LIKE_POST });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_LIKE_POST, error});
+      yield put({ type: FAILURE_LIKE_POST, error });
     }
   }
 }
@@ -119,16 +119,16 @@ function* SagaLikePost() {
 function* SagaSubmitPost() {
   while (WORKING) {
     // REQUEST_SUBMIT_POST
-    const {payload} = yield take(REQUEST_SUBMIT_POST);
+    const { payload } = yield take(REQUEST_SUBMIT_POST);
 
     try {
       const result = yield call([Api, API.post], '/community/submit', payload);
 
-      yield put({type: SUCCESS_SUBMIT_POST, result});
+      yield put({ type: SUCCESS_SUBMIT_POST, result });
     }
 
     catch (error) {
-      yield put({type: FAILURE_SUBMIT_POST, error});
+      yield put({ type: FAILURE_SUBMIT_POST, error });
     }
   }
 }
@@ -136,7 +136,7 @@ function* SagaSubmitPost() {
 function* SagaInitList() {
   while (WORKING) {
     // REQUEST_GET_INIT_POST_LIST
-    const {payload} = yield take(REQUEST_GET_INIT_POST_LIST);
+    const { payload } = yield take(REQUEST_GET_INIT_POST_LIST);
 
     try {
       const result = yield call([Api, API.get], payload.pathName,
@@ -145,11 +145,11 @@ function* SagaInitList() {
       result.data = normalize(result.data, arrayOf(post));
       result.listName = payload.listName;
 
-      yield put({type: SUCCESS_GET_INIT_POST_LIST, ...result});
+      yield put({ type: SUCCESS_GET_INIT_POST_LIST, ...result });
     }
 
     catch (error) {
-      yield put({type: FAILURE_GET_INIT_POST_LIST, error});
+      yield put({ type: FAILURE_GET_INIT_POST_LIST, error });
     }
   }
 }
@@ -157,7 +157,7 @@ function* SagaInitList() {
 function* SagaMoreList() {
   while (WORKING) {
     // REQUEST_GET_MORE_POST_LIST
-    const {payload} = yield take(REQUEST_GET_MORE_POST_LIST);
+    const { payload } = yield take(REQUEST_GET_MORE_POST_LIST);
 
     try {
       const result = yield call([Api, API.get], payload.pathName,
@@ -166,11 +166,11 @@ function* SagaMoreList() {
       result.data = normalize(result.data, arrayOf(post));
       result.listName = payload.listName;
 
-      yield put({type: SUCCESS_GET_MORE_POST_LIST, ...result});
+      yield put({ type: SUCCESS_GET_MORE_POST_LIST, ...result });
     }
 
     catch (error) {
-      yield put({type: FAILURE_GET_MORE_POST_LIST, error});
+      yield put({ type: FAILURE_GET_MORE_POST_LIST, error });
     }
   }
 }

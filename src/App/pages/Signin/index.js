@@ -18,11 +18,11 @@ import {
   requestSignin,
 } from '../../Actions/Signin';
 
-const SigninContainer = React.createClass({
+class SigninContainer extends React.Component {
   render() {
     return (<Signin {...this.props} />);
-  },
-});
+  }
+}
 
 SigninContainer.defaultProps = {
   UserStore: UI.User,
@@ -58,5 +58,5 @@ module.exports = connect(
     FireRequestEmailVerifyCode: requestEmailVerifyCode,
     FireRequestCheckVerifyCode: requestCheckVerifyCode,
     FireRequestSignin: requestSignin,
-  }
+  },
 )(SigninContainer);

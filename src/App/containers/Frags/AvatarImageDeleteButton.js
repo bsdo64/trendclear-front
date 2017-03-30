@@ -30,5 +30,5 @@ module.exports = connect(
   null,
   {
     FireRequestUserAvatarImageRemove: requestUserAvatarImageRemove,
-  }
+  },
 )(AvatarImageDeleteButtonContainer);

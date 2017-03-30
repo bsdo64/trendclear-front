@@ -1,4 +1,4 @@
-const {Schema, arrayOf} = require('normalizr');
+const { Schema, arrayOf } = require('normalizr');
 
 const club = new Schema('clubs');
 const categoryGroup = new Schema('categoryGroups');

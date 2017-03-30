@@ -1,0 +1,63 @@
+.box {
+  padding: 10px;
+
+  & > .content {
+    background: #fff;
+    padding: 10px;
+    -webkit-box-shadow: 1px 1px 1px 0 #c6c6c6;
+    -moz-box-shadow: 1px 1px 1px 0 #c6c6c6;
+    box-shadow: 1px 1px 1px 0 #c6c6c6;
+
+    & > .header {
+      & > span {
+        padding-right: 5px;
+      }
+    }
+
+    & > .submitType {
+      padding: 10px 0;
+
+      & > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        & .submitBox {
+          display: flex;
+          align-items: center;
+          height: 80px;
+          transition: background 0.2s ease;
+          cursor: pointer;
+
+          &:hover {
+            transition: background 0.2s ease;
+            background: #eee;
+          }
+
+          & > .iconBox {
+            width: 50px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+
+            & > i:global(.fa) {
+              font-size: 30px;
+              color: #aaa;
+            }
+          }
+
+          & > .submitContent {
+            flex: 2 1 auto;
+
+            & > .submitContentHeader {
+              font-size: 13px;
+              font-weight: bold;
+            }
+
+            & > .submitContentDescription {}
+          }
+        }
+      }
+    }
+  }
+}

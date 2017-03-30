@@ -39,20 +39,20 @@ const API = Api.setEntryPoint('/ajax');
 function* SagaPaybackRP() {
   while (WORKING) {
     // REQUEST_USER_PAYBACK_RP
-    const {payload} = yield take(REQUEST_USER_PAYBACK_RP);
+    const { payload } = yield take(REQUEST_USER_PAYBACK_RP);
 
     try {
       const result = yield call([API, API.post], '/user/payback/rp', payload);
       if (result && result.list) {
 
-        yield put({type: SUCCESS_USER_PAYBACK_RP, result});
+        yield put({ type: SUCCESS_USER_PAYBACK_RP, result });
       } else {
-        yield put({type: FAILURE_USER_PAYBACK_RP});
+        yield put({ type: FAILURE_USER_PAYBACK_RP });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_USER_PAYBACK_RP, error});
+      yield put({ type: FAILURE_USER_PAYBACK_RP, error });
     }
   }
 }
@@ -60,20 +60,20 @@ function* SagaPaybackRP() {
 function* SagaReadNoti() {
   while (WORKING) {
     // REQUEST_USER_READ_NOTIFICATION
-    const {payload} = yield take(REQUEST_USER_READ_NOTIFICATION);
+    const { payload } = yield take(REQUEST_USER_READ_NOTIFICATION);
 
     try {
       const result = yield call([API, API.put], '/user/noti/read', payload);
       if (result) {
         payload.userId = result;
-        yield put({type: SUCCESS_USER_READ_NOTIFICATION, result: payload});
+        yield put({ type: SUCCESS_USER_READ_NOTIFICATION, result: payload });
       } else {
-        yield put({type: FAILURE_USER_READ_NOTIFICATION});
+        yield put({ type: FAILURE_USER_READ_NOTIFICATION });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_USER_READ_NOTIFICATION, error});
+      yield put({ type: FAILURE_USER_READ_NOTIFICATION, error });
     }
   }
 }
@@ -81,22 +81,22 @@ function* SagaReadNoti() {
 function* SagaUserUpdateProfile() {
   while (WORKING) {
     // REQUEST_USER_UPDATE_PROFILE
-    const {payload} = yield take(REQUEST_USER_UPDATE_PROFILE);
+    const { payload } = yield take(REQUEST_USER_UPDATE_PROFILE);
 
     try {
       const result = yield call([API, API.post], '/user/setting/profile',
         payload);
 
       if (result.length === 1) {
-        yield put({type: SUCCESS_USER_UPDATE_PROFILE, result});
+        yield put({ type: SUCCESS_USER_UPDATE_PROFILE, result });
       }
       if (result.code === 1) {
-        yield put({type: FAILURE_USER_UPDATE_PROFILE, result});
+        yield put({ type: FAILURE_USER_UPDATE_PROFILE, result });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_USER_UPDATE_PROFILE, error});
+      yield put({ type: FAILURE_USER_UPDATE_PROFILE, error });
     }
   }
 }
@@ -104,23 +104,23 @@ function* SagaUserUpdateProfile() {
 function* SagaUserUpdatePassword() {
   while (WORKING) {
     // REQUEST_USER_UPDATE_PASSWORD
-    const {payload} = yield take(REQUEST_USER_UPDATE_PASSWORD);
+    const { payload } = yield take(REQUEST_USER_UPDATE_PASSWORD);
 
     try {
       const result = yield call([API, API.post], '/user/setting/password',
         payload);
 
       if (result === 'ok') {
-        yield put({type: SUCCESS_USER_UPDATE_PASSWORD, result});
+        yield put({ type: SUCCESS_USER_UPDATE_PASSWORD, result });
       }
 
       if (result.code === 1) {
-        yield put({type: FAILURE_USER_UPDATE_PASSWORD, result});
+        yield put({ type: FAILURE_USER_UPDATE_PASSWORD, result });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_USER_UPDATE_PASSWORD, error});
+      yield put({ type: FAILURE_USER_UPDATE_PASSWORD, error });
     }
   }
 }
@@ -134,14 +134,14 @@ function* SagaUserAvatarImageRemove() {
       const result = yield call([API, API.delete], '/user/avatarImg');
 
       if (result) {
-        yield put({type: SUCCESS_USER_AVATAR_IMAGE_REMOVE, result});
+        yield put({ type: SUCCESS_USER_AVATAR_IMAGE_REMOVE, result });
       } else {
-        yield put({type: FAILURE_USER_AVATAR_IMAGE_REMOVE});
+        yield put({ type: FAILURE_USER_AVATAR_IMAGE_REMOVE });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_USER_AVATAR_IMAGE_REMOVE, error});
+      yield put({ type: FAILURE_USER_AVATAR_IMAGE_REMOVE, error });
     }
   }
 }
@@ -149,24 +149,24 @@ function* SagaUserAvatarImageRemove() {
 function* SagaUserAvatarImageUpload() {
   while (WORKING) {
     // REQUEST_USER_AVATAR_IMAGE_UPLOAD
-    const {payload} = yield take(REQUEST_USER_AVATAR_IMAGE_UPLOAD);
+    const { payload } = yield take(REQUEST_USER_AVATAR_IMAGE_UPLOAD);
 
     try {
       const file = yield call([API.setEntryPoint('/image'), API.postImg],
         '/upload', payload);
       const user = yield call([API.setEntryPoint('/ajax'), API.post],
-        '/user/avatarImg', {file: file.files[0]});
+        '/user/avatarImg', { file: file.files[0] });
 
       if (file && file.files[0] && user.user.id) {
-        yield put({type: SUCCESS_USER_AVATAR_IMAGE_UPLOAD, file, user});
-        yield put({type: CLOSE_AVATAR_MODAL});
+        yield put({ type: SUCCESS_USER_AVATAR_IMAGE_UPLOAD, file, user });
+        yield put({ type: CLOSE_AVATAR_MODAL });
       } else {
-        yield put({type: FAILURE_USER_AVATAR_IMAGE_UPLOAD});
+        yield put({ type: FAILURE_USER_AVATAR_IMAGE_UPLOAD });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_USER_AVATAR_IMAGE_UPLOAD, error});
+      yield put({ type: FAILURE_USER_AVATAR_IMAGE_UPLOAD, error });
     }
   }
 }
@@ -174,21 +174,21 @@ function* SagaUserAvatarImageUpload() {
 function* SagaResetPassword() {
   while (WORKING) {
     // REQUEST_RESET_PASSWORD
-    const {payload} = yield take(REQUEST_RESET_PASSWORD);
+    const { payload } = yield take(REQUEST_RESET_PASSWORD);
 
     try {
       const result = yield call([API, API.post], '/user/resetPassword',
         payload);
 
       if (result === 'ok') {
-        yield put({type: SUCCESS_RESET_PASSWORD, result});
+        yield put({ type: SUCCESS_RESET_PASSWORD, result });
       } else {
-        yield put({type: FAILURE_RESET_PASSWORD, result});
+        yield put({ type: FAILURE_RESET_PASSWORD, result });
       }
     }
 
     catch (error) {
-      yield put({type: FAILURE_RESET_PASSWORD, error});
+      yield put({ type: FAILURE_RESET_PASSWORD, error });
     }
   }
 }

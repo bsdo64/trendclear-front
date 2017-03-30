@@ -8,9 +8,9 @@ if (process.env.NODE_ENV === 'production') {
   manager = io.Manager('http://localhost:3003');
 }
 
-VenalinkSocket = manager.socket('/venalink', {reconnect: true});
-NotiSocket = manager.socket('/noti', {reconnect: true});
-PointSocket = manager.socket('/point', {reconnect: true});
+VenalinkSocket = manager.socket('/venalink', { reconnect: true });
+NotiSocket = manager.socket('/noti', { reconnect: true });
+PointSocket = manager.socket('/point', { reconnect: true });
 
 exports.Point = PointSocket;
 exports.Noti = NotiSocket;

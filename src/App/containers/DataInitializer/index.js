@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class DataInitializer extends React.Component {
+
   constructor() {
     super();
 
@@ -42,8 +43,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    initialize: (location) => {
-      dispatch({type: '@@router/LOCATION_CHANGE', payload: location});
+    initialize: (payload) => {
+      dispatch({type: '@@router/LOCATION_CHANGE', payload});
     },
   };
 };

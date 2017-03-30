@@ -4,20 +4,20 @@ import { getLoginUser } from '../Util/func';
 import WidgetBox from '../../components/WidgetBox';
 import { UI, Domains } from '../../Reducers/InitialStates';
 import {
-  toggleVenacleStoreModal,
-  showItemInfo,
-  requestShoppingItemInit,
   requestPurchaseItem,
+  requestShoppingItemInit,
+  showItemInfo,
   toggleConfirmPurchaseItemModal,
+  toggleVenacleStoreModal,
 } from '../../Actions/VenacleStore';
 import { toggleAvatarModal, toggleShowInventory } from '../../Actions/User';
 
-const WidgetContainer = React.createClass({
+class WidgetContainer extends React.Component {
   render() {
 
     return (<WidgetBox {...this.props} />);
-  },
-});
+  }
+}
 
 WidgetContainer.defaultProps = {
   ShoppingStore: UI.Shopping,
@@ -55,12 +55,12 @@ const mapStateToProps = (state) => {
 module.exports = connect(
   mapStateToProps,
   {
-    FireToggleVenacleStoreModal: toggleVenacleStoreModal,
-    FireToggleAvatarModal: toggleAvatarModal,
-    FireShowItemInfo: showItemInfo,
     FireRequestPurchaseItem: requestPurchaseItem,
-    FireToggleConfirmPurchaseItemModal: toggleConfirmPurchaseItemModal,
     FireRequestShoppingItemInit: requestShoppingItemInit,
+    FireShowItemInfo: showItemInfo,
+    FireToggleAvatarModal: toggleAvatarModal,
+    FireToggleConfirmPurchaseItemModal: toggleConfirmPurchaseItemModal,
     FireToggleShowInventory: toggleShowInventory,
-  }
+    FireToggleVenacleStoreModal: toggleVenacleStoreModal,
+  },
 )(WidgetContainer);

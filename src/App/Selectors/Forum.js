@@ -17,9 +17,15 @@ export const rankForums = createSelector(
         b.get('subs_count') +
         b.get('post_count');
 
-      if (rankScoreA > rankScoreB) { return -1; }
-      if (rankScoreA < rankScoreB) { return 1; }
-      if (rankScoreA === rankScoreB) { return 0; }
+      if (rankScoreA > rankScoreB) {
+        return -1;
+      }
+      if (rankScoreA < rankScoreB) {
+        return 1;
+      }
+      if (rankScoreA === rankScoreB) {
+        return 0;
+      }
     }).slice(0, 9).toSet().toList();
-  }
+  },
 );

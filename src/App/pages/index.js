@@ -1,12 +1,8 @@
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
-import {
-  BrowserRouter,
-  Route,
-  Switch
-} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import MainHeader from '../containers/MainHeader';
+import MainHeader from '../components/MainHeader/index.js';
 import Home from './Home';
 import Signin from './Signin';
 import ModalContainer from '../containers/Modal/ModalContainer';

@@ -7,10 +7,15 @@ import qs from 'qs';
 
 const ListHeader = () => {
   return (
-    <div style={{padding: 10}}>
-      <div style={{background: '#fff', padding: 10}}>
-        <h3 style={{fontSize: '1.2em'}}>
-          <i className="fa fa-star" style={{color: 'yellow', paddingRight: 5}}/>
+    <div style={{ padding: 10 }}>
+      <div style={{
+        background: '#fff',
+        padding: 10,
+        boxShadow: '1px 1px 1px 0 #c6c6c6',
+      }}>
+        <h3 style={{ fontSize: '1.2em' }}>
+          <i className="fa fa-star"
+             style={{ color: 'yellow', paddingRight: 5 }}/>
           피드
         </h3>
         <p>팔로잉 인기글</p>
@@ -46,11 +51,11 @@ const BestBox = React.createClass({
 
   },
 
-  getMoreBest({previousPosition, currentPosition, event}) {
+  getMoreBest({ previousPosition, currentPosition, event }) {
     if (previousPosition === 'below' && currentPosition === 'inside' && event) {
       const body = event.target.body;
       if ((body) && body.clientHeight > 768) {
-        const {PaginationStore, GnbStore, listName, location, FireRequestGetMorePostList} = this.props;
+        const { PaginationStore, GnbStore, listName, location, FireRequestGetMorePostList } = this.props;
         const Pagination = PaginationStore.get(listName);
         if (Pagination) {
           const nextPage = Pagination.get('next_page');
@@ -96,14 +101,14 @@ const BestBox = React.createClass({
   },
 
   createBreadCrumbArray(array, pathname) {
-    array.push({title: '베스트', url: '/'});
+    array.push({ title: '베스트', url: '/' });
 
     switch (pathname) {
       case '/':
-        array.push({title: '팔로잉'});
+        array.push({ title: '팔로잉' });
         return array;
       case '/all':
-        array.push({title: '전체글'});
+        array.push({ title: '전체글' });
         return array;
     }
   },
@@ -115,11 +120,9 @@ const BestBox = React.createClass({
     const Collection = PaginationStore.get(listName);
     const breadcrumbs = this.createBreadCrumbArray([], location.pathname);
     return (
-      <div id="best_contents" ref="best_contents">
+      <div id="best_contents">
 
-        <ListHeader
-
-        />
+        <ListHeader/>
 
         <Header
           type={listName}

@@ -17,10 +17,10 @@ const API = Api.setEntryPoint('/ajax');
 function* SagaSaveFollowingFilter() {
   while (WORKING) {
     // REQUEST_SAVE_FOLLOWING_FILTER
-    const {payload} = yield take(REQUEST_SAVE_FOLLOWING_FILTER);
+    const { payload } = yield take(REQUEST_SAVE_FOLLOWING_FILTER);
 
     try {
-      const {data, collection} = yield call([Api, API.get], '/best', payload);
+      const { data, collection } = yield call([Api, API.get], '/best', payload);
       const normalized = normalize(data, arrayOf(post));
 
       yield put({
@@ -29,7 +29,7 @@ function* SagaSaveFollowingFilter() {
     }
 
     catch (error) {
-      yield put({type: FAILURE_SAVE_FOLLOWING_FILTER, error});
+      yield put({ type: FAILURE_SAVE_FOLLOWING_FILTER, error });
     }
   }
 }

@@ -108,7 +108,7 @@
     & > i {
       padding-right: 5px;
     }
-    & > i:global(.fa-search), & > i:global(.fa-cog) {
+    & > i:global(.fa-search), & > i:global(.fa-close), & > i:global(.fa-cog) {
       float: right;
       right: 10px;
     }
@@ -135,7 +135,6 @@
 
 .collectionSearchBox {
   padding-left: 25px;
-  padding-bottom: 5px;
 
   & > i:global(.fa-inbox) {
     padding-right: 5px;
@@ -154,8 +153,16 @@
 .collectionItemBox {
   padding-left: 25px;
 
-  & > i:global(.fa-inbox) {
-    padding-right: 5px;
+  & > a {
+    color: inherit;
+
+    &:hover {
+      color: #fff;
+    }
+
+    & > i:global(.fa-inbox) {
+      padding-right: 5px;
+    }
   }
 }
 
