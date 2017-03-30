@@ -248,7 +248,8 @@ class ExploreMenuBox extends React.Component {
 }
 
 ExploreMenuBox.propTypes = {
-  match: React.PropTypes.object.isRequired
+  match: React.PropTypes.object.isRequired,
+  location: React.PropTypes.object.isRequired,
 };
 ExploreMenuBox.defaultProps = {};
 
