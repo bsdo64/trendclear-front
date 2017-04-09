@@ -43,10 +43,10 @@ const PolicyMenu = React.createClass({
               </h5>
 
               <div className="sub_category item">
-                <Link to={{pathname: '/policies/privacy'}}>{'개인정보보호'}</Link>
+                <Link to={'/policies/privacy'}>{'개인정보보호'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/policies/terms'}}>{'서비스 약관'}</Link>
+                <Link to={'/policies/terms'}>{'서비스 약관'}</Link>
               </div>
             </li>
           </ul>

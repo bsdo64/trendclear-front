@@ -6,7 +6,7 @@ import HomeMenuBoxConnect from './components/HomeMenuBox/index.js';
 import ClubMenuBoxConnect from './components/ClubMenuBox/index.js';
 import ExploreMenuBox from './components/ExploreMenuBox/index.js';
 import SubmitMenuBox from './components/SubmitMenuBox/index.js';
-import { getSeqPathName, activeStyle } from './func';
+import { getSeqPathName, activeStyle } from './func.js';
 
 class LeftBar extends React.Component {
   render() {

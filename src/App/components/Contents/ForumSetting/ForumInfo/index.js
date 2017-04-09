@@ -60,42 +60,41 @@ const ForumInfo = React.createClass({
       }
 
       return (
-        <div className="ui container" style={{margin: 10, width: 700}}>
-          <div className="ui segments ">
-            <div className="ui segment"><h3 className="ui header">게시판 정보</h3>
-              <div className="ui divider"></div>
-              <div className="ui list">
-                <a className="item"><i className="right triangle icon"></i>
-                  <div className="content">
-                    <div className="header">기존 게시판 정보를 수정합니다.</div>
-                    <div className="description"> - 게시판 이름은 변경할 수 없습니다</div>
-                  </div>
-                </a>
-              </div>
-              <form id="create_forum" className="ui form"
-                    onChange={this.changeForm} onSubmit={this.updateForumInfo}>
-                <div className="field">
-                  <label>이름 *</label>
-                  {forum.get('title')}
+        <div className="ui container" style={{padding: 10}}>
+          <div className="ui segment">
+            <h3 className="ui header">게시판 정보</h3>
+            <div className="ui divider"></div>
+            <div className="ui list">
+              <a className="item"><i className="right triangle icon"></i>
+                <div className="content">
+                  <div className="header">기존 게시판 정보를 수정합니다.</div>
+                  <div className="description"> - 게시판 이름은 변경할 수 없습니다</div>
                 </div>
-                <div className="field">
-                  <label>부제 : </label>
-                  <input type="text" defaultValue={forum.get('sub_header')}
-                         name="forum_sub_header"/>
-                </div>
-                <div className="field">
-                  <label>설명 *</label>
-                  <input type="text" defaultValue={forum.get('description')}
-                         name="forum_description"/>
-                </div>
-                <div className="field">
-                  <label>규칙 *</label>
-                  <textarea name="forum_rule" defaultValue={forum.get('rule')}/>
-                </div>
-                <div className="ui error message"></div>
-                {button}
-              </form>
+              </a>
             </div>
+            <form id="create_forum" className="ui form"
+                  onChange={this.changeForm} onSubmit={this.updateForumInfo}>
+              <div className="field">
+                <label>이름 *</label>
+                {forum.get('title')}
+              </div>
+              <div className="field">
+                <label>부제 : </label>
+                <input type="text" defaultValue={forum.get('sub_header')}
+                       name="forum_sub_header"/>
+              </div>
+              <div className="field">
+                <label>설명 *</label>
+                <input type="text" defaultValue={forum.get('description')}
+                       name="forum_description"/>
+              </div>
+              <div className="field">
+                <label>규칙 *</label>
+                <textarea name="forum_rule" defaultValue={forum.get('rule')}/>
+              </div>
+              <div className="ui error message"></div>
+              {button}
+            </form>
           </div>
         </div>
       );

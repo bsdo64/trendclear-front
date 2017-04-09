@@ -1,78 +1,80 @@
 #comment_box {
-  margin: 0 0 0 70px;
-  padding: 10px;
-  font-size: 0.9em;
+  margin: 0;
+  padding: 0 10px;
   width: 620px;
-  background: #fff;
-  box-shadow: 1px 1px 1px 0 #c6c6c6
-더이상 표시할 추천 게시물이 없습니다;
 
-  .comment_header {
-    height: 20px;
+  .box {
+    background: #fff;
+    box-shadow: 1px 1px 1px 0 #c6c6c6;
+    padding: 10px;
 
-    .comment_count {
-      float: left;
-    }
-    ul.comment_sort_box {
-      margin: 0;
-      padding: 0;
-      float: right;
-      li {
-        display: inline-block;
-        padding-right: 5px;
+    .comment_header {
+      height: 20px;
+
+      .comment_count {
+        float: left;
+      }
+      ul.comment_sort_box {
+        margin: 0;
+        padding: 0;
+        float: right;
+        li {
+          display: inline-block;
+          padding-right: 5px;
+        }
       }
     }
-  }
 
-  .actions {
-    .like_icon, .comment_icon, .report_icon {
-      display: inline-block;
-    }
-    .like_box, .comment_box, .report_box {
-      display: inline-block;
-    }
+    .actions {
+      .like_icon, .comment_icon, .report_icon {
+        display: inline-block;
+      }
+      .like_box, .comment_box, .report_box {
+        display: inline-block;
+      }
 
-    .like_box, .comment_box {
-      margin-right: 10px;
-    }
-    .like_box {
-      .like_icon {
-        color: grey;
-        :hover {
-          color: red;
+      .like_box, .comment_box {
+        margin-right: 10px;
+      }
+      .like_box {
+        .like_icon {
+          color: grey;
+          :hover {
+            color: red;
+          }
+
+          &.active {
+            color: red;
+          }
+
+          i.icon {
+            cursor: pointer;
+          }
         }
+      }
+      .comment_box {
+        color: #27485E;
+      }
+      .report_box {
+        float: right;
 
-        &.active {
-          color: red;
-        }
-
-        i.icon {
+        .report_icon {
+          :hover {
+            color: #27485E;
+          }
+          display: inline-block;
+          padding-right: 5px;
+          color: #D0D6DA;
+          vertical-align: middle;
           cursor: pointer;
         }
       }
     }
-    .comment_box {
-      color: #27485E;
-    }
-    .report_box {
-      float: right;
 
-      .report_icon {
-        :hover {
-          color: #27485E;
-        }
-        display: inline-block;
-        padding-right: 5px;
-        color: #D0D6DA;
-        vertical-align: middle;
-        cursor: pointer;
+    & > form.ui.reply.form {
+      .field {
+        width: 535px;
       }
-    }
-  }
-
-  &.comments > form.ui.reply.form {
-    .field {
-      width: 535px;
     }
   }
 

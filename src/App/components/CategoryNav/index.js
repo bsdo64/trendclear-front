@@ -22,7 +22,7 @@ const RankList = React.createClass({
     e.stopPropagation();
   },
   render() {
-    const {openForumMeta, forums} = this.props;
+    const { openForumMeta, forums } = this.props;
     return (
       <div className="forum_rank">
         <ul>
@@ -45,7 +45,7 @@ const RankList = React.createClass({
                     </Link>
                   </div>
                   {
-                    (openForumMeta == forum.get('id')) &&
+                    (openForumMeta === forum.get('id')) &&
                     <div className="forum_info" onMouseEnter={this.stopEvent}>
                       <div id="forum_contents">
 
@@ -89,7 +89,7 @@ const RankList = React.createClass({
                                          dangerouslySetInnerHTML={{
                                            __html: marked(forum.get('rule')),
                                          }}
-                                    ></div>
+                                    />
                                   </div>
                                 }
                               </div>
@@ -142,7 +142,7 @@ const ClubList = React.createClass({
       <div className="four wide column group" key={item.get('id')}>
         <h3 >{item.get('title')}</h3>
         <ul className="category_lists">
-          <Scrollbars style={{height: 80}}>
+          <Scrollbars style={{ height: 80 }}>
             {
               item.get('forums').map(this.createCategory)
             }
@@ -153,7 +153,7 @@ const ClubList = React.createClass({
   },
 
   createClub (item) {
-    const {gnbMenu} = this.props;
+    const { gnbMenu } = this.props;
     const openSideNow = gnbMenu.get('openSideNow');
     const type = item.get('type');
     const list = item.get('list');
@@ -166,13 +166,13 @@ const ClubList = React.createClass({
              onMouseEnter={this.openSideCategories.bind(null, item.get('id'))}
              onClick={this.openSideCategories.bind(null, item.get('id'))}>
             {
-              (openSideNow == item.get('id')) &&
+              (openSideNow === item.get('id')) &&
               <i className="fa fa-arrow-right"/>
             }
             <span>{' ' + item.get('title')}</span>
           </a>
           {
-            (openSideNow == item.get('id')) &&
+            (openSideNow === item.get('id')) &&
             <div className="gnb_inner_wrap">
 
               <div className="gnb_inner">
@@ -208,13 +208,13 @@ const ClubList = React.createClass({
              onMouseEnter={this.openSideCategories.bind(null, item.get('id'))}
              onClick={this.openSideCategories.bind(null, item.get('id'))}>
             {
-              (openSideNow == item.get('id')) &&
+              (openSideNow === item.get('id')) &&
               <i className="fa fa-arrow-right"/>
             }
             <span>{' ' + item.get('title')}</span>
           </a>
           {
-            (openSideNow == item.get('id')) &&
+            (openSideNow === item.get('id')) &&
             <div className="gnb_inner_wrap">
 
               <div className="gnb_inner">
@@ -230,7 +230,7 @@ const ClubList = React.createClass({
   },
 
   render() {
-    const {gnbMenu, newForums, hotForums} = this.props;
+    const { gnbMenu, newForums, hotForums } = this.props;
     const groups = gnbMenu.get('data');
     const data = fromJS([
       {
@@ -286,7 +286,7 @@ const CategoryNav = React.createClass({
     this.props.FireToggleGnbPanel();
   },
   render() {
-    const {GnbStore} = this.props;
+    const { GnbStore } = this.props;
     const openGnb = GnbStore.get('openGnb');
     const gnbMenu = GnbStore.get('gnbMenu');
     const newForums = GnbStore.get('newForums');

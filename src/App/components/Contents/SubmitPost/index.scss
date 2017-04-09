@@ -14,7 +14,6 @@
   }
 
   .search_forum_box {
-    margin: 0 0 0 10px;
 
     .search_box {
       min-width: 500px;
@@ -32,6 +31,8 @@
       }
 
       & > .forum_lists {
+        display: flex;
+
         & > .created_forums_box, .following_forums_box, .ranking_forums_box {
           float: left;
 
@@ -50,152 +51,169 @@
     }
   }
 
-  .post_item {
+  .box {
     padding: 10px;
 
-    &:last-child {
-      border-bottom: none;
-    }
-    margin: 0;
-    border-bottom: 1px solid #B5C0D0;
-
-    input.post_submit_title {
-      width: 100%;
-      padding: 5px 10px;
-    }
-    .post_header {
-
-      .Select-control {
-        border: 1px solid rgba(34, 36, 38, 0.15);
-        color: rgba(0, 0, 0, 0.87);
-        border-radius: 0.07142857rem;
-        border-right: 1px solid #eee;
-      }
-
-      .Select {
-        width: 150px;
-        display: inline-block;
-
-        ~ .ui.input {
-          width: 450px;
-          display: inline-block;
-          position: absolute;
-
-          input {
-            width: 100%;
-            border-left: none;
-            height: 36px;
-          }
-        }
-      }
-    }
-    .best_post_meta {
+    .post_item {
+      padding: 10px;
       margin: 0;
-      padding: 2px 0;
-      .author_nick {
+      background: #fff;
+      -webkit-box-shadow: 1px 1px 1px 0 #c6c6c6;
+      -moz-box-shadow: 1px 1px 1px 0 #c6c6c6;
+      box-shadow: 1px 1px 1px 0 #c6c6c6;
+
+      .submit_header {
         font-weight: bold;
-        font-size: 13px;
-        display: inline-block;
-      }
-      .author_icon {
-        font-size: 13px;
-        display: inline-block;
-        vertical-align: middle;
-        img {
-          width: 15px;
+        padding-bottom: 10px;
+
+        & > .fa {
+          padding-right: 5px;
         }
       }
-      .list {
-        line-height: 0;
 
-        > .item {
-          margin: 0;
-          padding: 0 5px;
-          height: 12px;
-          line-height: 12px;
-          font-size: 12px;
-        }
-      }
-    }
-    #post_editor_background {
-      &:hover {
-        border-color: #ddd;
-      }
-      border: 1px solid #fff;
-      min-height: 200px;
-      padding: 0 4px;
-      -webkit-transition: border-color 0.3s;
-      -moz-transition: border-color 0.3s;
-      -ms-transition: border-color 0.3s;
-      -o-transition: border-color 0.3s;
-      transition: border-color 0.3s;
+      .post_header {
+        display: flex;
 
-      #post_editor {
-        min-height: 191px;
-        // min 200px - medium-editor-insert-plugin's active P tag margin 7 px - border 2px
+        .input_form_box {
+          flex: auto;
+          padding-left: 10px;
 
-        .medium-insert-embeds {
-          figure {
-            margin: 0;
-          }
-        }
-      }
-    }
+          .input_form_header {
+            display:flex;
+            flex: auto;
 
-    .submit_images {
-      padding-bottom: 5px;
+            .ui.input {
+              flex: auto;
 
-      .header {
-        padding: 5px 0;
+              input {
+                width: 100%;
+                border-left: none;
+                height: 36px;
+              }
+            }
 
-        h4 {
-          font-size: 13px;
-          margin: 0;
+            .Select {
+              width: 150px;
 
-        }
-        p {
-          font-size: 12px;
-
-        }
-      }
-      ul.image_list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-
-        li.image_item {
-          display: inline-block;
-          width: 100px;
-          height: 100px;
-          text-align: center;
-          overflow: hidden;
-          border: 1px solid #eee;
-          margin: 0 5px;
-          position: relative;
-          cursor: pointer;
-
-          &.select_represent {
-            .represent_box {
-              position: absolute;
-              top: 0;
-              width: 100%;
-              background: #058294;
-              color: #fff;
+              .Select-control {
+                border: 1px solid rgba(34, 36, 38, 0.15);
+                color: rgba(0, 0, 0, 0.87);
+                border-radius: 0.07142857rem;
+                border-right: 1px solid #eee;
+              }
             }
           }
 
-          img {
-            height: inherit;
+          .best_post_meta {
+            padding-top: 3px;
+
+            .author_nick {
+              font-weight: bold;
+              font-size: 13px;
+              display: inline-block;
+            }
+            .author_icon {
+              font-size: 13px;
+              display: inline-block;
+              vertical-align: middle;
+              img {
+                width: 15px;
+              }
+            }
           }
         }
       }
-    }
 
-    .submit_button_box {
-      padding: 10px 0;
+      #post_editor_background {
+        padding-top: 10px;
+        padding-left: 35px;
+        padding-bottom: 15px;
 
-      button:first-child {
-        margin-right: 10px;
+        .editor_left_padding {
+          padding-left: 10px;
+          font-size: 14px;
+          border-left: 1px solid #ddd;
+          min-height: 191px;
+          // min 200px - medium-editor-insert-plugin's active P tag margin 7 px - border 2px
+
+          #post_editor {
+
+            .medium-insert-buttons:not([data-active-addon="images"]) {
+              .medium-insert-buttons-show {
+                position: relative;
+                left: 6px;
+              }
+            }
+
+            .medium-insert-embeds {
+              figure {
+                margin: 0;
+              }
+            }
+
+            p {
+              margin: 0;
+              padding: 6px 0 6px;
+            }
+          }
+        }
+      }
+
+      .submit_images {
+        padding-bottom: 5px;
+
+        .header {
+          padding: 5px 0;
+
+          h4 {
+            font-size: 13px;
+            margin: 0;
+
+          }
+          p {
+            font-size: 12px;
+
+          }
+        }
+        ul.image_list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          li.image_item {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            overflow: hidden;
+            border: 1px solid #eee;
+            margin: 0 5px;
+            position: relative;
+            cursor: pointer;
+
+            &.select_represent {
+              .represent_box {
+                position: absolute;
+                top: 0;
+                width: 100%;
+                background: #058294;
+                color: #fff;
+              }
+            }
+
+            img {
+              height: inherit;
+            }
+          }
+        }
+      }
+
+      .submit_button_box {
+        padding: 10px 0;
+
+        button:first-child {
+          margin-right: 10px;
+        }
       }
     }
   }
@@ -204,6 +222,8 @@
 .editor-box {
   .ui.labeled.icon.menu.editor-type-menu {
     margin-top: 10px;
+    border: 1px solid #eee;
+    box-shadow: 1px 1px 1px 0 #d9d9d9;
   }
   .hide {
     display: none;
@@ -211,6 +231,7 @@
 }
 
 .url-meta-data-box {
+  font-size: 12px;
   margin: 10px 0;
   padding: 10px;
   border: 1px solid #dedede;

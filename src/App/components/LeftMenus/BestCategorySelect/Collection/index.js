@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import SubscribeForumList from '../SubscribeForumList';
@@ -92,7 +92,7 @@ const CollectionItem = React.createClass({
         }
 
         <div className="collection">
-          <Link to={{pathname: `/collection/${id}`}}>
+          <Link to={`/collection/${id}`}>
 
             <i className={isCollectionOpenStyle} style={{paddingRight: 3}}/>
             <span className="title">{title}</span>

@@ -57,7 +57,7 @@ const ForumLeftMenu = React.createClass({
                     <Link
                       to={{
                         pathname: '/community',
-                        query: {forumId: forum.get('id'), order: 'new'},
+                        search: `?forumId=${forum.get('id')}&order=new`,
                       }}>{'최신 글'}</Link>
                   </div>
                   <div className="sub_category item">
@@ -68,7 +68,7 @@ const ForumLeftMenu = React.createClass({
                     <Link
                       to={{
                         pathname: '/community',
-                        query: {forumId: forum.get('id'), order: 'hot'},
+                        search: `?forumId=${forum.get('id')}&order=hot`,
                       }}>{'인기 글'}</Link>
                   </div>
                   <div className="sub_category item">
@@ -78,7 +78,7 @@ const ForumLeftMenu = React.createClass({
                     }
                     <Link to={{
                       pathname: '/community',
-                      query: {forumId: forum.get('id'), order: 'm_view'},
+                      search: `?forumId=${forum.get('id')}&order=m_view`,
                     }}>{'많이 본 글'}</Link>
                   </div>
                   <div className="sub_category item">
@@ -88,7 +88,7 @@ const ForumLeftMenu = React.createClass({
                     }
                     <Link to={{
                       pathname: '/community',
-                      query: {forumId: forum.get('id'), order: 'm_comment'},
+                      search: `?forumId=${forum.get('id')}&order=m_comment`,
                     }}>{'댓글 많은 글'}</Link>
                   </div>
                 </li>
@@ -129,16 +129,16 @@ const ForumLeftMenu = React.createClass({
               </h5>
 
               <div className="sub_category item">
-                <Link to={{pathname: '/community'}}>{'최신 글'}</Link>
+                <Link to={'/community'}>{'최신 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/community'}}>{'인기 글'}</Link>
+                <Link to={'/community'}>{'인기 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/community'}}>{'많이 본 글'}</Link>
+                <Link to={'/community'}>{'많이 본 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/community'}}>{'댓글 많은 글'}</Link>
+                <Link to={'/community'}>{'댓글 많은 글'}</Link>
               </div>
             </li>
           </ul>

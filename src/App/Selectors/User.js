@@ -9,7 +9,7 @@ const getCollections = state => state.getIn(['Domains', 'Collections']);
 
 export const getUser = createSelector(
   [getCurrentUserId, getUsers],
-  (currentUserId, users) => {
+  (currentUserId, users = new List([])) => {
     return users.get(currentUserId + '');
   },
 );

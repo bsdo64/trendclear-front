@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
-import BigPost from '../../PostItem/BigPost';
-import Forum from './Forum';
-import CommentBox from '../../CommentBox';
+import BigPost from '../../PostItem/BigPost.js';
+import Forum from './Forum.js';
+import CommentBox from '../../CommentBox/index.js';
 
 const PostPage = React.createClass({
   displayName: 'PostPage',
@@ -40,7 +40,7 @@ const PostPage = React.createClass({
 
   render() {
 
-    const {Comments, SubComments, Users, Posts, ListStore, AuthStore} = this.props;
+    const { Comments, SubComments, Users, Posts, ListStore, AuthStore } = this.props;
 
     const postId = ListStore.get('CurrentPostId');
     if (postId) {
@@ -52,7 +52,7 @@ const PostPage = React.createClass({
           return (
             <div id="post_box" className="ui items">
 
-              <div style={{padding: 15}}>
+              <div style={{ padding: 15 }}>
                 <h2 className="ui center aligned icon">
                   <i className="bordered ban icon"/>
                   페이지를 찾을 수 없습니다.

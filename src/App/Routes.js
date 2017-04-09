@@ -5,7 +5,6 @@ import {
   IndexRoute,
   Router,
   Route,
-  browserHistory,
 } from 'react-router-dom';
 
 const LeftColGlobalCategoryNav = require(
@@ -167,7 +166,7 @@ HelpApp.propTypes = {
 export default (store) => {
 
   return (
-    <Router key={Math.random()} history={browserHistory}>
+    <Router key={Math.random()} >
       <Route path="/" component={App}>
         <IndexRoute
           components={{

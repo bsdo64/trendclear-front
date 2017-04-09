@@ -51,7 +51,7 @@ const CollectionLeftMenu = React.createClass({
                   }
                   <Link to={{
                     pathname: `/collection/${collectionId}`,
-                    query: {order: 'new'},
+                    search: `?order=new`
                   }}>{'최신 글'}</Link>
                 </div>
                 <div className="sub_category item">
@@ -61,7 +61,7 @@ const CollectionLeftMenu = React.createClass({
                   }
                   <Link to={{
                     pathname: `/collection/${collectionId}`,
-                    query: {order: 'hot'},
+                    search: `?order=hot`
                   }}>{'인기 글'}</Link>
                 </div>
                 <div className="sub_category item">
@@ -71,7 +71,7 @@ const CollectionLeftMenu = React.createClass({
                   }
                   <Link to={{
                     pathname: `/collection/${collectionId}`,
-                    query: {order: 'm_view'},
+                    search: `?order=m_view`
                   }}>{'많이 본 글'}</Link>
                 </div>
                 <div className="sub_category item">
@@ -82,7 +82,7 @@ const CollectionLeftMenu = React.createClass({
                   <Link
                     to={{
                       pathname: `/collection/${collectionId}`,
-                      query: {order: 'm_comment'},
+                      search: `?order=m_comment`
                     }}>{'댓글 많은 글'}</Link>
                 </div>
               </li>

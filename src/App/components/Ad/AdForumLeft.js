@@ -5,7 +5,7 @@ const AdForumLeft = React.createClass({
     url: PropTypes.string,
   },
   render() {
-    const {url} = this.props;
+    const { url } = this.props;
     return (
       <div>
         <img

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
@@ -19,6 +20,7 @@ class ClubMenuBox extends React.Component {
   }
 
   searchList(e) {
+    // TODO: Add filter function
     console.log(e.target.value);
   }
 
@@ -27,7 +29,7 @@ class ClubMenuBox extends React.Component {
   }
 
   render() {
-    const { clubInfo } = this.props;
+    const { clubInfo, match } = this.props;
 
     return (
       <div className={styles.gnbSubMenu}>
@@ -37,19 +39,12 @@ class ClubMenuBox extends React.Component {
             <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
               <div className={styles.subMenuBox}>
                 <div className={styles.subMenuItem}>
-                  <Link to="/">
+                  <Link to={`/club/${clubInfo.get('id')}`}>
                     <i className="fa fa-files-o"/>
-                    <span>클럽</span>
+                    <span>{clubInfo.get('title')}</span>
                   </Link>
                 </div>
                 <div >
-                  <Link to="/" style={{
-                    padding: 10,
-                    color: 'inherit',
-                    fontWeight: 'bold'
-                  }}>
-                    <span>{clubInfo.get('title')}</span>
-                  </Link>
 
                   <div style={{
                     minHeight: 60,
@@ -61,39 +56,35 @@ class ClubMenuBox extends React.Component {
                       paddingTop: 4,
                     }} />
                     <div style={{display: 'inline'}}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      {clubInfo.get('description')}
                     </div>
                   </div>
                 </div>
-                <div className={styles.subMenuItem}>
+                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
                   <Link to="/">
-                    <i className="fa fa-folder-open"/>
-                    <span>컬렉션</span>
+                    <span>정보</span>
                   </Link>
-
+                </div>
+                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
                   <Link to="/">
-                    <i className="fa fa-cog"/>
-                  </Link>
-
-                  <a href="#" onClick={this.toggleOpenSearch}>
-                    <i className={cx('fa', {
-                      'fa-search': !this.state.openSearch,
-                      'fa-close': this.state.openSearch,
-                    })}
-                    />
-                  </a>
-                </div>
-                <div>
-                  <Link to="/" style={{color: 'inherit'}}>
-                    <span>컬렉션</span>
+                    <span>피드</span>
                   </Link>
                 </div>
-                <div>
-                  <Link to="/" style={{color: 'inherit'}}>
-                    <span>컬렉션</span>
+                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
+                  <Link to="/">
+                    <span>시리즈</span>
                   </Link>
                 </div>
-
+                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
+                  <Link to="/">
+                    <span>태그</span>
+                  </Link>
+                </div>
+                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
+                  <Link to="/">
+                    <span>유저</span>
+                  </Link>
+                </div>
               </div>
 
             </Scrollbars>
@@ -122,8 +113,11 @@ class ClubMenuBox extends React.Component {
 
 ClubMenuBox.propTypes = {
   clubInfo: React.PropTypes.object.isRequired,
+  match: React.PropTypes.object.isRequired,
 };
-ClubMenuBox.defaultProps = {};
+ClubMenuBox.defaultProps = {
+  clubInfo: Map(),
+};
 
 const mapStateToProps = (state, props) => {
   const stateStore = state.get('Stores');

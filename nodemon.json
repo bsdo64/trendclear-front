@@ -1,0 +1,16 @@
+{
+  "verbose": true,
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "execMap": {
+    "js": "NODE_ENV=development node --harmony"
+  },
+  "watch": [
+    "app.js",
+    "routes/",
+    "middleware/",
+    "bin/"
+  ]
+}

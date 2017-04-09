@@ -50,7 +50,7 @@ class HomeMenuBox extends React.Component {
                   <i className="fa fa-cog"/>
                 </Link>
 
-                <a href="#" onClick={this.toggleOpenSearch}>
+                <a onClick={this.toggleOpenSearch}>
                   <i className={cx('fa', {
                     'fa-search': !this.state.openSearch,
                     'fa-close': this.state.openSearch,

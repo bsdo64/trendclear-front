@@ -8,9 +8,9 @@ const Main2 = React.createClass({
   },
 
   render() {
-    const {url, link} = this.props;
+    const { url, link } = this.props;
     return (
-      <div style={{marginTop: 10}}>
+      <div style={{ marginTop: 10 }}>
         <Link to={link}>
           <img src={url}/>
         </Link>

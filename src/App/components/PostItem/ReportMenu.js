@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import { browserHistory } from 'react-router';
 import Dropdown, {
   DropdownTrigger,
   DropdownContent,
@@ -9,7 +8,7 @@ import memoize from 'fast-memoize';
 
 import './ReportBox.scss';
 function createToggleModal(props) {
-  const {forumId, targetId, targetType} = props;
+  const {history, forumId, targetId, targetType} = props;
 
   return function toggleModal(e) {
     const action = e.target.dataset.action;
@@ -26,8 +25,8 @@ function createToggleModal(props) {
         });
         break;
       case 'mod_post':
-        browserHistory.push(
-          `/community/submit?forumId=${forumId}&postId=${targetId}`);
+        history.push(
+          `/submit/post?forumId=${forumId}&postId=${targetId}`);
         break;
       case 'mod_comment':
         props.FireOpenCommentUpdateView({
@@ -121,6 +120,7 @@ const Menu = (props) => {
 
 Menu.propTypes = {
   isUser: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   targetType: PropTypes.string.isRequired,
   FireToggleReportModal: PropTypes.func.isRequired,

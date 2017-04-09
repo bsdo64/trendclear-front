@@ -6,7 +6,7 @@ const Main1 = React.createClass({
   },
 
   render() {
-    const {url} = this.props;
+    const { url } = this.props;
     return (
       <div>
         <img

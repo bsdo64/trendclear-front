@@ -33,7 +33,7 @@ const CommunityContents = React.createClass({
 
   checkBanned() {
 
-    const {Forums, AuthStore, ListStore} = this.props;
+    const { Forums, AuthStore, ListStore } = this.props;
 
     const userId = AuthStore.get('userId');
 
@@ -65,12 +65,14 @@ const CommunityContents = React.createClass({
     if (isLogin && isBanned) {
 
       return (
-        <div style={{textAlign: 'center', paddingTop: 60}}>
+        <div style={{ textAlign: 'center', paddingTop: 60 }}>
           <h2 className="ui icon header">
-            <i className="remove icon"></i>
+            <i className="remove icon"/>
             <div className="content">
               당신은 벤 되었습니다
-              <div className="sub header">다른 게시판을 찾거나 새로운 게시판을 만들어 보세요</div>
+              <div className="sub header">
+                다른 게시판을 찾거나 새로운 게시판을 만들어 보세요
+              </div>
             </div>
           </h2>
         </div>
@@ -92,7 +94,8 @@ const CommunityContents = React.createClass({
 
       } else {
         return (
-          <div className="ui active inverted dimmer">
+          <div className="ui active inverted dimmer"
+               style={{background: 'rgb(230, 230, 230)'}}>
             <div className="ui large text loader">로딩중..</div>
           </div>
         );

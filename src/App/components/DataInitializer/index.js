@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class DataInitializer extends React.Component {
 
@@ -13,7 +14,7 @@ class DataInitializer extends React.Component {
 
   componentDidMount() {
     this.props.initialize(this.props.location);
-    this.setState({initialized: true});
+    this.setState({ initialized: true });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,12 +45,12 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch) => {
   return {
     initialize: (payload) => {
-      dispatch({type: '@@router/LOCATION_CHANGE', payload});
+      dispatch({ type: '@@router/LOCATION_CHANGE', payload });
     },
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps
-)(DataInitializer);
+  mapDispatchToProps,
+)(DataInitializer));

@@ -3,7 +3,7 @@ import ImageType from '../Lib/ImageType';
 import AvatarImageDeleteButton from '../../containers/Frags/AvatarImageDeleteButton';
 
 const AvatarImage = (props) => {
-  const {avatarImg, sex, imageClass = '', removable, noWrap} = props;
+  const { avatarImg, sex, imageClass = '', removable, noWrap } = props;
 
   if (avatarImg) {
     const imageType = new ImageType('/image/uploaded/files/' + avatarImg);

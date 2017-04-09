@@ -1,10 +1,9 @@
-import React, { PropTypes } from 'react';
-import { browserHistory } from 'react-router';
+import React from 'react';
+import PropTypes from 'prop-types';
 import qs from 'qs';
 import MakeUrl from '../Lib/MakeUrl';
 import Paginator from '../Paginator';
 
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import debug from 'debug';
 
 import Menu from '../PostItem/ReportMenu';
@@ -69,7 +68,7 @@ function closeUpdateComment() {
 }
 
 function sendSubCommentLike(props) {
-  const {location, isLogin, subCommentId, FireRequestLikeSubComment} = props;
+  const { location, isLogin, subCommentId, FireRequestLikeSubComment } = props;
   return function createSendSubCommentLike() {
     if (!isLogin) {
       props.FireToggleLoginModal({
@@ -77,60 +76,50 @@ function sendSubCommentLike(props) {
         location: location.pathname + location.search,
       });
     } else {
-      FireRequestLikeSubComment({subCommentId});
+      FireRequestLikeSubComment({ subCommentId });
     }
   };
 }
 
 function subCommentItem(props) {
   return function createSubCommentItem(subCommentId) {
-    return <SubCommentItem key={subCommentId} {...props}
-                           subCommentId={subCommentId}/>;
+    return <SubCommentItem
+      {...props}
+      key={subCommentId}
+      subCommentId={subCommentId}/>;
   };
 }
 
-const SubCommentItem = React.createClass({
-  displayName: 'SubCommentItem',
-  propTypes: {
-    LoginStore: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-    updating: PropTypes.object.isRequired,
-    subComments: PropTypes.object.isRequired,
-    authors: PropTypes.object.isRequired,
-    subCommentId: PropTypes.number.isRequired,
-    userId: PropTypes.number,
-    location: PropTypes.object.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestLikeSubComment: PropTypes.func.isRequired,
-    FireRequestUpdateSubComment: PropTypes.func.isRequired,
-    FireOpenCommentUpdateView: PropTypes.func.isRequired,
-    FireCloseCommentUpdateView: PropTypes.func.isRequired,
-  },
+class SubCommentItem extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.updateSubComment = this.updateSubComment.bind(this);
+  }
   componentDidUpdate(prevProps) {
     const oldUpdating = prevProps.updating;
-    const {updating} = this.props;
+    const { updating } = this.props;
     if ((oldUpdating.id !== updating.id)) {
-      if ((oldUpdating.type !== updating.type) &&
-        (updating.type === 'subComment')) {
+      if ((oldUpdating.type !== updating.type) && (updating.type === 'subComment')) {
         if (oldUpdating.updating !== updating) {
           if (this.editor) {
             this.editor.destroy();
           }
           this.editor = new MediumEditor( // eslint-disable-line no-undef
-            this.refs.sub_comment_content_update,
-            commentMediumConfig
+            this.subCommentContentUpdate,
+            commentMediumConfig,
           );
         }
       }
     }
-  },
+  }
 
   updateSubComment(commentId) {
 
-    const {LoginStore, UserStore, location, FireToggleLoginModal, FireRequestUpdateSubComment} = this.props;
+    const {
+      LoginStore, UserStore, location,
+      FireToggleLoginModal, FireRequestUpdateSubComment,
+    } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
@@ -163,10 +152,10 @@ const SubCommentItem = React.createClass({
         location: location.pathname + location.search,
       });
     }
-  },
+  }
 
   render() {
-    const {subComments, authors, subCommentId, userId, updating} = this.props;
+    const { subComments, authors, subCommentId, userId, updating } = this.props;
     const subComment = subComments.get(subCommentId.toString());
 
     if (subComment) {
@@ -176,8 +165,7 @@ const SubCommentItem = React.createClass({
         const commentDeleted = subComment.get('deleted');
         const subCommentSex = subCommentAuthor.getIn(['profile', 'sex']),
           sub_avatar_img = subCommentAuthor.getIn(['profile', 'avatar_img']),
-          sub_icon_img = subCommentAuthor.getIn(
-            ['icon', 0, 'iconDef', 'icon_img']);
+          sub_icon_img = subCommentAuthor.getIn(['icon', 0, 'iconDef', 'icon_img']);
         let subIconImg;
 
         if (sub_icon_img) {
@@ -193,10 +181,12 @@ const SubCommentItem = React.createClass({
               <div className="field update">
                 <div
                   id={'sub_comment_content_update'}
-                  ref={'sub_comment_content_update'}
+                  ref={content => this.subCommentContentUpdate = content}
                   className="comment_input sub_comment_input"
-                  dangerouslySetInnerHTML={{__html: subComment.get('content')}}
-                ></div>
+                  dangerouslySetInnerHTML={{
+                    __html: subComment.get('content'),
+                  }}
+                />
               </div>
               <div className="ui primary submit icon button"
                    onClick={this.updateSubComment.bind(this, subCommentId)}>
@@ -221,8 +211,8 @@ const SubCommentItem = React.createClass({
           contents = (
             <div
               className="comment_text"
-              dangerouslySetInnerHTML={{__html: subComment.get('content')}}
-            ></div>
+              dangerouslySetInnerHTML={{ __html: subComment.get('content') }}
+            />
           );
         }
 
@@ -257,8 +247,8 @@ const SubCommentItem = React.createClass({
                 {
                   !commentDeleted &&
                   <div className="like_box">
-                    <div className={'like_icon ' +
-                    (subComment.get('liked') ? 'active' : '')}
+                    <div
+                      className={'like_icon ' + (subComment.get('liked') ? 'active' : '')}
                          onClick={sendSubCommentLike(this.props)}>
                       <i className={'heart ' +
                       (subComment.get('liked') ? '' : 'outline') + ' icon'}/>
@@ -287,48 +277,51 @@ const SubCommentItem = React.createClass({
       }
     }
 
-    return (<div key={userId}></div>);
+    return (<div key={userId}/>);
+  }
+}
 
-  },
-});
+SubCommentItem.displayName = 'SubCommentItem';
+SubCommentItem.propTypes = {
+  LoginStore: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+  updating: PropTypes.object.isRequired,
+  subComments: PropTypes.object.isRequired,
+  authors: PropTypes.object.isRequired,
+  subCommentId: PropTypes.number.isRequired,
+  userId: PropTypes.number,
+  location: PropTypes.object.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
+  FireToggleReportModal: PropTypes.func.isRequired,
+  FireToggleDeleteModal: PropTypes.func.isRequired,
+  FireRequestLikeSubComment: PropTypes.func.isRequired,
+  FireRequestUpdateSubComment: PropTypes.func.isRequired,
+  FireOpenCommentUpdateView: PropTypes.func.isRequired,
+  FireCloseCommentUpdateView: PropTypes.func.isRequired,
+};
 
-const CommentItem = React.createClass({
-  displayName: 'CommentItem',
-  propTypes: {
-    LoginStore: PropTypes.object.isRequired,
-    comment: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-    updating: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    commentAuthor: PropTypes.object.isRequired,
-    subCommentList: PropTypes.object.isRequired,
-    authors: PropTypes.object.isRequired,
-    subComments: PropTypes.object.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestLikeComment: PropTypes.func.isRequired,
-    FireRequestLikeSubComment: PropTypes.func.isRequired,
-    FireRequestSubmitSubComment: PropTypes.func.isRequired,
-    FireRequestUpdateComment: PropTypes.func.isRequired,
-    FireRequestUpdateSubComment: PropTypes.func.isRequired,
-    FireOpenCommentUpdateView: PropTypes.func.isRequired,
-    FireCloseCommentUpdateView: PropTypes.func.isRequired,
-  },
+class CommentItem extends React.Component {
+  constructor(props) {
+    super(props);
 
-  mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return {
+    this.state = {
       subCommentOpen: false,
       liked: false,
       focus: false,
     };
-  },
+
+    this.editor = null;
+    this.show = this.show.bind(this);
+    this.close = this.close.bind(this);
+    this.sendLike = this.sendLike.bind(this);
+    this.toggleSubComment = this.toggleSubComment.bind(this);
+    this.submitSubComment = this.submitSubComment.bind(this);
+    this.updateComment = this.updateComment.bind(this);
+  }
 
   componentDidUpdate(prevProps) {
     const oldUpdating = prevProps.updating;
-    const {updating} = this.props;
+    const { updating } = this.props;
     if ((oldUpdating.id !== updating.id)) {
       if ((oldUpdating.type !== updating.type) &&
         (updating.type === 'comment')) {
@@ -337,27 +330,29 @@ const CommentItem = React.createClass({
             this.editor.destroy();
           }
           this.editor = new MediumEditor( // eslint-disable-line no-undef
-            this.refs.comment_content_update,
-            commentMediumConfig
+            this.commentContentUpdate,
+            commentMediumConfig,
           );
         }
       }
     }
-  },
+  }
 
   show() {
-
-    this.setState({focus: true});
-  },
+    this.setState({ focus: true });
+  }
 
   close() {
 
-    this.setState({focus: false});
-  },
+    this.setState({ focus: false });
+  }
 
   sendLike() {
 
-    const {comment, location, LoginStore, FireToggleLoginModal, FireRequestLikeComment} = this.props;
+    const {
+      comment, location, LoginStore,
+      FireToggleLoginModal, FireRequestLikeComment,
+    } = this.props;
     const isLogin = LoginStore.get('isLogin');
     if (!isLogin) {
       FireToggleLoginModal({
@@ -365,23 +360,24 @@ const CommentItem = React.createClass({
         location: location.pathname + location.search,
       });
     } else {
-      FireRequestLikeComment({commentId: comment.get('id')});
+      FireRequestLikeComment({ commentId: comment.get('id') });
     }
-  },
+  }
 
   toggleSubComment() {
-    this.setState({subCommentOpen: !this.state.subCommentOpen}, () => {
+    this.setState({ subCommentOpen: !this.state.subCommentOpen }, () => {
 
       const commentId = this.props.comment.get('id');
       this.editor = new MediumEditor( // eslint-disable-line no-undef
         this.refs['sub_comment_content_' + commentId], commentMediumConfig);
     });
-  },
+  }
 
   submitSubComment(commentId) {
 
     const {
-      LoginStore, UserStore, location, FireToggleLoginModal, FireRequestSubmitSubComment
+      LoginStore, UserStore, location,
+      FireToggleLoginModal, FireRequestSubmitSubComment,
     } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
@@ -417,7 +413,7 @@ const CommentItem = React.createClass({
         location: location.pathname + location.search,
       });
     }
-  },
+  }
 
   updateComment() {
     const {
@@ -460,11 +456,11 @@ const CommentItem = React.createClass({
         location: location.pathname + location.search,
       });
     }
-  },
+  }
 
   render() {
 
-    const {LoginStore, UserStore, updating} = this.props;
+    const { LoginStore, UserStore, updating } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     let userId;
@@ -504,9 +500,9 @@ const CommentItem = React.createClass({
           <div className="field">
             <div
               id="comment_input_update"
-              ref="comment_content_update"
+              ref={content => this.commentContentUpdate = content}
               className="comment_input"
-              dangerouslySetInnerHTML={{__html: comment.get('content')}}
+              dangerouslySetInnerHTML={{ __html: comment.get('content') }}
             >
             </div>
           </div>
@@ -534,8 +530,8 @@ const CommentItem = React.createClass({
       contents = (
         <div
           className="comment_text"
-          dangerouslySetInnerHTML={{__html: comment.get('content')}}
-        ></div>
+          dangerouslySetInnerHTML={{ __html: comment.get('content') }}
+        />
       );
     }
 
@@ -630,100 +626,104 @@ const CommentItem = React.createClass({
         </div>
       </div>
     );
+  }
+}
 
-  },
-});
+CommentItem.displayName = 'CommentItem';
+CommentItem.propTypes = {
+  LoginStore: PropTypes.object.isRequired,
+  comment: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+  updating: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  commentAuthor: PropTypes.object.isRequired,
+  subCommentList: PropTypes.object.isRequired,
+  authors: PropTypes.object.isRequired,
+  subComments: PropTypes.object.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
+  FireToggleReportModal: PropTypes.func.isRequired,
+  FireToggleDeleteModal: PropTypes.func.isRequired,
+  FireRequestLikeComment: PropTypes.func.isRequired,
+  FireRequestLikeSubComment: PropTypes.func.isRequired,
+  FireRequestSubmitSubComment: PropTypes.func.isRequired,
+  FireRequestUpdateComment: PropTypes.func.isRequired,
+  FireRequestUpdateSubComment: PropTypes.func.isRequired,
+  FireOpenCommentUpdateView: PropTypes.func.isRequired,
+  FireCloseCommentUpdateView: PropTypes.func.isRequired,
+};
 
-const CommentList = React.createClass({
-  displayName: 'CommentList',
-  propTypes: {
-    commentIdList: PropTypes.object.isRequired,
-    comments: PropTypes.object.isRequired,
-    authors: PropTypes.object.isRequired,
-    subComments: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-    LoginStore: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    updating: PropTypes.object.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestLikeComment: PropTypes.func.isRequired,
-    FireRequestLikeSubComment: PropTypes.func.isRequired,
-    FireRequestSubmitSubComment: PropTypes.func.isRequired,
-    FireRequestUpdateComment: PropTypes.func.isRequired,
-    FireRequestUpdateSubComment: PropTypes.func.isRequired,
-    FireOpenCommentUpdateView: PropTypes.func.isRequired,
-    FireCloseCommentUpdateView: PropTypes.func.isRequired,
-  },
+const CommentList = (props) => {
+  const {
+    commentIdList, comments, authors,
+  } = props;
 
-  render() {
-    const {
-      commentIdList, comments, authors,
-    } = this.props;
+  let commentsNode = commentIdList.map((commentId) => {
+    const comment = comments.get(commentId.toString());
 
-    let commentsNode = commentIdList.map((commentId) => {
-      const comment = comments.get(commentId.toString());
+    if (comment) {
+      const commentAuthor = authors.get(comment.get('author').toString());
 
-      if (comment) {
-        const commentAuthor = authors.get(comment.get('author').toString());
+      if (commentAuthor) {
+        const subCommentList = comment.get('subComments');
 
-        if (commentAuthor) {
-          const subCommentList = comment.get('subComments');
-
-          return (
-            <CommentItem
-              key={commentId}
-              comment={comment}
-              commentAuthor={commentAuthor}
-              subCommentList={subCommentList}
-              {...this.props}
-            />
-          );
-        }
+        return (
+          <CommentItem
+            key={commentId}
+            comment={comment}
+            commentAuthor={commentAuthor}
+            subCommentList={subCommentList}
+            {...props}
+          />
+        );
       }
+    }
 
-      return (<div key={commentId}></div>);
-    });
-    return (
-      <div className="comment_list">
-        {commentsNode}
-      </div>
-    );
-  },
-});
+    return (<div key={commentId}/>);
+  });
+  return (
+    <div className="comment_list">
+      {commentsNode}
+    </div>
+  );
+};
+
+CommentList.displayName = 'CommentList';
+CommentList.propTypes = {
+  commentIdList: PropTypes.object.isRequired,
+  comments: PropTypes.object.isRequired,
+  authors: PropTypes.object.isRequired,
+  subComments: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+  LoginStore: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  updating: PropTypes.object.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
+  FireToggleReportModal: PropTypes.func.isRequired,
+  FireToggleDeleteModal: PropTypes.func.isRequired,
+  FireRequestLikeComment: PropTypes.func.isRequired,
+  FireRequestLikeSubComment: PropTypes.func.isRequired,
+  FireRequestSubmitSubComment: PropTypes.func.isRequired,
+  FireRequestUpdateComment: PropTypes.func.isRequired,
+  FireRequestUpdateSubComment: PropTypes.func.isRequired,
+  FireOpenCommentUpdateView: PropTypes.func.isRequired,
+  FireCloseCommentUpdateView: PropTypes.func.isRequired,
+};
 
 require('./Comment.scss');
-const CommentBox = React.createClass({
-  displayName: 'CommentBox',
-  propTypes: {
-    location: PropTypes.object.isRequired,
-    LoginStore: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-    comments: PropTypes.object.isRequired,
-    subComments: PropTypes.object.isRequired,
-    authors: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired,
-    CommunityStore: PropTypes.object.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestLikeComment: PropTypes.func.isRequired,
-    FireRequestLikeSubComment: PropTypes.func.isRequired,
-    FireRequestSubmitComment: PropTypes.func.isRequired,
-    FireRequestSubmitSubComment: PropTypes.func.isRequired,
-    FireRequestUpdateComment: PropTypes.func.isRequired,
-    FireRequestUpdateSubComment: PropTypes.func.isRequired,
-    FireOpenCommentUpdateView: PropTypes.func.isRequired,
-    FireCloseCommentUpdateView: PropTypes.func.isRequired,
-  },
+class CommentBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       commentOrder: locationSearchToQueryObj(
-        this.props.location.search).comment_order,
+      this.props.location.search).comment_order,
     };
-  },
+
+    this.submitComment = this.submitComment.bind(this);
+    this.handleSetPage = this.handleSetPage.bind(this);
+    this.changeCommentOrder = this.changeCommentOrder.bind(this);
+    this.commentOrderButtom = this.commentOrderButtom.bind(this);
+  }
 
   componentWillReceiveProps(nextProps) {
     if (locationSearchToQueryObj(nextProps.location.search).comment_order !==
@@ -733,27 +733,27 @@ const CommentBox = React.createClass({
           nextProps.location.search).comment_order,
       });
     }
-  },
+  }
 
   componentDidMount() {
     this.editor = new MediumEditor( // eslint-disable-line no-undef
-      this.refs.comment_content,
-      commentMediumConfig
+      this.commentContent,
+      commentMediumConfig,
     );
-  },
+  }
 
   componentDidUpdate() {
     this.editor.destroy();
 
     this.editor = new MediumEditor( // eslint-disable-line no-undef
-      this.refs.comment_content,
-      commentMediumConfig
+      this.commentContent,
+      commentMediumConfig,
     );
-  },
+  }
 
   submitComment() {
 
-    const {LoginStore, UserStore, location, FireToggleLoginModal, FireRequestSubmitComment} = this.props;
+    const { LoginStore, UserStore, location, FireToggleLoginModal, FireRequestSubmitComment } = this.props;
     const isLogin = LoginStore.get('isLogin');
 
     if (isLogin) {
@@ -789,22 +789,24 @@ const CommentBox = React.createClass({
         location: location.pathname + location.search,
       });
     }
-  },
+  }
 
   handleSetPage(pagination) {
-    const {commentOrder} = this.state;
+    const { commentOrder } = this.state;
+    const { location, history } = this.props;
 
-    const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(
+    const makeUrl = new MakeUrl(location);
+    history.push(
       makeUrl
         .setQuery('comment_p', pagination.page)
         .setQuery('comment_order', commentOrder)
-        .end()
+        .end(),
     );
-  },
+  }
 
   changeCommentOrder() {
-    const {commentOrder} = this.state;
+    const { commentOrder } = this.state;
+    const { history } = this.props;
     let newOrder;
     switch (commentOrder) {
       case 'new': {
@@ -824,13 +826,13 @@ const CommentBox = React.createClass({
     }
 
     const makeUrl = new MakeUrl(this.props.location);
-    browserHistory.push(makeUrl.setQuery('comment_p', 1)
+    history.push(makeUrl.setQuery('comment_p', 1)
       .setQuery('comment_order', newOrder)
       .end());
-  },
+  }
 
   commentOrderButtom() {
-    const {commentOrder} = this.state;
+    const { commentOrder } = this.state;
     switch (commentOrder) {
       case 'new': {
         return <li onClick={this.changeCommentOrder}>최신순</li>;
@@ -843,7 +845,7 @@ const CommentBox = React.createClass({
       default:
         return <li onClick={this.changeCommentOrder}>최신순</li>;
     }
-  },
+  }
 
   render() {
     const {
@@ -866,43 +868,45 @@ const CommentBox = React.createClass({
       return (
         <div id="comment_box" className="ui comments">
 
-          <div className="comment_header">
-            <div className="comment_count">{commentLength}개 댓글</div>
-            <ul className="comment_sort_box">
-              { this.commentOrderButtom() }
-            </ul>
-          </div>
-          <form className="ui reply form ">
-            <div className="field">
+          <div className="box">
+            <div className="comment_header">
+              <div className="comment_count">{commentLength}개 댓글</div>
+              <ul className="comment_sort_box">
+                { this.commentOrderButtom() }
+              </ul>
+            </div>
+            <form className="ui reply form ">
+              <div className="field">
+                <div
+                  id="comment_input"
+                  ref={commentContent => this.commentContent = commentContent}
+                  className="comment_input"
+                ><p><br /></p></div>
+              </div>
               <div
-                id="comment_input"
-                ref="comment_content"
-                className="comment_input"
-              ><p><br /></p></div>
-            </div>
-            <div
-              className="ui primary submit icon button"
-              onClick={this.submitComment}
-            >
-              <i className="icon edit"/>
-            </div>
-          </form>
+                className="ui primary submit icon button"
+                onClick={this.submitComment}
+              >
+                <i className="icon edit"/>
+              </div>
+            </form>
 
-          <CommentList
-            updating={updating}
-            commentIdList={commentIdList}
-            {...this.props}
-          />
-
-          <div className="ui center aligned container">
-            { (commentLength > 0) &&
-            <Paginator
-              total={commentLength}
-              limit={10}
-              page={parseInt(commentPage, 10)}
-              handleSetPage={this.handleSetPage}
+            <CommentList
+              updating={updating}
+              commentIdList={commentIdList}
+              {...this.props}
             />
-            }
+
+            <div className="ui center aligned container">
+              { (commentLength > 0) &&
+              <Paginator
+                total={commentLength}
+                limit={10}
+                page={parseInt(commentPage, 10)}
+                handleSetPage={this.handleSetPage}
+              />
+              }
+            </div>
           </div>
 
         </div>
@@ -910,7 +914,31 @@ const CommentBox = React.createClass({
     }
 
     return (<div/>);
-  },
-});
+  }
+}
+
+CommentBox.displayName = 'CommentBox';
+CommentBox.propTypes = {
+  location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    LoginStore: PropTypes.object.isRequired,
+    UserStore: PropTypes.object.isRequired,
+    comments: PropTypes.object.isRequired,
+    subComments: PropTypes.object.isRequired,
+    authors: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired,
+    CommunityStore: PropTypes.object.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired,
+    FireToggleReportModal: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestLikeComment: PropTypes.func.isRequired,
+    FireRequestLikeSubComment: PropTypes.func.isRequired,
+    FireRequestSubmitComment: PropTypes.func.isRequired,
+    FireRequestSubmitSubComment: PropTypes.func.isRequired,
+    FireRequestUpdateComment: PropTypes.func.isRequired,
+    FireRequestUpdateSubComment: PropTypes.func.isRequired,
+    FireOpenCommentUpdateView: PropTypes.func.isRequired,
+    FireCloseCommentUpdateView: PropTypes.func.isRequired,
+};
 
 export default CommentBox;

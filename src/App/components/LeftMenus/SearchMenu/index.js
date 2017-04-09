@@ -31,25 +31,25 @@ const SearchMenu = React.createClass({
               <div className="sub_category item">
                 <Link to={{
                   pathname: '/search',
-                  query: {query: query, order: 'new'},
+                  search: `?query=${query}&order=new`,
                 }}>{'최신 글'}</Link>
               </div>
               <div className="sub_category item">
                 <Link to={{
                   pathname: '/search',
-                  query: {query: query, order: 'hot'},
+                  search: `?query=${query}&order=hot`,
                 }}>{'인기 글'}</Link>
               </div>
               <div className="sub_category item">
                 <Link to={{
                   pathname: '/search',
-                  query: {query: query, order: 'm_view'},
+                  search: `?query=${query}&order=m_view`,
                 }}>{'많이 본 글'}</Link>
               </div>
               <div className="sub_category item">
                 <Link to={{
                   pathname: '/search',
-                  query: {query: query, order: 'm_comment'},
+                  search: `?query=${query}&order=m_comment`,
                 }}>{'댓글 많은 글'}</Link>
               </div>
             </li>

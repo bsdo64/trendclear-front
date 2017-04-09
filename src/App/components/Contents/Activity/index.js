@@ -79,7 +79,7 @@ const ActivityBox = React.createClass({
 
   getMorePosts(context) {
 
-    const {PaginationStore, FireRequestGetMorePostList} = this.props;
+    const { PaginationStore, FireRequestGetMorePostList } = this.props;
     const Pagination = PaginationStore.get(context);
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
@@ -127,8 +127,8 @@ const ActivityBox = React.createClass({
   },
 
   render() {
-    const {UserStore, ActivityStore, location} = this.props;
-    const {ListStore, Posts, Users, AuthStore, PaginationStore} = this.props;
+    const { UserStore, ActivityStore, location } = this.props;
+    const { ListStore, Posts, Users, AuthStore, PaginationStore } = this.props;
 
     let context, Collection, PostIdList;
     if (location.pathname === '/activity' ||
@@ -194,7 +194,7 @@ const ActivityBox = React.createClass({
       );
     } else {
       return (
-        <div className="ui active loader"></div>
+        <div className="ui active loader"/>
       );
     }
   },

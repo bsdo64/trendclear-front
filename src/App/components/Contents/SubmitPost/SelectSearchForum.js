@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
-import { Link, browserHistory } from 'react-router';
-import AvatarImage from '../../AvatarImage';
+import { Link } from 'react-router-dom';
 import marked from '../../Lib/Marked';
 
 const SelectSearchForum = React.createClass({
   propTypes: {
-    profile: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     ForumFollowed: PropTypes.object.isRequired,
     ForumCreated: PropTypes.object.isRequired,
     RankForums: PropTypes.object.isRequired,
@@ -38,161 +37,154 @@ const SelectSearchForum = React.createClass({
   selectForum(forum) {
 
     if (forum && forum.id) {
-      browserHistory.push('/community/submit?forumId=' + forum.id);
+      this.props.history.push('/submit/post?forumId=' + forum.id);
     }
   },
 
   render() {
-    const {ForumCreated, ForumFollowed, RankForums, profile} = this.props;
-    const sex = profile.get('sex');
-    const avatarImg = profile.get('avatar_img');
+    const {ForumCreated, ForumFollowed, RankForums} = this.props;
 
     return (
-      <div id="submit_box" className="ui items">
-        <div className={'ui item post_item'}>
-          {/* avatar */}
-          <div className="ui image tiny">
-            <AvatarImage
-              sex={sex}
-              avatarImg={avatarImg}
-            />
-          </div>
+      <div id="submit_box">
+        <div className="box">
+          <div className={'post_item'}>
 
-          {/* meta */}
-          <div className="ui segment search_forum_box">
-            <div className="search_box">
-              <h3 className="ui header">
-                게시판 선택
-                <div className="sub header">관심 게시판을 찾아보세요</div>
-              </h3>
+            {/* meta */}
+            <div className="search_forum_box">
+              <div className="search_box">
+                <h3 className="ui header">
+                  게시판 선택
+                  <div className="sub header">관심 게시판을 찾아보세요</div>
+                </h3>
 
-              <div className="ui search search_forums">
-                <div className="ui icon input">
-                  <input className="prompt" type="text" placeholder="게시판 찾아보기"/>
-                  <i className="search icon"></i>
-                </div>
-                <div className="results"></div>
-              </div>
-
-              <div className="forum_lists">
-                <div className="created_forums_box">
-                  <div className="header">내 게시판</div>
-                  <ul className="list">
-                    {
-                      ForumCreated.sortBy(v => v.get('title')).map(v => {
-                        return (
-                          <li key={v.get('id')} className="item">
-                            <Link
-                              to={`/community/submit?forumId=${v.get('id')}`}>
-                              <span>{v.get('title')}</span>
-                            </Link>
-                          </li>
-                        );
-                      })
-                    }
-                  </ul>
+                <div className="ui search search_forums">
+                  <div className="ui icon input">
+                    <input className="prompt" type="text" placeholder="게시판 찾아보기"/>
+                    <i className="search icon"/>
+                  </div>
+                  <div className="results"/>
                 </div>
 
-                <div className="following_forums_box">
-                  <div className="header">팔로잉 게시판</div>
-                  <ul className="list">
-                    {
-                      ForumFollowed.sortBy(v => v.get('title')).map(v => {
-                        return (
-                          <li key={v.get('id')} className="item">
-                            <Link
-                              to={`/community/submit?forumId=${v.get('id')}`}>
-                              <span>{v.get('title')}</span>
-                            </Link>
-                          </li>
-                        );
-                      })
-                    }
-                  </ul>
-                </div>
-
-                <div className="ranking_forums_box">
-                  <div className="header">추천 게시판</div>
-                  <ul className="list">
-                    {
-                      RankForums.map((v, i) => {
-                        if (i === 0) {
-                          return (
-                            <li key={v.get('id')} className="item">
-                              <div id="forum_info" style={{
-                                margin: '5px 0',
-                                padding: 0,
-                                border: '1px solid #ddd',
-                                minWidth: 300,
-                              }}>
-                                <div className="ui cards">
-                                  <div className="card" style={{
-                                    borderTop: '1px solid rgb(5, 130, 148)',
-                                    boxShadow: 'none',
-                                    width: '100%',
-                                  }}>
-                                    <div className="content">
-                                      <div className="header">
-                                        <Link to={`/community?forumId=${v.get(
-                                          'id')}`}>
-                                          {v.get('title')}
-                                        </Link>
-                                      </div>
-                                      <div className="meta">
-                                        {v.get('sub_header')}
-                                      </div>
-                                      <div className="description">
-                                        {v.get('description')}
-                                      </div>
-                                      <div className="meta forum_meta">
-                                        <div className="forum_counts">
-                                          <span
-                                            className="follow_counts">팔로우 {v.get(
-                                            'follow_count')} 명</span>
-                                          <span
-                                            className="subs_counts">컬렉션 구독 {v.get(
-                                            'subs_count')}</span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="content">
-                                      {
-                                        v.get('rule') &&
-                                        <div >
-                                          <div className="ui header tiny">
-                                            클럽 규칙
-                                          </div>
-                                          <div className="description"
-                                               dangerouslySetInnerHTML={{
-                                                 __html: marked(v.get('rule')),
-                                               }}
-                                          ></div>
-                                        </div>
-                                      }
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                          );
-                        } else {
+                <div className="forum_lists">
+                  <div className="created_forums_box">
+                    <div className="header">내 게시판</div>
+                    <ul className="list">
+                      {
+                        ForumCreated.sortBy(v => v.get('title')).map(v => {
                           return (
                             <li key={v.get('id')} className="item">
                               <Link
-                                to={`/community/submit?forumId=${v.get('id')}`}>
+                                to={`?forumId=${v.get('id')}`}>
                                 <span>{v.get('title')}</span>
                               </Link>
                             </li>
                           );
-                        }
-                      })
-                    }
-                  </ul>
+                        })
+                      }
+                    </ul>
+                  </div>
+
+                  <div className="following_forums_box">
+                    <div className="header">팔로잉 게시판</div>
+                    <ul className="list">
+                      {
+                        ForumFollowed.sortBy(v => v.get('title')).map(v => {
+                          return (
+                            <li key={v.get('id')} className="item">
+                              <Link
+                                to={`?forumId=${v.get('id')}`}>
+                                <span>{v.get('title')}</span>
+                              </Link>
+                            </li>
+                          );
+                        })
+                      }
+                    </ul>
+                  </div>
+
+                  <div className="ranking_forums_box">
+                    <div className="header">추천 게시판</div>
+                    <ul className="list">
+                      {
+                        RankForums.map((v, i) => {
+                          if (i === 0) {
+                            return (
+                              <li key={v.get('id')} className="item">
+                                <div id="forum_info" style={{
+                                  margin: '5px 0',
+                                  padding: 0,
+                                  border: '1px solid #ddd',
+                                  minWidth: 300,
+                                }}>
+                                  <div className="ui cards">
+                                    <div className="card" style={{
+                                      borderTop: '1px solid rgb(5, 130, 148)',
+                                      boxShadow: 'none',
+                                      width: '100%',
+                                    }}>
+                                      <div className="content">
+                                        <div className="header">
+                                          <Link to={`/club/${v.get('id')}`}>
+                                            {v.get('title')}
+                                          </Link>
+                                        </div>
+                                        <div className="meta">
+                                          {v.get('sub_header')}
+                                        </div>
+                                        <div className="description">
+                                          {v.get('description')}
+                                        </div>
+                                        <div className="meta forum_meta">
+                                          <div className="forum_counts">
+                                          <span
+                                            className="follow_counts">팔로우 {v.get(
+                                            'follow_count')} 명</span>
+                                            <span
+                                              className="subs_counts">컬렉션 구독 {v.get(
+                                              'subs_count')}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="content">
+                                        {
+                                          v.get('rule') &&
+                                          <div >
+                                            <div className="ui header tiny">
+                                              클럽 규칙
+                                            </div>
+                                            <div className="description"
+                                                 dangerouslySetInnerHTML={{
+                                                   __html: marked(v.get('rule')),
+                                                 }}
+                                            />
+                                          </div>
+                                        }
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            );
+                          } else {
+                            return (
+                              <li key={v.get('id')} className="item">
+                                <Link
+                                  to={`/submit/post?forumId=${v.get('id')}`}>
+                                  <span>{v.get('title')}</span>
+                                </Link>
+                              </li>
+                            );
+                          }
+                        })
+                      }
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
 
+            </div>
           </div>
+
         </div>
       </div>
     );

@@ -42,18 +42,18 @@ const ForumSettingLeftMenu = React.createClass({
                     <Link
                       to={{
                         pathname: '/community/settings/foruminfo',
-                        query: {forumId: forumId},
+                        search: `?forumId=${forumId}`,
                       }}>{'게시판 정보'}</Link>
                   </div>
                   <div className="sub_category item">
                     <Link
                       to={{
                         pathname: '/community/settings/forumprefix',
-                        query: {forumId: forumId},
+                        search: `?forumId=${forumId}`,
                       }}>{'말머리'}</Link>
                   </div>
                   {/*<div className="sub_category item">*/}
-                  {/*<Link to={{pathname: '/community/settings/forumurl', query: {forumId: forumId}}}>{'게시판 주소'}</Link>*/}
+                  {/*<Link to={{pathname: '/community/settings/forumurl', search: `?forumId=${forumId}`}}>{'게시판 주소'}</Link>*/}
                   {/*</div>*/}
                 </li>
                 <li >
@@ -65,17 +65,17 @@ const ForumSettingLeftMenu = React.createClass({
                     <Link
                       to={{
                         pathname: '/community/settings/announce',
-                        query: {forumId: forumId},
+                        search: `?forumId=${forumId}`,
                       }}>{'공지글 설정'}</Link>
                   </div>
                   {/*<div className="sub_category item">*/}
-                  {/*<Link to={{pathname: '/community/settings/writepost', query: {forumId: forumId}}}>{'글 쓰기 설정'}</Link>*/}
+                  {/*<Link to={{pathname: '/community/settings/writepost', search: `?forumId=${forumId}`}}>{'글 쓰기 설정'}</Link>*/}
                   {/*</div>*/}
                   {/*<div className="sub_category item">*/}
-                  {/*<Link to={{pathname: '/community/settings/writecomment', query: {forumId: forumId}}}>{'댓글 쓰기 설정'}</Link>*/}
+                  {/*<Link to={{pathname: '/community/settings/writecomment', search: `?forumId=${forumId}`}}>{'댓글 쓰기 설정'}</Link>*/}
                   {/*</div>*/}
                   {/*<div className="sub_category item">*/}
-                  {/*<Link to={{pathname: '/community/settings/share', query: {forumId: forumId}}}>{'퍼가기 설정'}</Link>*/}
+                  {/*<Link to={{pathname: '/community/settings/share', search: `?forumId=${forumId}`}}>{'퍼가기 설정'}</Link>*/}
                   {/*</div>*/}
                 </li>
                 {/*<li >*/}
@@ -84,7 +84,7 @@ const ForumSettingLeftMenu = React.createClass({
                 {/*</h5>*/}
 
                 {/*<div className="sub_category item">*/}
-                {/*<Link to={{pathname: '/community/settings/promotion', query: {forumId: forumId}}}>{'이벤트 글 등록'}</Link>*/}
+                {/*<Link to={{pathname: '/community/settings/promotion', search: `?forumId=${forumId}`}}>{'이벤트 글 등록'}</Link>*/}
                 {/*</div>*/}
                 {/*</li>*/}
                 <li >
@@ -95,13 +95,13 @@ const ForumSettingLeftMenu = React.createClass({
                     <Link
                       to={{
                         pathname: '/community/settings/managers',
-                        query: {forumId: forumId},
+                        search: `?forumId=${forumId}`,
                       }}>{'매니저 설정'}</Link>
                   </div>
                   <div className="sub_category item">
                     <Link to={{
                       pathname: '/community/settings/banlist',
-                      query: {forumId: forumId},
+                      search: `?forumId=${forumId}`,
                     }}>{'게시판 벤 유저 설정'}</Link>
                   </div>
                 </li>
@@ -111,10 +111,10 @@ const ForumSettingLeftMenu = React.createClass({
                 {/*</h5>*/}
 
                 {/*<div className="sub_category item">*/}
-                {/*<Link to={{pathname: '/community/settings/spams', query: {forumId: forumId}}}>{'스팸 설정'}</Link>*/}
+                {/*<Link to={{pathname: '/community/settings/spams', search: `?forumId=${forumId}`}}>{'스팸 설정'}</Link>*/}
                 {/*</div>*/}
                 {/*<div className="sub_category item">*/}
-                {/*<Link to={{pathname: '/community/settings/spamreports', query: {forumId: forumId}}}>{'스팸 글 신고'}</Link>*/}
+                {/*<Link to={{pathname: '/community/settings/spamreports', search: `?forumId=${forumId}`}}>{'스팸 글 신고'}</Link>*/}
                 {/*</div>*/}
                 {/*</li>*/}
                 {/*<li >*/}
@@ -123,22 +123,22 @@ const ForumSettingLeftMenu = React.createClass({
                 {/*</h5>*/}
 
                 {/*<div className="sub_category item">*/}
-                {/*<Link to={{pathname: '/community/settings/stat/forum', query: {forumId: forumId}}}>{'게시판'}</Link>*/}
+                {/*<Link to={{pathname: '/community/settings/stat/forum', search: `?forumId=${forumId}`}}>{'게시판'}</Link>*/}
                 {/*</div>*/}
                 {/*<div className="sub_category item">*/}
-                {/*<Link to={{pathname: '/community/settings/stat/views', query: {forumId: forumId}}}>{'조회수'}</Link>*/}
+                {/*<Link to={{pathname: '/community/settings/stat/views', search: `?forumId=${forumId}`}}>{'조회수'}</Link>*/}
                 {/*</div>*/}
                 {/*<div className="sub_category item">*/}
-                {/*<Link to={{pathname: '/community/settings/stat/visitors', query: {forumId: forumId}}}>{'방문자 수'}</Link>*/}
+                {/*<Link to={{pathname: '/community/settings/stat/visitors', search: `?forumId=${forumId}`}}>{'방문자 수'}</Link>*/}
                 {/*</div>*/}
                 {/*<div className="sub_category item">*/}
-                {/*<Link to={{pathname: '/community/settings/stat/likerank', query: {forumId: forumId}}}>{'좋아요 순위'}</Link>*/}
+                {/*<Link to={{pathname: '/community/settings/stat/likerank', search: `?forumId=${forumId}`}}>{'좋아요 순위'}</Link>*/}
                 {/*</div>*/}
                 {/*<div className="sub_category item">*/}
-                {/*<Link to={{pathname: '/community/settings/stat/commentrank', query: {forumId: forumId}}}>{'댓글 순위'}</Link>*/}
+                {/*<Link to={{pathname: '/community/settings/stat/commentrank', search: `?forumId=${forumId}`}}>{'댓글 순위'}</Link>*/}
                 {/*</div>*/}
                 {/*<div className="sub_category item">*/}
-                {/*<Link to={{pathname: '/community/settings/stat/viewrank', query: {forumId: forumId}}}>{'조회수 순위'}</Link>*/}
+                {/*<Link to={{pathname: '/community/settings/stat/viewrank', search: `?forumId=${forumId}`}}>{'조회수 순위'}</Link>*/}
                 {/*</div>*/}
                 {/*</li>*/}
               </ul>
@@ -169,17 +169,17 @@ const ForumSettingLeftMenu = React.createClass({
               </h5>
 
               <div className="sub_category item">
-                <Link to={{pathname: '/community/settings'}}>{'게시판 정보'}</Link>
+                <Link to={'/community/settings'}>{'게시판 정보'}</Link>
               </div>
               <div className="sub_category item">
                 <Link
-                  to={{pathname: '/community/settings/banlist'}}>{'벤 리스트'}</Link>
+                  to={'/community/settings/banlist'}>{'벤 리스트'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/community/settings'}}>{'공지 글'}</Link>
+                <Link to={'/community/settings'}>{'공지 글'}</Link>
               </div>
               <div className="sub_category item">
-                <Link to={{pathname: '/community/settings'}}>{'통계'}</Link>
+                <Link to={'/community/settings'}>{'통계'}</Link>
               </div>
             </li>
           </ul>

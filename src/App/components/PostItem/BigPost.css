@@ -76,15 +76,23 @@
   word-wrap: break-word;
   font-size: 14px;
 
-  & p, & h2, & h3 {
+  & > p, & > h2, & > h3 {
     padding: 0 10px;
   }
 
-  & p {
+  & > p {
     margin-bottom: 0.5em;
   }
 
   & figure {
     margin: 0;
+  }
+
+  & div:global(.medium-insert-embeds-right) {
+    margin-right: 10px;
+  }
+
+  & div:global(.medium-insert-embeds-left) {
+    margin-left: 10px;
   }
 }

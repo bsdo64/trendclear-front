@@ -2,7 +2,6 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React, { PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 import ReactDOM from 'react-dom/server';
 import Select from 'react-select';
 import cx from 'classnames';
@@ -17,9 +16,11 @@ const errorLog = debug('vn:front:error');
 const EditorBox = React.createClass({
   displayName: 'EditorBox',
   propTypes: {
+    location: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     SubmitPostStore: PropTypes.object.isRequired,
     UserStore: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
     FireRemoveServerInit: PropTypes.func.isRequired,
     FireHandlePostTitle: PropTypes.func.isRequired,
     FireHandlePostContent: PropTypes.func.isRequired,
@@ -83,10 +84,9 @@ const EditorBox = React.createClass({
 
     // check update post success
     if (nextProps.SubmitPostStore.get('successUpdatePost') === true) {
-      browserHistory.replace(
-        '/community?forumId=' +
-        nextProps.SubmitPostStore.get('successForumId') +
-        '&postId=' + nextProps.SubmitPostStore.get('successPostId')
+      nextProps.history.replace(
+        '/club/' + nextProps.SubmitPostStore.get('successForumId') +
+        '?postId=' + nextProps.SubmitPostStore.get('successPostId')
       );
     }
   },
@@ -373,12 +373,14 @@ const EditorBox = React.createClass({
 
         <div className={displayEditor}>
           <div id="post_editor_background">
-            <div
-              ref="post_editor"
-              className="post_editor"
-              id="post_editor"
-              placeholder="텍스트를 입력하세요"
-            ></div>
+            <div className="editor_left_padding">
+              <div
+                ref="post_editor"
+                className="post_editor"
+                id="post_editor"
+                placeholder="텍스트를 입력하세요"
+              ></div>
+            </div>
           </div>
 
           {
@@ -450,6 +452,9 @@ require('./index.scss');
 const SubmitContents = React.createClass({
   displayName: 'SubmitContents',
   propTypes: {
+    location: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     AuthStore: PropTypes.object.isRequired,
     UserStore: PropTypes.object.isRequired,
     SubmitPostStore: PropTypes.object.isRequired,
@@ -474,9 +479,9 @@ const SubmitContents = React.createClass({
   componentWillReceiveProps(nextProps) {
     if (!this.props.SubmitPostStore.get('submitSuccess') &&
       nextProps.SubmitPostStore.get('submitSuccess')) {
-      browserHistory.replace(
-        '/community?forumId=' + nextProps.SubmitPostStore.get('forumId') +
-        '&postId=' + nextProps.SubmitPostStore.get('postId')
+      nextProps.history.replace(
+        '/club/' + nextProps.SubmitPostStore.get('forumId') +
+        '?postId=' + nextProps.SubmitPostStore.get('postId')
       );
     }
   },
@@ -494,7 +499,9 @@ const SubmitContents = React.createClass({
 
   render() {
     const {
-      AuthStore, UserStore, SubmitPostStore, ForumCreated, ForumFollowed, RankForums,
+      history,
+      ForumCreated, ForumFollowed, RankForums,
+      AuthStore, UserStore, SubmitPostStore,
     } = this.props;
 
     const isLogin = AuthStore.get('isLogin');
@@ -536,7 +543,7 @@ const SubmitContents = React.createClass({
       if (!forumInfo) {
         return (
           <SelectSearchForum
-            profile={profile}
+            history={history}
             ForumFollowed={ForumFollowed}
             ForumCreated={ForumCreated}
             RankForums={RankForums}
@@ -545,53 +552,57 @@ const SubmitContents = React.createClass({
       }
 
       return (
-        <div id="submit_box" className="ui items">
-          <div className={'ui item post_item'}>
-            {/* avatar */}
-            <div className="ui image tiny">
-              <AvatarImage
-                sex={sex}
-                avatarImg={avatar_img}
-              />
-            </div>
+        <div id="submit_box">
+          <div className="box">
+            <div className={'post_item'}>
 
-            {/* meta */}
-            <div className="ui content">
+              {/* submit header */}
+              <div className="submit_header">
+                <i className="fa fa-files-o" />
+                {forumInfo.get('title')}
+              </div>
+
+              {/* header form */}
               <div className="post_header">
-                {
-                  prefixes &&
-                  <Select
-                    name="select_prefix"
-                    value={SubmitPostStore.get('selectPrefixId')}
-                    placeholder="말머리 선택"
-                    noResultsText="말머리가 없습니다"
-                    options={options}
-                    onChange={this.handlePrefix}
+                {/* avatar */}
+                <div className="ui image tiny">
+                  <AvatarImage
+                    sex={sex}
+                    avatarImg={avatar_img}
                   />
-                }
-                <div className="ui input">
-                  <input ref="title"
-                         id="post_submit_title"
-                         type="text"
-                         placeholder="제목을 입력하세요"
-                         value={SubmitPostStore.get('title')}
-                         onChange={this.handleTitle}/>
                 </div>
-              </div>
 
-              <div className="meta best_post_meta">
-                <div className="ui horizontal divided list">
-                  <div className="item">
-                    {forumInfo.get('title')}
+                <div className="input_form_box">
+                  <div className="input_form_header">
+                    {
+                      prefixes &&
+                      <Select
+                        name="select_prefix"
+                        value={SubmitPostStore.get('selectPrefixId')}
+                        placeholder="말머리 선택"
+                        noResultsText="말머리가 없습니다"
+                        options={options}
+                        onChange={this.handlePrefix}
+                      />
+                    }
+                    <div className="ui input">
+                      <input ref="title"
+                             id="post_submit_title"
+                             type="text"
+                             placeholder="제목을 입력하세요"
+                             value={SubmitPostStore.get('title')}
+                             onChange={this.handleTitle}/>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="meta best_post_meta">
-                <div className="author_nick">
-                  {user.get('nick')}
-                </div>
-                <div className="author_icon">
-                  {iconImg}
+
+                  <div className="best_post_meta">
+                    <div className="author_nick">
+                      {user.get('nick')}
+                    </div>
+                    <div className="author_icon">
+                      {iconImg}
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -613,7 +624,6 @@ const SubmitContents = React.createClass({
       );
     }
   },
-
 });
 
 export default SubmitContents;

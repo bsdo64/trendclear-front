@@ -1,19 +1,12 @@
 #post_box {
   .post_item {
-    padding: 10px 10px 5px;
+    padding: 10px;
     margin: 0;
-    width: 700px;
 
     .ui.content {
-      margin-left: 10px;
-      padding-left: 0;
-      background: #fff;
-      -webkit-box-shadow: 1px 1px 1px 0 #c6c6c6
-더이상 표시할 추천 게시물이 없습니다;
-      -moz-box-shadow: 1px 1px 1px 0 #c6c6c6
-더이상 표시할 추천 게시물이 없습니다;
-      box-shadow: 1px 1px 1px 0 #c6c6c6
-더이상 표시할 추천 게시물이 없습니다;
+      -webkit-box-shadow: 1px 1px 1px 0 #c6c6c6;
+      -moz-box-shadow: 1px 1px 1px 0 #c6c6c6;
+      box-shadow: 1px 1px 1px 0 #c6c6c6;
 
       .best_post_meta {
         padding: 0 10px;

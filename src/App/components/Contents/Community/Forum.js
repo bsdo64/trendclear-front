@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { browserHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Dropdown, {
   DropdownTrigger,
   DropdownContent,
@@ -11,30 +11,21 @@ import marked from '../../Lib/Marked';
 import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
 import qs from 'qs';
+import j from 'jquery';
 
 // import AdForum1 from '../../Ad/AddForum1';
 
 require('./CommunityContents.scss');
-const PostList = React.createClass({
-  displayName: 'PostList',
-  mixins: [PureRenderMixin],
-  propTypes: {
-    item: PropTypes.object.isRequired,
-    author: PropTypes.object.isRequired,
-    postIdNow: PropTypes.number.isRequired,
-    defaultPageUrl: PropTypes.string.isRequired,
-    isAnnounce: PropTypes.bool.isRequired,
-  },
-
+class PostList extends React.PureComponent {
   componentDidMount() {
     $('.ui.embed').embed();
-  },
+  }
 
   componentDidUpdate() {
     $('.ui.embed').embed('refresh');
-  },
+  }
 
-  render: function() {
+  render() {
     const { item, author, postIdNow, defaultPageUrl, isAnnounce } = this.props;
     const id = item.get('id');
     const title = item.get('title');
@@ -51,28 +42,63 @@ const PostList = React.createClass({
 
     return (
       <tr className={activeClass}>
-        <td className="center aligned collapsing">{prefix &&
-        prefix.get('name')}</td>
-        <td className="center aligned collapsing">{like_count}</td>
-        <td className="center aligned collapsing">{view_count}</td>
-        <td className="left aligned">
-          {
-            isAnnounce &&
-            <i className="fa fa-bullhorn announce-icon"/>
-          }
-          <Link
-            className="article_title"
-            to={defaultPageUrl}>
-            {title}
-          </Link>
-          <span>{ comment_count > 0 && '[' + comment_count + ']'}</span>
+        {/*<td className="center aligned collapsing">{prefix &&*/}
+        {/*prefix.get('name')}</td>*/}
+        {/*<td className="center aligned collapsing">{like_count}</td>*/}
+        {/*<td className="center aligned collapsing">{view_count}</td>*/}
+        {/*<td className="left aligned">*/}
+          {/*{*/}
+            {/*isAnnounce &&*/}
+            {/*<i className="fa fa-bullhorn announce-icon"/>*/}
+          {/*}*/}
+          {/*<Link*/}
+            {/*className="article_title"*/}
+            {/*to={defaultPageUrl}>*/}
+            {/*{title}*/}
+          {/*</Link>*/}
+          {/*<span>{ comment_count > 0 && '[' + comment_count + ']'}</span>*/}
+        {/*</td>*/}
+        {/*<td className="right aligned collapsing">{author.get('nick')}</td>*/}
+        {/*<td className="center aligned collapsing">{created_at}</td>*/}
+        <td colSpan={6} style={{padding: 0}}>
+          <div style={{display: 'flex', padding: 5}}>
+            {
+              item.get('has_img') &&
+              <div style={{width: 80}}>
+                <img
+                  style={{width: 80}}
+                  src={`/image/uploaded/files/small/${item.get('has_img')}`} />
+              </div>
+            }
+            <div style={{flex: '0 1 580px', paddingLeft: 10, overflow: 'hidden'}}>
+              <Link
+              className="article_title"
+              style={{fontWeight: 'bold', fontSize: 14}}
+              to={defaultPageUrl}>
+              {title}
+              </Link>
+              <div style={{color: '#828282'}}>
+                {author.get('nick')} | {created_at}
+              </div>
+              <div style={{wordBreak: 'break-word', fontSize: 13}}>
+                {j(item.get('content')).text().trim().slice(0, 100)}
+              </div>
+            </div>
+          </div>
         </td>
-        <td className="right aligned collapsing">{author.get('nick')}</td>
-        <td className="center aligned collapsing">{created_at}</td>
       </tr>
     );
-  },
-});
+  }
+}
+
+PostList.displayName = 'PostList';
+PostList.propTypes =  {
+  item: PropTypes.object.isRequired,
+    author: PropTypes.object.isRequired,
+    postIdNow: PropTypes.number.isRequired,
+    defaultPageUrl: PropTypes.string.isRequired,
+    isAnnounce: PropTypes.bool.isRequired,
+};
 
 const Forum = React.createClass({
   displayName: 'Forum',
@@ -271,231 +297,230 @@ const Forum = React.createClass({
 
         return (
           <div id="forum_contents">
-
-            <div id="forum_info">
-              <div className="ui cards">
-                <div className="card" style={{
-                  boxShadow: 'none',
-                  width: '100%',
-                }}>
-                  <div className="content">
-                    {
-                      creatorProfile &&
-                      <AvatarImage
-                        sex={creatorProfile.get('sex')}
-                        avatarImg={creatorProfile.get('avatar_img')}
-                        imageClass="right floated mini ui image"
-                      />
-                    }
-                    <div className="header">
-                      {forum.get('title')}
-
+            <div className="box">
+              <div id="forum_info">
+                <div className="ui cards">
+                  <div className="card" style={{
+                    boxShadow: 'none',
+                    width: '100%',
+                  }}>
+                    <div className="content">
                       {
-                        (isManager) &&
-                        <Link to={`/community/settings?forumId=${forumId}`}
-                              className="ui button basic tiny right floated">
-                          <i className="fa fa-gear"/>
-                          {' 설정'}
-                        </Link>
+                        creatorProfile &&
+                        <AvatarImage
+                          sex={creatorProfile.get('sex')}
+                          avatarImg={creatorProfile.get('avatar_img')}
+                          imageClass="right floated mini ui image"
+                        />
                       }
+                      <div className="header">
+                        {forum.get('title')}
 
-                      {
-                        userId && isLogin &&
-                        <Dropdown className="subscribe_dropdown"
-                                  ref="subscribe_dropdown">
-                          <DropdownTrigger
-                            className="ui button basic tiny right floated">
+                        {
+                          (isManager) &&
+                          <Link to={{
+                            pathname: `/club/settings`,
+                            search: `?forumId=${forumId}`
+                          }}
+                                className="ui button basic tiny right floated">
+                            <i className="fa fa-gear"/>
+                            {' 설정'}
+                          </Link>
+                        }
+
+                        {
+                          userId && isLogin &&
+                          <Dropdown className="subscribe_dropdown"
+                                    ref="subscribe_dropdown">
+                            <DropdownTrigger
+                              className="ui button basic tiny right floated">
+                              <i className="fa fa-share"/>
+                              {' 구독'}
+                            </DropdownTrigger>
+                            <DropdownContent>
+                              <h4>구독 컬렉션 선택</h4>
+                              <ul className="collection_list">
+                                {
+                                  Users
+                                    .get(userId.toString())
+                                    .get('collections')
+                                    .map(collectionId => {
+                                      const collection = Collections.get(
+                                        collectionId.toString());
+                                      return (
+                                        <li key={collectionId}
+                                            className="collection_item">
+                                          <div className="ui checkbox">
+                                            <input
+                                              id={`collection-id-${collectionId}`}
+                                              type="checkbox"
+                                              value={collection.get('id')}
+                                              defaultChecked={self.checkCollectionHasForums(
+                                                collection.get('forums'),
+                                                forumId)}
+                                              onChange={self.selectCollection}/>
+                                            <label
+                                              htmlFor={`collection-id-${collectionId}`}>{collection.get(
+                                              'title')}</label>
+                                          </div>
+                                        </li>
+                                      );
+                                    })
+                                }
+                              </ul>
+                            </DropdownContent>
+                          </Dropdown>
+                        }
+
+                        {
+                          !userId && !isLogin &&
+                          <a onClick={this.openLoginModal}
+                             className="ui button basic tiny right floated">
                             <i className="fa fa-share"/>
                             {' 구독'}
-                          </DropdownTrigger>
-                          <DropdownContent>
-                            <h4>구독 컬렉션 선택</h4>
-                            <ul className="collection_list">
-                              {
-                                Users
-                                  .get(userId.toString())
-                                  .get('collections')
-                                  .map(collectionId => {
-                                    const collection = Collections.get(
-                                      collectionId.toString());
-                                    return (
-                                      <li key={collectionId}
-                                          className="collection_item">
-                                        <div className="ui checkbox">
-                                          <input
-                                            id={`collection-id-${collectionId}`}
-                                            type="checkbox"
-                                            value={collection.get('id')}
-                                            defaultChecked={self.checkCollectionHasForums(
-                                              collection.get('forums'),
-                                              forumId)}
-                                            onChange={self.selectCollection}/>
-                                          <label
-                                            htmlFor={`collection-id-${collectionId}`}>{collection.get(
-                                            'title')}</label>
-                                        </div>
-                                      </li>
-                                    );
-                                  })
-                              }
-                            </ul>
-                          </DropdownContent>
-                        </Dropdown>
-                      }
-
-                      {
-                        !userId && !isLogin &&
-                        <a onClick={this.openLoginModal}
-                           className="ui button basic tiny right floated">
-                          <i className="fa fa-share"/>
-                          {' 구독'}
-                        </a>
-                      }
-
-                      <a className={cFollowActive}
-                         onClick={this.toggleFollow.bind(this,
-                           isUserForumFollow, forumId)}>
-                        <i className="fa fa-star"/>
-                        {' 팔로우'}
-                      </a>
-                    </div>
-                    <div className="meta">
-                      {forum.get('sub_header')}
-                    </div>
-                    <div className="description">
-                      {forum.get('description')}
-                    </div>
-                    <div className="meta forum_meta">
-                      <div className="managers">{'메니저: '}
-                        {
-                          managersIds.map((userId, index) => {
-                            const user = Users.get(userId.toString());
-                            const comma = index !== (managersIds.size - 1)
-                              ? ', '
-                              : '';
-                            return user ? `${user.get('nick')} ${comma}` : '';
-                          })
+                          </a>
                         }
+
+                        <a className={cFollowActive}
+                           onClick={this.toggleFollow.bind(this,
+                             isUserForumFollow, forumId)}>
+                          <i className="fa fa-star"/>
+                          {' 팔로우'}
+                        </a>
                       </div>
-                      <div className="forum_counts">
-                        <span className="follow_counts">팔로우 {forum.get(
-                          'follow_count')} 명</span>
-                        <span className="subs_counts">컬렉션 구독 {forum.get(
-                          'subs_count')} 회</span>
+                      <div className="meta">
+                        {forum.get('sub_header')}
+                      </div>
+                      <div className="description">
+                        {forum.get('description')}
+                      </div>
+                      <div className="meta forum_meta">
+                        <div className="managers">{'메니저: '}
+                          {
+                            managersIds.map((userId, index) => {
+                              const user = Users.get(userId.toString());
+                              const comma = index !== (managersIds.size - 1)
+                                ? ', '
+                                : '';
+                              return user ? `${user.get('nick')} ${comma}` : '';
+                            })
+                          }
+                        </div>
+                        <div className="forum_counts">
+                          <span className="follow_counts">
+                            팔로우 {forum.get('follow_count')} 명
+                          </span>
+                          <span className="subs_counts">
+                            컬렉션 구독 {forum.get('subs_count')} 회
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="content">
-                    {
-                      forum.get('rule') &&
-                      <div >
-                        <div className="ui header tiny">
-                          클럽 규칙
+                    <div className="content">
+                      {
+                        forum.get('rule') &&
+                        <div >
+                          <div className="ui header tiny">
+                            클럽 규칙
+                          </div>
+                          <div className="description"
+                               dangerouslySetInnerHTML={{
+                                 __html: marked(forum.get('rule')),
+                               }}
+                          />
                         </div>
-                        <div className="description"
-                             dangerouslySetInnerHTML={{
-                               __html: marked(forum.get('rule')),
-                             }}
-                        />
-                      </div>
-                    }
+                      }
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/*<AdForum1 url="http://www.computerhope.com/banners/banner3.gif" />*/}
+              {/*<AdForum1 url="http://www.computerhope.com/banners/banner3.gif" />*/}
 
-            <div className="ui horizontal celled list">
-              <div className="item" style={{ fontWeight: 'bold' }}>
-                <div className="middle aligned content bold"
-                     onClick={this.resetPrefix}>전체
+              <div className="ui horizontal celled list">
+                <div className="item" style={{ fontWeight: 'bold' }}>
+                  <div className="middle aligned content bold"
+                       onClick={this.resetPrefix}>전체
+                  </div>
+                </div>
+                {
+                  forum.get('prefixes') &&
+                  forum.get('prefixes')
+                    .map(this.createPrefixItem.bind(this, Prefixes))
+                }
+              </div>
+              <table className="ui table very compact">
+                <thead>
+                <tr>
+                  <th className="center aligned collapsing">말머리</th>
+                  <th className="center aligned collapsing">좋아요</th>
+                  <th className="center aligned collapsing">조회</th>
+                  <th className="center aligned">제목</th>
+                  <th className="center aligned collapsing">글쓴이</th>
+                  <th className="center aligned collapsing">등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {
+                  announceIds &&
+                  announceIds.map(this.createPostItem.bind(this, makeUrl, true))
+                }
+
+                {
+                  postIds.map(this.createPostItem.bind(this, makeUrl, false))
+                }
+
+                </tbody>
+              </table>
+              <div className="ui right aligned container">
+                {
+                  userId && isLogin &&
+                  <Link
+                    className="ui button primary tiny"
+                    to={{
+                      pathname: `/submit/post`,
+                      search: `?forumId=${forumId}`,
+                    }}>
+                    글쓰기
+                  </Link>
+                }
+                {
+                  !userId && !isLogin &&
+                  <a
+                    className="ui button primary tiny"
+                    onClick={this.openLoginModal}>
+                    글쓰기
+                  </a>
+                }
+              </div>
+              <div className="ui divider"/>
+              <div className="ui center aligned container">
+                { (total > 0) &&
+                <Paginator
+                  total={total}
+                  limit={limit}
+                  page={page}
+                  handleSetPage={this.handleSetPage}
+                />
+                }
+
+                <div className="ui search mini" style={{ padding: '15px' }}>
+                  <div className="ui icon input">
+                    <form onSubmit={this.handleForumSearch}>
+                      <input className="prompt"
+                             type="text"
+                             placeholder="게시글 검색..."
+                             onChange={this.onChange}
+                             value={this.state.text}
+                      />
+                    </form>
+                    <i className="search icon"/>
+                  </div>
+                  <div className="results"/>
                 </div>
               </div>
-              {
-                forum.get('prefixes') &&
-                forum.get('prefixes')
-                  .map(this.createPrefixItem.bind(this, Prefixes))
-              }
             </div>
-            <table className="ui table very compact">
-              <thead>
-              <tr>
-                <th className="center aligned collapsing">말머리</th>
-                <th className="center aligned collapsing">좋아요</th>
-                <th className="center aligned collapsing">조회</th>
-                <th className="center aligned">제목</th>
-                <th className="center aligned collapsing">글쓴이</th>
-                <th className="center aligned collapsing">등록일</th>
-              </tr>
-              </thead>
-              <tbody>
-
-              {
-                announceIds &&
-                announceIds.map(this.createPostItem.bind(this, makeUrl, true))
-              }
-
-              {
-                postIds.map(this.createPostItem.bind(this, makeUrl, false))
-              }
-
-              </tbody>
-            </table>
-
-
-            <div className="ui right aligned container">
-              {
-                userId && isLogin &&
-                <Link
-                  className="ui button primary tiny"
-                  to={{
-                    pathname: '/community/submit',
-                    query: { forumId: forumId },
-                  }}>
-                  글쓰기
-                </Link>
-              }
-              {
-                !userId && !isLogin &&
-                <a
-                  className="ui button primary tiny"
-                  onClick={this.openLoginModal}>
-                  글쓰기
-                </a>
-              }
-            </div>
-
-            <div className="ui divider"/>
-
-            <div className="ui center aligned container">
-
-              { (total > 0) &&
-              <Paginator
-                total={total}
-                limit={limit}
-                page={page}
-                handleSetPage={this.handleSetPage}
-              />
-              }
-
-              <div className="ui search mini" style={{ padding: '15px' }}>
-                <div className="ui icon input">
-                  <form onSubmit={this.handleForumSearch}>
-                    <input className="prompt"
-                           type="text"
-                           placeholder="게시글 검색..."
-                           onChange={this.onChange}
-                           value={this.state.text}
-                    />
-                  </form>
-                  <i className="search icon"/>
-                </div>
-                <div className="results"/>
-              </div>
-            </div>
-
-
           </div>
         );
       }

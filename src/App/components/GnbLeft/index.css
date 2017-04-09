@@ -122,6 +122,12 @@
   }
 }
 
+/* Club Section */
+.clubMenuItem {
+  font-size: inherit;
+  padding: 5px 10px;
+}
+
 /* Collection Section */
 .collectionList {
   margin: 0;

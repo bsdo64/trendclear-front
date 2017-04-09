@@ -14,7 +14,7 @@ const SearchBar = React.createClass({
   submitQuery(e) {
     e.preventDefault();
 
-    const {SearchStore} = this.props;
+    const { SearchStore } = this.props;
     if (SearchStore) {
       const query = SearchStore.get('query');
 
@@ -26,7 +26,7 @@ const SearchBar = React.createClass({
   },
 
   getQueryValue() {
-    const {SearchStore} = this.props;
+    const { SearchStore } = this.props;
     let query = '';
 
     if (SearchStore) {
@@ -44,7 +44,7 @@ const SearchBar = React.createClass({
                  onChange={this.setQuery}
           />
 
-          <div className="results"></div>
+          <div className="results"/>
         </div>
       </form>
     );

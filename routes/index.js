@@ -6,6 +6,8 @@ const routes = [
   '/',
   '/all',
   '/collection/:collectionId',
+  '/club',
+  '/club/:clubId',
   '/community',
   '/community/submit',
   '/community/submit/category',

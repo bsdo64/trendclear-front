@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
@@ -10,44 +10,27 @@ import ShareLinkMenu from './ShareLinkMenu';
 import styles from './BigPost.css';
 import './Post.scss';
 
-const BigPost = React.createClass({
-  displayName: 'BigPost',
-  propTypes: {
-    post: PropTypes.object.isRequired,
-    author: PropTypes.object.isRequired,
-    user: PropTypes.object,
-    view: PropTypes.bool.isRequired,
-    Venatems: PropTypes.object.isRequired,
-    Items: PropTypes.object.isRequired,
-    postStyle: PropTypes.string,
-    location: PropTypes.object.isRequired,
-    shorten: PropTypes.bool.isRequired,
-    FireSetScrollPosition: PropTypes.func.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestLikePost: PropTypes.func.isRequired,
-    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
-    FireRequestActivateVenalink: PropTypes.func.isRequired,
-    FireRequestParticipateVenalink: PropTypes.func.isRequired,
-    FireOpenCommentUpdateView: PropTypes.func,
-  },
+class BigPost extends React.Component {
+  constructor(props) {
+    super(props);
 
-  mixins: [PureRenderMixin],
-
+    this.setScroll = this.setScroll.bind(this);
+    this.sendLike = this.sendLike.bind(this);
+    this.createIconImg = this.createIconImg.bind(this);
+  }
   componentDidMount() {
     this.postItem.addEventListener('click', this.setScroll);
-  },
+  }
 
   componentWillUnmount() {
     this.postItem.removeEventListener('click', this.setScroll);
-  },
+  }
 
   setScroll() {
 
     const currentScroll = document.body.scrollTop;
     this.props.FireSetScrollPosition(currentScroll);
-  },
+  }
 
   sendLike() {
 
@@ -60,17 +43,17 @@ const BigPost = React.createClass({
     } else {
       FireRequestLikePost({postId: post.get('id')});
     }
-  },
+  }
 
   createIconImg(iconImg) {
     if (iconImg) {
       return <img id="user_icon_img" src={'/images/' + iconImg}/>;
     }
-  },
+  }
 
   render() {
     const {
-      post, author, user, view, postStyle, shorten,
+      post, author, user, view, postStyle, shorten, history,
       FireToggleReportModal, FireToggleDeleteModal, FireOpenCommentUpdateView,
     } = this.props;
 
@@ -270,6 +253,7 @@ const BigPost = React.createClass({
               <div className="report_box">
                 <Menu
                   post={post}
+                  history={history}
                   targetType="post"
                   forumId={post.get('forum_id')}
                   targetId={post.get('id')}
@@ -284,7 +268,30 @@ const BigPost = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+BigPost.displayName = 'BigPost';
+BigPost.propTypes = {
+  post: PropTypes.object.isRequired,
+  author: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  view: PropTypes.bool.isRequired,
+  Venatems: PropTypes.object.isRequired,
+  Items: PropTypes.object.isRequired,
+  postStyle: PropTypes.string,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  shorten: PropTypes.bool.isRequired,
+  FireSetScrollPosition: PropTypes.func.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
+  FireToggleReportModal: PropTypes.func.isRequired,
+  FireToggleDeleteModal: PropTypes.func.isRequired,
+  FireRequestLikePost: PropTypes.func.isRequired,
+  FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+  FireRequestActivateVenalink: PropTypes.func.isRequired,
+  FireRequestParticipateVenalink: PropTypes.func.isRequired,
+  FireOpenCommentUpdateView: PropTypes.func,
+};
 
 export default BigPost;

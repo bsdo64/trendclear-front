@@ -1,40 +1,23 @@
 /**
  * Created by dobyeongsu on 2016. 3. 23..
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SigninAgree from './SigninAgree';
 import SigninFormContents from './SigninFormContents';
 
 require('./Signin.scss');
-const SigninContents = React.createClass({
-  displayName: 'SigninContents',
-  propTypes: {
-    history: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-    SigninFormStore: PropTypes.object.isRequired,
-    FireToggleAgreePrivacy: PropTypes.func.isRequired,
-    FireToggleAgreeTerm: PropTypes.func.isRequired,
-    FireConfirmAgree: PropTypes.func.isRequired,
-    FireResetSigninForm: PropTypes.func.isRequired,
-    FireEmailVerifyFormOpen: PropTypes.func.isRequired,
-
-    FireRequestCheckEmailDup: PropTypes.func.isRequired,
-    FireRequestCheckNickDup: PropTypes.func.isRequired,
-    FireRequestEmailVerifyCode: PropTypes.func.isRequired,
-    FireRequestCheckVerifyCode: PropTypes.func.isRequired,
-    FireRequestSignin: PropTypes.func.isRequired,
-  },
-
+class SigninContents extends React.Component {
   componentWillMount() {
     const { UserStore, history } = this.props;
     if (UserStore.get('user')) {
       history.replace('/');
     }
-  },
+  }
 
   componentWillUnmount() {
     this.props.FireResetSigninForm();
-  },
+  }
 
   render() {
     const { history, SigninFormStore } = this.props;
@@ -92,7 +75,25 @@ const SigninContents = React.createClass({
         }
       </div>
     );
-  },
-});
+  }
+}
+
+SigninContents.displayName = 'SigninContents';
+SigninContents.propTypes = {
+  history: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+  SigninFormStore: PropTypes.object.isRequired,
+  FireToggleAgreePrivacy: PropTypes.func.isRequired,
+  FireToggleAgreeTerm: PropTypes.func.isRequired,
+  FireConfirmAgree: PropTypes.func.isRequired,
+  FireResetSigninForm: PropTypes.func.isRequired,
+  FireEmailVerifyFormOpen: PropTypes.func.isRequired,
+
+  FireRequestCheckEmailDup: PropTypes.func.isRequired,
+  FireRequestCheckNickDup: PropTypes.func.isRequired,
+  FireRequestEmailVerifyCode: PropTypes.func.isRequired,
+  FireRequestCheckVerifyCode: PropTypes.func.isRequired,
+  FireRequestSignin: PropTypes.func.isRequired,
+};
 
 export default SigninContents;

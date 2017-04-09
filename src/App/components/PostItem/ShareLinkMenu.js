@@ -1,38 +1,26 @@
 /**
  * Created by dobyeongsu on 2016. 10. 26..
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Dropdown, {
   DropdownTrigger,
   DropdownContent,
 } from 'react-simple-dropdown';
 import moment from '../Lib/MomentLib';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import './LinkMenu.scss';
 
-const ShareLinkMenu = React.createClass({
-  propTypes: {
-    userId: PropTypes.number,
-    author: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired,
-    user: PropTypes.object,
-    Venatems: PropTypes.object.isRequired,
-    Items: PropTypes.object.isRequired,
-    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
-    FireRequestActivateVenalink: PropTypes.func.isRequired,
-    FireRequestParticipateVenalink: PropTypes.func.isRequired,
-  },
+class ShareLinkMenu extends React.Component {
+  constructor(props) {
+    super(props);
 
-  mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return {
+    this.state = {
       openVenalink: false,
       venalinkRP: '',
       startDate: moment().add(1, 'days'),
     };
-  },
+  }
 
   checkMaxRP(v) {
     const {user} = this.props;
@@ -44,7 +32,7 @@ const ShareLinkMenu = React.createClass({
         venalinkRPCheck: true,
       });
     }
-  },
+  }
 
   requestActivateVenalink(activateItem) {
     if (activateItem) {
@@ -65,19 +53,20 @@ const ShareLinkMenu = React.createClass({
         });
       }
     }
-  },
+  }
 
   copyLink(refId) {
     this.refs[refId].select();
     document.execCommand('copy');
-  },
+  }
+
   toggleVenalink() {
 
     this.props.FireToggleActiveVenalinkModal({
       contentType: 'ActivateVenalink',
       venalinkActivateRequestPostId: this.props.post.get('id'),
     });
-  },
+  }
 
   requestParticipateVenalink(venalinkId, participateItem, postId) {
     if (participateItem) {
@@ -95,12 +84,12 @@ const ShareLinkMenu = React.createClass({
         });
       }
     }
-  },
+  }
 
   isUsersPost(author, userId) {
 
     return userId === author.get('id');
-  },
+  }
 
   isActivateVenalinkPost(post) {
 
@@ -109,7 +98,7 @@ const ShareLinkMenu = React.createClass({
     } else {
       return false;
     }
-  },
+  }
 
   isParticipateVenalink(venalink) {
 
@@ -123,8 +112,7 @@ const ShareLinkMenu = React.createClass({
     }
 
     return false;
-
-  },
+  }
 
   createShareLink(linkId) {
     if (process.env.NODE_ENV === 'production') {
@@ -132,7 +120,7 @@ const ShareLinkMenu = React.createClass({
     } else {
       return `http://localhost:3000/link/post/m/${linkId}`;
     }
-  },
+  }
 
   createMyVenalinkUrl(myParticipate) {
 
@@ -147,7 +135,7 @@ const ShareLinkMenu = React.createClass({
     } else {
       return null;
     }
-  },
+  }
 
   findInventoryItem(user, options) {
     const {Items, Venatems} = this.props;
@@ -169,7 +157,7 @@ const ShareLinkMenu = React.createClass({
     }
 
     return null;
-  },
+  }
 
   createShareLinkIcon(isUsersPost, venalink, myParticipate) {
 
@@ -208,8 +196,7 @@ const ShareLinkMenu = React.createClass({
         );
       }
     }
-
-  },
+  }
 
   createShareLinkMenu(isUsersPost, venalink, myParticipate) {
 
@@ -307,7 +294,7 @@ const ShareLinkMenu = React.createClass({
       );
     }
 
-  },
+  }
 
   render() {
     const {userId, author, post} = this.props;
@@ -353,7 +340,19 @@ const ShareLinkMenu = React.createClass({
         </Dropdown>
       </div>
     );
-  },
-});
+  }
+}
+
+ShareLinkMenu.propTypes = {
+  userId: PropTypes.number,
+    author: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired,
+    user: PropTypes.object,
+    Venatems: PropTypes.object.isRequired,
+    Items: PropTypes.object.isRequired,
+    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+    FireRequestActivateVenalink: PropTypes.func.isRequired,
+    FireRequestParticipateVenalink: PropTypes.func.isRequired,
+};
 
 export default ShareLinkMenu;
