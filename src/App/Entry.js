@@ -46,8 +46,8 @@ const renderApp = (Component) => {
 renderApp(App);
 
 if (module.hot) {
-  module.hot.accept('./routes', () => {
-    const App = require('./routes').default;
+  module.hot.accept('./routes/index.js', () => {
+    const App = require('./routes/index.js').default;
     renderApp(App);
   });
 }
