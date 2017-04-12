@@ -6,7 +6,7 @@ require('./SigninButton.scss');
 const FlatButton = (props) => {
   const {linkTo, text} = props;
   return (
-    <div id="signin_button" className="widget">
+    <div id="flat_button" className="widget">
       <Link to={linkTo}>
         <button className="ui primary button fluid">{text}</button>
       </Link>

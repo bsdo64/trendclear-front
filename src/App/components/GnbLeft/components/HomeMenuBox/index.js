@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
 import styles from '../../index.css';
 import cx from 'classnames';
 import { getCollectionList } from '../../../../Selectors/User';
+
+import WidgetContainer from '../../../../components/WidgetBox/index.js';
 
 class HomeMenuBox extends React.Component {
   constructor() {
@@ -41,13 +44,9 @@ class HomeMenuBox extends React.Component {
                 </Link>
               </div>
               <div className={styles.subMenuItem}>
-                <Link to="/">
+                <Link to="/collection">
                   <i className="fa fa-folder-open"/>
                   <span>컬렉션</span>
-                </Link>
-
-                <Link to="/">
-                  <i className="fa fa-cog"/>
                 </Link>
 
                 <a onClick={this.toggleOpenSearch}>
@@ -101,21 +100,7 @@ class HomeMenuBox extends React.Component {
           </Scrollbars>
         </div>
 
-        <div className={styles.userMenu}>
-          <div className={styles.userMeta}>
-            <div className={styles.userAvatar}>
-              <img src="//placehold.it/40x40"/>
-            </div>
-            <div className={styles.userInfo}>
-              <div>Nice</div>
-              <div>Nice</div>
-              <div>Nice</div>
-            </div>
-          </div>
-          <div className={styles.userStats}>
-            Hello
-          </div>
-        </div>
+        <Route component={WidgetContainer}/>
       </div>
     );
   }

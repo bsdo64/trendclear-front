@@ -1,5 +1,9 @@
 .widget {
   margin-top: 10px;
+
+  &:first-child {
+    margin: 0;
+  }
 }
 
 #trend_box {

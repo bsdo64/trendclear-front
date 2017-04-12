@@ -108,7 +108,7 @@
     & > i {
       padding-right: 5px;
     }
-    & > i:global(.fa-search), & > i:global(.fa-close), & > i:global(.fa-cog) {
+    & > i:global(.fa-search), & > i:global(.fa-close) {
       float: right;
       right: 10px;
     }
@@ -151,7 +151,7 @@
     border: none;
     outline: none;
     color: #fff;
-    border-bottom: 1px solid #abc;
+    border-bAottom: 1px solid #abc;
     width: 120px;
   }
 }
@@ -170,36 +170,4 @@
       padding-right: 5px;
     }
   }
-}
-
-/* User Section */
-.userMenu {
-  position: relative;
-  background: #abc;
-  height: 65px;
-  flex: 0 0 auto;
-}
-
-.userMeta {
-  padding: 5px;
-  height: 50px;
-}
-
-.userAvatar {
-  display: inline-block;
-  padding-right: 5px;
-}
-
-.userInfo {
-  display: inline-block;
-  width: inherit;
-  & > div {
-    font-size: 30%;
-    font-size-adjust: 0.58;
-  }
-}
-
-.userStats {
-  padding: 0 5px;
-  display: inline-block;
 }

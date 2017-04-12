@@ -59,6 +59,7 @@ const LeftCol = React.createClass({
 
           {/* Community */}
           <Route path="/club/:clubId" component={ClubMenuBoxConnect}/>
+          <Route path="/collection" component={HomeMenuBoxConnect}/>
           <Route path="/collection/:collectionId" component={HomeMenuBoxConnect}/>
 
           {/* Gnb Menu */}
