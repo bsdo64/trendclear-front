@@ -1,73 +1,62 @@
-const { Schema, arrayOf } = require('normalizr');
+const { schema } = require('normalizr');
 
-const club = new Schema('clubs');
-const categoryGroup = new Schema('categoryGroups');
-const category = new Schema('categories');
-const collection = new Schema('collections');
-const forum = new Schema('forums');
-const prefix = new Schema('prefixes');
 
-const post = new Schema('posts');
-const author = new Schema('author');
-const inventory = new Schema('inventories');
-const venatem = new Schema('venatems');
-const item = new Schema('items');
-const comment = new Schema('comments');
-const subComment = new Schema('subComments');
+const prefix = new schema.Entity('prefixes');
 
-const noti = new Schema('notis');
-
-inventory.define({
-  items: arrayOf(venatem),
-});
-
-venatem.define({
+const item = new schema.Entity('items');
+const venatem = new schema.Entity('venatems', {
   item: item,
 });
+const inventory = new schema.Entity('inventories', {
+  items: [venatem],
+});
+
+const author = new schema.Entity('author');
+
+
+const subComment = new schema.Entity('subComments', {
+  author: author,
+});
+const comment = new schema.Entity('comments', {
+  author: author,
+  subComments: [subComment],
+});
+
+const post = new schema.Entity('posts', {
+  comments: [ comment ],
+  author: author,
+});
+
+const forum = new schema.Entity('forums', {
+  prefixes: [prefix],
+  announces: [post],
+  managers: [author],
+  bans: [author],
+});
+
+const category = new schema.Entity('categories', {
+  forums: [forum],
+});
+const categoryGroup = new schema.Entity('categoryGroups', {
+  categories: [category],
+});
+const club = new schema.Entity('clubs', {
+  category_groups: [categoryGroup],
+});
+
+
+const collection = new schema.Entity('collections', {
+  forums: [forum],
+});
+
+const noti = new schema.Entity('notis');
 
 author.define({
-  collections: arrayOf(collection),
-  follow_forums: arrayOf(forum),
-  forumCreated: arrayOf(forum),
-  forumManaged: arrayOf(forum),
-  inventories: arrayOf(inventory),
-});
-
-club.define({
-  category_groups: arrayOf(categoryGroup),
-});
-
-categoryGroup.define({
-  categories: arrayOf(category),
-});
-
-category.define({
-  forums: arrayOf(forum),
-});
-
-collection.define({
-  forums: arrayOf(forum),
-});
-
-forum.define({
-  prefixes: arrayOf(prefix),
-  announces: arrayOf(post),
-  managers: arrayOf(author),
-  bans: arrayOf(author),
-});
-
-comment.define({
-  author: author,
-  subComments: arrayOf(subComment),
-});
-
-subComment.define({
-  author: author,
-});
-
-post.define({
-  comments: arrayOf(comment),
-  author: author,
+  collections: [collection],
+  follow_forums: [forum],
+  forumCreated: [forum],
+  forumManaged: [forum],
+  inventories: [inventory],
 });
 
 module.exports = {

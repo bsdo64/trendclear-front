@@ -1,4 +1,4 @@
-import { normalize, arrayOf } from 'normalizr';
+import { normalize } from 'normalizr';
 import { forum } from '../../../Model/normalizr/schema';
 
 import { take, put, call } from 'redux-saga/effects';
@@ -312,7 +312,7 @@ function* SagaMoreList() {
       const result = yield call([API, API.get], payload.pathName,
         payload.params);
 
-      result.data = normalize(result.data, arrayOf(forum));
+      result.data = normalize(result.data, [forum]);
       result.listName = payload.listName;
 
       yield put({ type: SUCCESS_GET_MORE_FORUM_LIST, ...result });

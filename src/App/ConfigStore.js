@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import Stores from './Reducers';
 import Api from '../Utils/ApiClient';
 import assign from 'deep-assign';
-import { normalize, arrayOf } from 'normalizr';
+import { normalize } from 'normalizr';
 import { author, category, post, noti, forum } from '../Model/normalizr/schema';
 
 let bootStrapLogger;
@@ -62,7 +62,7 @@ const initRouteState = (/* store */) => dispatch => action => {
           const collectionBestPostList = resBody.CollectionBestPostStore.posts.data;
           const collectionBestPostListPagination = resBody.CollectionBestPostStore.posts.collection;
 
-          const normalized = normalize(collectionBestPostList, arrayOf(post));
+          const normalized = normalize(collectionBestPostList, [post]);
 
           assign(resBody, {
             Posts: normalized.entities.posts,
@@ -76,7 +76,7 @@ const initRouteState = (/* store */) => dispatch => action => {
           const bestPostList = resBody.BestPostStore.posts.data;
           const bestPostListPagination = resBody.BestPostStore.posts.collection;
 
-          const normalized = normalize(bestPostList, arrayOf(post));
+          const normalized = normalize(bestPostList, [post]);
 
           assign(resBody, {
             Posts: normalized.entities.posts,
@@ -90,7 +90,7 @@ const initRouteState = (/* store */) => dispatch => action => {
           const data = resBody.ActivityStore.posts.data;
           const collection = resBody.ActivityStore.posts.collection;
 
-          const normalized = normalize(data, arrayOf(post));
+          const normalized = normalize(data, [post]);
 
           let context, type = resBody.ActivityStore.type;
           switch (type) {
@@ -122,7 +122,7 @@ const initRouteState = (/* store */) => dispatch => action => {
           const searchPostList = resBody.SearchStore.search.posts.results;
           const searchPostListPagination = resBody.SearchStore.search.collection;
 
-          const normalized = normalize(searchPostList, arrayOf(post));
+          const normalized = normalize(searchPostList, [post]);
 
           assign(resBody, {
             Posts: normalized.entities.posts,
@@ -134,7 +134,7 @@ const initRouteState = (/* store */) => dispatch => action => {
           const searchForumList = resBody.SearchStore.forum.data.results;
           const searchForumListPagination = resBody.SearchStore.forum.collection;
 
-          const normalizedForums = normalize(searchForumList, arrayOf(forum));
+          const normalizedForums = normalize(searchForumList, [forum]);
 
           assign(resBody, {
             Forums: normalizedForums.entities.forums,
@@ -148,7 +148,7 @@ const initRouteState = (/* store */) => dispatch => action => {
           const forumPostList = resBody.CommunityStore.list.data;
           const forumPostListPagination = resBody.CommunityStore.list.collection;
 
-          const normalized = normalize(forumPostList, arrayOf(post));
+          const normalized = normalize(forumPostList, [post]);
 
           assign(resBody, {
             Posts: normalized.entities.posts,
@@ -202,7 +202,7 @@ const initRouteState = (/* store */) => dispatch => action => {
         if (resBody.GnbStore && resBody.GnbStore.gnbMenu) {
           const INCat = resBody.GnbStore.gnbMenu.data;
 
-          const normalized = normalize(INCat, arrayOf(category));
+          const normalized = normalize(INCat, [category]);
 
           resBody.GnbStore.gnbMenu.INCat = normalized;
 
@@ -216,7 +216,7 @@ const initRouteState = (/* store */) => dispatch => action => {
         if (resBody.UserStore && resBody.UserStore.notifications) {
           const INoti = resBody.UserStore.notifications.data;
 
-          const normalized = normalize(INoti, arrayOf(noti));
+          const normalized = normalize(INoti, [noti]);
 
           resBody.UserStore.notifications.INoti = normalized;
 

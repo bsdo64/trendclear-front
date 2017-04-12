@@ -20,6 +20,20 @@ class ShareLinkMenu extends React.Component {
       venalinkRP: '',
       startDate: moment().add(1, 'days'),
     };
+
+    this.checkMaxRP = this.checkMaxRP.bind(this);
+    this.requestActivateVenalink = this.requestActivateVenalink.bind(this);
+    this.copyLink = this.copyLink.bind(this);
+    this.toggleVenalink = this.toggleVenalink.bind(this);
+    this.requestParticipateVenalink = this.requestParticipateVenalink.bind(this);
+    this.isUsersPost = this.isUsersPost.bind(this);
+    this.isActivateVenalinkPost = this.isActivateVenalinkPost.bind(this);
+    this.isParticipateVenalink = this.isParticipateVenalink.bind(this);
+    this.createShareLink = this.createShareLink.bind(this);
+    this.createMyVenalinkUrl = this.createMyVenalinkUrl.bind(this);
+    this.findInventoryItem = this.findInventoryItem.bind(this);
+    this.createShareLinkIcon = this.createShareLinkIcon.bind(this);
+    this.createShareLinkMenu = this.createShareLinkMenu.bind(this);
   }
 
   checkMaxRP(v) {

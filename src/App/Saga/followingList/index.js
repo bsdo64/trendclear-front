@@ -1,7 +1,7 @@
 import { take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
-import { normalize, arrayOf } from 'normalizr';
+import { normalize } from 'normalizr';
 import { post } from '../../../Model/normalizr/schema';
 
 import {
@@ -21,7 +21,7 @@ function* SagaSaveFollowingFilter() {
 
     try {
       const { data, collection } = yield call([Api, API.get], '/best', payload);
-      const normalized = normalize(data, arrayOf(post));
+      const normalized = normalize(data, [post]);
 
       yield put({
         type: SUCCESS_SAVE_FOLLOWING_FILTER, data: normalized, collection,

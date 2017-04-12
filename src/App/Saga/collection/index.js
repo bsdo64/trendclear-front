@@ -1,6 +1,6 @@
 import { take, put, call, fork } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
-import { normalize, arrayOf } from 'normalizr';
+import { normalize } from 'normalizr';
 import { forum } from '../../../Model/normalizr/schema';
 import {
   REQUEST_CREATE_COLLECTION,
@@ -42,7 +42,7 @@ function* SagaSearchSubsForum() {
 
     try {
       const forums = yield call([Api, API.get], '/forum', payload);
-      const normalizedForums = normalize(forums, arrayOf(forum));
+      const normalizedForums = normalize(forums, [forum]);
 
       yield put(
         { type: SUCCESS_SEARCH_FORUM_TO_COLLECTION_SUBS, normalizedForums });

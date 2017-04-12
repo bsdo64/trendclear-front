@@ -4,12 +4,12 @@ import {
   receiveSocketPoint,
   receiveSocketTerminateVenalink,
 } from './Actions/User';
-import { normalize, arrayOf } from 'normalizr';
+import { normalize } from 'normalizr';
 import { noti } from '../Model/normalizr/schema';
 
 export default (store) => {
   Noti.on('comment_write noti', function(result) {
-    result.notis = normalize(result.notis, arrayOf(noti));
+    result.notis = normalize(result.notis, [noti]);
 
     store.dispatch(receiveSocketNoti(result));
   });
