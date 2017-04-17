@@ -274,31 +274,12 @@ const TrendBox = React.createClass({
 
               <div className="content">
                 <div className="user_info_header">
-                  <span className="ui description">{user.user.get(
-                    'nick')}</span>
+                  <span className="ui description">{user.user.get('nick')}</span>
                   {iconImg}
-                </div>
-                <div className="description">
 
-                  <div className="item">
-                    <span className="item_col">레벨</span>
-                    <div className="item_num">
-                      <span>{user.trendbox.get('level')}</span>
-                    </div>
-                  </div>
-
-                  <div className="item">
-                    <span className="item_col">명성</span>
-                    <div className="item_num">
-                      <span>{user.trendbox.get('reputation')}</span>
-                    </div>
-                  </div>
-
-                  <div className="item">
-                    <span className="item_col">랭크</span>
-                    <div className="item_num">
-                      <span>{gradeImg}</span>
-                    </div>
+                  <div className="user_info">
+                    <span className="item_col">Lv. {user.trendbox.get('level')}</span>
+                    <span className="item_col">Rep. {user.trendbox.get('reputation')}</span>
                   </div>
                 </div>
               </div>

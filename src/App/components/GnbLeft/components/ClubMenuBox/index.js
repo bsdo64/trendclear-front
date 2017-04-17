@@ -1,11 +1,13 @@
 import React from 'react';
 import { Map } from 'immutable';
+import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
 import styles from '../../index.css';
 import cx from 'classnames';
 import { getCurrentClub } from '../../../../Selectors/Club.js';
+import WidgetContaienr from '../../../../components/WidgetBox/index.js';
 
 class ClubMenuBox extends React.Component {
   constructor() {
@@ -91,21 +93,7 @@ class ClubMenuBox extends React.Component {
           }
         </div>
 
-        <div className={styles.userMenu}>
-          <div className={styles.userMeta}>
-            <div className={styles.userAvatar}>
-              <img src="//placehold.it/40x40"/>
-            </div>
-            <div className={styles.userInfo}>
-              <div>Nice</div>
-              <div>Nice</div>
-              <div>Nice</div>
-            </div>
-          </div>
-          <div className={styles.userStats}>
-            Hello
-          </div>
-        </div>
+        <Route component={WidgetContaienr} />
       </div>
     );
   }

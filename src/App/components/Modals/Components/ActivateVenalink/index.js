@@ -1,28 +1,26 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 import moment from '../../../Lib/MomentLib';
 import InputNumber from 'rc-input-number';
 import DatePicker from 'react-datepicker';
 
 require('./index.scss');
-const ActivateVenalink = React.createClass({
-  displayName: 'ActivateVenalink',
-  propTypes: {
-    UserStore: React.PropTypes.object.isRequired,
-    ShareLinkStore: React.PropTypes.object.isRequired,
-    Inventories: React.PropTypes.object.isRequired,
-    Venatems: React.PropTypes.object.isRequired,
-    Items: React.PropTypes.object.isRequired,
-    FireRequestActivateVenalink: React.PropTypes.func.isRequired,
-    FireToggleVenacleStoreModal: React.PropTypes.func.isRequired,
-  },
+class ActivateVenalink extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       venalinkRP: '',
       startDate: moment().add(1, 'days'),
     };
-  },
+
+    this.checkMaxRP = this.checkMaxRP.bind(this);
+    this.handleChangeDate = this.handleChangeDate.bind(this);
+    this.requestActivateVenalink = this.requestActivateVenalink.bind(this);
+    this.findInventoryItem = this.findInventoryItem.bind(this);
+    this.openPayment = this.openPayment.bind(this);
+    this.toggleStoreModal = this.toggleStoreModal.bind(this);
+  }
 
   checkMaxRP(v) {
     const {UserStore} = this.props;
@@ -34,14 +32,14 @@ const ActivateVenalink = React.createClass({
         venalinkRPCheck: true,
       });
     }
-  },
+  }
 
   handleChangeDate(moment) {
 
     this.setState({
       startDate: moment,
     });
-  },
+  }
 
   requestActivateVenalink(activateItem) {
     if (activateItem) {
@@ -57,7 +55,7 @@ const ActivateVenalink = React.createClass({
         });
       }
     }
-  },
+  }
 
   findInventoryItem(user, options) {
     const {Items, Venatems} = this.props;
@@ -79,17 +77,17 @@ const ActivateVenalink = React.createClass({
     }
 
     return null;
-  },
+  }
 
   openPayment() {
-    browserHistory.push('/user/chargePoint');
-  },
+    this.props.history.push('/user/chargePoint');
+  }
 
   toggleStoreModal() {
     this.props.FireToggleVenacleStoreModal({
       contentType: 'Shopping',
     });
-  },
+  }
 
   render() {
     const {UserStore} = this.props;
@@ -195,7 +193,21 @@ const ActivateVenalink = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+ActivateVenalink.displayName = 'ActivateVenalink';
+ActivateVenalink.propTypes = {
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+  ShareLinkStore: PropTypes.object.isRequired,
+  Inventories: PropTypes.object.isRequired,
+  Venatems: PropTypes.object.isRequired,
+  Items: PropTypes.object.isRequired,
+  FireRequestActivateVenalink: PropTypes.func.isRequired,
+  FireToggleVenacleStoreModal: PropTypes.func.isRequired,
+};
 
 export default ActivateVenalink;

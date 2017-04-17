@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Main from './components/Main.js';
-import Club from './components/Club.js';
+import Club from './routes/Club/index.js';
 import Series from './components/Series.js';
 import Post from './routes/Post/index.js';
 

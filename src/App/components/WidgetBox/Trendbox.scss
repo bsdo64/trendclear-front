@@ -33,38 +33,38 @@
           img {
             width: 16px;
           }
-        }
 
-        > .description {
-          display: table;
-          table-layout: auto;
-          width: 100%;
+          > .user_info {
+            display: table;
+            table-layout: auto;
+            width: 100%;
 
-          * {
-            color: white !important;
-            font-size: 12px;
-          }
-          > .item {
-            display: table-cell;
-            background: #0A5263;
-            text-align: center;
-            padding: 3px 9px;
-            -webkit-box-shadow: 1px 1px 1px #213B4C;
-            -moz-box-shadow: 1px 1px 1px #213B4C;
-            box-shadow: 1px 1px 1px #213B4C;
-            border-left: 1px solid #0E6479;
-            border-right: 1px solid #2D495D;
-
-            span.item_col {
-              font-size: 10px;
+            * {
+              color: white !important;
+              font-size: 12px;
             }
-            .item_num {
-              span, i {
-                font-size: 16px;
-              }
+            > .item {
+              display: table-cell;
+              background: #0A5263;
+              text-align: center;
+              padding: 3px 9px;
+              -webkit-box-shadow: 1px 1px 1px #213B4C;
+              -moz-box-shadow: 1px 1px 1px #213B4C;
+              box-shadow: 1px 1px 1px #213B4C;
+              border-left: 1px solid #0E6479;
+              border-right: 1px solid #2D495D;
 
-              #user_grade_img {
-                width: 15px;
+              span.item_col {
+                font-size: 10px;
+              }
+              .item_num {
+                span, i {
+                  font-size: 16px;
+                }
+
+                #user_grade_img {
+                  width: 15px;
+                }
               }
             }
           }
@@ -125,14 +125,29 @@
       }
 
       #store-button {
+        margin: 0;
         padding: 0;
 
-        .description {
-          margin: 0;
-          display: inline-block;
-
-          .item {
+        > .description {
+          * {
+            color: white !important;
+            font-size: 13px;
+          }
+          > .item {
             cursor: pointer;
+
+            span.item_col {
+              font-size: 10px;
+            }
+            .item_num {
+              span, i {
+                font-size: 16px;
+              }
+
+              #user_grade_img {
+                width: 15px;
+              }
+            }
           }
         }
       }

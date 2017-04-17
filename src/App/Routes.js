@@ -202,10 +202,6 @@ export default (store) => {
           }}/>
       </Route>
 
-      <Route path="/collection" component={App}>
-        <IndexRedirect to="/"/>
-      </Route>
-
       <Route path="/collection/:collectionId" component={App}>
         <IndexRoute
           components={{

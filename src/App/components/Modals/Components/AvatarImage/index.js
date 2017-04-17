@@ -39,7 +39,7 @@ const AvatarImageModal = React.createClass({
     };
   },
 
-  handleFile: function(e) {
+  handleFile(e) {
     e.preventDefault();
 
     const reader = new FileReader();

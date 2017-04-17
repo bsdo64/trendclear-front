@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { getLoginUser } from '../Util/func';
 import ActivateVenalink from '../../components/Modals/Components/ActivateVenalink';
 import {
@@ -31,10 +32,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(
+module.exports = withRouter(connect(
   mapStateToProps,
   {
     FireRequestActivateVenalink: requestActivateVenalink,
     FireToggleVenacleStoreModal: toggleVenacleStoreModal,
   },
-)(ActivateVenalinkContainer);
+)(ActivateVenalinkContainer));

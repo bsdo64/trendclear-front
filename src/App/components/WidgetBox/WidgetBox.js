@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -7,7 +8,6 @@ import TrendBox from './TrendBox';
 import qs from 'qs';
 
 require('./index.scss');
-
 class WidgetBox extends Component {
   render() {
     const {
@@ -70,7 +70,7 @@ class WidgetBox extends Component {
                             <div className="content">
                               <div className="header">
                                 <Link
-                                  to={`/community?forumId=${forum.get('id')}`}
+                                  to={`/club/${forum.get('id')}`}
                                   className={styleActive}>
                                   {forum.get('title')}
                                   {
