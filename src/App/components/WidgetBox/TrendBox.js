@@ -87,6 +87,7 @@ const TrendBox = React.createClass({
     return {
       RPModal: false,
       VStore: false,
+      wide: false,
     };
   },
 
@@ -123,7 +124,7 @@ const TrendBox = React.createClass({
       expPercent = expPercent - 100;
     }
 
-    if (currentTotalExp != prev_currentTotalExp) {
+    if (currentTotalExp !== prev_currentTotalExp) {
       $('#exp_progress')
         .progress({
           percent: expPercent,
@@ -154,7 +155,7 @@ const TrendBox = React.createClass({
 
   updateCountUp(nodeId, from, to, options) {
 
-    if (from != to) {
+    if (from !== to) {
       const count = new CountUp(nodeId, from, to, 0, 1.5, options);
       count.start();
     }
@@ -230,6 +231,10 @@ const TrendBox = React.createClass({
     this.props.FireToggleShowInventory();
   },
 
+  toggleWideBox() {
+    this.setState({wide: !this.state.wide})
+  },
+
   render() {
     const {
       user, ShoppingStore, InventoryStore, FireShowItemInfo, Inventories, Venatems, Items,
@@ -262,6 +267,17 @@ const TrendBox = React.createClass({
       <div id="trend_box" className="widget">
         <div id="widget_user_info">
           <div className="ui items">
+            <div className="ui item upward" onClick={this.toggleWideBox}>
+              {
+                this.state.wide &&
+                <i className="fa fa-caret-up"/>
+              }
+
+              {
+                !this.state.wide &&
+                <i className="fa fa-caret-down"/>
+              }
+            </div>
             <div className="ui item">
 
               <a id="user_avatar_img" className="ui mini image"

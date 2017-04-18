@@ -33,10 +33,6 @@ const mapStateToProps = (state) => {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
 
-  const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args));
-  };
-
   return {
     SubmitForumStore: getUIState('SubmitForum'),
     UserStore: getUser(stateStore),

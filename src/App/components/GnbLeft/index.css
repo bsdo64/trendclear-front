@@ -13,9 +13,20 @@
   height: 100%;
   background: #0c5064;
 
+  .upward {
+    & > .fa-caret-up {
+      color: #fff;
+    }
+  }
+
   & > .box {
     flex: 1 1 auto;
-    height: calc(100% - 65px);
+    height: calc(100% - 158px);
+    transition: height 100ms;
+
+    &.toggled {
+      height: calc(100% - 400px);
+    }
   }
 }
 

@@ -14,8 +14,13 @@
       border-bottom: 1px solid #20394A;
       margin: 0;
 
-      #user_avatar_img {
+      &.upward {
+        padding: 3px;
+        background: #306372;
 
+        & > .fa-caret-up {
+          margin: 0 auto;
+        }
       }
 
       > .content {

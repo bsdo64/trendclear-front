@@ -34,7 +34,7 @@ class HomeMenuBox extends React.Component {
 
     return (
       <div className={styles.gnbSubMenu}>
-        <div className={styles.box}>
+        <div className={cx(styles.box, styles.toggled)}>
           <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
               <div className={styles.subMenuItem}>
