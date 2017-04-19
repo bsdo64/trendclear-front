@@ -1,22 +1,22 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const AdForumLeft = React.createClass({
-  propTypes: {
-    url: PropTypes.string,
-  },
-  render() {
-    const { url } = this.props;
-    return (
-      <div>
-        <img
+const AdForumLeft = props => {
+  const { url } = props;
+  return (
+    <div>
+      <img
           src={url}
           style={{
             padding: 10,
             float: 'right',
           }}/>
-      </div>
-    );
-  },
-});
+    </div>
+  );
+};
+
+AdForumLeft.propTypes = {
+  url: PropTypes.string,
+};
 
 export default AdForumLeft;

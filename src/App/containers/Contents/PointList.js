@@ -7,11 +7,11 @@ import {
   requestMoreAccountList,
 } from '../../Actions/Point';
 
-const PointList = React.createClass({
+class PointList extends React.Component {
   render() {
     return <PointListBox {...this.props } />;
-  },
-});
+  }
+}
 
 PointList.defaultProps = {
   GnbStore: UI.Gnb,

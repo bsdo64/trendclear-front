@@ -1,17 +1,18 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Company from '../../components/LeftMenus/Company';
 
-const MenuContainer = React.createClass({
-  propTypes: {
-    location: PropTypes.object.isRequired,
-  },
-
+class MenuContainer extends React.Component {
   render() {
     return <Company {...this.props} />;
-  },
-});
+  }
+}
+
+MenuContainer.propTypes = {
+  location: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

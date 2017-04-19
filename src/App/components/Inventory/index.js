@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
 
@@ -7,18 +8,10 @@ const rebuildTooltip = function rebuildTooltip(itemCode) {
   ReactTooltip.rebuild();
 };
 
-const Inventory = React.createClass({
-  propTypes: {
-    ShoppingStore: PropTypes.object.isRequired,
-    inventory: PropTypes.object.isRequired,
-    Venatems: PropTypes.object.isRequired,
-    Items: PropTypes.object.isRequired,
-    positionStyle: PropTypes.string.isRequired,
-    FireShowItemInfo: PropTypes.func.isRequired,
-  },
+const Inventory = (props) => {
 
-  createTableColum(venatemId = '', c) {
-    const {Venatems, Items} = this.props;
+  function createTableColum(venatemId = '', c) {
+    const {Venatems, Items} = props;
     const venatem = Venatems.get(venatemId.toString());
     let item;
 
@@ -45,8 +38,9 @@ const Inventory = React.createClass({
         {item}
       </td>
     );
-  },
-  createTableRow(inventory, col, row) {
+  }
+
+  function createTableRow(inventory, col, row) {
     let tableRows = [];
     let r = 0;
     let itemIndex = 0;
@@ -58,7 +52,7 @@ const Inventory = React.createClass({
       while (++c <= col) {
         const listItemId = inventory.get('items').get(itemIndex);
 
-        tableCols.push(this.createTableColum(listItemId, c));
+        tableCols.push(createTableColum(listItemId, c));
 
         itemIndex = itemIndex + 1;
       }
@@ -70,47 +64,55 @@ const Inventory = React.createClass({
       );
     }
     return tableRows;
-  },
-  createTable(inventory, colNum, rowNum) {
+  }
+
+  function createTable(inventory, colNum, rowNum) {
 
     return (
       <table className="inventory_table">
         <tbody>
         {
-          this.createTableRow(inventory, colNum, rowNum)
+          createTableRow(inventory, colNum, rowNum)
         }
         </tbody>
       </table>
     );
-  },
-  render() {
+  }
 
-    const {inventory, positionStyle} = this.props;
-    const table = this.createTable(inventory, 4, 8);
+  const {inventory, positionStyle} = props;
+  const table = createTable(inventory, 4, 8);
 
-    const style = cx('user_inventory', {
-      [positionStyle]: true,
-    });
+  const style = cx('user_inventory', {
+    [positionStyle]: true,
+  });
 
-    return (
-      <div key="user_inventory" className={style}>
-        <h4>인벤토리</h4>
-        <div className="inventory_box">
-          <ul className="inventory_tap">
-            <li className="active">커뮤니티</li>
-            <li>뱃지</li>
-            <li>이모티콘</li>
-          </ul>
-          <div className="inventory_scroll">
-            {
-              table
-            }
-          </div>
-
+  return (
+    <div key="user_inventory" className={style}>
+      <h4>인벤토리</h4>
+      <div className="inventory_box">
+        <ul className="inventory_tap">
+          <li className="active">커뮤니티</li>
+          <li>뱃지</li>
+          <li>이모티콘</li>
+        </ul>
+        <div className="inventory_scroll">
+          {
+            table
+          }
         </div>
+
       </div>
-    );
-  },
-});
+    </div>
+  );
+};
+
+Inventory.propTypes = {
+  ShoppingStore: PropTypes.object.isRequired,
+  inventory: PropTypes.object.isRequired,
+  Venatems: PropTypes.object.isRequired,
+  Items: PropTypes.object.isRequired,
+  positionStyle: PropTypes.string.isRequired,
+  FireShowItemInfo: PropTypes.func.isRequired,
+};
 
 export default Inventory;

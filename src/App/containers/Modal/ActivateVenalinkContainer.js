@@ -8,11 +8,11 @@ import {
   toggleVenacleStoreModal,
 } from '../../Actions/VenacleStore';
 
-const ActivateVenalinkContainer = React.createClass({
+class ActivateVenalinkContainer extends React.Component {
   render() {
     return (<ActivateVenalink {...this.props} />);
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

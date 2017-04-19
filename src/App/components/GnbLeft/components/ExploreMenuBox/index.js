@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
@@ -84,8 +85,8 @@ class ExploreMenuBox extends React.Component {
 }
 
 ExploreMenuBox.propTypes = {
-  match: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 ExploreMenuBox.defaultProps = {};
 

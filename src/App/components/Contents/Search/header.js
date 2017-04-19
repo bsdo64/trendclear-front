@@ -1,26 +1,25 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const SearchHeader = React.createClass({
-  displayName: 'SearchHeader',
-  propTypes: {
-    posts: PropTypes.object.isRequired,
-  },
+const SearchHeader = props => {
+  const { posts } = props;
+  if (posts) {
+    const postData = posts.get('posts');
+    const total = postData.get('total') ? postData.get('total') : 0;
 
-  render() {
-    const {posts} = this.props;
-    if (posts) {
-      const postData = posts.get('posts');
-      const total = postData.get('total') ? postData.get('total') : 0;
+    return (
+      <div className="search-header">
+        포스트 {total}개
+      </div>
+    );
+  }
 
-      return (
-        <div className="search-header">
-          포스트 {total}개
-        </div>
-      );
-    }
+  return <div></div>;
+};
 
-    return <div></div>;
-  },
-});
+SearchHeader.displayName = 'SearchHeader';
+SearchHeader.propTypes = {
+  posts: PropTypes.object.isRequired,
+};
 
 export default SearchHeader;

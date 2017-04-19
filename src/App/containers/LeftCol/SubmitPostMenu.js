@@ -1,11 +1,8 @@
 import React from 'react';
 import SubmitPostMenu from '../../components/LeftMenus/SubmitPostMenu';
 
-const SubmitCategoryMenu = React.createClass({
-  displayName: 'SubmitCategoryMenu',
-  render() {
-    return (<SubmitPostMenu />);
-  },
-});
+const SubmitCategoryMenu = <SubmitPostMenu />;
+
+SubmitCategoryMenu.displayName = 'SubmitCategoryMenu';
 
 module.exports = SubmitCategoryMenu;

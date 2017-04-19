@@ -1,17 +1,16 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import qs from 'qs';
 
-const Managers = React.createClass({
-  displayName: 'Managers',
-  propTypes: {
-    location: PropTypes.object.isRequired,
-    Users: PropTypes.object.isRequired,
-    Forums: PropTypes.object.isRequired,
-    AuthStore: PropTypes.object.isRequired,
-    FireRequestAddForumManager: PropTypes.func.isRequired,
-    FireRequestDeleteForumManager: PropTypes.func.isRequired,
-  },
+class Managers extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.selectUser = this.selectUser.bind(this);
+    this.removeUser = this.removeUser.bind(this);
+    this.createManagerItem = this.createManagerItem.bind(this);
+  }
   componentDidMount() {
     const forumId = qs.parse(this.props.location.search.slice(1)).forumId;
 
@@ -41,13 +40,13 @@ const Managers = React.createClass({
           this.selectUser(user);
         },
       });
-  },
+  }
 
   selectUser(user) {
     const {location, FireRequestAddForumManager} = this.props;
     const forumId = qs.parse(location.search.slice(1)).forumId;
     FireRequestAddForumManager({userId: user.id, forumId: forumId});
-  },
+  }
 
   removeUser(manager) {
     const {location, FireRequestDeleteForumManager} = this.props;
@@ -58,7 +57,7 @@ const Managers = React.createClass({
       userId: manager.get('id'),
     });
 
-  },
+  }
 
   createManagerItem(id) {
     const {Users, Forums, location, AuthStore} = this.props;
@@ -87,7 +86,7 @@ const Managers = React.createClass({
         </div>
       );
     }
-  },
+  }
 
   render() {
     const {Forums, location} = this.props;
@@ -141,7 +140,17 @@ const Managers = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+Managers.displayName = 'Managers';
+Managers.propTypes = {
+  location: PropTypes.object.isRequired,
+  Users: PropTypes.object.isRequired,
+  Forums: PropTypes.object.isRequired,
+  AuthStore: PropTypes.object.isRequired,
+  FireRequestAddForumManager: PropTypes.func.isRequired,
+  FireRequestDeleteForumManager: PropTypes.func.isRequired,
+};
 
 export default Managers;

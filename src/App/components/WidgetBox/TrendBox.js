@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
 import Draggable from 'react-draggable'; // The default
@@ -8,19 +9,19 @@ import moment from '../Lib/MomentLib.js';
 import AvatarImage from '../AvatarImage';
 import Inventory from '../Inventory';
 
-const Timer = React.createClass({
-  propTypes: {
-    init: PropTypes.number,
-    type: PropTypes.string,
-  },
+class Timer extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState: function() {
-    return {init: this.props.init || 0};
-  },
-  tick: function() {
+    this.state = {init: this.props.init || 0};
+
+    this.tick = this.tick.bind(this);
+  }
+  tick() {
     this.setState({init: this.state.init - 1});
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
     const type = this.props.type || 'default';
 
     if (this.state.init > 0 && !this[type]) {
@@ -29,7 +30,7 @@ const Timer = React.createClass({
 
       this[type] = setInterval(this.tick, 1000);
     }
-  },
+  }
   componentWillReceiveProps(nextProps) {
     const self = this;
     const type = nextProps.type || 'default';
@@ -43,14 +44,14 @@ const Timer = React.createClass({
         self[type] = setInterval(self.tick, 1000);
       });
     }
-  },
-
-  componentWillUnmount: function() {
+  }
+  componentWillUnmount() {
     const type = this.props.type || 'default';
     clearInterval(this[type]);
     this[type] = null;
-  },
-  render: function() {
+  }
+
+  render() {
     const time = this.state.init;
     if (time === 0) {
       const type = this.props.type || 'default';
@@ -64,33 +65,33 @@ const Timer = React.createClass({
         {this.state.init}
       </span>
     );
-  },
-});
+  }
+}
+
+Timer.propTypes = {
+  init: PropTypes.number,
+    type: PropTypes.string,
+};
 
 require('./Trendbox.scss');
-const TrendBox = React.createClass({
-  propTypes: {
-    user: PropTypes.object.isRequired,
-    InventoryStore: PropTypes.object.isRequired,
-    ShoppingStore: PropTypes.object.isRequired,
-    Venatems: PropTypes.object.isRequired,
-    Items: PropTypes.object.isRequired,
-    Inventories: PropTypes.object.isRequired,
-    FireToggleVenacleStoreModal: PropTypes.func.isRequired,
-    FireToggleAvatarModal: PropTypes.func.isRequired,
-    FireShowItemInfo: PropTypes.func.isRequired,
-    FireRequestShoppingItemInit: PropTypes.func.isRequired,
-    FireToggleShowInventory: PropTypes.func.isRequired,
-  },
+class TrendBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       RPModal: false,
       VStore: false,
       wide: false,
     };
-  },
 
+    this.updateCountUp = this.updateCountUp.bind(this);
+    this.openAvatarModal = this.openAvatarModal.bind(this);
+    this.openRPModal = this.openRPModal.bind(this);
+    this.openVenacleStore = this.openVenacleStore.bind(this);
+    this.createSkill = this.createSkill.bind(this);
+    this.toggleInventory = this.toggleInventory.bind(this);
+    this.toggleWideBox = this.toggleWideBox.bind(this);
+  }
   componentDidMount() {
     const {user} = this.props;
     const prevTotalExp = user.trendbox.get('prev_exp');
@@ -104,7 +105,7 @@ const TrendBox = React.createClass({
       .progress({
         percent: expPercent,
       });
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     const currentUser = this.props.user;
@@ -151,7 +152,7 @@ const TrendBox = React.createClass({
     this.updateCountUp('current_exp', prev_currentTotalExp, currentTotalExp,
       options);
     this.updateCountUp('next_exp', prev_nextTotalExp, nextTotalExp, options);
-  },
+  }
 
   updateCountUp(nodeId, from, to, options) {
 
@@ -159,15 +160,15 @@ const TrendBox = React.createClass({
       const count = new CountUp(nodeId, from, to, 0, 1.5, options);
       count.start();
     }
-  },
+  }
   openAvatarModal() {
     this.props.FireToggleAvatarModal({
       contentType: 'AvatarImage',
     });
-  },
+  }
   openRPModal() {
     this.setState({RPModal: !this.state.RPModal});
-  },
+  }
 
   openVenacleStore() {
 
@@ -175,7 +176,7 @@ const TrendBox = React.createClass({
       contentType: 'Shopping',
     });
     this.props.FireRequestShoppingItemInit();
-  },
+  }
 
   createSkill(value, key) {
 
@@ -225,15 +226,15 @@ const TrendBox = React.createClass({
         </ReactTooltip>
       </div>
     );
-  },
+  }
 
   toggleInventory() {
     this.props.FireToggleShowInventory();
-  },
+  }
 
   toggleWideBox() {
     this.setState({wide: !this.state.wide})
-  },
+  }
 
   render() {
     const {
@@ -468,7 +469,21 @@ const TrendBox = React.createClass({
         }
       </div>
     );
-  },
-});
+  }
+}
+
+TrendBox.propTypes = {
+  user: PropTypes.object.isRequired,
+  InventoryStore: PropTypes.object.isRequired,
+  ShoppingStore: PropTypes.object.isRequired,
+  Venatems: PropTypes.object.isRequired,
+  Items: PropTypes.object.isRequired,
+  Inventories: PropTypes.object.isRequired,
+  FireToggleVenacleStoreModal: PropTypes.func.isRequired,
+  FireToggleAvatarModal: PropTypes.func.isRequired,
+  FireShowItemInfo: PropTypes.func.isRequired,
+  FireRequestShoppingItemInit: PropTypes.func.isRequired,
+  FireToggleShowInventory: PropTypes.func.isRequired,
+};
 
 export default TrendBox;

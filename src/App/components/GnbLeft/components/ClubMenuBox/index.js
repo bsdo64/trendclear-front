@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -31,7 +32,7 @@ class ClubMenuBox extends React.Component {
   }
 
   render() {
-    const { clubInfo, match } = this.props;
+    const { clubInfo } = this.props;
 
     return (
       <div className={styles.gnbSubMenu}>
@@ -100,8 +101,8 @@ class ClubMenuBox extends React.Component {
 }
 
 ClubMenuBox.propTypes = {
-  clubInfo: React.PropTypes.object.isRequired,
-  match: React.PropTypes.object.isRequired,
+  clubInfo: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 ClubMenuBox.defaultProps = {
   clubInfo: Map(),

@@ -1,24 +1,19 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 require('./index.scss');
-const DeleteModalBox = React.createClass({
-  displayName: 'DeleteModalBox',
-  propTypes: {
-    RemoveModalStore: PropTypes.object.isRequired,
-    LoginStore: PropTypes.object.isRequired,
-    Posts: PropTypes.object.isRequired,
-    Comments: PropTypes.object.isRequired,
-    SubComments: PropTypes.object.isRequired,
+class DeleteModalBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-    FireRequestDeleteItem: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
+    this.state = {
       selectItem: 1,
     };
-  },
+
+    this.sendReport = this.sendReport.bind(this);
+  }
+
   sendReport() {
     const {RemoveModalStore, LoginStore} = this.props;
 
@@ -31,7 +26,8 @@ const DeleteModalBox = React.createClass({
 
       this.props.FireRequestDeleteItem(reportObj);
     }
-  },
+  }
+
   render() {
     const {
       Posts, Comments, SubComments, RemoveModalStore,
@@ -87,7 +83,18 @@ const DeleteModalBox = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+DeleteModalBox.displayName = 'DeleteModalBox';
+DeleteModalBox.propTypes = {
+  RemoveModalStore: PropTypes.object.isRequired,
+    LoginStore: PropTypes.object.isRequired,
+    Posts: PropTypes.object.isRequired,
+    Comments: PropTypes.object.isRequired,
+    SubComments: PropTypes.object.isRequired,
+
+    FireRequestDeleteItem: PropTypes.func.isRequired,
+};
 
 export default DeleteModalBox;

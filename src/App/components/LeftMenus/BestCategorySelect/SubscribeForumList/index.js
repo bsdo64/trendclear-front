@@ -1,32 +1,31 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 
 require('./index.scss');
-const SubscribeForumList = React.createClass({
-  displayName: 'SubscribeForumList',
-  propTypes: {
-    subscribeForumList: PropTypes.object.isRequired,
-    collection: PropTypes.object.isRequired,
-    forums: PropTypes.object.isRequired,
-    searchForumList: PropTypes.object,
-    FireRequestAddForumInCollection: PropTypes.func.isRequired,
-    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
-    FireRequestSearchForumToCollectionSubs: PropTypes.func.isRequired,
-  },
+class SubscribeForumList extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       hideCreateCollectionBox: true,
       searchForumTitle: null,
     };
-  },
+
+    this.toggleCreateCollection = this.toggleCreateCollection.bind(this);
+    this.searchForum = this.searchForum.bind(this);
+    this.handleChangeName = this.handleChangeName.bind(this);
+    this.toggleForumCandidate = this.toggleForumCandidate.bind(this);
+    this.createListItem = this.createListItem.bind(this);
+  }
 
   toggleCreateCollection() {
 
     this.setState(
       {hideCreateCollectionBox: !this.state.hideCreateCollectionBox});
-  },
+  }
+
   searchForum(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -36,11 +35,13 @@ const SubscribeForumList = React.createClass({
         title: this.state.searchForumTitle,
       });
     }
-  },
+  }
+
   handleChangeName(e) {
 
     this.setState({searchForumTitle: e.target.value.trim()});
-  },
+  }
+
   toggleForumCandidate(forumId) {
 
     let newForumCandidate = this.props.subscribeForumList;
@@ -63,7 +64,8 @@ const SubscribeForumList = React.createClass({
         collectionId: this.props.collection.get('id'),
       });
     }
-  },
+  }
+
   createListItem(forumId) {
     const {forums} = this.props;
     const forum = forums.get(forumId.toString());
@@ -92,7 +94,7 @@ const SubscribeForumList = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
   render() {
 
@@ -125,7 +127,18 @@ const SubscribeForumList = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+SubscribeForumList.displayName = 'SubscribeForumList';
+SubscribeForumList.propTypes = {
+  subscribeForumList: PropTypes.object.isRequired,
+  collection: PropTypes.object.isRequired,
+  forums: PropTypes.object.isRequired,
+  searchForumList: PropTypes.object,
+  FireRequestAddForumInCollection: PropTypes.func.isRequired,
+  FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+  FireRequestSearchForumToCollectionSubs: PropTypes.func.isRequired,
+};
 
 export default SubscribeForumList;

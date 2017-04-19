@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import BigPost from '../PostItem/BigPost';
 import './BestList.scss';
 
@@ -44,11 +45,23 @@ function createItem(props, id) {
   }
 }
 
-const InfiniteList = React.createClass({
-  displayName: 'InfiniteList',
+const InfiniteList = props => {
+  const {PostIdList = [], PostItems = {}, AuthorItems, User} = props;
+  const okey = !!(PostItems.size && AuthorItems.size && User.size);
 
-  propTypes: {
-    PostIdList: PropTypes.object,
+  return (
+    <div className="ui items best_list">
+      {
+        okey &&
+        PostIdList.map(createItem.bind(null, props))
+      }
+    </div>
+  );
+};
+
+InfiniteList.displayName = 'InfiniteList';
+InfiniteList.propTypes = {
+  PostIdList: PropTypes.object,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     PostItems: PropTypes.object.isRequired,
@@ -65,39 +78,7 @@ const InfiniteList = React.createClass({
     FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
     FireRequestActivateVenalink: PropTypes.func.isRequired,
     FireRequestParticipateVenalink: PropTypes.func.isRequired,
-
-  },
-
-  componentDidMount() {
-    $('.ui.embed').embed();
-
-    window.addEventListener('resize', this.setScroll);
-  },
-
-  setScroll() {
-    const {scrollHeight} = this.props;
-    document.body.scrollTop = scrollHeight;
-  },
-
-  componentDidUpdate() {
-    $('.ui.embed').embed('refresh');
-  },
-
-  render() {
-    const {PostIdList = [], PostItems = {}, AuthorItems, User} = this.props;
-    const okey = !!(PostItems.size && AuthorItems.size && User.size);
-
-    return (
-      <div className="ui items best_list">
-        {
-          okey &&
-          PostIdList.map(createItem.bind(null, this.props))
-        }
-      </div>
-    );
-  },
-});
-
+};
 InfiniteList.defaultProps = {
   scrollHeight: 0,
 };

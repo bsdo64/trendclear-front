@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
@@ -58,8 +59,8 @@ class SubmitMenuBox extends React.Component {
 }
 
 SubmitMenuBox.propTypes = {
-  match: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 SubmitMenuBox.defaultProps = {};
 

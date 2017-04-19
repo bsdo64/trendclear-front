@@ -13,15 +13,15 @@ import {
   requestRemoveForumInCollection,
 } from '../../Actions/Collection';
 
-const BestCategoryMenu = React.createClass({
+class BestCategoryMenu extends React.Component {
   render() {
     return (
       <div>
         <BestCategorySelect {...this.props} />
       </div>
     );
-  },
-});
+  }
+}
 
 BestCategoryMenu.defaultProps = {
   GnbStore: UI.Gnb,

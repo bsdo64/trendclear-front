@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { fromJS } from 'immutable';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -6,127 +7,119 @@ import cx from 'classnames';
 import marked from '../Lib/Marked';
 import AvatarImage from '../AvatarImage';
 
-const RankList = React.createClass({
-  displayName: 'RankList',
-  propTypes: {
-    forums: PropTypes.object.isRequired,
-    openForumMeta: PropTypes.number,
-    FireOpenForumMeta: PropTypes.func.isRequired,
-  },
+const RankList = (props) => {
+  this.displayName = 'RankList';
 
-  openForumMeta (forumId) {
-    this.props.FireOpenForumMeta(forumId);
-  },
-  stopEvent(e) {
+  function stopEvent(e) {
     e.preventDefault();
     e.stopPropagation();
-  },
-  render() {
-    const { openForumMeta, forums } = this.props;
-    return (
-      <div className="forum_rank">
-        <ul>
-          {
-            forums.get('data').map((forum, index) => {
-              const creatorProfile = forum.get('creator').get('profile');
-              const cButton = cx({
-                active: forum.get('id') === openForumMeta,
-              });
+  }
 
-              return (
-                <li key={forum.get('id')}
-                    onMouseEnter={this.openForumMeta.bind(null,
-                      forum.get('id'))}
-                >
-                  <div className="forum_button">
-                    <Link to={`/community?forumId=${forum.get('id')}`}
-                          className={cButton}>
-                      {`${index + 1}. ${forum.get('title')}`}
-                    </Link>
-                  </div>
-                  {
-                    (openForumMeta === forum.get('id')) &&
-                    <div className="forum_info" onMouseEnter={this.stopEvent}>
-                      <div id="forum_contents">
+  const { openForumMeta, FireOpenForumMeta, forums } = props;
+  return (
+    <div className="forum_rank">
+      <ul>
+        {
+          forums.get('data').map((forum, index) => {
+            const creatorProfile = forum.get('creator').get('profile');
+            const cButton = cx({ active: forum.get('id') === openForumMeta });
 
-                        <div id="forum_info" style={{
-                          margin: '0 0 0 2px',
-                          padding: 0,
-                        }}>
-                          <div className="ui cards">
-                            <div className="card" style={{
-                              borderTop: '1px solid rgb(5, 130, 148)',
-                              boxShadow: 'none',
-                              width: '100%',
-                            }}>
-                              <div className="content">
-                                <AvatarImage
-                                  sex={creatorProfile.get('sex')}
-                                  avatarImg={creatorProfile.get('avatar_img')}
-                                  imageClass="right floated mini ui image"
-                                />
-                                <div className="header">
-                                  <Link to={`/community?forumId=${forum.get(
-                                    'id')}`}>
-                                    {forum.get('title')}
-                                  </Link>
-                                </div>
-                                <div className="meta">
-                                  {forum.get('sub_header')}
-                                </div>
-                                <div className="description">
-                                  {forum.get('description')}
-                                </div>
+            return (
+              <li key={forum.get('id')}
+                  onMouseEnter={FireOpenForumMeta(forum.get('id'))}
+              >
+                <div className="forum_button">
+                  <Link to={`/community?forumId=${forum.get('id')}`}
+                        className={cButton}>
+                    {`${index + 1}. ${forum.get('title')}`}
+                  </Link>
+                </div>
+                {
+                  (openForumMeta === forum.get('id')) &&
+                  <div className="forum_info" onMouseEnter={stopEvent}>
+                    <div id="forum_contents">
+
+                      <div id="forum_info" style={{
+                        margin: '0 0 0 2px',
+                        padding: 0,
+                      }}>
+                        <div className="ui cards">
+                          <div className="card" style={{
+                            borderTop: '1px solid rgb(5, 130, 148)',
+                            boxShadow: 'none',
+                            width: '100%',
+                          }}>
+                            <div className="content">
+                              <AvatarImage
+                                sex={creatorProfile.get('sex')}
+                                avatarImg={creatorProfile.get('avatar_img')}
+                                imageClass="right floated mini ui image"
+                              />
+                              <div className="header">
+                                <Link to={`/community?forumId=${forum.get(
+                                  'id')}`}>
+                                  {forum.get('title')}
+                                </Link>
                               </div>
-                              <div className="content">
-                                {
-                                  forum.get('rule') &&
-                                  <div >
-                                    <div className="ui header tiny">
-                                      클럽 규칙
-                                    </div>
-                                    <div className="description"
-                                         dangerouslySetInnerHTML={{
-                                           __html: marked(forum.get('rule')),
-                                         }}
-                                    />
+                              <div className="meta">
+                                {forum.get('sub_header')}
+                              </div>
+                              <div className="description">
+                                {forum.get('description')}
+                              </div>
+                            </div>
+                            <div className="content">
+                              {
+                                forum.get('rule') &&
+                                <div >
+                                  <div className="ui header tiny">
+                                    클럽 규칙
                                   </div>
-                                }
-                              </div>
+                                  <div className="description"
+                                       dangerouslySetInnerHTML={{
+                                         __html: marked(forum.get('rule')),
+                                       }}
+                                  />
+                                </div>
+                              }
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  }
-                </li>
-              );
-            })
-          }
-        </ul>
-      </div>
-    );
-  },
-});
+                  </div>
+                }
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  );
+};
 
-const ClubList = React.createClass({
-  displayName: 'ClubList',
-  propTypes: {
-    gnbMenu: PropTypes.object.isRequired,
-    categorySet: PropTypes.object,
-    newForums: PropTypes.object.isRequired,
-    hotForums: PropTypes.object.isRequired,
-    FireOpenSideCategory: PropTypes.func.isRequired,
-    FireOpenForumMeta: PropTypes.func.isRequired,
-  },
+RankList.propTypes = {
+  forums: PropTypes.object.isRequired,
+  openForumMeta: PropTypes.number,
+  FireOpenForumMeta: PropTypes.func.isRequired,
+};
 
+class ClubList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.openSideCategories = this.openSideCategories.bind(this);
+    this.createCategory = this.createCategory.bind(this);
+    this.createCategoryGroup = this.createCategoryGroup.bind(this);
+    this.createClub = this.createClub.bind(this);
+  }
   componentDidMount() {
     this.props.FireOpenSideCategory(1);
-  },
+  }
 
   openSideCategories(clubId) {
     this.props.FireOpenSideCategory(clubId);
-  },
+  }
 
   createCategory(item) {
     return (
@@ -135,7 +128,7 @@ const ClubList = React.createClass({
           'title')}</Link>
       </li>
     );
-  },
+  }
 
   createCategoryGroup(item) {
     return (
@@ -150,7 +143,7 @@ const ClubList = React.createClass({
         </ul>
       </div>
     );
-  },
+  }
 
   createClub (item) {
     const { gnbMenu } = this.props;
@@ -227,7 +220,7 @@ const ClubList = React.createClass({
         </li>
       );
     }
-  },
+  }
 
   render() {
     const { gnbMenu, newForums, hotForums } = this.props;
@@ -256,71 +249,72 @@ const ClubList = React.createClass({
         {data.map(this.createClub)}
       </ul>
     );
-  },
-});
+  }
+}
 
-const ClubListMain = React.createClass({
-  displayName: 'ClubListMain',
-  render() {
+ClubList.displayName = 'ClubList';
+ClubList.propTypes = {
+  gnbMenu: PropTypes.object.isRequired,
+  categorySet: PropTypes.object,
+  newForums: PropTypes.object.isRequired,
+  hotForums: PropTypes.object.isRequired,
+  FireOpenSideCategory: PropTypes.func.isRequired,
+  FireOpenForumMeta: PropTypes.func.isRequired,
+};
 
-    return (
-      <div className="category_box_main">
-        Hello main
-      </div>
-    );
-  },
-});
+const ClubListMain = (
+  <div className="category_box_main">
+    Hello main
+  </div>
+);
 
 require('./index.scss');
-const CategoryNav = React.createClass({
-  displayName: 'CategoryNav',
-  propTypes: {
-    FireToggleGnbPanel: PropTypes.func.isRequired,
-    FireOpenForumMeta: PropTypes.func.isRequired,
-    FireOpenSideCategory: PropTypes.func.isRequired,
-    GnbStore: PropTypes.object.isRequired,
-  },
+const CategoryNav = (props) => {
+  function handleToggleGnb() {
+    props.FireToggleGnbPanel();
+  }
 
-  handleToggleGnb() {
+  const { GnbStore, FireOpenSideCategory, FireOpenForumMeta } = props;
+  const openGnb = GnbStore.get('openGnb');
+  const gnbMenu = GnbStore.get('gnbMenu');
+  const newForums = GnbStore.get('newForums');
+  const hotForums = GnbStore.get('hotForums');
+  const categorySet = GnbStore.get('categorySet');
 
-    this.props.FireToggleGnbPanel();
-  },
-  render() {
-    const { GnbStore } = this.props;
-    const openGnb = GnbStore.get('openGnb');
-    const gnbMenu = GnbStore.get('gnbMenu');
-    const newForums = GnbStore.get('newForums');
-    const hotForums = GnbStore.get('hotForums');
-    const categorySet = GnbStore.get('categorySet');
-
-    return (
-      <div>
-        <div className="category_button" onClick={this.handleToggleGnb}>
-          <i className="fa fa-bars"/>
-          <i className="fa fa-caret-right" aria-hidden="true"/>
-          <div className="category_text">카테고리</div>
-        </div>
-
-        { /* 카테고리 박스 */ }
-        {
-          openGnb &&
-          <div ref="category_box" className="category_box">
-            <div className="gnb_menu">
-              <ClubList
-                gnbMenu={gnbMenu}
-                categorySet={categorySet}
-                newForums={newForums}
-                hotForums={hotForums}
-                FireOpenSideCategory={this.props.FireOpenSideCategory}
-                FireOpenForumMeta={this.props.FireOpenForumMeta}
-              />
-              <ClubListMain />
-            </div>
-          </div>
-        }
+  return (
+    <div>
+      <div className="category_button" onClick={handleToggleGnb}>
+        <i className="fa fa-bars"/>
+        <i className="fa fa-caret-right" aria-hidden="true"/>
+        <div className="category_text">카테고리</div>
       </div>
-    );
-  },
-});
 
+      { /* 카테고리 박스 */ }
+      {
+        openGnb &&
+        <div ref="category_box" className="category_box">
+          <div className="gnb_menu">
+            <ClubList
+              gnbMenu={gnbMenu}
+              categorySet={categorySet}
+              newForums={newForums}
+              hotForums={hotForums}
+              FireOpenSideCategory={FireOpenSideCategory}
+              FireOpenForumMeta={FireOpenForumMeta}
+            />
+            <ClubListMain />
+          </div>
+        </div>
+      }
+    </div>
+  );
+};
+
+CategoryNav.displayName = 'CategoryNav';
+CategoryNav.propTypes = {
+  FireToggleGnbPanel: PropTypes.func.isRequired,
+  FireOpenForumMeta: PropTypes.func.isRequired,
+  FireOpenSideCategory: PropTypes.func.isRequired,
+  GnbStore: PropTypes.object.isRequired,
+};
 module.exports = CategoryNav;

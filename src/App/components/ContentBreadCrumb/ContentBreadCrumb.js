@@ -1,16 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 require('./header.scss');
-const BestHeader = React.createClass({
-  displayName: 'BestHeader',
-  propTypes: {
-    type: PropTypes.string,
-    location: PropTypes.object,
-    breadcrumbs: PropTypes.array,
-    collections: PropTypes.object,
-  },
-  createBreadCrumbs(array = []) {
+const BestHeader = (props) => {
+  function createBreadCrumbs(array = []) {
 
     return array.map((v, index) => {
       const component = [];
@@ -25,60 +19,67 @@ const BestHeader = React.createClass({
 
       return component;
     });
-  },
-  render() {
-    const { type, location, breadcrumbs, collections } = this.props;
-    let breadcrumb;
+  }
 
-    switch (type) {
-      case 'bestPostList': {
-        breadcrumb = this.createBreadCrumbs(breadcrumbs);
+  const { type, location, breadcrumbs, collections } = props;
+  let breadcrumb;
 
-        return (
-          <div className="ui breadcrumb content_header">
-            <i className="fa fa-angle-right"/>
-            {breadcrumb}
-          </div>
-        );
-      }
+  switch (type) {
+    case 'bestPostList': {
+      breadcrumb = createBreadCrumbs(breadcrumbs);
 
-      case 'collectionBestPostList': {
-
-        if (collections) {
-          const collectionId = location.pathname.split('/')[2];
-          const collection = collections.get(collectionId.toString());
-
-          if (collection) {
-
-            breadcrumb = this.createBreadCrumbs([
-              { title: '나의 컬렉션' },
-              {
-                title: collection.get('title'),
-                url: `/collection/${collectionId}`,
-              },
-            ]);
-
-            return (
-              <div className="ui breadcrumb content_header">
-                <i className="fa fa-angle-right"/>
-                {breadcrumb}
-              </div>
-            );
-          }
-        }
-
-        return <div></div>;
-      }
-
-      default:
-        return (
-          <div className="ui breadcrumb content_header">
-            <i className="fa fa-angle-right"/>
-            {breadcrumb}
-          </div>
-        );
+      return (
+        <div className="ui breadcrumb content_header">
+          <i className="fa fa-angle-right"/>
+          {breadcrumb}
+        </div>
+      );
     }
-  },
-});
+
+    case 'collectionBestPostList': {
+
+      if (collections) {
+        const collectionId = location.pathname.split('/')[2];
+        const collection = collections.get(collectionId.toString());
+
+        if (collection) {
+
+          breadcrumb = createBreadCrumbs([
+            { title: '나의 컬렉션' },
+            {
+              title: collection.get('title'),
+              url: `/collection/${collectionId}`,
+            },
+          ]);
+
+          return (
+            <div className="ui breadcrumb content_header">
+              <i className="fa fa-angle-right"/>
+              {breadcrumb}
+            </div>
+          );
+        }
+      }
+
+      return <div></div>;
+    }
+
+    default:
+      return (
+        <div className="ui breadcrumb content_header">
+          <i className="fa fa-angle-right"/>
+          {breadcrumb}
+        </div>
+      );
+  }
+};
+
+BestHeader.displayName = 'BestHeader';
+BestHeader.propTypes = {
+  type: PropTypes.string,
+  location: PropTypes.object,
+  breadcrumbs: PropTypes.array,
+  collections: PropTypes.object,
+};
 
 export default BestHeader;

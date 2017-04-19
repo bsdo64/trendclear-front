@@ -7,11 +7,11 @@ import {
 } from '../../Actions/Search';
 import { getUser } from '../../Selectors/User';
 
-const Search = React.createClass({
+class Search extends React.Component {
   render() {
     return (<SearchBar {...this.props} />);
-  },
-});
+  }
+}
 
 Search.defaultProps = {
   SearchStore: UI.Search,

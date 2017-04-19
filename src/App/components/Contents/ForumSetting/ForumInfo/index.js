@@ -1,16 +1,17 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const ForumInfo = React.createClass({
-  propTypes: {
-    ForumSettingStore: PropTypes.object.isRequired,
-    FireHandleResetButton: PropTypes.func.isRequired,
-    FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
-    FireRequestUpdateForumMeta: PropTypes.func.isRequired,
-  },
+class ForumInfo extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.updateForumInfo = this.updateForumInfo.bind(this);
+    this.changeForm = this.changeForm.bind(this);
+  }
 
   componentWillUnmount() {
     this.props.FireHandleResetButton();
-  },
+  }
 
   updateForumInfo(e) {
     e.preventDefault();
@@ -28,12 +29,12 @@ const ForumInfo = React.createClass({
         'description'),
       rule: forumInfo ? forumInfo.get('forum_rule') : forum.get('rule'),
     });
-  },
+  }
 
   changeForm(e) {
     this.props.FireHandleChangeFormForumMeta(
       {[e.target.name]: e.target.value.trim()});
-  },
+  }
 
   render() {
     const {ForumSettingStore} = this.props;
@@ -63,9 +64,9 @@ const ForumInfo = React.createClass({
         <div className="ui container" style={{padding: 10}}>
           <div className="ui segment">
             <h3 className="ui header">게시판 정보</h3>
-            <div className="ui divider"></div>
+            <div className="ui divider"/>
             <div className="ui list">
-              <a className="item"><i className="right triangle icon"></i>
+              <a className="item"><i className="right triangle icon"/>
                 <div className="content">
                   <div className="header">기존 게시판 정보를 수정합니다.</div>
                   <div className="description"> - 게시판 이름은 변경할 수 없습니다</div>
@@ -92,7 +93,7 @@ const ForumInfo = React.createClass({
                 <label>규칙 *</label>
                 <textarea name="forum_rule" defaultValue={forum.get('rule')}/>
               </div>
-              <div className="ui error message"></div>
+              <div className="ui error message"/>
               {button}
             </form>
           </div>
@@ -100,8 +101,15 @@ const ForumInfo = React.createClass({
       );
     }
 
-    return <div></div>;
-  },
-});
+    return <div/>;
+  }
+}
+
+ForumInfo.propTypes = {
+  ForumSettingStore: PropTypes.object.isRequired,
+  FireHandleResetButton: PropTypes.func.isRequired,
+  FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
+  FireRequestUpdateForumMeta: PropTypes.func.isRequired,
+};
 
 export default ForumInfo;

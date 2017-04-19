@@ -8,11 +8,11 @@ import {
   failureCheckPointCharge,
 } from '../../Actions/Point';
 
-const ChargePoint = React.createClass({
+class ChargePoint extends React.Component {
   render() {
     return <ChargePointBox {...this.props} />;
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

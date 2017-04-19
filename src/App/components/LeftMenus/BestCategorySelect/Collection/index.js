@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import SubscribeForumList from '../SubscribeForumList';
 
 const Subs = (props) => {
-  const {subs, Forums, activeId, FireRequestRemoveForumInCollection} = props;
+  const { subs, Forums, activeId, FireRequestRemoveForumInCollection } = props;
 
   const unSubs = (forumId) => () => {
     FireRequestRemoveForumInCollection({
@@ -46,107 +47,81 @@ Subs.propTypes = {
   FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
 };
 
-const CollectionItem = React.createClass({
-  displayName: 'CollectionItem',
-  propTypes: {
-    id: PropTypes.string,
-    title: PropTypes.string.isRequired,
-    subs: PropTypes.object,
-    Forums: PropTypes.object.isRequired,
-    mouseOverItem: PropTypes.string,
-    location: PropTypes.object,
-    collection: PropTypes.object.isRequired,
-    ListStore: PropTypes.object,
+const CollectionItem = props => {
+  const {
+    id, title, subs, Forums,
+    location,
+    ListStore, collection, FireRequestRemoveForumInCollection,
+  } = props;
+  const collectionNowId = location ? location.pathname.split('/')[2] : null;
+  const collectionOpen = collectionNowId === id;
+  const itemStyle = cx('collection_list', {
+    hide: !collectionOpen,
+  });
+  const isCollectionOpenStyle = cx('fa', {
+    'fa-folder-open-o': collectionOpen,
+    'fa-folder-o': !collectionOpen,
+  });
 
-    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
-  },
+  return (
+    <div key={id} className='sub_category item collection_item'>
+      {
+        (collectionNowId === id) &&
+        <div className="active-menu"></div>
+      }
 
-  getInitialState() {
-    return {
-      hide: true,
-    };
-  },
+      <div className="collection">
+        <Link to={`/collection/${id}`}>
 
-  render() {
+          <i className={isCollectionOpenStyle} style={{ paddingRight: 3 }}/>
+          <span className="title">{title}</span>
 
-    const {
-      id, title, subs, Forums,
-      location,
-      ListStore, collection, FireRequestRemoveForumInCollection,
-    } = this.props;
-    const collectionNowId = location ? location.pathname.split('/')[2] : null;
-    const collectionOpen = collectionNowId === id;
-    const itemStyle = cx('collection_list', {
-      hide: !collectionOpen,
-    });
-    const isCollectionOpenStyle = cx('fa', {
-      'fa-folder-open-o': collectionOpen,
-      'fa-folder-o': !collectionOpen,
-    });
+        </Link>
 
-    return (
-      <div key={id} className='sub_category item collection_item'>
         {
-          (collectionNowId === id) &&
-          <div className="active-menu"></div>
-        }
-
-        <div className="collection">
-          <Link to={`/collection/${id}`}>
-
-            <i className={isCollectionOpenStyle} style={{paddingRight: 3}}/>
-            <span className="title">{title}</span>
-
-          </Link>
-
-          {
-            collectionOpen &&
-            <SubscribeForumList
-              searchForumList={ListStore.get('searchCollectionForumList')}
-              subscribeForumList={collection.get('forums')}
-              collection={collection}
-              forums={Forums}
-              {...this.props}
-            />
-          }
-        </div>
-
-        <div className={itemStyle}>
-          <Subs subs={subs}
-                Forums={Forums}
-                activeId={id}
-                FireRequestRemoveForumInCollection={FireRequestRemoveForumInCollection}
+          collectionOpen &&
+          <SubscribeForumList
+            searchForumList={ListStore.get('searchCollectionForumList')}
+            subscribeForumList={collection.get('forums')}
+            collection={collection}
+            forums={Forums}
+            {...props}
           />
-
-        </div>
+        }
       </div>
-    );
-  },
-});
+
+      <div className={itemStyle}>
+        <Subs subs={subs}
+              Forums={Forums}
+              activeId={id}
+              FireRequestRemoveForumInCollection={FireRequestRemoveForumInCollection}
+        />
+
+      </div>
+    </div>
+  );
+};
+
+CollectionItem.displayName = 'CollectionItem';
+CollectionItem.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  subs: PropTypes.object,
+  Forums: PropTypes.object.isRequired,
+  mouseOverItem: PropTypes.string,
+  location: PropTypes.object,
+  collection: PropTypes.object.isRequired,
+  ListStore: PropTypes.object,
+
+  FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+};
 
 require('./index.scss');
-const Collection = React.createClass({
-  displayName: 'Collection',
-  propTypes: {
-    Forums: PropTypes.object.isRequired,
-    location: PropTypes.object,
-    Collections: PropTypes.object.isRequired,
-    FireRequestCreateCollection: PropTypes.func.isRequired,
-    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
-  },
+class Collection extends React.Component {
+  constructor(props) {
+    super(props);
 
-  componentDidMount() {
-    $('.callback.example .checkbox')
-      .checkbox();
-  },
-
-  componentWillUnmount() {
-    $('.callback.example .checkbox')
-      .checkbox();
-  },
-
-  getInitialState() {
-    return {
+    this.state = {
       createCollection: {
         title: '',
         description: '',
@@ -154,16 +129,34 @@ const Collection = React.createClass({
       },
       hideCreateCollectionBox: true,
     };
-  },
+
+    this.toggleCreateCollection = this.toggleCreateCollection.bind(this);
+    this.closeCreateCollection = this.closeCreateCollection.bind(this);
+    this.handleChangeTitle = this.handleChangeTitle.bind(this);
+    this.handleChangeDescription = this.handleChangeDescription.bind(this);
+    this.handleChangePrivate = this.handleChangePrivate.bind(this);
+    this.submitNewCollection = this.submitNewCollection.bind(this);
+    this.createCollectionItem = this.createCollectionItem.bind(this);
+  }
+
+  componentDidMount() {
+    $('.callback.example .checkbox').checkbox();
+  }
+
+  componentWillUnmount() {
+    $('.callback.example .checkbox').checkbox();
+  }
+
   toggleCreateCollection() {
+    this.setState({
+      hideCreateCollectionBox: !this.state.hideCreateCollectionBox
+    });
+  }
 
-    this.setState(
-      {hideCreateCollectionBox: !this.state.hideCreateCollectionBox});
-  },
   closeCreateCollection() {
+    this.setState({ hideCreateCollectionBox: true });
+  }
 
-    this.setState({hideCreateCollectionBox: true});
-  },
   handleChangeTitle(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -171,7 +164,8 @@ const Collection = React.createClass({
     const newState = this.state;
     newState.createCollection.title = e.target.value;
     this.setState(newState);
-  },
+  }
+
   handleChangeDescription(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -179,26 +173,29 @@ const Collection = React.createClass({
     const newState = this.state;
     newState.createCollection.description = e.target.value;
     this.setState(newState);
-  },
+  }
+
   handleChangePrivate(e) {
     e.stopPropagation();
 
     const newState = this.state;
     newState.createCollection.isPrivate = !newState.createCollection.isPrivate;
     this.setState(newState);
-  },
+  }
+
   submitNewCollection(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    const {title, description} = this.state.createCollection;
+    const { title, description } = this.state.createCollection;
     if (title && description) {
       this.props.FireRequestCreateCollection(this.state.createCollection);
       this.closeCreateCollection();
     }
-  },
+  }
+
   createCollectionItem(collections) {
-    const {Forums, location} = this.props;
+    const { Forums, location } = this.props;
     const self = this;
     return collections.entrySeq().map(([key, map]) => {
       return (
@@ -215,11 +212,11 @@ const Collection = React.createClass({
         />
       );
     });
-  },
+  }
 
   render() {
 
-    const {Collections} = this.props;
+    const { Collections } = this.props;
 
     return (
       <li id="user_best_collection">
@@ -289,7 +286,16 @@ const Collection = React.createClass({
         </div>
       </li>
     );
-  },
-});
+  }
+}
+
+Collection.displayName = 'Collection';
+Collection.propTypes = {
+  Forums: PropTypes.object.isRequired,
+  location: PropTypes.object,
+  Collections: PropTypes.object.isRequired,
+  FireRequestCreateCollection: PropTypes.func.isRequired,
+  FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+};
 
 export default Collection;

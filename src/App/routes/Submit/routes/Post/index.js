@@ -19,11 +19,11 @@ import {
   requestGetPostMeta,
 } from '../../../../Actions/Post';
 
-const SubmitPostContainer = React.createClass({
+class SubmitPostContainer extends React.Component {
   render() {
     return (<SubmitPost {...this.props} />);
-  },
-});
+  }
+}
 
 SubmitPostContainer.defaultProps = {
   AuthStore: UI.Auth,

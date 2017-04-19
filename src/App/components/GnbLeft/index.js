@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch, Link } from 'react-router-dom';
 import styles from './index.css';
 
@@ -41,35 +42,32 @@ class LeftBar extends React.Component {
 }
 
 LeftBar.propTypes = {
-  match: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 LeftBar.defaultProps = {};
 
-const LeftCol = React.createClass({
-  render() {
+const LeftCol = (props) => {
+  return (
+    <div id="left_col">
 
-    return (
-      <div id="left_col">
+      <LeftBar {...props} />
 
-        <LeftBar {...this.props} />
+      <Switch>
 
-        <Switch>
+        {/* Community */}
+        <Route path="/club/:clubId" component={ClubMenuBoxConnect}/>
+        <Route path="/collection" component={HomeMenuBoxConnect}/>
+        <Route path="/collection/:collectionId" component={HomeMenuBoxConnect}/>
 
-          {/* Community */}
-          <Route path="/club/:clubId" component={ClubMenuBoxConnect}/>
-          <Route path="/collection" component={HomeMenuBoxConnect}/>
-          <Route path="/collection/:collectionId" component={HomeMenuBoxConnect}/>
-
-          {/* Gnb Menu */}
-          <Route path="/explore" component={ExploreMenuBox}/>
-          <Route path="/submit" component={SubmitMenuBox}/>
-          <Route exact path="/" component={HomeMenuBoxConnect}/>
-        </Switch>
-      </div>
-    );
-  },
-});
+        {/* Gnb Menu */}
+        <Route path="/explore" component={ExploreMenuBox}/>
+        <Route path="/submit" component={SubmitMenuBox}/>
+        <Route exact path="/" component={HomeMenuBoxConnect}/>
+      </Switch>
+    </div>
+  )
+};
 
 module.exports = LeftCol;

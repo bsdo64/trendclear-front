@@ -5,11 +5,11 @@ import { requestUserPaybackRP } from '../../Actions/User';
 import VenalinkShare from '../../components/Contents/Venalinks/VenalinkShare';
 import { requestGetMoreShareVenalinkList } from '../../Actions/Venalink';
 
-const VenalinkShareList = React.createClass({
+class VenalinkShareList extends React.Component {
   render() {
     return <VenalinkShare {...this.props} />;
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const Privacy = (props) => {
@@ -112,7 +113,7 @@ const Privacy = (props) => {
 };
 
 Privacy.propTypes = {
-  inSigninForm: React.PropTypes.bool
+  inSigninForm: PropTypes.bool
 };
 
 export default Privacy;

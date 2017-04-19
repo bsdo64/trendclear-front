@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import SubmitForumBox from '../../components/Contents/SubmitForum';
@@ -8,16 +9,16 @@ import {
   requestValidateTitleForumCreate,
 } from '../../Actions/Forum';
 
-const SubmitForum = React.createClass({
-  propTypes: {
-    SubmitForumStore: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-  },
+class SubmitForum extends React.Component {
   render() {
     return <SubmitForumBox {...this.props} />;
-  },
-});
+  }
+}
 
+SubmitForum.propTypes = {
+  SubmitForumStore: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+};
 SubmitForum.defaultProps = {
   SubmitForumStore: UI.SubmitForum,
 };

@@ -4,12 +4,11 @@ import { getLoginUser } from '../Util/func';
 import VenalinkActive from '../../components/Contents/Venalinks/VenalinkActive';
 import { requestGetMoreActiveVenalinkList } from '../../Actions/Venalink';
 
-const VenalinkActiveList = React.createClass({
-
+class VenalinkActiveList extends React.Component {
   render() {
     return <VenalinkActive {...this.props} />;
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

@@ -18,11 +18,11 @@ import {
   requestActivateVenalink,
 } from '../../Actions/VenacleStore';
 
-const ActivityContainer = React.createClass({
+class ActivityContainer extends React.Component {
   render() {
     return (<Activity {...this.props} />);
-  },
-});
+  }
+}
 
 ActivityContainer.defaultProps = {
   ActivityStore: UI.Activity,

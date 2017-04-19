@@ -1,41 +1,44 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import moment from '../../Lib/MomentLib';
 import debug from 'debug';
 const logger = debug('vn:front:error');
 
-const SettingProfile = React.createClass({
-  displayName: 'SettingProfile',
-  propTypes: {
-    UserStore: PropTypes.object.isRequired,
-    defaultYear: PropTypes.number.isRequired,
-    defaultMonth: PropTypes.number.isRequired,
-    UserSettingStore: PropTypes.object.isRequired,
-    FireCloseUserSettingMessage: PropTypes.func.isRequired,
-    FireRequestUserUpdateProfile: PropTypes.func.isRequired,
-  },
+class SettingProfile extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getDefaultProps() {
-    const d = new Date();
-    return {
-      defaultYear: d.getYear() + 1900,
-      defaultMonth: 12,
-      defaultDate: 31,
-    };
-  },
-
-  getInitialState() {
-    const {UserStore} = this.props;
+    const { UserStore } = this.props;
     const sex = UserStore.getIn(['profile', 'sex']);
     const birthday = UserStore.getIn(['profile', 'birth']);
 
     const d = moment(birthday);
-    return {
+    this.state = {
       sex: sex,
       year: d.get('year'),
       month: d.get('month'),
       date: d.get('date'),
     };
-  },
+
+    this.createYear = this.createYear.bind(this);
+    this.createMonth = this.createMonth.bind(this);
+    this.createDate = this.createDate.bind(this);
+    this.changeYear = this.changeYear.bind(this);
+    this.changeMonth = this.changeMonth.bind(this);
+    this.changeDate = this.changeDate.bind(this);
+    this.changeSex = this.changeSex.bind(this);
+    this.updateProfile = this.updateProfile.bind(this);
+    this.closeMessageBox = this.closeMessageBox.bind(this);
+    this.setErrorMessage = this.setErrorMessage.bind(this);
+  }
+
+  componentDidMount() {
+    $('.ui.radio.checkbox')
+      .checkbox();
+
+    $('select.dropdown')
+      .dropdown();
+  }
 
   createYear() {
 
@@ -46,7 +49,7 @@ const SettingProfile = React.createClass({
     }
 
     return list;
-  },
+  }
 
   createMonth() {
 
@@ -57,28 +60,33 @@ const SettingProfile = React.createClass({
     }
 
     return list;
-  },
+  }
 
-  componentDidMount() {
-    $('.ui.radio.checkbox')
-      .checkbox();
+  createDate() {
+    const list = [];
+    const month = 31;
+    for (let i = 0; i < month; i++) {
+      list.push(<option key={i} value={i}>{`${i + 1} 일`}</option>);
+    }
 
-    $('select.dropdown')
-      .dropdown();
-  },
+    return list;
+  }
 
   changeYear(e) {
-    this.setState({year: e.target.value});
-  },
+    this.setState({ year: e.target.value });
+  }
+
   changeMonth(e) {
-    this.setState({month: e.target.value});
-  },
+    this.setState({ month: e.target.value });
+  }
+
   changeDate(e) {
-    this.setState({date: e.target.value});
-  },
+    this.setState({ date: e.target.value });
+  }
+
   changeSex(sex) {
-    this.setState({sex: sex});
-  },
+    this.setState({ sex: sex });
+  }
 
   updateProfile() {
     const birth = {
@@ -92,7 +100,7 @@ const SettingProfile = React.createClass({
     };
 
     this.props.FireRequestUserUpdateProfile(profile);
-  },
+  }
 
   closeMessageBox(successType) {
 
@@ -100,8 +108,8 @@ const SettingProfile = React.createClass({
       .closest('.message')
       .transition('fade');
 
-    this.props.FireCloseUserSettingMessage({successType});
-  },
+    this.props.FireCloseUserSettingMessage({ successType });
+  }
 
   setErrorMessage(UserSettingStore) {
     const errMessage = UserSettingStore.get('error');
@@ -111,7 +119,7 @@ const SettingProfile = React.createClass({
       return (
         <div ref="errorMessage" className="ui error message">
           <i className="close icon"
-             onClick={this.closeMessageBox.bind(this, 'error')}></i>
+             onClick={this.closeMessageBox.bind(this, 'error')}/>
           <ul className="list">
             <li>이전 비밀번호와 다릅니다.</li>
           </ul>
@@ -123,19 +131,18 @@ const SettingProfile = React.createClass({
       return (
         <div ref="successMessage" className="ui icon small success message">
           <i className="close icon"
-             onClick={this.closeMessageBox.bind(this, 'success')}></i>
-          <i className="checkmark icon"></i>
+             onClick={this.closeMessageBox.bind(this, 'success')}/>
+          <i className="checkmark icon"/>
           <div className="content">
             <p>비밀번호를 성공적으로 변경하였습니다</p>
           </div>
         </div>
       );
     }
-
-  },
+  }
 
   render() {
-    const {UserSettingStore} = this.props;
+    const { UserSettingStore } = this.props;
     return (
       <div id="setting">
         <h3 className="ui dividing header">
@@ -207,37 +214,9 @@ const SettingProfile = React.createClass({
                     onChange={this.changeDate}
                   >
                     <option value="">일</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
+                    {
+                      this.createDate()
+                    }
                   </select>
                 </div>
               </div>
@@ -252,16 +231,31 @@ const SettingProfile = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
-const SettingPassword = React.createClass({
-  displayName: 'SettingPassword',
-  propTypes: {
-    UserSettingStore: PropTypes.object.isRequired,
-    FireCloseUserSettingMessage: PropTypes.func.isRequired,
-    FireRequestUserUpdatePassword: PropTypes.func.isRequired,
-  },
+SettingProfile.defaultProps = {
+  defaultYear: new Date() + 1900,
+  defaultMonth: 12,
+  defaultDate: 31,
+};
+SettingProfile.displayName = 'SettingProfile';
+SettingProfile.propTypes = {
+  UserStore: PropTypes.object.isRequired,
+  defaultYear: PropTypes.number.isRequired,
+  defaultMonth: PropTypes.number.isRequired,
+  UserSettingStore: PropTypes.object.isRequired,
+  FireCloseUserSettingMessage: PropTypes.func.isRequired,
+  FireRequestUserUpdateProfile: PropTypes.func.isRequired,
+};
+
+class SettingPassword extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.closeMessageBox = this.closeMessageBox.bind(this);
+    this.setErrorMessage = this.setErrorMessage.bind(this);
+  }
 
   componentDidMount() {
     $('.ui.form')
@@ -314,7 +308,7 @@ const SettingPassword = React.createClass({
         },
       })
     ;
-  },
+  }
 
   closeMessageBox(successType) {
 
@@ -322,8 +316,8 @@ const SettingPassword = React.createClass({
       .closest('.message')
       .transition('fade');
 
-    this.props.FireCloseUserSettingMessage({successType});
-  },
+    this.props.FireCloseUserSettingMessage({ successType });
+  }
 
   setErrorMessage(UserSettingStore) {
     const errMessage = UserSettingStore.get('error');
@@ -333,7 +327,7 @@ const SettingPassword = React.createClass({
       return (
         <div ref="errorMessage" className="ui error message">
           <i className="close icon"
-             onClick={this.closeMessageBox.bind(this, 'error')}></i>
+             onClick={this.closeMessageBox.bind(this, 'error')}/>
           <ul className="list">
             <li>이전 비밀번호와 다릅니다.</li>
           </ul>
@@ -345,18 +339,18 @@ const SettingPassword = React.createClass({
       return (
         <div ref="successMessage" className="ui icon small success message">
           <i className="close icon"
-             onClick={this.closeMessageBox.bind(this, 'success')}></i>
-          <i className="checkmark icon"></i>
+             onClick={this.closeMessageBox.bind(this, 'success')}/>
+          <i className="checkmark icon"/>
           <div className="content">
             <p>비밀번호를 성공적으로 변경하였습니다</p>
           </div>
         </div>
       );
     }
+  }
 
-  },
   render() {
-    const {UserSettingStore} = this.props;
+    const { UserSettingStore } = this.props;
     return (
       <div id="setting">
 
@@ -382,7 +376,7 @@ const SettingPassword = React.createClass({
                      placeholder="새로운 비밀번호 확인"/>
             </div>
             <div className="ui submit button primary">저장</div>
-            <div className="ui error message "></div>
+            <div className="ui error message "/>
           </div>
           {
             this.setErrorMessage(UserSettingStore)
@@ -390,32 +384,37 @@ const SettingPassword = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+SettingPassword.displayName = 'SettingPassword';
+SettingPassword.propTypes = {
+  UserSettingStore: PropTypes.object.isRequired,
+  FireCloseUserSettingMessage: PropTypes.func.isRequired,
+  FireRequestUserUpdatePassword: PropTypes.func.isRequired,
+};
 
 require('./index.scss');
-const SettingBox = React.createClass({
-  displayName: 'SettingBox',
-  propTypes: {
-    UserSettingStore: PropTypes.object.isRequired,
-    FireCloseUserSettingMessage: PropTypes.func.isRequired,
-    FireRequestUserUpdatePassword: PropTypes.func.isRequired,
-    FireRequestUserUpdateProfile: PropTypes.func.isRequired,
-  },
+const SettingBox = props => {
+  const { UserSettingStore } = props;
+  switch (UserSettingStore.get('page')) {
+    case 'password' :
+      return <SettingPassword {...props} />;
 
-  render() {
-    const {UserSettingStore} = this.props;
-    switch (UserSettingStore.get('page')) {
-      case 'password' :
-        return <SettingPassword {...this.props} />;
+    case 'profile' :
+      return <SettingProfile {...props} />;
 
-      case 'profile' :
-        return <SettingProfile {...this.props} />;
+    default :
+      return (<div/>);
+  }
+};
 
-      default :
-        return (<div></div>);
-    }
-  },
-});
+SettingBox.displayName = 'SettingBox';
+SettingBox.propTypes = {
+  UserSettingStore: PropTypes.object.isRequired,
+  FireCloseUserSettingMessage: PropTypes.func.isRequired,
+  FireRequestUserUpdatePassword: PropTypes.func.isRequired,
+  FireRequestUserUpdateProfile: PropTypes.func.isRequired,
+};
 
 export default SettingBox;

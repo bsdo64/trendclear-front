@@ -1,7 +1,8 @@
 /**
  * Created by dobyeongsu on 2016. 3. 23..
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom/server';
 import Select from 'react-select';
 import cx from 'classnames';
@@ -13,30 +14,11 @@ import SelectSearchForum from './SelectSearchForum';
 import debug from 'debug';
 const errorLog = debug('vn:front:error');
 
-const EditorBox = React.createClass({
-  displayName: 'EditorBox',
-  propTypes: {
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-    SubmitPostStore: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-    FireRemoveServerInit: PropTypes.func.isRequired,
-    FireHandlePostTitle: PropTypes.func.isRequired,
-    FireHandlePostContent: PropTypes.func.isRequired,
-    FireHandleResetPostContent: PropTypes.func.isRequired,
-    FireRequestSubmitPost: PropTypes.func.isRequired,
-    FireHandleSelectPrefix: PropTypes.func.isRequired,
-    FireHandleAddPostImages: PropTypes.func.isRequired,
-    FireHandleDeletePostImages: PropTypes.func.isRequired,
-    FireHandleSetRepresentImage: PropTypes.func.isRequired,
-    FireRequestDeleteUnUsingImage: PropTypes.func.isRequired,
-    FireRequestUpdatePost: PropTypes.func.isRequired,
-    FireRequestGetPostMeta: PropTypes.func.isRequired,
-  },
+class EditorBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       type: 'editor',
       isAnnounce: false,
       isLoadingUrl: false,
@@ -44,7 +26,23 @@ const EditorBox = React.createClass({
       successUrl: false,
       loadedUrlMeta: null,
     };
-  },
+
+    this.toggleAnnounce = this.toggleAnnounce.bind(this);
+    this.handleContent = this.handleContent.bind(this);
+    this.submitPost = this.submitPost.bind(this);
+    this.modPost = this.modPost.bind(this);
+    this.removeContent = this.removeContent.bind(this);
+    this.getUrlPost = this.getUrlPost.bind(this);
+    this.selectEditor = this.selectEditor.bind(this);
+    this.selectUrl = this.selectUrl.bind(this);
+    this.createUrlMetaContent = this.createUrlMetaContent.bind(this);
+    this.setUrlMetaContent = this.setUrlMetaContent.bind(this);
+    this.checkTitleAndContent = this.checkTitleAndContent.bind(this);
+    this.handleRecaptcha = this.handleRecaptcha.bind(this);
+    this.checkForumManager = this.checkForumManager.bind(this);
+    this.createThumbnailImages = this.createThumbnailImages.bind(this);
+    this.setRepresentImage = this.setRepresentImage.bind(this);
+  }
 
   componentDidMount() {
     // set leave delete
@@ -69,7 +67,7 @@ const EditorBox = React.createClass({
     }
 
     this.props.FireRemoveServerInit();
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     // init from server
@@ -89,7 +87,7 @@ const EditorBox = React.createClass({
         '?postId=' + nextProps.SubmitPostStore.get('successPostId')
       );
     }
-  },
+  }
 
   componentWillUnmount() {
     this.editor.destroy();
@@ -103,12 +101,12 @@ const EditorBox = React.createClass({
     } else {
       return true;
     }
-  },
+  }
 
   toggleAnnounce() {
 
     this.setState({isAnnounce: !this.state.isAnnounce});
-  },
+  }
 
   handleContent() {
     let allContents = this.editor.serialize();
@@ -123,7 +121,7 @@ const EditorBox = React.createClass({
       width: this.refs.post_editor.offsetWidth,
       height: this.refs.post_editor.offsetHeight,
     });
-  },
+  }
 
   submitPost() {
     const {SubmitPostStore, UserStore, location, FireRequestSubmitPost} = this.props;
@@ -180,7 +178,7 @@ const EditorBox = React.createClass({
     } else {
       errorLog('not available');
     }
-  },
+  }
 
   modPost() {
     const {SubmitPostStore, location, FireRequestUpdatePost} = this.props;
@@ -202,28 +200,28 @@ const EditorBox = React.createClass({
 
       FireRequestUpdatePost(newPost);
     }
-  },
+  }
 
   removeContent() {
     this.props.FireHandleResetPostContent();
     this.editor.setContent(null);
-  },
+  }
 
   getUrlPost() {
 
     const url = this.refs.url_input.value.trim();
     this.props.FireRequestGetPostMeta({url});
-  },
+  }
 
   selectEditor() {
 
     this.setState({type: 'editor'});
-  },
+  }
 
   selectUrl() {
 
     this.setState({type: 'url'});
-  },
+  }
 
   createUrlMetaContent(urlMetaData, askButton) {
 
@@ -261,7 +259,7 @@ const EditorBox = React.createClass({
           </div>
         </a>
       </div>);
-  },
+  }
 
   setUrlMetaContent(e) {
     e.preventDefault();
@@ -272,21 +270,21 @@ const EditorBox = React.createClass({
 
     this.props.FireHandlePostContent(
       {content: ReactDOM.renderToStaticMarkup(box)});
-  },
+  }
 
   checkTitleAndContent() {
 
     const {SubmitPostStore} = this.props;
     return !SubmitPostStore.get('title') ||
       !$(SubmitPostStore.get('content')).text().trim();
-  },
+  }
 
   handleRecaptcha(a, b, c, d) {
 
     const args = Array.prototype.slice.call(arguments, 1);
 
     errorLog(args, a, b, c, d);
-  },
+  }
 
   checkForumManager(user, managers) {
 
@@ -296,7 +294,7 @@ const EditorBox = React.createClass({
     } else {
       return user;
     }
-  },
+  }
 
   createThumbnailImages(image, index)  {
     const isRepresent = this.props.SubmitPostStore.get('representingImage') ===
@@ -316,12 +314,12 @@ const EditorBox = React.createClass({
         <img src={image.thumbnailUrl}/>
       </li>
     );
-  },
+  }
 
   setRepresentImage(index) {
 
     this.props.FireHandleSetRepresentImage(index);
-  },
+  }
 
   render() {
 
@@ -445,36 +443,38 @@ const EditorBox = React.createClass({
 
       </div>
     );
-  },
-});
+  }
+}
+
+EditorBox.displayName = 'EditorBox';
+EditorBox.propTypes = {
+  location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  SubmitPostStore: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+  FireRemoveServerInit: PropTypes.func.isRequired,
+  FireHandlePostTitle: PropTypes.func.isRequired,
+  FireHandlePostContent: PropTypes.func.isRequired,
+  FireHandleResetPostContent: PropTypes.func.isRequired,
+  FireRequestSubmitPost: PropTypes.func.isRequired,
+  FireHandleSelectPrefix: PropTypes.func.isRequired,
+  FireHandleAddPostImages: PropTypes.func.isRequired,
+  FireHandleDeletePostImages: PropTypes.func.isRequired,
+  FireHandleSetRepresentImage: PropTypes.func.isRequired,
+  FireRequestDeleteUnUsingImage: PropTypes.func.isRequired,
+  FireRequestUpdatePost: PropTypes.func.isRequired,
+  FireRequestGetPostMeta: PropTypes.func.isRequired,
+};
 
 require('./index.scss');
-const SubmitContents = React.createClass({
-  displayName: 'SubmitContents',
-  propTypes: {
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-    AuthStore: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-    SubmitPostStore: PropTypes.object.isRequired,
-    ForumFollowed: PropTypes.object.isRequired,
-    ForumCreated: PropTypes.object.isRequired,
-    RankForums: PropTypes.object.isRequired,
+class SubmitContents extends React.Component {
+  constructor(props) {
+    super(props);
 
-    FireRemoveServerInit: PropTypes.func.isRequired,
-    FireHandlePostContent: PropTypes.func.isRequired,
-    FireHandlePostTitle: PropTypes.func.isRequired,
-    FireHandleResetPostContent: PropTypes.func.isRequired,
-    FireRequestSubmitPost: PropTypes.func.isRequired,
-    FireHandleSelectPrefix: PropTypes.func.isRequired,
-    FireHandleAddPostImages: PropTypes.func.isRequired,
-    FireHandleDeletePostImages: PropTypes.func.isRequired,
-    FireHandleSetRepresentImage: PropTypes.func.isRequired,
-    FireRequestDeleteUnUsingImage: PropTypes.func.isRequired,
-    FireRequestUpdatePost: PropTypes.func.isRequired,
-    FireRequestGetPostMeta: PropTypes.func.isRequired,
-  },
+    this.handleTitle = this.handleTitle.bind(this);
+    this.handlePrefix = this.handlePrefix.bind(this);
+  }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.SubmitPostStore.get('submitSuccess') &&
@@ -484,18 +484,19 @@ const SubmitContents = React.createClass({
         '?postId=' + nextProps.SubmitPostStore.get('postId')
       );
     }
-  },
+  }
 
   handleTitle() {
     this.props.FireHandlePostTitle(this.refs.title.value);
-  },
+  }
+
   handlePrefix(option) {
     if (option) {
       this.props.FireHandleSelectPrefix(option.value);
     } else if (option === null) {
       this.props.FireHandleSelectPrefix(null);
     }
-  },
+  }
 
   render() {
     const {
@@ -623,7 +624,33 @@ const SubmitContents = React.createClass({
         </div>
       );
     }
-  },
-});
+  }
+}
+
+SubmitContents.displayName = 'SubmitContents';
+SubmitContents.propTypes = {
+  location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  AuthStore: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+  SubmitPostStore: PropTypes.object.isRequired,
+  ForumFollowed: PropTypes.object.isRequired,
+  ForumCreated: PropTypes.object.isRequired,
+  RankForums: PropTypes.object.isRequired,
+
+  FireRemoveServerInit: PropTypes.func.isRequired,
+  FireHandlePostContent: PropTypes.func.isRequired,
+  FireHandlePostTitle: PropTypes.func.isRequired,
+  FireHandleResetPostContent: PropTypes.func.isRequired,
+  FireRequestSubmitPost: PropTypes.func.isRequired,
+  FireHandleSelectPrefix: PropTypes.func.isRequired,
+  FireHandleAddPostImages: PropTypes.func.isRequired,
+  FireHandleDeletePostImages: PropTypes.func.isRequired,
+  FireHandleSetRepresentImage: PropTypes.func.isRequired,
+  FireRequestDeleteUnUsingImage: PropTypes.func.isRequired,
+  FireRequestUpdatePost: PropTypes.func.isRequired,
+  FireRequestGetPostMeta: PropTypes.func.isRequired,
+};
 
 export default SubmitContents;

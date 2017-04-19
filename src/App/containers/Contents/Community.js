@@ -24,11 +24,11 @@ import {
   requestActivateVenalink, requestParticipateVenalink,
 } from '../../Actions/VenacleStore';
 
-const CommunityContainer = React.createClass({
+class CommunityContainer extends React.Component {
   render() {
     return (<Community {...this.props} />);
-  },
-});
+  }
+}
 
 CommunityContainer.defaultProps = {
   LoginStore: UI.Login,

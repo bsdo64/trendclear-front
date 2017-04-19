@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -107,7 +108,7 @@ class HomeMenuBox extends React.Component {
 }
 
 HomeMenuBox.propTypes = {
-  collectionList: React.PropTypes.object.isRequired,
+  collectionList: PropTypes.object.isRequired,
 };
 HomeMenuBox.defaultProps = {};
 

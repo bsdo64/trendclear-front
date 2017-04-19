@@ -4,7 +4,6 @@
 
 import React, {
   Component,
-  PropTypes,
 } from 'react';
 
 class Users extends Component {

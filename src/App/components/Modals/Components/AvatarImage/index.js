@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import AvatarImage from '../../../../components/AvatarImage';
 
 require('./index.scss');
@@ -25,19 +26,18 @@ ImageBox.propTypes = {
   srcUrl: PropTypes.string,
 };
 
-const AvatarImageModal = React.createClass({
-  displayName: 'AvatarImageModal',
-  propTypes: {
-    UserStore: PropTypes.object.isRequired,
-    FireRequestUserAvatarImageUpload: PropTypes.func.isRequired,
-  },
+class AvatarImageModal extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       file: null,
       imagePreviewUrl: null,
     };
-  },
+
+    this.handleFile = this.handleFile.bind(this);
+    this.uploadAvatarImage = this.uploadAvatarImage.bind(this);
+  }
 
   handleFile(e) {
     e.preventDefault();
@@ -54,12 +54,13 @@ const AvatarImageModal = React.createClass({
     };
 
     reader.readAsDataURL(file);
-  },
+  }
+
   uploadAvatarImage() {
     if (this.state.file) {
       this.props.FireRequestUserAvatarImageUpload(this.state.file);
     }
-  },
+  }
   render() {
     const { UserStore } = this.props;
     const user = UserStore.get('user');
@@ -95,7 +96,13 @@ const AvatarImageModal = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+AvatarImage.displayName = 'AvatarImageModal';
+AvatarImage.propTypes = {
+  UserStore: PropTypes.object.isRequired,
+  FireRequestUserAvatarImageUpload: PropTypes.func.isRequired,
+};
 
 export default AvatarImageModal;

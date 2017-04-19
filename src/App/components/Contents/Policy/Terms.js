@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const Terms = (props) => {
@@ -154,7 +155,7 @@ const Terms = (props) => {
 };
 
 Terms.propTypes = {
-  inSigninForm: React.PropTypes.bool
+  inSigninForm: PropTypes.bool
 };
 
 export default Terms;

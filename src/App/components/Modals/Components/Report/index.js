@@ -1,22 +1,20 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 require('./index.scss');
-const ReportModalBox = React.createClass({
-  displayName: 'ReportModalBox',
-  propTypes: {
-    ReportStore: PropTypes.object.isRequired,
-    Posts: PropTypes.object.isRequired,
-    Comments: PropTypes.object.isRequired,
-    SubComments: PropTypes.object.isRequired,
-    FireRequestReport: PropTypes.func.isRequired,
-  },
+class ReportModalBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       selectItem: 1,
     };
-  },
+
+    this.selectReportItem = this.selectReportItem.bind(this);
+    this.createReportItem = this.createReportItem.bind(this);
+    this.sendReport = this.sendReport.bind(this);
+  }
 
   selectReportItem(e) {
 
@@ -26,7 +24,8 @@ const ReportModalBox = React.createClass({
       selectItem: parseInt(reportId, 10),
       reportMessage: reportMessage,
     });
-  },
+  }
+
   createReportItem(item) {
     const id = item.get('id');
     const message = item.get('message');
@@ -40,10 +39,11 @@ const ReportModalBox = React.createClass({
              data-message={message}>{message}</div>
       </div>
     );
-  },
+  }
+
   sendReport() {
 
-    const {ReportStore, FireRequestReport} = this.props;
+    const { ReportStore, FireRequestReport } = this.props;
 
     FireRequestReport({
       type: ReportStore.get('type'),
@@ -51,9 +51,10 @@ const ReportModalBox = React.createClass({
       reportId: this.state.selectItem,
       description: this.state.reportMessage,
     });
-  },
+  }
+
   render() {
-    const {ReportStore} = this.props;
+    const { ReportStore } = this.props;
 
     let content, title;
     switch (ReportStore.get('type')) {
@@ -64,10 +65,7 @@ const ReportModalBox = React.createClass({
 
       case 'comment':
         content = this.props.Comments.get(ReportStore.get('typeId').toString());
-        title = content ? <span>댓글: <div
-          dangerouslySetInnerHTML={{
-            __html: content.get('content'),
-          }}></div></span> : null;
+        title = content ? <span>댓글: <div dangerouslySetInnerHTML={{ __html: content.get('content'), }}/></span> : null;
         break;
 
       case 'subComment':
@@ -136,7 +134,16 @@ const ReportModalBox = React.createClass({
         }
       </div>
     );
-  },
-});
+  }
+}
+
+ReportModalBox.displayName = 'ReportModalBox';
+ReportModalBox.propTypes = {
+  ReportStore: PropTypes.object.isRequired,
+  Posts: PropTypes.object.isRequired,
+  Comments: PropTypes.object.isRequired,
+  SubComments: PropTypes.object.isRequired,
+  FireRequestReport: PropTypes.func.isRequired,
+};
 
 export default ReportModalBox;

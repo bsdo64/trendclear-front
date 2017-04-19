@@ -1,24 +1,26 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import debug from 'debug';
 const errorLog = debug('vn:Components:Modal:Login:Form');
 
 require('./index.scss');
-const Login = React.createClass({
-  displayName: 'LoginModalBox',
-  propTypes: {
-    LoginStore: PropTypes.object.isRequired,
-    ModalStore: PropTypes.object.isRequired,
-    FireRequestLogin: PropTypes.func.isRequired,
-  },
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.handleRequestLogin = this.handleRequestLogin.bind(this);
+    this.handleRequestLoginByEnter = this.handleRequestLoginByEnter.bind(this);
+    this.handleRequestSignin = this.handleRequestSignin.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+  }
   componentWillReceiveProps(nextProps) {
     if (!this.props.LoginStore.get('loginSuccess') &&
       nextProps.LoginStore.get('loginSuccess')) {
       window.location.href = nextProps.ModalStore.get('location') || '/';
     }
-  },
+  }
 
   componentDidMount() {
     $(this.refs.loginform)
@@ -60,20 +62,21 @@ const Login = React.createClass({
           errorLog(formErrors, fields);
         },
       });
-  },
+  }
 
   handleRequestLoginByEnter(e) {
     if (e.key === 'Enter' && e.keyCode === 13) {
       this.handleRequestLogin();
     }
-  },
+  }
 
   handleRequestLogin() {
     $(this.refs.loginform).form('validate form');
-  },
+  }
+
   handleRequestSignin() {
     $(this.refs.loginmodal).modal('hide');
-  },
+  }
 
   afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -116,7 +119,7 @@ const Login = React.createClass({
           errorLog(formErrors, fields);
         },
       });
-  },
+  }
 
   render() {
     const {LoginStore} = this.props;
@@ -194,7 +197,14 @@ const Login = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+Login.displayName = 'LoginModalBox';
+Login.propTypes =  {
+  LoginStore: PropTypes.object.isRequired,
+    ModalStore: PropTypes.object.isRequired,
+    FireRequestLogin: PropTypes.func.isRequired,
+};
 
 export default Login;

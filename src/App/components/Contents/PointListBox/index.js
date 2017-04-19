@@ -1,25 +1,24 @@
-import React, {
-  PropTypes,
-} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import accounting from 'accounting';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import moment from '../../Lib/MomentLib';
 import TablePagination from '../../Paginator/TablePagination';
 
-const PointListBox = React.createClass({
-  displayName: 'ChargePointBox',
-  propTypes: {
-    UserStore: PropTypes.object.isRequired,
-    FireRequestMoreAccountList: PropTypes.func,
-  },
+class PointListBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       pointType: 'TP',
       page: 1,
     };
-  },
+
+    this.togglePointType = this.togglePointType.bind(this);
+    this.createAccount = this.createAccount.bind(this);
+    this.handleClickPage = this.handleClickPage.bind(this);
+  }
 
   togglePointType(point) {
     this.props.FireRequestMoreAccountList({
@@ -31,7 +30,7 @@ const PointListBox = React.createClass({
       pointType: point,
       page: 1,
     });
-  },
+  }
 
   createAccount(account) {
     let type, itemType, totalPoint, amountPoint, positive;
@@ -128,7 +127,7 @@ const PointListBox = React.createClass({
           <b>{accounting.formatNumber(totalPoint)}</b></td>
       </tr>
     );
-  },
+  }
 
   handleClickPage(p) {
     return () => {
@@ -141,7 +140,7 @@ const PointListBox = React.createClass({
         page: p,
       });
     };
-  },
+  }
 
   render() {
     const {UserStore} = this.props;
@@ -242,7 +241,13 @@ const PointListBox = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+PointListBox.displayName = 'ChargePointBox';
+PointListBox.propTypes = {
+  UserStore: PropTypes.object.isRequired,
+    FireRequestMoreAccountList: PropTypes.func,
+};
 
 export default PointListBox;

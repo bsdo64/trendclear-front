@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LeftMenu from '../../components/LeftMenus/ForumSettingLeftMenu';
 
-const ForumSettingLeftMenu = React.createClass({
+class ForumSettingLeftMenu extends React.Component {
   render() {
     return (<LeftMenu {...this.props} />);
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

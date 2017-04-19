@@ -6,11 +6,11 @@ import {
   requestLogin,
 } from '../../Actions/Login';
 
-const LoginModalContainer = React.createClass({
+class LoginModalContainer extends React.Component {
   render() {
     return (<LoginModalBox {...this.props} />);
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

@@ -4,11 +4,11 @@ import { getLoginUser } from '../Util/func';
 import AvatarImageModal from '../../components/Modals/Components/AvatarImage';
 import { requestUserAvatarImageUpload } from '../../Actions/User';
 
-const AvatarImageContainer = React.createClass({
+class AvatarImageContainer extends React.Component {
   render() {
     return (<AvatarImageModal {...this.props} />);
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

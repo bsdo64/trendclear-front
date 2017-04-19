@@ -1,40 +1,32 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import { List } from 'immutable';
 import Collection from './Collection';
-
 import styles from './index.css';
+
 require('./index.scss');
-const BestCategorySelect = React.createClass({
-  displayName: 'BestCategorySelect',
-  propTypes: {
-    GnbStore: PropTypes.object.isRequired,
-    ListStore: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-    Categories: PropTypes.object.isRequired,
-    Forums: PropTypes.object.isRequired,
-    Collections: PropTypes.object.isRequired,
+class BestCategorySelect extends React.Component{
+  constructor(props) {
+    super(props);
 
-    FireUpdateFollowingFilter: PropTypes.func.isRequired,
-    FireRequestSaveFollowingFilter: PropTypes.func.isRequired,
-    FireRequestCreateCollection: PropTypes.func.isRequired,
-    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
+    this.state = {
       openFilter: false,
     };
-  },
+
+    this.updateFilterValue = this.updateFilterValue.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
+    this.saveFilter = this.saveFilter.bind(this);
+  }
 
   updateFilterValue(club, selectArray) {
     this.props.FireUpdateFollowingFilter({[club]: selectArray});
-  },
+  }
 
   toggleFilter() {
     this.setState({openFilter: !this.state.openFilter});
-  },
+  }
 
   saveFilter() {
     const {GnbStore} = this.props;
@@ -44,7 +36,7 @@ const BestCategorySelect = React.createClass({
       return parseInt(object.value);
     });
     this.props.FireRequestSaveFollowingFilter({categoryValue: normalize});
-  },
+  }
 
   render() {
     const {
@@ -145,7 +137,22 @@ const BestCategorySelect = React.createClass({
         </ul>
       </menu>
     </div>;
-  },
-});
+  }
+};
+
+BestCategorySelect.displayName = 'BestCategorySelect';
+BestCategorySelect.propTypes = {
+  GnbStore: PropTypes.object.isRequired,
+  ListStore: PropTypes.object.isRequired,
+  UserStore: PropTypes.object.isRequired,
+  Categories: PropTypes.object.isRequired,
+  Forums: PropTypes.object.isRequired,
+  Collections: PropTypes.object.isRequired,
+
+  FireUpdateFollowingFilter: PropTypes.func.isRequired,
+  FireRequestSaveFollowingFilter: PropTypes.func.isRequired,
+  FireRequestCreateCollection: PropTypes.func.isRequired,
+  FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+};
 
 export default BestCategorySelect ;

@@ -1,24 +1,18 @@
-import React, {
-  PropTypes,
-} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import accounting from 'accounting';
 import moment from 'moment';
 import TablePagination from '../../Paginator/TablePagination';
 
-const VenalinkShare = React.createClass({
-  propTypes: {
-    UserStore: PropTypes.object.isRequired,
-    FireRequestUserPaybackRP: PropTypes.func.isRequired,
-  },
-
-  paybackRP(itemId) {
-    return () => this.props.FireRequestUserPaybackRP({
+const VenalinkShare = props => {
+  function paybackRP(itemId) {
+    return () => props.FireRequestUserPaybackRP({
       userVenalinkId: itemId,
     });
-  },
+  }
 
-  createVenalinkItem(participatedList) {
+  function createVenalinkItem(participatedList) {
     let status,
       isTerminate,
       hasPaybackRP = participatedList.get('has_payback_rp'),
@@ -65,7 +59,7 @@ const VenalinkShare = React.createClass({
             isTerminate && participatedList.get('paid_r') > 0 &&
             !hasPaybackRP &&
             <div className="ui button primary tiny"
-                 onClick={this.paybackRP(participatedList.get('id'))}
+                 onClick={paybackRP(participatedList.get('id'))}
             >
               {
                 accounting.formatNumber(participatedList.get('paid_r')) +
@@ -79,104 +73,107 @@ const VenalinkShare = React.createClass({
           venalink.get('total_remain_r'))}</td>
       </tr>
     );
-  },
+  }
 
-  handleClickPage() {
+  function handleClickPage() {
 
-  },
+  }
 
-  render() {
-    const {UserStore} = this.props;
-    const participatedVenalinks = UserStore.get('participatedVenalinks');
+  const {UserStore} = props;
+  const participatedVenalinks = UserStore.get('participatedVenalinks');
 
-    return (
-      <div>
-        <div className="ui cards centered" style={{padding: 10}}>
-          <div className="card" style={{width: '100%'}}>
-            <div className="content">
-              <div className="header">
-                베나링크 참여 현황
-              </div>
-              <div className="description">
-                <div className="ui two statistics">
-                  <div className="statistic">
-                    <div className="value">
-                      22
-                    </div>
-                    <div className="label">
-                      평균 방문자
-                    </div>
+  return (
+    <div>
+      <div className="ui cards centered" style={{padding: 10}}>
+        <div className="card" style={{width: '100%'}}>
+          <div className="content">
+            <div className="header">
+              베나링크 참여 현황
+            </div>
+            <div className="description">
+              <div className="ui two statistics">
+                <div className="statistic">
+                  <div className="value">
+                    22
                   </div>
-                  <div className="statistic">
-                    <div className="value">
-                      1,200,232
-                    </div>
-                    <div className="label">
-                      총 방문자
-                    </div>
+                  <div className="label">
+                    평균 방문자
                   </div>
-                  <div className="statistic">
-                    <div className="value">
-                      1,200
-                    </div>
-                    <div className="label">
-                      평균 습득 RP
-                    </div>
+                </div>
+                <div className="statistic">
+                  <div className="value">
+                    1,200,232
                   </div>
-                  <div className="statistic">
-                    <div className="value">
-                      1,200,023
-                    </div>
-                    <div className="label">
-                      총 습득 RP
-                    </div>
+                  <div className="label">
+                    총 방문자
+                  </div>
+                </div>
+                <div className="statistic">
+                  <div className="value">
+                    1,200
+                  </div>
+                  <div className="label">
+                    평균 습득 RP
+                  </div>
+                </div>
+                <div className="statistic">
+                  <div className="value">
+                    1,200,023
+                  </div>
+                  <div className="label">
+                    총 습득 RP
                   </div>
                 </div>
               </div>
             </div>
-            <div className="ui bottom attached button">
-              내역 보기
-            </div>
+          </div>
+          <div className="ui bottom attached button">
+            내역 보기
           </div>
         </div>
-        <div style={{padding: 10}}>
-          <h4>베나링크 참여 리스트</h4>
-          <table className="ui celled table" style={{fontSize: 12}}>
-            <thead>
-            <tr>
-              <th className="center aligned" style={{width: 60}}>타입</th>
-              <th className="center aligned">상태</th>
-              <th className="center aligned three wide">종료 시간</th>
-              <th className="center aligned" style={{width: 70}}>참여<br />유저(명)
-              </th>
-              <th className="center aligned">나의 베나링크<br/>순 방문(명)</th>
-              <th className="center aligned">지급(예정) RP</th>
-              <th className="center aligned">남은 RP</th>
-            </tr>
-            </thead>
-            <tbody>
-            {
-              participatedVenalinks &&
-              participatedVenalinks.map(this.createVenalinkItem)
-            }
-            </tbody>
-            <tfoot>
-            <tr>
-              <th colSpan="10">
-                <TablePagination
-                  totalPage={10}
-                  currentPage={1}
-                  pageLimit={1}
-                  onClickPage={this.handleClickPage}
-                />
-              </th>
-            </tr>
-            </tfoot>
-          </table>
-        </div>
       </div>
-    );
-  },
-});
+      <div style={{padding: 10}}>
+        <h4>베나링크 참여 리스트</h4>
+        <table className="ui celled table" style={{fontSize: 12}}>
+          <thead>
+          <tr>
+            <th className="center aligned" style={{width: 60}}>타입</th>
+            <th className="center aligned">상태</th>
+            <th className="center aligned three wide">종료 시간</th>
+            <th className="center aligned" style={{width: 70}}>참여<br />유저(명)
+            </th>
+            <th className="center aligned">나의 베나링크<br/>순 방문(명)</th>
+            <th className="center aligned">지급(예정) RP</th>
+            <th className="center aligned">남은 RP</th>
+          </tr>
+          </thead>
+          <tbody>
+          {
+            participatedVenalinks &&
+            participatedVenalinks.map(createVenalinkItem)
+          }
+          </tbody>
+          <tfoot>
+          <tr>
+            <th colSpan="10">
+              <TablePagination
+                totalPage={10}
+                currentPage={1}
+                pageLimit={1}
+                onClickPage={handleClickPage}
+              />
+            </th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+VenalinkShare.propTypes = {
+  UserStore: PropTypes.object.isRequired,
+    FireRequestUserPaybackRP: PropTypes.func.isRequired,
+};
 
 export default VenalinkShare;

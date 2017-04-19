@@ -100,61 +100,58 @@ PostList.propTypes =  {
     isAnnounce: PropTypes.bool.isRequired,
 };
 
-const Forum = React.createClass({
-  displayName: 'Forum',
-  // mixins: [PureRenderMixin],
-  propTypes: {
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-    PaginationStore: PropTypes.object.isRequired,
-    AuthStore: PropTypes.object.isRequired,
-    ListStore: PropTypes.object.isRequired,
-
-    Users: PropTypes.object.isRequired,
-    Forums: PropTypes.object.isRequired,
-    Prefixes: PropTypes.object.isRequired,
-    Collections: PropTypes.object.isRequired,
-    Posts: PropTypes.object.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireRequestAddForumInCollection: PropTypes.func.isRequired,
-    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
-    FireRequestFollowForum: PropTypes.func.isRequired,
-    FireRequestUnFollowForum: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
+class Forum extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       text: '',
     };
-  },
+
+    this.onChange = this.onChange.bind(this);
+    this.handleForumSearch = this.handleForumSearch.bind(this);
+    this.handleSubmitPrefix = this.handleSubmitPrefix.bind(this);
+    this.handleSetPage = this.handleSetPage.bind(this);
+    this.resetPrefix = this.resetPrefix.bind(this);
+    this.openLoginModal = this.openLoginModal.bind(this);
+    this.createPrefixItem = this.createPrefixItem.bind(this);
+    this.createPostItem = this.createPostItem.bind(this);
+    this.selectCollection = this.selectCollection.bind(this);
+    this.checkCollectionHasForums = this.checkCollectionHasForums.bind(this);
+    this.toggleFollow = this.toggleFollow.bind(this);
+    this.isManager = this.isManager.bind(this);
+  }
+
   onChange(e) {
     this.setState({ text: e.target.value });
-  },
+  }
+
   handleForumSearch(e) {
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
     this.props.history.push(makeUrl.setQuery('forumSearch', this.state.text).end());
-  },
+  }
+
   handleSubmitPrefix(prefixId, e) {
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
     makeUrl.removeQuery('forumSearch');
     this.props.history.push(makeUrl.setQuery('forumPrefix', prefixId).end());
-  },
+  }
   handleSetPage(pagination) {
 
     const makeUrl = new MakeUrl(this.props.location);
     this.props.history.push(makeUrl.setQuery('p', pagination.page).end());
-  },
+  }
+
   resetPrefix(e) {
     e.preventDefault();
 
     const makeUrl = new MakeUrl(this.props.location);
     this.props.history.push(
       makeUrl.removeQuery('forumPrefix', 'forumSearch').end());
-  },
+  }
 
   openLoginModal() {
     const { location, FireToggleLoginModal } = this.props;
@@ -162,7 +159,7 @@ const Forum = React.createClass({
       contentType: 'Login',
       location: location.pathname + location.search,
     });
-  },
+  }
 
   createPrefixItem(Prefixes, prefixId) {
 
@@ -179,7 +176,8 @@ const Forum = React.createClass({
         </div>
       );
     }
-  },
+  }
+
   createPostItem(makeUrl, isAnnounce, postId) {
 
     const { Posts, Users, location } = this.props;
@@ -203,7 +201,7 @@ const Forum = React.createClass({
         );
       }
     }
-  },
+  }
 
   selectCollection(e) {
     const {
@@ -219,11 +217,12 @@ const Forum = React.createClass({
     } else {
       FireRequestRemoveForumInCollection(params);
     }
-  },
+  }
+
   checkCollectionHasForums(collectionForumList, forumId) {
 
     return collectionForumList.includes(forumId);
-  },
+  }
 
   toggleFollow(isForumFollow, forumId) {
 
@@ -241,7 +240,7 @@ const Forum = React.createClass({
         FireRequestFollowForum({ forumId: forumId, userId });
       }
     }
-  },
+  }
 
   isManager(managerIds, userId) {
     if (managerIds && managerIds.size > 0) {
@@ -249,7 +248,7 @@ const Forum = React.createClass({
     } else {
       return false;
     }
-  },
+  }
 
   render() {
 
@@ -529,7 +528,27 @@ const Forum = React.createClass({
     }
 
     return <div/>;
-  },
-});
+  }
+}
+
+Forum.displayName = 'Forum';
+Forum.propTypes = {
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  PaginationStore: PropTypes.object.isRequired,
+  AuthStore: PropTypes.object.isRequired,
+  ListStore: PropTypes.object.isRequired,
+
+  Users: PropTypes.object.isRequired,
+  Forums: PropTypes.object.isRequired,
+  Prefixes: PropTypes.object.isRequired,
+  Collections: PropTypes.object.isRequired,
+  Posts: PropTypes.object.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
+  FireRequestAddForumInCollection: PropTypes.func.isRequired,
+  FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+  FireRequestFollowForum: PropTypes.func.isRequired,
+  FireRequestUnFollowForum: PropTypes.func.isRequired,
+};
 
 export default Forum;

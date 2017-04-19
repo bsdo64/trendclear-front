@@ -1,15 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const MenuContainer = React.createClass({
-  propTypes: {
-    location: PropTypes.object.isRequired,
-  },
-
-  getEndpoint(location) {
+const MenuContainer = props => {
+  function getEndpoint(location) {
     return location.pathname.split('/')[1];
-  },
-  getTitle(endPoint) {
+  }
+  function getTitle(endPoint) {
     switch (endPoint) {
       case 'about':
         return '소개';
@@ -22,45 +19,48 @@ const MenuContainer = React.createClass({
       default:
         return '정책';
     }
-  },
-  render() {
-    const title = this.getTitle(this.getEndpoint(this.props.location));
-    return (
-      <div id="forum_category">
-        {/* Title */}
-        <div id="sub_category">
-          <div className="sub_category_button">
-            <div className="sub_category_text">{title}</div>
-          </div>
+  }
+
+  const title = getTitle(getEndpoint(props.location));
+  return (
+    <div id="forum_category">
+      {/* Title */}
+      <div id="sub_category">
+        <div className="sub_category_button">
+          <div className="sub_category_text">{title}</div>
         </div>
-
-        {/* Menu */}
-        <menu className="sub_category_list">
-
-          <ul >
-            <li >
-              <h5 className="">
-                <a><i className="fa fa-rss"/>{' 베나클'}</a>
-              </h5>
-
-              <div className="sub_category item">
-                <Link to={'/about'}>{'소개'}</Link>
-              </div>
-              {/*<div className="sub_category item">
-               <Link to={'/careers'}>{'채용'}</Link>
-               </div>*/}
-              <div className="sub_category item">
-                <Link to={'/help'}>{'고객센터'}</Link>
-              </div>
-              {/*<div className="sub_category item">
-               <Link to={'/advertisement'}>{'광고안내'}</Link>
-               </div>*/}
-            </li>
-          </ul>
-        </menu>
       </div>
-    );
-  },
-});
+
+      {/* Menu */}
+      <menu className="sub_category_list">
+
+        <ul >
+          <li >
+            <h5 className="">
+              <a><i className="fa fa-rss"/>{' 베나클'}</a>
+            </h5>
+
+            <div className="sub_category item">
+              <Link to={'/about'}>{'소개'}</Link>
+            </div>
+            {/*<div className="sub_category item">
+             <Link to={'/careers'}>{'채용'}</Link>
+             </div>*/}
+            <div className="sub_category item">
+              <Link to={'/help'}>{'고객센터'}</Link>
+            </div>
+            {/*<div className="sub_category item">
+             <Link to={'/advertisement'}>{'광고안내'}</Link>
+             </div>*/}
+          </li>
+        </ul>
+      </menu>
+    </div>
+  );
+};
+
+MenuContainer.propTypes = {
+  location: PropTypes.object.isRequired,
+};
 
 module.exports = MenuContainer;
