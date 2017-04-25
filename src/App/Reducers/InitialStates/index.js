@@ -146,5 +146,7 @@ export const UI = {
       error: null,
     },
   }),
-  User: Map({}),
+  WidgetBox: Map({
+    toggleTrendBox: false
+  }),
 };

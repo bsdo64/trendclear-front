@@ -6,7 +6,10 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
 import styles from '../../index.css';
 import cx from 'classnames';
-import { getCollectionList } from '../../../../Selectors/User';
+import MyForums from './components/MyForums/index.js'
+import MyCollections from './components/MyCollections/index.js'
+import { getUser, getCollectionList, getForumManaged } from '../../../../Selectors/User';
+import { getWidgetBox } from '../../../../Selectors/WidgetBox';
 
 import WidgetContainer from '../../../../components/WidgetBox/index.js';
 
@@ -15,10 +18,12 @@ class HomeMenuBox extends React.Component {
     super();
 
     this.state = {
-      openSearch: false,
+      openSearchCollection: false,
+      openSearchForum: false
     };
 
-    this.toggleOpenSearch = this.toggleOpenSearch.bind(this);
+    this.toggleOpenSearchCollection = this.toggleOpenSearchCollection.bind(this);
+    this.toggleOpenSearchForum = this.toggleOpenSearchForum.bind(this);
     this.searchList = this.searchList.bind(this);
   }
 
@@ -26,76 +31,51 @@ class HomeMenuBox extends React.Component {
     console.log(e.target.value);
   }
 
-  toggleOpenSearch() {
-    this.setState({ openSearch: !this.state.openSearch });
+  toggleOpenSearchCollection() {
+    this.setState({ openSearchCollection: !this.state.openSearchCollection });
+  }
+
+  toggleOpenSearchForum() {
+    this.setState({ openSearchForum: !this.state.openSearchForum });
   }
 
   render() {
-    const { collectionList } = this.props;
+    const { collectionList, forumManaged, user, widgetBox} = this.props;
+    const toggleStyle = cx(styles.box, {
+      [styles.toggled]: widgetBox && widgetBox.get('toggleTrendBox')
+    });
 
     return (
       <div className={styles.gnbSubMenu}>
-        <div className={cx(styles.box, styles.toggled)}>
+        <div className={toggleStyle}>
           <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
+
               <div className={styles.subMenuItem}>
                 <Link to="/">
                   <i className="fa fa-star"/>
                   <span>피드</span>
                 </Link>
               </div>
-              <div className={styles.subMenuItem}>
-                <Link to="/collection">
-                  <i className="fa fa-folder-open"/>
-                  <span>컬렉션</span>
-                </Link>
 
-                <a onClick={this.toggleOpenSearch}>
-                  <i className={cx('fa', {
-                    'fa-search': !this.state.openSearch,
-                    'fa-close': this.state.openSearch,
-                  })}
-                  />
-                </a>
-              </div>
+              <MyCollections
+                user={user}
+                collectionList={collectionList}
+                openSearchCollection={this.state.openSearchCollection}
+                toggleOpenSearchCollection={this.toggleOpenSearchCollection}
+                searchList={this.searchList}
+              />
 
               {
-                this.state.openSearch &&
-                <div className={styles.collectionSearchBox}>
-                  <i className="fa fa-inbox"/>
-                  <input
-                    type="text"
-                    className={styles.searchInput}
-                    onChange={this.searchList}
-                  />
-                </div>
+                user && user.get('id') &&
+                <MyForums
+                  user={user}
+                  forumManaged={forumManaged}
+                  openSearchForum={this.state.openSearchForum}
+                  toggleOpenSearchForum={this.toggleOpenSearchForum}
+                  searchList={this.searchList}
+                />
               }
-
-              <div className={styles.scrollable}>
-                <Scrollbars
-                  autoHide
-                  autoHeight
-                  autoHeightMin={100}
-                  autoHeightMax={200}
-                  style={{ width: 210 }}>
-
-                  <ul className={styles.collectionList}>
-                    {collectionList.map((v, i) => {
-                      return (
-                        <li key={i} className={styles.collectionListItem}>
-                          <div className={styles.collectionItemBox}>
-                            <Link to={`/collection/${v.get('id')}`}>
-                              <i className="fa fa-inbox"/>
-                              {v.get('title')}
-                            </Link>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-
-                </Scrollbars>
-              </div>
             </div>
 
           </Scrollbars>
@@ -109,6 +89,9 @@ class HomeMenuBox extends React.Component {
 
 HomeMenuBox.propTypes = {
   collectionList: PropTypes.object.isRequired,
+  forumManaged: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  widgetBox: PropTypes.object.isRequired,
 };
 HomeMenuBox.defaultProps = {};
 
@@ -117,6 +100,9 @@ const mapStateToProps = (state, props) => {
 
   return {
     collectionList: getCollectionList(stateStore, props),
+    forumManaged: getForumManaged(stateStore),
+    user: getUser(stateStore),
+    widgetBox: getWidgetBox(stateStore)
   };
 };
 

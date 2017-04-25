@@ -1,7 +1,8 @@
 import { AppContainer } from 'react-hot-loader';
 import React from 'react';
 import { render } from 'react-dom';
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
+import { UI, Domains } from './Reducers/InitialStates/index';
 import App from './routes/index.js';
 import configStore from './ConfigStore';
 import createSagaMiddleware from 'redux-saga';
@@ -20,7 +21,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 // Create Store
 const store = configStore(
-  fromJS({ Stores: { UI: {}, Domains: {} } }),
+  Map({ Stores: Map({ UI: Map(UI), Domains: Map(Domains) }) }),
   sagaMiddleware,
 );
 

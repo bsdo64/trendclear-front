@@ -6,17 +6,22 @@ import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { getSeqPathName, activeStyle } from '../../func';
 import styles from '../../index.css';
+import { connect } from "react-redux";
+import { getWidgetBox } from '../../../../Selectors/WidgetBox';
 import WidgetContainer from '../../../../components/WidgetBox/index.js';
 
 class SubmitMenuBox extends React.Component {
   render() {
-    const { match, location } = this.props;
+    const { match, location, widgetBox } = this.props;
     const pathname = getSeqPathName(location.pathname, 2);
     const getStyle = (path) => activeStyle(styles.activeButton, path, pathname);
+    const toggleStyle = cx(styles.box, {
+      [styles.toggled]: widgetBox && widgetBox.get('toggleTrendBox')
+    });
 
     return (
       <div className={styles.gnbSubMenu}>
-        <div className={styles.box}>
+        <div className={toggleStyle}>
           <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
               <div className={cx([styles.subMenuItem, getStyle('/')])}>
@@ -64,4 +69,15 @@ SubmitMenuBox.propTypes = {
 };
 SubmitMenuBox.defaultProps = {};
 
-export default SubmitMenuBox;
+const mapStateToProps = (state, props) => {
+  const stateStore = state.get('Stores');
+
+  return {
+    widgetBox: getWidgetBox(stateStore)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {},
+)(SubmitMenuBox);

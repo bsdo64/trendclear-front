@@ -45,19 +45,29 @@ function createItem(props, id) {
   }
 }
 
-const InfiniteList = props => {
-  const {PostIdList = [], PostItems = {}, AuthorItems, User} = props;
-  const okey = !!(PostItems.size && AuthorItems.size && User.size);
+class InfiniteList extends React.Component {
+  componentDidMount() {
+    $('ui.embed').embed();
+  }
 
-  return (
-    <div className="ui items best_list">
-      {
-        okey &&
-        PostIdList.map(createItem.bind(null, props))
-      }
-    </div>
-  );
-};
+  componentDidUpdate() {
+    $('.ui.embed').embed('refresh');
+  }
+
+  render() {
+    const {PostIdList = [], PostItems = {}, AuthorItems, User} = this.props;
+    const okey = !!(PostItems.size && AuthorItems.size && User.size);
+
+    return (
+      <div className="ui items best_list">
+        {
+          okey &&
+          PostIdList.map(createItem.bind(null, this.props))
+        }
+      </div>
+    );
+  }
+}
 
 InfiniteList.displayName = 'InfiniteList';
 InfiniteList.propTypes = {
