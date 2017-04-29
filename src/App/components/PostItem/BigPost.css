@@ -30,6 +30,7 @@
     & > div > img,
     & > img {
       width: inherit;
+      height: inherit;
     }
   }
 

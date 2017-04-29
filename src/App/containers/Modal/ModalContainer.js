@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(
+export default connect(
   mapStateToProps,
   {
     FireCloseModal: closeModal,
