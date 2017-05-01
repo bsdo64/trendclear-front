@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import cx from 'classnames';
@@ -12,80 +13,79 @@ moment.locale('ko');
 
 require('./index.scss');
 
-const NotiItem = React.createClass({
-  propTypes: {
-    noti: PropTypes.object.isRequired,
-    close: PropTypes.func.isRequired,
-    FireRequestUserReadNotification: PropTypes.func.isRequired,
-  },
 
-  readNoti(notiId) {
-    const {noti, FireRequestUserReadNotification} = this.props;
+function readNoti(notiId, props) {
+  const {noti, FireRequestUserReadNotification} = props;
 
-    if (!noti.get('read')) {
-      FireRequestUserReadNotification({
-        id: notiId,
-      });
-    }
-  },
-
-  render() {
-    const {noti, close} = this.props;
-    const forumId = noti.get('forum_id');
-    const postId = noti.get('post_id');
-    const linkUrl = `/community?forumId=${forumId}&postId=${postId}`;
-    const notiItemClass = cx({
-      event: true,
-      'is-read': !noti.get('read'),
+  if (!noti.get('read')) {
+    FireRequestUserReadNotification({
+      id: notiId,
     });
+  }
+}
 
-    switch (noti.get('type')) {
-      case 'comment_write':
-        return (
-          <div className={notiItemClass}
-               onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
-            <div className="label">
-              <img src={require('../../images/40x40.png')}/>
-            </div>
-            <div className="content">
-              <div className="summary" onClick={close}>
-                글 <Link to={linkUrl}>{noti.get('title')}</Link>에 <Link
-                to={linkUrl}>{noti.get('count')}</Link>개의 댓글이
-                달렸습니다.
+const NotiItem = (props) => {
+  const {noti, close} = props;
+  const forumId = noti.get('forum_id');
+  const postId = noti.get('post_id');
+  const linkUrl = `/community?forumId=${forumId}&postId=${postId}`;
+  const notiItemClass = cx({
+    event: true,
+    'is-read': !noti.get('read'),
+  });
 
-                <div className="date">
-                  {moment(noti.get('receive_at')).fromNow()}
-                </div>
+  switch (noti.get('type')) {
+    case 'comment_write':
+      return (
+        <div className={notiItemClass}
+             onMouseEnter={readNoti.bind(this, noti.get('id'), props)}>
+          <div className="label">
+            <img src={require('../../images/40x40.png')}/>
+          </div>
+          <div className="content">
+            <div className="summary" onClick={close}>
+              글 <Link to={linkUrl}>{noti.get('title')}</Link>에 <Link
+              to={linkUrl}>{noti.get('count')}</Link>개의 댓글이
+              달렸습니다.
+
+              <div className="date">
+                {moment(noti.get('receive_at')).fromNow()}
               </div>
             </div>
           </div>
-        );
-      case 'post_like':
-        return (
-          <div className={notiItemClass}
-               onMouseEnter={this.readNoti.bind(this, noti.get('id'))}>
-            <div className="label">
-              <img src={require('../../images/40x40.png')}/>
-            </div>
-            <div className="content">
-              <div className="summary">
-                글 <Link to={linkUrl}>{noti.get('title')}</Link>을 <Link
-                to={linkUrl}>{noti.get('count')}</Link>명이 좋아합니다.
+        </div>
+      );
+    case 'post_like':
+      return (
+        <div className={notiItemClass}
+             onMouseEnter={readNoti.bind(this, noti.get('id'), props)}>
+          <div className="label">
+            <img src={require('../../images/40x40.png')}/>
+          </div>
+          <div className="content">
+            <div className="summary">
+              글 <Link to={linkUrl}>{noti.get('title')}</Link>을 <Link
+              to={linkUrl}>{noti.get('count')}</Link>명이 좋아합니다.
 
-                <div className="date">
-                  {moment(noti.get('receive_at')).fromNow()}
-                </div>
+              <div className="date">
+                {moment(noti.get('receive_at')).fromNow()}
               </div>
             </div>
           </div>
-        );
-      default :
-        return (
-          <div></div>
-        );
-    }
-  },
-});
+        </div>
+      );
+    default :
+      return (
+        <div/>
+      );
+  }
+};
+
+NotiItem.propTypes = {
+  noti: PropTypes.object.isRequired,
+  close: PropTypes.func.isRequired,
+  FireRequestUserReadNotification: PropTypes.func.isRequired,
+};
 
 class NotiButtons extends Component {
   constructor(props) {
@@ -150,28 +150,22 @@ NotiButtons.propTypes = {
   FireRequestUserReadNotification: PropTypes.func.isRequired,
 };
 
-const UserButtons = React.createClass({
-  propTypes: {
-    history: PropTypes.object.isRequired,
-    UserStore: PropTypes.object.isRequired,
-    FireRequestLogout: PropTypes.func.isRequired,
-  },
-
+class UserButtons extends Component {
   gotoActivity() {
 
-    this.refs.profile_dropdown.hide();
+    this.profile_dropdown.hide();
     this.props.history.push('/activity');
-  },
+  }
 
   gotoSettings() {
 
-    this.refs.profile_dropdown.hide();
+    this.profile_dropdown.hide();
     this.props.history.push('/setting');
-  },
+  }
 
   handleLogout() {
     this.props.FireRequestLogout();
-  },
+  }
 
   render() {
     const {UserStore} = this.props;
@@ -199,7 +193,7 @@ const UserButtons = React.createClass({
         {
           avatarImg
         }
-        <Dropdown ref="profile_dropdown">
+        <Dropdown ref={ref => this.profile_dropdown = ref}>
           <DropdownTrigger id="profile_id_button" className="text">
             {user.get('nick')}
           </DropdownTrigger>
@@ -215,8 +209,14 @@ const UserButtons = React.createClass({
         </Dropdown>
       </div>
     );
-  },
-});
+  }
+}
+
+UserButtons.propTypes = {
+  history: PropTypes.object.isRequired,
+    UserStore: PropTypes.object.isRequired,
+    FireRequestLogout: PropTypes.func.isRequired,
+};
 
 const MyArea = React.createClass({
   propTypes: {

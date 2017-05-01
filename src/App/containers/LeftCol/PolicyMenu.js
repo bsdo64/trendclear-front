@@ -1,10 +1,8 @@
 import React from 'react';
 import PolicyMenu from '../../components/LeftMenus/PolicyMenu';
 
-const MenuContainer = React.createClass({
-  render() {
-    return (<PolicyMenu {...this.props} />);
-  },
-});
+const MenuContainer = (props) => {
+  return (<PolicyMenu {...props} />);
+};
 
 module.exports = MenuContainer;
