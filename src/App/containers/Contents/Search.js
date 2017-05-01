@@ -27,15 +27,15 @@ import {
   requestParticipateVenalink,
 } from '../../Actions/VenacleStore';
 
-const SearchContainer = React.createClass({
+class SearchContainer extends React.Component {
   render() {
     return (
       <Search
         {...this.props}
       />
     );
-  },
-});
+  }
+}
 
 SearchContainer.defaultProps = {
   GnbStore: UI.Gnb,

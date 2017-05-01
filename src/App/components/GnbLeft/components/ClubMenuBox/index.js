@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,6 +8,7 @@ import { Link } from 'react-router-dom';
 import styles from '../../index.css';
 import cx from 'classnames';
 import { getCurrentClub } from '../../../../Selectors/Club.js';
+import { getWidgetBox } from '../../../../Selectors/WidgetBox';
 import WidgetContaienr from '../../../../components/WidgetBox/index.js';
 
 class ClubMenuBox extends React.Component {
@@ -27,15 +29,18 @@ class ClubMenuBox extends React.Component {
   }
 
   toggleOpenSearch() {
-    this.setState({ openSearch: !this.state.openSearch });
+    this.setState({ openSearch: !this.state.openSearchCollection });
   }
 
   render() {
-    const { clubInfo, match } = this.props;
+    const { clubInfo, widgetBox } = this.props;
+    const toggleStyle = cx(styles.box, {
+      [styles.toggled]: widgetBox && widgetBox.get('toggleTrendBox')
+    });
 
     return (
       <div className={styles.gnbSubMenu}>
-        <div className={styles.box}>
+        <div className={toggleStyle}>
           {
             clubInfo &&
             <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
@@ -100,8 +105,9 @@ class ClubMenuBox extends React.Component {
 }
 
 ClubMenuBox.propTypes = {
-  clubInfo: React.PropTypes.object.isRequired,
-  match: React.PropTypes.object.isRequired,
+  clubInfo: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  widgetBox: PropTypes.object.isRequired,
 };
 ClubMenuBox.defaultProps = {
   clubInfo: Map(),
@@ -112,10 +118,13 @@ const mapStateToProps = (state, props) => {
 
   return {
     clubInfo: getCurrentClub(stateStore, props),
+    widgetBox: getWidgetBox(stateStore)
   };
 };
 
 export default connect(
   mapStateToProps,
-  {},
+  {
+
+  },
 )(ClubMenuBox);

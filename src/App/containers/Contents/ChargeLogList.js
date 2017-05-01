@@ -6,11 +6,11 @@ import {
   requestGetMoreChargeLogList,
 } from '../../Actions/Point';
 
-const ChargeLogList = React.createClass({
+class ChargeLogList extends React.Component{
   render() {
     return <ChargeLogListBox {...this.props} />;
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   requestUserAvatarImageRemove,
@@ -20,11 +21,11 @@ DeleteButton.propTypes = {
   FireRequestUserAvatarImageRemove: PropTypes.func.isRequired,
 };
 
-const AvatarImageDeleteButtonContainer = React.createClass({
+class AvatarImageDeleteButtonContainer extends React.Component {
   render() {
     return (<DeleteButton {...this.props} />);
-  },
-});
+  }
+}
 
 module.exports = connect(
   null,

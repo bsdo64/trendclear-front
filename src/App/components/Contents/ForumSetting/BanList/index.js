@@ -1,15 +1,16 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import qs from 'qs';
 
-const BanList = React.createClass({
-  displayName: 'BanList',
-  propTypes: {
-    location: PropTypes.object.isRequired,
-    Users: PropTypes.object.isRequired,
-    Forums: PropTypes.object.isRequired,
-    FireRequestAddForumBanUser: PropTypes.func.isRequired,
-    FireRequestDeleteForumBanUser: PropTypes.func.isRequired,
-  },
+class BanList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.selectUser = this.selectUser.bind(this);
+    this.removeUser = this.removeUser.bind(this);
+    this.createUserItem = this.createUserItem.bind(this);
+  }
+  
   componentDidMount() {
     const forumId = qs.parse(this.props.location.search.slice(1)).forumId;
 
@@ -39,13 +40,13 @@ const BanList = React.createClass({
           this.selectUser(user);
         },
       });
-  },
+  }
 
   selectUser(user) {
     const {location, FireRequestAddForumBanUser} = this.props;
     const forumId = qs.parse(location.search.slice(1)).forumId;
     FireRequestAddForumBanUser({userId: user.id, forumId: forumId});
-  },
+  }
 
   removeUser(user) {
     const {location, FireRequestDeleteForumBanUser} = this.props;
@@ -55,7 +56,7 @@ const BanList = React.createClass({
       forumId: forumId,
       userId: user.get('id'),
     });
-  },
+  }
 
   createUserItem(id) {
     const {Users} = this.props;
@@ -72,7 +73,7 @@ const BanList = React.createClass({
         </div>
       );
     }
-  },
+  }
 
   render() {
     const {Forums, location} = this.props;
@@ -124,7 +125,16 @@ const BanList = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+BanList.displayName = 'BanList';
+BanList.propTypes = {
+  location: PropTypes.object.isRequired,
+  Users: PropTypes.object.isRequired,
+  Forums: PropTypes.object.isRequired,
+  FireRequestAddForumBanUser: PropTypes.func.isRequired,
+  FireRequestDeleteForumBanUser: PropTypes.func.isRequired,
+};
 
 export default BanList;

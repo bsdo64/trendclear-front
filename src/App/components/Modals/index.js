@@ -1,7 +1,8 @@
 /**
  * Created by dobyeongsu on 2016. 11. 4..
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { UI } from '../../Reducers/InitialStates';
 import LoginContainer from '../../containers/Modal/LoginModalContainer';
@@ -13,14 +14,8 @@ import ActivateVenalinkContainer from '../../containers/Modal/ActivateVenalinkCo
 import ConfirmPurchaseItemContainer from '../../containers/Modal/ConfirmPurchaseItemContainer';
 
 require('./index.scss');
-const ModalBox = React.createClass({
-  displayName: 'ModalBox',
-  propTypes: {
-    FireCloseModal: PropTypes.func.isRequired,
-    ModalStore: PropTypes.object.isRequired,
-  },
-
-  proxyContainer(type) {
+const ModalBox = props => {
+  function proxyContainer(type) {
     switch (type) {
       case 'Login':
         return <LoginContainer />;
@@ -46,19 +41,19 @@ const ModalBox = React.createClass({
           </div>
         );
     }
-  },
-  closeModal() {
-    this.props.FireCloseModal();
-  },
+  }
+  function closeModal() {
+    props.FireCloseModal();
+  }
 
-  afterOpenModal() {
+  function afterOpenModal() {
 
-  },
+  }
 
-  createModals(modal, key) {
+  function createModals(modal, key) {
     const openModal = modal.openModal;
     const contentType = modal.contentType;
-    const children = this.proxyContainer(contentType);
+    const children = proxyContainer(contentType);
 
     return (
       <Modal
@@ -66,32 +61,36 @@ const ModalBox = React.createClass({
         overlayClassName={'ui dimmer modals page visible active'}
         className={`ui small modal scrolling visible active Content-${contentType}`}
         isOpen={openModal}
-        onAfterOpen={this.afterOpenModal}
-        onRequestClose={this.closeModal}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
         contentLabel="Modal"
       >
         {children}
 
       </Modal>
     );
-  },
-  render() {
-    const {ModalStore} = this.props;
-    const modals = ModalStore.get('modals');
-    const modalsArray = modals.toJS();
+  }
 
-    if (modals.size === 0) {
-      return <div></div>;
+  const {ModalStore} = props;
+  const modals = ModalStore.get('modals');
+  const modalsArray = modals.toJS();
+
+  if (modals.size === 0) {
+    return <div/>;
+  }
+
+  return <div>
+    {
+      modalsArray.map(createModals)
     }
+  </div>;
+};
 
-    return <div>
-      {
-        modalsArray.map(this.createModals)
-      }
-    </div>;
-  },
-});
-
+ModalBox.displayName = 'ModalBox';
+ModalBox.propTypes = {
+  FireCloseModal: PropTypes.func.isRequired,
+  ModalStore: PropTypes.object.isRequired,
+};
 ModalBox.defaultProps = {
   ModalStore: UI.Modal,
 };

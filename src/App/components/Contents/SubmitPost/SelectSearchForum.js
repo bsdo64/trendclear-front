@@ -1,14 +1,14 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import marked from '../../Lib/Marked';
 
-const SelectSearchForum = React.createClass({
-  propTypes: {
-    history: PropTypes.object.isRequired,
-    ForumFollowed: PropTypes.object.isRequired,
-    ForumCreated: PropTypes.object.isRequired,
-    RankForums: PropTypes.object.isRequired,
-  },
+class SelectSearchForum extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.selectForum = this.selectForum.bind(this);
+  }
 
   componentDidMount() {
     $('.ui.search_forums')
@@ -32,14 +32,13 @@ const SelectSearchForum = React.createClass({
           this.selectForum(forum);
         },
       });
-  },
+  }
 
   selectForum(forum) {
-
     if (forum && forum.id) {
       this.props.history.push('/submit/post?forumId=' + forum.id);
     }
-  },
+  }
 
   render() {
     const {ForumCreated, ForumFollowed, RankForums} = this.props;
@@ -188,7 +187,14 @@ const SelectSearchForum = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+SelectSearchForum.propTypes = {
+  history: PropTypes.object.isRequired,
+  ForumFollowed: PropTypes.object.isRequired,
+  ForumCreated: PropTypes.object.isRequired,
+  RankForums: PropTypes.object.isRequired,
+};
 
 export default SelectSearchForum;

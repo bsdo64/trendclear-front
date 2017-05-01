@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
 import Main from './components/Main.js';
@@ -18,7 +19,7 @@ const Contents = ({ match }) => {
 };
 
 Contents.propTypes = {
-  match: React.PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default Contents;

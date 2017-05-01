@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   IndexRedirect,
   Link,
@@ -107,11 +108,9 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  // LeftColGnb: React.PropTypes.element.isRequired,
-  // LeftColMenu: React.PropTypes.element.isRequired,
-  ContentsContainer: React.PropTypes.element.isRequired,
-  WidgetContainer: React.PropTypes.element.isRequired,
-  ModalContainer: React.PropTypes.element.isRequired,
+  ContentsContainer: PropTypes.element.isRequired,
+  WidgetContainer: PropTypes.element.isRequired,
+  ModalContainer: PropTypes.element.isRequired,
 };
 
 const HelpApp = (props) => {
@@ -157,10 +156,10 @@ const HelpApp = (props) => {
 };
 
 HelpApp.propTypes = {
-  LeftColGnb: React.PropTypes.element.isRequired,
-  LeftColMenu: React.PropTypes.element.isRequired,
-  ContentsContainer: React.PropTypes.element.isRequired,
-  ModalContainer: React.PropTypes.element.isRequired,
+  LeftColGnb: PropTypes.element.isRequired,
+  LeftColMenu: PropTypes.element.isRequired,
+  ContentsContainer: PropTypes.element.isRequired,
+  ModalContainer: PropTypes.element.isRequired,
 };
 
 export default (store) => {

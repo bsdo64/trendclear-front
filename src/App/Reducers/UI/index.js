@@ -21,6 +21,7 @@ import Shopping from './Shopping';
 import SigninForm from './SigninForm';
 import SubmitPost from './SubmitPost';
 import SubmitForum from './SubmitForum';
+import WidgetBox from './WidgetBox';
 
 // UI reducer
 export default combineReducers({
@@ -46,4 +47,5 @@ export default combineReducers({
   SigninForm,
   SubmitPost,
   SubmitForum,
+  WidgetBox,
 });

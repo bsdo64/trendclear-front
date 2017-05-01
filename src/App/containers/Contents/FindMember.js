@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { UI } from '../../Reducers/InitialStates';
@@ -6,13 +7,7 @@ import {
   requestResetPassword,
 } from '../../Actions/User';
 
-const FindMemberContainer = React.createClass({
-  propTypes: {
-    AuthStore: PropTypes.object.isRequired,
-    ResetPasswordStore: PropTypes.object.isRequired,
-    FireRequestResetPassword: PropTypes.func.isRequired,
-  },
-
+class FindMemberContainer extends React.Component {
   componentDidMount() {
     $('.ui.form')
       .form({
@@ -42,18 +37,18 @@ const FindMemberContainer = React.createClass({
           });
         },
       });
-  },
+  }
 
   componentDidUpdate() {
     $('.ui.form').form('refresh');
-  },
+  }
 
   componentWillMount() {
     const {AuthStore} = this.props;
     if (AuthStore.get('isLogin')) {
       browserHistory.push('/setting/password');
     }
-  },
+  }
 
   render() {
     const {ResetPasswordStore} = this.props;
@@ -121,9 +116,14 @@ const FindMemberContainer = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
+FindMemberContainer.propTypes = {
+  AuthStore: PropTypes.object.isRequired,
+    ResetPasswordStore: PropTypes.object.isRequired,
+    FireRequestResetPassword: PropTypes.func.isRequired,
+};
 FindMemberContainer.defaultProps = {
   AuthStore: UI.Auth,
   ResetPasswordStore: UI.ResetPassword,

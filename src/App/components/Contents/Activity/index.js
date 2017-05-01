@@ -1,7 +1,8 @@
 /**
  * Created by dobyeongsu on 2016. 3. 23..
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import AvatarImage from '../../AvatarImage';
@@ -10,31 +11,8 @@ import InfiniteLoader from '../../Loader/InfiniteLoader';
 import Waypoint from 'react-waypoint';
 
 require('./index.scss');
-const ActivityBox = React.createClass({
-  displayName: 'ActivityBox',
-  propTypes: {
-    UserStore: PropTypes.object.isRequired,
-    ActivityStore: PropTypes.object.isRequired,
-    ListStore: PropTypes.object.isRequired,
-    AuthStore: PropTypes.object.isRequired,
-    PaginationStore: PropTypes.object.isRequired,
-    Posts: PropTypes.object.isRequired,
-    Users: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-
-    FireSetScrollPosition: PropTypes.func.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestGetMorePostList: PropTypes.func.isRequired,
-    FireRequestLikePost: PropTypes.func.isRequired,
-    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
-    FireRequestActivateVenalink: PropTypes.func.isRequired,
-    FireRequestParticipateVenalink: PropTypes.func.isRequired,
-
-  },
-
-  createActivityUserHeader(UserStore) {
+const ActivityBox = props => {
+  function createActivityUserHeader(UserStore) {
 
     const user = UserStore.get('user');
     const sex = UserStore.getIn(['profile', 'sex']),
@@ -50,9 +28,9 @@ const ActivityBox = React.createClass({
         <div className="nick">{user.get('nick')}</div>
       </h2>
     );
-  },
+  }
 
-  createActivityMeta(meta) {
+  function createActivityMeta(meta) {
 
     return (
       <div className="activity-meta">
@@ -75,11 +53,11 @@ const ActivityBox = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
-  getMorePosts(context) {
+  function getMorePosts(context) {
 
-    const { PaginationStore, FireRequestGetMorePostList } = this.props;
+    const { PaginationStore, FireRequestGetMorePostList } = props;
     const Pagination = PaginationStore.get(context);
     if (Pagination) {
       const nextPage = Pagination.get('next_page');
@@ -117,87 +95,106 @@ const ActivityBox = React.createClass({
         });
       }
     }
-  },
+  }
 
-  createStyle(context, linkContext) {
-
+  function createStyle(context, linkContext) {
     return cx('item', {
       active: context === linkContext,
     });
-  },
+  }
 
-  render() {
-    const { UserStore, ActivityStore, location } = this.props;
-    const { ListStore, Posts, Users, AuthStore, PaginationStore } = this.props;
+  const { UserStore, ActivityStore, location } = props;
+  const { ListStore, Posts, Users, AuthStore, PaginationStore } = props;
 
-    let context, Collection, PostIdList;
-    if (location.pathname === '/activity' ||
-      location.pathname === '/activity/likes') {
-      context = 'likePostList';
-    } else if (location.pathname === ('/activity/posts')) {
-      context = 'myWritePostList';
-    } else if (location.pathname === ('/activity/comments')) {
-      context = 'myWriteCommentPostList';
-    }
+  let context, Collection, PostIdList;
+  if (location.pathname === '/activity' ||
+    location.pathname === '/activity/likes') {
+    context = 'likePostList';
+  } else if (location.pathname === ('/activity/posts')) {
+    context = 'myWritePostList';
+  } else if (location.pathname === ('/activity/comments')) {
+    context = 'myWriteCommentPostList';
+  }
 
-    Collection = PaginationStore.get(context);
-    PostIdList = ListStore.get(context);
+  Collection = PaginationStore.get(context);
+  PostIdList = ListStore.get(context);
 
-    if (UserStore.get('user')) {
-      return (
-        <div id="activity">
-          <div className="activity-header">
-            <div className="activity-background">
+  if (UserStore.get('user')) {
+    return (
+      <div id="activity">
+        <div className="activity-header">
+          <div className="activity-background">
 
-              {this.createActivityUserHeader(UserStore)}
-              {this.createActivityMeta(ActivityStore.get('meta'))}
-            </div>
-
-            <div className="ui menu activity-menu">
-              <Link to="/activity/likes"
-                    className={this.createStyle(context, 'likePostList')}>
-                좋아요
-              </Link>
-              <Link to="/activity/posts"
-                    className={this.createStyle(context, 'myWritePostList')}>
-                글
-              </Link>
-              <Link to="/activity/comments" className={this.createStyle(context,
-                'myWriteCommentPostList')}>
-                댓글
-              </Link>
-            </div>
+            {createActivityUserHeader(UserStore)}
+            {createActivityMeta(ActivityStore.get('meta'))}
           </div>
 
-          <div id="best_contents">
-
-            <InfiniteList
-              PostIdList={PostIdList}
-              PostItems={Posts}
-              AuthorItems={Users}
-              User={AuthStore}
-              scrollHeight={ListStore.get('scrollHeight')}
-              {...this.props}
-            />
-
-            <Waypoint
-              onEnter={this.getMorePosts.bind(this, context)}
-              bottomOffset='-200px'
-              scrollableAncestor={window || null}
-            />
-
-            <InfiniteLoader collection={Collection}/>
-
+          <div className="ui menu activity-menu">
+            <Link to="/activity/likes"
+                  className={createStyle(context, 'likePostList')}>
+              좋아요
+            </Link>
+            <Link to="/activity/posts"
+                  className={createStyle(context, 'myWritePostList')}>
+              글
+            </Link>
+            <Link to="/activity/comments" className={createStyle(context,
+              'myWriteCommentPostList')}>
+              댓글
+            </Link>
           </div>
+        </div>
+
+        <div id="best_contents">
+
+          <InfiniteList
+            PostIdList={PostIdList}
+            PostItems={Posts}
+            AuthorItems={Users}
+            User={AuthStore}
+            scrollHeight={ListStore.get('scrollHeight')}
+            {...props}
+          />
+
+          <Waypoint
+            onEnter={getMorePosts.bind(this, context)}
+            bottomOffset='-200px'
+            scrollableAncestor={window || null}
+          />
+
+          <InfiniteLoader collection={Collection}/>
 
         </div>
-      );
-    } else {
-      return (
-        <div className="ui active loader"/>
-      );
-    }
-  },
-});
+
+      </div>
+    );
+  } else {
+    return (
+      <div className="ui active loader"/>
+    );
+  }
+};
+
+ActivityBox.displayName = 'ActivityBox';
+ActivityBox.propTypes = {
+  UserStore: PropTypes.object.isRequired,
+    ActivityStore: PropTypes.object.isRequired,
+    ListStore: PropTypes.object.isRequired,
+    AuthStore: PropTypes.object.isRequired,
+    PaginationStore: PropTypes.object.isRequired,
+    Posts: PropTypes.object.isRequired,
+    Users: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+
+    FireSetScrollPosition: PropTypes.func.isRequired,
+    FireToggleLoginModal: PropTypes.func.isRequired,
+    FireToggleReportModal: PropTypes.func.isRequired,
+    FireToggleDeleteModal: PropTypes.func.isRequired,
+    FireRequestGetMorePostList: PropTypes.func.isRequired,
+    FireRequestLikePost: PropTypes.func.isRequired,
+    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+    FireRequestActivateVenalink: PropTypes.func.isRequired,
+    FireRequestParticipateVenalink: PropTypes.func.isRequired,
+};
 
 export default ActivityBox;

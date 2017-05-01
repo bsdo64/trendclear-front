@@ -1,10 +1,10 @@
 import React from 'react';
 import HelpMenu from '../../components/LeftMenus/HelpMenu';
 
-const MenuContainer = React.createClass({
+class MenuContainer extends React.Component {
   render() {
     return (<HelpMenu {...this.props} />);
-  },
-});
+  }
+}
 
 module.exports = MenuContainer;

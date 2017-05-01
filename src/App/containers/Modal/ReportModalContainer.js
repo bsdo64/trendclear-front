@@ -5,11 +5,11 @@ import ReportModalBox from '../../components/Modals/Components/Report/index';
 
 import { requestReport } from '../../Actions/Report';
 
-const ReportModalContainer = React.createClass({
+class ReportModalContainer extends React.Component {
   render() {
     return (<ReportModalBox {...this.props} />);
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

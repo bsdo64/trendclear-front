@@ -7,11 +7,11 @@ import {
 } from '../../Actions/Gnb';
 import CategoryNav from '../../components/CategoryNav';
 
-const LeftColCategoryNav = React.createClass({
+class LeftColCategoryNav extends React.Component{
   render() {
     return (<CategoryNav {...this.props} />);
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

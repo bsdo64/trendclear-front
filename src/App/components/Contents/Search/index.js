@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Waypoint from 'react-waypoint';
 import Dropdown, {
@@ -12,41 +13,27 @@ import InfiniteLoader from '../../Loader/InfiniteLoader';
 import qs from 'qs';
 
 require('./index.scss');
-const SearchBox = React.createClass({
-  displayName: 'SearchBox',
-  propTypes: {
-    SearchStore: PropTypes.object.isRequired,
-    PaginationStore: PropTypes.object.isRequired,
-    AuthStore: PropTypes.object.isRequired,
-    Collections: PropTypes.object.isRequired,
-    ListStore: PropTypes.object.isRequired,
-    Forums: PropTypes.object.isRequired,
-    Posts: PropTypes.object.isRequired,
-    Users: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
+class SearchBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-    FireSetScrollPosition: PropTypes.func.isRequired,
-    FireRequestGetMorePostList: PropTypes.func.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestAddForumInCollection: PropTypes.func.isRequired,
-    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
-    FireRequestGetMoreForumList: PropTypes.func.isRequired,
-    FireRequestFollowForum: PropTypes.func.isRequired,
-    FireRequestUnFollowForum: PropTypes.func.isRequired,
-    FireRequestLikePost: PropTypes.func.isRequired,
-    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
-
-  },
+    this.getMoreBest = this.getMoreBest.bind(this);
+    this.checkCollectionHasForums = this.checkCollectionHasForums.bind(this);
+    this.selectCollection = this.selectCollection.bind(this);
+    this.openLoginModal = this.openLoginModal.bind(this);
+    this.toggleFollow = this.toggleFollow.bind(this);
+    this.createCollectionCheckBox = this.createCollectionCheckBox.bind(this);
+    this.prevForumList = this.prevForumList.bind(this);
+    this.nextForumList = this.nextForumList.bind(this);
+  }
 
   componentDidMount() {
     $('.ui.embed').embed();
-  },
+  }
 
   componentDidUpdate() {
     $('.ui.embed').embed('refresh');
-  },
+  }
 
   getMoreBest() {
 
@@ -67,11 +54,12 @@ const SearchBox = React.createClass({
         });
       }
     }
-  },
-  checkCollectionHasForums(collectionForumList, forumId) {
+  }
 
+  checkCollectionHasForums(collectionForumList, forumId) {
     return collectionForumList.includes(forumId);
-  },
+  }
+
   selectCollection(forumId) {
     const {
       FireRequestAddForumInCollection,
@@ -87,7 +75,7 @@ const SearchBox = React.createClass({
         FireRequestRemoveForumInCollection(params);
       }
     };
-  },
+  }
   openLoginModal() {
     const {
       location,
@@ -98,7 +86,7 @@ const SearchBox = React.createClass({
       contentType: 'Login',
       location: location.pathname + location.search,
     });
-  },
+  }
   toggleFollow(isForumFollow, forumId) {
 
     const {AuthStore, FireRequestFollowForum, FireRequestUnFollowForum} = this.props;
@@ -112,7 +100,7 @@ const SearchBox = React.createClass({
         FireRequestFollowForum({forumId: forumId, userId});
       }
     }
-  },
+  }
   createCollectionCheckBox(Collections, forumId, collectionId) {
     const collection = Collections.get(collectionId.toString());
     return (
@@ -130,7 +118,7 @@ const SearchBox = React.createClass({
         </div>
       </li>
     );
-  },
+  }
 
   prevForumList() {
     const {PaginationStore, SearchStore, location, FireRequestGetMoreForumList} = this.props;
@@ -150,7 +138,7 @@ const SearchBox = React.createClass({
         });
       }
     }
-  },
+  }
 
   nextForumList() {
     const {PaginationStore, SearchStore, location, FireRequestGetMoreForumList} = this.props;
@@ -170,7 +158,7 @@ const SearchBox = React.createClass({
         });
       }
     }
-  },
+  }
 
   render() {
     const {
@@ -349,7 +337,33 @@ const SearchBox = React.createClass({
 
       </div>
     );
-  },
-});
+  }
+}
+
+SearchBox.displayName = 'SearchBox';
+SearchBox.propTypes = {
+  SearchStore: PropTypes.object.isRequired,
+  PaginationStore: PropTypes.object.isRequired,
+  AuthStore: PropTypes.object.isRequired,
+  Collections: PropTypes.object.isRequired,
+  ListStore: PropTypes.object.isRequired,
+  Forums: PropTypes.object.isRequired,
+  Posts: PropTypes.object.isRequired,
+  Users: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+
+  FireSetScrollPosition: PropTypes.func.isRequired,
+  FireRequestGetMorePostList: PropTypes.func.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
+  FireToggleReportModal: PropTypes.func.isRequired,
+  FireToggleDeleteModal: PropTypes.func.isRequired,
+  FireRequestAddForumInCollection: PropTypes.func.isRequired,
+  FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+  FireRequestGetMoreForumList: PropTypes.func.isRequired,
+  FireRequestFollowForum: PropTypes.func.isRequired,
+  FireRequestUnFollowForum: PropTypes.func.isRequired,
+  FireRequestLikePost: PropTypes.func.isRequired,
+  FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+};
 
 export default SearchBox;

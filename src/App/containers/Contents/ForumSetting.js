@@ -17,12 +17,11 @@ import {
   requestDeleteForumBanUser,
 } from '../../Actions/ForumSetting';
 
-const ForumSettingsContainer = React.createClass({
+class ForumSettingsContainer extends React.Component {
   render() {
-
     return (<ForumSettingsComponent {...this.props} />);
-  },
-});
+  }
+}
 
 ForumSettingsContainer.defaultProps = {
   LoginStore: UI.Login,

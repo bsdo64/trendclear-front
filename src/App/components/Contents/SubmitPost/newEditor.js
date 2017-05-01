@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Editor, EditorState, Modifier, RichUtils } from 'draft-js';
 
 class ColorfulEditorExample extends React.Component {
@@ -95,10 +96,10 @@ class StyleButton extends React.Component {
 }
 
 StyleButton.propTypes = {
-  style: React.PropTypes.object.isRequired,
-  active: React.PropTypes.bool.isRequired,
-  label: React.PropTypes.string.isRequired,
-  onToggle: React.PropTypes.func.isRequired,
+  style: PropTypes.object.isRequired,
+  active: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  onToggle: PropTypes.func.isRequired,
 };
 
 const COLORS = [
@@ -128,8 +129,8 @@ const ColorControls = (props) => {
 };
 
 ColorControls.propTypes = {
-  editorState: React.PropTypes.object.isRequired,
-  onToggle: React.PropTypes.func.isRequired,
+  editorState: PropTypes.object.isRequired,
+  onToggle: PropTypes.func.isRequired,
 };
 
 // This object provides the styling information for our custom color

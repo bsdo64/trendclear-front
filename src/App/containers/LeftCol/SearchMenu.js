@@ -1,15 +1,17 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SearchMenu from '../../components/LeftMenus/SearchMenu';
 
-const MenuContainer = React.createClass({
-  propTypes: {
-    SearchStore: PropTypes.object.isRequired,
-  },
+class MenuContainer extends React.Component {
   render() {
     return <SearchMenu {...this.props} />;
-  },
-});
+  }
+}
+
+MenuContainer.propTypes = {
+  SearchStore: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import Setting from '../../components/Contents/Setting';
@@ -9,16 +10,15 @@ import {
   requestUserUpdateProfile,
 } from '../../Actions/User';
 
-const SettingContainer = React.createClass({
-  propTypes: {
-    UserSettingStore: PropTypes.object.isRequired,
-  },
-
+class SettingContainer extends React.Component {
   render() {
     return (<Setting {...this.props} />);
-  },
-});
+  }
+}
 
+SettingContainer.propTypes = {
+  UserSettingStore: PropTypes.object.isRequired,
+};
 SettingContainer.defaultProps = {
   UserSettingStore: UI.UserSetting,
 };

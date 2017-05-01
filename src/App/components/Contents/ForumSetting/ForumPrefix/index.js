@@ -1,44 +1,51 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 require('./index.scss');
-const PrefixBox = React.createClass({
-  propTypes: {
-    forum: PropTypes.object.isRequired,
-    prefixes: PropTypes.object.isRequired,
-    FireRequestAddForumPrefix: PropTypes.func.isRequired,
-    FireRequestDeleteForumPrefix: PropTypes.func.isRequired,
-    FireRequestUpdateForumPrefix: PropTypes.func.isRequired,
-  },
+class PrefixBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.input_prefix = null;
+
+    this.state = {
       openAdder: false,
       prefixText: null,
       updateItemId: null,
       updateItemText: null,
     };
-  },
+
+    this.openPrefixUpdate = this.openPrefixUpdate.bind(this);
+    this.closePrefixUpdate = this.closePrefixUpdate.bind(this);
+    this.updateOnChange = this.updateOnChange.bind(this);
+    this.sendUpdate = this.sendUpdate.bind(this);
+    this.prefixDelete = this.prefixDelete.bind(this);
+    this.createPrefixItem = this.createPrefixItem.bind(this);
+    this.triggerOpenAddPrefix = this.triggerOpenAddPrefix.bind(this);
+    this.sendPrefix = this.sendPrefix.bind(this);
+    this.prefixText = this.prefixText.bind(this);
+  }
 
   openPrefixUpdate(id) {
 
     this.setState({
       updateItemId: id,
     });
-  },
+  }
 
   closePrefixUpdate() {
 
     this.setState({
       updateItemId: null,
     });
-  },
+  }
 
   updateOnChange(e) {
 
     this.setState({
       updateItemText: e.target.value,
     });
-  },
+  }
 
   sendUpdate(e) {
 
@@ -46,7 +53,7 @@ const PrefixBox = React.createClass({
     const text = e.target.value;
     const {forum, FireRequestUpdateForumPrefix} = this.props;
 
-    if (charCode == 13) {
+    if (charCode === 13) {
       FireRequestUpdateForumPrefix({
         id: this.state.updateItemId,
         forumId: forum.get('id'),
@@ -59,14 +66,14 @@ const PrefixBox = React.createClass({
         updateItemText: null,
       });
     }
-  },
+  }
 
   prefixDelete(id) {
 
     this.props.FireRequestDeleteForumPrefix({
       id: id,
     });
-  },
+  }
 
   createPrefixItem (p) {
 
@@ -80,7 +87,7 @@ const PrefixBox = React.createClass({
               onKeyPress={this.sendUpdate}
             />
             <button className="ui icon button" onClick={this.closePrefixUpdate}>
-              <i className="icon remove circle outline"></i>
+              <i className="icon remove circle outline"/>
             </button>
           </div>
         </li>
@@ -98,17 +105,19 @@ const PrefixBox = React.createClass({
         </li>
       );
     }
-  },
+  }
+
   triggerOpenAddPrefix() {
 
     this.setState({openAdder: !this.state.openAdder});
 
-  },
+  }
+
   sendPrefix(e) {
     const charCode = e.charCode;
     const {forum, FireRequestAddForumPrefix} = this.props;
 
-    if (charCode == 13) {
+    if (charCode === 13) {
       FireRequestAddForumPrefix({
         forumId: forum.get('id'),
         prefixName: this.state.prefixText,
@@ -118,13 +127,15 @@ const PrefixBox = React.createClass({
         prefixText: null,
       });
     }
-  },
+  }
+
   prefixText() {
 
     this.setState({
-      prefixText: this.refs.input_prefix.value.trim(),
+      prefixText: this.input_prefix.value.trim(),
     });
-  },
+  }
+
   render() {
     const {prefixes} = this.props;
     const self = this;
@@ -132,11 +143,11 @@ const PrefixBox = React.createClass({
     const adder = this.state.openAdder
       ? (
         <div className="ui action input prefix-adder-input">
-          <input ref="input_prefix" type="text" onKeyPress={this.sendPrefix}
+          <input ref={r => this.input_prefix = r} type="text" onKeyPress={this.sendPrefix}
                  onChange={this.prefixText}/>
           <button className="ui icon button"
                   onClick={this.triggerOpenAddPrefix}>
-            <i className="icon remove circle outline"></i>
+            <i className="icon remove circle outline"/>
           </button>
         </div>
       )
@@ -153,23 +164,28 @@ const PrefixBox = React.createClass({
         </li>
       </ul>
     );
-  },
-});
+  }
+}
 
-const ForumPrefix = React.createClass({
-  propTypes: {
-    ForumSettingStore: PropTypes.object.isRequired,
-    FireHandleResetButton: PropTypes.func.isRequired,
-    FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
-    FireRequestUpdateForumMeta: PropTypes.func.isRequired,
-    FireRequestAddForumPrefix: PropTypes.func.isRequired,
-    FireRequestDeleteForumPrefix: PropTypes.func.isRequired,
-    FireRequestUpdateForumPrefix: PropTypes.func.isRequired,
-  },
+PrefixBox.propTypes = {
+  forum: PropTypes.object.isRequired,
+  prefixes: PropTypes.object.isRequired,
+  FireRequestAddForumPrefix: PropTypes.func.isRequired,
+  FireRequestDeleteForumPrefix: PropTypes.func.isRequired,
+  FireRequestUpdateForumPrefix: PropTypes.func.isRequired,
+};
+
+class ForumPrefix extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.updateForumPrefix = this.updateForumPrefix.bind(this);
+    this.changeForm = this.changeForm.bind(this);
+  }
 
   componentWillUnmount() {
     this.props.FireHandleResetButton();
-  },
+  }
 
   updateForumPrefix(e) {
     e.preventDefault();
@@ -187,12 +203,12 @@ const ForumPrefix = React.createClass({
         'description'),
       rule: forumInfo ? forumInfo.get('forum_rule') : forum.get('rule'),
     });
-  },
+  }
 
   changeForm(e) {
     this.props.FireHandleChangeFormForumMeta(
       {[e.target.name]: e.target.value.trim()});
-  },
+  }
 
   render() {
     const {ForumSettingStore} = this.props;
@@ -224,9 +240,9 @@ const ForumPrefix = React.createClass({
           <div className="ui segments ">
             <div className="ui segment">
               <h3 className="ui header">말머리 설정</h3>
-              <div className="ui divider"></div>
+              <div className="ui divider"/>
               <div className="ui list">
-                <a className="item"><i className="right triangle icon"></i>
+                <a className="item"><i className="right triangle icon"/>
                   <div className="content">
                     <div className="header">말머리를 설정합니다</div>
                     <div className="description"> - 최대 5개의 말머리를 설정할 수 있습니다</div>
@@ -246,8 +262,18 @@ const ForumPrefix = React.createClass({
       );
     }
 
-    return <div></div>;
-  },
-});
+    return <div/>;
+  }
+}
+
+ForumPrefix.propTypes = {
+  ForumSettingStore: PropTypes.object.isRequired,
+  FireHandleResetButton: PropTypes.func.isRequired,
+  FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
+  FireRequestUpdateForumMeta: PropTypes.func.isRequired,
+  FireRequestAddForumPrefix: PropTypes.func.isRequired,
+  FireRequestDeleteForumPrefix: PropTypes.func.isRequired,
+  FireRequestUpdateForumPrefix: PropTypes.func.isRequired,
+};
 
 export default ForumPrefix;

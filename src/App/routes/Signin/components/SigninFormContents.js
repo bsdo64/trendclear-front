@@ -1,30 +1,22 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-const SigninFormContents = React.createClass({
-  signinEmailInput: null,
-  emailVerifyInput: null,
-  signinForm: null,
-  signinFormInput: null,
+class SigninFormContents extends React.Component {
+  constructor(props) {
+    super(props);
+    this.signinEmailInput = null;
+    this.emailVerifyInput = null;
+    this.signinForm = null;
+    this.signinFormInput = null;
 
-  displayName: 'SigninFormContents',
-  propTypes: {
-    submitResult: PropTypes.bool.isRequired,
-    emailVerifySuccess: PropTypes.bool.isRequired,
-    emailVerifyFail: PropTypes.bool.isRequired,
-    emailVerifyFormOpen: PropTypes.bool.isRequired,
-    emailDup: PropTypes.any,
-    nickDup: PropTypes.any,
-    emailRequested: PropTypes.any,
-    history: PropTypes.object,
-
-    FireRequestCheckEmailDup: PropTypes.func.isRequired,
-    FireRequestCheckNickDup: PropTypes.func.isRequired,
-    FireRequestEmailVerifyCode: PropTypes.func.isRequired,
-    FireEmailVerifyFormOpen: PropTypes.func.isRequired,
-    FireRequestCheckVerifyCode: PropTypes.func.isRequired,
-    FireRequestSignin: PropTypes.func.isRequired,
-  },
+    this.createYear = this.createYear.bind(this);
+    this.handleEmail = this.handleEmail.bind(this);
+    this.handleNick = this.handleNick.bind(this);
+    this._sendEmailVerify = this._sendEmailVerify.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCheckEmailCodeVerify = this.handleCheckEmailCodeVerify.bind(this);
+  }
 
   componentWillReceiveProps(nextProps) {
     const oldSubmitResult = this.props.submitResult;
@@ -35,7 +27,7 @@ const SigninFormContents = React.createClass({
         this.props.history.push('/');
       }
     }
-  },
+  }
 
   componentDidMount() {
     $('form select').dropdown();
@@ -157,7 +149,8 @@ const SigninFormContents = React.createClass({
 
       },
     });
-  },
+  }
+
   createYear() {
     const currentYear = new Date().getYear() + 1900;
     const options = [];
@@ -166,7 +159,7 @@ const SigninFormContents = React.createClass({
       options.push(<option key={y} value={y}>{y}</option>);
     }
     return options;
-  },
+  }
 
   render() {
     const { emailDup, nickDup, emailVerifyFail, emailVerifyFormOpen } = this.props;
@@ -364,37 +357,56 @@ const SigninFormContents = React.createClass({
         </form>
       </div>
     );
-  },
+  }
 
   handleEmail() {
     const emailValue = this.signinEmailInput.value;
     if (emailValue.length > 3) {
       this.props.FireRequestCheckEmailDup({ email: emailValue });
     }
-  },
+  }
 
   handleNick() {
     const nickValue = this.signinFormInput.value;
     if (nickValue.length > 1) {
       this.props.FireRequestCheckNickDup({ nick: nickValue });
     }
-  },
+  }
 
   _sendEmailVerify() {
     const email = this.signinEmailInput.value;
     if (email) {
       this.props.FireRequestEmailVerifyCode({ email });
     }
-  },
+  }
   handleSubmit() {
 
     $(this.signinForm).form('validate form');
-  },
+  }
 
   handleCheckEmailCodeVerify() {
     this.props.FireRequestCheckVerifyCode(
       { verifyCode: this.emailVerifyInput.value });
-  },
-});
+  }
+}
+
+SigninFormContents.displayName = 'SigninFormContents';
+SigninFormContents.propTypes = {
+  submitResult: PropTypes.bool.isRequired,
+    emailVerifySuccess: PropTypes.bool.isRequired,
+    emailVerifyFail: PropTypes.bool.isRequired,
+    emailVerifyFormOpen: PropTypes.bool.isRequired,
+    emailDup: PropTypes.any,
+    nickDup: PropTypes.any,
+    emailRequested: PropTypes.any,
+    history: PropTypes.object,
+
+    FireRequestCheckEmailDup: PropTypes.func.isRequired,
+    FireRequestCheckNickDup: PropTypes.func.isRequired,
+    FireRequestEmailVerifyCode: PropTypes.func.isRequired,
+    FireEmailVerifyFormOpen: PropTypes.func.isRequired,
+    FireRequestCheckVerifyCode: PropTypes.func.isRequired,
+    FireRequestSignin: PropTypes.func.isRequired,
+};
 
 export default SigninFormContents;

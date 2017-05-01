@@ -1,35 +1,35 @@
 /**
  * Created by dobyeongsu on 2016. 3. 23..
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Privacy from './Privacy';
 import Terms from './Terms';
 
 require('./index.scss');
-const PolicyBox = React.createClass({
-  displayName: 'PolicyBox',
-  propTypes: {
-    location: PropTypes.object.isRequired,
-  },
-
-  getEndpoint(location) {
+const PolicyBox = props => {
+  function getEndpoint(location) {
     return location.pathname.split('/')[2];
-  },
-  render() {
-    const {location} = this.props;
-    const endPoint = this.getEndpoint(location);
+  }
 
-    switch (endPoint) {
-      case 'privacy':
-        return (<Privacy />);
+  const {location} = props;
+  const endPoint = getEndpoint(location);
 
-      case 'terms':
-        return (<Terms />);
+  switch (endPoint) {
+    case 'privacy':
+      return (<Privacy />);
 
-      default:
-        return (<Terms />);
-    }
-  },
-});
+    case 'terms':
+      return (<Terms />);
+
+    default:
+      return (<Terms />);
+  }
+};
+
+PolicyBox.displayName = 'PolicyBox';
+PolicyBox.propTypes = {
+  location: PropTypes.object.isRequired,
+};
 
 export default PolicyBox;

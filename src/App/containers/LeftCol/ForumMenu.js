@@ -10,11 +10,11 @@ import {
   requestSearchForumToCollectionSubs,
 } from '../../Actions/Collection';
 
-const MenuContainer = React.createClass({
+class MenuContainer extends React.Component {
   render() {
     return (<ForumLeftMenu {...this.props} />);
-  },
-});
+  }
+}
 
 MenuContainer.defaultProps = {
   ListStore: UI.List,

@@ -1,18 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 require('./index.scss');
-const Announce = React.createClass({
-  propTypes: {
-    ForumSettingStore: PropTypes.object.isRequired,
-    FireHandleResetButton: PropTypes.func.isRequired,
-    FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
-    FireRequestUpdateForumMeta: PropTypes.func.isRequired,
-    FireRequestDeleteForumAnnounce: PropTypes.func.isRequired,
-  },
-
+class Announce extends React.Component {
   componentWillUnmount() {
     this.props.FireHandleResetButton();
-  },
+
+    this.updateAnnounce = this.updateAnnounce.bind(this);
+    this.changeForm = this.changeForm.bind(this);
+    this.removeAnnounce = this.removeAnnounce.bind(this);
+  }
 
   updateAnnounce(e) {
     e.preventDefault();
@@ -30,12 +27,12 @@ const Announce = React.createClass({
         'description'),
       rule: forumInfo ? forumInfo.get('forum_rule') : forum.get('rule'),
     });
-  },
+  }
 
   changeForm(e) {
     this.props.FireHandleChangeFormForumMeta(
       {[e.target.name]: e.target.value.trim()});
-  },
+  }
 
   removeAnnounce(announce) {
     'use strict';
@@ -47,7 +44,7 @@ const Announce = React.createClass({
       forumId: forum.get('id'),
       postId: announce.get('id'),
     });
-  },
+  }
 
   render() {
     const {ForumSettingStore} = this.props;
@@ -116,7 +113,15 @@ const Announce = React.createClass({
     }
 
     return <div></div>;
-  },
-});
+  }
+}
+
+Announce.propTypes = {
+  ForumSettingStore: PropTypes.object.isRequired,
+  FireHandleResetButton: PropTypes.func.isRequired,
+  FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
+  FireRequestUpdateForumMeta: PropTypes.func.isRequired,
+  FireRequestDeleteForumAnnounce: PropTypes.func.isRequired,
+};
 
 export default Announce;

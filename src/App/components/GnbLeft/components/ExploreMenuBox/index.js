@@ -1,19 +1,27 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
+import { connect } from "react-redux";
+import { getWidgetBox } from '../../../../Selectors/WidgetBox';
 import { getSeqPathName, activeStyle } from '../../func';
 import styles from '../../index.css';
+import WidgetContainer from '../../../WidgetBox/index.js';
 
 class ExploreMenuBox extends React.Component {
   render() {
-    const { match, location } = this.props;
+    const { match, location, widgetBox } = this.props;
+    const toggleStyle = cx(styles.box, {
+      [styles.toggled]: widgetBox && widgetBox.get('toggleTrendBox')
+    });
     const pathname = getSeqPathName(location.pathname, 2);
     const getStyle = (path) => activeStyle(styles.activeButton, path, pathname);
 
     return (
       <div className={styles.gnbSubMenu}>
-        <div className={styles.box}>
+        <div className={toggleStyle}>
           <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
               <div className={cx([styles.subMenuItem, getStyle('/')])}>
@@ -63,30 +71,28 @@ class ExploreMenuBox extends React.Component {
           </Scrollbars>
         </div>
 
-        <div className={styles.userMenu}>
-          <div className={styles.userMeta}>
-            <div className={styles.userAvatar}>
-              <img src="//placehold.it/40x40"/>
-            </div>
-            <div className={styles.userInfo}>
-              <div>Nice</div>
-              <div>Nice</div>
-              <div>Nice</div>
-            </div>
-          </div>
-          <div className={styles.userStats}>
-            Hello
-          </div>
-        </div>
+        <Route component={WidgetContainer}/>
       </div>
     );
   }
 }
 
 ExploreMenuBox.propTypes = {
-  match: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  widgetBox: PropTypes.object.isRequired,
 };
 ExploreMenuBox.defaultProps = {};
 
-export default ExploreMenuBox;
+const mapStateToProps = (state, props) => {
+  const stateStore = state.get('Stores');
+
+  return {
+    widgetBox: getWidgetBox(stateStore)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {},
+)(ExploreMenuBox);

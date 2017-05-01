@@ -1,42 +1,17 @@
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import BigPost from '../../PostItem/BigPost.js';
 import Forum from './Forum.js';
 import CommentBox from '../../CommentBox/index.js';
 
-const PostPage = React.createClass({
-  displayName: 'PostPage',
-  propTypes: {
-    Comments: PropTypes.object.isRequired,
-    SubComments: PropTypes.object.isRequired,
-    Users: PropTypes.object.isRequired,
-    Posts: PropTypes.object.isRequired,
-    ListStore: PropTypes.object.isRequired,
-    AuthStore: PropTypes.object.isRequired,
-    FireSetScrollPosition: PropTypes.func.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestLikePost: PropTypes.func.isRequired,
-    FireRequestLikeComment: PropTypes.func.isRequired,
-    FireRequestLikeSubComment: PropTypes.func.isRequired,
-    FireRequestSubmitComment: PropTypes.func.isRequired,
-    FireRequestSubmitSubComment: PropTypes.func.isRequired,
-    FireRequestUpdateComment: PropTypes.func.isRequired,
-    FireRequestUpdateSubComment: PropTypes.func.isRequired,
-    FireCloseCommentUpdateView: PropTypes.func.isRequired,
-    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
-    FireRequestActivateVenalink: PropTypes.func.isRequired,
-    FireRequestParticipateVenalink: PropTypes.func.isRequired,
-  },
-
+class PostPage extends React.Component {
   componentDidMount() {
     $('.ui.embed').embed();
-  },
+  }
 
   componentDidUpdate() {
     $('.ui.embed').embed('refresh');
-  },
+  }
 
   render() {
 
@@ -110,7 +85,32 @@ const PostPage = React.createClass({
     } else {
       return <div></div>;
     }
-  },
-});
+  }
+}
+
+PostPage.displayName = 'PostPage';
+PostPage.propTypes = {
+  Comments: PropTypes.object.isRequired,
+  SubComments: PropTypes.object.isRequired,
+  Users: PropTypes.object.isRequired,
+  Posts: PropTypes.object.isRequired,
+  ListStore: PropTypes.object.isRequired,
+  AuthStore: PropTypes.object.isRequired,
+  FireSetScrollPosition: PropTypes.func.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
+  FireToggleReportModal: PropTypes.func.isRequired,
+  FireToggleDeleteModal: PropTypes.func.isRequired,
+  FireRequestLikePost: PropTypes.func.isRequired,
+  FireRequestLikeComment: PropTypes.func.isRequired,
+  FireRequestLikeSubComment: PropTypes.func.isRequired,
+  FireRequestSubmitComment: PropTypes.func.isRequired,
+  FireRequestSubmitSubComment: PropTypes.func.isRequired,
+  FireRequestUpdateComment: PropTypes.func.isRequired,
+  FireRequestUpdateSubComment: PropTypes.func.isRequired,
+  FireCloseCommentUpdateView: PropTypes.func.isRequired,
+  FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+  FireRequestActivateVenalink: PropTypes.func.isRequired,
+  FireRequestParticipateVenalink: PropTypes.func.isRequired,
+};
 
 export default PostPage;

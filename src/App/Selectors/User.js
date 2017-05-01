@@ -44,6 +44,22 @@ export const forumCreated = createSelector(
   },
 );
 
+export const getForumManaged = createSelector(
+  getUser,
+  getForums,
+  (user, forums) => {
+    if (user) {
+      const userForumManageIdList = user.get('forumManaged');
+
+      return userForumManageIdList.map(v => {
+        return forums.get(v + '');
+      });
+    } else {
+      return new List();
+    }
+  }
+);
+
 export const getCollectionList = createSelector(
   getUser,
   getCollections,

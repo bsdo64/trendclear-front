@@ -1,10 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const AddForum1 = React.createClass({
-  propTypes: {
-    url: PropTypes.string,
-  },
-
+class AddForum1 extends React.Component {
   render() {
     const { url } = this.props;
     return (
@@ -19,7 +16,11 @@ const AddForum1 = React.createClass({
           }}/>
       </div>
     );
-  },
-});
+  }
+}
+
+AddForum1.propTypes = {
+  url: PropTypes.string,
+};
 
 export default AddForum1;

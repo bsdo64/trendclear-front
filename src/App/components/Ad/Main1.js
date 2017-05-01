@@ -1,25 +1,24 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Main1 = React.createClass({
-  propTypes: {
-    url: PropTypes.string,
-  },
-
-  render() {
-    const { url } = this.props;
-    return (
+const Main1 = props => {
+  const { url } = props;
+  return (
       <div>
         <img
-          src={url}
-          style={{
-            padding: 10,
-            width: '100%',
-            borderTop: '1px solid #abc',
-            borderBottom: '1px solid #abc',
-          }}/>
+            src={url}
+            style={{
+              padding: 10,
+              width: '100%',
+              borderTop: '1px solid #abc',
+              borderBottom: '1px solid #abc',
+            }}/>
       </div>
-    );
-  },
-});
+  );
+};
+
+Main1.propTypes = {
+  url: PropTypes.string,
+};
 
 export default Main1;

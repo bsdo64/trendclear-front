@@ -1,28 +1,24 @@
-import React, {
-  PropTypes,
-} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import moment from '../../Lib/MomentLib';
 import debug from 'debug';
 const paymentLog = debug('vn:api:payment');
 
 require('./index.scss');
-const ChargePointBox = React.createClass({
-  displayName: 'ChargePointBox',
-  propTypes: {
-    UserStore: PropTypes.object.isRequired,
-    ChargePointStore: PropTypes.object,
-    FireRequestCheckPointCharge: PropTypes.func.isRequired,
-    FireFailureCheckPointCharge: PropTypes.func.isRequired,
-    FireWaitingCheckCharge: PropTypes.func.isRequired,
-  },
+class ChargePointBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       pay_method: 'trans',
       amount: 11000,
     };
-  },
+
+    this.sendPayment = this.sendPayment.bind(this);
+    this.changeMethod = this.changeMethod.bind(this);
+    this.changeAmount = this.changeAmount.bind(this);
+  }
 
   sendPayment() {
     const {UserStore} = this.props;
@@ -62,18 +58,18 @@ const ChargePointBox = React.createClass({
         paymentLog(rsp);
       }
     });
-  },
+  }
 
   changeMethod({value}) {
     this.setState({
       pay_method: value,
     });
-  },
+  }
   changeAmount({value}) {
     this.setState({
       amount: value,
     });
-  },
+  }
   render() {
     const {ChargePointStore} = this.props;
     let isRequestCheckCharge, successChargePoint, failureChargePoint, result;
@@ -208,7 +204,16 @@ const ChargePointBox = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+ChargePointBox.displayName = 'ChargePointBox';
+ChargePointBox.propTypes = {
+  UserStore: PropTypes.object.isRequired,
+    ChargePointStore: PropTypes.object,
+    FireRequestCheckPointCharge: PropTypes.func.isRequired,
+    FireFailureCheckPointCharge: PropTypes.func.isRequired,
+    FireWaitingCheckCharge: PropTypes.func.isRequired,
+};
 
 export default ChargePointBox;

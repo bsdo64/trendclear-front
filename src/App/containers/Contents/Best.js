@@ -17,7 +17,7 @@ import {
   requestParticipateVenalink,
 } from '../../Actions/VenacleStore';
 
-const BestContainer = React.createClass({
+class BestContainer extends React.Component {
   render() {
     return (
       <div>
@@ -26,8 +26,8 @@ const BestContainer = React.createClass({
         />
       </div>
     );
-  },
-});
+  }
+}
 
 BestContainer.defaultProps = {
   GnbStore: UI.Gnb,

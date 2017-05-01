@@ -1,14 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getLoginUser } from '../Util/func';
 import DeleteModalBox from '../../components/Modals/Components/DeleteItem';
 import { requestDeleteItem } from '../../Actions/DeleteItem';
 
-const DeleteModalContainer = React.createClass({
+class DeleteModalContainer extends React.Component {
   render() {
     return (<DeleteModalBox {...this.props} />);
-  },
-});
+  }
+}
 
 DeleteModalContainer.propTypes = {
   LoginStore: PropTypes.object.isRequired,

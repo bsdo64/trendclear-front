@@ -9,11 +9,11 @@ import {
   requestSearchForumToCollectionSubs,
 } from '../../Actions/Collection';
 
-const CollectionMenu = React.createClass({
+class CollectionMenu extends React.Component {
   render() {
     return (<CollectionLeftMenu {...this.props} />);
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

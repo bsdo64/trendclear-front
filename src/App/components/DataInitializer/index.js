@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -34,8 +35,8 @@ class DataInitializer extends React.Component {
 }
 
 DataInitializer.propTypes = {
-  initialize: React.PropTypes.func.isRequired,
-  location: React.PropTypes.object.isRequired,
+  initialize: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = () => {

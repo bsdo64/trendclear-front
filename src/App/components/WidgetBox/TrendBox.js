@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
 import Draggable from 'react-draggable'; // The default
@@ -8,19 +9,19 @@ import moment from '../Lib/MomentLib.js';
 import AvatarImage from '../AvatarImage';
 import Inventory from '../Inventory';
 
-const Timer = React.createClass({
-  propTypes: {
-    init: PropTypes.number,
-    type: PropTypes.string,
-  },
+class Timer extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState: function() {
-    return {init: this.props.init || 0};
-  },
-  tick: function() {
+    this.state = {init: this.props.init || 0};
+
+    this.tick = this.tick.bind(this);
+  }
+  tick() {
     this.setState({init: this.state.init - 1});
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
     const type = this.props.type || 'default';
 
     if (this.state.init > 0 && !this[type]) {
@@ -29,7 +30,7 @@ const Timer = React.createClass({
 
       this[type] = setInterval(this.tick, 1000);
     }
-  },
+  }
   componentWillReceiveProps(nextProps) {
     const self = this;
     const type = nextProps.type || 'default';
@@ -43,14 +44,14 @@ const Timer = React.createClass({
         self[type] = setInterval(self.tick, 1000);
       });
     }
-  },
-
-  componentWillUnmount: function() {
+  }
+  componentWillUnmount() {
     const type = this.props.type || 'default';
     clearInterval(this[type]);
     this[type] = null;
-  },
-  render: function() {
+  }
+
+  render() {
     const time = this.state.init;
     if (time === 0) {
       const type = this.props.type || 'default';
@@ -64,38 +65,38 @@ const Timer = React.createClass({
         {this.state.init}
       </span>
     );
-  },
-});
+  }
+}
+
+Timer.propTypes = {
+  init: PropTypes.number,
+    type: PropTypes.string,
+};
 
 require('./Trendbox.scss');
-const TrendBox = React.createClass({
-  propTypes: {
-    user: PropTypes.object.isRequired,
-    InventoryStore: PropTypes.object.isRequired,
-    ShoppingStore: PropTypes.object.isRequired,
-    Venatems: PropTypes.object.isRequired,
-    Items: PropTypes.object.isRequired,
-    Inventories: PropTypes.object.isRequired,
-    FireToggleVenacleStoreModal: PropTypes.func.isRequired,
-    FireToggleAvatarModal: PropTypes.func.isRequired,
-    FireShowItemInfo: PropTypes.func.isRequired,
-    FireRequestShoppingItemInit: PropTypes.func.isRequired,
-    FireToggleShowInventory: PropTypes.func.isRequired,
-  },
+class TrendBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       RPModal: false,
       VStore: false,
       wide: false,
     };
-  },
 
+    this.updateCountUp = this.updateCountUp.bind(this);
+    this.openAvatarModal = this.openAvatarModal.bind(this);
+    this.openRPModal = this.openRPModal.bind(this);
+    this.openVenacleStore = this.openVenacleStore.bind(this);
+    this.createSkill = this.createSkill.bind(this);
+    this.toggleInventory = this.toggleInventory.bind(this);
+    this.toggleWideBox = this.toggleWideBox.bind(this);
+  }
   componentDidMount() {
     const {user} = this.props;
-    const prevTotalExp = user.trendbox.get('prev_exp');
-    const currentTotalExp = user.trendbox.get('exp');
-    const nextTotalExp = user.trendbox.get('next_exp');
+    const prevTotalExp = user.getIn(['trendbox', 'prev_exp']);
+    const currentTotalExp = user.getIn(['trendbox', 'exp']);
+    const nextTotalExp = user.getIn(['trendbox', 'next_exp']);
 
     const expPercent = (currentTotalExp - prevTotalExp) /
       (nextTotalExp - prevTotalExp) * 100;
@@ -104,18 +105,18 @@ const TrendBox = React.createClass({
       .progress({
         percent: expPercent,
       });
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     const currentUser = this.props.user;
     const nextUser = nextProps.user;
 
-    const prev_currentTotalExp = currentUser.trendbox.get('exp');
-    const prev_nextTotalExp = currentUser.trendbox.get('next_exp');
+    const prev_currentTotalExp = currentUser.getIn(['trendbox', 'exp']);
+    const prev_nextTotalExp = currentUser.getIn(['trendbox', 'next_exp']);
 
-    const prevTotalExp = nextUser.trendbox.get('prev_exp');
-    const currentTotalExp = nextUser.trendbox.get('exp');
-    const nextTotalExp = nextUser.trendbox.get('next_exp');
+    const prevTotalExp = nextUser.getIn(['trendbox', 'prev_exp']);
+    const currentTotalExp = nextUser.getIn(['trendbox', 'exp']);
+    const nextTotalExp = nextUser.getIn(['trendbox', 'next_exp']);
 
     let expPercent = (currentTotalExp - prevTotalExp) /
       (nextTotalExp - prevTotalExp) * 100;
@@ -140,18 +141,18 @@ const TrendBox = React.createClass({
       suffix: '',
     };
 
-    const prevTP = currentUser.trendbox.get('T');
-    const nextTP = nextUser.trendbox.get('T');
+    const prevTP = currentUser.getIn(['trendbox', 'T']);
+    const nextTP = nextUser.getIn(['trendbox', 'T']);
     this.updateCountUp('tp_point', prevTP, nextTP, options);
 
-    const prevRP = currentUser.trendbox.get('R');
-    const nextRP = nextUser.trendbox.get('R');
+    const prevRP = currentUser.getIn(['trendbox', 'R']);
+    const nextRP = nextUser.getIn(['trendbox', 'R']);
     this.updateCountUp('rp_point', prevRP, nextRP, options);
 
     this.updateCountUp('current_exp', prev_currentTotalExp, currentTotalExp,
       options);
     this.updateCountUp('next_exp', prev_nextTotalExp, nextTotalExp, options);
-  },
+  }
 
   updateCountUp(nodeId, from, to, options) {
 
@@ -159,15 +160,15 @@ const TrendBox = React.createClass({
       const count = new CountUp(nodeId, from, to, 0, 1.5, options);
       count.start();
     }
-  },
+  }
   openAvatarModal() {
     this.props.FireToggleAvatarModal({
       contentType: 'AvatarImage',
     });
-  },
+  }
   openRPModal() {
     this.setState({RPModal: !this.state.RPModal});
-  },
+  }
 
   openVenacleStore() {
 
@@ -175,7 +176,7 @@ const TrendBox = React.createClass({
       contentType: 'Shopping',
     });
     this.props.FireRequestShoppingItemInit();
-  },
+  }
 
   createSkill(value, key) {
 
@@ -202,7 +203,7 @@ const TrendBox = React.createClass({
              src={'/images/' + value.getIn(['skill', 'img'])}/>
         <ReactTooltip
           id={value.getIn(['skill', 'name'])}
-          place="bottom"
+          place="top"
           class="skill2"
           effect="solid">
 
@@ -225,26 +226,27 @@ const TrendBox = React.createClass({
         </ReactTooltip>
       </div>
     );
-  },
+  }
 
   toggleInventory() {
     this.props.FireToggleShowInventory();
-  },
+  }
 
   toggleWideBox() {
-    this.setState({wide: !this.state.wide})
-  },
+    this.props.FireToggleTrendBox();
+  }
 
   render() {
     const {
-      user, ShoppingStore, InventoryStore, FireShowItemInfo, Inventories, Venatems, Items,
+      user, widgetBox,
+      ShoppingStore, InventoryStore, FireShowItemInfo, Inventories, Venatems, Items,
     } = this.props;
 
-    const sex = user.profile.get('sex'),
-      avatar_img = user.profile.get('avatar_img'),
-      iconDef = user.icon ? user.icon.get('iconDef') : null,
+    const sex = user.getIn(['profile', 'sex']),
+      avatar_img = user.getIn(['profile', 'avatar_img']),
+      iconDef = user.getIn(['icon', 'iconDef']),
       icon_img = iconDef ? iconDef.get('icon_img') : null,
-      grade_img = user.grade.getIn(['gradeDef', 'img']);
+      grade_img = user.getIn(['grade', 'gradeDef', 'img']);
     let iconImg, gradeImg;
 
     const findCommunityInventory = Inventories.find(
@@ -269,12 +271,12 @@ const TrendBox = React.createClass({
           <div className="ui items">
             <div className="ui item upward" onClick={this.toggleWideBox}>
               {
-                this.state.wide &&
+                widgetBox && !widgetBox.get('toggleTrendBox') &&
                 <i className="fa fa-caret-up"/>
               }
 
               {
-                !this.state.wide &&
+                widgetBox && widgetBox.get('toggleTrendBox') &&
                 <i className="fa fa-caret-down"/>
               }
             </div>
@@ -290,12 +292,12 @@ const TrendBox = React.createClass({
 
               <div className="content">
                 <div className="user_info_header">
-                  <span className="ui description">{user.user.get('nick')}</span>
+                  <span className="ui description">{user.get('nick')}</span>
                   {iconImg}
 
                   <div className="user_info">
-                    <span className="item_col">Lv. {user.trendbox.get('level')}</span>
-                    <span className="item_col">Rep. {user.trendbox.get('reputation')}</span>
+                    <span className="item_col">Lv. {user.getIn(['trendbox', 'level'])}</span>
+                    <span className="item_col">Rep. {user.getIn(['trendbox', 'reputation'])}</span>
                   </div>
                 </div>
               </div>
@@ -307,14 +309,14 @@ const TrendBox = React.createClass({
                   <div className="point_line">
                     <span className="ui description">TP</span>
                     <span id="tp_point"
-                          className="ui right floated point tp_point">{accounting.formatNumber(
-                      user.trendbox.get('T'))}</span>
+                          className="ui right floated point tp_point">
+                      {accounting.formatNumber(user.getIn(['trendbox', 'T']))}</span>
                   </div>
                   <div className="point_line">
                     <span className="ui description">RP</span>
                     <span id="rp_point"
-                          className="ui right floated point rp_point">{accounting.formatNumber(
-                      user.trendbox.get('R'))}</span>
+                          className="ui right floated point rp_point">
+                      {accounting.formatNumber(user.getIn(['trendbox', 'R']))}</span>
                   </div>
                 </div>
                 <div className="colum">
@@ -322,9 +324,9 @@ const TrendBox = React.createClass({
                     {'경험치 '}
                     <div className="exp_description">
                       {'('}
-                      <span id="current_exp">{user.trendbox.get('exp')}</span>
+                      <span id="current_exp">{user.getIn(['trendbox', 'exp'])}</span>
                       {'/'}
-                      <span id="next_exp">{user.trendbox.get('next_exp')}</span>
+                      <span id="next_exp">{user.getIn(['trendbox', 'next_exp'])}</span>
                       {')'}
                     </div>
                   </h4>
@@ -336,8 +338,8 @@ const TrendBox = React.createClass({
                         <div className="progress"></div>
                       </div>
                       <div className="label remain_exp">
-                        나머지 {user.trendbox.get('next_exp') -
-                      user.trendbox.get('exp')}
+                        나머지 {user.getIn(['trendbox', 'next_exp']) -
+                      user.getIn(['trendbox', 'exp'])}
                       </div>
                     </div>
                   </div>
@@ -350,35 +352,27 @@ const TrendBox = React.createClass({
                 <div className="description">
 
                   <div className="item" onClick={this.openVenacleStore}>
+                    <i className="fa fa-shopping-cart"></i>
                     <span className="item_col">상점</span>
-                    <div className="item_num">
-                      <i className="fa fa-shopping-cart"></i>
-                    </div>
                   </div>
 
                   <div className="item">
                     <Link to="/user/points">
+                      <i className="fa fa-line-chart"></i>
                       <span className="item_col">포인트</span>
-                      <div className="item_num">
-                        <i className="fa fa-line-chart"></i>
-                      </div>
                     </Link>
                   </div>
 
                   <div className="item">
                     <Link to="/user/venalinks">
+                      <i className="fa fa-unlink"></i>
                       <span className="item_col">베나링크</span>
-                      <div className="item_num">
-                        <i className="fa fa-unlink"></i>
-                      </div>
                     </Link>
                   </div>
 
                   <div className="item" onClick={this.toggleInventory}>
+                    <i className="fa fa-folder-open"></i>
                     <span className="item_col">인벤토리</span>
-                    <div className="item_num">
-                      <i className="fa fa-folder-open"></i>
-                    </div>
                   </div>
 
                   <ReactTooltip
@@ -433,8 +427,8 @@ const TrendBox = React.createClass({
                   <div className="skill_line">
                     <div className="ui mini images skills">
                       {
-                        user.skills &&
-                        user.skills.sortBy(value => value.get('id'))
+                        user.get('skills') &&
+                        user.get('skills').sortBy(value => value.get('id'))
                           .map(this.createSkill)
                       }
                     </div>
@@ -468,7 +462,23 @@ const TrendBox = React.createClass({
         }
       </div>
     );
-  },
-});
+  }
+}
+
+TrendBox.propTypes = {
+  user: PropTypes.object.isRequired,
+  widgetBox: PropTypes.object.isRequired,
+  InventoryStore: PropTypes.object.isRequired,
+  ShoppingStore: PropTypes.object.isRequired,
+  Venatems: PropTypes.object.isRequired,
+  Items: PropTypes.object.isRequired,
+  Inventories: PropTypes.object.isRequired,
+  FireToggleVenacleStoreModal: PropTypes.func.isRequired,
+  FireToggleAvatarModal: PropTypes.func.isRequired,
+  FireShowItemInfo: PropTypes.func.isRequired,
+  FireRequestShoppingItemInit: PropTypes.func.isRequired,
+  FireToggleShowInventory: PropTypes.func.isRequired,
+  FireToggleTrendBox: PropTypes.func.isRequired,
+};
 
 export default TrendBox;

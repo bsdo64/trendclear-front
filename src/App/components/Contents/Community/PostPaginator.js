@@ -1,34 +1,32 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const PostPaginator = React.createClass({
-  displayName: 'PostPaginator',
-  propTypes: {
-    Users: PropTypes.object.isRequired,
+const PostPaginator = props => {
+  const {Posts, ListStore} = props;
+
+  const postId = ListStore.get('CurrentPostId');
+  if (postId) {
+    const post = Posts.get(postId.toString());
+
+    if (post) {
+
+      return <div style={{}}>
+        Hello1
+      </div>;
+
+    } else {
+      return <div/>;
+    }
+  } else {
+    return <div/>;
+  }
+};
+
+PostPaginator.displayName = 'PostPaginator';
+PostPaginator.propTypes = {
+  Users: PropTypes.object.isRequired,
     Posts: PropTypes.object.isRequired,
     ListStore: PropTypes.object.isRequired,
-  },
-
-  render() {
-
-    const {Posts, ListStore} = this.props;
-
-    const postId = ListStore.get('CurrentPostId');
-    if (postId) {
-      const post = Posts.get(postId.toString());
-
-      if (post) {
-
-        return <div style={{}}>
-          Hello1
-        </div>;
-
-      } else {
-        return <div></div>;
-      }
-    } else {
-      return <div></div>;
-    }
-  },
-});
+};
 
 export default PostPaginator;

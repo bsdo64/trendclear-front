@@ -25,7 +25,7 @@
     transition: height 100ms;
 
     &.toggled {
-      height: calc(100% - 400px);
+      height: calc(100% - 350px);
     }
   }
 }
@@ -153,7 +153,7 @@
 .collectionSearchBox {
   padding-left: 25px;
 
-  & > i:global(.fa-inbox) {
+  & > i:global(.fa-inbox), & > i:global(.fa-file-o) {
     padding-right: 5px;
   }
 
@@ -177,7 +177,7 @@
       color: #fff;
     }
 
-    & > i:global(.fa-inbox) {
+    & > i:global(.fa-inbox), & > i:global(.fa-file-o) {
       padding-right: 5px;
     }
   }

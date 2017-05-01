@@ -9,11 +9,11 @@ import {
   requestShoppingItemInit,
 } from '../../Actions/VenacleStore';
 
-const ShoppingContainer = React.createClass({
+class ShoppingContainer extends React.Component {
   render() {
     return (<Shopping {...this.props} />);
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {

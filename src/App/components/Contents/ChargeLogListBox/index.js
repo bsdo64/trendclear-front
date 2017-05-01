@@ -1,22 +1,22 @@
-import React, {
-  PropTypes,
-} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import accounting from 'accounting';
 import moment from '../../Lib/MomentLib';
 import TablePaginator from '../../Paginator/TablePagination';
 
-const ChargeLogListBox = React.createClass({
-  displayName: 'ChargePointBox',
-  propTypes: {
-    UserStore: PropTypes.object.isRequired,
-    FireRequestGetMoreChargeLogList: PropTypes.func,
-  },
+class ChargeLogListBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       page: 1,
     };
-  },
+
+    this.paymentTime = this.paymentTime.bind(this);
+    this.paymentStatus = this.paymentStatus.bind(this);
+    this.paymentMethod = this.paymentMethod.bind(this);
+    this.handlePage = this.handlePage.bind(this);
+  }
 
   paymentTime(payment) {
     const momentTime = moment(payment.get('paid_at'));
@@ -35,7 +35,7 @@ const ChargeLogListBox = React.createClass({
     }
 
     return time;
-  },
+  }
 
   paymentStatus(payment) {
     const status = payment.get('status');
@@ -68,7 +68,7 @@ const ChargeLogListBox = React.createClass({
     }
 
     return paymentStatus;
-  },
+  }
 
   paymentMethod(payment) {
     const method = payment.get('pay_method');
@@ -96,7 +96,7 @@ const ChargeLogListBox = React.createClass({
     }
 
     return paymentMethod;
-  },
+  }
 
   handlePage(p) {
     return () => {
@@ -108,7 +108,7 @@ const ChargeLogListBox = React.createClass({
         page: p,
       });
     };
-  },
+  }
 
   render() {
     const {UserStore} = this.props;
@@ -192,7 +192,13 @@ const ChargeLogListBox = React.createClass({
         </table>
       </div>
     );
-  },
-});
+  }
+}
+
+ChargeLogListBox.displayName = 'ChargePointBox';
+ChargeLogListBox.propTypes = {
+  UserStore: PropTypes.object.isRequired,
+  FireRequestGetMoreChargeLogList: PropTypes.func,
+};
 
 export default ChargeLogListBox;

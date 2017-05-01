@@ -7,15 +7,15 @@ import {
   toggleConfirmPurchaseItemModal,
 } from '../../Actions/VenacleStore';
 
-const ConfirmPurchaseItemContainer = React.createClass({
+class ConfirmPurchaseItemContainer extends React.Component {
   render() {
     return (
       <ConfirmBox
         {...this.props}
       />
     );
-  },
-});
+  }
+}
 
 const mapStateToProps = (state) => {
   const getUIState = function getUIState(args) {
