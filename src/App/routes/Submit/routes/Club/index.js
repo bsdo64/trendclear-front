@@ -28,14 +28,14 @@ SubmitForum.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const stateStore = state.get('Stores');
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
 
   return {
     SubmitForumStore: getUIState('SubmitForum'),
-    UserStore: getUser(stateStore),
+    UserStore: getUser(StoreState),
   };
 };
 

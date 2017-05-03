@@ -33,7 +33,7 @@ WidgetContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const getStoreState = state.get('Stores');
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -46,13 +46,13 @@ const mapStateToProps = (state) => {
     ShoppingStore: getUIState('Shopping'),
     InventoryStore: getUIState('Inventory'),
     LoginStore: getUIState('Login'),
-    user: getUser(getStoreState),
+    user: getUser(StoreState),
 
     Forums: getDomainState('Forums'),
     Venatems: getDomainState('Venatems'),
     Items: getDomainState('Items'),
     Inventories: getDomainState('Inventories'),
-    widgetBox: getWidgetBox(getStoreState),
+    widgetBox: getWidgetBox(StoreState),
   };
 };
 

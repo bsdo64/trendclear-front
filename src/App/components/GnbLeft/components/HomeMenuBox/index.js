@@ -96,13 +96,13 @@ HomeMenuBox.propTypes = {
 HomeMenuBox.defaultProps = {};
 
 const mapStateToProps = (state, props) => {
-  const stateStore = state.get('Stores');
+  const StoreState = state.get('Stores');
 
   return {
-    collectionList: getCollectionList(stateStore, props),
-    forumManaged: getForumManaged(stateStore),
-    user: getUser(stateStore),
-    widgetBox: getWidgetBox(stateStore)
+    collectionList: getCollectionList(StoreState, props),
+    forumManaged: getForumManaged(StoreState),
+    user: getUser(StoreState),
+    widgetBox: getWidgetBox(StoreState)
   };
 };
 

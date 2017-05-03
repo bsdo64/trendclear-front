@@ -9,6 +9,7 @@ import Club from '../../containers/Contents/Community.js';
 import Setting from '../../containers/Contents/ForumSetting';
 import Explore from '../Explore/index.js';
 import Writing from '../Submit/index.js';
+import Search from '../Search/index.js';
 import User from '../User/index.js';
 import RightSide from '../../containers/RightSide/RightSide.js';
 
@@ -21,6 +22,9 @@ const DefaultLayout = () => {
       <div id="section">
         <div id="contents">
           <Switch>
+
+            {/* Search */}
+            <Route exact path="/search" component={Search}/>
 
             {/* Community */}
             <Route exact path="/collection" component={CollectionIndex}/>
