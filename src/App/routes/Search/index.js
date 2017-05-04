@@ -1,35 +1,52 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Activity from '../../components/Contents/Activity';
+import { getUser } from '../../Selectors/User.js';
 import { UI, Domains } from '../../Reducers/InitialStates';
-import { getUser } from '../../Selectors/User';
-
-import { setScrollPosition } from '../../Actions/List';
-import { toggleLoginModal } from '../../Actions/Login';
 import {
   toggleActiveVenalinkModal,
   requestLikePost,
   requestGetMorePostList,
 } from '../../Actions/Post';
-import { toggleReportModal } from '../../Actions/Report';
-import { toggleDeleteModal } from '../../Actions/DeleteItem';
 import {
-  requestParticipateVenalink,
+  requestFollowForum,
+  requestUnFollowForum,
+  requestGetMoreForumList,
+} from '../../Actions/Forum';
+import { toggleLoginModal } from '../../Actions/Login';
+import { toggleDeleteModal } from '../../Actions/DeleteItem';
+import { toggleReportModal } from '../../Actions/Report';
+import {
+  requestAddForumInCollection,
+  requestRemoveForumInCollection,
+} from '../../Actions/Collection';
+import {
   requestActivateVenalink,
+  requestParticipateVenalink,
 } from '../../Actions/VenacleStore';
+import { setScrollPosition } from '../../Actions/List';
 
-class ActivityContainer extends React.Component {
+import Search from '../../components/Contents/Search';
+
+class SearchContainer extends React.Component {
   render() {
-    return (<Activity {...this.props} />);
+    return (
+      <Search
+        {...this.props}
+      />
+    );
   }
 }
 
-ActivityContainer.defaultProps = {
-  ActivityStore: UI.Activity,
+SearchContainer.defaultProps = {
+  GnbStore: UI.Gnb,
+  SearchStore: UI.Search,
+  LoginStore: UI.Login,
+  CommunityStore: UI.Community,
   ListStore: UI.List,
   AuthStore: UI.Auth,
   PaginationStore: UI.Pagination,
 
+  Collections: Domains.Collections,
   Forums: Domains.Forums,
   Users: Domains.Users,
   Posts: Domains.Posts,
@@ -49,13 +66,17 @@ const mapStateToProps = (state) => {
   };
 
   return {
-    ActivityStore: getUIState('Activity'),
-    LoginModalStore: getUIState('LoginModal'),
+    GnbStore: getUIState('Gnb'),
+    LoginStore: getUIState('Login'),
+    CommunityStore: getUIState('Community'),
+    SearchStore: getUIState('Search'),
+
     ListStore: getUIState('List'),
     AuthStore: getUIState('Auth'),
     PaginationStore: getUIState('Pagination'),
     UserStore: getUser(StoreState),
 
+    Collections: getDomainState('Collections'),
     Forums: getDomainState('Forums'),
     Users: getDomainState('Users'),
     Posts: getDomainState('Posts'),
@@ -68,13 +89,19 @@ module.exports = connect(
   mapStateToProps,
   {
     FireSetScrollPosition: setScrollPosition,
-    FireToggleLoginModal: toggleLoginModal,
     FireRequestGetMorePostList: requestGetMorePostList,
-    FireToggleDeleteModal: toggleDeleteModal,
+    FireRequestGetMoreForumList: requestGetMoreForumList,
+    FireToggleLoginModal: toggleLoginModal,
     FireToggleReportModal: toggleReportModal,
+    FireToggleDeleteModal: toggleDeleteModal,
+    FireRequestAddForumInCollection: requestAddForumInCollection,
+    FireRequestRemoveForumInCollection: requestRemoveForumInCollection,
+    FireRequestFollowForum: requestFollowForum,
+    FireRequestUnFollowForum: requestUnFollowForum,
     FireRequestLikePost: requestLikePost,
     FireToggleActiveVenalinkModal: toggleActiveVenalinkModal,
     FireRequestActivateVenalink: requestActivateVenalink,
     FireRequestParticipateVenalink: requestParticipateVenalink,
-  },
-)(ActivityContainer);
+  }
+)(SearchContainer);
+

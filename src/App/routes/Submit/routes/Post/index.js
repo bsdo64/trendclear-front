@@ -32,7 +32,7 @@ SubmitPostContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const stateStore = state.get('Stores');
+  const StoreState = state.get('Stores');
 
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
@@ -46,10 +46,10 @@ const mapStateToProps = (state) => {
     SubmitPostStore: getUIState('SubmitPost'),
     AuthStore: getUIState('Auth'),
     LoginStore: getUIState('Login'),
-    UserStore: getUser(stateStore),
-    ForumFollowed: forumFollowed(stateStore),
-    ForumCreated: forumCreated(stateStore),
-    RankForums: rankForums(stateStore),
+    UserStore: getUser(StoreState),
+    ForumFollowed: forumFollowed(StoreState),
+    ForumCreated: forumCreated(StoreState),
+    RankForums: rankForums(StoreState),
     Posts: getDomainState('Posts'),
   };
 };

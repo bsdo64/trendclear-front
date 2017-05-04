@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route, Switch } from 'react-router-dom';
 import Waypoint from 'react-waypoint';
 import Header from '../../ContentBreadCrumb/ContentBreadCrumb';
 import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 import qs from 'qs';
 
-const ListHeader = () => {
+const FeedHeader = () => {
   return (
     <div style={{ padding: 10 }}>
       <div style={{
@@ -23,6 +24,25 @@ const ListHeader = () => {
       </div>
     </div>
   );
+};
+
+const CollectionHeader = () => {
+  return (
+    <div style={{ padding: 10 }}>
+      <div style={{
+        background: '#fff',
+        padding: 10,
+        boxShadow: '1px 1px 1px 0 #c6c6c6',
+      }}>
+        <h3 style={{ fontSize: '1.2em' }}>
+          <i className="fa fa-inbox"
+             style={{ color: '#abc', paddingRight: 5 }}/>
+          컬렉션
+        </h3>
+        <p>컬렉션 인기글</p>
+      </div>
+    </div>
+  )
 };
 
 const BestBox = props => {
@@ -96,7 +116,10 @@ const BestBox = props => {
   return (
     <div id="best_contents">
 
-      <ListHeader/>
+      <Switch>
+        <Route exact path="/collection/:collectionId" component={CollectionHeader} />
+        <Route exact path="/" component={FeedHeader} />
+      </Switch>
 
       <Header
         type={listName}
