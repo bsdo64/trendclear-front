@@ -237,6 +237,13 @@ const Users = (state = initList, action) => {
         .mergeDeepIn([targetId.toString(), 'payments'], data);
     }
 
+    case SUCCESS_CREATE_COLLECTION: {
+      const {collection} = action;
+      return state
+        .updateIn([collection.creator_id.toString(), 'collections'],
+          collectionIdList => collectionIdList.push(collection.id));
+    }
+
     default:
       return state;
   }
