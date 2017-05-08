@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import {
@@ -28,9 +28,9 @@ function* SagaReport() {
 }
 
 function* reportSaga() {
-  yield [
+  yield all([
     SagaReport(),
-  ];
+  ]);
 }
 
 export default reportSaga;

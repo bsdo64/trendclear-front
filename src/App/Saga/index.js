@@ -1,3 +1,4 @@
+import { all } from 'redux-saga/effects';
 import user from './user';
 import signin from './signin';
 import login from './login';
@@ -13,7 +14,7 @@ import venaStore from './venaStore';
 import venalink from './venalink';
 
 function* rootSaga() {
-  yield [
+  yield all([
     user(),
     signin(),
     login(),
@@ -27,7 +28,7 @@ function* rootSaga() {
     followingList(),
     venaStore(),
     venalink(),
-  ];
+  ]);
 }
 
 export default rootSaga;

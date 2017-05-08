@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import {
@@ -194,7 +194,7 @@ function* SagaResetPassword() {
 }
 
 function* user() {
-  yield [
+  yield all([
     SagaPaybackRP(),
     SagaReadNoti(),
     SagaResetPassword(),
@@ -202,7 +202,7 @@ function* user() {
     SagaUserUpdatePassword(),
     SagaUserAvatarImageRemove(),
     SagaUserAvatarImageUpload(),
-  ];
+  ]);
 }
 
 export default user;

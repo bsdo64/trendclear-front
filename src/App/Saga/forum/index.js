@@ -1,7 +1,6 @@
+import { all, take, put, call } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
 import { forum } from '../../../Model/normalizr/schema';
-
-import { take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import {
@@ -325,7 +324,7 @@ function* SagaMoreList() {
 }
 
 function* forumSaga() {
-  yield [
+  yield all([
     SagaCreateForum(),
     SagaVaildateTitleCreateForum(),
     SagaMoreList(),
@@ -340,7 +339,7 @@ function* forumSaga() {
     SagaDeleteForumAnnounce(),
     SagaAddForumBanUser(),
     SagaDeleteForumBanUser(),
-  ];
+  ]);
 }
 
 export default forumSaga;

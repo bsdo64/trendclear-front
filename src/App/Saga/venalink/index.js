@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import {
@@ -54,10 +54,10 @@ function* SagaGetMoreShareList() {
 }
 
 function* venalink() {
-  yield [
+  yield all([
     SagaGetMoreActiveList(),
     SagaGetMoreShareList(),
-  ];
+  ]);
 }
 
 export default venalink;

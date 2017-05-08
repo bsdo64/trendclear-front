@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 import {
   CLOSE_DELETE_MODAL,
@@ -30,9 +30,9 @@ function* SagaDeleteItem() {
 }
 
 function* deleteItem() {
-  yield [
+  yield all([
     SagaDeleteItem(),
-  ];
+  ]);
 }
 
 export default deleteItem;

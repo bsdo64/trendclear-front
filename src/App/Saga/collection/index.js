@@ -1,4 +1,4 @@
-import { take, put, call, fork } from 'redux-saga/effects';
+import { all, take, put, call, fork } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 import { normalize } from 'normalizr';
 import { forum } from '../../../Model/normalizr/schema';
@@ -169,14 +169,14 @@ function* SagaUpdateCollection() {
 }
 
 function* collection() {
-  yield [
+  yield all([
     SagaSearchSubsForum(),
     SagaAddSubsForum(),
     SagaRemoveSubsForum(),
     SagaCreateCollection(),
     SagaDeleteCollection(),
     SagaUpdateCollection(),
-  ];
+  ]);
 }
 
 export default collection;

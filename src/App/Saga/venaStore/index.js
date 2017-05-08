@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 import { inventory } from '../../../Model/normalizr/schema';
 import { normalize } from 'normalizr';
@@ -107,12 +107,12 @@ function* SagaInitShoppingItems() {
 }
 
 function* venaStore() {
-  yield [
+  yield all([
     SagaParticipateVenalink(),
     SagaActivateVenalink(),
     SagaPurchaseItem(),
     SagaInitShoppingItems(),
-  ];
+  ]);
 }
 
 export default venaStore;

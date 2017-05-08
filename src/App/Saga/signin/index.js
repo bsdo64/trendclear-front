@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import {
@@ -119,13 +119,13 @@ function* SagaCheckEmailDup() {
 }
 
 function* signinSaga() {
-  yield [
+  yield all([
     SagaCheckEmailDup(),
     SagaCheckNickDup(),
     SagaCheckVerifyCode(),
     SagaEmailVerify(),
     SagaSignin(),
-  ];
+  ]);
 }
 
 export default signinSaga;

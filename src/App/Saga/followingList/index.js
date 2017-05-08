@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import { normalize } from 'normalizr';
@@ -35,9 +35,9 @@ function* SagaSaveFollowingFilter() {
 }
 
 function* followingList() {
-  yield [
+  yield all([
     SagaSaveFollowingFilter(),
-  ];
+  ]);
 }
 
 export default followingList;

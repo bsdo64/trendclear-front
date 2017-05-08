@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import {
@@ -80,11 +80,11 @@ function* SagaCheckPointCharge() {
 }
 
 function* user() {
-  yield [
+  yield all([
     SagaCheckPointCharge(),
     SagaMoreAccountList(),
     SagaGetMoreChargeLogList(),
-  ];
+  ]);
 }
 
 export default user;

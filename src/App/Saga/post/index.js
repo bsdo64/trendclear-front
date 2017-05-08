@@ -1,7 +1,6 @@
+import { all, take, put, call } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
 import { post } from '../../../Model/normalizr/schema';
-
-import { take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import {
@@ -176,7 +175,7 @@ function* SagaMoreList() {
 }
 
 function* postSaga() {
-  yield [
+  yield all([
     SagaGetMeta(),
     SagaUpdatePost(),
     SagaRemoveUnusingImage(),
@@ -184,7 +183,7 @@ function* postSaga() {
     SagaLikePost(),
     SagaInitList(),
     SagaSubmitPost(),
-  ];
+  ]);
 }
 
 export default postSaga;

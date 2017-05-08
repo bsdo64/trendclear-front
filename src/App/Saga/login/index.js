@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import {
@@ -58,10 +58,10 @@ function* SagaLogin() {
 }
 
 function* login() {
-  yield [
+  yield all([
     SagaLogin(),
     SagaLogout(),
-  ];
+  ]);
 }
 
 export default login;

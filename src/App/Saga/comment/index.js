@@ -1,7 +1,6 @@
+import { all, take, put, call } from 'redux-saga/effects';
 import { normalize } from 'normalizr';
 import { post, comment, subComment } from '../../../Model/normalizr/schema';
-
-import { take, put, call } from 'redux-saga/effects';
 import Api from '../../../Utils/ApiClient';
 
 import {
@@ -156,14 +155,14 @@ function* SagaLikeComment() {
 }
 
 function* commentSaga() {
-  yield [
+  yield all([
     SagaLikeComment(),
     SagaLikeSubComment(),
     SagaSubmitComment(),
     SagaUpdateComment(),
     SagaSubmitSubComment(),
     SagaUpdateSubComment(),
-  ];
+  ]);
 }
 
 export default commentSaga;
