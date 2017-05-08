@@ -20,6 +20,9 @@ class SettingProfile extends React.Component {
       date: d.get('date'),
     };
 
+    this.successMessage = null;
+    this.errorMessage = null;
+
     this.createYear = this.createYear.bind(this);
     this.createMonth = this.createMonth.bind(this);
     this.createDate = this.createDate.bind(this);
@@ -104,7 +107,7 @@ class SettingProfile extends React.Component {
 
   closeMessageBox(successType) {
 
-    $(this.refs[successType + 'Message'])
+    $(this[successType + 'Message'])
       .closest('.message')
       .transition('fade');
 
@@ -117,7 +120,7 @@ class SettingProfile extends React.Component {
 
     if (errMessage) {
       return (
-        <div ref="errorMessage" className="ui error message">
+        <div ref={r => this.errorMessage = r} className="ui error message">
           <i className="close icon"
              onClick={this.closeMessageBox.bind(this, 'error')}/>
           <ul className="list">
@@ -129,7 +132,7 @@ class SettingProfile extends React.Component {
 
     if (successMessage) {
       return (
-        <div ref="successMessage" className="ui icon small success message">
+        <div ref={r => this.successMessage = r} className="ui icon small success message">
           <i className="close icon"
              onClick={this.closeMessageBox.bind(this, 'success')}/>
           <i className="checkmark icon"/>
@@ -235,7 +238,7 @@ class SettingProfile extends React.Component {
 }
 
 SettingProfile.defaultProps = {
-  defaultYear: new Date() + 1900,
+  defaultYear: new Date().getYear() + 1900,
   defaultMonth: 12,
   defaultDate: 31,
 };
@@ -252,6 +255,9 @@ SettingProfile.propTypes = {
 class SettingPassword extends React.Component {
   constructor(props) {
     super(props);
+
+    this.successMessage = null;
+    this.errorMessage = null;
 
     this.closeMessageBox = this.closeMessageBox.bind(this);
     this.setErrorMessage = this.setErrorMessage.bind(this);
@@ -312,7 +318,7 @@ class SettingPassword extends React.Component {
 
   closeMessageBox(successType) {
 
-    $(this.refs[successType + 'Message'])
+    $(this[successType + 'Message'])
       .closest('.message')
       .transition('fade');
 
@@ -325,7 +331,7 @@ class SettingPassword extends React.Component {
 
     if (errMessage) {
       return (
-        <div ref="errorMessage" className="ui error message">
+        <div ref={r => this.errorMessage = r} className="ui error message">
           <i className="close icon"
              onClick={this.closeMessageBox.bind(this, 'error')}/>
           <ul className="list">
@@ -337,7 +343,7 @@ class SettingPassword extends React.Component {
 
     if (successMessage) {
       return (
-        <div ref="successMessage" className="ui icon small success message">
+        <div ref={r => this.successMessage = r} className="ui icon small success message">
           <i className="close icon"
              onClick={this.closeMessageBox.bind(this, 'success')}/>
           <i className="checkmark icon"/>

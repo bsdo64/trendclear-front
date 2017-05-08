@@ -4,6 +4,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 import styles from './index.css';
 
 import HomeMenuBoxConnect from './components/HomeMenuBox/index.js';
+import MyMenuBoxConnect from './components/MyMenuBox/index.js';
 import ClubMenuBoxConnect from './components/ClubMenuBox/index.js';
 import ExploreMenuBox from './components/ExploreMenuBox/index.js';
 import SubmitMenuBox from './components/SubmitMenuBox/index.js';
@@ -55,6 +56,12 @@ const LeftCol = (props) => {
       <LeftBar {...props} />
 
       <Switch>
+
+        {/* Activity */}
+        <Route path="/activity" component={MyMenuBoxConnect}/>
+
+        {/* Setting */}
+        <Route path="/setting" component={MyMenuBoxConnect}/>
 
         {/* Community */}
         <Route path="/club/:clubId" component={ClubMenuBoxConnect}/>

@@ -6,12 +6,14 @@ import Best from '../../containers/Contents/Best.js';
 import Collection from '../../containers/Contents/BestCollection.js';
 import CollectionIndex from '../Collection/index.js';
 import Club from '../../containers/Contents/Community.js';
-import Setting from '../../containers/Contents/ForumSetting';
+import ForumSetting from '../../containers/Contents/ForumSetting';
 import Explore from '../Explore/index.js';
 import Writing from '../Submit/index.js';
 import Search from '../Search/index.js';
 import User from '../User/index.js';
 import RightSide from '../../containers/RightSide/RightSide.js';
+import Activity from '../Activity/index.js';
+import Setting from '../../containers/Contents/Setting.js';
 
 const DefaultLayout = () => {
   return (
@@ -23,13 +25,24 @@ const DefaultLayout = () => {
         <div id="contents">
           <Switch>
 
+            {/* Activity */}
+            <Route exact path="/activity" component={Activity}/>
+            <Route exact path="/activity/likes" component={Activity}/>
+            <Route exact path="/activity/posts" component={Activity}/>
+            <Route exact path="/activity/comments" component={Activity}/>
+
+            {/* Setting */}
+            <Route exact path="/setting" component={Setting}/>
+            <Route exact path="/setting/password" component={Setting}/>
+            <Route exact path="/setting/profile" component={Setting}/>
+
             {/* Search */}
             <Route exact path="/search" component={Search}/>
 
             {/* Community */}
             <Route exact path="/collection" component={CollectionIndex}/>
             <Route path="/collection/:id" component={Collection}/>
-            <Route exact path="/club/settings" component={Setting}/>
+            <Route exact path="/club/settings" component={ForumSetting}/>
             <Route path="/club/:clubId" component={Club}/>
 
             {/* Gnb Menu Item*/}

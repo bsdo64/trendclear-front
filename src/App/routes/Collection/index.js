@@ -198,10 +198,10 @@ CollectionIndex.propTypes = {
 CollectionIndex.defaultProps = {};
 
 const mapStateToProps = (state) => {
-  const getStoreState = state.get('Stores');
+  const StoreState = state.get('Stores');
 
   return {
-    collectionList: getCollectionList(getStoreState)
+    collectionList: getCollectionList(StoreState)
   };
 };
 

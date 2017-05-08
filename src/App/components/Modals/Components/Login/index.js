@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import debug from 'debug';
 const errorLog = debug('vn:Components:Modal:Login:Form');
 
@@ -9,6 +9,8 @@ require('./index.scss');
 class Login extends React.Component {
   constructor(props) {
     super(props);
+
+    this.loginForm = null;
 
     this.handleRequestLogin = this.handleRequestLogin.bind(this);
     this.handleRequestLoginByEnter = this.handleRequestLoginByEnter.bind(this);
@@ -23,7 +25,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    $(this.refs.loginform)
+    $(this.loginForm)
       .form({
         inline: true,
         on: 'blur',
@@ -71,16 +73,22 @@ class Login extends React.Component {
   }
 
   handleRequestLogin() {
-    $(this.refs.loginform).form('validate form');
+    $(this.loginForm).form('validate form');
   }
 
   handleRequestSignin() {
-    $(this.refs.loginmodal).modal('hide');
+    const { history, FireToggleLoginModal } = this.props;
+
+    FireToggleLoginModal({
+      contentType: 'Login',
+    });
+
+    history.push('/signin');
   }
 
   afterOpenModal() {
     // references are now sync'd and can be accessed.
-    $(this.refs.loginform)
+    $(this.loginForm)
       .form({
         inline: true,
         on: 'blur',
@@ -153,7 +161,7 @@ class Login extends React.Component {
 
         <div id="tc_Content" role="main">
           <div id="mArticle">
-            <form className="ui form" ref="loginform">
+            <form className="ui form" ref={r => this.loginForm = r}>
               <div className="field">
                 <label>이메일</label>
                 <input type="text" name="loginEmail"/>
@@ -176,11 +184,9 @@ class Login extends React.Component {
               { loginError }
 
               <div className="login_append">
-                <Link to="/member/find" className="link_find">아이디 /
-                  비밀번호찾기</Link>
+                <Link to="/member/find" className="link_find">아이디 / 비밀번호찾기</Link>
                 <span className="txt_bar">|</span>
-                <Link to="/signin" onClick={this.handleRequestSignin}>회원
-                  가입하기</Link>
+                <a href="#" onClick={this.handleRequestSignin}>회원 가입하기</a>
               </div>
 
             </form>
@@ -202,9 +208,11 @@ class Login extends React.Component {
 
 Login.displayName = 'LoginModalBox';
 Login.propTypes =  {
+  history: PropTypes.object.isRequired,
   LoginStore: PropTypes.object.isRequired,
-    ModalStore: PropTypes.object.isRequired,
-    FireRequestLogin: PropTypes.func.isRequired,
+  ModalStore: PropTypes.object.isRequired,
+  FireRequestLogin: PropTypes.func.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default withRouter(Login);

@@ -74,7 +74,7 @@ class BigPost extends React.Component {
 
     const isLong = (post.get('height') > 0) && (post.get('height') > 1000);
     const contentStyle = cx([styles.postContent], {
-      shorten_post: isLong,
+      [styles.shortenPost]: isLong,
     });
 
     return (

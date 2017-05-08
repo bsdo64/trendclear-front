@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import LoginModalBox from '../../components/Modals/Components/Login/index';
 import {
   requestLogin,
+  toggleLoginModal
 } from '../../Actions/Login';
 
 class LoginModalContainer extends React.Component {
@@ -13,24 +14,22 @@ class LoginModalContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
-  };
-
-  const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
     LoginStore: getUIState('Login'),
     ModalStore: getUIState('Modal'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
   };
 };
 
-module.exports = connect(
+export default connect(
   mapStateToProps,
   {
+    FireToggleLoginModal: toggleLoginModal,
     FireRequestLogin: requestLogin,
   }
 )(LoginModalContainer);
