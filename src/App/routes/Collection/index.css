@@ -22,3 +22,67 @@
     }
   }
 }
+
+.myCollectionListItem {
+
+  & > span.titleText {
+    cursor: pointer;
+
+    & > a {
+      color: black;
+    }
+  }
+
+  &:hover {
+    background: #f7f7f7;
+
+    & .trashItem {
+      display: block;
+    }
+  }
+}
+
+.trashItem {
+  float: right;
+  display: none;
+  cursor: pointer;
+
+  & > i:global(.fa-trash) {
+    color: #aaa;
+  }
+}
+
+span.createCollectionButton {
+  cursor: pointer;
+}
+
+.createCollectionBox {
+  width: 260px;
+  margin-left: 10px;
+
+  & > .boxItem {
+    padding: 10px;
+
+    & > label {
+      font-weight: bold;
+      padding-right: 10px;
+    }
+  }
+
+  & > button {
+    position: relative;
+    left: 120px;
+  }
+}
+
+.privateBox {
+  display: inline-block;
+}
+
+.collectionInputText {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  outline: none;
+  width: 200px;
+}
