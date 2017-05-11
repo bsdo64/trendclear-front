@@ -67,7 +67,10 @@ const initRouteState = (/* store */) => dispatch => action => {
           assign(resBody, {
             Posts: normalized.entities.posts,
             Users: normalized.entities.author,
-            ListStore: { collectionBestPostList: normalized.result },
+            ListStore: {
+              collectionBestPostList: normalized.result,
+              collection: resBody.CollectionBestPostStore.collection
+            },
             PaginationStore: { collectionBestPostList: collectionBestPostListPagination },
           });
         }

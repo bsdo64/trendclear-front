@@ -18,7 +18,7 @@ export const forumFollowed = createSelector(
   [getForums, getUser],
   (forums, user) => {
     if (!user) {
-      return new List([]);
+      return forums;
     }
 
     const ForumIds = user.get('follow_forums');
@@ -75,3 +75,4 @@ export const getCollectionList = createSelector(
     }
   },
 );
+

@@ -27,6 +27,9 @@ class EditorBox extends React.Component {
       loadedUrlMeta: null,
     };
 
+    this.postEditor = null;
+    this.urlInput = null;
+
     this.toggleAnnounce = this.toggleAnnounce.bind(this);
     this.handleContent = this.handleContent.bind(this);
     this.submitPost = this.submitPost.bind(this);
@@ -47,7 +50,7 @@ class EditorBox extends React.Component {
   componentDidMount() {
     // set leave delete
 
-    const dom = this.refs.post_editor;
+    const dom = this.postEditor;
     this.editor = new MediumEditor(dom, medium);  // eslint-disable-line no-undef
     this.editor.subscribe('editableInput', () => {
       this.handleContent();
@@ -118,8 +121,8 @@ class EditorBox extends React.Component {
 
     this.props.FireHandlePostContent({
       content: el,
-      width: this.refs.post_editor.offsetWidth,
-      height: this.refs.post_editor.offsetHeight,
+      width: this.postEditor.offsetWidth,
+      height: this.postEditor.offsetHeight,
     });
   }
 
@@ -209,7 +212,7 @@ class EditorBox extends React.Component {
 
   getUrlPost() {
 
-    const url = this.refs.url_input.value.trim();
+    const url = this.urlInput.value.trim();
     this.props.FireRequestGetPostMeta({url});
   }
 
@@ -227,7 +230,7 @@ class EditorBox extends React.Component {
 
     return (
       <div className="url-meta-data-box">
-        <a href={urlMetaData.get('url')} target="_blank">
+        <a href={urlMetaData.get('url')} target="_blank" rel='noopener noreferrer'>
           <div className="ui items">
             <div className="item">
               {
@@ -360,11 +363,11 @@ class EditorBox extends React.Component {
 
         <div className="ui labeled icon menu editor-type-menu">
           <a className={editorActive} onClick={this.selectEditor}>
-            <i className="pencil icon"></i>
+            <i className="pencil icon"/>
             에디터
           </a>
           <a className={urlActive} onClick={this.selectUrl}>
-            <i className="chain icon"></i>
+            <i className="chain icon"/>
             URL
           </a>
         </div>
@@ -373,11 +376,11 @@ class EditorBox extends React.Component {
           <div id="post_editor_background">
             <div className="editor_left_padding">
               <div
-                ref="post_editor"
+                ref={r => this.postEditor = r}
                 className="post_editor"
                 id="post_editor"
                 placeholder="텍스트를 입력하세요"
-              ></div>
+              />
             </div>
           </div>
 
@@ -401,7 +404,7 @@ class EditorBox extends React.Component {
 
         <div className={displayUrl}>
           <div className="ui action input">
-            <input ref="url_input" type="text" placeholder="주소를 입력하세요"/>
+            <input ref={r => this.urlInput = r} type="text" placeholder="주소를 입력하세요"/>
             <button className="ui button" onClick={this.getUrlPost}>확인</button>
           </div>
 
@@ -472,6 +475,8 @@ class SubmitContents extends React.Component {
   constructor(props) {
     super(props);
 
+    this.inputTitle = null;
+
     this.handleTitle = this.handleTitle.bind(this);
     this.handlePrefix = this.handlePrefix.bind(this);
   }
@@ -487,7 +492,7 @@ class SubmitContents extends React.Component {
   }
 
   handleTitle() {
-    this.props.FireHandlePostTitle(this.refs.title.value);
+    this.props.FireHandlePostTitle(this.inputTitle.value);
   }
 
   handlePrefix(option) {
@@ -587,7 +592,7 @@ class SubmitContents extends React.Component {
                       />
                     }
                     <div className="ui input">
-                      <input ref="title"
+                      <input ref={r => this.inputTitle = r}
                              id="post_submit_title"
                              type="text"
                              placeholder="제목을 입력하세요"

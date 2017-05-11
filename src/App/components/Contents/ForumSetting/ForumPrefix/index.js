@@ -236,7 +236,7 @@ class ForumPrefix extends React.Component {
 
       return (
         <div className="ui container forum-prefix"
-             style={{margin: 10, width: 700}}>
+             style={{padding: 10 }}>
           <div className="ui segments ">
             <div className="ui segment">
               <h3 className="ui header">말머리 설정</h3>

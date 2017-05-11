@@ -1,0 +1,10 @@
+:global(.__react_component_tooltip) {
+
+  & div:global(.ui.list) div:global(.item) div:global(.image).itemImage {
+    background: #fff;
+    padding: 0;
+    width: 43px;
+    border: 2px solid #007470;
+    border-radius: 3px;
+  }
+}

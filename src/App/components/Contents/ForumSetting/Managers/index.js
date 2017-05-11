@@ -95,28 +95,28 @@ class Managers extends React.Component {
     const managerIds = forum.get('managers');
 
     return (
-      <div className="ui container" style={{margin: 10, width: 700}}>
+      <div className="ui container" style={{padding: 10}}>
         <div className="ui segments ">
           <div className="ui segment">
-            <h3 className="ui header">메니저 설정</h3>
+            <h3 className="ui header">매니저 설정</h3>
             <div className="ui divider"></div>
             <div className="ui list">
               <a className="item">
                 <i className="right triangle icon"></i>
                 <div className="content">
-                  <div className="header">메니저를 설정하고 커뮤니티를 활성화하세요</div>
-                  <div className="description">누구나 메니저가 될 수 있습니다</div>
+                  <div className="header">매니저를 설정하고 커뮤니티를 활성화하세요</div>
+                  <div className="description">누구나 매니저가 될 수 있습니다</div>
                 </div>
               </a><a className="item"><i className="help icon"></i>
               <div className="content">
-                <div className="description">게시판 개설자는 최초의 메니저가 됩니다</div>
+                <div className="description">게시판 개설자는 최초의 매니저가 됩니다</div>
               </div>
             </a>
             </div>
             <div className="ui two column grid">
               <div className="row">
                 <div className="column">
-                  <h4>메니저 추가</h4>
+                  <h4>매니저 추가</h4>
                   <div className="ui search">
                     <div className="ui left icon input">
                       <input className="prompt" type="text"
@@ -126,7 +126,7 @@ class Managers extends React.Component {
                   </div>
                 </div>
                 <div className="column">
-                  <h4>메니저 리스트</h4>
+                  <h4>매니저 리스트</h4>
                   <div className="ui list">
                     {
                       managerIds &&

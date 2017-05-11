@@ -82,21 +82,23 @@ class BanList extends React.Component {
     const banUserIds = forum.get('bans');
 
     return (
-      <div className="ui container" style={{margin: 10, width: 700}}>
+      <div className="ui container" style={{padding: 10}}>
         <div className="ui segments ">
           <div className="ui segment"><h3 className="ui header">벤 유저 설정</h3>
-            <div className="ui divider"></div>
-            <div className="ui list"><a className="item"><i
-              className="right triangle icon"></i>
-              <div className="content">
-                <div className="header">베나클과 커뮤니티의 목적에 맞지 않는 유저를 영구 벤 할수 있습니다
+            <div className="ui divider"/>
+            <div className="ui list">
+              <a className="item">
+                <i className="right triangle icon"/>
+                <div className="content">
+                  <div className="header">베나클과 커뮤니티의 목적에 맞지 않는 유저를 영구 벤 할수 있습니다</div>
                 </div>
-              </div>
-            </a><a className="item"><i className="help icon"></i>
-              <div className="content">
-                <div className="description">관리자가 허용하기 전까지 게시판의 접속이 불가합니다</div>
-              </div>
-            </a>
+              </a>
+              <a className="item">
+                <i className="help icon"/>
+                <div className="content">
+                  <div className="description">관리자가 허용하기 전까지 게시판의 접속이 불가합니다</div>
+                </div>
+              </a>
             </div>
             <div className="ui two column grid">
               <div className="row">

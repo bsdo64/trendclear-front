@@ -6,3 +6,8 @@ export const getSearch = createSelector(
   getGlobalSearch,
   SearchState => SearchState,
 );
+
+export const getSearchQueryRankList = createSelector(
+  [getGlobalSearch],
+  SearchState => SearchState.get('queryRankList')
+);

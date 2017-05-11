@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
-
-const rebuildTooltip = function rebuildTooltip(itemCode) {
-  this.props.FireShowItemInfo(itemCode);
-  ReactTooltip.rebuild();
-};
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const Inventory = (props) => {
+
+  const rebuildTooltip = function (itemCode) {
+    props.FireShowItemInfo(itemCode);
+    ReactTooltip.rebuild();
+  };
 
   function createTableColum(venatemId = '', c) {
     const {Venatems, Items} = props;
@@ -95,12 +96,11 @@ const Inventory = (props) => {
           <li>뱃지</li>
           <li>이모티콘</li>
         </ul>
-        <div className="inventory_scroll">
-          {
-            table
-          }
-        </div>
-
+        <Scrollbars autoHeight autoHeightMax={300} autoHeightMin={300} autoHide>
+          <div className="inventory_scroll">
+            {table}
+          </div>
+        </Scrollbars>
       </div>
     </div>
   );

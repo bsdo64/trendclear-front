@@ -17,12 +17,21 @@ import j from 'jquery';
 
 require('./CommunityContents.scss');
 class PostList extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.trimContent = this.trimContent.bind(this);
+  }
   componentDidMount() {
     $('.ui.embed').embed();
   }
 
   componentDidUpdate() {
     $('.ui.embed').embed('refresh');
+  }
+
+  trimContent(content) {
+    return $(content).text().trim().slice(0, 100);
   }
 
   render() {
@@ -64,9 +73,8 @@ class PostList extends React.PureComponent {
           <div style={{display: 'flex', padding: 5}}>
             {
               item.get('has_img') &&
-              <div style={{width: 80}}>
+              <div style={{width: 80, height: 50, overflow: 'hidden' }}>
                 <img
-                  style={{width: 80}}
                   src={`/image/uploaded/files/small/${item.get('has_img')}`} />
               </div>
             }
@@ -75,13 +83,15 @@ class PostList extends React.PureComponent {
               className="article_title"
               style={{fontWeight: 'bold', fontSize: 14}}
               to={defaultPageUrl}>
-              {title}
+
+                {prefix && `[${prefix.get('name')}] `}
+                {title}
               </Link>
               <div style={{color: '#828282'}}>
                 {author.get('nick')} | {created_at}
               </div>
               <div style={{wordBreak: 'break-word', fontSize: 13}}>
-                {j(item.get('content')).text().trim().slice(0, 100)}
+                {this.trimContent(item.get('content'))}
               </div>
             </div>
           </div>
@@ -329,8 +339,7 @@ class Forum extends React.Component {
 
                         {
                           userId && isLogin &&
-                          <Dropdown className="subscribe_dropdown"
-                                    ref="subscribe_dropdown">
+                          <Dropdown className="subscribe_dropdown">
                             <DropdownTrigger
                               className="ui button basic tiny right floated">
                               <i className="fa fa-share"/>
@@ -394,7 +403,7 @@ class Forum extends React.Component {
                         {forum.get('description')}
                       </div>
                       <div className="meta forum_meta">
-                        <div className="managers">{'메니저: '}
+                        <div className="managers">{'매니저: '}
                           {
                             managersIds.map((userId, index) => {
                               const user = Users.get(userId.toString());
@@ -451,12 +460,7 @@ class Forum extends React.Component {
               <table className="ui table very compact">
                 <thead>
                 <tr>
-                  <th className="center aligned collapsing">말머리</th>
-                  <th className="center aligned collapsing">좋아요</th>
-                  <th className="center aligned collapsing">조회</th>
-                  <th className="center aligned">제목</th>
-                  <th className="center aligned collapsing">글쓴이</th>
-                  <th className="center aligned collapsing">등록일</th>
+                  <th className="center aligned">포스트</th>
                 </tr>
                 </thead>
                 <tbody>

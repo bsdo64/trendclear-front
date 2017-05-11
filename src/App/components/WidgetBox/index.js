@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../../containers/Util/func.js';
 import WidgetBox from './WidgetBox.js';
 import { UI, Domains } from '../../Reducers/InitialStates/index.js';
 import {
   requestPurchaseItem,
   requestShoppingItemInit,
-  showItemInfo,
   toggleConfirmPurchaseItemModal,
   toggleVenacleStoreModal,
 } from '../../Actions/VenacleStore.js';
@@ -56,12 +54,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(
+export default connect(
   mapStateToProps,
   {
     FireRequestPurchaseItem: requestPurchaseItem,
     FireRequestShoppingItemInit: requestShoppingItemInit,
-    FireShowItemInfo: showItemInfo,
     FireToggleAvatarModal: toggleAvatarModal,
     FireToggleConfirmPurchaseItemModal: toggleConfirmPurchaseItemModal,
     FireToggleShowInventory: toggleShowInventory,

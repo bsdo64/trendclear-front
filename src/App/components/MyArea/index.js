@@ -121,7 +121,7 @@ class NotiButtons extends Component {
               <div className="xQb">알림</div>
             </div>
 
-            <Scrollbars style={{ height: 300 }}>
+            <Scrollbars autoHide style={{ height: 300 }}>
               <div className="ui feed ">
                 {
                   Noti &&

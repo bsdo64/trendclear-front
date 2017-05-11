@@ -72,7 +72,7 @@ class Announce extends React.Component {
       }
 
       return (
-        <div className="ui container announce" style={{margin: 10, width: 700}}>
+        <div className="ui container announce" style={{padding: 10}}>
           <div className="ui segments ">
             <div className="ui segment">
               <h3 className="ui header">공지글 설정</h3>

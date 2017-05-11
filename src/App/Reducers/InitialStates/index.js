@@ -85,6 +85,8 @@ export const UI = {
   RemoveModal: Map({}),
   Search: Map({
     query: null,
+    requestRank: false,
+    queryRankList: List([])
   }),
   UserSetting: Map({}),
   ShareLink: Map({

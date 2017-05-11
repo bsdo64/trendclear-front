@@ -1,78 +1,52 @@
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import cx from 'classnames';
+import { Link } from 'react-router-dom';
+import { Scrollbars } from 'react-custom-scrollbars';
+import { forumFollowed } from '../../Selectors/User.js';
 import style from './index.css';
-
-const clubData = [
-  {
-    imgSrc: 'http://placehold.it/40x40',
-    title: '나는열네지금부터열다섯자입다',
-    subTitle: '너희에게 먼저 말해야겠어',
-  },
-  {
-    imgSrc: 'http://placehold.it/40x40',
-    title: '우리집 안녕',
-    subTitle: '너희에게 먼저 말해야겠어',
-  },
-  {
-    imgSrc: 'http://placehold.it/40x40',
-    title: '우리집 안녕',
-    subTitle: '너희에게 먼저 말해야겠어',
-  },
-  {
-    imgSrc: 'http://placehold.it/40x40',
-    title: '우리집 안녕',
-    subTitle: '너희에게 먼저 말해야겠어',
-  },
-  {
-    imgSrc: 'http://placehold.it/40x40',
-    title: '우리집 안녕',
-    subTitle: '너희에게 먼저 말해야겠어',
-  },
-  {
-    imgSrc: 'http://placehold.it/40x40',
-    title: '우리집 안녕',
-    subTitle: '너희에게 먼저 말해야겠어',
-  },
-  {
-    imgSrc: 'http://placehold.it/40x40',
-    title: '우리집 안녕',
-    subTitle: '너희에게 먼저 말해야겠어',
-  },
-];
 
 class FollowingList extends Component {
   render() {
+
+    const { followingForum } = this.props;
+
     return (
       <div className={cx([style.followingList, style.widgetBox])}>
         <div style={{fontWeight: 'bold', paddingBottom: 5}}>팔로잉 리스트</div>
 
         <div style={{paddingBottom: 5}}>
           클럽
-          <ul style={{margin: 0, padding: 0, listStyle: 'none'}}>
-            {clubData.map((v, i) => {
-              return (
-                <li key={i} style={{padding: '5px 0'}}>
-                  <div style={{
-                    display: 'inline-block',
-                    float: 'left',
-                    paddingRight: 5,
-                  }}>
-                    <img src={v.imgSrc}/>
-                  </div>
-                  <div>
-                    <h4
-                      style={{marginBottom: 4, fontSize: '1em'}}>{v.title}</h4>
-                    <p>{v.subTitle}</p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+          <Scrollbars
+            autoHide
+            autoHeight
+            autoHeightMax={300}
+          >
+            <ul style={{margin: 0, padding: 0, listStyle: 'none'}}>
+              {followingForum.sortBy(v => v.get('title')).map((forum, i) => {
+                return (
+                  <li key={i} style={{padding: '3px 0'}}>
+                    <div style={{
+                      display: 'inline-block',
+                      float: 'left',
+                      paddingRight: 5,
+                    }}>
+                      <img src="http://placehold.it/16x16"/>
+                    </div>
+                    <div>
+                      <h4 style={{marginBottom: 4, fontSize: '1em'}}>
+                        <Link to={`/club/${forum.get('id')}`}>{forum.get('title')}</Link>
+                      </h4>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </Scrollbars>
         </div>
 
-        <div style={{paddingBottom: 5}}>
+        {/*<div style={{paddingBottom: 5}}>
           태그
           <div>
             <span style={{paddingRight: 5}}>#우리집</span>
@@ -82,8 +56,9 @@ class FollowingList extends Component {
             <span style={{paddingRight: 5}}>#우리집</span>
             <span style={{paddingRight: 5}}>#우리집</span>
           </div>
-        </div>
+        </div>*/}
 
+{/*
         <div style={{paddingBottom: 5}}>
           유저
           <div>
@@ -113,12 +88,32 @@ class FollowingList extends Component {
             </span>
           </div>
         </div>
+*/}
       </div>
     );
   }
 }
 
-FollowingList.propTypes = {};
+FollowingList.propTypes = {
+  followingForum: PropTypes.object
+};
 FollowingList.defaultProps = {};
 
-export default FollowingList;
+const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
+  const getUIState = function getUIState(args) {
+    return state.getIn(['Stores', 'UI'].concat(args));
+  };
+
+  return {
+    AuthStore: getUIState('Auth'),
+    followingForum: forumFollowed(StoreState)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+
+  }
+)(FollowingList);

@@ -150,3 +150,9 @@ body {
     }
   }
 }
+
+.ReactModalPortal {
+  .ReactModal__Overlay {
+    z-index: 100;
+  }
+}

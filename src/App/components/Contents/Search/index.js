@@ -175,12 +175,13 @@ class SearchBox extends React.Component {
     return (
       <div id="best_contents">
 
-        <div id="search_forum_list">
+        {
+          searchForumList && searchForumList.length > 0 &&
+          <div id="search_forum_list">
           <h4>게시판</h4>
           <div className="search-forum-box">
             <ul className="search-forum-list">
               {
-                searchForumList &&
                 searchForumList.map(forumId => {
                   const forum = Forums.get(forumId.toString());
                   if (!forum) return null;
@@ -219,13 +220,12 @@ class SearchBox extends React.Component {
                               <div className="content">
                                 <div className="header">
                                   <Link
-                                    to={`/community?forumId=${forumId}`}>{forum.get(
-                                    'title')}</Link>
+                                    to={`/club/${forumId}`}>{forum.get('title')}</Link>
 
                                   {
                                     (userId === creator.get('id')) &&
                                     <Link
-                                      to={`/community/settings?forumId=${forumId}`}
+                                      to={`/club/settings?forumId=${forumId}`}
                                       className="ui button primary basic tiny right floated">
                                       <i className="fa fa-gear"/>
                                       {' 설정'}
@@ -234,8 +234,7 @@ class SearchBox extends React.Component {
 
                                   {
                                     userId && isLogin &&
-                                    <Dropdown className="subscribe_dropdown"
-                                              ref="subscribe_dropdown">
+                                    <Dropdown className="subscribe_dropdown">
                                       <DropdownTrigger
                                         className="ui button primary basic tiny right floated">
                                         <i className="fa fa-share"/>
@@ -315,6 +314,7 @@ class SearchBox extends React.Component {
             </div>
           </div>
         </div>
+        }
 
         <SearchHeader posts={searchPosts}/>
 

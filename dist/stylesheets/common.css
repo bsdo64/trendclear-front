@@ -105,3 +105,6 @@ body {
       width: 250px;
       min-height: 150px;
       position: relative; }
+
+.ReactModalPortal .ReactModal__Overlay {
+  z-index: 100; }

@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
-import Draggable from 'react-draggable'; // The default
 import accounting from 'accounting';
 import CountUp from 'countup.js';
 import moment from '../Lib/MomentLib.js';
 import AvatarImage from '../AvatarImage';
-import Inventory from '../Inventory';
 
 class Timer extends React.Component {
   constructor(props) {
@@ -239,7 +237,6 @@ class TrendBox extends React.Component {
   render() {
     const {
       user, widgetBox,
-      ShoppingStore, InventoryStore, FireShowItemInfo, Inventories, Venatems, Items,
     } = this.props;
 
     const sex = user.getIn(['profile', 'sex']),
@@ -249,9 +246,6 @@ class TrendBox extends React.Component {
       grade_img = user.getIn(['grade', 'gradeDef', 'img']);
     let iconImg, gradeImg;
 
-    const findCommunityInventory = Inventories.find(
-      i => i.get('type') === 'community');
-
     if (icon_img) {
       iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
     }
@@ -259,11 +253,6 @@ class TrendBox extends React.Component {
     if (grade_img) {
       gradeImg = <img id="user_grade_img" src={'/images/' + grade_img}/>;
     }
-
-    const filterTooltipItem = ShoppingStore
-      .get('items')
-      .filter(item => item.get('code') === ShoppingStore.get('tooltipItemCode'))
-      .get(0);
 
     return (
       <div id="trend_box" className="widget">
@@ -325,8 +314,6 @@ class TrendBox extends React.Component {
                     <div className="exp_description">
                       {'('}
                       <span id="current_exp">{user.getIn(['trendbox', 'exp'])}</span>
-                      {'/'}
-                      <span id="next_exp">{user.getIn(['trendbox', 'next_exp'])}</span>
                       {')'}
                     </div>
                   </h4>
@@ -374,49 +361,6 @@ class TrendBox extends React.Component {
                     <i className="fa fa-folder-open"></i>
                     <span className="item_col">인벤토리</span>
                   </div>
-
-                  <ReactTooltip
-                    id="item"
-                    effect="solid"
-                    place="bottom"
-                    afterShow={this.showItemTooltip}
-                    afterHide={this.closeItemTooltip}
-                  >
-                    {
-                      ShoppingStore.get('tooltipItemCode') &&
-                      <div>
-                        <div className="ui horizontal list">
-                          <div className="item">
-                            <img className="ui mini circular image"
-                                 src={filterTooltipItem.get('image')}/>
-                            <div className="content">
-                              <div
-                                className="ui sub header">{filterTooltipItem.get(
-                                'title')}</div>
-                              <div className="meta level">레벨
-                                : {filterTooltipItem.get('attribute')
-                                  .get('available_level')}</div>
-                              <div className="meta cooltime">쿨타임
-                                : {filterTooltipItem.get('attribute')
-                                  .get('cooltime_sec')} 초
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <hr />
-                        {filterTooltipItem.get('attribute').get('description')}
-                      </div>
-                    }
-
-                    {
-                      ShoppingStore.get('tooltipItemCode') === null &&
-                      <div>
-                        <div className="ui active inverted dimmer">
-                          <div className="ui text loader">Loading</div>
-                        </div>
-                      </div>
-                    }
-                  </ReactTooltip>
                 </div>
               </div>
             </div>
@@ -438,28 +382,6 @@ class TrendBox extends React.Component {
             </div>
           </div>
         </div>
-        {
-          InventoryStore.get('openInventory') &&
-          <Draggable
-            defaultPosition={{x: 0, y: 0}}
-            position={null}
-            grid={[10, 10]}
-            zIndex={101}
-            onStart={this.handleStart}
-            onDrag={this.handleDrag}
-            onStop={this.handleStop}>
-            <div style={{position: 'absolute'}}>
-              <Inventory
-                positionStyle="drag"
-                inventory={findCommunityInventory}
-                Venatems={Venatems}
-                Items={Items}
-                ShoppingStore={ShoppingStore}
-                FireShowItemInfo={FireShowItemInfo}
-              />
-            </div>
-          </Draggable>
-        }
       </div>
     );
   }
@@ -468,14 +390,8 @@ class TrendBox extends React.Component {
 TrendBox.propTypes = {
   user: PropTypes.object.isRequired,
   widgetBox: PropTypes.object.isRequired,
-  InventoryStore: PropTypes.object.isRequired,
-  ShoppingStore: PropTypes.object.isRequired,
-  Venatems: PropTypes.object.isRequired,
-  Items: PropTypes.object.isRequired,
-  Inventories: PropTypes.object.isRequired,
   FireToggleVenacleStoreModal: PropTypes.func.isRequired,
   FireToggleAvatarModal: PropTypes.func.isRequired,
-  FireShowItemInfo: PropTypes.func.isRequired,
   FireRequestShoppingItemInit: PropTypes.func.isRequired,
   FireToggleShowInventory: PropTypes.func.isRequired,
   FireToggleTrendBox: PropTypes.func.isRequired,

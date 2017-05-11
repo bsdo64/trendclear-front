@@ -5,13 +5,16 @@ import ReactTooltip from 'react-tooltip';
 import AvatarImage from '../../../AvatarImage';
 import Inventory from '../../../Inventory';
 
-const rebuildTooltip = function rebuildTooltip(itemCode) {
-  this.props.FireShowItemInfo(itemCode);
-  ReactTooltip.rebuild();
-};
-
 require('./index.scss');
 const Shopping = props => {
+
+
+  const rebuildTooltip = function rebuildTooltip(itemCode) {
+    ReactTooltip.rebuild();
+    props.FireShowItemInfo(itemCode);
+  };
+
+
   function togglePurchaseWindow(item) {
     props.FireToggleConfirmPurchaseItemModal({
       item,
@@ -45,14 +48,10 @@ const Shopping = props => {
     iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
   }
 
-  // const filterTooltipItem = ShoppingStore
-  //   .get('items')
-  //   .filter(item => item.get('code') === ShoppingStore.get('tooltipItemCode'))
-  //   .get(0);
 
   return (
     <div style={{ top: '10%', height: 900, bottom: 0, zIndex: 102 }}>
-      <h2 ref="subtitle">베나클 스토어</h2>
+      <h2>베나클 스토어</h2>
 
       <div id="venacle_store">
         <div className="top_menu">
@@ -186,19 +185,16 @@ const Shopping = props => {
             </div>
             <div className="content">
               <div className="colum" style={{ paddingBottom: 5 }}>
-                <h4 className="ui description title"
-                    style={{ marginBottom: 5 }}>트랜드 포인트</h4>
+                <h4 className="ui description title" style={{ marginBottom: 5 }}>트랜드 포인트</h4>
                 <div className="point_line">
                   <span className="ui description">TP</span>
-                  <span id="tp_point"
-                        className="ui right floated point tp_point">{accounting.formatNumber(
-                    UserStore.getIn(['trendbox', 'T']))}</span>
+                  <span id="tp_point" className="ui right floated point tp_point">
+                    {accounting.formatNumber(UserStore.getIn(['trendbox', 'T']))}</span>
                 </div>
                 <div className="point_line">
                   <span className="ui description">RP</span>
-                  <span id="rp_point"
-                        className="ui right floated point rp_point">{accounting.formatNumber(
-                    UserStore.getIn(['trendbox', 'R']))}</span>
+                  <span id="rp_point" className="ui right floated point rp_point">
+                    {accounting.formatNumber(UserStore.getIn(['trendbox', 'R']))}</span>
                 </div>
               </div>
               <span className="ui right floated point rp_point">RP 충전</span>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../../containers/Util/func';
+import { getUser } from '../../Selectors/User.js';
 import Signin from './components/index.js';
 import { UI } from '../../Reducers/InitialStates';
 
@@ -30,17 +30,14 @@ SigninContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
 
-  const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args));
-  };
-
   return {
     SigninFormStore: getUIState('SigninForm'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
   };
 };
 

@@ -6,6 +6,8 @@ import styles from './index.css';
 import HomeMenuBoxConnect from './components/HomeMenuBox/index.js';
 import MyMenuBoxConnect from './components/MyMenuBox/index.js';
 import ClubMenuBoxConnect from './components/ClubMenuBox/index.js';
+import ClubSettingBoxConnect from './components/ClubSettingBox/index.js';
+import UserMenuBoxConnect from './components/UserMenuBoxConnect/index.js';
 import ExploreMenuBox from './components/ExploreMenuBox/index.js';
 import SubmitMenuBox from './components/SubmitMenuBox/index.js';
 import { getSeqPathName, activeStyle } from './func.js';
@@ -60,8 +62,19 @@ const LeftCol = (props) => {
         {/* Activity */}
         <Route path="/activity" component={MyMenuBoxConnect}/>
 
+        {/* User */}
+        <Route path="/user" component={UserMenuBoxConnect}/>
+
         {/* Setting */}
         <Route path="/setting" component={MyMenuBoxConnect}/>
+
+        {/* ClubSetting */}
+        <Route path="/club/settings" component={ClubSettingBoxConnect}/>
+        <Route path="/club/settings/forumInfo" component={ClubSettingBoxConnect}/>
+        <Route path="/club/settings/forumprefix" component={ClubSettingBoxConnect}/>
+        <Route path="/club/settings/announce" component={ClubSettingBoxConnect}/>
+        <Route path="/club/settings/managers" component={ClubSettingBoxConnect}/>
+        <Route path="/club/settings/banlist" component={ClubSettingBoxConnect}/>
 
         {/* Community */}
         <Route path="/club/:clubId" component={ClubMenuBoxConnect}/>
