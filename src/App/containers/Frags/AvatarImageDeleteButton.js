@@ -27,7 +27,7 @@ class AvatarImageDeleteButtonContainer extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   null,
   {
     FireRequestUserAvatarImageRemove: requestUserAvatarImageRemove,

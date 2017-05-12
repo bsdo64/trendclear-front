@@ -111,4 +111,4 @@ class AjaxApiClient {
   }
 }
 
-module.exports = new AjaxApiClient();
+export default new AjaxApiClient();

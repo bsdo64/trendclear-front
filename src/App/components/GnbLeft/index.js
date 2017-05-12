@@ -90,4 +90,4 @@ const LeftCol = (props) => {
   )
 };
 
-module.exports = LeftCol;
+export default LeftCol;

@@ -5,4 +5,4 @@ const UserPointMenu = <UserPoint />;
 
 UserPointMenu.displayName = 'UserPointMenu';
 
-module.exports = UserPointMenu;
+export default UserPointMenu;

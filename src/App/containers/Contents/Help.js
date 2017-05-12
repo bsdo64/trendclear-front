@@ -7,4 +7,4 @@ class ActivityContainer extends React.Component {
   }
 }
 
-module.exports = ActivityContainer;
+export default ActivityContainer;

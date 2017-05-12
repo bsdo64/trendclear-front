@@ -32,4 +32,4 @@ const RightSide = () => {
 RightSide.propTypes = {};
 RightSide.defaultProps = {};
 
-module.exports = RightSide;
+export default RightSide;

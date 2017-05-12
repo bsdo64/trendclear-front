@@ -25,4 +25,4 @@ InfiniteLoader.propTypes = {
   collection: PropTypes.object,
 };
 
-module.exports = InfiniteLoader;
+export default InfiniteLoader;

@@ -13,12 +13,14 @@ module.exports = {
   output: {
     path: path.resolve(root, './dist'),
     filename: 'bundle.js',
+    publicPath: "/"
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false,
     }),
+    new webpack.optimize.UglifyJsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),

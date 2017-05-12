@@ -7,4 +7,4 @@ class MenuContainer extends React.Component {
   }
 }
 
-module.exports = MenuContainer;
+export default MenuContainer;

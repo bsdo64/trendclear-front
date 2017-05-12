@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = withRouter(connect(
+export default withRouter(connect(
   mapStateToProps,
   {
     FireRequestValidateTitleForumCreate: requestValidateTitleForumCreate,

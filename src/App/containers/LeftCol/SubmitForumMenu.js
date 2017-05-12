@@ -4,4 +4,4 @@ import SubmitForumMenu from '../../components/LeftMenus/SubmitForumMenu';
 const SubmitCategoryMenu = <SubmitForumMenu />;
 SubmitCategoryMenu.displayName = 'SubmitCategoryMenu';
 
-module.exports = SubmitCategoryMenu;
+export default SubmitCategoryMenu;

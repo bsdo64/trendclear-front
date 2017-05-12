@@ -5,4 +5,4 @@ const AccountCategoryMenu = () => (
   <Account/>
 );
 
-module.exports = AccountCategoryMenu;
+export default AccountCategoryMenu;

@@ -5,4 +5,4 @@ const SubmitCategoryMenu = <SubmitPostMenu />;
 
 SubmitCategoryMenu.displayName = 'SubmitCategoryMenu';
 
-module.exports = SubmitCategoryMenu;
+export default SubmitCategoryMenu;

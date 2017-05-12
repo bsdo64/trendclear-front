@@ -317,4 +317,4 @@ CategoryNav.propTypes = {
   FireOpenSideCategory: PropTypes.func.isRequired,
   GnbStore: PropTypes.object.isRequired,
 };
-module.exports = CategoryNav;
+export default CategoryNav;

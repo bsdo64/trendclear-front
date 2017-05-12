@@ -63,4 +63,4 @@ MenuContainer.propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-module.exports = MenuContainer;
+export default MenuContainer;

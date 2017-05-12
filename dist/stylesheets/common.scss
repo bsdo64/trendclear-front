@@ -5,49 +5,61 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 100;
-  src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');
+  src: url('/fonts/NotoKR-Thin/notokr-thin.eot');
+  src: url('/fonts/NotoKR-Thin/notokr-thin.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/NotoKR-Thin/notokr-thin.woff2') format('woff2'),
+  url('/fonts/NotoKR-Thin/notokr-thin.woff') format('woff'),
+  url('/fonts/NotoKR-Thin/notokr-thin.ttf') format('ttf');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 300;
-  src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');
+  src: url('/fonts/NotoKR-Light/notokr-light.eot');
+  src: url('/fonts/NotoKR-Light/notokr-light.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/NotoKR-Light/notokr-light.woff2') format('woff2'),
+  url('/fonts/NotoKR-Light/notokr-light.woff') format('woff'),
+  url('/fonts/NotoKR-Light/notokr-light.ttf') format('ttf');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
-  src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');
+  src: url('/fonts/NotoKR-Medium/notokr-medium.eot');
+  src: url('/fonts/NotoKR-Medium/notokr-medium.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/NotoKR-Medium/notokr-medium.woff2') format('woff2'),
+  url('/fonts/NotoKR-Medium/notokr-medium.woff') format('woff'),
+  url('/fonts/NotoKR-Medium/notokr-medium.ttf') format('ttf');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
-  src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');
+  src: url('/fonts/NotoKR-Regular/notokr-regular.eot');
+  src: url('/fonts/NotoKR-Regular/notokr-regular.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/NotoKR-Regular/notokr-regular.woff2') format('woff2'),
+  url('/fonts/NotoKR-Regular/notokr-regular.woff') format('woff'),
+  url('/fonts/NotoKR-Regular/notokr-regular.ttf') format('ttf');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
-  src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');
+  src: url('/fonts/NotoKR-Bold/notokr-bold.eot');
+  src: url('/fonts/NotoKR-Bold/notokr-bold.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/NotoKR-Bold/notokr-bold.woff2') format('woff2'),
+  url('/fonts/NotoKR-Bold/notokr-bold.woff') format('woff'),
+  url('/fonts/NotoKR-Bold/notokr-bold.ttf') format('ttf');
 }
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 900;
-  src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),
-  url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');
+  src: url('/fonts/NotoKR-Black/notokr-Black.eot');
+  src: url('/fonts/NotoKR-Black/notokr-Black.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/NotoKR-Black/notokr-Black.woff2') format('woff2'),
+  url('/fonts/NotoKR-Black/notokr-Black.woff') format('woff'),
+  url('/fonts/NotoKR-Black/notokr-Black.ttf') format('ttf');
 }
 
 

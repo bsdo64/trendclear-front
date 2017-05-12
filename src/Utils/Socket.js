@@ -12,6 +12,6 @@ VenalinkSocket = manager.socket('/venalink', { reconnect: true });
 NotiSocket = manager.socket('/noti', { reconnect: true });
 PointSocket = manager.socket('/point', { reconnect: true });
 
-exports.Point = PointSocket;
-exports.Noti = NotiSocket;
-exports.Venalink = VenalinkSocket;
+export const Point = PointSocket;
+export const Noti = NotiSocket;
+export const Venalink = VenalinkSocket;

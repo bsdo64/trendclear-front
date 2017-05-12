@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import { UI } from '../InitialStates';
 import {
   SUCCESS_SAVE_FOLLOWING_FILTER,
@@ -83,7 +84,7 @@ const ListReducer = (state = UI.List, action) => {
     }
 
     case SUCCESS_GET_MORE_FORUM_LIST: {
-      return state.set('searchForumList', action.data.result);
+      return state.set('searchForumList', new List(action.data.result));
     }
 
     default:

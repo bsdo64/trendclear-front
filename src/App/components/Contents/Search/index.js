@@ -176,7 +176,7 @@ class SearchBox extends React.Component {
       <div id="best_contents">
 
         {
-          searchForumList && searchForumList.length > 0 &&
+          searchForumList && searchForumList.size > 0 &&
           <div id="search_forum_list">
           <h4>게시판</h4>
           <div className="search-forum-box">

@@ -8,5 +8,5 @@ class CompanyContainer extends React.Component {
   }
 }
 
-module.exports = connect()(CompanyContainer);
+export default connect()(CompanyContainer);
 

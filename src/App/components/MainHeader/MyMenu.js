@@ -18,7 +18,7 @@ class MyMenuContainer extends React.Component {
     const {LoginStore} = nextProps;
 
     if (this.props.LoginStore.get('isLogin') === false
-        && LoginStore.get('isLogin') === true) {
+      && LoginStore.get('isLogin') === true) {
       Noti.emit('join_room');
       Point.emit('join_room');
     }
@@ -53,7 +53,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(
+export default connect(
   mapStateToProps,
   {
     FireToggleLoginModal: toggleLoginModal,
