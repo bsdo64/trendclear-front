@@ -8,6 +8,7 @@ import Select from 'react-select';
 import cx from 'classnames';
 import qs from 'qs';
 // import Recaptcha from 'react-recaptcha';
+import { Link } from 'react-router-dom';
 import { medium, mediumInsertConfig } from './config';
 import AvatarImage from '../../AvatarImage';
 import SelectSearchForum from './SelectSearchForum';
@@ -565,13 +566,13 @@ class SubmitContents extends React.Component {
               {/* submit header */}
               <div className="submit_header">
                 <i className="fa fa-files-o" />
-                {forumInfo.get('title')}
+                <Link to={`/club/${forumInfo.get('id')}`} >{forumInfo.get('title')}</Link>
               </div>
 
               {/* header form */}
               <div className="post_header">
                 {/* avatar */}
-                <div className="ui image tiny">
+                <div className="ui image tiny" style={{width: 55}}>
                   <AvatarImage
                     sex={sex}
                     avatarImg={avatar_img}

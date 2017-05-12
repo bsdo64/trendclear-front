@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from '../../Lib/MomentLib';
+import moment from '../../../Lib/MomentLib';
 import debug from 'debug';
 const logger = debug('vn:front:error');
 

@@ -1,12 +1,12 @@
 import React from 'react';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../../../Selectors/User.js';
 import { connect } from 'react-redux';
-import ChargePointBox from '../../components/Contents/ChargePointBox';
+import ChargePointBox from './components/ChargePointBox.js';
 import {
   waitingCheckCharge,
   requestCheckPointCharge,
   failureCheckPointCharge,
-} from '../../Actions/Point';
+} from '../../../../Actions/Point';
 
 class ChargePoint extends React.Component {
   render() {
@@ -15,6 +15,7 @@ class ChargePoint extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
     ListStore: getUIState('List'),
     PaginationStore: getUIState('Pagination'),
     ChargePointStore: getUIState('ChargePoint'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Users: getDomainState('Users'),
   };

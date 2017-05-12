@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import accounting from 'accounting';
-import moment from '../../Lib/MomentLib';
-import TablePaginator from '../../Paginator/TablePagination';
+import moment from '../../../../../../../Lib/MomentLib';
+import TablePagination from '../../../../../../../components/Paginator/TablePagination';
 
 class ChargeLogListBox extends React.Component {
   constructor(props) {
@@ -180,7 +180,7 @@ class ChargeLogListBox extends React.Component {
           <tfoot>
           <tr>
             <th colSpan="7">
-              <TablePaginator
+              <TablePagination
                 totalPage={totalPage}
                 currentPage={this.state.page}
                 pageLimit={pageLimit}

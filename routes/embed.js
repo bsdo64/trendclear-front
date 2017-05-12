@@ -1,9 +1,6 @@
-'use strict';
-
-var express = require('express');
-var videoParser = require('js-video-url-parser');
-var metafetch = require('meta-resolver');
-
+const express = require('express');
+const videoParser = require('js-video-url-parser');
+const metafetch = require('meta-resolver');
 const Embeds = express.Router();
 
 Embeds.get('/oembed', (req, res, next) => {

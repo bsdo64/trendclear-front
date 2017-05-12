@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import marked from '../../Lib/Marked';
+import marked from '../../../Lib/Marked';
 import debug from 'debug';
 const submitFailLog = debug('vn:api:submitForum');
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from '../../../Lib/MomentLib';
+import moment from '../../../../Lib/MomentLib';
 import InputNumber from 'rc-input-number';
 import DatePicker from 'react-datepicker';
 
@@ -81,6 +81,7 @@ class ActivateVenalink extends React.Component {
 
   openPayment() {
     this.props.history.push('/user/chargePoint');
+    this.props.FireCloseModal();
   }
 
   toggleStoreModal() {
@@ -208,6 +209,7 @@ ActivateVenalink.propTypes = {
   Items: PropTypes.object.isRequired,
   FireRequestActivateVenalink: PropTypes.func.isRequired,
   FireToggleVenacleStoreModal: PropTypes.func.isRequired,
+  FireCloseModal: PropTypes.func.isRequired,
 };
 
 export default ActivateVenalink;

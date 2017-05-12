@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { fromJS } from 'immutable';
 import { Scrollbars } from 'react-custom-scrollbars';
 import cx from 'classnames';
-import marked from '../Lib/Marked';
+import marked from '../../Lib/Marked';
 import AvatarImage from '../AvatarImage';
 
 const RankList = (props) => {

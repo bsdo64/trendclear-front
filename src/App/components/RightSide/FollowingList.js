@@ -24,7 +24,7 @@ class FollowingList extends Component {
             autoHeightMax={300}
           >
             <ul style={{margin: 0, padding: 0, listStyle: 'none'}}>
-              {followingForum.sortBy(v => v.get('title')).map((forum, i) => {
+              {followingForum.sortBy(v => v.get('title')).valueSeq().map((forum, i) => {
                 return (
                   <li key={i} style={{padding: '3px 0'}}>
                     <div style={{
@@ -32,7 +32,7 @@ class FollowingList extends Component {
                       float: 'left',
                       paddingRight: 5,
                     }}>
-                      <img src="http://placehold.it/16x16"/>
+                      <i className="fa fa-file-o" />
                     </div>
                     <div>
                       <h4 style={{marginBottom: 4, fontSize: '1em'}}>

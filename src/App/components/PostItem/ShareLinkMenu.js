@@ -7,7 +7,7 @@ import Dropdown, {
   DropdownTrigger,
   DropdownContent,
 } from 'react-simple-dropdown';
-import moment from '../Lib/MomentLib';
+import moment from '../../Lib/MomentLib';
 
 import './LinkMenu.scss';
 

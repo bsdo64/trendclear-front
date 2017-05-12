@@ -3,7 +3,7 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import segmentize from 'segmentize';
 
-const Ellipsis = (
+const Ellipsis = () => (
   <a className="item"><i className="fa fa-ellipsis-h"/></a>
 );
 

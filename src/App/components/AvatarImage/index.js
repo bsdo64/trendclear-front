@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImageType from '../Lib/ImageType';
+import ImageType from '../../Lib/ImageType';
 import AvatarImageDeleteButton from '../../containers/Frags/AvatarImageDeleteButton';
 
 const AvatarImage = (props) => {

@@ -7,11 +7,10 @@ import Dropdown, {
   DropdownContent,
 } from 'react-simple-dropdown';
 import AvatarImage from '../../AvatarImage';
-import marked from '../../Lib/Marked';
-import MakeUrl from '../../Lib/MakeUrl';
+import marked from '../../../Lib/Marked';
+import MakeUrl from '../../../Lib/MakeUrl';
 import Paginator from '../../Paginator';
 import qs from 'qs';
-import j from 'jquery';
 
 // import AdForum1 from '../../Ad/AddForum1';
 

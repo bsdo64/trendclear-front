@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import accounting from 'accounting';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
-import moment from '../../Lib/MomentLib';
-import TablePagination from '../../Paginator/TablePagination';
+import moment from '../../../../../../../Lib/MomentLib';
+import TablePagination from '../../../../../../../components/Paginator/TablePagination';
 
 class PointListBox extends React.Component {
   constructor(props) {
@@ -247,7 +247,7 @@ class PointListBox extends React.Component {
 PointListBox.displayName = 'ChargePointBox';
 PointListBox.propTypes = {
   UserStore: PropTypes.object.isRequired,
-    FireRequestMoreAccountList: PropTypes.func,
+  FireRequestMoreAccountList: PropTypes.func,
 };
 
 export default PointListBox;

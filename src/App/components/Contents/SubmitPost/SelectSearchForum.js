@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import marked from '../../Lib/Marked';
+import marked from '../../../Lib/Marked';
 
 class SelectSearchForum extends React.Component {
   constructor(props) {

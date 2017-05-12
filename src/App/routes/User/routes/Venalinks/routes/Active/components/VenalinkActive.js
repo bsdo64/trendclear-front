@@ -1,75 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import accounting from 'accounting';
+import account from 'accounting';
 import moment from 'moment';
-import TablePagination from '../../Paginator/TablePagination';
+import TablePagination from '../../../../../../../components/Paginator/TablePagination';
 
-const VenalinkShare = props => {
-  function paybackRP(itemId) {
-    return () => props.FireRequestUserPaybackRP({
-      userVenalinkId: itemId,
-    });
-  }
+const VenalinkActive = props => {
+  function createVenalinkItem(venalink) {
 
-  function createVenalinkItem(participatedList) {
-    let status,
-      isTerminate,
-      hasPaybackRP = participatedList.get('has_payback_rp'),
-      venalink = participatedList.get('venalink');
-    switch (participatedList.get('venalink').get('is_activate')) {
+    let status, positive;
+    switch (venalink.get('is_activate')) {
       case true:
-        status = '활성화';
-        isTerminate = false;
+        status = '활성';
+        positive = 1;
         break;
       case false:
         status = '종료';
-        isTerminate = true;
+        positive = 0;
         break;
     }
 
-    const isActiveStyle = cx('center aligned one wide', {
-      positive: !isTerminate,
-      negative: isTerminate,
-    });
-
-    const canPayback = isTerminate && participatedList.get('paid_r') > 0;
-    const isDisabledRow = cx({
-      disabled: !(canPayback || !isTerminate) || hasPaybackRP,
+    const statusStyle = cx('center aligned', {
+      positive: positive,
+      negative: !positive,
     });
 
     return (
-      <tr className={isDisabledRow} key={participatedList.get('id')}>
-        <td>포스트</td>
-        <td className={isActiveStyle}>{status}</td>
+      <tr key={venalink.get('id')}>
+        <td className="center aligned">포스트</td>
+        <td className={statusStyle}>{status}</td>
+        <td className="center aligned">{moment(venalink.get('active_at'))
+          .format('YY/MM/DD HH:mm:ss')}</td>
         <td className="center aligned">{moment(venalink.get('terminate_at'))
           .format('YY/MM/DD HH:mm:ss')}</td>
         <td className="positive right aligned">{venalink.get(
           'participants').size}</td>
-        <td className="positive right aligned">{accounting.formatNumber(
-          participatedList.get('count_visitor'))}</td>
-        <td className="right aligned">
-          {
-            (!isTerminate || participatedList.get('paid_r') <= 0 ||
-            hasPaybackRP) &&
-            <b>{accounting.formatNumber(participatedList.get('paid_r'))}</b>
-          }
-
-          {
-            isTerminate && participatedList.get('paid_r') > 0 &&
-            !hasPaybackRP &&
-            <div className="ui button primary tiny"
-                 onClick={paybackRP(participatedList.get('id'))}
-            >
-              {
-                accounting.formatNumber(participatedList.get('paid_r')) +
-                'RP 받기'
-              }
-            </div>
-          }
-
-        </td>
-        <td className="right aligned">{accounting.formatNumber(
+        <td className="right aligned ">{account.formatNumber(
+          venalink.get('total_amount_r'))}</td>
+        <td className="right aligned">{venalink.get('pay_per_click_r')}</td>
+        <td className="positive right aligned">{venalink.get('total_pay_r') /
+        venalink.get('pay_per_click_r')}</td>
+        <td className="right aligned">{account.formatNumber(
+          venalink.get('total_pay_r'))}</td>
+        <td className="right aligned">{account.formatNumber(
           venalink.get('total_remain_r'))}</td>
       </tr>
     );
@@ -80,7 +53,7 @@ const VenalinkShare = props => {
   }
 
   const {UserStore} = props;
-  const participatedVenalinks = UserStore.get('participatedVenalinks');
+  const venalinks = UserStore.get('venalinks');
 
   return (
     <div>
@@ -88,7 +61,7 @@ const VenalinkShare = props => {
         <div className="card" style={{width: '100%'}}>
           <div className="content">
             <div className="header">
-              베나링크 참여 현황
+              베나링크 활성화 현황
             </div>
             <div className="description">
               <div className="ui two statistics">
@@ -113,7 +86,7 @@ const VenalinkShare = props => {
                     1,200
                   </div>
                   <div className="label">
-                    평균 습득 RP
+                    평균 사용 RP
                   </div>
                 </div>
                 <div className="statistic">
@@ -121,7 +94,7 @@ const VenalinkShare = props => {
                     1,200,023
                   </div>
                   <div className="label">
-                    총 습득 RP
+                    총 사용 RP
                   </div>
                 </div>
               </div>
@@ -132,25 +105,31 @@ const VenalinkShare = props => {
           </div>
         </div>
       </div>
+
       <div style={{padding: 10}}>
-        <h4>베나링크 참여 리스트</h4>
+        <h4>베나링크 활성화 리스트</h4>
         <table className="ui celled table" style={{fontSize: 12}}>
           <thead>
           <tr>
             <th className="center aligned" style={{width: 60}}>타입</th>
-            <th className="center aligned">상태</th>
-            <th className="center aligned three wide">종료 시간</th>
+            <th className="center aligned one wide">상태</th>
+            <th className="center aligned" style={{width: 82}}>활성화<br />시간
+            </th>
+            <th className="center aligned" style={{width: 82}}>종료 시간</th>
             <th className="center aligned" style={{width: 70}}>참여<br />유저(명)
             </th>
-            <th className="center aligned">나의 베나링크<br/>순 방문(명)</th>
-            <th className="center aligned">지급(예정) RP</th>
+            <th className="center aligned">활성 RP</th>
+            <th className="center aligned" style={{width: 70}}>방문당<br/>지급 RP
+            </th>
+            <th className="center aligned">순 방문<br/>(명)</th>
+            <th className="center aligned">총 지급 RP</th>
             <th className="center aligned">남은 RP</th>
           </tr>
           </thead>
           <tbody>
           {
-            participatedVenalinks &&
-            participatedVenalinks.map(createVenalinkItem)
+            venalinks &&
+            venalinks.map(createVenalinkItem)
           }
           </tbody>
           <tfoot>
@@ -159,7 +138,7 @@ const VenalinkShare = props => {
               <TablePagination
                 totalPage={10}
                 currentPage={1}
-                pageLimit={1}
+                pageLimit={10}
                 onClickPage={handleClickPage}
               />
             </th>
@@ -171,9 +150,8 @@ const VenalinkShare = props => {
   );
 };
 
-VenalinkShare.propTypes = {
+VenalinkActive.propTypes = {
   UserStore: PropTypes.object.isRequired,
-    FireRequestUserPaybackRP: PropTypes.func.isRequired,
 };
 
-export default VenalinkShare;
+export default VenalinkActive;

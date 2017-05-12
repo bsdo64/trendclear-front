@@ -1,5 +1,4 @@
 const request = require('superagent');
-const Promise = require('bluebird');
 const debug = require('debug');
 const apiErrorLog = debug('vn:api:error');
 const apiResultLog = debug('vn:api:result');

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import MakeUrl from '../Lib/MakeUrl';
+import MakeUrl from '../../Lib/MakeUrl';
 import Paginator from '../Paginator';
 
 import debug from 'debug';

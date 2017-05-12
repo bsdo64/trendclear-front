@@ -1,10 +1,10 @@
 import React from 'react';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../../../../../Selectors/User';
 import { connect } from 'react-redux';
-import ChargeLogListBox from '../../components/Contents/ChargeLogListBox';
+import ChargeLogListBox from './components/ChargeLogListBox.js';
 import {
   requestGetMoreChargeLogList,
-} from '../../Actions/Point';
+} from '../../../../../../Actions/Point';
 
 class ChargeLogList extends React.Component{
   render() {
@@ -13,6 +13,7 @@ class ChargeLogList extends React.Component{
 }
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
     ListStore: getUIState('List'),
     PaginationStore: getUIState('Pagination'),
     ChargePointStore: getUIState('ChargePoint'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Users: getDomainState('Users'),
   };

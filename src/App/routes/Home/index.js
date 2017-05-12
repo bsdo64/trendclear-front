@@ -1,19 +1,20 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import RightSide from '../../components/RightSide/index.js';
-import GnbLeft from '../../components/GnbLeft/index.js';
 import CollectionIndex from '../Collection/index.js';
 import Explore from '../Explore/index.js';
 import Writing from '../Submit/index.js';
 import Search from '../Search/index.js';
 import User from '../User/index.js';
 import Activity from '../Activity/index.js';
+import RightSide from '../../components/RightSide/index.js';
+import GnbLeft from '../../components/GnbLeft/index.js';
 import Best from '../../containers/Contents/Best.js';
 import Collection from '../../containers/Contents/BestCollection.js';
 import Club from '../../containers/Contents/Community.js';
-import ForumSetting from '../../containers/Contents/ForumSetting';
+import ForumSetting from '../../containers/Contents/ForumSetting.js';
 import Setting from '../../containers/Contents/Setting.js';
+
 import TootipContainer from '../../components/TooltipContainer/index.js';
 import InventoryContainer from '../../components/Inventory/InventoryContainer';
 
@@ -56,8 +57,10 @@ const DefaultLayout = () => {
             <Route exact path="/collection" component={CollectionIndex}/>
             <Route path="/collection/:id" component={Collection}/>
 
-            {/* Gnb Menu Item*/}
+            {/* User */}
             <Route path="/user" component={User}/>
+
+            {/* Gnb Menu Item*/}
             <Route path="/submit" component={Writing}/>
             <Route path="/explore" component={Explore}/>
             <Route path="/" component={Best}/>

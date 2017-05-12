@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import moment from '../../Lib/MomentLib';
+import moment from '../../../../../Lib/MomentLib';
 import debug from 'debug';
 const paymentLog = debug('vn:api:payment');
 
@@ -210,10 +210,10 @@ class ChargePointBox extends React.Component {
 ChargePointBox.displayName = 'ChargePointBox';
 ChargePointBox.propTypes = {
   UserStore: PropTypes.object.isRequired,
-    ChargePointStore: PropTypes.object,
-    FireRequestCheckPointCharge: PropTypes.func.isRequired,
-    FireFailureCheckPointCharge: PropTypes.func.isRequired,
-    FireWaitingCheckCharge: PropTypes.func.isRequired,
+  ChargePointStore: PropTypes.object,
+  FireRequestCheckPointCharge: PropTypes.func.isRequired,
+  FireFailureCheckPointCharge: PropTypes.func.isRequired,
+  FireWaitingCheckCharge: PropTypes.func.isRequired,
 };
 
 export default ChargePointBox;

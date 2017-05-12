@@ -108,7 +108,7 @@ router.get('/venalink/post/:linkId', function (req, res) {
         const post = result.body;
 
         if (post) {
-          res.redirect(`/community?forumId=${post.forum_id}&postId=${post.id}`);
+          res.redirect(`/club/${post.forum_id}?postId=${post.id}`);
         } else {
           res.redirect('/');
         }
@@ -145,7 +145,7 @@ router.get('/link/post/:linkId', function (req, res, next) {
         const post = result.body;
 
         if (post) {
-          res.redirect(`/community?forumId=${post.forum_id}&postId=${post.id}`);
+          res.redirect(`/club/${post.forum_id}?postId=${post.id}`);
         } else {
           res.redirect('/');
         }

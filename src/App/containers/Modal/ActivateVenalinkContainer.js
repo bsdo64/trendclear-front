@@ -7,6 +7,9 @@ import {
   requestActivateVenalink,
   toggleVenacleStoreModal,
 } from '../../Actions/VenacleStore';
+import {
+  closeModal,
+} from '../../Actions/Modal';
 
 class ActivateVenalinkContainer extends React.Component {
   render() {
@@ -37,5 +40,6 @@ export default withRouter(connect(
   {
     FireRequestActivateVenalink: requestActivateVenalink,
     FireToggleVenacleStoreModal: toggleVenacleStoreModal,
+    FireCloseModal: closeModal,
   },
 )(ActivateVenalinkContainer));

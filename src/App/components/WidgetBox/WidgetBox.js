@@ -36,7 +36,7 @@ class WidgetBox extends Component {
 
 WidgetBox.propTypes = {
   widgetBox: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   LoginStore: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   Forums: PropTypes.object.isRequired,

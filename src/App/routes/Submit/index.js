@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
 import Main from './components/Main.js';
+import Series from './routes/Series/index.js';
 import Club from './routes/Club/index.js';
-import Series from './components/Series.js';
 import Post from './routes/Post/index.js';
 
 const Contents = ({ match }) => {

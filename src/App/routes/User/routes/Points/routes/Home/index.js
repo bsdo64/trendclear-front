@@ -1,11 +1,11 @@
 import React from 'react';
-import { getLoginUser } from '../Util/func';
 import { connect } from 'react-redux';
-import PointListBox from '../../components/Contents/PointListBox';
-import { UI, Domains } from '../../Reducers/InitialStates';
+import { getUser } from '../../../../../../Selectors/User';
+import { UI, Domains } from '../../../../../../Reducers/InitialStates';
 import {
   requestMoreAccountList,
-} from '../../Actions/Point';
+} from '../../../../../../Actions/Point';
+import PointListBox from './components/PointListBox.js';
 
 class PointList extends React.Component {
   render() {
@@ -26,6 +26,7 @@ PointList.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -41,7 +42,7 @@ const mapStateToProps = (state) => {
     SearchStore: getUIState('Search'),
     ListStore: getUIState('List'),
     PaginationStore: getUIState('Pagination'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Users: getDomainState('Users'),
   };
