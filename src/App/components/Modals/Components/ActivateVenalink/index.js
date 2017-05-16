@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from '../../../../Lib/MomentLib';
+import accounting from 'accounting';
 import InputNumber from 'rc-input-number';
 import DatePicker from 'react-datepicker';
 
@@ -129,7 +130,7 @@ class ActivateVenalink extends React.Component {
                     <div className="ui right labeled input">
                       <InputNumber
                         step={100}
-                        min={0}
+                        min={1500}
                         max={UserStore.get('trendbox').get('R')}
                         onChange={this.checkMaxRP}
                         type="text"
@@ -152,13 +153,14 @@ class ActivateVenalink extends React.Component {
                         placeholderText="기한을 입력하세요"/>
                     </div>
                   </div>
-                  <div className="field">
+                  <div className="field" style={{paddingTop: 10}}>
                     {
                       UserStore.get('trendbox').get('R') > 0 &&
                       <div>
-                        RP : {UserStore.get('trendbox').get('R')}
-                        => {UserStore.get('trendbox').get('R') -
-                      this.state.venalinkRP}
+                        <h4>나의 총 RP</h4>
+                        <p>활성화 전 <span style={{float: 'right', paddingRight: 80}}>{accounting.formatNumber(UserStore.get('trendbox').get('R'))} RP</span></p>
+                        <p>활성 예산 <span style={{float: 'right', paddingRight: 80}}>{accounting.formatNumber(this.state.venalinkRP) || 0} RP</span></p>
+                        <p>활성 후 <span style={{float: 'right', paddingRight: 80}}>{accounting.formatNumber(UserStore.get('trendbox').get('R') - this.state.venalinkRP)} RP</span></p>
                       </div>
                     }
 

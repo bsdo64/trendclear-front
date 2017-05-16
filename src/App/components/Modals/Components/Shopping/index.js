@@ -79,7 +79,7 @@ const Shopping = props => {
               <div className="ui teal left pointing label">1</div>
             </a>
             <a className="item">
-              포스팅
+              커뮤니티
               <div className="ui label">51</div>
             </a>
             <a className="item">
@@ -87,7 +87,7 @@ const Shopping = props => {
               <div className="ui label">1</div>
             </a>
             <a className="item">
-              포인트
+              이모티콘
               <div className="ui label">1</div>
             </a>
             <div className="item">
