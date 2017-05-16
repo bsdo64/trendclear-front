@@ -100,7 +100,7 @@ class ActivateVenalink extends React.Component {
       <div className="ui items">
         <div className="item">
           <a className="ui tiny image">
-            <img src="/images/venacle-item1-venalink.png"/>
+            <img src="/images/venacle-item1-open-vlink.png"/>
           </a>
           {
             activateItem &&

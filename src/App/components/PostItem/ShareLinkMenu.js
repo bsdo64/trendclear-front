@@ -226,7 +226,7 @@ class ShareLinkMenu extends React.Component {
           <h4 className="ui header">2. 베나링크를 활성화 하고 더 많은 사람들에게 알리세요!</h4>
           <div className="ui contents">
             <img className="ui floated right image small" style={{width: 50}}
-                 src="/images/venacle-item1-venalink.png"/>
+                 src="/images/venacle-item1-open-vlink.png"/>
             RP를 사용해 베나링크를 활성화 하고 <br />많은 사람들에게 공유를 요청하세요
           </div>
           <div className="ui button primary" style={{margin: '10px 0 5px 0'}}
@@ -241,7 +241,7 @@ class ShareLinkMenu extends React.Component {
           <h4 className="ui header">2. 베나링크가 활성화 되었습니다</h4>
           <div className="ui contents">
             <img className="ui floated right image small" style={{width: 50}}
-                 src="/images/venacle-item1-venalink.png"/>
+                 src="/images/venacle-item1-open-vlink.png"/>
             참여 : 10명<br />
             총 RP: {venalink.get('total_amount_r')}<br />
             지급 RP: {venalink.get('total_amount_r') -
@@ -261,7 +261,7 @@ class ShareLinkMenu extends React.Component {
           <h4 className="ui header">2. 베나링크 참여</h4>
           <div className="ui contents">
             <img className="ui floated right image small" style={{width: 50}}
-                 src="/images/venacle-item1-venalink.png"/>
+                 src="/images/venacle-item1-open-vlink.png"/>
             현재 베나링크 참여자 : {venalink.get('participants').size}명<br />
             남은 RP: {venalink.get('total_remain_r')}<br />
             기간 : {moment(venalink.get('terminate_at'))
@@ -292,7 +292,7 @@ class ShareLinkMenu extends React.Component {
           </div>
           <div className="ui contents">
             <img className="ui floated right image small" style={{width: 50}}
-                 src="/images/venacle-item1-venalink.png"/>
+                 src="/images/venacle-item1-open-vlink.png"/>
             현재 베나링크 참여자 : {venalink.get('participants').size}명<br />
             남은 RP: {venalink.get('total_remain_r')}<br />
             기간 : {moment(venalink.get('terminate_at'))

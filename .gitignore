@@ -11,7 +11,8 @@ dist/images/**/*
 !dist/images/skill_0.jpg
 !dist/images/skill_1.jpg
 !dist/images/skill_2.jpg
-!dist/images/venacle-item1-venalink.png
+!dist/images/venacle-item1-open-vlink.png
+!dist/images/venacle-item2-participate-vlink.png
 !dist/images/venacle-item3-create-community.png
 
 npm-debug*
