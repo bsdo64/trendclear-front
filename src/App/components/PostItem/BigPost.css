@@ -79,6 +79,12 @@
   word-wrap: break-word;
   font-size: 14px;
 
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
   & > p, & > h2, & > h3 {
     padding: 0 10px;
   }

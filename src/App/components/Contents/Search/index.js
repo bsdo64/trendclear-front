@@ -200,7 +200,7 @@ class SearchBox extends React.Component {
                     : false;
 
                   const cFollowActive = cx(
-                    'ui button primary basic tiny right floated follow_button',
+                    'ui button basic tiny right floated follow_button',
                     {
                       active: isUserForumFollow,
                     });
@@ -226,7 +226,7 @@ class SearchBox extends React.Component {
                                     (userId === creator.get('id')) &&
                                     <Link
                                       to={`/club/settings?forumId=${forumId}`}
-                                      className="ui button primary basic tiny right floated">
+                                      className="ui button basic tiny right floated">
                                       <i className="fa fa-gear"/>
                                       {' 설정'}
                                     </Link>
@@ -236,7 +236,7 @@ class SearchBox extends React.Component {
                                     userId && isLogin &&
                                     <Dropdown className="subscribe_dropdown">
                                       <DropdownTrigger
-                                        className="ui button primary basic tiny right floated">
+                                        className="ui button basic tiny right floated">
                                         <i className="fa fa-share"/>
                                         {' 구독'}
                                       </DropdownTrigger>
@@ -259,7 +259,7 @@ class SearchBox extends React.Component {
                                   {
                                     !userId && !isLogin &&
                                     <a onClick={self.openLoginModal}
-                                       className="ui button primary basic tiny right floated">
+                                       className="ui button basic tiny right floated">
                                       <i className="fa fa-share"/>
                                       {' 구독'}
                                     </a>

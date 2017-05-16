@@ -27,7 +27,7 @@ class PostPage extends React.Component {
           return (
             <div id="post_box" className="ui items">
 
-              <div style={{ padding: 15 }}>
+              <div style={{ padding: 50 }}>
                 <h2 className="ui center aligned icon">
                   <i className="bordered ban icon"/>
                   페이지를 찾을 수 없습니다.

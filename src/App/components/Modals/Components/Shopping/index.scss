@@ -121,7 +121,6 @@
 
     .inventory_scroll {
       height: 280px;
-      overflow-y: scroll;
 
       table.inventory_table {
         font-family: Arial, Helvetica, sans-serif;
@@ -203,8 +202,8 @@
 
           .content {
             position: relative;
-            width: 40px;
-            height: 40px;
+            width: 43px;
+            height: 43px;
             overflow: hidden;
             text-align: center;
             vertical-align: middle;

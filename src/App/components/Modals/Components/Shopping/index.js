@@ -101,13 +101,10 @@ const Shopping = props => {
         <div className="contents">
           <div className="ui pointing menu">
             <a className="active item">
-              Home
+              베나클
             </a>
             <a className="item">
-              Messages
-            </a>
-            <a className="item">
-              Friends
+              유저
             </a>
             <div className="right menu">
               <div className="item">

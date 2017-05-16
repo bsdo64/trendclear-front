@@ -159,7 +159,7 @@ router.get('/link/post/:linkId', function (req, res, next) {
 router.get(routes, function (req, res, next) {
 
   let defaultData = {
-    production: !!process.env.NODE_ENV,
+    production: process.env.NODE_ENV === 'production',
 
     title: '베나클',
     meta: [

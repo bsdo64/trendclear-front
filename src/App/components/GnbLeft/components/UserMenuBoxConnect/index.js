@@ -126,9 +126,7 @@ class UserMenuBox extends React.Component {
                 </div>
 
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
-                  <Link to="/">
-                    <span style={{color: '#fff', fontWeight: 'bold'}}>활동</span>
-                  </Link>
+                  <span style={{color: '#fff', fontWeight: 'bold'}}>활동</span>
                 </div>
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
                   <Link to="/user/profile">
@@ -141,9 +139,7 @@ class UserMenuBox extends React.Component {
                   </Link>
                 </div>
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
-                  <Link to="/">
-                    <span style={{color: '#fff', fontWeight: 'bold'}}>포인트</span>
-                  </Link>
+                  <span style={{color: '#fff', fontWeight: 'bold'}}>포인트</span>
                 </div>
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
                   <Link to="/user/chargePoint">
@@ -161,9 +157,7 @@ class UserMenuBox extends React.Component {
                   </Link>
                 </div>
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
-                  <Link to="/">
-                    <span style={{color: '#fff', fontWeight: 'bold'}}>베나링크</span>
-                  </Link>
+                  <span style={{color: '#fff', fontWeight: 'bold'}}>베나링크</span>
                 </div>
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
                   <Link to="/user/venalinks/active">

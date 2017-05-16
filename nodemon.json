@@ -5,7 +5,10 @@
     "node_modules/**/node_modules"
   ],
   "execMap": {
-    "js": "NODE_ENV=development node --harmony"
+    "js": "node --harmony"
+  },
+  "env": {
+    "NODE_ENV": "development"
   },
   "watch": [
     "app.js",

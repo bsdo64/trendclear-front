@@ -72,7 +72,14 @@ class PostList extends React.PureComponent {
           <div style={{display: 'flex', padding: 5}}>
             {
               item.get('has_img') &&
-              <div style={{width: 80, height: 50, overflow: 'hidden' }}>
+              <div style={{
+                width: 80,
+                maxHeight: 60,
+                overflow: 'hidden',
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center'
+              }}>
                 <img
                   src={`/image/uploaded/files/small/${item.get('has_img')}`} />
               </div>
