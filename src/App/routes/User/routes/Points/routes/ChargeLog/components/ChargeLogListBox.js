@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import accounting from 'accounting';
+import ReactToolTip from 'react-tooltip';
 import moment from '../../../../../../../Lib/MomentLib';
 import TablePagination from '../../../../../../../components/Paginator/TablePagination';
 
@@ -16,6 +17,15 @@ class ChargeLogListBox extends React.Component {
     this.paymentStatus = this.paymentStatus.bind(this);
     this.paymentMethod = this.paymentMethod.bind(this);
     this.handlePage = this.handlePage.bind(this);
+    this.getVbankInfo = this.getVbankInfo.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState, prevContext) {
+    ReactToolTip.rebuild();
+  }
+
+  componentWillUnmount() {
+    ReactToolTip.rebuild();
   }
 
   paymentTime(payment) {
@@ -86,7 +96,11 @@ class ChargeLogListBox extends React.Component {
       }
 
       case 'vbank': {
-        paymentMethod = <a>가상계좌</a>;
+        paymentMethod = (
+          <div data-tip data-for='vbankinfo' onMouseEnter={this.getVbankInfo(payment)}>
+            <a  >가상계좌</a>
+          </div>
+        );
         break;
       }
 
@@ -108,6 +122,14 @@ class ChargeLogListBox extends React.Component {
         page: p,
       });
     };
+  }
+
+  getVbankInfo(payment) {
+    const { FireGetVbankInfo } = this.props;
+
+    return () => {
+      FireGetVbankInfo({ paymentId: payment.get('id') });
+    }
   }
 
   render() {
@@ -199,6 +221,7 @@ ChargeLogListBox.displayName = 'ChargePointBox';
 ChargeLogListBox.propTypes = {
   UserStore: PropTypes.object.isRequired,
   FireRequestGetMoreChargeLogList: PropTypes.func,
+  FireGetVbankInfo: PropTypes.func,
 };
 
 export default ChargeLogListBox;

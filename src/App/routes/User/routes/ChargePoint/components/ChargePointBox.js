@@ -144,11 +144,19 @@ class ChargePointBox extends React.Component {
         {
           successChargePoint &&
           <div className="ui segment">
-
-            <div className="ui center aligned container">
-              <h3>결제가 완료 되었습니다</h3>
-            </div>
-            {result.toString()}
+            {
+              result &&
+              <div>
+                <h3 className="ui header">
+                  결제가 완료 되었습니다
+                  <div className="sub header">아래 계좌로 입금 해주세요</div>
+                </h3>
+                <p>결제 종류 : {result.get('pay_method')}</p>
+                <p>입금 은행: {result.get('vbank_name')}</p>
+                <p>입금 게좌번호: {result.get('vbank_num')}</p>
+                <p>입금 금액: {result.get('amount')}</p>
+              </div>
+            }
           </div>
         }
 

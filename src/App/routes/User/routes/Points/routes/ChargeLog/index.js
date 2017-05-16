@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ChargeLogListBox from './components/ChargeLogListBox.js';
 import {
   requestGetMoreChargeLogList,
+  getVbankInfo,
 } from '../../../../../../Actions/Point';
 
 class ChargeLogList extends React.Component{
@@ -23,7 +24,6 @@ const mapStateToProps = (state) => {
   };
 
   return {
-    GnbStore: getUIState('Gnb'),
     LoginStore: getUIState('Login'),
     CommunityStore: getUIState('Community'),
     SearchStore: getUIState('Search'),
@@ -31,7 +31,6 @@ const mapStateToProps = (state) => {
     PaginationStore: getUIState('Pagination'),
     ChargePointStore: getUIState('ChargePoint'),
     UserStore: getUser(StoreState),
-
     Users: getDomainState('Users'),
   };
 };
@@ -40,5 +39,6 @@ export default connect(
   mapStateToProps,
   {
     FireRequestGetMoreChargeLogList: requestGetMoreChargeLogList,
+    FireGetVbankInfo: getVbankInfo,
   }
 )(ChargeLogList);

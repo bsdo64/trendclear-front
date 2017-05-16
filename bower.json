@@ -20,5 +20,8 @@
     "medium-editor": "^5.16.1",
     "medium-editor-insert-plugin": "2.4.0",
     "normalize-scss": "^3.0.3"
+  },
+  "resolutions": {
+    "medium-editor-insert-plugin": "2.4.1"
   }
 }

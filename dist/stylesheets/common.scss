@@ -166,5 +166,9 @@ body {
 .ReactModalPortal {
   .ReactModal__Overlay {
     z-index: 100;
+
+    &.ui.page.dimmer {
+      line-height: 1.4285em;
+    }
   }
 }

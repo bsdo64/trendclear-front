@@ -46,6 +46,8 @@ class EditorBox extends React.Component {
     this.checkForumManager = this.checkForumManager.bind(this);
     this.createThumbnailImages = this.createThumbnailImages.bind(this);
     this.setRepresentImage = this.setRepresentImage.bind(this);
+    this.fixBackspace = this.fixBackspace.bind(this);
+
   }
 
   componentDidMount() {
@@ -325,6 +327,13 @@ class EditorBox extends React.Component {
     this.props.FireHandleSetRepresentImage(index);
   }
 
+  fixBackspace(e) {
+    const firstParagragh = e.target.querySelector('p');
+    if (!firstParagragh) {
+      this.editor.setContent('<p class="medium-insert-active"></p>');
+    }
+  }
+
   render() {
 
     const {SubmitPostStore, UserStore} = this.props;
@@ -378,6 +387,7 @@ class EditorBox extends React.Component {
             <div className="editor_left_padding">
               <div
                 ref={r => this.postEditor = r}
+                onKeyDown={this.fixBackspace}
                 className="post_editor"
                 id="post_editor"
                 placeholder="텍스트를 입력하세요"

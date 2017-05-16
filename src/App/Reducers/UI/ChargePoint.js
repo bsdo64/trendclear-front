@@ -4,6 +4,7 @@ import {
   SUCCESS_CHECK_POINT_CHARGE,
   FAILURE_CHECK_POINT_CHARGE,
   WAITING_CHECK_CHARGE,
+  GET_VBANK_INFO
 } from '../../Actions/Point';
 
 const ChargePoint = (state = UI.ChargePoint, action) => {
@@ -36,6 +37,12 @@ const ChargePoint = (state = UI.ChargePoint, action) => {
         successChargePoint: false,
         failureChargePoint: false,
       });
+    }
+
+    case GET_VBANK_INFO: {
+      return state.merge({
+        paymentId: action.payload.paymentId
+      })
     }
 
     default:

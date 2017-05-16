@@ -10,7 +10,16 @@ export const REQUEST_GET_MORE_CHARGE_LOG_LIST = 'REQUEST_GET_MORE_CHARGE_LOG_LIS
 export const SUCCESS_GET_MORE_CHARGE_LOG_LIST = 'SUCCESS_GET_MORE_CHARGE_LOG_LIST';
 export const FAILURE_GET_MORE_CHARGE_LOG_LIST = 'FAILURE_GET_MORE_CHARGE_LOG_LIST';
 
+export const GET_VBANK_INFO = 'GET_VBANK_INFO';
+
 export const WAITING_CHECK_CHARGE = 'WAITING_CHECK_CHARGE';
+
+export function getVbankInfo(payload) {
+  return {
+    type: GET_VBANK_INFO,
+    payload,
+  }
+}
 
 export function waitingCheckCharge() {
   return {
