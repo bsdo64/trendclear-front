@@ -9,6 +9,7 @@ import {
   toggleActiveVenalinkModal,
   requestLikePost,
   requestGetMorePostList,
+  setFocusCurrentPost,
 } from '../../Actions/Post';
 import { toggleReportModal } from '../../Actions/Report';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
@@ -77,5 +78,6 @@ export default connect(
     FireToggleActiveVenalinkModal: toggleActiveVenalinkModal,
     FireRequestActivateVenalink: requestActivateVenalink,
     FireRequestParticipateVenalink: requestParticipateVenalink,
+    FireSetFocusCurrentPost: setFocusCurrentPost,
   },
 )(BestContainer);

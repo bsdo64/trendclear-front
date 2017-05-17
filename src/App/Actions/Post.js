@@ -36,6 +36,7 @@ export const HANDLE_DELETE_POST_IMAGES = 'HANDLE_DELETE_POST_IMAGES';
 export const HANDLE_SET_REPRESENT_IMAGE = 'HANDLE_SET_REPRESENT_IMAGE';
 export const TOGGLE_ACTIVE_VENALINK_MODAL = 'TOGGLE_ACTIVE_VENALINK_MODAL';
 export const CLOSE_ACTIVE_VENALINK_MODAL = 'CLOSE_ACTIVE_VENALINK_MODAL';
+export const SET_FOCUS_CURRENT_POST = 'SET_FOCUS_CURRENT_POST';
 
 export function requestDeleteUnUsingImage(payload) {
   return {
@@ -147,6 +148,13 @@ export function requestGetMorePostList(payload) {
     type: REQUEST_GET_MORE_POST_LIST,
     payload,
   };
+}
+
+export function setFocusCurrentPost(payload) {
+  return {
+    type: SET_FOCUS_CURRENT_POST,
+    payload,
+  }
 }
 
 export default {

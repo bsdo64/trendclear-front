@@ -3,18 +3,31 @@ import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cx from 'classnames';
+import AvatarImage from '../../components/AvatarImage/index.js';
 import { getPaymentInfo } from '../../Selectors/User';
+import { getCurrentFocusPostAuthor } from '../../Selectors/Post';
 
 import s from './index.css';
 const TooltipContainer = (props) => {
-  const { ShoppingStore, paymentItem } = props;
+  const { ShoppingStore, paymentItem, authorInfo } = props;
   const filterTooltipItem = ShoppingStore
     .get('items')
     .filter(item => item.get('code') === ShoppingStore.get('tooltipItemCode'))
     .get(0);
 
+  let sex = authorInfo && authorInfo.getIn(['profile', 'sex']),
+    avatar_img = authorInfo && authorInfo.getIn(['profile', 'avatar_img']),
+    iconDef = authorInfo && authorInfo.getIn(['icon', 'iconDef']),
+    icon_img = iconDef && iconDef.get('icon_img');
+
+  let iconImg;
+  if (icon_img) {
+    iconImg = <img id="user_icon_img" src={'/images/' + icon_img}/>;
+  }
+
+
   return (
-    <div>
+    <div style={{ zIndex: 100 }}>
       <ReactTooltip
         id="item"
         effect="solid"
@@ -76,6 +89,44 @@ const TooltipContainer = (props) => {
           </div>
         }
       </ReactTooltip>
+
+      <ReactTooltip
+        id="postauthor"
+        place="right"
+        effect="solid"
+      >
+        {
+          authorInfo &&
+          <div id="trend_box" className={s.widget}>
+            <div id="widget_user_info">
+              <div className="ui items">
+                <div className="ui item">
+
+                  <a id="user_avatar_img" className="ui mini image">
+                    <AvatarImage
+                      sex={sex}
+                      avatarImg={avatar_img}
+                    />
+                  </a>
+
+                  <div className={'content'}>
+                    <div className="user_info_header">
+                      <span className="ui description">{authorInfo.get('nick')}</span>
+
+                      {iconImg}
+
+                      <div className="user_info">
+                        <span className="item_col">Lv. {authorInfo.getIn(['trendbox', 'level'])}</span>
+                        <span className="item_col">Rep. {authorInfo.getIn(['trendbox', 'reputation'])}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </ReactTooltip>
     </div>
   )
 };
@@ -83,6 +134,7 @@ const TooltipContainer = (props) => {
 TooltipContainer.propTypes = {
   ShoppingStore: PropTypes.object,
   paymentItem: PropTypes.object,
+  authorInfo: PropTypes.object,
 };
 TooltipContainer.defaultProps = {};
 
@@ -95,6 +147,7 @@ const mapStateToProps = (state) => {
   return {
     ShoppingStore: getUIState('Shopping'),
     paymentItem: getPaymentInfo(StoreState),
+    authorInfo: getCurrentFocusPostAuthor(StoreState),
   };
 };
 

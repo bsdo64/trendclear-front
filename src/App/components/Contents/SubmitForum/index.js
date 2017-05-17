@@ -10,6 +10,8 @@ class SubmitForumBox extends React.Component {
 
     this.state = {value: ''};
 
+    this.ruleText = null;
+
     this.handleChange = this.handleChange.bind(this);
     this.rawMarkup = this.rawMarkup.bind(this);
     this.validate = this.validate.bind(this);
@@ -96,7 +98,7 @@ class SubmitForumBox extends React.Component {
   }
 
   handleChange() {
-    this.setState({value: this.refs.rule_textarea.value});
+    this.setState({value: this.ruleText.value});
   }
   rawMarkup() {
     return {__html: marked(this.state.value, {breaks: true})};
@@ -212,7 +214,7 @@ class SubmitForumBox extends React.Component {
               <label>규칙 *</label>
               <textarea name="forum_rule"
                         onChange={this.handleChange}
-                        ref="rule_textarea"
+                        ref={r => this.ruleText = r}
                         defaultValue={this.state.value}/>
             </div>
             <h5>클럽 규칙</h5>

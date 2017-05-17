@@ -17,6 +17,7 @@ class BigPost extends React.Component {
     this.setScroll = this.setScroll.bind(this);
     this.sendLike = this.sendLike.bind(this);
     this.createIconImg = this.createIconImg.bind(this);
+    this.currentAuthor = this.currentAuthor.bind(this);
   }
   componentDidMount() {
     this.postItem.addEventListener('click', this.setScroll);
@@ -49,6 +50,20 @@ class BigPost extends React.Component {
     if (iconImg) {
       return <img id="user_icon_img" src={'/images/' + iconImg}/>;
     }
+  }
+
+  currentAuthor() {
+
+    Promise.resolve()
+      .then(() => {
+        return ReactTooltip.rebuild();
+      })
+      .then(() => {
+        this.props.FireSetFocusCurrentPost({
+          postId: this.props.post.get('id'),
+          authorId: this.props.author.get('id')
+        });
+      });
   }
 
   render() {
@@ -113,69 +128,12 @@ class BigPost extends React.Component {
                   <div className="item">
                     <div className={cx(styles.authorNick)}>
                       <a data-tip
-                         data-for={'nick_' + author.get('nick') + '_' +
-                         post.get('id')}
+                         data-for="postauthor"
                          data-offset="{'bottom': 8, 'right': 42}"
+                         onMouseOver={this.currentAuthor}
                       >
                         {author.get('nick')}
                       </a>
-                      <ReactTooltip
-                        id={'nick_' + author.get('nick') + '_' + post.get('id')}
-                        place="right"
-                        class="abc"
-                        effect="solid"
-                      >
-                        <div id="trend_box" className="widget">
-                          <div id="widget_user_info">
-                            <div className="ui items">
-                              <div className="ui item">
-
-                                <a id="user_avatar_img"
-                                   className="ui mini image">
-                                  <AvatarImage
-                                    sex={sex}
-                                    avatarImg={avatar_img}
-                                  />
-                                </a>
-
-                                <div className="content">
-                                  <div className="user_info_header">
-                                    <span
-                                      className="ui description">{author.get(
-                                      'nick')}</span>
-                                    {this.createIconImg(icon_img)}
-                                  </div>
-                                  <div className="description">
-
-                                    <div className="item">
-                                      <span className="item_col">레벨</span>
-                                      <div className="item_num">
-                                        <span>{author.getIn(
-                                          ['trendbox', 'level'])}</span>
-                                      </div>
-                                    </div>
-
-                                    <div className="item">
-                                      <span className="item_col">명성</span>
-                                      <div className="item_num">
-                                        <span>{author.getIn(
-                                          ['trendbox', 'reputation'])}</span>
-                                      </div>
-                                    </div>
-
-                                    <div className="item">
-                                      <span className="item_col">랭크</span>
-                                      <div className="item_num">
-                                        <span></span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </ReactTooltip>
                     </div>
                     <div className={cx(styles.authorIcon)}>
                       {this.createIconImg(icon_img)}
@@ -292,6 +250,7 @@ BigPost.propTypes = {
   FireRequestActivateVenalink: PropTypes.func.isRequired,
   FireRequestParticipateVenalink: PropTypes.func.isRequired,
   FireOpenCommentUpdateView: PropTypes.func,
+  FireSetFocusCurrentPost: PropTypes.func,
 };
 
 export default BigPost;

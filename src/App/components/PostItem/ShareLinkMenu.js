@@ -3,10 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dropdown, {
-  DropdownTrigger,
-  DropdownContent,
-} from 'react-simple-dropdown';
+import Dropdown, { DropdownContent, DropdownTrigger } from 'react-simple-dropdown';
 import moment from '../../Lib/MomentLib';
 
 import './LinkMenu.scss';
@@ -37,7 +34,7 @@ class ShareLinkMenu extends React.Component {
   }
 
   checkMaxRP(v) {
-    const {user} = this.props;
+    const { user } = this.props;
     const maxRP = user.get('trendbox').get('R');
 
     if (v <= maxRP) {
@@ -51,7 +48,7 @@ class ShareLinkMenu extends React.Component {
   requestActivateVenalink(activateItem) {
     if (activateItem) {
       const item = activateItem.get('item');
-      const {post} = this.props;
+      const { post } = this.props;
 
       this.setState({
         openVenalink: false,
@@ -116,7 +113,7 @@ class ShareLinkMenu extends React.Component {
 
   isParticipateVenalink(venalink) {
 
-    const {userId} = this.props;
+    const { userId } = this.props;
 
     if (venalink) {
       if (venalink.get('participants')) {
@@ -152,7 +149,7 @@ class ShareLinkMenu extends React.Component {
   }
 
   findInventoryItem(user, options) {
-    const {Items, Venatems} = this.props;
+    const { Items, Venatems } = this.props;
 
     if (user && user.get('inventories')) {
       const findItem = Items.find(i => i.get('title') === options.title);
@@ -185,7 +182,7 @@ class ShareLinkMenu extends React.Component {
       } else {
         return (
           <div className="share_link_icon">
-            <i className="fa fa-link" style={{color: '#b56f7e'}}/>
+            <i className="fa fa-link" style={{ color: '#b56f7e' }}/>
           </div>
         );
       }
@@ -199,7 +196,7 @@ class ShareLinkMenu extends React.Component {
       } else if (venalink && myParticipate) {
         return (
           <div className="share_link_icon">
-            <i className="fa fa-unlink" style={{color: '#b56f7e'}}/>
+            <i className="fa fa-unlink" style={{ color: '#b56f7e' }}/>
           </div>
         );
       } else {
@@ -214,10 +211,10 @@ class ShareLinkMenu extends React.Component {
 
   createShareLinkMenu(isUsersPost, venalink, myParticipate) {
 
-    const {user, post} = this.props;
+    const { user, post } = this.props;
     const myVenalinkUrl = this.createMyVenalinkUrl(myParticipate);
     const participateItem = this.findInventoryItem(
-      user, {type: 'community', title: '베나링크 참여권'}
+      user, { type: 'community', title: '베나링크 참여권' }
     );
 
     if (isUsersPost && !venalink) {
@@ -225,11 +222,11 @@ class ShareLinkMenu extends React.Component {
         <div className="item">
           <h4 className="ui header">2. 베나링크를 활성화 하고 더 많은 사람들에게 알리세요!</h4>
           <div className="ui contents">
-            <img className="ui floated right image small" style={{width: 50}}
+            <img className="ui floated right image small" style={{ width: 50 }}
                  src="/images/venacle-item1-open-vlink.png"/>
             RP를 사용해 베나링크를 활성화 하고 <br />많은 사람들에게 공유를 요청하세요
           </div>
-          <div className="ui button primary" style={{margin: '10px 0 5px 0'}}
+          <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}
                onClick={this.toggleVenalink}>
             베나링크 활성화
           </div>
@@ -240,9 +237,9 @@ class ShareLinkMenu extends React.Component {
         <div className="item">
           <h4 className="ui header">2. 베나링크가 활성화 되었습니다</h4>
           <div className="ui contents">
-            <img className="ui floated right image small" style={{width: 50}}
+            <img className="ui floated right image small" style={{ width: 50 }}
                  src="/images/venacle-item1-open-vlink.png"/>
-            참여 : 10명<br />
+            참여 : {venalink.get('participants').size}명<br />
             총 RP: {venalink.get('total_amount_r')}<br />
             지급 RP: {venalink.get('total_amount_r') -
           venalink.get('total_remain_r')}<br />
@@ -250,7 +247,7 @@ class ShareLinkMenu extends React.Component {
             기간 : {moment(venalink.get('terminate_at'))
             .format('YY-MM-DD HH:mm:ss')}
           </div>
-          <div className="ui button primary" style={{margin: '10px 0 5px 0'}}>
+          <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}>
             베나링크 활성화 됨
           </div>
         </div>
@@ -260,7 +257,7 @@ class ShareLinkMenu extends React.Component {
         <div className="item">
           <h4 className="ui header">2. 베나링크 참여</h4>
           <div className="ui contents">
-            <img className="ui floated right image small" style={{width: 50}}
+            <img className="ui floated right image small" style={{ width: 50 }}
                  src="/images/venacle-item1-open-vlink.png"/>
             현재 베나링크 참여자 : {venalink.get('participants').size}명<br />
             남은 RP: {venalink.get('total_remain_r')}<br />
@@ -269,7 +266,7 @@ class ShareLinkMenu extends React.Component {
             <br />
             베나링크에 참여하고 RP를 보상 받으세요!
           </div>
-          <div className="ui button primary" style={{margin: '10px 0 5px 0'}}
+          <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}
                onClick={this.requestParticipateVenalink.bind(this,
                  venalink.get('id'), participateItem, post.get('id'))}>
             베나링크 참여하기
@@ -280,7 +277,7 @@ class ShareLinkMenu extends React.Component {
       return (
         <div className="item">
           <h4 className="ui header">베나링크를 복사하고 공유하세요</h4>
-          <div className="ui action input link" style={{paddingBottom: 10}}>
+          <div className="ui action input link" style={{ paddingBottom: 10 }}>
             <input ref={'venalink_' + post.get('id')} type="text"
                    readOnly="readonly" value={myVenalinkUrl}/>
             <button className="ui primary right labeled icon button"
@@ -291,7 +288,7 @@ class ShareLinkMenu extends React.Component {
             </button>
           </div>
           <div className="ui contents">
-            <img className="ui floated right image small" style={{width: 50}}
+            <img className="ui floated right image small" style={{ width: 50 }}
                  src="/images/venacle-item1-open-vlink.png"/>
             현재 베나링크 참여자 : {venalink.get('participants').size}명<br />
             남은 RP: {venalink.get('total_remain_r')}<br />
@@ -301,7 +298,7 @@ class ShareLinkMenu extends React.Component {
             순방문자 1명당 5 RP씩 보상해 받습니다.<br />
             활성화 기간이 끝나면 보상받은 RP를 지급받게 됩니다.
           </div>
-          <div className="ui button primary" style={{margin: '10px 0 5px 0'}}>
+          <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}>
             예상 지급 RP: {myParticipate.get('paid_r')}
           </div>
         </div>
@@ -311,7 +308,7 @@ class ShareLinkMenu extends React.Component {
   }
 
   render() {
-    const {userId, author, post} = this.props;
+    const { userId, author, post } = this.props;
 
     const linkUrl = this.createShareLink(post.get('link_id'));
     const venalink = this.isActivateVenalinkPost(post);
@@ -359,14 +356,14 @@ class ShareLinkMenu extends React.Component {
 
 ShareLinkMenu.propTypes = {
   userId: PropTypes.number,
-    author: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired,
-    user: PropTypes.object,
-    Venatems: PropTypes.object.isRequired,
-    Items: PropTypes.object.isRequired,
-    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
-    FireRequestActivateVenalink: PropTypes.func.isRequired,
-    FireRequestParticipateVenalink: PropTypes.func.isRequired,
+  author: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  Venatems: PropTypes.object.isRequired,
+  Items: PropTypes.object.isRequired,
+  FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+  FireRequestActivateVenalink: PropTypes.func.isRequired,
+  FireRequestParticipateVenalink: PropTypes.func.isRequired,
 };
 
 export default ShareLinkMenu;

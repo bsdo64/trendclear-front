@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BigPost from '../PostItem/BigPost';
+import ReactTooltip from 'react-tooltip';
 import './BestList.scss';
 
 function createItem(props, id) {
@@ -39,6 +40,7 @@ function createItem(props, id) {
           FireRequestActivateVenalink={props.FireRequestActivateVenalink}
           FireRequestParticipateVenalink={props.FireRequestParticipateVenalink}
           FireOpenCommentUpdateView={props.FireOpenCommentUpdateView}
+          FireSetFocusCurrentPost={props.FireSetFocusCurrentPost}
         />,
       ];
     }
@@ -52,6 +54,8 @@ class InfiniteList extends React.Component {
 
   componentDidUpdate() {
     $('.ui.embed').embed('refresh');
+
+    ReactTooltip.rebuild();
   }
 
   render() {
@@ -72,22 +76,23 @@ class InfiniteList extends React.Component {
 InfiniteList.displayName = 'InfiniteList';
 InfiniteList.propTypes = {
   PostIdList: PropTypes.object,
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-    PostItems: PropTypes.object.isRequired,
-    AuthorItems: PropTypes.object.isRequired,
-    User: PropTypes.object.isRequired,
-    Venatems: PropTypes.object.isRequired,
-    Items: PropTypes.object.isRequired,
-    scrollHeight: PropTypes.number.isRequired,
-    FireSetScrollPosition: PropTypes.func.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestLikePost: PropTypes.func.isRequired,
-    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
-    FireRequestActivateVenalink: PropTypes.func.isRequired,
-    FireRequestParticipateVenalink: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  PostItems: PropTypes.object.isRequired,
+  AuthorItems: PropTypes.object.isRequired,
+  User: PropTypes.object.isRequired,
+  Venatems: PropTypes.object.isRequired,
+  Items: PropTypes.object.isRequired,
+  scrollHeight: PropTypes.number.isRequired,
+  FireSetScrollPosition: PropTypes.func.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
+  FireToggleReportModal: PropTypes.func.isRequired,
+  FireToggleDeleteModal: PropTypes.func.isRequired,
+  FireRequestLikePost: PropTypes.func.isRequired,
+  FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+  FireRequestActivateVenalink: PropTypes.func.isRequired,
+  FireRequestParticipateVenalink: PropTypes.func.isRequired,
+  FireSetFocusCurrentPost: PropTypes.func.isRequired,
 };
 InfiniteList.defaultProps = {
   scrollHeight: 0,

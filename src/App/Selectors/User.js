@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect';
 import { List } from 'immutable';
 
+
 const getCurrentUserId = state => state.getIn(['UI', 'Auth', 'userId']);
 const getPaymentId = state => state.getIn(['UI', 'ChargePoint', 'paymentId']);
-const getUsers = state => state.getIn(['Domains', 'Users']);
+export const getUsers = state => state.getIn(['Domains', 'Users']);
 const getForums = state => state.getIn(['Domains', 'Forums']);
 const getCollections = state => state.getIn(['Domains', 'Collections']);
 

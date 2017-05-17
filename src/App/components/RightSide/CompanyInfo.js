@@ -19,14 +19,14 @@ const CompanyInfo = () => {
         <Link to="/help">고객센터</Link>
       </div>
       <div>
-        <span> Venacle © 2016</span>
+        <span> Venacle © 2017</span>
       </div>
       <div style={{color: '#b3b3b3'}}>
         <div>상호명 : 베나클</div>
         <div>대표자 : 도병수</div>
         <div>사업자 번호 : 359-19-00336</div>
-        <div style={{fontSize: 11}}>주소 : 서울시 강서구 화곡동 강서로8길 174 303호</div>
-        <div>전화 : 070-4130-0420</div>
+        <div style={{fontSize: 11}}>주소 : 서울시 마포구 양화로18안길 10 401호</div>
+        <div>문의: webmaster@venacle.com</div>
       </div>
     </div>
   )
