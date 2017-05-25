@@ -10,7 +10,7 @@ require('./Signin.scss');
 class SigninContents extends React.Component {
   componentWillMount() {
     const { UserStore, history } = this.props;
-    if (UserStore.get('user')) {
+    if (UserStore && UserStore.get('user')) {
       history.replace('/');
     }
   }

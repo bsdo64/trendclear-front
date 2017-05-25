@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import AvatarImageModal from '../../components/Modals/Components/AvatarImage';
 import { requestUserAvatarImageUpload } from '../../Actions/User';
 
@@ -11,16 +11,10 @@ class AvatarImageContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const getUIState = function getUIState(args) {
-    return state.getIn(['Stores', 'UI'].concat(args));
-  };
-
-  const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args));
-  };
+  const StoreState = state.get('Stores');
 
   return {
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
   };
 };
 

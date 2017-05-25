@@ -8,8 +8,8 @@ import Dropdown, {
 } from 'react-simple-dropdown';
 import cx from 'classnames';
 import SearchHeader from './header';
-import InfiniteList from '../../List/InfiniteList';
-import InfiniteLoader from '../../Loader/InfiniteLoader';
+import InfiniteList from '../../../components/List/InfiniteList';
+import InfiniteLoader from '../../../components/Loader/InfiniteLoader';
 import qs from 'qs';
 
 require('./index.scss');

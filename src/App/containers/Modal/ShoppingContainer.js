@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import Shopping from '../../components/Modals/Components/Shopping';
 import {
   showItemInfo,
@@ -16,6 +16,7 @@ class ShoppingContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -27,7 +28,7 @@ const mapStateToProps = (state) => {
   return {
     ShoppingStore: getUIState('Shopping'),
     ReportStore: getUIState('Report'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Venatems: getDomainState('Venatems'),
     Items: getDomainState('Items'),

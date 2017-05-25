@@ -25,7 +25,7 @@ import {
 } from '../../Actions/VenacleStore';
 import { setScrollPosition } from '../../Actions/List';
 
-import Search from '../../components/Contents/Search';
+import Search from './components/index.js';
 
 class SearchContainer extends React.Component {
   render() {

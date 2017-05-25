@@ -126,7 +126,7 @@ const ActivityBox = props => {
 
 ActivityBox.displayName = 'ActivityBox';
 ActivityBox.propTypes = {
-  UserStore: PropTypes.object.isRequired,
+  UserStore: PropTypes.object,
   ActivityStore: PropTypes.object.isRequired,
   ListStore: PropTypes.object.isRequired,
   AuthStore: PropTypes.object.isRequired,

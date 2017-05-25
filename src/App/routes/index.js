@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import MainHeader from '../components/MainHeader/index.js';
 import Home from './Home/index.js';
 import Signin from './Signin/index.js';
+import FindMember from './Member/FindMember.js';
 import ModalContainer from '../containers/Modal/ModalContainer.js';
 import DataInitializer from '../components/DataInitializer/index.js';
 import ScrollToTop from '../components/ScrollToTop/index.js'
@@ -29,6 +30,7 @@ const App = (props) => {
               <Route component={MainHeader}/>
               <Switch>
                 <Route path="/signin" component={Signin}/>
+                <Route path="/member/find" component={FindMember}/>
                 <Route component={Home}/>
               </Switch>
             </div>

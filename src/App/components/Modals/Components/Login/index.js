@@ -14,6 +14,7 @@ class Login extends React.Component {
 
     this.handleRequestLogin = this.handleRequestLogin.bind(this);
     this.handleRequestLoginByEnter = this.handleRequestLoginByEnter.bind(this);
+    this.handleRequestFindUser = this.handleRequestFindUser.bind(this);
     this.handleRequestSignin = this.handleRequestSignin.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
   }
@@ -64,6 +65,16 @@ class Login extends React.Component {
           errorLog(formErrors, fields);
         },
       });
+  }
+
+  handleRequestFindUser() {
+    const { history, FireToggleLoginModal } = this.props;
+
+    FireToggleLoginModal({
+      contentType: 'Login',
+    });
+
+    history.push('/member/find');
   }
 
   handleRequestLoginByEnter(e) {
@@ -184,7 +195,9 @@ class Login extends React.Component {
               { loginError }
 
               <div className="login_append">
-                <Link to="/member/find" className="link_find">아이디 / 비밀번호찾기</Link>
+                <a href="#"
+                   className="link_find"
+                   onClick={this.handleRequestFindUser}>아이디 / 비밀번호찾기</a>
                 <span className="txt_bar">|</span>
                 <a href="#" onClick={this.handleRequestSignin}>회원 가입하기</a>
               </div>

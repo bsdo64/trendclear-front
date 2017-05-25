@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import SubmitForumBox from '../../components/Contents/SubmitForum';
 import { UI } from '../../Reducers/InitialStates';
 import {
@@ -24,17 +24,14 @@ SubmitForum.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
 
-  const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args));
-  };
-
   return {
     SubmitForumStore: getUIState('SubmitForum'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
   };
 };
 

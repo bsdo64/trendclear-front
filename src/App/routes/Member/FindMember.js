@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { UI } from '../../Reducers/InitialStates';
+import { UI } from '../../Reducers/InitialStates/index';
 import {
   requestResetPassword,
 } from '../../Actions/User';
@@ -44,9 +44,9 @@ class FindMemberContainer extends React.Component {
   }
 
   componentWillMount() {
-    const {AuthStore} = this.props;
+    const {AuthStore, history} = this.props;
     if (AuthStore.get('isLogin')) {
-      browserHistory.push('/setting/password');
+      history.push('/setting/password');
     }
   }
 

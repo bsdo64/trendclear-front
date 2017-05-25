@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import ConfirmBox from '../../components/Modals/Components/ConfirmBox';
 import {
   requestPurchaseItem,
@@ -18,16 +18,13 @@ class ConfirmPurchaseItemContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
 
-  const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args));
-  };
-
   return {
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
     ShoppingStore: getUIState('Shopping'),
   };
 };

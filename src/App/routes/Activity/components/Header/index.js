@@ -86,5 +86,5 @@ export default function ActivityHeader(props) {
 ActivityHeader.propTypes = {
   UserStore: PropTypes.object,
   ActivityStore: PropTypes.object.isRequired,
-  context: PropTypes.object.isRequired,
+  context: PropTypes.string.isRequired,
 };

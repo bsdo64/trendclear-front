@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import ActivateVenalink from '../../components/Modals/Components/ActivateVenalink';
 import {
   requestActivateVenalink,
@@ -18,6 +18,7 @@ class ActivateVenalinkContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
     Items: getDomainState('Items'),
     Venatems: getDomainState('Venatems'),
     ShareLinkStore: getUIState('ShareLink'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
   };
 };
 

@@ -99,8 +99,8 @@ class AvatarImageModal extends React.Component {
   }
 }
 
-AvatarImage.displayName = 'AvatarImageModal';
-AvatarImage.propTypes = {
+AvatarImageModal.displayName = 'AvatarImageModal';
+AvatarImageModal.propTypes = {
   UserStore: PropTypes.object.isRequired,
   FireRequestUserAvatarImageUpload: PropTypes.func.isRequired,
 };

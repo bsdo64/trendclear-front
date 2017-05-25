@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User';
 import Community from '../../components/Contents/Community';
 import { UI, Domains } from '../../Reducers/InitialStates';
 
@@ -50,6 +50,7 @@ CommunityContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -66,7 +67,7 @@ const mapStateToProps = (state) => {
     AuthStore: getUIState('Auth'),
     ForumStore: getUIState('Forum'),
     PaginationStore: getUIState('Pagination'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Collections: getDomainState('Collections'),
     Forums: getDomainState('Forums'),

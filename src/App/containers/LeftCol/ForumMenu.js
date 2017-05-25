@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import ForumLeftMenu from '../../components/LeftMenus/ForumLeftMenu';
 import { UI, Domains } from '../../Reducers/InitialStates';
 import {
@@ -25,6 +25,7 @@ MenuContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -35,7 +36,7 @@ const mapStateToProps = (state) => {
 
   return {
     ListStore: getUIState('List'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Forums: getDomainState('Forums'),
     Collections: getDomainState('Collections'),

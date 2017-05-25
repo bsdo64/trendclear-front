@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import BestCategorySelect from '../../components/LeftMenus/BestCategorySelect';
 import { UI, Domains } from '../../Reducers/InitialStates';
 
@@ -33,6 +33,7 @@ BestCategoryMenu.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -45,7 +46,7 @@ const mapStateToProps = (state) => {
     ListStore: getUIState('List'),
     GnbStore: getUIState('Gnb'),
     AuthStore: getUIState('Auth'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
     Forums: getDomainState('Forums'),
     Categories: getDomainState('Categories'),
     Collections: getDomainState('Collections'),

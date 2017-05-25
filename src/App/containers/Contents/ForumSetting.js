@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import ForumSettingsComponent from '../../components/Contents/ForumSetting';
 import { UI, Domains } from '../../Reducers/InitialStates';
 import {
@@ -39,6 +39,7 @@ ForumSettingsContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -53,7 +54,7 @@ const mapStateToProps = (state) => {
     AuthStore: getUIState('Auth'),
     PaginationStore: getUIState('Pagination'),
     ForumSettingStore: getUIState('ForumSetting'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Forums: getDomainState('Forums'),
     Users: getDomainState('Users'),

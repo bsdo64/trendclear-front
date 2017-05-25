@@ -1,6 +1,7 @@
 import { UI } from '../InitialStates';
 import {
   REQUEST_RESET_PASSWORD,
+  FAILURE_RESET_PASSWORD,
   SUCCESS_RESET_PASSWORD,
 } from '../../Actions/User';
 
@@ -12,6 +13,14 @@ const ResetPassword = (state = UI.ResetPassword, action) => {
         error: null,
         requestFindEmail: null,
         userExist: false,
+      });
+    }
+
+    case FAILURE_RESET_PASSWORD: {
+      return state.merge({
+        isLoading: false,
+        error: true,
+        requestFindEmail: null
       });
     }
 

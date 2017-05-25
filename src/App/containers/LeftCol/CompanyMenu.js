@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import Company from '../../components/LeftMenus/Company';
 
 class MenuContainer extends React.Component {
@@ -15,6 +15,7 @@ MenuContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -28,7 +29,7 @@ const mapStateToProps = (state) => {
     GnbStore: getUIState('Gnb'),
     AuthStore: getUIState('Auth'),
     CommunityStore: getUIState('Community'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Forums: getDomainState('Forums'),
     Collections: getDomainState('Collections'),

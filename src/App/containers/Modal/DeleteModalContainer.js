@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import DeleteModalBox from '../../components/Modals/Components/DeleteItem';
 import { requestDeleteItem } from '../../Actions/DeleteItem';
 
@@ -20,6 +20,7 @@ DeleteModalContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
   return {
     LoginStore: getUIState('Login'),
     RemoveModalStore: getUIState('RemoveModal'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Posts: getDomainState('Posts'),
     Comments: getDomainState('Comments'),

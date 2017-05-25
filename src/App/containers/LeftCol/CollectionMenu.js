@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import CollectionLeftMenu from '../../components/LeftMenus/CollectionLeftMenu';
 import {
   requestCreateCollection,
@@ -16,6 +16,7 @@ class CollectionMenu extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
     GnbStore: getUIState('Gnb'),
     AuthStore: getUIState('Auth'),
     CommunityStore: getUIState('Community'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Forums: getDomainState('Forums'),
     Categories: getDomainState('Categories'),

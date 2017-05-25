@@ -56,7 +56,7 @@ class FollowingList extends Component {
 
 FollowingList.propTypes = {
   currentCollection: PropTypes.object,
-  subscribingForumList: PropTypes.array
+  subscribingForumList: PropTypes.object,
 };
 FollowingList.defaultProps = {};
 

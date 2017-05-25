@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoginUser } from '../Util/func';
+import { getUser } from '../../Selectors/User.js';
 import ReportModalBox from '../../components/Modals/Components/Report/index';
 
 import { requestReport } from '../../Actions/Report';
@@ -12,6 +12,7 @@ class ReportModalContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -23,7 +24,7 @@ const mapStateToProps = (state) => {
   return {
     LoginStore: getUIState('Login'),
     ReportStore: getUIState('Report'),
-    UserStore: getLoginUser(getDomainState('Users'), getUIState('Auth')),
+    UserStore: getUser(StoreState),
 
     Posts: getDomainState('Posts'),
     Comments: getDomainState('Comments'),
