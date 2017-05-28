@@ -87,7 +87,7 @@ class PostList extends React.PureComponent {
             <div style={{flex: '0 1 580px', paddingLeft: 10, overflow: 'hidden'}}>
               <Link
               className="article_title"
-              style={{fontWeight: 'bold', fontSize: 14}}
+              style={{fontWeight: 'bold', fontSize: 14, color: '#007d8a'}}
               to={defaultPageUrl}>
                 {isAnnounce && <i className="fa fa-thumb-tack" style={{paddingRight: 5}} />}
                 {prefix && `[${prefix.get('name')}] `}
