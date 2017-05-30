@@ -18,6 +18,10 @@ import Setting from '../../containers/Contents/Setting.js';
 import TootipContainer from '../../components/TooltipContainer/index.js';
 import InventoryContainer from '../../components/Inventory/InventoryContainer';
 
+import Policy from '../../containers/Contents/Policy.js';
+import Company from '../../containers/Contents/Company.js';
+import Help from '../../containers/Contents/Help.js';
+
 const DefaultLayout = () => {
   return (
     <div id="container">
@@ -63,6 +67,14 @@ const DefaultLayout = () => {
             {/* Gnb Menu Item*/}
             <Route path="/submit" component={Writing}/>
             <Route path="/explore" component={Explore}/>
+
+            {/* Policy, About, etc.. Item*/}
+            <Route path="/policies/terms" component={Policy}/>
+            <Route path="/policies/privacy" component={Policy}/>
+            <Route path="/policies" component={Policy}/>
+            <Route path="/about" component={Company}/>
+            <Route path="/help" component={Help}/>
+
             <Route path="/" component={Best}/>
           </Switch>
         </div>

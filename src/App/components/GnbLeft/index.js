@@ -10,6 +10,7 @@ import ClubSettingBoxConnect from './components/ClubSettingBox/index.js';
 import UserMenuBoxConnect from './components/UserMenuBoxConnect/index.js';
 import ExploreMenuBox from './components/ExploreMenuBox/index.js';
 import SubmitMenuBox from './components/SubmitMenuBox/index.js';
+import Policy from './components/PolicyMenuBox/index.js';
 import { getSeqPathName, activeStyle } from './func.js';
 
 class LeftBar extends React.Component {
@@ -84,6 +85,16 @@ const LeftCol = (props) => {
         {/* Gnb Menu */}
         <Route path="/explore" component={ExploreMenuBox}/>
         <Route path="/submit" component={SubmitMenuBox}/>
+
+        {/* Policy Menu */}
+        <Route path="/policies" component={Policy}/>
+        <Route path="/policies/privacy" component={Policy}/>
+        <Route path="/policies/terms" component={Policy}/>
+
+        {/* About, help, etc.. Menu */}
+        <Route path="/about" component={Policy}/>
+        <Route path="/help" component={Policy}/>
+
         <Route exact path="/" component={HomeMenuBoxConnect}/>
       </Switch>
     </div>

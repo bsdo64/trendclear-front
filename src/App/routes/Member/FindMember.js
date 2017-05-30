@@ -50,6 +50,10 @@ class FindMemberContainer extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+
+  }
+
   render() {
     const {ResetPasswordStore} = this.props;
     const error = ResetPasswordStore.get('error');
