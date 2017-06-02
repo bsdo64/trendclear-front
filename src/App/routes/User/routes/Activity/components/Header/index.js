@@ -66,15 +66,15 @@ export default function ActivityHeader(props) {
       </div>
 
       <div className="ui menu activity-menu">
-        <Link to="/activity/likes"
+        <Link to="/user/activity/likes"
               className={createStyle(context, 'likePostList')}>
           좋아요
         </Link>
-        <Link to="/activity/posts"
+        <Link to="/user/activity/posts"
               className={createStyle(context, 'myWritePostList')}>
           글
         </Link>
-        <Link to="/activity/comments" className={createStyle(context,
+        <Link to="/user/activity/comments" className={createStyle(context,
           'myWriteCommentPostList')}>
           댓글
         </Link>

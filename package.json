@@ -1,6 +1,6 @@
 {
   "name": "trendclear-front",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "_dev:hot-webpack": "webpack-dev-server --config webpack/webpack.hot.dev.config.js",
@@ -82,7 +82,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
-    "css-loader": "^0.28.2",
+    "css-loader": "^0.28.4",
     "del": "^2.2.2",
     "eslint": "^3.19.0",
     "eslint-plugin-promise": "^3.5.0",
@@ -91,7 +91,7 @@
     "file-loader": "^0.11.1",
     "gulp": "^3.9.1",
     "gulp-cached": "^1.1.1",
-    "gulp-clean-css": "^3.4.0",
+    "gulp-clean-css": "^3.4.1",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^3.0.1",
     "gulp-uglify": "^3.0.0",
@@ -109,6 +109,6 @@
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.1",
     "url-loader": "^0.5.8",
-    "webpack": "^2.6.0"
+    "webpack": "^2.6.1"
   }
 }
