@@ -1,10 +1,14 @@
 .share_link_dropdown {
+  cursor: initial;
+
   .ui.input.link {
     margin: 0;
     padding: 0;
   }
 
   .item {
+    cursor: initial !important;
+
     h4.ui.header {
       font-size: 14px;
     }

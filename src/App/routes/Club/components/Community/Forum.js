@@ -6,10 +6,10 @@ import Dropdown, {
   DropdownTrigger,
   DropdownContent,
 } from 'react-simple-dropdown';
-import AvatarImage from '../../AvatarImage';
-import marked from '../../../Lib/Marked';
-import MakeUrl from '../../../Lib/MakeUrl';
-import Paginator from '../../Paginator';
+import AvatarImage from '../../../../components/AvatarImage/index';
+import marked from '../../../../Lib/Marked';
+import MakeUrl from '../../../../Lib/MakeUrl';
+import Paginator from '../../../../components/Paginator/index';
 import qs from 'qs';
 
 // import AdForum1 from '../../Ad/AddForum1';

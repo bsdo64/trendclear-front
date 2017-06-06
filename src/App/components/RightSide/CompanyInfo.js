@@ -21,13 +21,13 @@ const CompanyInfo = () => {
       <div>
         <span> Venacle © 2017</span>
       </div>
-      <div style={{color: '#b3b3b3'}}>
+      {/*<div style={{color: '#b3b3b3'}}>
         <div>상호명 : 베나클</div>
         <div>대표자 : 도병수</div>
         <div>사업자 번호 : 359-19-00336</div>
         <div style={{fontSize: 11}}>주소 : 서울시 마포구 양화로18안길 10 401호</div>
         <div>문의: webmaster@venacle.com</div>
-      </div>
+      </div>*/}
     </div>
   )
 };

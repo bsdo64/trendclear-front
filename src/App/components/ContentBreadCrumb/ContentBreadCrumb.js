@@ -36,6 +36,17 @@ const BestHeader = (props) => {
       );
     }
 
+    case 'forumPostList': {
+      breadcrumb = createBreadCrumbs(breadcrumbs);
+
+      return (
+        <div className="ui breadcrumb content_header">
+          <i className="fa fa-angle-right"/>
+          {breadcrumb}
+        </div>
+      );
+    }
+
     case 'collectionBestPostList': {
 
       if (collections) {

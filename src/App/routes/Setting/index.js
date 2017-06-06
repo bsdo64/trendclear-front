@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getUser } from '../../Selectors/User.js';
-import Setting from '../../components/Contents/Setting';
-import { UI } from '../../Reducers/InitialStates';
+import Setting from '../../components/Contents/Setting/index';
+import { UI } from '../../Reducers/InitialStates/index';
 import {
   closeUserSettingMessage,
   requestUserUpdatePassword,

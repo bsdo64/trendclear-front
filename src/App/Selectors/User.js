@@ -91,3 +91,14 @@ export const getPaymentInfo = createSelector(
     }
   }
 );
+
+export const getLatestSeenList = createSelector(
+  getUser,
+  (user) => {
+    if (user) {
+      return user.get('latestSeen')
+    } else {
+      return new List();
+    }
+  }
+);

@@ -67,6 +67,77 @@
   }
 }
 
+.latestSeenList {
+  background: #fff;
+  width: 240px;
+  padding: 10px;
+
+  & > .issueHeader {
+    font-weight: bold;
+  }
+
+  & > .issueWrap {
+    & > ol {
+      list-style: none;
+      margin: 0;
+      padding: 5px 0 0;
+
+      & > li {
+        &:hover {
+          background: #eee;
+        }
+      }
+
+      & .listItem {
+        padding: 3px;
+
+        & > a {
+          width: 100%;
+        }
+
+        & .numText {
+          width: 22px;
+          font-size: 15px;
+          padding-right: 6px;
+          display: inline-block;
+          text-align: right;
+        }
+
+        & .issueKeyword {
+          vertical-align: top;
+          color: #000;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          width: 210px;
+
+          & .meta {
+            float: right;
+
+            & .type {
+              vertical-align: top;
+              padding: 0 3px;
+
+              & :global(.fa) {
+                padding-right: 3px;
+                font-size: 11px;
+
+                &:global(.fa-heart-o) {
+                  color: red;
+                }
+
+                &:global(.fa-edit) {
+                  color: #058294;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .famousList {
   width: 240px;
   height: 150px;

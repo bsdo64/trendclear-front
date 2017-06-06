@@ -45,6 +45,24 @@ const CollectionHeader = () => {
   )
 };
 
+const ForumFeedHeader = () => {
+  return (
+    <div style={{ padding: 10 }}>
+      <div style={{
+        background: '#fff',
+        padding: 10,
+        boxShadow: '1px 1px 1px 0 #c6c6c6',
+      }}>
+        <h3 style={{ fontSize: '1.2em' }}>
+          <i className="fa fa-inbox" style={{ color: '#abc', paddingRight: 5 }}/>
+          클럽 피드
+        </h3>
+        <p>클럽 인기글</p>
+      </div>
+    </div>
+  )
+};
+
 const BestBox = props => {
   function getMoreBest({ previousPosition, currentPosition, event }) {
     if (previousPosition === 'below' && currentPosition === 'inside' && event) {
@@ -71,6 +89,10 @@ const BestBox = props => {
 
               case 'collectionBestPostList':
                 pathName = location.pathname + '/posts';
+                break;
+
+              case 'forumPostList':
+                pathName = location.pathname;
                 break;
 
               default:
@@ -105,6 +127,9 @@ const BestBox = props => {
       case '/all':
         array.push({ title: '전체글' });
         return array;
+      default:
+        array.push({ title: '전체글' });
+        return array;
     }
   }
 
@@ -117,6 +142,7 @@ const BestBox = props => {
     <div id="best_contents">
 
       <Switch>
+        <Route exact path="/club/:clubId/feed" component={ForumFeedHeader} />
         <Route exact path="/collection/:collectionId" component={CollectionHeader} />
         <Route exact path="/" component={FeedHeader} />
       </Switch>

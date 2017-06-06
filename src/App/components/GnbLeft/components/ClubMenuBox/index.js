@@ -11,6 +11,10 @@ import { getCurrentClub } from '../../../../Selectors/Club.js';
 import { getWidgetBox } from '../../../../Selectors/WidgetBox';
 import WidgetContaienr from '../../../../components/WidgetBox/index.js';
 
+const isActiveButton = (location, locationMatch) => {
+  return location.pathname === locationMatch;
+};
+
 class ClubMenuBox extends React.Component {
   constructor() {
     super();
@@ -33,7 +37,7 @@ class ClubMenuBox extends React.Component {
   }
 
   render() {
-    const { clubInfo, widgetBox } = this.props;
+    const { match, clubInfo, widgetBox, location } = this.props;
     const toggleStyle = cx(styles.box, {
       [styles.toggled]: widgetBox && widgetBox.get('toggleTrendBox')
     });
@@ -67,18 +71,22 @@ class ClubMenuBox extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
-                  <Link to="/">
+                <div className={cx([styles.subMenuItem, styles.clubMenuItem], {
+                  [styles.activeButton]: isActiveButton(location, `/club/${clubInfo.get('id')}`)
+                })}>
+                  <Link to={`/club/${clubInfo.get('id')}`}>
                     <span>정보</span>
                   </Link>
                 </div>
-                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
-                  <Link to="/">
+                <div className={cx([styles.subMenuItem, styles.clubMenuItem], {
+                  [styles.activeButton]: isActiveButton(location, `/club/${clubInfo.get('id')}/feed`)
+                })}>
+                  <Link to={`/club/${clubInfo.get('id')}/feed`}>
                     <span>피드</span>
                   </Link>
                 </div>
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
-                  <Link to="/">
+                  <Link to="/" className="ui disable">
                     <span>시리즈</span>
                   </Link>
                 </div>

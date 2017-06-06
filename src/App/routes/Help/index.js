@@ -1,5 +1,5 @@
 import React from 'react';
-import Help from '../../components/Contents/Help';
+import Help from './components/Help/index';
 
 class ActivityContainer extends React.Component {
   render() {

@@ -6,6 +6,7 @@ import FollowingList from './FollowingList.js';
 import SubscribingList from './SubscribingList';
 import RankList from './RankList.js';
 import CompanyInfo from './CompanyInfo.js'
+import LatestSeen from './LatestSeen.js';
 
 const RightSide = () => {
   return (
@@ -17,6 +18,8 @@ const RightSide = () => {
       </Switch>
 
       <RankList />
+
+      <LatestSeen />
 
       <Main2
         key="Main2"

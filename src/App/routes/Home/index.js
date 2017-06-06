@@ -1,26 +1,30 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+/* Content Container */
 import CollectionIndex from '../Collection/index.js';
 import Explore from '../Explore/index.js';
 import Writing from '../Submit/index.js';
 import Search from '../Search/index.js';
 import User from '../User/index.js';
-import Activity from '../Activity/index.js';
-import RightSide from '../../components/RightSide/index.js';
-import GnbLeft from '../../components/GnbLeft/index.js';
+import Policy from '../Policy/index.js';
+import Company from '../Company/index.js';
+import Help from '../Help/index.js';
 import Best from '../../containers/Contents/Best.js';
 import Collection from '../../containers/Contents/BestCollection.js';
-import Club from '../../containers/Contents/Community.js';
+import Club from '../Club/index.js';
 import ForumSetting from '../../containers/Contents/ForumSetting.js';
-import Setting from '../../containers/Contents/Setting.js';
+import Setting from '../Setting/index.js';
 
-import TootipContainer from '../../components/TooltipContainer/index.js';
+/* RightSide Container */
+import RightSide from '../../components/RightSide/index.js';
+
+/* GnbLeftSide Container */
+import GnbLeft from '../../components/GnbLeft/index.js';
+
+/* Etc Components */
+import TooltipContainer from '../../components/TooltipContainer/index.js';
 import InventoryContainer from '../../components/Inventory/InventoryContainer';
-
-import Policy from '../../containers/Contents/Policy.js';
-import Company from '../../containers/Contents/Company.js';
-import Help from '../../containers/Contents/Help.js';
 
 const DefaultLayout = () => {
   return (
@@ -31,12 +35,6 @@ const DefaultLayout = () => {
       <div id="section">
         <div id="contents">
           <Switch>
-
-            {/* Activity */}
-            <Route exact path="/activity" component={Activity}/>
-            <Route exact path="/activity/likes" component={Activity}/>
-            <Route exact path="/activity/posts" component={Activity}/>
-            <Route exact path="/activity/comments" component={Activity}/>
 
             {/* Setting */}
             <Route exact path="/setting" component={Setting}/>
@@ -82,7 +80,7 @@ const DefaultLayout = () => {
         <Route component={RightSide}/>
       </div>
 
-      <TootipContainer />
+      <TooltipContainer />
       <InventoryContainer />
     </div>
   );

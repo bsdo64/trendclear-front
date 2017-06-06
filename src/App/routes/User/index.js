@@ -16,10 +16,16 @@ const User = (props) => {
   return (
     <div>
       <Switch>
+
+        {/* Activity */}
+        <Route exact path={`${match.url}/activity`} component={Activity}/>
+        <Route exact path={`${match.url}/activity/likes`} component={Activity}/>
+        <Route exact path={`${match.url}/activity/posts`} component={Activity}/>
+        <Route exact path={`${match.url}/activity/comments`} component={Activity}/>
+
         {/* User */}
         <Route path={`${match.url}/venalinks`} component={Venalinks}/>
         <Route path={`${match.url}/chargePoint`} component={ChargePoint}/>
-        <Route path={`${match.url}/activity`} component={Activity}/>
         <Route path={`${match.url}/points`} component={Points}/>
         <Route path={`${match.url}/profile`} component={Profile}/>
         <Route path={`${match.url}`} component={Profile}/>

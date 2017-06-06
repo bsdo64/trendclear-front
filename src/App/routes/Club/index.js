@@ -1,28 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../../Selectors/User';
-import Community from '../../components/Contents/Community';
-import { UI, Domains } from '../../Reducers/InitialStates';
+import Community from './components/Community/index';
+import { Domains, UI } from '../../Reducers/InitialStates/index';
 
 import { setScrollPosition } from '../../Actions/List';
 import { toggleLoginModal } from '../../Actions/Login';
 import { toggleReportModal } from '../../Actions/Report';
 import { requestFollowForum, requestUnFollowForum } from '../../Actions/Forum';
-import {
-  requestAddForumInCollection,
-  requestRemoveForumInCollection,
-} from '../../Actions/Collection';
+import { requestAddForumInCollection, requestRemoveForumInCollection } from '../../Actions/Collection';
 import { toggleDeleteModal } from '../../Actions/DeleteItem';
 import { requestLikePost, toggleActiveVenalinkModal } from '../../Actions/Post';
 import {
-  requestSubmitSubComment, requestSubmitComment,
-  requestLikeComment, requestLikeSubComment,
-  requestUpdateComment, requestUpdateSubComment,
-  openCommentUpdateView, closeCommentUpdateView,
+  closeCommentUpdateView,
+  openCommentUpdateView,
+  requestLikeComment,
+  requestLikeSubComment,
+  requestSubmitComment,
+  requestSubmitSubComment,
+  requestUpdateComment,
+  requestUpdateSubComment
 } from '../../Actions/Comment';
-import {
-  requestActivateVenalink, requestParticipateVenalink,
-} from '../../Actions/VenacleStore';
+import { requestActivateVenalink, requestParticipateVenalink } from '../../Actions/VenacleStore';
 
 class CommunityContainer extends React.Component {
   render() {
@@ -32,7 +31,6 @@ class CommunityContainer extends React.Component {
 
 CommunityContainer.defaultProps = {
   LoginStore: UI.Login,
-  CommunityStore: UI.Community,
   ListStore: UI.List,
   AuthStore: UI.Auth,
   ForumStore: UI.Forum,

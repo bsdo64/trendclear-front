@@ -25,6 +25,7 @@ class HomeMenuBox extends React.Component {
     this.toggleOpenSearchCollection = this.toggleOpenSearchCollection.bind(this);
     this.toggleOpenSearchForum = this.toggleOpenSearchForum.bind(this);
     this.searchList = this.searchList.bind(this);
+    this.isActive = this.isActive.bind(this);
   }
 
   searchList(e) {
@@ -39,10 +40,17 @@ class HomeMenuBox extends React.Component {
     this.setState({ openSearchForum: !this.state.openSearchForum });
   }
 
+  isActive(location) {
+    return location.pathname === '/';
+  }
+
   render() {
-    const { collectionList, forumManaged, user, widgetBox} = this.props;
+    const { location, collectionList, forumManaged, user, widgetBox} = this.props;
     const toggleStyle = cx(styles.box, {
       [styles.toggled]: widgetBox && widgetBox.get('toggleTrendBox')
+    });
+    const activeStyle = cx(styles.subMenuItem, {
+      [styles.activeButton]: this.isActive(location)
     });
 
     return (
@@ -51,8 +59,8 @@ class HomeMenuBox extends React.Component {
           <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
             <div className={styles.subMenuBox}>
 
-              <div className={styles.subMenuItem}>
-                <Link to="/">
+              <div className={activeStyle}>
+                <Link to="/" >
                   <i className="fa fa-star"/>
                   <span>피드</span>
                 </Link>
@@ -64,6 +72,7 @@ class HomeMenuBox extends React.Component {
                 openSearchCollection={this.state.openSearchCollection}
                 toggleOpenSearchCollection={this.toggleOpenSearchCollection}
                 searchList={this.searchList}
+                location={location}
               />
 
               {
@@ -92,6 +101,7 @@ HomeMenuBox.propTypes = {
   forumManaged: PropTypes.object.isRequired,
   user: PropTypes.object,
   widgetBox: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 HomeMenuBox.defaultProps = {};
 

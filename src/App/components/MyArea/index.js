@@ -152,7 +152,7 @@ const UserButtons = props => {
 
   function gotoActivity() {
     profile_dropdown.hide();
-    props.history.push('/activity');
+    props.history.push('/user');
   }
 
   function gotoSettings() {
@@ -195,7 +195,7 @@ const UserButtons = props => {
         </DropdownTrigger>
         <DropdownContent id="profile_popup" className="ui">
           <div className="ui vertical menu secondary">
-            <a className="item" onClick={gotoActivity}>나의 활동</a>
+            <a className="item" onClick={gotoActivity}>프로필 / 활동</a>
             <a className="item" onClick={gotoSettings}>설정</a>
             <a className="item" onClick={handleLogout}>
               로그아웃

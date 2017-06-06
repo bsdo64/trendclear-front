@@ -3,26 +3,26 @@ import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 
 import { connect } from 'react-redux';
-import { UI, Domains } from '../../Reducers/InitialStates/index';
-import { getUser } from '../../Selectors/User';
+import { UI, Domains } from '../../../../Reducers/InitialStates/index';
+import { getUser } from '../../../../Selectors/User';
 
-import { setScrollPosition } from '../../Actions/List';
-import { toggleLoginModal } from '../../Actions/Login';
+import { setScrollPosition } from '../../../../Actions/List';
+import { toggleLoginModal } from '../../../../Actions/Login';
 import {
   toggleActiveVenalinkModal,
   requestLikePost,
   requestGetMorePostList,
-} from '../../Actions/Post';
-import { toggleReportModal } from '../../Actions/Report';
-import { toggleDeleteModal } from '../../Actions/DeleteItem';
+} from '../../../../Actions/Post';
+import { toggleReportModal } from '../../../../Actions/Report';
+import { toggleDeleteModal } from '../../../../Actions/DeleteItem';
 import {
   requestParticipateVenalink,
   requestActivateVenalink,
-} from '../../Actions/VenacleStore';
+} from '../../../../Actions/VenacleStore';
 
 import ActivityHeader from './components/Header/index.js';
-import InfiniteList from '../../components/List/InfiniteList.js';
-import InfiniteLoader from '../../components/Loader/InfiniteLoader.js';
+import InfiniteList from '../../../../components/List/InfiniteList.js';
+import InfiniteLoader from '../../../../components/Loader/InfiniteLoader.js';
 
 require('./index.scss');
 const ActivityBox = props => {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 
-import AvatarImage from '../../../../components/AvatarImage/index.js';
+import AvatarImage from '../../../../../../components/AvatarImage/index.js';
 
 function createStyle(context, linkContext) {
   return cx('item', {

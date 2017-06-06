@@ -18,10 +18,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^2.2.3",
     "medium-editor": "^5.16.1",
-    "medium-editor-insert-plugin": "2.4.0",
+    "medium-editor-insert-plugin": "2.4.1",
     "normalize-scss": "^3.0.3"
-  },
-  "resolutions": {
-    "medium-editor-insert-plugin": "2.4.1"
   }
 }

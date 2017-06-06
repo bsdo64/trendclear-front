@@ -18,18 +18,6 @@ class MyMenuBox extends React.Component {
     this.state = {
       openSearch: false,
     };
-
-    this.toggleOpenSearch = this.toggleOpenSearch.bind(this);
-    this.searchList = this.searchList.bind(this);
-  }
-
-  searchList(e) {
-    // TODO: Add filter function
-    console.log(e.target.value);
-  }
-
-  toggleOpenSearch() {
-    this.setState({ openSearch: !this.state.openSearchCollection });
   }
 
   render() {
@@ -46,14 +34,9 @@ class MyMenuBox extends React.Component {
             <Scrollbars autoHide style={{ width: 210, paddingRight: 10 }}>
               <div className={styles.subMenuBox}>
                 <div className={styles.subMenuItem}>
-                  <Link to={`/activity`}>
+                  <Link to={`/user`}>
                     <i className="fa fa-user"/>
                     <span>{user.get('nick')}</span>
-                  </Link>
-                </div>
-                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
-                  <Link to="/activity">
-                    <span>내 활동</span>
                   </Link>
                 </div>
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>

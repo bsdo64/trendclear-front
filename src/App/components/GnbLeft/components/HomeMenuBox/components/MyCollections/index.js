@@ -1,20 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../../../index.css';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import Scrollbars from 'react-custom-scrollbars';
 import cx from 'classnames';
-import qs from 'qs';
+
+const isActive = location => {
+  return location.pathname === '/collection'
+};
 
 const MyCollections = props => {
   const {
     collectionList, user, openSearchCollection,
+    location,
     searchList, toggleOpenSearchCollection
   } = props;
 
+  const activeStyle = cx(styles.subMenuItem, {
+    [styles.activeButton]: isActive(location)
+  });
+
   return (
     <div>
-      <div className={styles.subMenuItem}>
+      <div className={activeStyle}>
         <Link to="/collection">
           <i className="fa fa-folder-open"/>
           <span>컬렉션</span>
@@ -54,10 +62,10 @@ const MyCollections = props => {
               return (
                 <li key={i} className={styles.collectionListItem}>
                   <div className={styles.collectionItemBox}>
-                    <Link to={`/collection/${v.get('id')}`}>
+                    <NavLink to={`/collection/${v.get('id')}`} activeClassName={styles.activeButton}>
                       <i className="fa fa-inbox"/>
                       {v.get('title')}
-                    </Link>
+                    </NavLink>
                   </div>
                 </li>
               );

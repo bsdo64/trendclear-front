@@ -1,15 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import Forum from './Forum';
 import PostPage from './PostPage';
+import Feeds from '../FeedPostList/index.js'
+
+function getContentTypeByUrl(location) {
+  const queryObj = qs.parse(location.search.substr(1));
+  const url = location.pathname.split('/');
+
+  if (url.indexOf('feed') !== -1) {
+    return 'feed';
+  }
+
+  if (queryObj.postId) {
+    return 'post';
+  } else {
+    return 'forum';
+  }
+}
 
 const CommunityContents = props => {
+  const { Forums, AuthStore, ListStore, location } = props;
+
   function checkBanned() {
 
-    const { Forums, AuthStore, ListStore } = props;
-
     const userId = AuthStore.get('userId');
-
     const forumId = ListStore.get('forum');
 
     if (forumId) {
@@ -31,8 +47,8 @@ const CommunityContents = props => {
     }
   }
 
-  const type = props.CommunityStore.get('type');
-  const isLogin = props.AuthStore.get('isLogin');
+  const type = getContentTypeByUrl(location);
+  const isLogin = AuthStore.get('isLogin');
   const isBanned = checkBanned();
   if (isLogin && isBanned) {
 
@@ -63,7 +79,10 @@ const CommunityContents = props => {
           {...props}
         />
       );
-
+    } else if (type === 'feed') {
+      return (
+        <Feeds {...props} />
+      )
     } else {
       return (
         <div className="ui active inverted dimmer"
@@ -78,29 +97,28 @@ const CommunityContents = props => {
 CommunityContents.displayName = 'CommunityContents';
 CommunityContents.propTypes = {
   Forums: PropTypes.object.isRequired,
-    AuthStore: PropTypes.object.isRequired,
-    ListStore: PropTypes.object.isRequired,
-    CommunityStore: PropTypes.object.isRequired,
-    FireSetScrollPosition: PropTypes.func.isRequired,
-    FireToggleLoginModal: PropTypes.func.isRequired,
-    FireToggleReportModal: PropTypes.func.isRequired,
-    FireRequestAddForumInCollection: PropTypes.func.isRequired,
-    FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
-    FireToggleDeleteModal: PropTypes.func.isRequired,
-    FireRequestFollowForum: PropTypes.func.isRequired,
-    FireRequestUnFollowForum: PropTypes.func.isRequired,
-    FireRequestLikePost: PropTypes.func.isRequired,
-    FireRequestLikeComment: PropTypes.func.isRequired,
-    FireRequestLikeSubComment: PropTypes.func.isRequired,
-    FireRequestSubmitComment: PropTypes.func.isRequired,
-    FireRequestSubmitSubComment: PropTypes.func.isRequired,
-    FireRequestUpdateComment: PropTypes.func.isRequired,
-    FireRequestUpdateSubComment: PropTypes.func.isRequired,
-    FireOpenCommentUpdateView: PropTypes.func.isRequired,
-    FireCloseCommentUpdateView: PropTypes.func.isRequired,
-    FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
-    FireRequestActivateVenalink: PropTypes.func.isRequired,
-    FireRequestParticipateVenalink: PropTypes.func.isRequired,
+  AuthStore: PropTypes.object.isRequired,
+  ListStore: PropTypes.object.isRequired,
+  FireSetScrollPosition: PropTypes.func.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
+  FireToggleReportModal: PropTypes.func.isRequired,
+  FireRequestAddForumInCollection: PropTypes.func.isRequired,
+  FireRequestRemoveForumInCollection: PropTypes.func.isRequired,
+  FireToggleDeleteModal: PropTypes.func.isRequired,
+  FireRequestFollowForum: PropTypes.func.isRequired,
+  FireRequestUnFollowForum: PropTypes.func.isRequired,
+  FireRequestLikePost: PropTypes.func.isRequired,
+  FireRequestLikeComment: PropTypes.func.isRequired,
+  FireRequestLikeSubComment: PropTypes.func.isRequired,
+  FireRequestSubmitComment: PropTypes.func.isRequired,
+  FireRequestSubmitSubComment: PropTypes.func.isRequired,
+  FireRequestUpdateComment: PropTypes.func.isRequired,
+  FireRequestUpdateSubComment: PropTypes.func.isRequired,
+  FireOpenCommentUpdateView: PropTypes.func.isRequired,
+  FireCloseCommentUpdateView: PropTypes.func.isRequired,
+  FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
+  FireRequestActivateVenalink: PropTypes.func.isRequired,
+  FireRequestParticipateVenalink: PropTypes.func.isRequired,
 };
 
 export default CommunityContents;

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BigPost from '../../PostItem/BigPost.js';
+import BigPost from '../../../../components/PostItem/BigPost.js';
 import Forum from './Forum.js';
-import CommentBox from '../../CommentBox/index.js';
+import CommentBox from '../../../../components/CommentBox/index.js';
 
 class PostPage extends React.Component {
   componentDidMount() {
