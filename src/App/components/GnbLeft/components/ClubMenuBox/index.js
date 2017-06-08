@@ -25,6 +25,33 @@ class ClubMenuBox extends React.Component {
 
     this.toggleOpenSearch = this.toggleOpenSearch.bind(this);
     this.searchList = this.searchList.bind(this);
+    this.createClubImage = this.createClubImage.bind(this);
+  }
+
+  createClubImage() {
+    const { clubInfo } = this.props;
+    const forumImage = clubInfo.get('forum_image');
+
+    let dom;
+    if (forumImage) {
+      dom = (
+        <img src={`${forumImage}`} style={{
+          float: 'left',
+          paddingRight: 10,
+          paddingTop: 4,
+        }} />
+      )
+    } else {
+      dom = (
+        <img src={`/images/empty-club-image.png`} style={{
+          float: 'left',
+          paddingRight: 10,
+          paddingTop: 4,
+        }} />
+      )
+    }
+
+    return dom;
   }
 
   searchList(e) {
@@ -61,11 +88,9 @@ class ClubMenuBox extends React.Component {
                     minHeight: 60,
                     padding: '2px 10px',
                   }}>
-                    <img src="http://placehold.it/40x40" style={{
-                      float: 'left',
-                      paddingRight: 10,
-                      paddingTop: 4,
-                    }} />
+                    {
+                      this.createClubImage()
+                    }
                     <div style={{display: 'inline'}}>
                       {clubInfo.get('description')}
                     </div>

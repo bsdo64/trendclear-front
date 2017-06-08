@@ -84,7 +84,7 @@ class PostList extends React.PureComponent {
                   src={`/image/uploaded/files/small/${item.get('has_img')}`} />
               </div>
             }
-            <div style={{flex: '0 1 580px', paddingLeft: 10, overflow: 'hidden'}}>
+            <div style={{flex: '0 1 580px', position: 'relative', paddingLeft: 10, overflow: 'hidden'}}>
               <Link
               className="article_title"
               style={{fontWeight: 'bold', fontSize: 14, color: '#007d8a'}}
@@ -93,6 +93,14 @@ class PostList extends React.PureComponent {
                 {prefix && `[${prefix.get('name')}] `}
                 {title}
               </Link>
+              <div style={{position: 'absolute', top: 0, right: 0}}>
+                <div style={{float: 'left', paddingRight: 15}}>
+                  <i className="fa fa-heart-o" style={{color: 'red', paddingRight: 5}} />{like_count}
+                </div>
+                <div style={{float: 'left'}}>
+                  <i className="fa fa-edit" style={{paddingRight: 3}}/>{comment_count}
+                </div>
+              </div>
               <div style={{color: '#828282'}}>
                 {author.get('nick')} | {created_at}
               </div>

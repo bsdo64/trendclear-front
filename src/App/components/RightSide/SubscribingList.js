@@ -8,6 +8,28 @@ import { getCurrentCollection, getSubscribingForumList } from '../../Selectors/C
 import style from './index.css';
 
 class FollowingList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.createForumImage = this.createForumImage.bind(this);
+  }
+  createForumImage(forum) {
+    const src = forum.get('forum_image');
+    let dom;
+
+    if (src) {
+      dom = (
+        <img src={`${src}`} style={{width: 16, height: 16}}/>
+      )
+    } else {
+      dom = (
+        <img src={`/images/empty-club-image.png`} style={{width: 16, height: 16}}/>
+      )
+    }
+
+    return dom;
+  }
+
   render() {
 
     const { currentCollection, subscribingForumList } = this.props;
@@ -35,7 +57,9 @@ class FollowingList extends Component {
                           float: 'left',
                           paddingRight: 5,
                         }}>
-                          <img src="http://placehold.it/16x16"/>
+                          {
+                            this.createForumImage(forum)
+                          }
                         </div>
                         <div>
                           <h4 style={{marginBottom: 4, fontSize: '1em'}}>
