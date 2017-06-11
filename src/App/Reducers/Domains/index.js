@@ -597,6 +597,29 @@ const Venatems = (state = initList, action) => {
   }
 };
 
+import { ADD_FILTER, REMOVE_FILTER } from '../../Actions/Filter';
+
+const Filters = (state = initList, action) => {
+  switch (action.type) {
+
+    case ADD_FILTER: {
+      const {payload} = action;
+
+      return state.merge({
+        [payload.name]: payload.filter
+      });
+    }
+
+    case REMOVE_FILTER: {
+      const {payload} = action;
+      return state.merge({[payload]: ''});
+    }
+
+    default:
+      return state;
+  }
+};
+
 // Domain reducer
 export default combineReducers({
   Users,
@@ -611,4 +634,5 @@ export default combineReducers({
   Prefixes,
   SubComments,
   Notis,
+  Filters,
 });

@@ -8,8 +8,9 @@ import styles from '../../index.css';
 import cx from 'classnames';
 import MyForums from './components/MyForums/index.js'
 import MyCollections from './components/MyCollections/index.js'
-import { getUser, getCollectionList, getForumManaged } from '../../../../Selectors/User';
+import { getUser, getCollectionSearchList, getForumSearchList } from '../../../../Selectors/User';
 import { getWidgetBox } from '../../../../Selectors/WidgetBox';
+import { addFilter, removeFilter } from '../../../../Actions/Filter';
 
 import WidgetContainer from '../../../../components/WidgetBox/index.js';
 
@@ -24,20 +25,43 @@ class HomeMenuBox extends React.Component {
 
     this.toggleOpenSearchCollection = this.toggleOpenSearchCollection.bind(this);
     this.toggleOpenSearchForum = this.toggleOpenSearchForum.bind(this);
-    this.searchList = this.searchList.bind(this);
+    this.searchMyCollectionList = this.searchMyCollectionList.bind(this);
+    this.searchMyForumList = this.searchMyForumList.bind(this);
     this.isActive = this.isActive.bind(this);
   }
 
-  searchList(e) {
-    console.log(e.target.value);
+  componentWillUnmount() {
+    this.props.FireRemoveFilter('searchMyForum');
+  }
+
+  searchMyCollectionList(e) {
+    this.props.FireAddFilter({
+      name: 'searchMyCollection',
+      filter: e.target.value.trim()
+    });
+  }
+
+  searchMyForumList(e) {
+    this.props.FireAddFilter({
+      name: 'searchMyForum',
+      filter: e.target.value.trim()
+    });
   }
 
   toggleOpenSearchCollection() {
-    this.setState({ openSearchCollection: !this.state.openSearchCollection });
+    this.setState({ openSearchCollection: !this.state.openSearchCollection }, () => {
+      if (!this.state.openSearchCollection) {
+        this.props.FireRemoveFilter('searchMyCollection');
+      }
+    });
   }
 
   toggleOpenSearchForum() {
-    this.setState({ openSearchForum: !this.state.openSearchForum });
+    this.setState({ openSearchForum: !this.state.openSearchForum }, () => {
+      if (!this.state.openSearchForum) {
+        this.props.FireRemoveFilter('searchMyForum');
+      }
+    });
   }
 
   isActive(location) {
@@ -71,7 +95,7 @@ class HomeMenuBox extends React.Component {
                 collectionList={collectionList}
                 openSearchCollection={this.state.openSearchCollection}
                 toggleOpenSearchCollection={this.toggleOpenSearchCollection}
-                searchList={this.searchList}
+                searchList={this.searchMyCollectionList}
                 location={location}
               />
 
@@ -82,7 +106,7 @@ class HomeMenuBox extends React.Component {
                   forumManaged={forumManaged}
                   openSearchForum={this.state.openSearchForum}
                   toggleOpenSearchForum={this.toggleOpenSearchForum}
-                  searchList={this.searchList}
+                  searchList={this.searchMyForumList}
                 />
               }
             </div>
@@ -109,8 +133,8 @@ const mapStateToProps = (state, props) => {
   const StoreState = state.get('Stores');
 
   return {
-    collectionList: getCollectionList(StoreState, props),
-    forumManaged: getForumManaged(StoreState),
+    collectionList: getCollectionSearchList(StoreState, props),
+    forumManaged: getForumSearchList(StoreState),
     user: getUser(StoreState),
     widgetBox: getWidgetBox(StoreState)
   };
@@ -118,5 +142,8 @@ const mapStateToProps = (state, props) => {
 
 export default connect(
   mapStateToProps,
-  {},
+  {
+    FireAddFilter: addFilter,
+    FireRemoveFilter: removeFilter,
+  },
 )(HomeMenuBox);

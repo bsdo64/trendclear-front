@@ -61,6 +61,22 @@ export const getForumManaged = createSelector(
   }
 );
 
+export const getForumSearchFilter = state => state.getIn(['Domains', 'Filters', 'searchMyForum']);
+
+export const getForumSearchList = createSelector(
+  getForumManaged,
+  getForumSearchFilter,
+  (forums, filter) => {
+    if (filter) {
+
+      return forums.filter(v => v.get('title').toLowerCase().includes(filter));
+
+    } else {
+      return forums;
+    }
+  },
+);
+
 export const getCollectionList = createSelector(
   getUser,
   getCollections,
@@ -73,6 +89,22 @@ export const getCollectionList = createSelector(
       });
     } else {
       return new List();
+    }
+  },
+);
+
+export const getCollectionSearchFilter = state => state.getIn(['Domains', 'Filters', 'searchMyCollection']);
+
+export const getCollectionSearchList = createSelector(
+  getCollectionList,
+  getCollectionSearchFilter,
+  (collections, filter) => {
+    if (filter) {
+
+      return collections.filter(v => v.get('title').toLowerCase().includes(filter));
+
+    } else {
+      return collections;
     }
   },
 );

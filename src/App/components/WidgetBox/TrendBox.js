@@ -1,75 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
 import accounting from 'accounting';
 import CountUp from 'countup.js';
-import moment from '../../Lib/MomentLib.js';
 import AvatarImage from '../AvatarImage';
-
-class Timer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {init: this.props.init || 0};
-
-    this.tick = this.tick.bind(this);
-  }
-  tick() {
-    this.setState({init: this.state.init - 1});
-  }
-
-  componentDidMount() {
-    const type = this.props.type || 'default';
-
-    if (this.state.init > 0 && !this[type]) {
-      clearInterval(this[type]);
-      this[type] = null;
-
-      this[type] = setInterval(this.tick, 1000);
-    }
-  }
-  componentWillReceiveProps(nextProps) {
-    const self = this;
-    const type = nextProps.type || 'default';
-
-    if (nextProps.init > 0 && !this[type]) {
-      this.setState({init: nextProps.init}, () => {
-
-        clearInterval(self[type]);
-        self[type] = null;
-
-        self[type] = setInterval(self.tick, 1000);
-      });
-    }
-  }
-  componentWillUnmount() {
-    const type = this.props.type || 'default';
-    clearInterval(this[type]);
-    this[type] = null;
-  }
-
-  render() {
-    const time = this.state.init;
-    if (time === 0) {
-      const type = this.props.type || 'default';
-      clearInterval(this[type]);
-      this[type] = null;
-    }
-    return (
-      <span className={((time === 0) ? 'skill_cool_effect' : ((time > 0)
-        ? 'skill_cool'
-        : ''))}>
-        {this.state.init}
-      </span>
-    );
-  }
-}
-
-Timer.propTypes = {
-  init: PropTypes.number,
-    type: PropTypes.string,
-};
 
 require('./Trendbox.scss');
 class TrendBox extends React.Component {
@@ -86,7 +20,6 @@ class TrendBox extends React.Component {
     this.openAvatarModal = this.openAvatarModal.bind(this);
     this.openRPModal = this.openRPModal.bind(this);
     this.openVenacleStore = this.openVenacleStore.bind(this);
-    this.createSkill = this.createSkill.bind(this);
     this.toggleInventory = this.toggleInventory.bind(this);
     this.toggleWideBox = this.toggleWideBox.bind(this);
   }
@@ -159,6 +92,7 @@ class TrendBox extends React.Component {
       count.start();
     }
   }
+
   openAvatarModal() {
     this.props.FireToggleAvatarModal({
       contentType: 'AvatarImage',
@@ -174,56 +108,6 @@ class TrendBox extends React.Component {
       contentType: 'Shopping',
     });
     this.props.FireRequestShoppingItemInit();
-  }
-
-  createSkill(value, key) {
-
-    let usingTime, cooltimeSec, endTime, gap, result;
-    if (value.get('using_at')) {
-      usingTime = moment(value.get('using_at'));
-      cooltimeSec = value.getIn(['skill', 'property', 'cooltime']);
-      endTime = moment(usingTime).add(cooltimeSec, 'seconds');
-
-      gap = (endTime - moment() ) / 1000;
-      result = gap > 0 ? parseInt(gap, 10) : 0;
-    } else {
-      result = 0;
-    }
-
-    return (
-      <div
-        data-tip
-        data-for={value.getIn(['skill', 'name'])}
-        className="skill"
-        key={key}>
-        <Timer init={result} type={value.getIn(['skill', 'name'])}/>
-        <img className="ui image skill_image"
-             src={'/images/' + value.getIn(['skill', 'img'])}/>
-        <ReactTooltip
-          id={value.getIn(['skill', 'name'])}
-          place="top"
-          class="skill2"
-          effect="solid">
-
-          <div className="ui horizontal list">
-            <div className="item">
-              <img className="ui mini circular image"
-                   src={'/images/' + value.getIn(['skill', 'img'])}/>
-              <div className="content">
-                <div className="ui sub header">{value.getIn(
-                  ['skill', 'title'])}</div>
-                <div className="meta level">레벨 : {value.getIn(['level'])}</div>
-                <div className="meta cooltime">쿨타임 : {value.getIn(
-                  ['skill', 'property', 'cooltime'])}</div>
-              </div>
-            </div>
-          </div>
-          <hr />
-          {value.getIn(['skill', 'description'])}
-
-        </ReactTooltip>
-      </div>
-    );
   }
 
   toggleInventory() {
@@ -360,22 +244,6 @@ class TrendBox extends React.Component {
                   <div className="item" onClick={this.toggleInventory}>
                     <i className="fa fa-folder-open"></i>
                     <span className="item_col">인벤토리</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="ui item">
-              <div id="skill_box">
-                <div className="colum">
-                  <h4 className="ui description title">스킬</h4>
-                  <div className="skill_line">
-                    <div className="ui mini images skills">
-                      {
-                        user.get('skills') &&
-                        user.get('skills').sortBy(value => value.get('id'))
-                          .map(this.createSkill)
-                      }
-                    </div>
                   </div>
                 </div>
               </div>

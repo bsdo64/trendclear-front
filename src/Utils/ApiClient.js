@@ -77,12 +77,18 @@ class AjaxApiClient {
 
   put(url, params) {
     return new Promise((resolve, reject) => {
-      return this.r
+      const q = this.r
         .put(this.EndPoint + url)
-        .send(params)
         .set('Accept', 'application/json')
-        .withCredentials()
-        .end(this._done(resolve, reject));
+        .withCredentials();
+
+      if (params instanceof File) {
+        q.attach('forum_header', params, params.name)
+      } else {
+        q.send(params)
+      }
+
+      return q.end(this._done(resolve, reject));
     }).catch(this.catchError);
 
   }

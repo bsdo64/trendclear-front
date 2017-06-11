@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Route, Switch, Link } from 'react-router-dom';
+
 import styles from './index.css';
+import { getUser } from '../../Selectors/User';
+import { toggleLoginModal } from '../../Actions/Login';
 
 import HomeMenuBoxConnect from './components/HomeMenuBox/index.js';
 import MyMenuBoxConnect from './components/MyMenuBox/index.js';
@@ -11,11 +15,26 @@ import UserMenuBoxConnect from './components/UserMenuBoxConnect/index.js';
 import ExploreMenuBox from './components/ExploreMenuBox/index.js';
 import SubmitMenuBox from './components/SubmitMenuBox/index.js';
 import Policy from './components/PolicyMenuBox/index.js';
+import SkillBox from './components/SkillBox/index.js';
 import { getSeqPathName, activeStyle } from './func.js';
 
 class LeftBar extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleToggleLogin = this.handleToggleLogin.bind(this);
+  }
+
+  handleToggleLogin() {
+    const { location, FireToggleLoginModal } = this.props;
+    FireToggleLoginModal({
+      contentType: 'Login',
+      location: location.pathname + location.search,
+    });
+  }
+
   render() {
-    const { location } = this.props;
+    const { location, user } = this.props;
     const pathname = getSeqPathName(location.pathname, 1);
     const getStyle = (path) => activeStyle(styles.active, path, pathname);
 
@@ -32,9 +51,27 @@ class LeftBar extends React.Component {
             <Link to="/submit"><i className="fa fa-pencil"/></Link>
           </li>
           <li className={getStyle('/user')}>
-            <Link to="/user"><i className="fa fa-user"/></Link>
+            {
+              user &&
+              <Link to="/user"><i className="fa fa-user"/></Link>
+            }
+
+            {
+              !user &&
+              <a style={{cursor: 'pointer'}} onClick={this.handleToggleLogin}><i className="fa fa-user"/></a>
+            }
           </li>
         </ul>
+        <div style={{
+          textAlign: 'center',
+          borderTop: '1px solid rgba(34,36,38,.15)',
+          borderBottom: '1px solid rgba(255,255,255,.1)',
+        }}>
+        </div>
+        {
+          user &&
+          <SkillBox user={user} />
+        }
         <ul className={styles.bottomIconList}>
           <li>
             <i className="fa fa-bars"/>
@@ -49,14 +86,31 @@ LeftBar.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  FireToggleLoginModal: PropTypes.object.isRequired
 };
 LeftBar.defaultProps = {};
+
+const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
+
+  return {
+    user: getUser(StoreState)
+  };
+};
+
+const LeftBarContainer = connect(
+  mapStateToProps,
+  {
+    FireToggleLoginModal: toggleLoginModal,
+  },
+)(LeftBar);
 
 const LeftCol = (props) => {
   return (
     <div id="left_col">
 
-      <LeftBar {...props} />
+      <LeftBarContainer  {...props} />
 
       <Switch>
 
