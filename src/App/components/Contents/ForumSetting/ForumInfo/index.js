@@ -20,19 +20,21 @@ class ForumInfo extends React.Component {
     const {ForumSettingStore, FireRequestUpdateForumMeta} = this.props;
     const forumInfo = ForumSettingStore.get('forumInfo');
     const forum = ForumSettingStore.get('forum');
-    const forumImage = ForumSettingStore.getIn(['forumInfo', 'forum_image']);
 
     FireRequestUpdateForumMeta({
       id: forum.get('id'),
       sub_header: forumInfo ? forumInfo.get('forum_sub_header') : forum.get('sub_header'),
       description: forumInfo ? forumInfo.get('forum_description') : forum.get('description'),
       rule: forumInfo ? forumInfo.get('forum_rule') : forum.get('rule'),
+      forum_image: forumInfo ? forumInfo.get('forum_image'): forum.get('forum_image'),
     });
   }
 
   changeForm(e) {
+    const {ForumSettingStore } = this.props;
+    const forum = ForumSettingStore.get('forum');
 
-    if (e.target.name === 'forum_image') {
+    if (e.target.name === 'forum_image' && e.target.files) {
       e.preventDefault();
 
       const reader = new FileReader();
@@ -40,15 +42,15 @@ class ForumInfo extends React.Component {
 
       reader.onloadend = () => {
 
-        this.setState({
-          file: file,
-          imagePreviewUrl: reader.result,
-        }, () => {
-          this.props.FireRequestUpdateForumMeta({forum_header: this.state.file});
+        this.props.FireRequestUpdateForumMeta({
+          id: forum.get('id'),
+          forum_image: file
         });
       };
 
       reader.readAsDataURL(file);
+    } else if (e.target.name === 'forum_image' ) {
+      this.props.FireHandleChangeFormForumMeta({[e.target.name]: null});
     } else {
       this.props.FireHandleChangeFormForumMeta(
         {[e.target.name]: e.target.value.trim()});
@@ -96,8 +98,9 @@ class ForumInfo extends React.Component {
                   onChange={this.changeForm} onSubmit={this.updateForumInfo}>
               <div className="field" style={{float: 'right'}}>
                 <label>클럽 이미지</label>
-                <img src={`${forum.get('forum_image') ? forum.get('forum_image') : '/images/empty-club-image.png' }`} />
+                <img src={`${forum.get('forum_image') ? '/image/uploaded/files/avatar1/' + forum.get('forum_image') : '/images/empty-club-image.png' }`} />
                 <input type="file" name="forum_image" style={{width: 200, border: 'none'}}/>
+                <input type="button" onClick={this.changeForm} name="forum_image" style={{width: 200, border: 'none'}}/>
               </div>
               <div className="field" style={{clear: 'none'}}>
                 <label>이름 *</label>

@@ -144,11 +144,12 @@ class PointListBox extends React.Component {
 
   render() {
     const {UserStore} = this.props;
+    const userAccount = UserStore.getIn(['account']);
     const accounts = UserStore.getIn(['account', 'results']);
     const totalAccounts = UserStore.getIn(['account', 'total']) || 0;
     const trendbox = UserStore.get('trendbox');
-    const length = accounts && accounts.size || 0;
-    const totalPage = Math.ceil(totalAccounts / length);
+    const length = userAccount && userAccount.get('limit') || 1;
+    const totalPage = userAccount && Math.ceil(totalAccounts / length);
 
     const isTP = this.state.pointType === 'TP';
     const isRP = this.state.pointType === 'RP';

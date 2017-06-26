@@ -7,7 +7,7 @@ import MainHeader from '../components/MainHeader/index.js';
 import Home from './Home/index.js';
 import Signin from './Signin/index.js';
 import FindMember from './Member/FindMember.js';
-import ModalContainer from '../containers/Modal/ModalContainer.js';
+import ModalContainer from '../components/Modals/ModalContainer.js';
 import DataInitializer from '../components/DataInitializer/index.js';
 import ScrollToTop from '../components/ScrollToTop/index.js'
 

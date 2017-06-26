@@ -31,10 +31,10 @@ class ExploreMenuBox extends React.Component {
                 </Link>
               </div>
 
-              <div className={cx([styles.subMenuItem, getStyle('/posts')])}>
-                <Link to={`${match.url}/posts`}>
-                  <i className="fa fa-file"/>
-                  <span>포스트</span>
+              <div className={cx([styles.subMenuItem, getStyle('/collections')])}>
+                <Link to={`${match.url}/collections`}>
+                  <i className="fa fa-folder"/>
+                  <span>컬랙션</span>
                 </Link>
               </div>
 
@@ -42,6 +42,13 @@ class ExploreMenuBox extends React.Component {
                 <Link to={`${match.url}/clubs`}>
                   <i className="fa fa-files-o"/>
                   <span>클럽</span>
+                </Link>
+              </div>
+
+              <div className={cx([styles.subMenuItem, getStyle('/posts')])}>
+                <Link to={`${match.url}/posts`}>
+                  <i className="fa fa-file"/>
+                  <span>포스트</span>
                 </Link>
               </div>
 

@@ -82,11 +82,13 @@ class AjaxApiClient {
         .set('Accept', 'application/json')
         .withCredentials();
 
-      if (params instanceof File) {
-        q.attach('forum_header', params, params.name)
-      } else {
-        q.send(params)
-      }
+      Object.keys(params).map(key => {
+        if (params[key] instanceof File) {
+          q.attach(key, params[key])
+        } else if (params[key]) {
+          q.field(key, params[key])
+        }
+      });
 
       return q.end(this._done(resolve, reject));
     }).catch(this.catchError);

@@ -8,6 +8,27 @@ import { forumFollowed } from '../../Selectors/User.js';
 import style from './index.css';
 
 class FollowingList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.createForumImage = this.createForumImage.bind(this);
+  }
+  createForumImage(forum) {
+    const src = forum.get('forum_image');
+    let dom;
+
+    if (src) {
+      dom = (
+        <img src={`/image/uploaded/files/avatar1/${src}`} style={{width: 15, height: 15}}/>
+      )
+    } else {
+      dom = (
+        <img src={`/images/empty-club-image.png`} style={{width: 14, height: 14}}/>
+      )
+    }
+
+    return dom;
+  }
   render() {
 
     const { followingForum } = this.props;
@@ -32,12 +53,13 @@ class FollowingList extends Component {
                       float: 'left',
                       paddingRight: 5,
                     }}>
-                      <i className="fa fa-file-o" />
+                      {
+                        this.createForumImage(forum)
+                      }
                     </div>
                     <div>
-                      <h4 style={{marginBottom: 4, fontSize: '1em'}}>
-                        <Link to={`/club/${forum.get('id')}`}>{forum.get('title')}</Link>
-                      </h4>
+                      <Link style={{marginBottom: 5, fontSize: '1em', fontWeight: 'regular'}}
+                            to={`/club/${forum.get('id')}`}>{forum.get('title')}</Link>
                     </div>
                   </li>
                 );

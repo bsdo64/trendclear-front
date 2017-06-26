@@ -53,6 +53,7 @@ import {
   SUCCESS_ADD_FORUM_BAN_USER,
   SUCCESS_DELETE_FORUM_MANAGER,
   SUCCESS_DELETE_FORUM_BAN_USER,
+  SUCCESS_UPDATE_FORUM_META,
 } from '../../Actions/ForumSetting';
 import {
   SUCCESS_PURCHASE_ITEM,
@@ -226,7 +227,7 @@ const Users = (state = initList, action) => {
       const {data, targetId} = payload;
 
       return state
-        .mergeDeepIn([targetId.toString(), 'account'], data);
+        .setIn([targetId.toString(), 'account'], fromJS(data));
     }
 
     case SUCCESS_GET_MORE_CHARGE_LOG_LIST: {
@@ -234,7 +235,7 @@ const Users = (state = initList, action) => {
       const {data, targetId} = payload;
 
       return state
-        .mergeDeepIn([targetId.toString(), 'payments'], data);
+        .setIn([targetId.toString(), 'payments'], fromJS(data));
     }
 
     case SUCCESS_CREATE_COLLECTION: {
@@ -465,6 +466,13 @@ const Forums = (state = initList, action) => {
       return state.updateIn([forumId.toString(), 'bans'], list => {
         return list.filterNot(i => i === userId);
       });
+    }
+
+    case SUCCESS_UPDATE_FORUM_META: {
+      const {result} = action;
+      const {id} = result;
+
+      return state.mergeIn([id.toString()], Map(result));
     }
 
     default:

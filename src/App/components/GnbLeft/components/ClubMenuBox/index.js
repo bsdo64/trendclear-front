@@ -35,10 +35,11 @@ class ClubMenuBox extends React.Component {
     let dom;
     if (forumImage) {
       dom = (
-        <img src={`${forumImage}`} style={{
+        <img src={`/image/uploaded/files/avatar1/${forumImage}`} style={{
           float: 'left',
           paddingRight: 10,
           paddingTop: 4,
+          width: 45
         }} />
       )
     } else {
@@ -47,6 +48,7 @@ class ClubMenuBox extends React.Component {
           float: 'left',
           paddingRight: 10,
           paddingTop: 4,
+          width: 45
         }} />
       )
     }

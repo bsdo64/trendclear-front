@@ -6,15 +6,35 @@ import CollectionIndex from '../Collection/index.js';
 import Explore from '../Explore/index.js';
 import Writing from '../Submit/index.js';
 import Search from '../Search/index.js';
-import User from '../User/index.js';
-import Policy from '../Policy/index.js';
 import Company from '../Company/index.js';
 import Help from '../Help/index.js';
-import Best from '../../containers/Contents/Best.js';
 import Collection from '../../containers/Contents/BestCollection.js';
 import Club from '../Club/index.js';
 import ForumSetting from '../../containers/Contents/ForumSetting.js';
 import Setting from '../Setting/index.js';
+import Bundle from '../../components/Bundle/index.js';
+
+import loadBest from 'bundle-loader?lazy!../../containers/Contents/Best.js';
+import loadUser from 'bundle-loader?lazy!../User/index.js';
+import loadPolicy from 'bundle-loader?lazy!../Policy/index.js'
+
+const Best = (props) => (
+  <Bundle load={loadBest}>
+    {(P) => <P { ...props }/>}
+  </Bundle>
+);
+
+const Policy = (props) => (
+  <Bundle load={loadPolicy}>
+    {(P) => <P { ...props }/>}
+  </Bundle>
+);
+
+const User = (props) => (
+  <Bundle load={loadUser}>
+    {(Mod) => <Mod { ...props }/>}
+  </Bundle>
+);
 
 /* RightSide Container */
 import RightSide from '../../components/RightSide/index.js';

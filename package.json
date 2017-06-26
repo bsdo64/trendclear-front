@@ -8,6 +8,7 @@
     "_dev:front-server": "NODE_ENV=development nodemon --config nodemon.json bin/www.js",
     "webpack-dev": "webpack --config webpack/webpack.hot.dev.config.js",
     "webpack-prod": "webpack --config webpack/webpack.production.config.js",
+    "webpack-stats": "webpack --config webpack/webpack.hot.dev.config.js --profile --json > stats.json",
     "_lint": "gulp cached-lint-watch",
     "start-dev": "npm-run-all -l -s _redis -p _dev:hot-webpack _dev:front-server"
   },
@@ -82,6 +83,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
+    "bundle-loader": "^0.5.5",
     "css-loader": "^0.28.4",
     "del": "^2.2.2",
     "eslint": "^3.19.0",

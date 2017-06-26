@@ -28,7 +28,13 @@ const ForumSetting = (state = UI.ForumSetting, action) => {
       return state.mergeIn(['forumInfo'], action.data);
     }
     case SUCCESS_UPDATE_FORUM_META: {
-      return state.setIn(['forumInfo', 'success'], 'updated');
+      const {result} = action;
+      const {id} = result;
+
+      return state
+        .setIn(['forumInfo', 'success'], 'updated')
+        .mergeIn(['forum'], Map(result));
+
     }
     case FAILURE_UPDATE_FORUM_META: {
       return state.setIn(['forumInfo', 'success'], 'failed');

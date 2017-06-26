@@ -19,11 +19,11 @@ class FollowingList extends Component {
 
     if (src) {
       dom = (
-        <img src={`${src}`} style={{width: 16, height: 16}}/>
+        <img src={`/image/uploaded/files/avatar1/${src}`} style={{width: 15, height: 15}}/>
       )
     } else {
       dom = (
-        <img src={`/images/empty-club-image.png`} style={{width: 16, height: 16}}/>
+        <img src={`/images/empty-club-image.png`} style={{width: 15, height: 15}}/>
       )
     }
 
@@ -62,9 +62,8 @@ class FollowingList extends Component {
                           }
                         </div>
                         <div>
-                          <h4 style={{marginBottom: 4, fontSize: '1em'}}>
-                            <Link to={`/club/${forum.get('id')}`}>{forum.get('title')}</Link>
-                          </h4>
+                          <Link style={{marginBottom: 5, fontSize: '1em', fontWeight: 'regular'}}
+                                to={`/club/${forum.get('id')}`}>{forum.get('title')}</Link>
                         </div>
                       </li>
                     )

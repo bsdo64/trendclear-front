@@ -155,7 +155,7 @@ class TrendBox extends React.Component {
             </div>
             <div className="ui item">
 
-              <a id="user_avatar_img" className="ui mini image"
+              <a id="user_avatar_img" className="ui mini image" style={{minHeight: 35}}
                  onClick={this.openAvatarModal}>
                 <AvatarImage
                   sex={sex}

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImageType from '../../Lib/ImageType';
-import AvatarImageDeleteButton from '../../containers/Frags/AvatarImageDeleteButton';
+import AvatarImageDeleteButton from '../AvatarImageDeleteButton/index';
 
 const AvatarImage = (props) => {
   const { avatarImg, sex, imageClass = '', removable, noWrap } = props;

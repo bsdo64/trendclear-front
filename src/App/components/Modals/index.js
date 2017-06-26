@@ -5,13 +5,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { UI } from '../../Reducers/InitialStates';
-import LoginContainer from '../../containers/Modal/LoginModalContainer';
-import ReportContainer from '../../containers/Modal/ReportModalContainer';
-import AvatarImageContainer from '../../containers/Modal/AvatarImageContainer';
-import DeleteItemContainer from '../../containers/Modal/DeleteModalContainer';
-import ShoppingContainer from '../../containers/Modal/ShoppingContainer';
-import ActivateVenalinkContainer from '../../containers/Modal/ActivateVenalinkContainer';
-import ConfirmPurchaseItemContainer from '../../containers/Modal/ConfirmPurchaseItemContainer';
+import LoginContainer from './Components/Login/LoginModalContainer';
+import ReportContainer from './Components/Report/ReportModalContainer';
+import AvatarImageContainer from './Components/AvatarImage/AvatarImageContainer';
+import DeleteItemContainer from './Components/DeleteItem/DeleteModalContainer';
+import ShoppingContainer from './Components/Shopping/ShoppingContainer';
+import ActivateVenalinkContainer from './Components/ActivateVenalink/ActivateVenalinkContainer';
+import ConfirmPurchaseItemContainer from './Components/ConfirmBox/ConfirmPurchaseItemContainer';
 
 require('./index.scss');
 const ModalBox = props => {

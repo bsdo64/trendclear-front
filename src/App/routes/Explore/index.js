@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Main from './components/Main.js';
 import Club from './components/Club.js';
+import Collections from './components/Collections.js';
 import Series from './components/Series.js';
 import Post from './components/Post.js';
 import Tags from './components/Tags.js';
@@ -13,6 +14,7 @@ const Contents = ({ match }) => {
   return (
     <Switch>
       <Route path={`${match.url}/users`} component={Users}/>
+      <Route path={`${match.url}/collections`} component={Collections}/>
       <Route path={`${match.url}/tags`} component={Tags}/>
       <Route path={`${match.url}/series`} component={Series}/>
       <Route path={`${match.url}/clubs`} component={Club}/>

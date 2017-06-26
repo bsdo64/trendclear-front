@@ -32,6 +32,7 @@ class HomeMenuBox extends React.Component {
 
   componentWillUnmount() {
     this.props.FireRemoveFilter('searchMyForum');
+    this.props.FireRemoveFilter('searchMyCollection');
   }
 
   searchMyCollectionList(e) {
