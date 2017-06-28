@@ -12,7 +12,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(root, './dist'),
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: "/"
   },
   plugins: [
@@ -20,6 +20,37 @@ module.exports = {
       minimize: true,
       debug: false,
     }),
+    function() {
+
+      this.plugin("done", function(statsData) {
+          var stats = statsData.toJson();
+
+          if (!stats.errors.length) {
+
+            console.log(stats.assetsByChunkName);
+              // var htmlFileName = "index.html";
+              // var html = FileSystem.readFileSync(Path.join(__dirname, htmlFileName), "utf8");
+
+              // var htmlOutput = html.replace(
+              //     /<script\s+src=(["'])(.+?)bundle\.js\1/i,
+              //     "<script src=$1$2" + stats.assetsByChunkName.main[0] + "$1");
+
+              // FileSystem.writeFileSync(Path.join(__dirname, "%your build path%", htmlFileName), htmlOutput);
+          }
+      });
+    },
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendors',
+      minChunks: function (module) {
+        // this assumes your vendor imports exist in the node_modules directory
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      }
+    }),
+    //CommonChunksPlugin will now extract all the common modules from vendor and main bundles
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
+    }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {

@@ -1,5 +1,8 @@
 dist/*bundle*
 dist/vendor*
+dist/Entry*
+dist/manifest*
+dist/vendors*
 .idea/
 bower_components/
 node_modules/
