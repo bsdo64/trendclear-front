@@ -1,9 +1,11 @@
 const webpack = require('webpack');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 const root = path.resolve(__dirname, '../');
 
 module.exports = {
+  devtool: 'cheap-module-sourec-map',
   entry: {
     Entry: [
       'babel-polyfill',
@@ -20,25 +22,26 @@ module.exports = {
       minimize: true,
       debug: false,
     }),
-    function() {
+    new BundleAnalyzerPlugin(),
+    // function() {
 
-      this.plugin("done", function(statsData) {
-          var stats = statsData.toJson();
+    //   this.plugin("done", function(statsData) {
+    //       var stats = statsData.toJson();
 
-          if (!stats.errors.length) {
+    //       if (!stats.errors.length) {
 
-            console.log(stats.assetsByChunkName);
-              // var htmlFileName = "index.html";
-              // var html = FileSystem.readFileSync(Path.join(__dirname, htmlFileName), "utf8");
+    //         console.log(stats.assetsByChunkName);
+    //           // var htmlFileName = "index.html";
+    //           // var html = FileSystem.readFileSync(Path.join(__dirname, htmlFileName), "utf8");
 
-              // var htmlOutput = html.replace(
-              //     /<script\s+src=(["'])(.+?)bundle\.js\1/i,
-              //     "<script src=$1$2" + stats.assetsByChunkName.main[0] + "$1");
+    //           // var htmlOutput = html.replace(
+    //           //     /<script\s+src=(["'])(.+?)bundle\.js\1/i,
+    //           //     "<script src=$1$2" + stats.assetsByChunkName.main[0] + "$1");
 
-              // FileSystem.writeFileSync(Path.join(__dirname, "%your build path%", htmlFileName), htmlOutput);
-          }
-      });
-    },
+    //           // FileSystem.writeFileSync(Path.join(__dirname, "%your build path%", htmlFileName), htmlOutput);
+    //       }
+    //   });
+    // },
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendors',
       minChunks: function (module) {
@@ -51,7 +54,14 @@ module.exports = {
       name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        screw_ie8: true
+      },
+      comments: false,
+      sourceMap: false
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
