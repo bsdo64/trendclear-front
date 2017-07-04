@@ -64,6 +64,7 @@ const ModalBox = props => {
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         contentLabel="Modal"
+        onClick={() => { console.log(1) }}
       >
         {children}
 

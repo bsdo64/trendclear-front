@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 const root = path.resolve(__dirname, '../');
 
@@ -22,7 +21,6 @@ module.exports = {
       minimize: true,
       debug: false,
     }),
-    new BundleAnalyzerPlugin(),
     // function() {
 
     //   this.plugin("done", function(statsData) {
