@@ -127,6 +127,8 @@ HomeMenuBox.propTypes = {
   user: PropTypes.object,
   widgetBox: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  FireAddFilter: PropTypes.func.isRequired,
+  FireRemoveFilter: PropTypes.func.isRequired,
 };
 HomeMenuBox.defaultProps = {};
 

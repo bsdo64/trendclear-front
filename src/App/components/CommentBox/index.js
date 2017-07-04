@@ -503,8 +503,7 @@ class CommentItem extends React.Component {
               ref={content => this.commentContentUpdate = content}
               className="comment_input"
               dangerouslySetInnerHTML={{ __html: comment.get('content') }}
-            >
-            </div>
+            />
           </div>
           <div
             className="ui primary submit icon button"

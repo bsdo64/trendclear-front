@@ -15,8 +15,9 @@ const GettingStartedGoogleMap = withGoogleMap(props => (
     defaultCenter={{ lat: 37.556605, lng: 126.925185, }}
     onClick={props.onMapClick}
   >
-    {props.markers.map(marker => (
+    {props.markers.map((marker, key) => (
       <Marker
+        key={key}
         {...marker}
         onRightClick={() => props.onMarkerRightClick(marker)}
       />

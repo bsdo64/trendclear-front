@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import debug from 'debug';
 const errorLog = debug('vn:Components:Modal:Login:Form');
 

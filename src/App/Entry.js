@@ -1,7 +1,7 @@
 import { AppContainer } from 'react-hot-loader';
 import React from 'react';
 import { render } from 'react-dom';
-import { fromJS, Map } from 'immutable';
+import { Map } from 'immutable';
 import { UI, Domains } from './Reducers/InitialStates/index';
 import App from './routes/index.js';
 import configStore from './ConfigStore';

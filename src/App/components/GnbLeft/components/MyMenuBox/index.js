@@ -70,7 +70,7 @@ MyMenuBox.defaultProps = {
   user: Map(),
 };
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
   const stateStore = state.get('Stores');
 
   return {

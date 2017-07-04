@@ -64,12 +64,13 @@ class SubmitMenuBox extends React.Component {
 }
 
 SubmitMenuBox.propTypes = {
+  widgetBox: PropTypes.object,
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
 };
 SubmitMenuBox.defaultProps = {};
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
   const stateStore = state.get('Stores');
 
   return {

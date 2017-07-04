@@ -180,6 +180,7 @@ class SubmitForumBox extends React.Component {
                   <div className="description">게시판 규칙은
                     <a
                       href="https://namu.wiki/w/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4"
+                      rel="noopener noreferrer"
                       target="_blank"> Markdown </a>
                     을 지원합니다
                   </div>

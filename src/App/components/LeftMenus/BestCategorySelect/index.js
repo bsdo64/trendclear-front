@@ -138,7 +138,7 @@ class BestCategorySelect extends React.Component{
       </menu>
     </div>;
   }
-};
+}
 
 BestCategorySelect.displayName = 'BestCategorySelect';
 BestCategorySelect.propTypes = {

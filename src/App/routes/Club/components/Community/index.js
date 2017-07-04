@@ -96,6 +96,7 @@ const CommunityContents = props => {
 
 CommunityContents.displayName = 'CommunityContents';
 CommunityContents.propTypes = {
+  location: PropTypes.object.isRequired,
   Forums: PropTypes.object.isRequired,
   AuthStore: PropTypes.object.isRequired,
   ListStore: PropTypes.object.isRequired,

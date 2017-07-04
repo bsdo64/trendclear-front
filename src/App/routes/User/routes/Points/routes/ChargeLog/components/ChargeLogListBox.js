@@ -20,7 +20,7 @@ class ChargeLogListBox extends React.Component {
     this.getVbankInfo = this.getVbankInfo.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState, prevContext) {
+  componentDidUpdate() {
     ReactToolTip.rebuild();
   }
 

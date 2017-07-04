@@ -7,7 +7,8 @@ class ColorfulEditorExample extends React.Component {
     super(props);
     this.state = {editorState: EditorState.createEmpty()};
 
-    this.focus = () => this.refs.editor.focus();
+    this.editor = null;
+    this.focus = () => this.editor.focus();
     this.onChange = (editorState) => this.setState({editorState});
     this.toggleColor = (toggledColor) => this._toggleColor(toggledColor);
   }
@@ -62,7 +63,7 @@ class ColorfulEditorExample extends React.Component {
             editorState={editorState}
             onChange={this.onChange}
             placeholder="Write something colorful....."
-            ref="editor"
+            ref={r => this.editor = r}
           />
         </div>
       </div>
@@ -116,8 +117,9 @@ const ColorControls = (props) => {
   const currentStyle = props.editorState.getCurrentInlineStyle();
   return (
     <div style={styles.controls}>
-      {COLORS.map(type =>
+      {COLORS.map((type, i) =>
         <StyleButton
+          key={i}
           active={currentStyle.has(type.style)}
           label={type.label}
           onToggle={props.onToggle}

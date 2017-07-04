@@ -4,6 +4,7 @@ module.exports = {
     'browser': true,
     'node': true,
     'jquery': true,
+    es6: true
   },
   'plugins': [
     'react',

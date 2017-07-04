@@ -292,7 +292,7 @@ const CategoryNav = (props) => {
       { /* 카테고리 박스 */ }
       {
         openGnb &&
-        <div ref="category_box" className="category_box">
+        <div className="category_box">
           <div className="gnb_menu">
             <ClubList
               gnbMenu={gnbMenu}

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { UI } from '../../Reducers/InitialStates/index';
 import {
@@ -124,9 +123,10 @@ class FindMemberContainer extends React.Component {
 }
 
 FindMemberContainer.propTypes = {
+  history: PropTypes.object.isRequired,
   AuthStore: PropTypes.object.isRequired,
-    ResetPasswordStore: PropTypes.object.isRequired,
-    FireRequestResetPassword: PropTypes.func.isRequired,
+  ResetPasswordStore: PropTypes.object.isRequired,
+  FireRequestResetPassword: PropTypes.func.isRequired,
 };
 FindMemberContainer.defaultProps = {
   AuthStore: UI.Auth,

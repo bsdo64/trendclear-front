@@ -49,6 +49,7 @@ class SimpleMap extends React.Component {
               {this.state.markers.map((marker, index) => {
                 return (
                   <Marker
+                    key={index}
                     {...marker}
                     onRightclick={this.handleMarkerRightclick.bind(this, index)}
                   />
@@ -75,7 +76,7 @@ const About = () => {
           <div className="ui text container">
             <h3 className="ui header">베나클의 철학</h3>
             <p style={{textAlign: 'center'}}>
-              <b>"세상의 모든 이슈를 모아 효과적으로 공유하고 소통할수 있도록 도와주는 것"</b>
+              <b>{`"세상의 모든 이슈를 모아 효과적으로 공유하고 소통할수 있도록 도와주는 것"`}</b>
             </p>
           </div>
         </div>

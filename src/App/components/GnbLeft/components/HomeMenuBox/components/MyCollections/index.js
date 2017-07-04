@@ -11,8 +11,7 @@ const isActive = location => {
 
 const MyCollections = props => {
   const {
-    collectionList, user, openSearchCollection,
-    location,
+    collectionList, openSearchCollection,
     searchList, toggleOpenSearchCollection
   } = props;
 
@@ -80,7 +79,6 @@ const MyCollections = props => {
 
 MyCollections.propTypes = {
   collectionList: PropTypes.object.isRequired,
-  user: PropTypes.object,
   openSearchCollection: PropTypes.bool,
   toggleOpenSearchCollection: PropTypes.func,
   searchList: PropTypes.func
