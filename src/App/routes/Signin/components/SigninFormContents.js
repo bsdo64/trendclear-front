@@ -53,7 +53,7 @@ class SigninFormContents extends React.Component {
           identifier: 'password',
           rules: [
             {
-              type: 'regExp[/^[A-Za-z0-9~!@\#$%<>^&*\()\-=+_\’]{6,20}$/]',
+              type: 'regExp[/^[A-Za-z0-9~!@#$%<>^&*()-=+_’]{6,20}$/]',
               prompt: '비밀번호는 특수문자포함 6~20 자리 안으로 입력해주세요',
             },
           ],

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Bundle extends Component {
   state = {
@@ -35,6 +36,11 @@ class Bundle extends Component {
       return <div />
     }
   }
+}
+
+Bundle.propTypes = {
+  children: PropTypes.func,
+  load: PropTypes.func,
 }
 
 export default Bundle

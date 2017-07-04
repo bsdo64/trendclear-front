@@ -81,6 +81,11 @@ const Profile = (props) => {
   )
 };
 
+Profile.propTypes = {
+  user: PropTypes.object.isRequired,
+  ActivityStore: PropTypes.object.isRequired
+};
+
 Profile.defaultProps = {
   user: UI.User,
   ActivityStore: UI.Activity
@@ -91,10 +96,6 @@ const mapStateToProps = (state) => {
 
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
-  };
-
-  const getDomainState = function getUIState(args) {
-    return state.getIn(['Stores', 'Domains'].concat(args));
   };
 
   return {
