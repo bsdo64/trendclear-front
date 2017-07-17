@@ -14,6 +14,7 @@
     "app.js",
     "routes/",
     "middleware/",
-    "bin/"
+    "bin/",
+    "dist/stylesheets/"
   ]
 }

@@ -42,8 +42,9 @@ const ModalBox = props => {
         );
     }
   }
-  function closeModal() {
+  function closeModal(e) {
     props.FireCloseModal();
+    e.stopPropagation();
   }
 
   function afterOpenModal() {
@@ -64,7 +65,6 @@ const ModalBox = props => {
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         contentLabel="Modal"
-        onClick={() => { console.log(1) }}
       >
         {children}
 

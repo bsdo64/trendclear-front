@@ -59,7 +59,7 @@ const CommunityContents = props => {
           <div className="content">
             당신은 벤 되었습니다
             <div className="sub header">
-              다른 게시판을 찾거나 새로운 게시판을 만들어 보세요
+              다른 게시판을 찾거나 새로운 게시판을 직접 만들어 보세요
             </div>
           </div>
         </h2>

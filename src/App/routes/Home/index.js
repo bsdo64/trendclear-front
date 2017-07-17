@@ -1,40 +1,21 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { createLazyMod } from '../../Lib/utils';
 
 /* Content Container */
-import CollectionIndex from '../Collection/index.js';
-import Explore from '../Explore/index.js';
-import Writing from '../Submit/index.js';
-import Search from '../Search/index.js';
-import Company from '../Company/index.js';
-import Help from '../Help/index.js';
-import Collection from '../../containers/Contents/BestCollection.js';
-import Club from '../Club/index.js';
-import ForumSetting from '../../containers/Contents/ForumSetting.js';
-import Setting from '../Setting/index.js';
-import Bundle from '../../components/Bundle/index.js';
-
-import loadBest from 'bundle-loader?lazy!../../containers/Contents/Best.js';
-import loadUser from 'bundle-loader?lazy!../User/index.js';
-import loadPolicy from 'bundle-loader?lazy!../Policy/index.js'
-
-const Best = (props) => (
-  <Bundle load={loadBest}>
-    {(P) => <P { ...props }/>}
-  </Bundle>
-);
-
-const Policy = (props) => (
-  <Bundle load={loadPolicy}>
-    {(P) => <P { ...props }/>}
-  </Bundle>
-);
-
-const User = (props) => (
-  <Bundle load={loadUser}>
-    {(Mod) => <Mod { ...props }/>}
-  </Bundle>
-);
+const Explore = createLazyMod(require('bundle-loader?lazy&name=[name]!../Explore/index.js'));
+const Writing = createLazyMod(require('bundle-loader?lazy&name=[name]!../Submit/index.js'));
+const Search = createLazyMod(require('bundle-loader?lazy&name=[name]!../Search/index.js'));
+const Company = createLazyMod(require('bundle-loader?lazy&name=[name]!../Company/index.js'));
+const Help = createLazyMod(require('bundle-loader?lazy&name=[name]!../Help/index.js'));
+const Collection = createLazyMod(require('bundle-loader?lazy&name=[name]!../../containers/Contents/BestCollection.js'));
+const ForumSetting = createLazyMod(require('bundle-loader?lazy&name=[name]!../../containers/Contents/ForumSetting.js'));
+const Setting = createLazyMod(require('bundle-loader?lazy&name=[name]!../Setting/index.js'));
+const Best = createLazyMod(require('bundle-loader?lazy&name=[name]!../../containers/Contents/Best.js'));
+const Club = createLazyMod(require('bundle-loader?lazy&name=[name]!../Club/index.js'));
+const CollectionIndex = createLazyMod(require('bundle-loader?lazy&name=[name]!../Collection/index.js'));
+const Policy = createLazyMod(require('bundle-loader?lazy&name=[name]!../Policy/index.js'));
+const User = createLazyMod(require('bundle-loader?lazy&name=[name]!../User/index.js'));
 
 /* RightSide Container */
 import RightSide from '../../components/RightSide/index.js';

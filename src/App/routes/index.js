@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Bundle from '../components/Bundle/index.js';
 import MainHeader from '../components/MainHeader/index.js';
 import loadHome from 'bundle-loader?lazy!./Home/index.js';
-import Signin from './Signin/index.js';
+import loadSignin from 'bundle-loader?lazy!./Signin/index.js';
 import FindMember from './Member/FindMember.js';
 import ModalContainer from '../components/Modals/ModalContainer.js';
 import DataInitializer from '../components/DataInitializer/index.js';
@@ -14,6 +14,12 @@ import ScrollToTop from '../components/ScrollToTop/index.js'
 const Home = (props) => {
   return <Bundle load={loadHome}>
       {Home => <Home {...props} />}
+    </Bundle>
+}
+
+const Signin = (props) => {
+  return <Bundle load={loadSignin}>
+      {Signin => <Signin {...props} />}
     </Bundle>
 }
 

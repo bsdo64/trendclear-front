@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
+import { createLazyMod } from '../../Lib/utils';
 
-import Main from './components/Main.js';
-import Club from './components/Club.js';
-import Collections from './components/Collections.js';
-import Series from './components/Series.js';
-import Post from './components/Post.js';
-import Tags from './components/Tags.js';
-import Users from './components/Users.js';
+const Main = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/Main.js'));
+const Club = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/Club.js'));
+const Collections = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/Collections.js'));
+const Series = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/Series.js'));
+const Post = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/Post.js'));
+const Tags = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/Tags.js'));
+const Users = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/Users.js'));
 
 const Contents = ({ match }) => {
   return (

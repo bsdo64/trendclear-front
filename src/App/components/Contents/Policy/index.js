@@ -2,34 +2,40 @@
  * Created by dobyeongsu on 2016. 3. 23..
  */
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Privacy from './Privacy';
-import Terms from './Terms';
 
-require('./index.scss');
-const PolicyBox = props => {
-  function getEndpoint(location) {
-    return location.pathname.split('/')[2];
-  }
+import Bundle from '../../Bundle/index.js';
+import loadPrivacy from 'bundle-loader?lazy!./Privacy.js';
+import loadTerms from 'bundle-loader?lazy!./Terms.js';
 
-  const {location} = props;
-  const endPoint = getEndpoint(location);
+const Privacy = (props) => {
+  return <Bundle load={loadPrivacy}>
+      {Privacy => <Privacy {...props} />}
+    </Bundle>
+}
 
-  switch (endPoint) {
-    case 'privacy':
-      return (<Privacy />);
+const Terms = (props) => {
+  return <Bundle load={loadTerms}>
+      {Terms => <Terms {...props} />}
+    </Bundle>
+}
 
-    case 'terms':
-      return (<Terms />);
+const PolicyBox = () => {
 
-    default:
-      return (<Terms />);
-  }
+  return (
+    <Switch>
+      <Route path={`/policies/privacy`} component={Privacy}/>
+      <Route path={`/policies/terms`} component={Terms}/>
+      <Route component={Terms}/>
+    </Switch>
+  )
 };
 
 PolicyBox.displayName = 'PolicyBox';
 PolicyBox.propTypes = {
   location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default PolicyBox;

@@ -32,6 +32,7 @@ module.exports = {
   output: {
     publicPath: `${bundleServer.host}:${bundleServer.port}/${bundleServer.pathName}`,
     filename: 'bundle-[name].js',
+    chunkFilename: '[name]-[id].js',
     path: dist,
   },
   plugins: [

@@ -83,7 +83,7 @@ function* SagaRemoveUnusingImage() {
         requestArray.push(call([ImageApi, ImageApi.delete], '/uploaded/files',
           { file: payload[index].deleteUrl }));
       }
-      const result = yield requestArray;
+      const result = yield all(requestArray);
 
       yield put({ type: SUCCESS_DELETE_UN_USING_IMAGE, result });
     }
