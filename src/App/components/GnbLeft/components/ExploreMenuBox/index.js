@@ -52,13 +52,6 @@ class ExploreMenuBox extends React.Component {
                 </Link>
               </div>
 
-              <div className={cx([styles.subMenuItem, getStyle('/series')])}>
-                <Link to={`${match.url}/series`}>
-                  <i className="fa fa-list"/>
-                  <span>시리즈</span>
-                </Link>
-              </div>
-
               <div className={cx([styles.subMenuItem, getStyle('/tags')])}>
                 <Link to={`${match.url}/tags`}>
                   <i className="fa fa-hashtag"/>
@@ -66,12 +59,19 @@ class ExploreMenuBox extends React.Component {
                 </Link>
               </div>
 
-              <div className={cx([styles.subMenuItem, getStyle('/users')])}>
-                <Link to={`${match.url}/users`}>
-                  <i className="fa fa-user"/>
-                  <span>유저</span>
-                </Link>
-              </div>
+              {/*<div className={cx([styles.subMenuItem, getStyle('/series')])}>*/}
+                {/*<Link to={`${match.url}/series`}>*/}
+                  {/*<i className="fa fa-list"/>*/}
+                  {/*<span>시리즈</span>*/}
+                {/*</Link>*/}
+              {/*</div>*/}
+
+              {/*<div className={cx([styles.subMenuItem, getStyle('/users')])}>*/}
+                {/*<Link to={`${match.url}/users`}>*/}
+                  {/*<i className="fa fa-user"/>*/}
+                  {/*<span>유저</span>*/}
+                {/*</Link>*/}
+              {/*</div>*/}
 
             </div>
 

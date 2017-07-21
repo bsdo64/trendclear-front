@@ -72,7 +72,7 @@ module.exports = {
         use: ['babel-loader'],
         include: path.resolve(root, 'src'),
       }, {
-        test: /\.css$/,
+        test: /\.p?css$/,
         use: [
           'style-loader',
           'css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=1',

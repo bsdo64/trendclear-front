@@ -35,10 +35,9 @@ class FollowingList extends Component {
 
     return (
       <div className={cx([style.followingList, style.widgetBox])}>
-        <div style={{fontWeight: 'bold', paddingBottom: 5}}>팔로잉 리스트</div>
+        <div style={{fontWeight: 'bold', paddingBottom: 5}}>팔로잉 클럽</div>
 
         <div style={{paddingBottom: 5}}>
-          클럽
           <Scrollbars
             autoHide
             autoHeight

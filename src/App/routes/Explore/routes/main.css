@@ -1,0 +1,33 @@
+.explore_card {
+  -webkit-box-shadow: 1px 1px 1px 0px #abc;
+  -moz-box-shadow: 1px 1px 1px 0px #abc;
+  box-shadow: 1px 1px 1px 0px #abc;
+  margin-bottom: 10px;
+
+  & ul.ex_list {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #eee;
+    width: 100%;
+    list-style: none;
+
+    & > li.ex_list_item {
+      padding: 10px 0;
+      position: relative;
+      border-bottom: 1px solid #eee;
+    }
+
+    & > li.ex_list_item_flex {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      flex-flow: column;
+    }
+  }
+
+  & .more_btn {
+    display: block;
+    text-align: center;
+    padding-top: 5px;
+  }
+}

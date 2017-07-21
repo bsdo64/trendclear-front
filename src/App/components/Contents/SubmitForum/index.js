@@ -118,7 +118,8 @@ class SubmitForumBox extends React.Component {
   render() {
     const {SubmitForumStore, UserStore} = this.props;
 
-    const trendbox = UserStore.get('trendbox');
+
+    const trendbox = UserStore && UserStore.get('trendbox');
     if (!trendbox) {
       return <div>로그인을 해주세요</div>;
     }

@@ -2,20 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Switch, Link } from 'react-router-dom';
-
-import styles from './index.css';
 import { getUser } from '../../Selectors/User';
 import { toggleLoginModal } from '../../Actions/Login';
 
-import HomeMenuBoxConnect from './components/HomeMenuBox/index.js';
-import MyMenuBoxConnect from './components/MyMenuBox/index.js';
-import ClubMenuBoxConnect from './components/ClubMenuBox/index.js';
-import ClubSettingBoxConnect from './components/ClubSettingBox/index.js';
-import UserMenuBoxConnect from './components/UserMenuBoxConnect/index.js';
-import ExploreMenuBox from './components/ExploreMenuBox/index.js';
-import SubmitMenuBox from './components/SubmitMenuBox/index.js';
-import Policy from './components/PolicyMenuBox/index.js';
-import SkillBox from './components/SkillBox/index.js';
+import { createLazyMod } from '../../Lib/utils';
+const HomeMenuBoxConnect = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/HomeMenuBox/index.js'));
+const MyMenuBoxConnect = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/MyMenuBox/index.js'));
+const ClubMenuBoxConnect = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/ClubMenuBox/index.js'));
+const ClubSettingBoxConnect = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/ClubSettingBox/index.js'));
+const UserMenuBoxConnect = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/UserMenuBoxConnect/index.js'));
+const ExploreMenuBox = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/ExploreMenuBox/index.js'));
+const SubmitMenuBox = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/SubmitMenuBox/index.js'));
+const Policy = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/PolicyMenuBox/index.js'));
+const SkillBox = createLazyMod(require('bundle-loader?lazy&name=[name]!./components/SkillBox/index.js'));
+
+import styles from './index.css';
 import { getSeqPathName, activeStyle } from './func.js';
 
 class LeftBar extends React.Component {

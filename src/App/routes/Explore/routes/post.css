@@ -1,0 +1,39 @@
+.post_item {
+  display: flex;
+  z-index: 10;
+
+  & > img.td_m {
+    width: 100PX;
+    height: 60px;
+    flex: 1 1 auto;
+    margin-right: 10px;
+  }
+
+  & > .header {
+    width: 100%;
+
+    & > .club_name {
+      & > a {
+        z-index: 12;
+      }
+    }
+
+    & > .title {
+      font-weight: bold;
+    }
+
+    & > .meta {
+
+      & > .divider {
+        color: rgba(34, 36, 38, 0.15);
+      }
+    }
+  }
+
+  & > .counts {
+    flex: 1 0 auto;
+    bottom: 8px;
+    right: 10px;
+    z-index: 11;
+  }
+}
