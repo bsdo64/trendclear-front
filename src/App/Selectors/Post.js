@@ -3,6 +3,7 @@ import { getUsers } from './User'
 
 export const getCommunity = state => state.getIn(['UI', 'Community']);
 export const getPosts = state => state.getIn(['Domains', 'Posts']);
+export const getLists = state => state.getIn(['UI', 'List']);
 
 export const getCurrentFocusPostAuthor = createSelector(
   getCommunity,

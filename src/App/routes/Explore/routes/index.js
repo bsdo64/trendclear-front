@@ -1,4 +1,5 @@
 import React, { Component, } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import style from './main.css';
 import postStyle from './post.css';
@@ -270,4 +271,16 @@ class Main extends Component {
 Main.propTypes = {};
 Main.defaultProps = {};
 
-export default Main;
+const mapStateToProps = (state) => {
+  const StoreState = state.get('Stores');
+
+  return {
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+
+  }
+)(Main);

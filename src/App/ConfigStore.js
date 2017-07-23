@@ -7,6 +7,7 @@ import Stores from './Reducers';
 import Api from '../Utils/ApiClient';
 import assign from 'deep-assign';
 import { normalize } from 'normalizr';
+import * as schema from '../Model/normalizr/schema';
 import { author, category, post, noti, forum } from '../Model/normalizr/schema';
 
 let bootStrapLogger;
@@ -202,25 +203,9 @@ const initRouteState = (/* store */) => dispatch => action => {
           });
         }
 
-        if (resBody.GnbStore && resBody.GnbStore.gnbMenu) {
-          const INCat = resBody.GnbStore.gnbMenu.data;
-
-          const normalized = normalize(INCat, [category]);
-
-          resBody.GnbStore.gnbMenu.INCat = normalized;
-
-          assign(resBody, {
-            Categories: normalized.entities.categories,
-            Forums: normalized.entities.forums,
-            ListStore: { CategoryList: normalized.result },
-          });
-        }
-
         if (resBody.UserStore && resBody.UserStore.notifications) {
           const INoti = resBody.UserStore.notifications.data;
-
           const normalized = normalize(INoti, [noti]);
-
           resBody.UserStore.notifications.INoti = normalized;
 
           assign(resBody, {
@@ -230,8 +215,46 @@ const initRouteState = (/* store */) => dispatch => action => {
         }
 
         if (resBody.ForumSettingStore && resBody.ForumSettingStore.content) {
-
           resBody.ForumSettingStore.forum = resBody.CommunityStore.forum;
+        }
+
+        function capitalizeFirstLetter(string) {
+          return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function createDomainEntities (entities) {
+          const schemaMap = {
+            Author: 'Users',
+          };
+          const result = {};
+
+          for (let prop in entities) {
+            let schemaName = capitalizeFirstLetter(prop);
+            if (schemaMap[schemaName]) {
+              schemaName = schemaMap[schemaName];
+            }
+
+            result[schemaName] = entities[prop];
+          }
+
+          return result;
+        }
+
+        if (resBody.listStores) {
+
+          if (resBody.listStores.type === 'List') {
+            for (let i = 0; i < resBody.listStores.list.length; i++) {
+              const list = resBody.listStores.list[i];
+              const normalized = normalize(list.data.results, [schema[list.itemSchema]]);
+              const schemaEntities = createDomainEntities(normalized.entities);
+
+              assign(resBody, schemaEntities, {
+                ListStore: { [list.listName]: normalized.result },
+                PaginationStore: { [list.listName]: list.collection },
+              });
+            }
+          }
+
         }
 
         const state = {
