@@ -242,9 +242,9 @@ const initRouteState = (/* store */) => dispatch => action => {
 
         if (resBody.listStores) {
 
-          if (resBody.listStores.type === 'List') {
-            for (let i = 0; i < resBody.listStores.list.length; i++) {
-              const list = resBody.listStores.list[i];
+          if (resBody.listStores.list) {
+            for (let i = 0; i < resBody.listStores.lists.length; i++) {
+              const list = resBody.listStores.lists[i];
               const normalized = normalize(list.data.results, [schema[list.itemSchema]]);
               const schemaEntities = createDomainEntities(normalized.entities);
 
@@ -254,7 +254,6 @@ const initRouteState = (/* store */) => dispatch => action => {
               });
             }
           }
-
         }
 
         const state = {
