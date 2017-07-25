@@ -86,7 +86,7 @@ class AjaxApiClient {
         if (params[key] instanceof File) {
           q.attach(key, params[key])
         } else if (params[key]) {
-          q.field(key, params[key])
+          q.send({[key]: params[key]})
         }
       });
 

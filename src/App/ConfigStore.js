@@ -6,6 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import Stores from './Reducers';
 import Api from '../Utils/ApiClient';
 import assign from 'deep-assign';
+import deepMerge from 'deepmerge';
 import { normalize } from 'normalizr';
 import * as schema from '../Model/normalizr/schema';
 import { author, category, post, noti, forum } from '../Model/normalizr/schema';
@@ -242,16 +243,16 @@ const initRouteState = (/* store */) => dispatch => action => {
 
         if (resBody.listStores) {
 
-          if (resBody.listStores.list) {
+          if (resBody.listStores.lists) {
             for (let i = 0; i < resBody.listStores.lists.length; i++) {
               const list = resBody.listStores.lists[i];
               const normalized = normalize(list.data.results, [schema[list.itemSchema]]);
               const schemaEntities = createDomainEntities(normalized.entities);
 
-              assign(resBody, schemaEntities, {
+              resBody = deepMerge.all([resBody, schemaEntities, {
                 ListStore: { [list.listName]: normalized.result },
                 PaginationStore: { [list.listName]: list.collection },
-              });
+              }]);
             }
           }
         }

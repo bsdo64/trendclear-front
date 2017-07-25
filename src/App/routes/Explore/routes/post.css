@@ -3,7 +3,7 @@
   z-index: 10;
 
   & > img.td_m {
-    width: 100PX;
+    width: 80px;
     height: 60px;
     flex: 1 1 auto;
     margin-right: 10px;

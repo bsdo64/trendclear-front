@@ -7,6 +7,25 @@ import InfiniteList from '../../List/InfiniteList';
 import InfiniteLoader from '../../Loader/InfiniteLoader';
 import qs from 'qs';
 
+const ExploreHeader = () => {
+  return (
+    <div style={{ padding: 10 }}>
+      <div style={{
+        background: '#fff',
+        padding: 10,
+        boxShadow: '1px 1px 1px 0 #c6c6c6',
+      }}>
+        <h3 style={{ fontSize: '1.2em' }}>
+          <i className="fa fa-star"
+             style={{ color: 'yellow', paddingRight: 5 }}/>
+          피드
+        </h3>
+        <p>인기글</p>
+      </div>
+    </div>
+  );
+};
+
 const FeedHeader = () => {
   return (
     <div style={{ padding: 10 }}>
@@ -68,7 +87,9 @@ const BestBox = props => {
     if (previousPosition === 'below' && currentPosition === 'inside' && event) {
       const body = event.target.body;
       if ((body) && body.clientHeight > 768) {
-        const { PaginationStore, GnbStore, listName, location, FireRequestGetMorePostList } = props;
+        const {
+          listType, PaginationStore, GnbStore, listName, location, FireRequestGetMorePostList
+        } = props;
         const Pagination = PaginationStore.get(listName);
         if (Pagination) {
           const nextPage = Pagination.get('next_page');
@@ -108,7 +129,7 @@ const BestBox = props => {
                 page: nextPage,
                 order: query.order || 'hot',
                 categoryValue: (normalize.length > 0) ? normalize : null,
-                listType: location.pathname === '/all' ? 'all' : null,
+                listType: listType,
               },
             });
           }
@@ -125,6 +146,7 @@ const BestBox = props => {
         array.push({ title: '팔로잉' });
         return array;
       case '/all':
+      case '/explore/posts':
         array.push({ title: '전체글' });
         return array;
       default:
@@ -145,6 +167,7 @@ const BestBox = props => {
         <Route exact path="/club/:clubId/feed" component={ForumFeedHeader} />
         <Route exact path="/collection/:collectionId" component={CollectionHeader} />
         <Route exact path="/" component={FeedHeader} />
+        <Route exact path="/explore/posts" component={ExploreHeader} />
       </Switch>
 
       <Header
@@ -188,6 +211,7 @@ BestBox.propTypes = {
   AuthStore: PropTypes.object.isRequired,
   listName: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
+  listType: PropTypes.string,
 
   FireSetScrollPosition: PropTypes.func.isRequired,
   FireToggleLoginModal: PropTypes.func.isRequired,

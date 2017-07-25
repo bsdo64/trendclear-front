@@ -32,17 +32,11 @@ export const forum = new schema.Entity('forums', {
   managers: [author],
   bans: [author],
 });
+export const club = forum;
 
 export const category = new schema.Entity('categories', {
   forums: [forum],
 });
-export const categoryGroup = new schema.Entity('categoryGroups', {
-  categories: [category],
-});
-export const club = new schema.Entity('clubs', {
-  category_groups: [categoryGroup],
-});
-
 
 export const collection = new schema.Entity('collections', {
   forums: [forum],

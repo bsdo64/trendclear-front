@@ -1,0 +1,53 @@
+.explore_club {
+  padding: 10px;
+}
+
+.card {
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+ul.clubCardList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  & > li.clubCardItem {
+    display: inline-block;
+    vertical-align: top;
+    width: 300px;
+
+    & img {
+      display: block;
+    }
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+
+  & > .clubImage {
+    padding-right: 10px;
+  }
+
+  & > .clubTitle {
+    flex: 1 0 auto;
+  }
+}
+
+.cardStats {
+  display: flex;
+  align-items: stretch;
+
+  & > .button {
+    flex: 1 0 auto;
+    text-align: center;
+  }
+}
+
+.header {
+  padding: 10px;
+  background: #fff;
+}

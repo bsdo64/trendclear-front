@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
-require('./header.scss');
+const style = require('./header.css');
 const BestHeader = (props) => {
   function createBreadCrumbs(array = []) {
 
@@ -10,11 +9,11 @@ const BestHeader = (props) => {
       const component = [];
 
       v.url
-        ? component.push(<Link to={v.url} className="section">{v.title}</Link>)
-        : component.push(<div className="section">{v.title}</div>);
+        ? component.push(<Link to={v.url} className={style.section}>{v.title}</Link>)
+        : component.push(<div className={style.section}>{v.title}</div>);
 
       (array.length !== (index + 1))
-        ? component.push(<div className="divider"> / </div>)
+        ? component.push(<div className={style.divider}> / </div>)
         : false;
 
       return component;
@@ -22,14 +21,14 @@ const BestHeader = (props) => {
   }
 
   const { type, location, breadcrumbs, collections } = props;
-  let breadcrumb;
+  let breadcrumb = createBreadCrumbs(breadcrumbs);
 
   switch (type) {
     case 'bestPostList': {
       breadcrumb = createBreadCrumbs(breadcrumbs);
 
       return (
-        <div className="ui breadcrumb content_header">
+        <div className={style.content_header}>
           <i className="fa fa-angle-right"/>
           {breadcrumb}
         </div>
@@ -40,7 +39,7 @@ const BestHeader = (props) => {
       breadcrumb = createBreadCrumbs(breadcrumbs);
 
       return (
-        <div className="ui breadcrumb content_header">
+        <div className={style.content_header}>
           <i className="fa fa-angle-right"/>
           {breadcrumb}
         </div>
@@ -64,7 +63,7 @@ const BestHeader = (props) => {
           ]);
 
           return (
-            <div className="ui breadcrumb content_header">
+            <div className={style.content_header}>
               <i className="fa fa-angle-right"/>
               {breadcrumb}
             </div>
@@ -77,7 +76,7 @@ const BestHeader = (props) => {
 
     default:
       return (
-        <div className="ui breadcrumb content_header">
+        <div className={style.content_header}>
           <i className="fa fa-angle-right"/>
           {breadcrumb}
         </div>
