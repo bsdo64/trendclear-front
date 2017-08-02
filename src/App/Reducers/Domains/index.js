@@ -60,6 +60,9 @@ import {
   SUCCESS_ACTIVATE_VENALINK,
   SUCCESS_PARTICIPATE_VENALINK,
 } from '../../Actions/VenacleStore';
+import {
+  SUCCESS_GET_MORE_LIST
+} from '../../Actions/List';
 
 const initList = Map({});
 
@@ -473,6 +476,15 @@ const Forums = (state = initList, action) => {
       const {id} = result;
 
       return state.mergeIn([id.toString()], Map(result));
+    }
+
+    case SUCCESS_GET_MORE_LIST: {
+      const ClubData = action.result.Clubs || action.result.Forums;
+      if (ClubData) {
+        return state.mergeDeep(ClubData);
+      }
+
+      return state;
     }
 
     default:

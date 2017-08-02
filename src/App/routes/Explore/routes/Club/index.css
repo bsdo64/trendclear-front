@@ -18,6 +18,10 @@ ul.clubCardList {
     vertical-align: top;
     width: 300px;
 
+    & > .clubCard {
+      margin-right: 10px;
+    }
+
     & img {
       display: block;
     }
@@ -29,11 +33,31 @@ ul.clubCardList {
   align-items: center;
 
   & > .clubImage {
-    padding-right: 10px;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  & > .clubTitle {
-    flex: 1 0 auto;
+  & > .clubInfo {
+    & > .clubTitle {
+      flex: 1 0 auto;
+    }
+
+    & > .clubMeta {
+      color: #aaa;
+    }
+  }
+}
+
+.cardContent {
+  & > .clubRule {
+    & > pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
   }
 }
 

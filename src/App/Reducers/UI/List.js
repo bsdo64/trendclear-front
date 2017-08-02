@@ -16,6 +16,9 @@ import {
 import {
   SUCCESS_DELETE_ITEM,
 } from '../../Actions/DeleteItem';
+import {
+  SUCCESS_GET_MORE_LIST
+} from '../../Actions/List';
 
 const ListReducer = (state = UI.List, action) => {
   switch (action.type) {
@@ -85,6 +88,15 @@ const ListReducer = (state = UI.List, action) => {
 
     case SUCCESS_GET_MORE_FORUM_LIST: {
       return state.set('searchForumList', new List(action.data.result));
+    }
+
+    case SUCCESS_GET_MORE_LIST: {
+      return state
+        .update('exploreClubs', list =>
+          list
+            ? list.concat(action.result.ListStore.exploreClubs)
+            : [].concat(action.result.ListStore.exploreClubs)
+        );
     }
 
     default:

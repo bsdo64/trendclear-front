@@ -9,6 +9,9 @@ import {
 import {
   SUCCESS_GET_MORE_FORUM_LIST,
 } from '../../Actions/Forum';
+import {
+  SUCCESS_GET_MORE_LIST
+} from '../../Actions/List'
 
 const Pagination = (state = UI.Pagination, action) => {
   switch (action.type) {
@@ -22,6 +25,11 @@ const Pagination = (state = UI.Pagination, action) => {
       const {listName, collection} = action;
 
       return state.merge({[listName]: collection});
+    }
+
+    case SUCCESS_GET_MORE_LIST: {
+      return state
+        .merge({exploreClubs: action.result.PaginationStore.exploreClubs});
     }
 
     default:

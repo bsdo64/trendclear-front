@@ -13,13 +13,24 @@ export const getCurrentClub = createSelector(
   },
 );
 
+export const getExploreClubs = createSelector(
+  getLists,
+  getClubs,
+  (lists, clubs) => {
+    const clubIds = lists.get('exploreClubs');
+    return clubIds && clubIds.map(clubId => {
+      return clubs.get(clubId + '');
+    });
+  }
+);
+
 export const getExploreMainClubs = createSelector(
   getLists,
   getClubs,
   (lists, clubs) => {
     const clubIds = lists.get('exploreMainClubs');
     return clubIds && clubIds.map(clubId => {
-      return clubs.get(clubId + '')
-    })
+      return clubs.get(clubId + '');
+    });
   }
 );

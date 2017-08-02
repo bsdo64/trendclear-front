@@ -13,6 +13,7 @@ import followingList from './followingList';
 import venaStore from './venaStore';
 import venalink from './venalink';
 import search from './search';
+import list from './list';
 
 function* rootSaga() {
   yield all([
@@ -30,6 +31,7 @@ function* rootSaga() {
     venaStore(),
     venalink(),
     search(),
+    list(),
   ]);
 }
 
