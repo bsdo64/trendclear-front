@@ -41,7 +41,7 @@ function* SagaRequestMoreList() {
     const { payload } = yield take(REQUEST_GET_MORE_LIST);
 
     try {
-      const result = yield call([Api, API.get], '/list', payload);
+      const result = yield call([Api, API.get], payload.pathName, payload.params);
 
       let r = {};
       for (let i = 0; i < result.lists.length; i++) {

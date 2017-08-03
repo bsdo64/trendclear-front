@@ -9,6 +9,7 @@ import postStyle from './post.css';
 
 const CollectionItem = props => {
   const { item } = props;
+  const forums = item.get('forums');
   return (
     <div>
       <div className="tl_default" style={{ display: 'flex', alignItems: 'center', }}>
@@ -21,7 +22,7 @@ const CollectionItem = props => {
           overflow: 'hidden',
           textOverflow: 'ellipsis'
         }}>
-          {item.getIn(['creator', 'nick'])} / {item.get('title')}
+          {item.get('title')} <span style={{color: '#aaa', fontSize: 11}}>@{item.getIn(['creator', 'nick'])}</span>
         </span>
         <span className="td_t" style={{
           color: '#095e6b',
@@ -29,61 +30,41 @@ const CollectionItem = props => {
           flex: '1 0 auto',
           textAlign: 'right',
         }}>
-          <span><i className="fa fa-files-o" aria-hidden="true"></i> {item.get('forums').size}</span>
+          <span><i className="fa fa-files-o" aria-hidden="true"></i> {forums.size}</span>
         </span>
       </div>
-      <div style={{paddingTop: 10}}>
+      {/*<div style={{paddingTop: 10}}>
         무료로 챙기는 보건소 꿀팁 무료로 챙기는 보건소 꿀팁 무료로 챙기는 보건소 꿀팁 무료로 챙기는 보건소 꿀팁 무료로 챙기는 보건소 꿀팁 무료로 챙기는 보건소 꿀팁 무료로 챙기는 보건소 꿀팁
-      </div>
+      </div>*/}
       <div className="td_ow" style={{ paddingTop: 5 }}>
         <ul className="td_o" style={{ display: 'inline', margin: 0, padding: 0, listStyle: 'none', }}>
-          <li style={{
-            display: 'inline',
-            marginRight: 5,
-            padding: '2px 3px',
-            background: '#058294',
-            color: '#eee',
-            fontSize: '11px',
-            borderRadius: '2px',
-          }}>더이상은</li>
-          <li style={{
-            display: 'inline',
-            marginRight: 5,
-            padding: '2px 3px',
-            background: '#058294',
-            color: '#eee',
-            fontSize: '11px',
-            borderRadius: '2px',
-          }}>친구와 함께</li>
-          <li style={{
-            display: 'inline',
-            marginRight: 5,
-            padding: '2px 3px',
-            background: '#058294',
-            color: '#eee',
-            fontSize: '11px',
-            borderRadius: '2px',
-          }}>너희집</li>
-          <li style={{
-            display: 'inline',
-            marginRight: 5,
-            padding: '2px 3px',
-            background: '#058294',
-            color: '#eee',
-            fontSize: '11px',
-            borderRadius: '2px',
-          }}>친구</li>
-          <li style={{
-            display: 'inline',
-            marginRight: 5,
-            padding: '2px 3px',
-            background: '#058294',
-            color: '#eee',
-            fontSize: '11px',
-            borderRadius: '2px',
-          }}>친구헿</li>
+          {
+            forums.slice(0, 5).map((v, i) => {
+              return (
+                <li
+                  key={i}
+                  style={{
+                    display: 'inline',
+                    marginRight: 5,
+                    padding: '3px 5px',
+                    background: 'rgba(21, 130, 146, 0.75)',
+                    fontSize: '11px',
+                    borderRadius: '2px',
+                  }}>
+                  <Link to={`/club/${v.get('id')}`} style={{color: '#eee',}}>
+                    <i className="fa fa-files-o" />
+                    {` ${v.get('title')}`}
+                  </Link>
+                </li>
+              )
+            })
+          }
+
         </ul>
-        <span><i className="fa fa-ellipsis-h"></i></span>
+        {
+          forums.size > 5 &&
+          <span><i className="fa fa-ellipsis-h"></i></span>
+        }
       </div>
     </div>
   )

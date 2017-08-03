@@ -11,10 +11,19 @@ import { getExploreClubs } from '../../../../Selectors/Club';
 import { getCollection } from '../../../../Selectors/Pagination';
 
 class Club extends Component {
+  componentDidMount() {
+    console.log('comdid');
+    this.getMoreBest();
+  }
+
   getMoreBest = (data) => {
     const { FireRequestGetMoreList, pagination } = this.props;
+    const bodyHeight = document.body.offsetHeight;
+    const listHeight = this.list.offsetHeight;
 
-    if (pagination.get('next_page')) {
+    console.log(bodyHeight, listHeight);
+
+    if (pagination && pagination.get('next_page')) {
       FireRequestGetMoreList({
         listName: 'exploreClubs',
         pathName: '/list',
@@ -35,7 +44,7 @@ class Club extends Component {
           클럽 리스트
         </div>
 
-        <ul className={style.clubCardList}>
+        <ul ref={r => this.list = r} className={style.clubCardList}>
           <StackGrid
             columnWidth={290}
             gutterWidth={10}
@@ -49,9 +58,12 @@ class Club extends Component {
                 <div className={style.card + ' ' + style.clubCard}>
                   <div className={style.content}>
                     <div className={style.cardHeader}>
-                      <div className={style.clubImage}>
-                        <img src={`/image/uploaded/files/${v.get('forum_image')}`} />
-                      </div>
+                      {
+                        v.get('forum_image') &&
+                        <div className={style.clubImage}>
+                          <img src={`/image/uploaded/files/${v.get('forum_image')}`} />
+                        </div>
+                      }
                       <div className={style.clubInfo}>
                         <div className={style.clubTitle}>
                           <Link to={`/club/${v.get('id')}`}>{v.get('title')}</Link>

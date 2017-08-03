@@ -33,6 +33,7 @@ const MyForums = props => {
         <div className={styles.collectionSearchBox}>
           <i className="fa fa-file-o"/>
           <input
+            autoFocus={true}
             type="text"
             className={styles.searchInput}
             onChange={searchList}

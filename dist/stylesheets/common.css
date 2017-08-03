@@ -100,7 +100,8 @@ body {
     bottom: 0; }
   #container > #section {
     float: none;
-    margin-left: 250px; }
+    margin-left: 250px;
+    width: 860px; }
     #container > #section > #contents {
       position: relative;
       float: left;

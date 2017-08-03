@@ -41,6 +41,7 @@ const MyCollections = props => {
         <div className={styles.collectionSearchBox}>
           <i className="fa fa-inbox"/>
           <input
+            autoFocus={true}
             type="text"
             className={styles.searchInput}
             onChange={searchList}
