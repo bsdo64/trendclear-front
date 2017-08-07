@@ -11,16 +11,29 @@ import { getExploreClubs } from '../../../../Selectors/Club';
 import { getCollection } from '../../../../Selectors/Pagination';
 
 class Club extends Component {
-  componentDidMount() {
-    console.log('comdid');
-    this.getMoreBest();
+  state = {
+    initial: false,
+    loading: false,
+  };
+
+  componentWillReceiveProps(nextProps) {
+    const {pagination} = nextProps;
+
+
+    if (!this.props.pagination
+        && pagination && pagination.get('next_page')) {
+
+      console.log('active');
+      this.getMoreBest(pagination.get('next_page'));
+    }
   }
 
-  getMoreBest = (data) => {
+  getMoreBest = (nextPage) => {
     const { FireRequestGetMoreList, pagination } = this.props;
     const bodyHeight = document.body.offsetHeight;
     const listHeight = this.list.offsetHeight;
 
+    console.log(pagination && pagination.get('next_page'));
     console.log(bodyHeight, listHeight);
 
     if (pagination && pagination.get('next_page')) {

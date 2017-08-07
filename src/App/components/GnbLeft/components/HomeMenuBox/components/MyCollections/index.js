@@ -49,31 +49,43 @@ const MyCollections = props => {
         </div>
       }
 
-      <div className={styles.scrollable}>
-        <Scrollbars
-          autoHide
-          autoHeight
-          autoHeightMin={50}
-          autoHeightMax={200}
-          style={{ width: 210 }}>
+      {
+        !!collectionList.size &&
+        <div className={styles.scrollable}>
+          <Scrollbars
+            autoHide
+            autoHeight
+            autoHeightMin={50}
+            autoHeightMax={200}
+            style={{ width: 210 }}>
 
-          <ul className={styles.collectionList}>
-            {collectionList.map((v, i) => {
-              return (
-                <li key={i} className={styles.collectionListItem}>
-                  <div className={styles.collectionItemBox}>
-                    <NavLink to={`/collection/${v.get('id')}`} activeClassName={styles.activeButton}>
-                      <i className="fa fa-inbox"/>
-                      {v.get('title')}
-                    </NavLink>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+            <ul className={styles.collectionList}>
+              {collectionList.map((v, i) => {
+                return (
+                  <li key={i} className={styles.collectionListItem}>
+                    <div className={styles.collectionItemBox}>
+                      <NavLink to={`/collection/${v.get('id')}`} activeClassName={styles.activeButton}>
+                        <i className="fa fa-inbox"/>
+                        {v.get('title')}
+                      </NavLink>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
 
-        </Scrollbars>
-      </div>
+          </Scrollbars>
+        </div>
+      }
+
+      {
+        collectionList.size === 0 &&
+        <div className={styles.emptyAddBox}>
+          <Link to="/collection" className={styles.addButton}>
+            + 컬렉션을 추가해보세요
+          </Link>
+        </div>
+      }
     </div>
   );
 };

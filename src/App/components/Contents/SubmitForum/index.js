@@ -219,7 +219,7 @@ class SubmitForumBox extends React.Component {
                         ref={r => this.ruleText = r}
                         defaultValue={this.state.value}/>
             </div>
-            <h5>클럽 규칙</h5>
+            <h5>클럽 규칙 미리보기</h5>
             <div
               className="markdown_output"
               style={{paddingBottom: 10}}

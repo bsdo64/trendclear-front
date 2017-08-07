@@ -45,19 +45,19 @@ class ExploreMenuBox extends React.Component {
                 </Link>
               </div>
 
-              <div className={cx([styles.subMenuItem, getStyle('/collections')])}>
-                <Link to={`${match.url}/collections`}>
-                  <i className="fa fa-folder"/>
-                  <span>컬랙션</span>
-                </Link>
-              </div>
+              {/*<div className={cx([styles.subMenuItem, getStyle('/collections')])}>*/}
+                {/*<Link to={`${match.url}/collections`}>*/}
+                  {/*<i className="fa fa-folder"/>*/}
+                  {/*<span>컬랙션</span>*/}
+                {/*</Link>*/}
+              {/*</div>*/}
 
-              <div className={cx([styles.subMenuItem, getStyle('/tags')])}>
-                <Link to={`${match.url}/tags`}>
-                  <i className="fa fa-hashtag"/>
-                  <span>태그</span>
-                </Link>
-              </div>
+              {/*<div className={cx([styles.subMenuItem, getStyle('/tags')])}>*/}
+                {/*<Link to={`${match.url}/tags`}>*/}
+                  {/*<i className="fa fa-hashtag"/>*/}
+                  {/*<span>태그</span>*/}
+                {/*</Link>*/}
+              {/*</div>*/}
 
               {/*<div className={cx([styles.subMenuItem, getStyle('/series')])}>*/}
                 {/*<Link to={`${match.url}/series`}>*/}

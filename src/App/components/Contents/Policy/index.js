@@ -24,11 +24,13 @@ const Terms = (props) => {
 const PolicyBox = () => {
 
   return (
-    <Switch>
-      <Route path={`/policies/privacy`} component={Privacy}/>
-      <Route path={`/policies/terms`} component={Terms}/>
-      <Route component={Terms}/>
-    </Switch>
+    <div style={{padding: 10}}>
+      <Switch>
+        <Route path={`/policies/privacy`} component={Privacy}/>
+        <Route path={`/policies/terms`} component={Terms}/>
+        <Route component={Terms}/>
+      </Switch>
+    </div>
   )
 };
 

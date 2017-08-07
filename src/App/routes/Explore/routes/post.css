@@ -13,12 +13,14 @@
     width: 100%;
 
     & > .club_name {
+      font-size: 11px;
       & > a {
         z-index: 12;
       }
     }
 
     & > .title {
+      font-size: 13px;
       font-weight: bold;
     }
 
@@ -35,5 +37,22 @@
     bottom: 8px;
     right: 10px;
     z-index: 11;
+
+    & > .likeBox {
+      padding-right: 10px;
+
+      & > :global(.fa.fa-heart) {
+        color: red;
+      }
+
+      & > :global(.fa.fa-heart-o) {
+        cursor: pointer;
+      }
+
+      & > :global(.fa.fa-heart-o):hover {
+        color: red;
+      }
+    }
+
   }
 }

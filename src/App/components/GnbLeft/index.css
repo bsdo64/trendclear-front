@@ -187,6 +187,15 @@
   }
 }
 
-.skills {
+.emptyAddBox {
+  padding: 10px;
 
+  & > .addButton {
+    cursor: pointer;
+    color: #808e90;
+
+    &:hover {
+      color: #fff;
+    }
+  }
 }

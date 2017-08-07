@@ -1,4 +1,5 @@
 import React, { Component, } from 'react';
+import cx from 'classnames';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getExploreMainPost } from '../../../Selectors/Post';
@@ -114,10 +115,17 @@ const ClubItem = props => {
 const PostItem = props => {
   const { item } = props;
 
-  let postImg;
+  let postImg,
+      likeCx;
+
   if (item.get('has_img')) {
     postImg = <img src={`/image/uploaded/files/small/${item.get('has_img')}`} className={postStyle.td_m}/>;
   }
+
+  likeCx = cx('fa', {
+    'fa-heart': item.get('liked'),
+    'fa-heart-o': !item.get('liked'),
+  });
 
   return (
     <div className={postStyle.post_item}>
@@ -140,8 +148,12 @@ const PostItem = props => {
         </div>
       </div>
       <div className={postStyle.counts}>
-        <span style={{ paddingRight: 10 }}><i className='fa fa-heart'/> {item.get('like_count')}</span>
-        <span><i className='fa fa-comments-o'/> {item.get('comment_count')}</span>
+        <span className={postStyle.likeBox}>
+          <i className={likeCx}/> {item.get('like_count')}
+        </span>
+        <span>
+          <i className='fa fa-comments-o'/> {item.get('comment_count')}
+        </span>
       </div>
     </div>
   )
@@ -224,9 +236,9 @@ class Main extends Component {
         </MainCard>
 
         {/* 컬렉션 */}
-        <MainCard title="컬렉션" type="collections">
-          <MainCardList itemType="collection" listType="flex" items={mainCollections} />
-        </MainCard>
+        {/*<MainCard title="컬렉션" type="collections">*/}
+          {/*<MainCardList itemType="collection" listType="flex" items={mainCollections} />*/}
+        {/*</MainCard>*/}
 
       </div>
     );
