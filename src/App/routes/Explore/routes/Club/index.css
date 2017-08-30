@@ -39,6 +39,11 @@ ul.clubCardList {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    & > img {
+      width: inherit;
+      height: inherit;
+    }
   }
 
   & > .clubInfo {
@@ -54,7 +59,8 @@ ul.clubCardList {
 
 .cardContent {
   & > .clubRule {
-    & > pre {
+    & > div {
+      padding: 10px 0;
       white-space: pre-wrap;
       word-wrap: break-word;
     }

@@ -5,6 +5,7 @@ import Waypoint from 'react-waypoint';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import StackGrid from 'react-stack-grid';
+import marked from '../../../../Lib/Marked';
 import style from './index.css';
 import { requestGetMoreList } from '../../../../Actions/List';
 import { getExploreClubs } from '../../../../Selectors/Club';
@@ -42,6 +43,16 @@ class Club extends Component {
         pathName: '/list',
         params: {
           page: pagination.get('next_page'),
+        },
+      });
+    }
+
+    if (nextPage && typeof nextPage === 'number') {
+      FireRequestGetMoreList({
+        listName: 'exploreClubs',
+        pathName: '/list',
+        params: {
+          page: nextPage,
         },
       });
     }
@@ -88,9 +99,9 @@ class Club extends Component {
                     </div>
                     <div className={style.cardContent}>
                       <div className={style.clubRule}>
-                        <pre>
-                          {v.get('rule')}
-                        </pre>
+                        <div dangerouslySetInnerHTML={{
+                          __html: marked(v.get('rule') || '', {breaks: true})
+                        }} />
                       </div>
                     </div>
                     <div className={style.cardStats}>

@@ -187,6 +187,7 @@ const BestBox = props => {
       />
 
       <Waypoint
+        debug
         onEnter={getMoreBest}
         bottomOffset='-200px'
         scrollableAncestor={window || null}
