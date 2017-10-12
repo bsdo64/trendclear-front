@@ -1,0 +1,28 @@
+.header {
+  font-weight: bold;
+}
+
+ul.list {
+  margin: 0;
+  padding: 5px 0;
+  list-style: none;
+
+  & li.item{
+    position: relative;
+    padding-bottom: 10px;
+
+    & img {
+      position: relative;
+      left: -10px;
+    }
+
+    & .meta {
+      position: relative;
+      top: 0;
+      right: 0;
+      background: #abc;
+      width: 50px;
+      height: 50px;
+    }
+  }
+}

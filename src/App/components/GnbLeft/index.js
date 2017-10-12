@@ -88,7 +88,7 @@ LeftBar.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   user: PropTypes.object,
-  FireToggleLoginModal: PropTypes.object.isRequired
+  FireToggleLoginModal: PropTypes.func.isRequired
 };
 LeftBar.defaultProps = {};
 
