@@ -31,3 +31,16 @@ export const getExploreMainPost = createSelector(
     });
   }
 );
+
+export const getFamousPostList = createSelector(
+  getLists,
+  getPosts,
+  getForums,
+  (lists, posts, forums) => {
+    const postIds = lists.get('famousPosts');
+
+    return postIds && postIds.map((postId) => {
+      return posts.get(postId + '');
+    });
+  }
+);

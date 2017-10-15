@@ -11,18 +11,56 @@ ul.list {
     position: relative;
     padding-bottom: 10px;
 
-    & img {
-      position: relative;
-      left: -10px;
+    & .anchor {
+      color: inherit;
+      cursor: pointer;
     }
 
-    & .meta {
+    & .imageBox {
+      width: 240px;
+      height: 100px;
+      overflow: hidden;
       position: relative;
-      top: 0;
-      right: 0;
-      background: #abc;
-      width: 50px;
-      height: 50px;
+      left: -10px;
+      display: inline-block;
+
+      & img {
+        position: absolute;
+        /* move the element half way across the screen */
+        left: 50%;
+        /* allow the width to be calculated dynamically */
+        top: 50%;
+        /* then move the element back again using a transform */
+        transform: translateX(-50%) translateY(-50%);
+      }
+    }
+
+    & .title {
+      font-size: 1.05rem;
+    }
+
+    & .subTitle {
+      & .club {
+        display: inline;
+        color: #aaa;
+      }
+
+      & .meta {
+        display: inline-block;
+        float: right;
+
+        & i {
+          padding-right: 3px;
+        }
+
+        & .like {
+          padding-right: 5px;
+        }
+
+        & .comment {
+
+        }
+      }
     }
   }
 }

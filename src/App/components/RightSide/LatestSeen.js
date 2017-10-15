@@ -31,6 +31,11 @@ class LatestSeen extends Component {
               {
                 latestSeenList && latestSeenList.map((v, index) => {
 
+                  const likedClass = cx('fa', {
+                    'fa-heart-o': !v.get('liked'),
+                    'fa-heart': v.get('liked'),
+                  });
+
                   return (
                     <li key={index}>
                       <div className={cx([style.listItem])}>
@@ -40,7 +45,7 @@ class LatestSeen extends Component {
                             {v.get('title')}
                             <div className={style.meta}>
                             <span className={style.type}>
-                              <i className="fa fa-heart-o" />{v.get('like_count')}
+                              <i className={likedClass} />{v.get('like_count')}
                             </span>
                               <span className={style.type}>
                               <i className="fa fa-edit" />{v.get('comment_count')}

@@ -48,6 +48,11 @@ class PostList extends React.PureComponent {
       announce: isAnnounce,
     });
 
+    const likedClass = cx('fa', {
+      'fa-heart-o': !item.get('liked'),
+      'fa-heart': item.get('liked'),
+    });
+
     return (
       <tr className={activeClass}>
         {/*<td className="center aligned collapsing">{prefix &&*/}
@@ -95,7 +100,7 @@ class PostList extends React.PureComponent {
               </Link>
               <div style={{position: 'absolute', top: 0, right: 0}}>
                 <div style={{float: 'left', paddingRight: 15}}>
-                  <i className="fa fa-heart-o" style={{color: 'red', paddingRight: 5}} />{like_count}
+                  <i className={likedClass} style={{color: 'red', paddingRight: 5}} />{like_count}
                 </div>
                 <div style={{float: 'left'}}>
                   <i className="fa fa-edit" style={{paddingRight: 3}}/>{comment_count}

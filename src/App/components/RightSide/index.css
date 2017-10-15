@@ -122,7 +122,7 @@
                 padding-right: 3px;
                 font-size: 11px;
 
-                &:global(.fa-heart-o) {
+                &:global(.fa-heart-o), &:global(.fa-heart) {
                   color: red;
                 }
 
