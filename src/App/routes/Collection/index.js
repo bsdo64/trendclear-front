@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { connect } from 'react-redux';
 import {
-  requestCreateCollection
+  requestCreateCollection,
+  requestDeleteCollection,
 } from '../../Actions/Collection';
 import { getCollectionList } from '../../Selectors/User.js';
 
@@ -71,7 +72,9 @@ class CollectionIndex extends Component {
     e.preventDefault();
     e.stopPropagation();
 
-    console.log('Hello' + id);
+    this.props.FireRequestDeleteCollection({
+      collectionId: id
+    });
   }
 
   submitNewCollection(e) {
@@ -194,6 +197,7 @@ class CollectionIndex extends Component {
 CollectionIndex.propTypes = {
   collectionList: PropTypes.object.isRequired,
   FireRequestCreateCollection: PropTypes.func.isRequired,
+  FireRequestDeleteCollection: PropTypes.func.isRequired,
 };
 CollectionIndex.defaultProps = {};
 
@@ -208,6 +212,7 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {
-    FireRequestCreateCollection: requestCreateCollection
+    FireRequestCreateCollection: requestCreateCollection,
+    FireRequestDeleteCollection: requestDeleteCollection
   }
 )(CollectionIndex);

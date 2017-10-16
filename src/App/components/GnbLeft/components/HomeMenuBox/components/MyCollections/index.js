@@ -61,6 +61,7 @@ const MyCollections = props => {
 
             <ul className={styles.collectionList}>
               {collectionList.map((v, i) => {
+
                 return (
                   <li key={i} className={styles.collectionListItem}>
                     <div className={styles.collectionItemBox}>

@@ -140,9 +140,11 @@ function* SagaDeleteCollection() {
     const { payload } = yield take(REQUEST_DELETE_COLLECTION);
 
     try {
-      const result = yield call([Api, API.post], '/collection', payload);
+      const result = yield call([Api, API.delete], '/collection', payload);
 
-      yield put({ type: SUCCESS_DELETE_COLLECTION, result });
+      payload.userId = result.userId;
+
+      yield put({ type: SUCCESS_DELETE_COLLECTION, payload });
     }
 
     catch (error) {

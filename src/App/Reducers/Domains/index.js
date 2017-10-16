@@ -41,6 +41,7 @@ import {
 } from '../../Actions/Forum';
 import {
   SUCCESS_CREATE_COLLECTION,
+  SUCCESS_DELETE_COLLECTION,
   SUCCESS_ADD_FORUM_IN_COLLECTION,
   SUCCESS_REMOVE_FORUM_IN_COLLECTION,
   SUCCESS_SEARCH_FORUM_TO_COLLECTION_SUBS,
@@ -241,6 +242,19 @@ const Users = (state = initList, action) => {
         .setIn([targetId.toString(), 'payments'], fromJS(data));
     }
 
+    case SUCCESS_DELETE_COLLECTION: {
+      const {collectionId, userId} = action.payload;
+      const loginUser = findUserById(userId);
+      if (loginUser) {
+        const updateUser = loginUser
+          .update('collections', list => list.filter(v => v !== collectionId));
+
+        return state.update(userId.toString(), () => updateUser);
+      }
+
+      return state;
+    }
+
     case SUCCESS_CREATE_COLLECTION: {
       const {collection} = action;
       return state
@@ -371,6 +385,12 @@ const Comments = (state = initList, action) => {
 
 const Collections = (state = initList, action) => {
   switch (action.type) {
+
+    case SUCCESS_DELETE_COLLECTION: {
+      const { collectionId } = action.payload;
+      return state.delete(collectionId.toString());
+    }
+
     case SUCCESS_CREATE_COLLECTION: {
       return state.merge({[action.collection.id]: action.collection});
     }
