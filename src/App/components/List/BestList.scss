@@ -1,11 +1,6 @@
 $postWidth: 620px;
 
 #best_contents {
-  .search-header {
-    padding-left: 10px;
-    font-size: 14px;
-    font-weight: 700;
-  }
 
   .best_list {
     margin: 0;
@@ -13,6 +8,7 @@ $postWidth: 620px;
     .best_list_item {
       margin: 0;
       padding: 10px;
+      padding-bottom: 0;
       width: $postWidth;
 
       .ui.content {

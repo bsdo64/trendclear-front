@@ -8,9 +8,9 @@ const SearchHeader = props => {
     const total = postData.get('total') ? postData.get('total') : 0;
 
     return (
-      <div className="search-header">
-        포스트 {total}개
-      </div>
+      <h4 className="header post">
+        {total}개의 포스트
+      </h4>
     );
   }
 

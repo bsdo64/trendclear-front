@@ -1,11 +1,16 @@
-#search_forum_list {
-  padding-bottom: 10px;
-
+.search {
   h4 {
     padding: 10px;
     margin: 0;
-    border-bottom: 1px solid #eee;
   }
+
+  h4.header.post {
+    padding-bottom: 0;
+  }
+}
+
+#search_forum_list {
+  padding-bottom: 10px;
 
   .search-forum-list {
     list-style: none;

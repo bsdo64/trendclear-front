@@ -163,6 +163,7 @@ class SearchBox extends React.Component {
   render() {
     const {
       SearchStore, Collections, ListStore, Forums, Posts, Users, AuthStore, PaginationStore,
+      location
     } = this.props;
     const Collection = PaginationStore.get('searchPostList');
     const searchPosts = SearchStore.get('search');
@@ -173,12 +174,12 @@ class SearchBox extends React.Component {
     const self = this;
 
     return (
-      <div id="best_contents">
+      <div id="best_contents" className={'search'}>
 
         {
           searchForumList && searchForumList.size > 0 &&
           <div id="search_forum_list">
-          <h4>게시판</h4>
+          <h4 className='header'>{searchForumPagination.get('total')}개의 게시판</h4>
           <div className="search-forum-box">
             <ul className="search-forum-list">
               {
@@ -209,7 +210,7 @@ class SearchBox extends React.Component {
                     return (
                       <li key={forumId} className="search-forum-item">
                         <div id="forum_info" style={{
-                          margin: '0 0 0 2px',
+                          margin: 0,
                           padding: 0,
                         }}>
                           <div className="ui cards">
@@ -333,7 +334,7 @@ class SearchBox extends React.Component {
           scrollableAncestor={window || null}
         />
 
-        <InfiniteLoader collection={Collection}/>
+        <InfiniteLoader location={location} collection={Collection}/>
 
       </div>
     );

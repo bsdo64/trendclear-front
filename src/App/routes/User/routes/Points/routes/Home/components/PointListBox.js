@@ -165,7 +165,7 @@ class PointListBox extends React.Component {
     return (
       <div>
         <div className="ui cards centered" style={{paddingTop: 20}}>
-          <div className="card" style={{width: 350}}>
+          <div className="card" style={{width: 280}}>
             <div className="content">
               <div className="header">
                 나의 TP
@@ -184,7 +184,7 @@ class PointListBox extends React.Component {
               내역 보기
             </div>
           </div>
-          <div className="card" style={{width: 350}}>
+          <div className="card" style={{width: 280}}>
             <div className="content">
               <div className="header">나의 RP</div>
               <div className="description" style={{

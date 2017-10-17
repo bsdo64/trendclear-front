@@ -55,7 +55,7 @@ class FamousList extends Component {
 
                         {
                           !v.get('has_img') &&
-                          <img src={`http://placehold.it/240x100`} />
+                          <img src={`/images/cat1.jpeg`} />
                         }
                       </div>
                       <div>

@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const InfiniteLoader = ({collection}) => {
+const InfiniteLoader = ({collection, location}) => {
+  let message;
+  if (location && location.pathname === '/search') {
+    message = '더이상 표시할 게시물이 없습니다'
+  } else {
+    message = '더이상 표시할 추천 게시물이 없습니다';
+  }
+
   if (collection && collection.get('next_page')) {
     return (
       <div className="ui items">
@@ -14,7 +21,7 @@ const InfiniteLoader = ({collection}) => {
     return (
       <div className="no-more-post">
         <div className="alert">
-          더이상 표시할 추천 게시물이 없습니다
+          {message}
         </div>
       </div>
     );
@@ -23,6 +30,7 @@ const InfiniteLoader = ({collection}) => {
 
 InfiniteLoader.propTypes = {
   collection: PropTypes.object,
+  location: PropTypes.object,
 };
 
 export default InfiniteLoader;

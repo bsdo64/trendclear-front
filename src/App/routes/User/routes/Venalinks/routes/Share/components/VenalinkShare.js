@@ -84,54 +84,6 @@ const VenalinkShare = props => {
 
   return (
     <div>
-      <div className="ui cards centered" style={{padding: 10}}>
-        <div className="card" style={{width: '100%'}}>
-          <div className="content">
-            <div className="header">
-              베나링크 참여 현황
-            </div>
-            <div className="description">
-              <div className="ui two statistics">
-                <div className="statistic">
-                  <div className="value">
-                    22
-                  </div>
-                  <div className="label">
-                    평균 방문자
-                  </div>
-                </div>
-                <div className="statistic">
-                  <div className="value">
-                    1,200,232
-                  </div>
-                  <div className="label">
-                    총 방문자
-                  </div>
-                </div>
-                <div className="statistic">
-                  <div className="value">
-                    1,200
-                  </div>
-                  <div className="label">
-                    평균 습득 RP
-                  </div>
-                </div>
-                <div className="statistic">
-                  <div className="value">
-                    1,200,023
-                  </div>
-                  <div className="label">
-                    총 습득 RP
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="ui bottom attached button">
-            내역 보기
-          </div>
-        </div>
-      </div>
       <div style={{padding: 10}}>
         <h4>베나링크 참여 리스트</h4>
         <table className="ui celled table" style={{fontSize: 12}}>
