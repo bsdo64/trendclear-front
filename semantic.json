@@ -8,10 +8,10 @@
       "themes": "src/themes/"
     },
     "output": {
-      "packaged": "public/semantic/",
-      "uncompressed": "public/semantic/components/",
-      "compressed": "public/semantic/components/",
-      "themes": "public/semantic/themes/"
+      "packaged": "../../dist/semantic/",
+      "uncompressed": "../../dist/semantic/components/",
+      "compressed": "../../dist/semantic/components/",
+      "themes": "../../dist/semantic/themes/"
     },
     "clean": "dist/"
   },
@@ -68,5 +68,5 @@
     "state",
     "visibility"
   ],
-  "version": "2.2.11"
+  "version": "2.2.13"
 }

@@ -1,5 +1,5 @@
 /*!
- * # Semantic UI 2.2.10 - Dimmer
+ * # Semantic UI 2.2.13 - Dimmer
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -13,7 +13,7 @@
             Dimmer
 *******************************/
 
-.dimmable:not(.body) {
+.dimmable:not(body) {
   position: relative;
 }
 .ui.dimmer {
@@ -62,6 +62,8 @@
 .ui.segment > .ui.dimmer {
   border-radius: inherit !important;
 }
+
+/* Scrollbars */
 
 
 /*******************************
