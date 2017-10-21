@@ -20,6 +20,19 @@ class Timer extends React.Component {
     this.setState({init: this.state.init - 1});
   }
 
+  componentDidUpdate(prevProps, prevState, prevContext) {
+    if (prevState.init === 1) {
+      setTimeout(() => {
+        const type = this.props.type || 'default';
+
+        clearInterval(this[type]);
+        this[type] = null;
+
+        this.props.toggleSkill();
+      }, 200); // 200ms in CSS
+    }
+  }
+
   componentDidMount() {
     const type = this.props.type || 'default';
 
@@ -33,6 +46,8 @@ class Timer extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+
     const self = this;
     const type = nextProps.type || 'default';
 
@@ -56,13 +71,7 @@ class Timer extends React.Component {
 
   render() {
     const time = this.state.init;
-    if (time === 0) {
-      const type = this.props.type || 'default';
-      clearInterval(this[type]);
-      this[type] = null;
 
-      this.props.toggleSkill();
-    }
     return (
       <span className={((time === 0) ? 'skill_cool_effect' : ((time > 0)
         ? 'skill_cool'

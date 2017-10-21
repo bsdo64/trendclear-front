@@ -9,11 +9,11 @@ const BestHeader = (props) => {
       const component = [];
 
       v.url
-        ? component.push(<Link to={v.url} className={style.section}>{v.title}</Link>)
-        : component.push(<div className={style.section}>{v.title}</div>);
+        ? component.push(<Link key={index} to={v.url} className={style.section}>{v.title}</Link>)
+        : component.push(<div key={index} className={style.section}>{v.title}</div>);
 
       (array.length !== (index + 1))
-        ? component.push(<div className={style.divider}> / </div>)
+        ? component.push(<div key={index + 1} className={style.divider}> / </div>)
         : false;
 
       return component;

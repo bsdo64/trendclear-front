@@ -13,6 +13,7 @@ import { medium, mediumInsertConfig } from './config';
 import AvatarImage from '../../AvatarImage';
 import SelectSearchForum from './SelectSearchForum';
 import debug from 'debug';
+import './index.scss';
 const errorLog = debug('vn:front:error');
 
 class EditorBox extends React.Component {
@@ -55,7 +56,7 @@ class EditorBox extends React.Component {
 
     const dom = this.postEditor;
     this.editor = new MediumEditor(dom, medium);  // eslint-disable-line no-undef
-    this.editor.subscribe('editableInput', () => {
+    this.editor.subscribe('editableInput', (data, editable) => {
       this.handleContent();
     });
     $(dom).mediumInsert(mediumInsertConfig(this));

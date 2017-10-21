@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
+import qs from 'qs';
 import Dropdown, {
   DropdownTrigger,
   DropdownContent,
@@ -10,8 +11,8 @@ import AvatarImage from '../../../../components/AvatarImage/index';
 import marked from '../../../../Lib/Marked';
 import MakeUrl from '../../../../Lib/MakeUrl';
 import Paginator from '../../../../components/Paginator/index';
-import qs from 'qs';
-
+import { CLUB_NOT_EXIST } from '../../../../Constants/ErrorCodes';
+import ClubNotExist from '../ClubNotExist/index.js';
 // import AdForum1 from '../../Ad/AddForum1';
 
 require('./CommunityContents.scss');
@@ -281,7 +282,13 @@ class Forum extends React.Component {
 
   render() {
 
-    const { Users, Forums, Prefixes, AuthStore, ListStore, PaginationStore, Collections } = this.props;
+    const { clubInfo,
+      Users, Forums, Prefixes, AuthStore, ListStore, PaginationStore, Collections
+    } = this.props;
+
+    if (clubInfo && clubInfo.get('errorCode') === CLUB_NOT_EXIST) {
+      return (<ClubNotExist />)
+    }
 
     const self = this;
     const userId = AuthStore.get('userId');

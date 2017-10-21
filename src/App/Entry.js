@@ -10,7 +10,6 @@ import StartSocketSubs from './socketSubscribe';
 import rootSaga from './Saga';
 
 if (process.env.NODE_ENV !== 'production') {
-  window.Perf = require('react-addons-perf');
   localStorage.debug = 'vn:*';
 }
 

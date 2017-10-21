@@ -92,7 +92,7 @@ InfiniteList.propTypes = {
   FireToggleActiveVenalinkModal: PropTypes.func.isRequired,
   FireRequestActivateVenalink: PropTypes.func.isRequired,
   FireRequestParticipateVenalink: PropTypes.func.isRequired,
-  FireSetFocusCurrentPost: PropTypes.func.isRequired,
+  FireSetFocusCurrentPost: PropTypes.func,
 };
 InfiniteList.defaultProps = {
   scrollHeight: 0,

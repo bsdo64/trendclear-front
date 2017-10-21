@@ -1,0 +1,1 @@
+export const CLUB_NOT_EXIST = 1;

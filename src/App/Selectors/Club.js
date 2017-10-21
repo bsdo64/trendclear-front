@@ -1,13 +1,20 @@
 import { createSelector } from 'reselect';
+import { CLUB_NOT_EXIST } from '../Constants/ErrorCodes';
 
 const getClubs = state => state.getIn(['Domains', 'Forums']);
 const getLists = state => state.getIn(['UI', 'List']);
+const getErrorPage = state => state.getIn(['UI', 'ErrorPage']);
 const currentClubId = state => state.getIn(['UI', 'List', 'forum']);
 
 export const getCurrentClub = createSelector(
   getClubs,
   currentClubId,
-  (forums, clubId) => {
+  getErrorPage,
+  (forums, clubId, errorPage) => {
+
+    if (!clubId && errorPage.get('errorCode') === CLUB_NOT_EXIST) {
+      return errorPage;
+    }
 
     return forums.get(clubId + '');
   },

@@ -25,6 +25,7 @@ export const UI = {
     successChargePoint: false,
   }),
   Community: Map({}),
+  ErrorPage: Map({}),
   Forum: Map({}),
   ForumSetting: fromJS({
     forumInfo: {

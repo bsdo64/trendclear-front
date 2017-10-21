@@ -278,6 +278,7 @@ const initRouteState = (/* store */) => dispatch => action => {
             UserSetting: resBody.UserSettingStore,
             Login: resBody.LoginStore,
             List: resBody.ListStore,
+            ErrorPage: resBody.ErrorPageStore
           },
           Domains: {
             Users: resBody.Users,
@@ -305,7 +306,10 @@ const initRouteState = (/* store */) => dispatch => action => {
         }
 
         return dispatch(action);
-      });
+      })
+      .catch(e => {
+        console.log(e);
+      })
   } else {
     return dispatch(action);
   }

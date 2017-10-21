@@ -3,6 +3,7 @@ import Activity from './Activity';
 import Auth from './Auth';
 import ChargePoint from './ChargePoint';
 import Community from './Community';
+import ErrorPage from './ErrorPage';
 import ForumSetting from './ForumSetting';
 import Forum from './Forum';
 import Gnb from './Gnb';
@@ -29,6 +30,7 @@ export default combineReducers({
   Auth,
   ChargePoint,
   Community,
+  ErrorPage,
   ForumSetting,
   Forum,
   Gnb,

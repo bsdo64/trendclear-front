@@ -19,7 +19,7 @@ const SearchHeader = props => {
 
 SearchHeader.displayName = 'SearchHeader';
 SearchHeader.propTypes = {
-  posts: PropTypes.object.isRequired,
+  posts: PropTypes.object,
 };
 
 export default SearchHeader;

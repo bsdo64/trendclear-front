@@ -23,6 +23,8 @@ import {
 } from '../../Actions/Comment';
 import { requestActivateVenalink, requestParticipateVenalink } from '../../Actions/VenacleStore';
 
+import { getCurrentClub } from '../../Selectors/Club';
+
 class CommunityContainer extends React.Component {
   render() {
     return (<Community {...this.props} />);
@@ -47,8 +49,8 @@ CommunityContainer.defaultProps = {
   Items: Domains.Items,
 };
 
-const mapStateToProps = (state) => {
-  const StoreState = state.get('Stores');
+const mapStateToProps = (state, props) => {
+  const stateStore = state.get('Stores');
   const getUIState = function getUIState(args) {
     return state.getIn(['Stores', 'UI'].concat(args));
   };
@@ -65,7 +67,7 @@ const mapStateToProps = (state) => {
     AuthStore: getUIState('Auth'),
     ForumStore: getUIState('Forum'),
     PaginationStore: getUIState('Pagination'),
-    UserStore: getUser(StoreState),
+    UserStore: getUser(stateStore),
 
     Collections: getDomainState('Collections'),
     Forums: getDomainState('Forums'),
@@ -76,6 +78,8 @@ const mapStateToProps = (state) => {
     Prefixes: getDomainState('Prefixes'),
     Items: getDomainState('Items'),
     Venatems: getDomainState('Venatems'),
+
+    clubInfo: getCurrentClub(stateStore, props)
   };
 };
 

@@ -71,6 +71,10 @@ class ClubMenuBox extends React.Component {
       [styles.toggled]: widgetBox && widgetBox.get('toggleTrendBox')
     });
 
+    if (clubInfo.get('error')) {
+      return null;
+    }
+
     return (
       <div className={styles.gnbSubMenu}>
         <div className={toggleStyle}>

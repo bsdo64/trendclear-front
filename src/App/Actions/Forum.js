@@ -18,6 +18,14 @@ export const REQUEST_CREATE_FORUM = 'REQUEST_CREATE_FORUM';
 export const SUCCESS_CREATE_FORUM = 'SUCCESS_CREATE_FORUM';
 export const FAILURE_CREATE_FORUM = 'FAILURE_CREATE_FORUM';
 
+export const RESET_CLUB_NOT_EXIST = 'RESET_CLUB_NOT_EXIST';
+
+export function resetClubNotExist() {
+  return {
+    type: RESET_CLUB_NOT_EXIST
+  };
+}
+
 export function requestCreateForum(payload) {
   return {
     type: REQUEST_CREATE_FORUM,
