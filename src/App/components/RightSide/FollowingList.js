@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
-import { Scrollbars } from 'react-custom-scrollbars';
+import Scrollbars from '../ShadowScrollbars';
 import { forumFollowed } from '../../Selectors/User.js';
 import style from './index.css';
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import cx from 'classnames';
-import { Scrollbars } from 'react-custom-scrollbars';
+import Scrollbars from '../ShadowScrollbars';
 import Dropdown, {
   DropdownTrigger,
   DropdownContent,

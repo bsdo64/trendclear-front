@@ -89,12 +89,20 @@ const Inventory = (props) => {
 
   return (
     <div key="user_inventory" className={style}>
-      <h4>인벤토리</h4>
+      <h4 style={{display: 'inline-block'}}>인벤토리</h4>
+      {
+        positionStyle === 'drag' &&
+        <span
+          style={{float: 'right', cursor: 'pointer', padding: '0 5px'}}
+          onClick={() => props.FireToggleShowInventory()}
+        >
+          <i className='fa fa-close' />
+        </span>
+      }
       <div className="inventory_box">
         <ul className="inventory_tap">
           <li className="active">커뮤니티</li>
-          <li>뱃지</li>
-          <li>이모티콘</li>
+
         </ul>
         <Scrollbars autoHeight autoHeightMax={300} autoHeightMin={300} autoHide>
           <div className="inventory_scroll">
@@ -113,6 +121,7 @@ Inventory.propTypes = {
   Items: PropTypes.object.isRequired,
   positionStyle: PropTypes.string.isRequired,
   FireShowItemInfo: PropTypes.func.isRequired,
+  FireToggleShowInventory: PropTypes.func,
 };
 
 export default Inventory;

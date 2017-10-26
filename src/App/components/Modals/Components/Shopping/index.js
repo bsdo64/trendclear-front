@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import accounting from 'accounting';
 import ReactTooltip from 'react-tooltip';
 import AvatarImage from '../../../AvatarImage';
@@ -51,7 +52,10 @@ const Shopping = props => {
 
   return (
     <div style={{ top: '10%', height: 900, bottom: 0, zIndex: 102 }}>
-      <h2>베나클 스토어</h2>
+      <h2 style={{padding: '10px 10px 0 10px'}}>
+        <i className='fa fa-shopping-basket' style={{paddingRight: 10}} />
+        베나클 스토어
+      </h2>
 
       <div id="venacle_store">
         <div className="top_menu">
@@ -59,12 +63,12 @@ const Shopping = props => {
             <a className="active item">
               커뮤니티
             </a>
-            <a className="item">
+            {/*<a className="item">
               티켓
             </a>
             <a className="item">
               이벤트
-            </a>
+            </a>*/}
             <div className="right menu">
               <a className="ui item" onClick={toggleVenacleStore}>
                 나가기
@@ -75,27 +79,15 @@ const Shopping = props => {
         <div className="main_menu">
           <div className="ui vertical menu">
             <a className="active teal item">
-              메인
-              <div className="ui teal left pointing label">1</div>
+              아이템
+              <div className="ui teal left pointing label">3</div>
             </a>
-            <a className="item">
-              커뮤니티
-              <div className="ui label">51</div>
-            </a>
-            <a className="item">
-              뱃지
-              <div className="ui label">1</div>
-            </a>
-            <a className="item">
-              이모티콘
-              <div className="ui label">1</div>
-            </a>
-            <div className="item">
+            {/*<div className="item">
               <div className="ui transparent icon input">
                 <input type="text" placeholder="Search mail..."/>
                 <i className="search icon"/>
               </div>
-            </div>
+            </div>*/}
           </div>
         </div>
         <div className="contents">
@@ -103,17 +95,14 @@ const Shopping = props => {
             <a className="active item">
               베나클
             </a>
-            <a className="item">
-              유저
-            </a>
-            <div className="right menu">
+            {/*<div className="right menu">
               <div className="item">
                 <div className="ui transparent icon input">
                   <input type="text" placeholder="Search..."/>
                   <i className="search link icon"/>
                 </div>
               </div>
-            </div>
+            </div>*/}
           </div>
           <div className="ui segment">
             <p >인기순</p>
@@ -194,7 +183,11 @@ const Shopping = props => {
                     {accounting.formatNumber(UserStore.getIn(['trendbox', 'R']))}</span>
                 </div>
               </div>
-              <span className="ui right floated point rp_point">RP 충전</span>
+              <span className="ui right floated point rp_point" onClick={toggleVenacleStore}>
+                <Link to={'/user/chargePoint'}>
+                  RP 충전
+                </Link>
+              </span>
             </div>
           </div>
         </div>

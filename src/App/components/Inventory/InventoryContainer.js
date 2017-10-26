@@ -8,10 +8,16 @@ import { getUser } from '../../Selectors/User';
 import {
   showItemInfo
 } from '../../Actions/VenacleStore.js';
+import {
+  toggleShowInventory
+} from '../../Actions/User';
 
 class InventoryContainer extends Component {
   render() {
-    const { ShoppingStore, InventoryStore, FireShowItemInfo, Inventories, Venatems, Items, } = this.props;
+    const {
+      ShoppingStore, InventoryStore, Inventories, Venatems, Items,
+      FireToggleShowInventory, FireShowItemInfo,
+    } = this.props;
 
     const findCommunityInventory = Inventories.find(
       i => i.get('type') === 'community');
@@ -33,6 +39,7 @@ class InventoryContainer extends Component {
                 Items={Items}
                 ShoppingStore={ShoppingStore}
                 FireShowItemInfo={FireShowItemInfo}
+                FireToggleShowInventory={FireToggleShowInventory}
               />
             </div>
           </Draggable>
@@ -70,6 +77,7 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {
-    FireShowItemInfo: showItemInfo
+    FireShowItemInfo: showItemInfo,
+    FireToggleShowInventory: toggleShowInventory,
   },
 )(InventoryContainer);

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../../../index.css';
 import { NavLink, Link } from 'react-router-dom';
-import Scrollbars from 'react-custom-scrollbars';
+import Scrollbars from '../../../../../ShadowScrollbars';
 import cx from 'classnames';
 
 const isActive = location => {
