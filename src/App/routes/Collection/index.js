@@ -7,7 +7,11 @@ import {
   requestCreateCollection,
   requestDeleteCollection,
 } from '../../Actions/Collection';
+import {
+  toggleLoginModal
+} from '../../Actions/Login';
 import { getCollectionList } from '../../Selectors/User.js';
+import { getUser } from '../../Selectors/User.js';
 
 import s from './index.css';
 const ListHeader = () => {
@@ -43,10 +47,22 @@ class CollectionIndex extends Component {
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.submitNewCollection = this.submitNewCollection.bind(this);
     this.removeCollection = this.removeCollection.bind(this);
+    this.openLoginModal = this.openLoginModal.bind(this);
+  }
+
+  openLoginModal() {
+    const { FireToggleLoginModal } = this.props;
+    FireToggleLoginModal({
+      contentType: 'Login',
+    });
   }
 
   toggleCreateCollection() {
-    this.setState({ toggleCreateCollection: !this.state.toggleCreateCollection })
+    if (this.props.user) {
+      this.setState({ toggleCreateCollection: !this.state.toggleCreateCollection })
+    } else {
+      this.openLoginModal()
+    }
   }
 
   handleChangePrivate(e) {
@@ -196,8 +212,10 @@ class CollectionIndex extends Component {
 
 CollectionIndex.propTypes = {
   collectionList: PropTypes.object.isRequired,
+  user: PropTypes.object,
   FireRequestCreateCollection: PropTypes.func.isRequired,
   FireRequestDeleteCollection: PropTypes.func.isRequired,
+  FireToggleLoginModal: PropTypes.func.isRequired,
 };
 CollectionIndex.defaultProps = {};
 
@@ -205,7 +223,8 @@ const mapStateToProps = (state) => {
   const StoreState = state.get('Stores');
 
   return {
-    collectionList: getCollectionList(StoreState)
+    collectionList: getCollectionList(StoreState),
+    user: getUser(StoreState)
   };
 };
 
@@ -213,6 +232,7 @@ export default connect(
   mapStateToProps,
   {
     FireRequestCreateCollection: requestCreateCollection,
-    FireRequestDeleteCollection: requestDeleteCollection
+    FireRequestDeleteCollection: requestDeleteCollection,
+    FireToggleLoginModal: toggleLoginModal,
   }
 )(CollectionIndex);

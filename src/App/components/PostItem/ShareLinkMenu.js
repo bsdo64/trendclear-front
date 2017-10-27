@@ -220,7 +220,7 @@ class ShareLinkMenu extends React.Component {
     if (isUsersPost && !venalink) {
       return (
         <div className="item">
-          <h4 className="ui header">2. 베나링크를 활성화 하고 더 많은 사람들에게 알리세요!</h4>
+          <h4 className="ui header">베나링크를 활성화 하고 더 많은 사람들에게 알리세요!</h4>
           <div className="ui contents">
             <img className="ui floated right image small" style={{ width: 50 }}
                  src="/images/venacle-item1-open-vlink.png"/>
@@ -330,8 +330,8 @@ class ShareLinkMenu extends React.Component {
             <div className="ui dropdown share_link_dropdown">
               <div className="ui menu transition visible" tabIndex="-1">
                 <div className="item">
-                  <h4 className="ui header">1. 링크를 복사하고 공유하세요</h4>
-                  <div className="ui action input link">
+                  <h4 className="ui header">링크를 복사하고 공유하세요</h4>
+                  <div className="ui action input link" style={{margin: 0}}>
                     <input ref={'sharelink' + post.get('id')} type="text"
                            readOnly="readonly" value={linkUrl}/>
                     <button className="ui primary right labeled icon button"

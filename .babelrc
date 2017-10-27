@@ -1,5 +1,14 @@
 {
-  "presets": [["es2015", {"modules": false}], "react", "stage-0"],
+  "presets": [
+    [
+      "es2015",
+      // This is necessary for tree shaking,
+      //webpack 2 can handle ES6 modules syntax.
+      {"modules": false}
+    ],
+    "react",
+    "stage-0"
+  ],
   "plugins": [
     "react-hot-loader/babel",
     "syntax-dynamic-import"
@@ -9,6 +18,6 @@
     "bower_components/**"
   ],
   "env": {
-    "NODE": "6.9.1"
+    "NODE": "8.7.0"
   }
 }

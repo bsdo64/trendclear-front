@@ -90,8 +90,8 @@ const ForumSettingsComponent = (props) => {
     }
   } else {
     return (
-      <div>
-        권한이 없습니다
+      <div style={{padding: 10}}>
+        <div className="ui segment">권한이 없습니다</div>
       </div>
     );
   }

@@ -72,7 +72,7 @@ class Club extends Component {
           <StackGrid
             columnWidth={295}
             gutterWidth={5}
-          >yasasfasdflkjㄴㅇㅁㄹ₩
+          >
           {clubs && clubs.map((v, i) => {
             return (
               <li key={i} className={style.clubCardItem}>

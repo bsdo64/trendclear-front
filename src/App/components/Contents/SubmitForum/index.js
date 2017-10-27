@@ -121,7 +121,14 @@ class SubmitForumBox extends React.Component {
 
     const trendbox = UserStore && UserStore.get('trendbox');
     if (!trendbox) {
-      return <div>로그인을 해주세요</div>;
+      return (
+        <div style={{padding: 10}}>
+          <div className="ui segment">
+            안녕하세요 베나클 입니다.
+            로그인을 해주세요
+          </div>
+        </div>
+      );
     }
 
     const canCreate = trendbox.get('level') >= 5 && trendbox.get('T') >= 100;

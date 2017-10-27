@@ -635,9 +635,11 @@ class SubmitContents extends React.Component {
 
     } else {
       return (
-        <div>
-          안녕하세요 베나클 입니다.
-          로그인을 해주세요
+        <div style={{padding: 10}}>
+          <div className="ui segment">
+            안녕하세요 베나클 입니다.
+            로그인을 해주세요
+          </div>
         </div>
       );
     }
