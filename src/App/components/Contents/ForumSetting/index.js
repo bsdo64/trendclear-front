@@ -113,6 +113,7 @@ ForumSettingsComponent.propTypes = {
   FireRequestDeleteForumAnnounce: PropTypes.func.isRequired,
   FireRequestAddForumBanUser: PropTypes.func.isRequired,
   FireRequestDeleteForumBanUser: PropTypes.func.isRequired,
+  FireRequestPostForumImage: PropTypes.func.isRequired,
 };
 
 export default ForumSettingsComponent;

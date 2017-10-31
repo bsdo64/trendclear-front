@@ -75,6 +75,44 @@ class AjaxApiClient {
     }).catch(this.catchError);
   }
 
+  imagePost(url, params) {
+    return new Promise((resolve, reject) => {
+      const q = this.r
+        .post(this.EndPoint + url)
+        .set('Accept', 'application/json')
+        .withCredentials();
+
+      Object.keys(params).map(key => {
+        if (params[key] instanceof File) {
+          q.attach(key, params[key])
+        } else if (params[key]) {
+          q.field({[key]: params[key]})
+        }
+      });
+
+      return q.end(this._done(resolve, reject));
+    }).catch(this.catchError);
+  }
+
+  imagePut(url, params) {
+    return new Promise((resolve, reject) => {
+      const q = this.r
+        .put(this.EndPoint + url)
+        .set('Accept', 'application/json')
+        .withCredentials();
+
+      Object.keys(params).map(key => {
+        if (params[key] instanceof File) {
+          q.attach(key, params[key])
+        } else if (params[key]) {
+          q.field({[key]: params[key]})
+        }
+      });
+
+      return q.end(this._done(resolve, reject));
+    }).catch(this.catchError);
+  }
+
   put(url, params) {
     return new Promise((resolve, reject) => {
       const q = this.r
@@ -92,7 +130,6 @@ class AjaxApiClient {
 
       return q.end(this._done(resolve, reject));
     }).catch(this.catchError);
-
   }
 
   delete(url, params) {

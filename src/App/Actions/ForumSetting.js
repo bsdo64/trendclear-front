@@ -42,6 +42,10 @@ export const REQUEST_DELETE_FORUM_BAN_USER = 'REQUEST_DELETE_FORUM_BAN_USER';
 export const SUCCESS_DELETE_FORUM_BAN_USER = 'SUCCESS_DELETE_FORUM_BAN_USER';
 export const FAILURE_DELETE_FORUM_BAN_USER = 'FAILURE_DELETE_FORUM_BAN_USER';
 
+export const REQUEST_POST_FORUM_IMAGE = 'REQUEST_POST_FORUM_IMAGE';
+export const SUCCESS_UPDATE_FORUM_IMAGE = 'SUCCESS_UPDATE_FORUM_IMAGE';
+export const FAILURE_UPDATE_FORUM_IMAGE = 'FAILURE_UPDATE_FORUM_IMAGE';
+
 export function handleResetButton() {
   return {
     type: HANDLE_RESET_BUTTON,
@@ -114,6 +118,13 @@ export function requestAddForumBanUser(payload) {
 export function requestDeleteForumBanUser(payload) {
   return {
     type: REQUEST_DELETE_FORUM_BAN_USER,
+    payload,
+  };
+}
+
+export function requestPostForumImage(payload) {
+  return {
+    type: REQUEST_POST_FORUM_IMAGE,
     payload,
   };
 }

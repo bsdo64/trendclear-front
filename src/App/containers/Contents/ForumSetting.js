@@ -15,6 +15,7 @@ import {
   requestDeleteForumAnnounce,
   requestAddForumBanUser,
   requestDeleteForumBanUser,
+  requestPostForumImage,
 } from '../../Actions/ForumSetting';
 
 class ForumSettingsContainer extends React.Component {
@@ -78,5 +79,6 @@ export default connect(
     FireRequestDeleteForumAnnounce: requestDeleteForumAnnounce,
     FireRequestAddForumBanUser: requestAddForumBanUser,
     FireRequestDeleteForumBanUser: requestDeleteForumBanUser,
+    FireRequestPostForumImage: requestPostForumImage,
   }
 )(ForumSettingsContainer);

@@ -6,6 +6,7 @@ class ForumInfo extends React.Component {
     super(props);
 
     this.updateForumInfo = this.updateForumInfo.bind(this);
+    this.uploadClubImage = this.uploadClubImage.bind(this);
     this.changeForm = this.changeForm.bind(this);
   }
 
@@ -31,30 +32,28 @@ class ForumInfo extends React.Component {
   }
 
   changeForm(e) {
-    const {ForumSettingStore } = this.props;
-    const forum = ForumSettingStore.get('forum');
+    this.props.FireHandleChangeFormForumMeta(
+      {[e.target.name]: e.target.value.trim()});
+  }
 
-    if (e.target.name === 'forum_image' && e.target.files) {
-      e.preventDefault();
+  uploadClubImage(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-      const reader = new FileReader();
-      const file = e.target.files[0];
+    const forum = this.props.ForumSettingStore.get('forum');
+    const reader = new FileReader();
+    const file = e.target.files[0];
 
-      reader.onloadend = () => {
+    reader.onloadend = () => {
 
-        this.props.FireRequestUpdateForumMeta({
-          id: forum.get('id'),
-          forum_image: file
-        });
-      };
+      this.props.FireRequestPostForumImage({
+        id: forum.get('id'),
+        forum_image: file,
+        beforeImage: forum.get('forum_image')
+      });
+    };
 
-      reader.readAsDataURL(file);
-    } else if (e.target.name === 'forum_image' ) {
-      this.props.FireHandleChangeFormForumMeta({[e.target.name]: null});
-    } else {
-      this.props.FireHandleChangeFormForumMeta(
-        {[e.target.name]: e.target.value.trim()});
-    }
+    reader.readAsDataURL(file);
   }
 
   render() {
@@ -95,12 +94,15 @@ class ForumInfo extends React.Component {
               </a>
             </div>
             <form id="create_forum" className="ui form"
-                  onChange={this.changeForm} onSubmit={this.updateForumInfo}>
+                  onSubmit={this.updateForumInfo}
+                  onChange={this.changeForm}>
+
               <div className="field" style={{float: 'right'}}>
                 <label>클럽 이미지</label>
                 <img src={`${forum.get('forum_image') ? '/image/uploaded/files/avatar1/' + forum.get('forum_image') : '/images/empty-club-image.png' }`} />
-                <input type="file" name="forum_image" style={{width: 200, border: 'none'}}/>
-                <input type="button" onClick={this.changeForm} name="forum_image" style={{width: 200, border: 'none'}}/>
+                <input
+                  onChange={this.uploadClubImage}
+                  type="file" name="forum_image" style={{width: 200, border: 'none'}}/>
               </div>
               <div className="field" style={{clear: 'none'}}>
                 <label>이름 *</label>
@@ -137,6 +139,7 @@ ForumInfo.propTypes = {
   FireHandleResetButton: PropTypes.func.isRequired,
   FireHandleChangeFormForumMeta: PropTypes.func.isRequired,
   FireRequestUpdateForumMeta: PropTypes.func.isRequired,
+  FireRequestPostForumImage: PropTypes.func.isRequired,
 };
 
 export default ForumInfo;

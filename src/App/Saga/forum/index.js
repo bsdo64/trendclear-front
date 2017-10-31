@@ -62,10 +62,35 @@ import {
   REQUEST_DELETE_FORUM_BAN_USER,
   SUCCESS_DELETE_FORUM_BAN_USER,
   FAILURE_DELETE_FORUM_BAN_USER,
+
+  REQUEST_POST_FORUM_IMAGE,
+  SUCCESS_UPDATE_FORUM_IMAGE,
+  FAILURE_UPDATE_FORUM_IMAGE,
 } from '../../Actions/ForumSetting';
 
 const WORKING = true;
 const API = Api.setEntryPoint('/ajax');
+
+function* SagaPostForumImage() {
+  while (WORKING) {
+    // REQUEST_POST_FORUM_IMAGE
+    const { payload } = yield take(REQUEST_POST_FORUM_IMAGE);
+
+    try {
+      const result = yield call([API, API.imagePost], '/forum/image', payload);
+
+      if (result) {
+        yield put({ type: SUCCESS_UPDATE_FORUM_IMAGE, result });
+      } else {
+        yield put({ type: FAILURE_UPDATE_FORUM_IMAGE });
+      }
+    }
+
+    catch (error) {
+      yield put({ type: FAILURE_UPDATE_FORUM_META, error });
+    }
+  }
+}
 
 function* SagaUpdateForumMeta() {
   while (WORKING) {
@@ -326,6 +351,7 @@ function* SagaMoreList() {
 function* forumSaga() {
   yield all([
     SagaCreateForum(),
+    SagaPostForumImage(),
     SagaVaildateTitleCreateForum(),
     SagaMoreList(),
     SagaFollow(),
