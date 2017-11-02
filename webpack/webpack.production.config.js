@@ -7,7 +7,10 @@ const inlineCss = new ExtractTextWebpackPlugin({
   filename: 'styles.inline.css',
   allChunks: true
 });
-const scss = new ExtractTextWebpackPlugin('scss.styles.css');
+const scss = new ExtractTextWebpackPlugin({
+  filename: 'scss.styles.css',
+  allChunks: true
+});
 
 module.exports = {
   entry: {
