@@ -116,7 +116,7 @@ class ClubMenuBox extends React.Component {
                     <span>피드</span>
                   </Link>
                 </div>
-                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
+                {/*<div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
                   <Link to="/" className="ui disable">
                     <span>시리즈</span>
                   </Link>
@@ -130,7 +130,7 @@ class ClubMenuBox extends React.Component {
                   <Link to="/">
                     <span>유저</span>
                   </Link>
-                </div>
+                </div>*/}
               </div>
 
             </Scrollbars>

@@ -3,6 +3,10 @@ dist/vendor*
 dist/Entry*
 dist/manifest*
 dist/vendors*
+
+dist/styles.inline.css
+dist/scss.styles.css
+
 .idea/
 bower_components/
 node_modules/

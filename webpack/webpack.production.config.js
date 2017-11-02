@@ -3,8 +3,13 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const root = path.resolve(__dirname, '../');
 
+const inlineCss = new ExtractTextWebpackPlugin({
+  filename: 'styles.inline.css',
+  allChunks: true
+});
+const scss = new ExtractTextWebpackPlugin('scss.styles.css');
+
 module.exports = {
-  devtool: 'cheap-module-sourec-map',
   entry: {
     Entry: [
       'babel-polyfill',
@@ -66,7 +71,8 @@ module.exports = {
       },
       __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false')),
     }),
-    new ExtractTextWebpackPlugin('styles.css'),
+    inlineCss,
+    scss,
   ],
   resolve: {
     alias: {
@@ -81,16 +87,25 @@ module.exports = {
         include: path.resolve(root, 'src'),
       }, {
         test: /\.css$/,
-        use: ExtractTextWebpackPlugin.extract({
+        use: inlineCss.extract({
           fallback: 'style-loader',
           use: [
-            'css-loader?modules&localIdentName=[hash:base64:8]&importLoaders=1',
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                minimize: true,
+                sourceMap: true,
+                modules: true,
+                localIdentName: '[hash:base64:5]'
+              }
+            },
             'postcss-loader',
           ],
         }),
       }, {
         test: /\.scss$/,
-        use: ExtractTextWebpackPlugin.extract({
+        use: scss.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'postcss-loader', 'sass-loader'],
         }),

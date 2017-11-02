@@ -71,7 +71,7 @@ class FamousList extends Component {
                             <i className="fa fa-heart" />{v.get('like_count')}
                           </span>
                             <span className={fStyle.comment}>
-                            <i className="fa fa-comment" />{v.get('comment_count')}
+                            <i className="fa fa-edit" />{v.get('comment_count')}
                           </span>
                           </div>
                         </div>

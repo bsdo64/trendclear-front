@@ -224,7 +224,7 @@ class ShareLinkMenu extends React.Component {
           <div className="ui contents">
             <img className="ui floated right image small" style={{ width: 50 }}
                  src="/images/venacle-item1-open-vlink.png"/>
-            RP를 사용해 베나링크를 활성화 하고 <br />많은 사람들에게 공유를 요청하세요
+            RP를 사용해 베나링크를 활성화 하고 <br/>많은 사람들에게 공유를 요청하세요
           </div>
           <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}
                onClick={this.toggleVenalink}>
@@ -232,77 +232,90 @@ class ShareLinkMenu extends React.Component {
           </div>
         </div>
       );
-    } else if (isUsersPost && venalink) {
-      return (
-        <div className="item">
-          <h4 className="ui header">2. 베나링크가 활성화 되었습니다</h4>
-          <div className="ui contents">
-            <img className="ui floated right image small" style={{ width: 50 }}
-                 src="/images/venacle-item1-open-vlink.png"/>
-            참여 : {venalink.get('participants').size}명<br />
-            총 RP: {venalink.get('total_amount_r')}<br />
-            지급 RP: {venalink.get('total_amount_r') -
-          venalink.get('total_remain_r')}<br />
-            남은 RP: {venalink.get('total_remain_r')}<br />
-            기간 : {moment(venalink.get('terminate_at'))
-            .format('YY-MM-DD HH:mm:ss')}
+    } else {
+      let participants
+
+      if (isUsersPost && venalink) {
+
+         participants = venalink.get('participants') && venalink.get('participants').size || '0';
+
+        return (
+          <div className="item">
+            <h4 className="ui header">2. 베나링크가 활성화 되었습니다</h4>
+            <div className="ui contents">
+              <img className="ui floated right image small" style={{ width: 50 }}
+                   src="/images/venacle-item1-open-vlink.png"/>
+              참여 : {participants}명<br/>
+              총 RP: {venalink.get('total_amount_r')}<br/>
+              지급 RP: {venalink.get('total_amount_r') -
+            venalink.get('total_remain_r')}<br/>
+              남은 RP: {venalink.get('total_remain_r')}<br/>
+              기간 : {moment(venalink.get('terminate_at'))
+              .format('YY-MM-DD HH:mm:ss')}
+            </div>
+            <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}>
+              베나링크 활성화 됨
+            </div>
           </div>
-          <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}>
-            베나링크 활성화 됨
+        );
+      } else if (!isUsersPost && venalink && !myParticipate) {
+
+        participants = venalink.get('participants') && venalink.get('participants').size || '0';
+
+        return (
+          <div className="item">
+            <h4 className="ui header">2. 베나링크 참여</h4>
+            <div className="ui contents">
+              <img className="ui floated right image small" style={{ width: 50 }}
+                   src="/images/venacle-item1-open-vlink.png"/>
+              현재 베나링크 참여자 : {participants}명<br/>
+              남은 RP: {venalink.get('total_remain_r')}<br/>
+              기간 : {moment(venalink.get('terminate_at'))
+              .format('YY-MM-DD HH:mm:ss')}<br/>
+              <br/>
+              베나링크에 참여하고 RP를 보상 받으세요!
+            </div>
+            <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}
+                 onClick={this.requestParticipateVenalink.bind(this,
+                   venalink.get('id'), participateItem, post.get('id'))}>
+              베나링크 참여하기
+            </div>
           </div>
-        </div>
-      );
-    } else if (!isUsersPost && venalink && !myParticipate) {
-      return (
-        <div className="item">
-          <h4 className="ui header">2. 베나링크 참여</h4>
-          <div className="ui contents">
-            <img className="ui floated right image small" style={{ width: 50 }}
-                 src="/images/venacle-item1-open-vlink.png"/>
-            현재 베나링크 참여자 : {venalink.get('participants').size}명<br />
-            남은 RP: {venalink.get('total_remain_r')}<br />
-            기간 : {moment(venalink.get('terminate_at'))
-            .format('YY-MM-DD HH:mm:ss')}<br />
-            <br />
-            베나링크에 참여하고 RP를 보상 받으세요!
+        );
+      } else if (!isUsersPost && venalink && myParticipate) {
+
+        participants = venalink.get('participants') && venalink.get('participants').size || '0';
+
+        return (
+          <div className="item">
+            <h4 className="ui header">베나링크를 복사하고 공유하세요</h4>
+            <div className="ui action input link" style={{ paddingBottom: 10 }}>
+              <input ref={'venalink_' + post.get('id')} type="text"
+                     readOnly="readonly" value={myVenalinkUrl}/>
+              <button className="ui primary right labeled icon button"
+                      onClick={this.copyLink.bind(this,
+                        'venalink_' + post.get('id'))}>
+                <i className="copy icon"/>
+                복사
+              </button>
+            </div>
+            <div className="ui contents">
+              <img className="ui floated right image small" style={{ width: 50 }}
+                   src="/images/venacle-item1-open-vlink.png"/>
+              현재 베나링크 참여자 : {participants}명<br/>
+              남은 RP: {venalink.get('total_remain_r')}<br/>
+              기간 : {moment(venalink.get('terminate_at'))
+              .format('YY-MM-DD HH:mm:ss')}<br/>
+              <br/>
+              순방문자 1명당 5 RP씩 보상해 받습니다.<br/>
+              활성화 기간이 끝나면 보상받은 RP를 지급받게 됩니다.
+            </div>
+            <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}>
+              예상 지급 RP: {myParticipate.get('paid_r')}
+            </div>
           </div>
-          <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}
-               onClick={this.requestParticipateVenalink.bind(this,
-                 venalink.get('id'), participateItem, post.get('id'))}>
-            베나링크 참여하기
-          </div>
-        </div>
-      );
-    } else if (!isUsersPost && venalink && myParticipate) {
-      return (
-        <div className="item">
-          <h4 className="ui header">베나링크를 복사하고 공유하세요</h4>
-          <div className="ui action input link" style={{ paddingBottom: 10 }}>
-            <input ref={'venalink_' + post.get('id')} type="text"
-                   readOnly="readonly" value={myVenalinkUrl}/>
-            <button className="ui primary right labeled icon button"
-                    onClick={this.copyLink.bind(this,
-                      'venalink_' + post.get('id'))}>
-              <i className="copy icon"/>
-              복사
-            </button>
-          </div>
-          <div className="ui contents">
-            <img className="ui floated right image small" style={{ width: 50 }}
-                 src="/images/venacle-item1-open-vlink.png"/>
-            현재 베나링크 참여자 : {venalink.get('participants').size}명<br />
-            남은 RP: {venalink.get('total_remain_r')}<br />
-            기간 : {moment(venalink.get('terminate_at'))
-            .format('YY-MM-DD HH:mm:ss')}<br />
-            <br />
-            순방문자 1명당 5 RP씩 보상해 받습니다.<br />
-            활성화 기간이 끝나면 보상받은 RP를 지급받게 됩니다.
-          </div>
-          <div className="ui button primary" style={{ margin: '10px 0 5px 0' }}>
-            예상 지급 RP: {myParticipate.get('paid_r')}
-          </div>
-        </div>
-      );
+        );
+      }
     }
 
   }
@@ -331,7 +344,10 @@ class ShareLinkMenu extends React.Component {
               <div className="ui menu transition visible" tabIndex="-1">
                 <div className="item">
                   <h4 className="ui header">링크를 복사하고 공유하세요</h4>
-                  <div className="ui action input link" style={{margin: 0}}>
+                  <div>
+                    보상 : <span>아래 주소로 접속한 방문자당 5TP</span>
+                  </div>
+                  <div className="ui action input link" style={{ marginTop: 10 }}>
                     <input ref={'sharelink' + post.get('id')} type="text"
                            readOnly="readonly" value={linkUrl}/>
                     <button className="ui primary right labeled icon button"

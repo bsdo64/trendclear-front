@@ -55,10 +55,16 @@ ul.list {
 
         & .like {
           padding-right: 5px;
+
+          & > i {
+            color: red;
+          }
         }
 
         & .comment {
-
+          & > i {
+            color: #058294;
+          }
         }
       }
     }

@@ -5,7 +5,11 @@ import React, {
 class Series extends Component {
   render() {
     return (
-      <div>Series</div>
+      <div style={{padding: 10}}>
+        <div className="ui segment">
+          준비중인 서비스 입니다
+        </div>
+      </div>
     );
   }
 }
