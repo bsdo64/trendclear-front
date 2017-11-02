@@ -11,6 +11,7 @@ dump.rdb
 
 dist/images/**/*
 !dist/images/icon_1.png
+!dist/images/cat1.jpeg
 !dist/images/skill_0.jpg
 !dist/images/skill_1.jpg
 !dist/images/skill_2.jpg
