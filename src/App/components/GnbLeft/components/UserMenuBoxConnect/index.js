@@ -16,17 +16,19 @@ import AvatarImage from '../../../AvatarImage';
 class UserMenuBox extends React.Component {
   componentDidMount() {
     const {user} = this.props;
-    const prevTotalExp = user.getIn(['trendbox', 'prev_exp']);
-    const currentTotalExp = user.getIn(['trendbox', 'exp']);
-    const nextTotalExp = user.getIn(['trendbox', 'next_exp']);
+    if (user) {
+      const prevTotalExp = user.getIn(['trendbox', 'prev_exp']);
+      const currentTotalExp = user.getIn(['trendbox', 'exp']);
+      const nextTotalExp = user.getIn(['trendbox', 'next_exp']);
 
-    const expPercent = (currentTotalExp - prevTotalExp) /
-      (nextTotalExp - prevTotalExp) * 100;
+      const expPercent = (currentTotalExp - prevTotalExp) /
+        (nextTotalExp - prevTotalExp) * 100;
 
-    $('#exp_progress')
-      .progress({
-        percent: expPercent,
-      });
+      $('#exp_progress')
+        .progress({
+          percent: expPercent,
+        });
+    }
   }
   
   render() {
@@ -34,6 +36,10 @@ class UserMenuBox extends React.Component {
     const toggleStyle = cx(styles.box, {
       [styles.toggled]: widgetBox && widgetBox.get('toggleTrendBox')
     });
+
+    if (!user) {
+      return (null)
+    }
 
     const sex = user.getIn(['profile', 'sex']),
       avatar_img = user.getIn(['profile', 'avatar_img']),

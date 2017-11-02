@@ -1,18 +1,32 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import accounting from 'accounting';
 import moment from 'moment';
 import TablePagination from '../../../../../../../components/Paginator/TablePagination';
 
-const VenalinkShare = props => {
-  function paybackRP(itemId) {
-    return () => props.FireRequestUserPaybackRP({
+class VenalinkShare extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      page: 1
+    };
+
+    this.paybackRP = this.paybackRP.bind(this);
+    this.createVenalinkItem = this.createVenalinkItem.bind(this);
+    this.handleClickPage = this.handleClickPage.bind(this);
+    this.handleClickPage = this.handleClickPage.bind(this);
+
+  }
+
+  paybackRP(itemId) {
+    return () => this.props.FireRequestUserPaybackRP({
       userVenalinkId: itemId,
     });
   }
 
-  function createVenalinkItem(participatedList) {
+  createVenalinkItem(participatedList) {
     let status,
       isTerminate,
       hasPaybackRP = participatedList.get('has_payback_rp'),
@@ -51,7 +65,7 @@ const VenalinkShare = props => {
         <td className="right aligned">
           {
             (!isTerminate || participatedList.get('paid_r') <= 0 ||
-            hasPaybackRP) &&
+              hasPaybackRP) &&
             <b>{accounting.formatNumber(participatedList.get('paid_r'))}</b>
           }
 
@@ -59,7 +73,7 @@ const VenalinkShare = props => {
             isTerminate && participatedList.get('paid_r') > 0 &&
             !hasPaybackRP &&
             <div className="ui button primary tiny"
-                 onClick={paybackRP(participatedList.get('id'))}
+                 onClick={this.paybackRP(participatedList.get('id'))}
             >
               {
                 accounting.formatNumber(participatedList.get('paid_r')) +
@@ -75,57 +89,72 @@ const VenalinkShare = props => {
     );
   }
 
-  function handleClickPage() {
+  handleClickPage(p) {
+    return () => {
+      this.props.FireRequestGetMoreShareVenalinkList({
+        p: p,
+      });
 
+      this.setState({
+        page: p,
+      });
+    };
   }
 
-  const {UserStore} = props;
-  const participatedVenalinks = UserStore.get('participatedVenalinks');
+  render() {
+    const {userParticipatedVenalinksPage, userParticipatedVenalinks} = this.props;
+    const total = userParticipatedVenalinksPage && Math.ceil(userParticipatedVenalinksPage.get('total') / userParticipatedVenalinksPage.get('limit'));
+    const limit = userParticipatedVenalinksPage && userParticipatedVenalinksPage.get('limit');
+    const page = userParticipatedVenalinksPage && userParticipatedVenalinksPage.get('current_page');
 
-  return (
-    <div>
-      <div style={{padding: 10}}>
-        <h4>베나링크 참여 리스트</h4>
-        <table className="ui celled table" style={{fontSize: 12}}>
-          <thead>
-          <tr>
-            <th className="center aligned" style={{width: 60}}>타입</th>
-            <th className="center aligned">상태</th>
-            <th className="center aligned three wide">종료 시간</th>
-            <th className="center aligned" style={{width: 70}}>참여<br />유저(명)
-            </th>
-            <th className="center aligned">나의 베나링크<br/>순 방문(명)</th>
-            <th className="center aligned">지급(예정) RP</th>
-            <th className="center aligned">남은 RP</th>
-          </tr>
-          </thead>
-          <tbody>
-          {
-            participatedVenalinks &&
-            participatedVenalinks.map(createVenalinkItem)
-          }
-          </tbody>
-          <tfoot>
-          <tr>
-            <th colSpan="10">
-              <TablePagination
-                totalPage={10}
-                currentPage={1}
-                pageLimit={1}
-                onClickPage={handleClickPage}
-              />
-            </th>
-          </tr>
-          </tfoot>
-        </table>
+    return (
+      <div>
+        <div style={{padding: 10}}>
+          <h4>베나링크 참여 리스트</h4>
+          <table className="ui celled table" style={{fontSize: 12}}>
+            <thead>
+            <tr>
+              <th className="center aligned" style={{width: 60}}>타입</th>
+              <th className="center aligned">상태</th>
+              <th className="center aligned three wide">종료 시간</th>
+              <th className="center aligned" style={{width: 70}}>참여<br />유저(명)
+              </th>
+              <th className="center aligned">나의 베나링크<br/>순 방문(명)</th>
+              <th className="center aligned">지급(예정) RP</th>
+              <th className="center aligned">남은 RP</th>
+            </tr>
+            </thead>
+            <tbody>
+            {
+              userParticipatedVenalinks &&
+              userParticipatedVenalinks.map(this.createVenalinkItem)
+            }
+            </tbody>
+            <tfoot>
+            <tr>
+              <th colSpan="10">
+                <TablePagination
+                  totalPage={total}
+                  currentPage={page || 1}
+                  pageLimit={limit}
+                  onClickPage={this.handleClickPage}
+                />
+              </th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 VenalinkShare.propTypes = {
   UserStore: PropTypes.object.isRequired,
   FireRequestUserPaybackRP: PropTypes.func.isRequired,
+  userParticipatedVenalinksPage: PropTypes.object,
+  userParticipatedVenalinks: PropTypes.object,
+  FireRequestGetMoreShareVenalinkList: PropTypes.func.isRequired,
 };
 
 export default VenalinkShare;

@@ -56,8 +56,8 @@ export function ActivityHeader(props) {
     <div className="activity-header">
       <div className="activity-background">
 
-        {createActivityUserHeader(UserStore)}
-        {createActivityMeta(ActivityStore.get('meta'))}
+        {UserStore && createActivityUserHeader(UserStore)}
+        {ActivityStore && createActivityMeta(ActivityStore.get('meta'))}
       </div>
     </div>
   )

@@ -19,6 +19,7 @@ import {
 import {
   SUCCESS_GET_MORE_LIST
 } from '../../Actions/List';
+import { SUCCESS_GET_MORE_ACTIVE_VENALINK_LIST, SUCCESS_GET_MORE_SHARE_VENALINK_LIST } from '../../Actions/Venalink';
 
 const ListReducer = (state = UI.List, action) => {
   switch (action.type) {
@@ -97,6 +98,17 @@ const ListReducer = (state = UI.List, action) => {
             ? list.concat(action.result.ListStore.exploreClubs)
             : [].concat(action.result.ListStore.exploreClubs)
         );
+    }
+
+    case SUCCESS_GET_MORE_ACTIVE_VENALINK_LIST: {
+      const { result } = action;
+      return state.set('userVenalinks', new List(result.normalized.result))
+    }
+
+    case SUCCESS_GET_MORE_SHARE_VENALINK_LIST: {
+      const {result} = action;
+
+      return state.set('userParticipatedVenalinks', new List(result.normalized.result));
     }
 
     default:

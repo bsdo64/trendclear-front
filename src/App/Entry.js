@@ -35,6 +35,7 @@ sagaMiddleware.run(rootSaga);
  * @param Component
  * @returns {*}
  */
+delete AppContainer.prototype.unstable_handleError;
 const renderApp = (Component) => {
   return render(
     <AppContainer>

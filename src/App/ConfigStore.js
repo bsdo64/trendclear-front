@@ -57,6 +57,8 @@ const initRouteState = (/* store */) => dispatch => action => {
             Inventories: normalized.entities.inventories,
             Venatems: normalized.entities.venatems,
             Items: normalized.entities.items,
+            Participants: normalized.entities.participants,
+            ParticipatedVenalinks: normalized.entities.participatedVenalinks,
           });
         }
 
@@ -293,6 +295,9 @@ const initRouteState = (/* store */) => dispatch => action => {
             Categories: resBody.Categories,
             Notis: resBody.Notis,
             Prefixes: resBody.Prefixes,
+            Venalinks: resBody.Venalinks,
+            ParticipatedVenalinks: resBody.ParticipatedVenalinks,
+            Participants: resBody.Participants,
           },
         };
 

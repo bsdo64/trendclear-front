@@ -44,10 +44,22 @@ export const collection = new schema.Entity('collections', {
 
 export const noti = new schema.Entity('notis');
 
+export const venalinkParticipants = new schema.Entity('participants');
+
+export const venalink = new schema.Entity('venalinks', {
+  participants: [venalinkParticipants],
+});
+
+export const participatedVenalinks = new schema.Entity('participatedVenalinks', {
+  venalink: venalink
+});
+
 author.define({
   collections: [collection],
   follow_forums: [forum],
   forumCreated: [forum],
   forumManaged: [forum],
   inventories: [inventory],
+  venalinks: [venalink],
+  participatedVenalinks: [participatedVenalinks]
 });

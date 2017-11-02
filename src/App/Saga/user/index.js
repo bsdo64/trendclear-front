@@ -43,8 +43,7 @@ function* SagaPaybackRP() {
 
     try {
       const result = yield call([API, API.post], '/user/payback/rp', payload);
-      if (result && result.list) {
-
+      if (result) {
         yield put({ type: SUCCESS_USER_PAYBACK_RP, result });
       } else {
         yield put({ type: FAILURE_USER_PAYBACK_RP });

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { getUser } from '../../../../../../Selectors/User.js';
 import { requestGetMoreActiveVenalinkList } from '../../../../../../Actions/Venalink';
 import VenalinkActive from './components/VenalinkActive.js';
+import { getUserVenalinks } from '../../../../../../Selectors/Venalinks';
+import { getCollection } from '../../../../../../Selectors/Pagination';
 
 class VenalinkActiveList extends React.Component {
   render() {
@@ -15,6 +17,8 @@ const mapStateToProps = (state) => {
 
   return {
     UserStore: getUser(StoreState),
+    venalinks: getUserVenalinks(StoreState),
+    venalinkPage: getCollection('userVenalinks')(StoreState)
   };
 };
 

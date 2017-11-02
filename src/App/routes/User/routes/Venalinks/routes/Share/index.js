@@ -4,6 +4,8 @@ import { getUser } from '../../../../../../Selectors/User.js';
 import VenalinkShare from './components/VenalinkShare.js';
 import { requestUserPaybackRP } from '../../../../../../Actions/User';
 import { requestGetMoreShareVenalinkList } from '../../../../../../Actions/Venalink';
+import { getUserParticipatedVenalinks } from '../../../../../../Selectors/ParticipatedVenalinks';
+import { getCollection } from '../../../../../../Selectors/Pagination';
 
 class VenalinkShareList extends React.Component {
   render() {
@@ -16,6 +18,8 @@ const mapStateToProps = (state) => {
 
   return {
     UserStore: getUser(StoreState),
+    userParticipatedVenalinks: getUserParticipatedVenalinks(StoreState),
+    userParticipatedVenalinksPage: getCollection('userParticipatedVenalinks')(StoreState),
   };
 };
 

@@ -207,10 +207,9 @@ const Users = (state = initList, action) => {
 
     case SUCCESS_USER_PAYBACK_RP: {
       const {result} = action;
-      const {trendbox, list, userId} = result;
+      const {trendbox, userId} = result;
 
       return state
-        .mergeDeepIn([userId.toString(), 'participatedVenalinks'], fromJS(list))
         .mergeIn([userId.toString(), 'trendbox'], trendbox);
     }
 
@@ -638,6 +637,7 @@ const Venatems = (state = initList, action) => {
 };
 
 import { ADD_FILTER, REMOVE_FILTER } from '../../Actions/Filter';
+import { SUCCESS_GET_MORE_ACTIVE_VENALINK_LIST, SUCCESS_GET_MORE_SHARE_VENALINK_LIST } from '../../Actions/Venalink';
 
 const Filters = (state = initList, action) => {
   switch (action.type) {
@@ -660,6 +660,62 @@ const Filters = (state = initList, action) => {
   }
 };
 
+const Participants = (state = initList, action) => {
+  switch (action.type) {
+    case SUCCESS_GET_MORE_ACTIVE_VENALINK_LIST: {
+      const {result} = action;
+
+      return state.merge(result.normalized.entities.participants);
+    }
+
+    case SUCCESS_GET_MORE_SHARE_VENALINK_LIST: {
+      const {result} = action;
+
+      return state.merge(result.normalized.entities.participants);
+    }
+
+    default: return state;
+  }
+};
+
+const ParticipatedVenalinks = (state = initList, action) => {
+  switch (action.type) {
+    case SUCCESS_USER_PAYBACK_RP: {
+      const {result} = action;
+      const {itemId} = result;
+
+      return state.setIn([itemId + '', 'has_payback_rp'], () => true);
+    }
+
+    case SUCCESS_GET_MORE_SHARE_VENALINK_LIST: {
+      const {result} = action;
+
+      return state.merge(result.normalized.entities.participatedVenalinks);
+    }
+
+    default: return state;
+  }
+};
+
+const Venalinks = (state = initList, action) => {
+  switch (action.type) {
+
+    case SUCCESS_GET_MORE_ACTIVE_VENALINK_LIST: {
+      const {result} = action;
+
+      return state.merge(result.normalized.entities.venalinks);
+    }
+
+    case SUCCESS_GET_MORE_SHARE_VENALINK_LIST: {
+      const {result} = action;
+
+      return state.merge(result.normalized.entities.venalinks);
+    }
+
+    default: return state;
+  }
+};
+
 // Domain reducer
 export default combineReducers({
   Users,
@@ -674,5 +730,8 @@ export default combineReducers({
   Prefixes,
   SubComments,
   Notis,
+  Participants,
+  ParticipatedVenalinks,
+  Venalinks,
   Filters,
 });

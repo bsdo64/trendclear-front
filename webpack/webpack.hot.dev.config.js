@@ -34,6 +34,7 @@ module.exports = {
     filename: 'bundle-[name].js',
     chunkFilename: '[name]-[id].js',
     path: dist,
+    crossOriginLoading: "anonymous"
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
