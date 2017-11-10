@@ -345,7 +345,7 @@ class ShareLinkMenu extends React.Component {
                 <div className="item">
                   <h4 className="ui header">링크를 복사하고 공유하세요</h4>
                   <div>
-                    보상 : <span>아래 주소로 접속한 방문자당 5TP</span>
+                    보상 : <span>주소 방문자당 5TP</span>
                   </div>
                   <div className="ui action input link" style={{ marginTop: 10 }}>
                     <input ref={'sharelink' + post.get('id')} type="text"

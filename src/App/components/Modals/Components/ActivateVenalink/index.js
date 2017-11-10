@@ -131,6 +131,7 @@ class ActivateVenalink extends React.Component {
                       <InputNumber
                         step={100}
                         min={1500}
+                        defaultValue={1500}
                         max={UserStore.get('trendbox').get('R')}
                         onChange={this.checkMaxRP}
                         type="text"

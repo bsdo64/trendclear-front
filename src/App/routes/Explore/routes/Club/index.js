@@ -106,10 +106,10 @@ class Club extends Component {
                     </div>
                     <div className={style.cardStats}>
                       <div className={style.clubFollows + ' ' + style.button}>
-                        <i className="fa fa-star" /> {v.get('follow_count')}
+                        팔로잉 <i className="fa fa-star" /> {v.get('follow_count')}
                       </div>
                       <div className={style.clubSubs + ' ' + style.button}>
-                        <i className="fa fa-star" /> 구독하기
+                        구독하기
                       </div>
                     </div>
                   </div>

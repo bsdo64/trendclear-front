@@ -13,7 +13,7 @@ import MakeUrl from '../../../../Lib/MakeUrl';
 import Paginator from '../../../../components/Paginator/index';
 import { CLUB_NOT_EXIST } from '../../../../Constants/ErrorCodes';
 import ClubNotExist from '../ClubNotExist/index.js';
-// import AdForum1 from '../../Ad/AddForum1';
+import AdForum1 from '../../../../components/Ad/AddForum1';
 
 require('./CommunityContents.scss');
 class PostList extends React.PureComponent {
@@ -468,8 +468,6 @@ class Forum extends React.Component {
                   </div>
                 </div>
               </div>
-
-              {/*<AdForum1 url="http://www.computerhope.com/banners/banner3.gif" />*/}
 
               <div className="ui horizontal celled list">
                 <div className="item" style={{ fontWeight: 'bold' }}>

@@ -68,7 +68,7 @@ class SimpleMap extends React.Component {
   }
 }
 
-require('./Contact.scss');
+require('./Help.scss');
 const PolicyBox = () => {
 
   return (
@@ -104,24 +104,6 @@ const PolicyBox = () => {
               </div>
               <div className="content description">
                 359-19-00336
-              </div>
-            </div>
-            <div className="item">
-              <i className="user icon"></i>
-              <div className="content title">
-                대표
-              </div>
-              <div className="content description">
-                도병수 (이메일 : <a href="mailto:bsdo64@gmail.com">bsdo64@gmail.com</a>)
-              </div>
-            </div>
-            <div className="item">
-              <i className="user icon"></i>
-              <div className="content title">
-                개인정보담당자
-              </div>
-              <div className="content description">
-                도병수
               </div>
             </div>
             <div className="item">

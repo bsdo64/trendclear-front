@@ -6,16 +6,16 @@ import { createLazyMod } from '../../Lib/utils';
 const Explore = createLazyMod(require('bundle-loader?lazy!../Explore/index.js'));
 const Writing = createLazyMod(require('bundle-loader?lazy!../Submit/index.js'));
 const Search = createLazyMod(require('bundle-loader?lazy!../Search/index.js'));
-const Company = createLazyMod(require('bundle-loader?lazy!../Company/index.js'));
+const About = createLazyMod(require('bundle-loader?lazy!../About/index.js'));
 const Help = createLazyMod(require('bundle-loader?lazy!../Help/index.js'));
-const Collection = createLazyMod(require('bundle-loader?lazy!../../containers/Contents/BestCollection.js'));
-const ForumSetting = createLazyMod(require('bundle-loader?lazy!../../containers/Contents/ForumSetting.js'));
 const Setting = createLazyMod(require('bundle-loader?lazy!../Setting/index.js'));
-const Best = createLazyMod(require('bundle-loader?lazy!../../containers/Contents/Best.js'));
 const Club = createLazyMod(require('bundle-loader?lazy!../Club/index.js'));
-const CollectionIndex = createLazyMod(require('bundle-loader?lazy!../Collection/index.js'));
 const Policy = createLazyMod(require('bundle-loader?lazy!../Policy/index.js'));
 const User = createLazyMod(require('bundle-loader?lazy!../User/index.js'));
+const CollectionIndex = createLazyMod(require('bundle-loader?lazy!../Collection/index.js'));
+const Collection = createLazyMod(require('bundle-loader?lazy!../../containers/Contents/BestCollection.js'));
+const ForumSetting = createLazyMod(require('bundle-loader?lazy!../../containers/Contents/ForumSetting.js'));
+const Best = createLazyMod(require('bundle-loader?lazy!../../containers/Contents/Best.js'));
 
 /* RightSide Container */
 import RightSide from '../../components/RightSide/index.js';
@@ -71,7 +71,7 @@ const DefaultLayout = () => {
             <Route path="/policies/terms" component={Policy}/>
             <Route path="/policies/privacy" component={Policy}/>
             <Route path="/policies" component={Policy}/>
-            <Route path="/about" component={Company}/>
+            <Route path="/about" component={About}/>
             <Route path="/help" component={Help}/>
 
             <Route path="/" component={Best}/>
