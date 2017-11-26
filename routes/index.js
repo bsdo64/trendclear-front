@@ -170,17 +170,17 @@ router.get('/link/post/:linkId', function (req, res, next) {
   }
 });
 
-/* GET home page. */
-router.use(function (req, res, next) {
-  const ua = req.headers['user-agent'].toLowerCase();
-  const findMobileDevice = ua.includes('ipad') || ua.includes('android') || ua.includes('iphone');
-
-  if (findMobileDevice) {
-    return res.redirect('http://naver.com');
-  }
-
-  next();
-});
+// /* Redirect to mobile home page. */
+// router.use(function (req, res, next) {
+//   const ua = req.headers['user-agent'].toLowerCase();
+//   const findMobileDevice = ua.includes('ipad') || ua.includes('android') || ua.includes('iphone');
+//
+//   if (findMobileDevice) {
+//     return res.redirect('http://venacle.com');
+//   }
+//
+//   next();
+// });
 
 /* GET home page. */
 router.get(routes, function (req, res, next) {
