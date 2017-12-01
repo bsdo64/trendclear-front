@@ -6,6 +6,9 @@
   -webkit-box-shadow: 1px 1px 1px 0 #c6c6c6;
   -moz-box-shadow: 1px 1px 1px 0 #c6c6c6;
   box-shadow: 1px 1px 1px 0 #c6c6c6;
+  width: 240px;
+  background: #fff;
+  padding: 10px;
 
   &.widgetBox {
     margin-top: 10px;
@@ -13,15 +16,11 @@
 }
 
 .followingList {
-  background: #fff;
-  padding: 10px;
-  width: 240px;
+
 }
 
 .rankList {
-  background: #fff;
-  width: 240px;
-  padding: 10px;
+
 
   & > .issueHeader {
     font-weight: bold;
@@ -68,9 +67,6 @@
 }
 
 .latestSeenList {
-  background: #fff;
-  width: 240px;
-  padding: 10px;
 
   & > .issueHeader {
     font-weight: bold;
@@ -139,7 +135,5 @@
 }
 
 .famousList {
-  width: 240px;
-  background: #fff;
-  padding: 10px;
+
 }

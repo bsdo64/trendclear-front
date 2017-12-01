@@ -6,12 +6,15 @@ import RankList from './RankList.js';
 import CompanyInfo from './CompanyInfo.js'
 import LatestSeen from './LatestSeen.js';
 import FamouseList from './FamousList';
+import Guide from './Guide'
 
 import style from './index.css';
 
 const RightSide = () => {
   return (
     <div className={style.rightSide}>
+
+      <Guide />
 
       <Switch>
         <Route exact path="/" component={FollowingList} />
