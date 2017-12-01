@@ -24,7 +24,6 @@ class ClubMenuBox extends React.Component {
     };
 
     this.toggleOpenSearch = this.toggleOpenSearch.bind(this);
-    this.searchList = this.searchList.bind(this);
     this.createClubImage = this.createClubImage.bind(this);
   }
 
@@ -32,33 +31,31 @@ class ClubMenuBox extends React.Component {
     const { clubInfo } = this.props;
     const forumImage = clubInfo.get('forum_image');
 
-    let dom;
+    let dom = (imgSrc) => (
+      <div style={{
+        width: 45,
+        height: 45,
+        verticalAlign: 'top',
+        display: 'inline-block',
+        overflow: 'hidden'
+      }}>
+        <img src={imgSrc} style={{
+          float: 'left',
+          paddingRight: 10,
+          paddingTop: 4,
+          width: 45
+        }} />
+      </div>
+    );
+
+    let imgSrc;
     if (forumImage) {
-      dom = (
-        <img src={`/image/uploaded/files/avatar1/${forumImage}`} style={{
-          float: 'left',
-          paddingRight: 10,
-          paddingTop: 4,
-          width: 45
-        }} />
-      )
+      imgSrc = `/image/uploaded/files/avatar1/${forumImage}`;
     } else {
-      dom = (
-        <img src={`/images/empty-club-image.png`} style={{
-          float: 'left',
-          paddingRight: 10,
-          paddingTop: 4,
-          width: 45
-        }} />
-      )
+      imgSrc = `/images/empty-club-image.png`;
     }
 
-    return dom;
-  }
-
-  searchList(e) {
-    // TODO: Add filter function
-    console.log(e.target.value);
+    return dom(imgSrc);
   }
 
   toggleOpenSearch() {
@@ -146,6 +143,7 @@ class ClubMenuBox extends React.Component {
 ClubMenuBox.propTypes = {
   clubInfo: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   widgetBox: PropTypes.object.isRequired,
 };
 ClubMenuBox.defaultProps = {

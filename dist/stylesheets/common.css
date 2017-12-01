@@ -114,6 +114,7 @@ body {
       position: relative; }
 
 .ReactModalPortal .ReactModal__Overlay {
-  z-index: 100; }
+  z-index: 100;
+  overflow-y: scroll; }
   .ReactModalPortal .ReactModal__Overlay.ui.page.dimmer {
     line-height: 1.4285em; }
