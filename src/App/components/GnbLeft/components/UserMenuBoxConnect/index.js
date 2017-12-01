@@ -163,6 +163,11 @@ class UserMenuBox extends React.Component {
                   </Link>
                 </div>
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
+                  <Link to="/user/points/myPointRefund">
+                    <span>RP 환급</span>
+                  </Link>
+                </div>
+                <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>
                   <span style={{color: '#fff', fontWeight: 'bold'}}>베나링크</span>
                 </div>
                 <div className={cx([styles.subMenuItem, styles.clubMenuItem])}>

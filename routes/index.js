@@ -66,6 +66,7 @@ const routes = [
   '/user/chargePoint',
   '/user/points',
   '/user/points/chargeLog',
+  '/user/points/myPointRefund',
   '/user/venalinks',
   '/user/venalinks/active',
   '/user/venalinks/share',
